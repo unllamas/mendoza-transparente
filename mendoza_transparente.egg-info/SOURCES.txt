@@ -1,0 +1,10 @@
+LICENSE
+README.md
+pyproject.toml
+mendoza_transparente.egg-info/PKG-INFO
+mendoza_transparente.egg-info/SOURCES.txt
+mendoza_transparente.egg-info/dependency_links.txt
+mendoza_transparente.egg-info/requires.txt
+mendoza_transparente.egg-info/top_level.txt
+mt/__init__.py
+mt/fetch.py

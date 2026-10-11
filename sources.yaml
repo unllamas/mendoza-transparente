@@ -1,0 +1,75 @@
+# Catálogo de fuentes. El `id` es el nombre de la carpeta en data/raw/<id>/.
+# dificultad: facil | media | dificil   ·   estado: pendiente | activo | roto
+# El detalle de cada fuente está en docs/relevamiento-fuentes.md.
+
+- id: hacienda-deuda-stock
+  nombre: Deuda pública provincial, stock vigente y tableros trimestrales
+  organismo: Ministerio de Hacienda y Finanzas de Mendoza
+  url: https://sitios.mendoza.gob.ar/haciendayfinanzas/stock-vigente/
+  formato: xlsx
+  frecuencia: trimestral
+  dificultad: facil
+  estado: pendiente
+
+- id: hacienda-participacion-municipal
+  nombre: Coparticipación de la provincia a los municipios
+  organismo: Ministerio de Hacienda y Finanzas de Mendoza
+  url: https://sitios.mendoza.gob.ar/haciendayfinanzas/participacion-municipal/
+  formato: xls
+  frecuencia: mensual
+  dificultad: facil
+  estado: pendiente
+
+- id: dnap-ron
+  nombre: Recursos de origen nacional (transferencias automáticas de Nación a provincias)
+  organismo: Dirección Nacional de Asuntos Provinciales
+  url: https://www.argentina.gob.ar/economia/sechacienda/asuntosprovinciales/ron
+  formato: xls, csv
+  frecuencia: diaria
+  dificultad: facil
+  estado: pendiente
+
+- id: boletin-oficial
+  nombre: Boletín Oficial de Mendoza (índice y texto completo de normas)
+  organismo: Gobierno de Mendoza
+  url: https://portalgateway.mendoza.gov.ar/api/boe/
+  formato: api (html en json)
+  frecuencia: diaria
+  dificultad: facil
+  estado: pendiente
+
+- id: etica-publica
+  nombre: Declaraciones juradas patrimoniales y registro de sanciones
+  organismo: Oficina de Investigaciones Administrativas y Ética Pública
+  url: https://eticapublica.mendoza.gov.ar/api/v1/public/
+  formato: api json
+  frecuencia: continua
+  dificultad: facil
+  estado: pendiente
+
+- id: compras-ocds
+  nombre: Contrataciones abiertas de COMPR.AR Mendoza (OCDS)
+  organismo: Dirección General de Contrataciones Públicas
+  url: https://datosabiertos-compras.mendoza.gov.ar/datasets/
+  formato: json ocds
+  frecuencia: irregular (último corte 04/01/2026)
+  dificultad: facil
+  estado: pendiente
+
+- id: energia-regalias
+  nombre: Regalías de petróleo y gas por provincia
+  organismo: Secretaría de Energía de la Nación
+  url: http://datos.energia.gob.ar/dataset/regalias-de-petroleo-crudo-gas-natural-glp-gasolina-y-condensado
+  formato: zip, csv
+  frecuencia: mensual
+  dificultad: facil
+  estado: pendiente
+
+- id: deie-ipc
+  nombre: IPC Gran Mendoza y canasta básica
+  organismo: DEIE Mendoza
+  url: https://sitios.mendoza.gob.ar/deie/category/economia/precios-e-indices/ipc/feed/
+  formato: rss, pdf
+  frecuencia: mensual
+  dificultad: facil
+  estado: pendiente

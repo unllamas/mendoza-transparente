@@ -1,0 +1,14 @@
+Metadata-Version: 2.4
+Name: mendoza-transparente
+Version: 0.1.0
+Summary: Datos públicos de la provincia de Mendoza, recopilados, normalizados y curados.
+Requires-Python: >=3.11
+License-File: LICENSE
+Requires-Dist: requests>=2.31
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: pandas>=2.2
+Requires-Dist: openpyxl>=3.1
+Requires-Dist: xlrd>=2.0
+Requires-Dist: pypdf>=4.0
+Requires-Dist: pdfplumber>=0.11
+Dynamic: license-file
