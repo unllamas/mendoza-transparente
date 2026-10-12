@@ -1,0 +1,68 @@
+{
+  "titulo": "Planta del Estado por jurisdicción (resumen de la ley)",
+  "descripcion": "Cada fila es una jurisdicción y carácter de la planilla 8.1 de la Ley de Presupuesto: cargos y horas cátedra permanentes y temporarios, y la partida de personal anual cuando la planilla la imprime. Los nombres son los de la planilla ese año, y algunas jurisdicciones aparecen con el nombre de la que se fusionó. Son cargos OCUPADOS al mes de corte (agosto del año anterior), no todos los cargos autorizados: los retenidos y las vacantes en trámite van aparte (cargos_vacantes). No hay nombres ni sueldos.",
+  "columnas": {
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio",
+      "descripcion": "Año del presupuesto."
+    },
+    "es_proyecto": {
+      "etiqueta": "Proyecto",
+      "tipo": "booleano",
+      "descripcion": "1 si es el proyecto de ley enviado a la Legislatura (2027); 0 si es la ley sancionada."
+    },
+    "codigo_caracter": {
+      "etiqueta": "Carácter",
+      "tipo": "texto",
+      "valores": {
+        "1": "Administración Central",
+        "2": "Organismos Descentralizados",
+        "5": "Otras Entidades"
+      },
+      "descripcion": "Clasificación institucional de la ley: 1 Administración Central, 2 Organismos Descentralizados, 5 Otras Entidades (el 3, Cuentas Especiales, no tiene planta)."
+    },
+    "jurisdiccion": {
+      "etiqueta": "Jurisdicción",
+      "tipo": "texto"
+    },
+    "cargos_permanentes": {
+      "etiqueta": "Cargos permanentes",
+      "tipo": "numero",
+      "unidad": "cargos"
+    },
+    "cargos_temporarios": {
+      "etiqueta": "Cargos temporarios",
+      "tipo": "numero",
+      "unidad": "cargos"
+    },
+    "horas_catedra_permanentes": {
+      "etiqueta": "Horas cátedra permanentes",
+      "tipo": "numero",
+      "unidad": "horas"
+    },
+    "horas_catedra_temporarias": {
+      "etiqueta": "Horas cátedra temporarias",
+      "tipo": "numero",
+      "unidad": "horas"
+    },
+    "costo_partida_personal": {
+      "etiqueta": "Partida de personal",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Costo de la planta (partida de personal) en pesos nominales. Solo está en 2020 y 2022 a 2024: 2021 y 2026-2027 no lo imprimen y en 2025 la columna sale cortada en el PDF."
+    }
+  },
+  "orden": [
+    "anio",
+    "jurisdiccion",
+    "cargos_permanentes",
+    "cargos_temporarios",
+    "horas_catedra_permanentes",
+    "horas_catedra_temporarias",
+    "costo_partida_personal",
+    "codigo_caracter",
+    "es_proyecto"
+  ]
+}

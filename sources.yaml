@@ -201,3 +201,13 @@
   frecuencia: trimestral
   dificultad: media
   estado: activo
+
+- id: presupuesto-planta
+  nombre: Cargos de la planta del Estado en la Ley de Presupuesto
+  organismo: Ministerio de Hacienda y Finanzas de Mendoza
+  url: https://sitios.mendoza.gob.ar/haciendayfinanzas/ley-de-presupuesto/
+  descripcion: "Cuántos cargos ocupados (permanentes y temporarios) y cuántas horas cátedra fija la Ley de Presupuesto para cada organismo, por escalafón y clase, y cuántos cargos están retenidos o vacantes; de 2020 al proyecto 2027."
+  formato: pdf
+  frecuencia: anual
+  dificultad: dificil
+  estado: activo

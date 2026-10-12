@@ -450,4 +450,6 @@ export interface AgencyDetail extends AgencySummary {
     buyers: { slug: string; name: string; processes: number }[];
   } | null;
   appointments: { date: string; action: string; person: string; role: string; unit: string; url: string }[];
+  /** Occupied positions in each year's budget law (planilla 8.2) and unfilled ones (8.6, since 2022). */
+  budget: { year: number; positions: number; vacancies: number | null; project: boolean }[];
 }

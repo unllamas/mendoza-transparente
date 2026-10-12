@@ -40,7 +40,7 @@ concurrency:
 env:
   DIARIO: "boletin-oficial"
   SEMANAL: "compras-ocds,dnap,etica-publica,indices,deie-ipc"
-  MENSUAL: "hacienda-deuda-stock,hacienda-participacion-municipal,energia-regalias,poblacion,legislatura,autoridades,proveedores,lrf-personal"
+  MENSUAL: "hacienda-deuda-stock,hacienda-participacion-municipal,energia-regalias,poblacion,legislatura,autoridades,proveedores,lrf-personal,presupuesto-planta"
 
 jobs:
   plan:

@@ -1,0 +1,1396 @@
+anio,es_proyecto,codigo_caracter,codigo_jurisdiccion,jurisdiccion,codigo_unidad,unidad,tipo_cargo,cargos,horas_catedra
+2020,0,1,1,Poder Legislativo,1,Cámara de Senadores,permanente,326,0
+2020,0,1,1,Poder Legislativo,1,Cámara de Senadores,temporario,125,0
+2020,0,1,1,Poder Legislativo,2,Cámara de Diputados,permanente,474,0
+2020,0,1,1,Poder Legislativo,2,Cámara de Diputados,temporario,138,0
+2020,0,1,1,Poder Legislativo,3,Legislatura,permanente,101,0
+2020,0,1,1,Poder Legislativo,3,Legislatura,temporario,7,0
+2020,0,1,1,Poder Legislativo,4,Oficina de Investigaciones Administrativas y Etica Publica,permanente,1,0
+2020,0,1,2,Poder Judicial,1,Suprema Corte,permanente,3371,0
+2020,0,1,2,Poder Judicial,1,Suprema Corte,temporario,1,0
+2020,0,1,2,Poder Judicial,2,Ministerio Público,permanente,1554,0
+2020,0,1,2,Poder Judicial,3,Jury de enjuiciamiento,permanente,3,0
+2020,0,1,2,Poder Judicial,4,Junta Electoral,permanente,11,0
+2020,0,1,2,Poder Judicial,5,Consejo de la Magistratura,permanente,6,0
+2020,0,1,2,Poder Judicial,6,Ministerio Publico de la Defensa,permanente,289,0
+2020,0,1,3,Tribunal de Cuentas,1,Tribunal de Cuentas,permanente,299,0
+2020,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",1,"Ministerio de Gobierno,Trabajo y Justicia",permanente,187,0
+2020,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",2,Dcción.del Reg. Estado Civil y Capac. Pers,permanente,421,0
+2020,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",2,Dcción.del Reg. Estado Civil y Capac. Pers,temporario,2,0
+2020,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",9,Subsecretaría de Trabajo y Empleo,permanente,176,0
+2020,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",12,Dcción. de Personas Jurídicas,permanente,47,0
+2020,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",12,Dcción. de Personas Jurídicas,temporario,1,0
+2020,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",19,Dirección de Defensa al Consumidor,permanente,40,0
+2020,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",23,Dirección de Informática y Comunicaciones,permanente,31,0
+2020,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",23,Dirección de Informática y Comunicaciones,temporario,1,0
+2020,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",24,Asesoría de Gobierno,permanente,23,0
+2020,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",25,Escribanía General de Gobierno,permanente,9,0
+2020,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",26,Casa de Mendoza,permanente,9,0
+2020,0,1,6,Ministerio de Hacienda y Finanzas,1,Ministerio de Hacienda y Finanzas,permanente,100,0
+2020,0,1,6,Ministerio de Hacienda y Finanzas,2,Direccion Gral. de Presupuesto,permanente,20,0
+2020,0,1,6,Ministerio de Hacienda y Finanzas,2,Direccion Gral. de Presupuesto,temporario,1,0
+2020,0,1,6,Ministerio de Hacienda y Finanzas,3,Contaduría Gral. de la Provincia,permanente,129,0
+2020,0,1,6,Ministerio de Hacienda y Finanzas,5,Tesorería Gral. de la Provincia,permanente,20,0
+2020,0,1,6,Ministerio de Hacienda y Finanzas,6,Dcción. Gral. de Contratac. Públ. y Gestión de Bienes,permanente,29,0
+2020,0,1,6,Ministerio de Hacienda y Finanzas,9,Oficina Técnica Previsional,permanente,20,0
+2020,0,1,6,Ministerio de Hacienda y Finanzas,10,Dcción. Admin.de Activos ex Bcos.Oficiales,permanente,21,0
+2020,0,1,6,Ministerio de Hacienda y Finanzas,11,Dirección de Asuntos Legales,permanente,7,0
+2020,0,1,6,Ministerio de Hacienda y Finanzas,16,Dirección General de la Deuda Pública,permanente,6,0
+2020,0,1,7,"Ministerio de Economia, Infraest.y Energia",1,"Ministerio de Economía, Infraest.y Energía",permanente,163,0
+2020,0,1,7,"Ministerio de Economia, Infraest.y Energia",2,Dcción. de Estad. e Investigac. Económicas,permanente,46,0
+2020,0,1,7,"Ministerio de Economia, Infraest.y Energia",3,Dirección de Fiscalización y Control,permanente,52,0
+2020,0,1,7,"Ministerio de Economia, Infraest.y Energia",6,Dcción.de Agricultura y Contingencias Clim,permanente,51,0
+2020,0,1,7,"Ministerio de Economia, Infraest.y Energia",7,Dcción. Pcial.de Ganadería,permanente,95,0
+2020,0,1,7,"Ministerio de Economia, Infraest.y Energia",9,Dcción.de Desarrollo Tecnológico y Empleo,permanente,1,0
+2020,0,1,7,"Ministerio de Economia, Infraest.y Energia",15,Dcción.de Asociativismo y Cooperativas,permanente,17,0
+2020,0,1,7,"Ministerio de Economia, Infraest.y Energia",20,Subsecretaría de Energía y Minería,permanente,11,0
+2020,0,1,7,"Ministerio de Economia, Infraest.y Energia",21,Dirección de Hidrocarburos,permanente,8,0
+2020,0,1,7,"Ministerio de Economia, Infraest.y Energia",21,Dirección de Hidrocarburos,temporario,1,0
+2020,0,1,7,"Ministerio de Economia, Infraest.y Energia",22,Dirección de Minería,permanente,20,0
+2020,0,1,7,"Ministerio de Economia, Infraest.y Energia",23,Dirección de Energía Renovable,permanente,3,0
+2020,0,1,7,"Ministerio de Economia, Infraest.y Energia",30,Subsecretaría de Infraestructura,permanente,21,0
+2020,0,1,7,"Ministerio de Economia, Infraest.y Energia",31,Dirección Hidráulica,permanente,54,0
+2020,0,1,7,"Ministerio de Economia, Infraest.y Energia",32,Dirección de Administración de Contratos y Obras Pub.,permanente,58,0
+2020,0,1,7,"Ministerio de Economia, Infraest.y Energia",33,Reg.de Anteced. de Construct de Obras Púb.,permanente,5,0
+2020,0,1,7,"Ministerio de Economia, Infraest.y Energia",34,Dirección de Proyectos y Licitaciones,permanente,19,0
+2020,0,1,7,"Ministerio de Economia, Infraest.y Energia",40,Subsecretaría de Infraes.Social y Básica,permanente,158,0
+2020,0,1,7,"Ministerio de Economia, Infraest.y Energia",40,Subsecretaría de Infraes.Social y Básica,temporario,1,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,"Ministerio de Salud, Desarr.Soc.y Deportes",permanente,299,92
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,"Ministerio de Salud, Desarr.Soc.y Deportes",temporario,524,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",7,Hospital José Nestor Lencinas,permanente,155,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",13,Hospital A. Metraux,permanente,60,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",14,Hospital H. Gailhac,permanente,142,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",18,Hospital Arturo Illia,permanente,76,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",20,Hospital D. Sícoli,permanente,117,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",21,Hospital Fernando Arenas Raffo,permanente,60,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",25,Hospital Ministro Dr. Ramón Carrillo,permanente,246,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",26,Hospital Luis Chrabalowski,permanente,65,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",28,Hospital Eva Perón,permanente,52,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",29,Servicio de Emergencia Coordinado,permanente,153,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",41,Area Departamental de Salud Capital,permanente,67,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",42,Area Departamental de Salud Gral. Alvear,permanente,110,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",43,Area Departamental de Salud Godoy Cruz,permanente,248,36
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",44,Area Departamental de Salud Guaymallén,permanente,292,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",45,Area Departamental de Salud Junín,permanente,111,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",46,Area Departamental de Salud La Paz,permanente,30,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",47,Area Departamental de Salud Las Heras,permanente,212,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",48,Area Departamental de Salud Lavalle,permanente,147,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",49,Area Departamental de Salud Luján,permanente,187,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",50,Area Departamental de Salud Maipú,permanente,150,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",51,Area Departamental de Salud Malargue,permanente,76,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",52,Area Departamental de Salud Rivadavia,permanente,119,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",53,Area Departamental de Salud San Carlos,permanente,98,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",54,Area Departamental de Salud San Martín,permanente,154,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",55,Area Departamental de Salud San Rafael,permanente,198,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",56,Area Departamental de Salud Santa Rosa,permanente,67,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",57,Area Departamental de Salud Tunuyán,permanente,104,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",58,Area Departamental de Salud Tupungato,permanente,63,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",75,Subsecretaría de Salud,permanente,692,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",80,Subsecretaría de Desarrollo Social,permanente,134,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",80,Subsecretaría de Desarrollo Social,temporario,1,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",81,Dir.Gral.de Administración de Desarrollo Social,permanente,1,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",82,Dirección de Derechos Humanos,permanente,5,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",83,Fondo de Inversión y Desarrollo,permanente,35,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",85,Direcc.de Economía Social y Asociatividad,permanente,59,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",86,Dirección de Contingencia,permanente,52,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",87,Dirección de Atención Adultos Mayores,permanente,218,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",88,Dirección de Atención a las Pers.c/Discap.,permanente,141,29
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",89,Dirección de Género y Diversidad,permanente,23,0
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",90,Subsecretaría de Deportes,permanente,148,80
+2020,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",91,Dirección Gral. de Administración de Deportes,permanente,1,0
+2020,0,1,15,Fiscalia de Estado,1,Fiscalía de Estado,permanente,129,0
+2020,0,1,15,Fiscalia de Estado,1,Fiscalía de Estado,temporario,1,0
+2020,0,1,16,Ministerio de Seguridad,1,Ministerio de Seguridad,permanente,209,0
+2020,0,1,16,Ministerio de Seguridad,2,Dcción. de Investigaciones,permanente,487,0
+2020,0,1,16,Ministerio de Seguridad,5,Dcción. de Defensa Civil,permanente,90,0
+2020,0,1,16,Ministerio de Seguridad,6,Dcción. General de Policia,permanente,8250,0
+2020,0,1,16,Ministerio de Seguridad,6,Dcción. General de Policia,temporario,1,0
+2020,0,1,16,Ministerio de Seguridad,7,Dcción. de Participación Comunitaria,permanente,1,0
+2020,0,1,16,Ministerio de Seguridad,9,Dirección Gral de Administración,permanente,436,0
+2020,0,1,16,Ministerio de Seguridad,10,Dcción. de Seguridad Vial,permanente,118,0
+2020,0,1,16,Ministerio de Seguridad,13,Dirección Gral. del Servicio Penitenciario,permanente,2730,0
+2020,0,1,22,Secretaria de Cultura,1,Secretaría de Cultura,permanente,243,0
+2020,0,1,22,Secretaria de Cultura,1,Secretaría de Cultura,temporario,0,51
+2020,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,1,Secretaría de Ambiente y Ordenamiento Territorial,permanente,70,0
+2020,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,3,Dirección de Protección Ambiental,permanente,42,0
+2020,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,4,Dirección de Recursos Naturales Renovables,permanente,220,0
+2020,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,4,Dirección de Recursos Naturales Renovables,temporario,1,0
+2020,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,6,Ecoparque Mendoza,permanente,68,0
+2020,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,7,Parques y Paseos Publicos,permanente,118,0
+2020,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,7,Parques y Paseos Publicos,temporario,7,0
+2020,0,1,26,Secretaria de Servicios Publicos,1,Secretaría de Servicios Públicos,permanente,8,0
+2020,0,1,26,Secretaria de Servicios Publicos,2,Dirección de Transporte,permanente,30,0
+2020,0,1,26,Secretaria de Servicios Publicos,3,Dirección de Asuntos Legales Fiscalización,permanente,29,0
+2020,0,1,26,Secretaria de Servicios Publicos,4,Dirección de Planificación y Proyectos Esp,permanente,33,0
+2020,0,1,26,Secretaria de Servicios Publicos,5,Coordinación de Gabinete,permanente,10,0
+2020,0,1,26,Secretaria de Servicios Publicos,14,Dirección de Servicios Eléctricos,permanente,7,0
+2020,0,2,7,"Ministerio de Economia, Infraest.y Energia",1,Instituto de Sanid.y Calid.Agropec.Mendoza,permanente,216,0
+2020,0,2,7,"Ministerio de Economia, Infraest.y Energia",2,Dirección Provincial de Vialidad,permanente,911,0
+2020,0,2,7,"Ministerio de Economia, Infraest.y Energia",2,Dirección Provincial de Vialidad,temporario,11,0
+2020,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,Hospital Central,permanente,1240,0
+2020,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",2,Hospital Materno Infantil Humberto Notti,permanente,1364,68
+2020,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",2,Hospital Materno Infantil Humberto Notti,temporario,2,0
+2020,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",3,Hospital Teodoro Schestakow,permanente,580,0
+2020,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",4,Hospital Luis Lagomaggiore,permanente,1298,0
+2020,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",8,Hospital Carlos Pereyra,permanente,193,20
+2020,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",9,Hospital El Sauce,permanente,174,0
+2020,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",10,Hospital Diego Paroissien,permanente,502,0
+2020,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",11,Hospital A. Perrupato,permanente,642,0
+2020,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",12,Hospital Gral. Alvear,permanente,377,0
+2020,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",15,Hospital Victorino Tagarelli,permanente,129,0
+2020,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",16,Hospital Antonio J. Scaravelli,permanente,449,0
+2020,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",17,Hospital Saporitti,permanente,262,0
+2020,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",17,Hospital Saporitti,temporario,1,0
+2020,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",19,Hospital Malargue,permanente,149,0
+2020,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",24,Hospital Gral. Las Heras,permanente,161,0
+2020,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",25,"Dir.Gral.de Proteccion de Derechos de Niñas, Niños y Adolescentes",permanente,1004,0
+2020,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",25,"Dir.Gral.de Proteccion de Derechos de Niñas, Niños y Adolescentes",temporario,3,0
+2020,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",26,Direcc de Responsabilidad Penal y Juvenil,permanente,353,0
+2020,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",26,Direcc de Responsabilidad Penal y Juvenil,temporario,10,0
+2020,0,2,14,Direccion General de Escuelas,1,Dcción. Gral. de Escuelas,permanente,711,136
+2020,0,2,14,Direccion General de Escuelas,1,Dcción. Gral. de Escuelas,temporario,46,512
+2020,0,2,14,Direccion General de Escuelas,2,Dcción. de Educ.Inicial y Básica(1er.y 2do,permanente,22850,45331
+2020,0,2,14,Direccion General de Escuelas,2,Dcción. de Educ.Inicial y Básica(1er.y 2do,temporario,1451,4473
+2020,0,2,14,Direccion General de Escuelas,3,Dcción. Educ.Básica(3er.cic.) y Polimodal,permanente,4006,151384
+2020,0,2,14,Direccion General de Escuelas,3,Dcción. Educ.Básica(3er.cic.) y Polimodal,temporario,352,3147
+2020,0,2,14,Direccion General de Escuelas,7,Dcción. de Educación Privada,permanente,7,0
+2020,0,2,14,Direccion General de Escuelas,8,Dcción. de Jóvenes y Adultos,permanente,2010,51522
+2020,0,2,14,Direccion General de Escuelas,8,Dcción. de Jóvenes y Adultos,temporario,178,1653
+2020,0,2,14,Direccion General de Escuelas,9,Dcción. de Educación Especial,permanente,1899,5191
+2020,0,2,14,Direccion General de Escuelas,9,Dcción. de Educación Especial,temporario,205,239
+2020,0,2,14,Direccion General de Escuelas,10,Dcción. de Educación Superior,permanente,646,63280
+2020,0,2,14,Direccion General de Escuelas,10,Dcción. de Educación Superior,temporario,74,2328
+2020,0,2,14,Direccion General de Escuelas,11,Dirección de Educación Técnica y Trabajo,permanente,3845,84703
+2020,0,2,14,Direccion General de Escuelas,11,Dirección de Educación Técnica y Trabajo,temporario,225,1799
+2020,0,2,16,Ministerio de Seguridad,1,INSPECCION GENERAL DE SEGURIDAD,permanente,15,0
+2020,0,5,6,Ministerio de Hacienda y Finanzas,2,Caja de Seguro Mutual,permanente,17,0
+2020,0,5,6,Ministerio de Hacienda y Finanzas,3,Instituto Pcial. de Juegos y Casinos,permanente,541,0
+2020,0,5,6,Ministerio de Hacienda y Finanzas,3,Instituto Pcial. de Juegos y Casinos,temporario,12,0
+2020,0,5,6,Ministerio de Hacienda y Finanzas,4,Administración Tributaria Mendoza,permanente,511,0
+2020,0,5,6,Ministerio de Hacienda y Finanzas,4,Administración Tributaria Mendoza,temporario,1,0
+2020,0,5,7,"Ministerio de Economia, Infraest.y Energia",1,Instituto Provincial de la Vivienda,permanente,422,0
+2020,0,5,7,"Ministerio de Economia, Infraest.y Energia",2,Ente Mendoza Turismo,permanente,90,0
+2020,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,Dcción. Gral. Obra Social de Emp. Pcos.,permanente,1738,0
+2020,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,Dcción. Gral. Obra Social de Emp. Pcos.,temporario,66,0
+2020,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",2,Hospital El Carmen,permanente,817,0
+2020,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",2,Hospital El Carmen,temporario,38,0
+2020,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",3,Sanatorio Fleming -O.S.E.P.-,permanente,265,0
+2020,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",3,Sanatorio Fleming -O.S.E.P.-,temporario,18,0
+2021,0,1,1,Poder Legislativo,1,Cámara de Senadores,permanente,326,0
+2021,0,1,1,Poder Legislativo,1,Cámara de Senadores,temporario,125,0
+2021,0,1,1,Poder Legislativo,2,Cámara de Diputados,permanente,474,0
+2021,0,1,1,Poder Legislativo,2,Cámara de Diputados,temporario,138,0
+2021,0,1,1,Poder Legislativo,3,Legislatura,permanente,101,0
+2021,0,1,1,Poder Legislativo,3,Legislatura,temporario,7,0
+2021,0,1,1,Poder Legislativo,4,Oficina de Investigaciones Administrativas y Etica Publica,permanente,1,0
+2021,0,1,2,Poder Judicial,1,Suprema Corte,permanente,3344,0
+2021,0,1,2,Poder Judicial,1,Suprema Corte,temporario,1,0
+2021,0,1,2,Poder Judicial,2,Ministerio Público,permanente,1553,0
+2021,0,1,2,Poder Judicial,3,Jury de enjuiciamiento,permanente,3,0
+2021,0,1,2,Poder Judicial,4,Junta Electoral,permanente,11,0
+2021,0,1,2,Poder Judicial,5,Consejo de la Magistratura,permanente,8,0
+2021,0,1,2,Poder Judicial,6,Ministerio Publico de la Defensa,permanente,289,0
+2021,0,1,3,Tribunal de Cuentas,1,Tribunal de Cuentas,permanente,288,0
+2021,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",1,"Ministerio de Gobierno,Trabajo y Justicia",permanente,181,0
+2021,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",2,Dcción.del Reg. Estado Civil y Capac. Pers,permanente,413,0
+2021,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",2,Dcción.del Reg. Estado Civil y Capac. Pers,temporario,2,0
+2021,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",9,Subsecretaría de Trabajo y Empleo,permanente,175,0
+2021,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",12,Dcción. de Personas Jurídicas,permanente,49,0
+2021,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",12,Dcción. de Personas Jurídicas,temporario,1,0
+2021,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",19,Dirección de Defensa al Consumidor,permanente,37,0
+2021,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",23,Dirección de Informática y Comunicaciones,permanente,29,0
+2021,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",23,Dirección de Informática y Comunicaciones,temporario,1,0
+2021,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",24,Asesoría de Gobierno,permanente,22,0
+2021,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",25,Escribanía General de Gobierno,permanente,9,0
+2021,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",26,Casa de Mendoza,permanente,7,0
+2021,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",27,Oficina Técnica Previsional,permanente,21,0
+2021,0,1,6,Ministerio de Hacienda y Finanzas,1,Ministerio de Hacienda y Finanzas,permanente,96,0
+2021,0,1,6,Ministerio de Hacienda y Finanzas,2,Direccion Gral. de Presupuesto,permanente,18,0
+2021,0,1,6,Ministerio de Hacienda y Finanzas,2,Direccion Gral. de Presupuesto,temporario,1,0
+2021,0,1,6,Ministerio de Hacienda y Finanzas,3,Contaduría Gral. de la Provincia,permanente,124,0
+2021,0,1,6,Ministerio de Hacienda y Finanzas,5,Tesorería Gral. de la Provincia,permanente,19,0
+2021,0,1,6,Ministerio de Hacienda y Finanzas,6,Dcción. Gral. de Contratac. Públ. y Gestión de Bienes,permanente,28,0
+2021,0,1,6,Ministerio de Hacienda y Finanzas,10,Dcción. Admin.de Activos ex Bcos.Oficiales,permanente,19,0
+2021,0,1,6,Ministerio de Hacienda y Finanzas,11,Dirección de Asuntos Legales,permanente,5,0
+2021,0,1,6,Ministerio de Hacienda y Finanzas,16,Dirección General de la Deuda Pública,permanente,6,0
+2021,0,1,6,Ministerio de Hacienda y Finanzas,19,Direccion de Seguimiento y Evaluacion del Gasto,permanente,1,0
+2021,0,1,6,Ministerio de Hacienda y Finanzas,20,Direccion Gral.de Inversion Publica y PPP,permanente,1,0
+2021,0,1,7,Ministerio de Economia y Energia,1,Ministerio de Economía y Energía,permanente,168,0
+2021,0,1,7,Ministerio de Economia y Energia,2,Dcción. de Estad. e Investigac. Económicas,permanente,44,0
+2021,0,1,7,Ministerio de Economia y Energia,3,Dirección de Fiscalización y Control,permanente,48,0
+2021,0,1,7,Ministerio de Economia y Energia,6,Dcción.de Agricultura y Contingencias Clim,permanente,48,0
+2021,0,1,7,Ministerio de Economia y Energia,7,Dcción. Pcial.de Ganadería,permanente,93,0
+2021,0,1,7,Ministerio de Economia y Energia,9,Dcción.de Desarrollo Tecnológico y Empleo,permanente,1,0
+2021,0,1,7,Ministerio de Economia y Energia,15,Dcción.de Asociativismo y Cooperativas,permanente,16,0
+2021,0,1,7,Ministerio de Economia y Energia,20,Subsecretaría de Energía y Minería,permanente,12,0
+2021,0,1,7,Ministerio de Economia y Energia,21,Dirección de Hidrocarburos,permanente,9,0
+2021,0,1,7,Ministerio de Economia y Energia,22,Dirección de Minería,permanente,20,0
+2021,0,1,7,Ministerio de Economia y Energia,23,Dirección de Energía Renovable,permanente,3,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,"Ministerio de Salud, Desarr.Soc.y Deportes",permanente,299,83
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,"Ministerio de Salud, Desarr.Soc.y Deportes",temporario,503,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",7,Hospital José Nestor Lencinas,permanente,153,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",13,Hospital A. Metraux,permanente,60,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",14,Hospital H. Gailhac,permanente,140,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",18,Hospital Arturo Illia,permanente,76,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",20,Hospital D. Sícoli,permanente,115,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",21,Hospital Fernando Arenas Raffo,permanente,60,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",25,Hospital Ministro Dr. Ramón Carrillo,permanente,244,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",26,Hospital Luis Chrabalowski,permanente,64,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",28,Hospital Eva Perón,permanente,50,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",29,Servicio de Emergencia Coordinado,permanente,149,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",41,Area Departamental de Salud Capital,permanente,61,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",42,Area Departamental de Salud Gral. Alvear,permanente,108,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",43,Area Departamental de Salud Godoy Cruz,permanente,244,36
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",44,Area Departamental de Salud Guaymallén,permanente,276,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",45,Area Departamental de Salud Junín,permanente,107,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",46,Area Departamental de Salud La Paz,permanente,29,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",47,Area Departamental de Salud Las Heras,permanente,202,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",48,Area Departamental de Salud Lavalle,permanente,148,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",49,Area Departamental de Salud Luján,permanente,178,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",50,Area Departamental de Salud Maipú,permanente,146,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",51,Area Departamental de Salud Malargue,permanente,73,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",52,Area Departamental de Salud Rivadavia,permanente,120,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",53,Area Departamental de Salud San Carlos,permanente,98,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",54,Area Departamental de Salud San Martín,permanente,154,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",55,Area Departamental de Salud San Rafael,permanente,199,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",56,Area Departamental de Salud Santa Rosa,permanente,65,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",57,Area Departamental de Salud Tunuyán,permanente,104,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",58,Area Departamental de Salud Tupungato,permanente,62,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",75,Subsecretaría de Salud,permanente,694,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",80,Subsecretaría de Desarrollo Social,permanente,130,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",80,Subsecretaría de Desarrollo Social,temporario,1,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",81,Dir.Gral.de Administración de Desarrollo Social,permanente,1,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",82,Dirección de Derechos Humanos,permanente,5,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",83,Fondo de Inversión y Desarrollo,permanente,31,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",85,Direcc.de Economía Social y Asociatividad,permanente,58,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",86,Dirección de Contingencia,permanente,51,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",87,Dirección de Atención Adultos Mayores,permanente,208,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",88,Dirección de Atención a las Pers.c/Discap.,permanente,138,29
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",89,Dirección de Género y Diversidad,permanente,23,0
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",90,Subsecretaría de Deportes,permanente,143,88
+2021,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",91,Dirección Gral. de Administración de Deportes,permanente,1,0
+2021,0,1,9,Ministerio de Planificacion e Infraestructura Publica,1,Ministerio de Planificacion e Infraestructura Publica,permanente,1,0
+2021,0,1,9,Ministerio de Planificacion e Infraestructura Publica,2,Subsecretaria de Planificacion y Seguimiento,permanente,77,0
+2021,0,1,9,Ministerio de Planificacion e Infraestructura Publica,4,Subsecretaría de Obras Públicas,permanente,18,0
+2021,0,1,9,Ministerio de Planificacion e Infraestructura Publica,8,Dirección de Hidráulica,permanente,53,0
+2021,0,1,9,Ministerio de Planificacion e Infraestructura Publica,23,Subsecretaria de Infraestructura Educativa,permanente,154,0
+2021,0,1,9,Ministerio de Planificacion e Infraestructura Publica,23,Subsecretaria de Infraestructura Educativa,temporario,1,0
+2021,0,1,15,Fiscalia de Estado,1,Fiscalía de Estado,permanente,118,0
+2021,0,1,15,Fiscalia de Estado,1,Fiscalía de Estado,temporario,1,0
+2021,0,1,16,Ministerio de Seguridad,1,Ministerio de Seguridad,permanente,206,0
+2021,0,1,16,Ministerio de Seguridad,2,Dcción. de Investigaciones,permanente,463,0
+2021,0,1,16,Ministerio de Seguridad,5,Dcción. de Defensa Civil,permanente,89,0
+2021,0,1,16,Ministerio de Seguridad,6,Dcción. General de Policia,permanente,8305,0
+2021,0,1,16,Ministerio de Seguridad,6,Dcción. General de Policia,temporario,1,0
+2021,0,1,16,Ministerio de Seguridad,7,Dcción. de Participación Comunitaria,permanente,1,0
+2021,0,1,16,Ministerio de Seguridad,9,Dirección Gral de Administración,permanente,404,0
+2021,0,1,16,Ministerio de Seguridad,10,Dcción. de Seguridad Vial,permanente,113,0
+2021,0,1,16,Ministerio de Seguridad,13,Dirección Gral. del Servicio Penitenciario,permanente,2757,0
+2021,0,1,22,Ministerio de Cultura y Turismo,1,Secretaría de Cultura,permanente,238,0
+2021,0,1,22,Ministerio de Cultura y Turismo,1,Secretaría de Cultura,temporario,0,48
+2021,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,1,Secretaría de Ambiente y Ordenamiento Territorial,permanente,70,0
+2021,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,3,Dirección de Protección Ambiental,permanente,42,0
+2021,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,4,Dirección de Recursos Naturales Renovables,permanente,217,0
+2021,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,4,Dirección de Recursos Naturales Renovables,temporario,1,0
+2021,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,6,Ecoparque Mendoza,permanente,66,0
+2021,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,7,Parques y Paseos Publicos,permanente,112,0
+2021,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,7,Parques y Paseos Publicos,temporario,7,0
+2021,0,1,26,Secretaria de Servicios Publicos,1,Secretaría de Servicios Públicos,permanente,8,0
+2021,0,1,26,Secretaria de Servicios Publicos,2,Dirección de Transporte,permanente,30,0
+2021,0,1,26,Secretaria de Servicios Publicos,3,Dirección de Asuntos Legales Fiscalización,permanente,28,0
+2021,0,1,26,Secretaria de Servicios Publicos,4,Dirección de Planificación y Proyectos Esp,permanente,31,0
+2021,0,1,26,Secretaria de Servicios Publicos,5,Coordinación de Gabinete,permanente,10,0
+2021,0,1,26,Secretaria de Servicios Publicos,14,Dirección de Servicios Eléctricos,permanente,7,0
+2021,0,2,7,Ministerio de Economia y Energia,1,Instituto de Sanid.y Calid.Agropec.Mendoza,permanente,215,0
+2021,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,Hospital Central,permanente,1234,0
+2021,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",2,Hospital Materno Infantil Humberto Notti,permanente,1357,68
+2021,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",2,Hospital Materno Infantil Humberto Notti,temporario,2,0
+2021,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",3,Hospital Teodoro Schestakow,permanente,572,0
+2021,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",4,Hospital Luis Lagomaggiore,permanente,1273,0
+2021,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",8,Hospital Carlos Pereyra,permanente,190,20
+2021,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",9,Hospital El Sauce,permanente,164,0
+2021,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",10,Hospital Diego Paroissien,permanente,496,0
+2021,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",11,Hospital A. Perrupato,permanente,631,0
+2021,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",12,Hospital Gral. Alvear,permanente,369,0
+2021,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",15,Hospital Victorino Tagarelli,permanente,126,0
+2021,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",16,Hospital Antonio J. Scaravelli,permanente,448,0
+2021,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",17,Hospital Saporitti,permanente,260,0
+2021,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",17,Hospital Saporitti,temporario,1,0
+2021,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",19,Hospital Malargue,permanente,148,0
+2021,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",24,Hospital Gral. Las Heras,permanente,161,0
+2021,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",25,"Dir.Gral.de Proteccion de Derechos de Niñas, Niños y Adolescentes",permanente,980,0
+2021,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",25,"Dir.Gral.de Proteccion de Derechos de Niñas, Niños y Adolescentes",temporario,3,0
+2021,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",26,Direcc de Responsabilidad Penal y Juvenil,permanente,344,0
+2021,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",26,Direcc de Responsabilidad Penal y Juvenil,temporario,10,0
+2021,0,2,9,Ministerio de Planificacion e Infraestructura Publica,2,Direccion Provincial de Vialidad,permanente,879,0
+2021,0,2,9,Ministerio de Planificacion e Infraestructura Publica,2,Direccion Provincial de Vialidad,temporario,10,0
+2021,0,2,14,Direccion General de Escuelas,1,Dcción. Gral. de Escuelas,permanente,711,136
+2021,0,2,14,Direccion General de Escuelas,1,Dcción. Gral. de Escuelas,temporario,46,512
+2021,0,2,14,Direccion General de Escuelas,2,Dcción. de Educ.Inicial y Básica(1er.y 2do,permanente,22850,45331
+2021,0,2,14,Direccion General de Escuelas,2,Dcción. de Educ.Inicial y Básica(1er.y 2do,temporario,1451,4473
+2021,0,2,14,Direccion General de Escuelas,3,Dcción. Educ.Básica(3er.cic.) y Polimodal,permanente,4006,151384
+2021,0,2,14,Direccion General de Escuelas,3,Dcción. Educ.Básica(3er.cic.) y Polimodal,temporario,352,3147
+2021,0,2,14,Direccion General de Escuelas,7,Dcción. de Educación Privada,permanente,7,0
+2021,0,2,14,Direccion General de Escuelas,8,Dcción. de Jóvenes y Adultos,permanente,2010,51522
+2021,0,2,14,Direccion General de Escuelas,8,Dcción. de Jóvenes y Adultos,temporario,178,1653
+2021,0,2,14,Direccion General de Escuelas,9,Dcción. de Educación Especial,permanente,1899,5191
+2021,0,2,14,Direccion General de Escuelas,9,Dcción. de Educación Especial,temporario,205,239
+2021,0,2,14,Direccion General de Escuelas,10,Dcción. de Educación Superior,permanente,646,63280
+2021,0,2,14,Direccion General de Escuelas,10,Dcción. de Educación Superior,temporario,74,2328
+2021,0,2,14,Direccion General de Escuelas,11,Dirección de Educación Técnica y Trabajo,permanente,3845,84703
+2021,0,2,14,Direccion General de Escuelas,11,Dirección de Educación Técnica y Trabajo,temporario,225,1799
+2021,0,2,16,Ministerio de Seguridad,1,INSPECCION GENERAL DE SEGURIDAD,permanente,14,0
+2021,0,5,6,Ministerio de Hacienda y Finanzas,2,Caja de Seguro Mutual,permanente,16,0
+2021,0,5,6,Ministerio de Hacienda y Finanzas,3,Instituto Pcial. de Juegos y Casinos,permanente,534,0
+2021,0,5,6,Ministerio de Hacienda y Finanzas,3,Instituto Pcial. de Juegos y Casinos,temporario,11,0
+2021,0,5,6,Ministerio de Hacienda y Finanzas,4,Administración Tributaria Mendoza,permanente,481,0
+2021,0,5,6,Ministerio de Hacienda y Finanzas,4,Administración Tributaria Mendoza,temporario,1,0
+2021,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,Dcción. Gral. Obra Social de Emp. Pcos.,permanente,1716,0
+2021,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,Dcción. Gral. Obra Social de Emp. Pcos.,temporario,69,0
+2021,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",2,Hospital El Carmen,permanente,802,0
+2021,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",2,Hospital El Carmen,temporario,43,0
+2021,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",3,Sanatorio Fleming -O.S.E.P.-,permanente,258,0
+2021,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",3,Sanatorio Fleming -O.S.E.P.-,temporario,18,0
+2021,0,5,9,Ministerio de Planificacion e Infraestructura Publica,3,Instituto Provincial de la Vivienda,permanente,421,0
+2021,0,5,22,Ministerio de Cultura y Turismo,1,Ente Mendoza Turismo,permanente,88,0
+2022,0,1,1,Poder Legislativo,1,Cámara de Senadores,permanente,326,0
+2022,0,1,1,Poder Legislativo,1,Cámara de Senadores,temporario,125,0
+2022,0,1,1,Poder Legislativo,2,Cámara de Diputados,permanente,474,0
+2022,0,1,1,Poder Legislativo,2,Cámara de Diputados,temporario,138,0
+2022,0,1,1,Poder Legislativo,3,Legislatura,permanente,103,0
+2022,0,1,1,Poder Legislativo,3,Legislatura,temporario,7,0
+2022,0,1,1,Poder Legislativo,4,Oficina de Investigaciones Administrativas y Etica Publica,permanente,1,0
+2022,0,1,2,Poder Judicial,1,Suprema Corte,permanente,3263,0
+2022,0,1,2,Poder Judicial,1,Suprema Corte,temporario,2,0
+2022,0,1,2,Poder Judicial,2,Ministerio Público,permanente,1564,0
+2022,0,1,2,Poder Judicial,3,Jury de enjuiciamiento,permanente,2,0
+2022,0,1,2,Poder Judicial,4,Junta Electoral,permanente,11,0
+2022,0,1,2,Poder Judicial,5,Consejo de la Magistratura,permanente,7,0
+2022,0,1,2,Poder Judicial,6,Ministerio Publico de la Defensa,permanente,286,0
+2022,0,1,3,Tribunal de Cuentas,1,Tribunal de Cuentas,permanente,281,0
+2022,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",1,"Ministerio de Gobierno,Trabajo y Justicia",permanente,172,0
+2022,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",2,Dcción.del Reg. Estado Civil y Capac. Pers,permanente,404,0
+2022,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",2,Dcción.del Reg. Estado Civil y Capac. Pers,temporario,2,0
+2022,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",9,Subsecretaría de Trabajo y Empleo,permanente,173,0
+2022,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",12,Dcción. de Personas Jurídicas,permanente,50,0
+2022,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",12,Dcción. de Personas Jurídicas,temporario,1,0
+2022,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",19,Dirección de Defensa al Consumidor,permanente,49,0
+2022,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",23,Dirección de Informática y Comunicaciones,permanente,25,0
+2022,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",23,Dirección de Informática y Comunicaciones,temporario,1,0
+2022,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",24,Asesoría de Gobierno,permanente,21,0
+2022,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",25,Escribanía General de Gobierno,permanente,9,0
+2022,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",26,Casa de Mendoza,permanente,6,0
+2022,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",27,Oficina Técnica Previsional,permanente,19,0
+2022,0,1,6,Ministerio de Hacienda y Finanzas,1,Ministerio de Hacienda y Finanzas,permanente,94,0
+2022,0,1,6,Ministerio de Hacienda y Finanzas,2,Direccion Gral. de Presupuesto,permanente,15,0
+2022,0,1,6,Ministerio de Hacienda y Finanzas,2,Direccion Gral. de Presupuesto,temporario,1,0
+2022,0,1,6,Ministerio de Hacienda y Finanzas,3,Contaduría Gral. de la Provincia,permanente,122,0
+2022,0,1,6,Ministerio de Hacienda y Finanzas,5,Tesorería Gral. de la Provincia,permanente,19,0
+2022,0,1,6,Ministerio de Hacienda y Finanzas,6,Dcción. Gral. de Contratac. Públ. y Gestión de Bienes,permanente,28,0
+2022,0,1,6,Ministerio de Hacienda y Finanzas,10,Dcción. Admin.de Activos ex Bcos.Oficiales,permanente,17,0
+2022,0,1,6,Ministerio de Hacienda y Finanzas,11,Dirección de Asuntos Legales,permanente,5,0
+2022,0,1,6,Ministerio de Hacienda y Finanzas,16,Dirección General de la Deuda Pública,permanente,5,0
+2022,0,1,6,Ministerio de Hacienda y Finanzas,19,Direccion de Seguimiento y Evaluacion del Gasto,permanente,1,0
+2022,0,1,6,Ministerio de Hacienda y Finanzas,20,Direccion Gral.de Inversion Publica y PPP,permanente,1,0
+2022,0,1,7,Ministerio de Economia y Energia,1,Ministerio de Economía y Energía,permanente,87,0
+2022,0,1,7,Ministerio de Economia y Energia,2,Dcción. de Estad. e Investigac. Económicas,permanente,42,0
+2022,0,1,7,Ministerio de Economia y Energia,3,Dirección de Fiscalización y Control,permanente,49,0
+2022,0,1,7,Ministerio de Economia y Energia,6,Dcción.de Agricultura y Contingencias Clim,permanente,45,0
+2022,0,1,7,Ministerio de Economia y Energia,7,Dcción. Pcial.de Ganadería,permanente,91,0
+2022,0,1,7,Ministerio de Economia y Energia,9,Dcción.de Desarrollo Tecnológico y Empleo,permanente,1,0
+2022,0,1,7,Ministerio de Economia y Energia,15,Dcción.de Asociativismo y Cooperativas,permanente,14,0
+2022,0,1,7,Ministerio de Economia y Energia,20,Subsecretaría de Energía y Minería,permanente,9,0
+2022,0,1,7,Ministerio de Economia y Energia,21,Dirección de Hidrocarburos,permanente,11,0
+2022,0,1,7,Ministerio de Economia y Energia,22,Dirección de Minería,permanente,17,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,"Ministerio de Salud, Desarr.Soc.y Deportes",permanente,312,55
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,"Ministerio de Salud, Desarr.Soc.y Deportes",temporario,541,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",7,Hospital José Nestor Lencinas,permanente,162,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",13,Hospital A. Metraux,permanente,62,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",14,Hospital H. Gailhac,permanente,135,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",18,Hospital Arturo Illia,permanente,78,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",20,Hospital D. Sícoli,permanente,111,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",21,Hospital Fernando Arenas Raffo,permanente,64,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",25,Hospital Ministro Dr. Ramón Carrillo,permanente,278,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",26,Hospital Luis Chrabalowski,permanente,68,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",28,Hospital Eva Perón,permanente,51,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",29,Servicio de Emergencia Coordinado,permanente,155,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",41,Area Departamental de Salud Capital,permanente,62,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",42,Area Departamental de Salud Gral. Alvear,permanente,113,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",43,Area Departamental de Salud Godoy Cruz,permanente,241,36
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",44,Area Departamental de Salud Guaymallén,permanente,266,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",45,Area Departamental de Salud Junín,permanente,113,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",46,Area Departamental de Salud La Paz,permanente,35,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",47,Area Departamental de Salud Las Heras,permanente,202,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",48,Area Departamental de Salud Lavalle,permanente,150,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",49,Area Departamental de Salud Luján,permanente,180,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",50,Area Departamental de Salud Maipú,permanente,150,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",51,Area Departamental de Salud Malargue,permanente,79,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",52,Area Departamental de Salud Rivadavia,permanente,117,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",53,Area Departamental de Salud San Carlos,permanente,100,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",54,Area Departamental de Salud San Martín,permanente,157,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",55,Area Departamental de Salud San Rafael,permanente,209,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",56,Area Departamental de Salud Santa Rosa,permanente,64,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",57,Area Departamental de Salud Tunuyán,permanente,112,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",58,Area Departamental de Salud Tupungato,permanente,66,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",75,Subsecretaría de Salud,permanente,684,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",80,Subsecretaría de Desarrollo Social,permanente,127,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",80,Subsecretaría de Desarrollo Social,temporario,1,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",81,Dir.Gral.de Administración de Desarrollo Social,permanente,1,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",82,Dirección de Derechos Humanos,permanente,5,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",83,Fondo de Inversión y Desarrollo,permanente,29,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",85,Direcc.de Economía Social y Asociatividad,permanente,58,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",86,Dirección de Contingencia,permanente,49,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",87,Dirección de Atención Adultos Mayores,permanente,201,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",88,Dirección de Atención a las Pers.c/Discap.,permanente,137,29
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",89,Dirección de Género y Diversidad,permanente,24,0
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",90,Subsecretaría de Deportes,permanente,138,88
+2022,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",91,Dirección Gral. de Administración de Deportes,permanente,1,0
+2022,0,1,9,Ministerio de Planificacion e Infraestructura Publica,1,Ministerio de Planificacion e Infraestructura Publica,permanente,78,0
+2022,0,1,9,Ministerio de Planificacion e Infraestructura Publica,2,Subsecretaria de Planificacion y Seguimiento,permanente,33,0
+2022,0,1,9,Ministerio de Planificacion e Infraestructura Publica,4,Subsecretaría de Obras Públicas,permanente,63,0
+2022,0,1,9,Ministerio de Planificacion e Infraestructura Publica,8,Dirección de Hidráulica,permanente,53,0
+2022,0,1,9,Ministerio de Planificacion e Infraestructura Publica,23,Subsecretaria de Infraestructura Educativa,permanente,148,0
+2022,0,1,9,Ministerio de Planificacion e Infraestructura Publica,23,Subsecretaria de Infraestructura Educativa,temporario,1,0
+2022,0,1,15,Fiscalia de Estado,1,Fiscalía de Estado,permanente,119,0
+2022,0,1,15,Fiscalia de Estado,1,Fiscalía de Estado,temporario,1,0
+2022,0,1,16,Ministerio de Seguridad,1,Ministerio de Seguridad,permanente,192,0
+2022,0,1,16,Ministerio de Seguridad,2,Dcción. de Investigaciones,permanente,432,0
+2022,0,1,16,Ministerio de Seguridad,5,Dcción. de Defensa Civil,permanente,83,0
+2022,0,1,16,Ministerio de Seguridad,6,Dcción. General de Policia,permanente,8371,0
+2022,0,1,16,Ministerio de Seguridad,6,Dcción. General de Policia,temporario,1,0
+2022,0,1,16,Ministerio de Seguridad,7,Dcción. de Participación Comunitaria,permanente,1,0
+2022,0,1,16,Ministerio de Seguridad,9,Dirección Gral de Administración,permanente,389,0
+2022,0,1,16,Ministerio de Seguridad,9,Dirección Gral de Administración,temporario,1,0
+2022,0,1,16,Ministerio de Seguridad,10,Dcción. de Seguridad Vial,permanente,103,0
+2022,0,1,16,Ministerio de Seguridad,13,Dirección Gral. del Servicio Penitenciario,permanente,2788,0
+2022,0,1,22,Ministerio de Cultura y Turismo,1,Secretaría de Cultura,permanente,232,0
+2022,0,1,22,Ministerio de Cultura y Turismo,1,Secretaría de Cultura,temporario,1,48
+2022,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,1,Secretaría de Ambiente y Ordenamiento Territorial,permanente,68,0
+2022,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,3,Dirección de Protección Ambiental,permanente,41,0
+2022,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,4,Dirección de Recursos Naturales Renovables,permanente,229,0
+2022,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,4,Dirección de Recursos Naturales Renovables,temporario,1,0
+2022,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,6,Ecoparque Mendoza,permanente,64,0
+2022,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,7,Parques y Paseos Publicos,permanente,107,0
+2022,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,7,Parques y Paseos Publicos,temporario,6,0
+2022,0,1,26,Secretaria de Servicios Publicos,1,Secretaría de Servicios Públicos,permanente,8,0
+2022,0,1,26,Secretaria de Servicios Publicos,2,Dirección de Transporte,permanente,30,0
+2022,0,1,26,Secretaria de Servicios Publicos,3,Dirección de Asuntos Legales Fiscalización,permanente,27,0
+2022,0,1,26,Secretaria de Servicios Publicos,4,Dirección de Planificación y Proyectos Esp,permanente,30,0
+2022,0,1,26,Secretaria de Servicios Publicos,5,Coordinación de Gabinete,permanente,10,0
+2022,0,1,26,Secretaria de Servicios Publicos,14,Dirección de Servicios Eléctricos,permanente,6,0
+2022,0,2,7,Ministerio de Economia y Energia,1,Instituto de Sanid.y Calid.Agropec.Mendoza,permanente,213,0
+2022,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,Hospital Central,permanente,1277,0
+2022,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",2,Hospital Materno Infantil Humberto Notti,permanente,1405,68
+2022,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",2,Hospital Materno Infantil Humberto Notti,temporario,2,0
+2022,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",3,Hospital Teodoro Schestakow,permanente,589,0
+2022,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",4,Hospital Luis Lagomaggiore,permanente,1317,0
+2022,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",8,Hospital Carlos Pereyra,permanente,204,20
+2022,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",9,Hospital El Sauce,permanente,162,0
+2022,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",10,Hospital Diego Paroissien,permanente,522,0
+2022,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",11,Hospital A. Perrupato,permanente,644,0
+2022,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",12,Hospital Gral. Alvear,permanente,379,0
+2022,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",15,Hospital Victorino Tagarelli,permanente,148,0
+2022,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",16,Hospital Antonio J. Scaravelli,permanente,462,0
+2022,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",17,Hospital Saporitti,permanente,267,0
+2022,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",17,Hospital Saporitti,temporario,1,0
+2022,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",19,Hospital Malargue,permanente,172,0
+2022,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",24,Hospital Gral. Las Heras,permanente,155,0
+2022,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",25,"Dir.Gral.de Proteccion de Derechos de Niñas, Niños y Adolescentes",permanente,949,0
+2022,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",25,"Dir.Gral.de Proteccion de Derechos de Niñas, Niños y Adolescentes",temporario,3,0
+2022,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",26,Direcc de Responsabilidad Penal y Juvenil,permanente,343,0
+2022,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",26,Direcc de Responsabilidad Penal y Juvenil,temporario,10,0
+2022,0,2,9,Ministerio de Planificacion e Infraestructura Publica,2,Direccion Provincial de Vialidad,permanente,828,0
+2022,0,2,9,Ministerio de Planificacion e Infraestructura Publica,2,Direccion Provincial de Vialidad,temporario,10,0
+2022,0,2,14,Direccion General de Escuelas,1,Dcción. Gral. de Escuelas,permanente,691,136
+2022,0,2,14,Direccion General de Escuelas,1,Dcción. Gral. de Escuelas,temporario,83,460
+2022,0,2,14,Direccion General de Escuelas,2,Dcción. de Educ.Inicial y Básica(1er.y 2do,permanente,23864,25548
+2022,0,2,14,Direccion General de Escuelas,2,Dcción. de Educ.Inicial y Básica(1er.y 2do,temporario,989,947
+2022,0,2,14,Direccion General de Escuelas,3,Dcción. Educ.Básica(3er.cic.) y Polimodal,permanente,4299,150710
+2022,0,2,14,Direccion General de Escuelas,3,Dcción. Educ.Básica(3er.cic.) y Polimodal,temporario,176,1180
+2022,0,2,14,Direccion General de Escuelas,7,Dcción. de Educación Privada,permanente,7,0
+2022,0,2,14,Direccion General de Escuelas,8,Dcción. de Jóvenes y Adultos,permanente,2137,50084
+2022,0,2,14,Direccion General de Escuelas,8,Dcción. de Jóvenes y Adultos,temporario,119,722
+2022,0,2,14,Direccion General de Escuelas,9,Dcción. de Educación Especial,permanente,2069,4670
+2022,0,2,14,Direccion General de Escuelas,9,Dcción. de Educación Especial,temporario,84,75
+2022,0,2,14,Direccion General de Escuelas,10,Dcción. de Educación Superior,permanente,681,65030
+2022,0,2,14,Direccion General de Escuelas,10,Dcción. de Educación Superior,temporario,55,2405
+2022,0,2,14,Direccion General de Escuelas,11,Dirección de Educación Técnica y Trabajo,permanente,3934,85231
+2022,0,2,14,Direccion General de Escuelas,11,Dirección de Educación Técnica y Trabajo,temporario,129,618
+2022,0,2,16,Ministerio de Seguridad,1,INSPECCION GENERAL DE SEGURIDAD,permanente,14,0
+2022,0,5,6,Ministerio de Hacienda y Finanzas,2,Caja de Seguro Mutual,permanente,17,0
+2022,0,5,6,Ministerio de Hacienda y Finanzas,3,Instituto Pcial. de Juegos y Casinos,permanente,516,0
+2022,0,5,6,Ministerio de Hacienda y Finanzas,3,Instituto Pcial. de Juegos y Casinos,temporario,10,0
+2022,0,5,6,Ministerio de Hacienda y Finanzas,4,Administración Tributaria Mendoza,permanente,436,0
+2022,0,5,6,Ministerio de Hacienda y Finanzas,4,Administración Tributaria Mendoza,temporario,1,0
+2022,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,Dcción. Gral. Obra Social de Emp. Pcos.,permanente,2002,0
+2022,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,Dcción. Gral. Obra Social de Emp. Pcos.,temporario,14,0
+2022,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",2,Hospital El Carmen,permanente,938,0
+2022,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",2,Hospital El Carmen,temporario,1,0
+2022,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",3,Sanatorio Fleming -O.S.E.P.-,permanente,301,0
+2022,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",3,Sanatorio Fleming -O.S.E.P.-,temporario,2,0
+2022,0,5,9,Ministerio de Planificacion e Infraestructura Publica,3,Instituto Provincial de la Vivienda,permanente,403,0
+2022,0,5,22,Ministerio de Cultura y Turismo,1,Ente Mendoza Turismo,permanente,81,0
+2023,0,1,1,Poder Legislativo,1,Cámara de Senadores,permanente,326,0
+2023,0,1,1,Poder Legislativo,1,Cámara de Senadores,temporario,125,0
+2023,0,1,1,Poder Legislativo,2,Cámara de Diputados,permanente,474,0
+2023,0,1,1,Poder Legislativo,2,Cámara de Diputados,temporario,138,0
+2023,0,1,1,Poder Legislativo,3,Legislatura,permanente,103,0
+2023,0,1,1,Poder Legislativo,3,Legislatura,temporario,7,0
+2023,0,1,1,Poder Legislativo,4,Oficina de Investigaciones Administrativas y Etica Publica,permanente,1,0
+2023,0,1,2,Poder Judicial,1,Suprema Corte,permanente,3212,0
+2023,0,1,2,Poder Judicial,1,Suprema Corte,temporario,2,0
+2023,0,1,2,Poder Judicial,2,Ministerio Público,permanente,1554,0
+2023,0,1,2,Poder Judicial,3,Jury de enjuiciamiento,permanente,1,0
+2023,0,1,2,Poder Judicial,4,Junta Electoral,permanente,11,0
+2023,0,1,2,Poder Judicial,5,Consejo de la Magistratura,permanente,7,0
+2023,0,1,2,Poder Judicial,6,Ministerio Publico de la Defensa,permanente,285,0
+2023,0,1,3,Tribunal de Cuentas,1,Tribunal de Cuentas,permanente,273,0
+2023,0,1,3,Tribunal de Cuentas,1,Tribunal de Cuentas,temporario,1,0
+2023,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",1,"Ministerio de Gobierno,Trabajo y Justicia",permanente,163,0
+2023,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",2,Dcción.del Reg. Estado Civil y Capac. Pers,permanente,373,0
+2023,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",2,Dcción.del Reg. Estado Civil y Capac. Pers,temporario,2,0
+2023,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",9,Subsecretaría de Trabajo y Empleo,permanente,164,0
+2023,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",12,Dcción. de Personas Jurídicas,permanente,49,0
+2023,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",12,Dcción. de Personas Jurídicas,temporario,1,0
+2023,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",19,Dirección de Defensa al Consumidor,permanente,46,0
+2023,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",23,Dirección de Informática y Comunicaciones,permanente,21,0
+2023,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",23,Dirección de Informática y Comunicaciones,temporario,1,0
+2023,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",24,Asesoría de Gobierno,permanente,21,0
+2023,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",25,Escribanía General de Gobierno,permanente,9,0
+2023,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",26,Casa de Mendoza,permanente,6,0
+2023,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",27,Oficina Técnica Previsional,permanente,20,0
+2023,0,1,6,Ministerio de Hacienda y Finanzas,1,Ministerio de Hacienda y Finanzas,permanente,89,0
+2023,0,1,6,Ministerio de Hacienda y Finanzas,2,Direccion Gral. de Presupuesto,permanente,17,0
+2023,0,1,6,Ministerio de Hacienda y Finanzas,3,Contaduría Gral. de la Provincia,permanente,121,0
+2023,0,1,6,Ministerio de Hacienda y Finanzas,5,Tesorería Gral. de la Provincia,permanente,19,0
+2023,0,1,6,Ministerio de Hacienda y Finanzas,6,Dcción. Gral. de Contratac. Públ. y Gestión de Bienes,permanente,23,0
+2023,0,1,6,Ministerio de Hacienda y Finanzas,10,Dcción. Admin.de Activos ex Bcos.Oficiales,permanente,16,0
+2023,0,1,6,Ministerio de Hacienda y Finanzas,11,Dirección de Asuntos Legales,permanente,4,0
+2023,0,1,6,Ministerio de Hacienda y Finanzas,16,Dirección General de la Deuda Pública,permanente,5,0
+2023,0,1,6,Ministerio de Hacienda y Finanzas,19,Direccion de Seguimiento y Evaluacion del Gasto,permanente,1,0
+2023,0,1,6,Ministerio de Hacienda y Finanzas,20,Direccion Gral.de Inversion Publica y PPP,permanente,1,0
+2023,0,1,7,Ministerio de Economia y Energia,1,Ministerio de Economía y Energía,permanente,85,0
+2023,0,1,7,Ministerio de Economia y Energia,2,Dcción. de Estad. e Investigac. Económicas,permanente,40,0
+2023,0,1,7,Ministerio de Economia y Energia,3,Dirección de Fiscalización y Control,permanente,46,0
+2023,0,1,7,Ministerio de Economia y Energia,6,Dcción.de Agricultura y Contingencias Clim,permanente,39,0
+2023,0,1,7,Ministerio de Economia y Energia,7,Dcción. Pcial.de Ganadería,permanente,84,0
+2023,0,1,7,Ministerio de Economia y Energia,15,Dcción.de Asociativismo y Cooperativas,permanente,14,0
+2023,0,1,7,Ministerio de Economia y Energia,20,Subsecretaría de Energía y Minería,permanente,7,0
+2023,0,1,7,Ministerio de Economia y Energia,21,Dirección de Hidrocarburos,permanente,11,0
+2023,0,1,7,Ministerio de Economia y Energia,22,Dirección de Minería,permanente,15,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,"Ministerio de Salud, Desarr.Soc.y Deportes",permanente,338,49
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,"Ministerio de Salud, Desarr.Soc.y Deportes",temporario,552,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",7,Hospital José Nestor Lencinas,permanente,170,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",13,Hospital A. Metraux,permanente,83,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",14,Hospital H. Gailhac,permanente,130,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",18,Hospital Arturo Illia,permanente,83,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",20,Hospital D. Sícoli,permanente,110,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",21,Hospital Fernando Arenas Raffo,permanente,65,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",25,Hospital Ministro Dr. Ramón Carrillo,permanente,324,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",26,Hospital Luis Chrabalowski,permanente,71,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",28,Hospital Eva Perón,permanente,59,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",29,Servicio de Emergencia Coordinado,permanente,156,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",41,Area Departamental de Salud Capital,permanente,65,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",42,Area Departamental de Salud Gral. Alvear,permanente,127,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",43,Area Departamental de Salud Godoy Cruz,permanente,254,36
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",44,Area Departamental de Salud Guaymallén,permanente,271,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",45,Area Departamental de Salud Junín,permanente,126,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",46,Area Departamental de Salud La Paz,permanente,42,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",47,Area Departamental de Salud Las Heras,permanente,191,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",48,Area Departamental de Salud Lavalle,permanente,169,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",49,Area Departamental de Salud Luján,permanente,173,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",50,Area Departamental de Salud Maipú,permanente,164,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",51,Area Departamental de Salud Malargue,permanente,84,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",52,Area Departamental de Salud Rivadavia,permanente,118,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",53,Area Departamental de Salud San Carlos,permanente,107,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",54,Area Departamental de Salud San Martín,permanente,173,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",55,Area Departamental de Salud San Rafael,permanente,224,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",56,Area Departamental de Salud Santa Rosa,permanente,65,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",57,Area Departamental de Salud Tunuyán,permanente,118,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",58,Area Departamental de Salud Tupungato,permanente,70,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",75,Subsecretaría de Salud,permanente,667,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",80,Subsecretaría de Desarrollo Social,permanente,123,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",80,Subsecretaría de Desarrollo Social,temporario,1,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",81,Dir.Gral.de Administración de Desarrollo Social,permanente,1,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",82,Dirección de Derechos Humanos,permanente,6,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",83,Fondo de Inversión y Desarrollo,permanente,27,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",85,Direcc.de Economía Social y Asociatividad,permanente,56,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",86,Dirección de Contingencia,permanente,46,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",87,Dirección de Atención Adultos Mayores,permanente,202,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",88,Dirección de Atención a las Pers.c/Discap.,permanente,150,29
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",89,Dirección de Género y Diversidad,permanente,23,0
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",90,Subsecretaría de Deportes,permanente,132,68
+2023,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",91,Dirección Gral. de Administración de Deportes,permanente,1,0
+2023,0,1,9,Ministerio de Planificacion e Infraestructura Publica,1,Ministerio de Planificacion e Infraestructura Publica,permanente,75,0
+2023,0,1,9,Ministerio de Planificacion e Infraestructura Publica,2,Subsecretaria de Planificacion y Seguimiento,permanente,29,0
+2023,0,1,9,Ministerio de Planificacion e Infraestructura Publica,4,Subsecretaría de Obras Públicas,permanente,55,0
+2023,0,1,9,Ministerio de Planificacion e Infraestructura Publica,8,Dirección de Hidráulica,permanente,46,0
+2023,0,1,9,Ministerio de Planificacion e Infraestructura Publica,23,Subsecretaria de Infraestructura Educativa,permanente,137,0
+2023,0,1,9,Ministerio de Planificacion e Infraestructura Publica,23,Subsecretaria de Infraestructura Educativa,temporario,1,0
+2023,0,1,15,Fiscalia de Estado,1,Fiscalía de Estado,permanente,116,0
+2023,0,1,16,Ministerio de Seguridad,1,Ministerio de Seguridad,permanente,177,0
+2023,0,1,16,Ministerio de Seguridad,2,Dcción. de Investigaciones,permanente,406,0
+2023,0,1,16,Ministerio de Seguridad,5,Dcción. de Defensa Civil,permanente,71,0
+2023,0,1,16,Ministerio de Seguridad,6,Dcción. General de Policia,permanente,8414,0
+2023,0,1,16,Ministerio de Seguridad,6,Dcción. General de Policia,temporario,1,0
+2023,0,1,16,Ministerio de Seguridad,7,Dcción. de Participación Comunitaria,permanente,1,0
+2023,0,1,16,Ministerio de Seguridad,9,Dirección Gral de Administración,permanente,365,0
+2023,0,1,16,Ministerio de Seguridad,10,Dcción. de Seguridad Vial,permanente,91,0
+2023,0,1,16,Ministerio de Seguridad,13,Dirección Gral. del Servicio Penitenciario,permanente,2774,0
+2023,0,1,22,Ministerio de Cultura y Turismo,1,Secretaría de Cultura,permanente,220,0
+2023,0,1,22,Ministerio de Cultura y Turismo,1,Secretaría de Cultura,temporario,1,48
+2023,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,1,Secretaría de Ambiente y Ordenamiento Territorial,permanente,62,0
+2023,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,3,Dirección de Protección Ambiental,permanente,39,0
+2023,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,4,Dirección de Recursos Naturales Renovables,permanente,224,0
+2023,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,4,Dirección de Recursos Naturales Renovables,temporario,1,0
+2023,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,6,Ecoparque Mendoza,permanente,62,0
+2023,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,7,Parques y Paseos Publicos,permanente,103,0
+2023,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,7,Parques y Paseos Publicos,temporario,6,0
+2023,0,1,26,Secretaria de Servicios Publicos,1,Secretaría de Servicios Públicos,permanente,8,0
+2023,0,1,26,Secretaria de Servicios Publicos,2,Dirección de Transporte,permanente,27,0
+2023,0,1,26,Secretaria de Servicios Publicos,3,Dirección de Asuntos Legales Fiscalización,permanente,22,0
+2023,0,1,26,Secretaria de Servicios Publicos,4,Dirección de Planificación y Proyectos Esp,permanente,28,0
+2023,0,1,26,Secretaria de Servicios Publicos,5,Coordinación de Gabinete,permanente,9,0
+2023,0,1,26,Secretaria de Servicios Publicos,14,Dirección de Servicios Eléctricos,permanente,5,0
+2023,0,2,7,Ministerio de Economia y Energia,1,Instituto de Sanid.y Calid.Agropec.Mendoza,permanente,208,0
+2023,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,Hospital Central,permanente,1401,0
+2023,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",2,Hospital Materno Infantil Humberto Notti,permanente,1501,68
+2023,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",2,Hospital Materno Infantil Humberto Notti,temporario,2,0
+2023,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",3,Hospital Teodoro Schestakow,permanente,650,0
+2023,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",4,Hospital Luis Lagomaggiore,permanente,1394,0
+2023,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",8,Hospital Carlos Pereyra,permanente,216,11
+2023,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",9,Hospital El Sauce,permanente,185,0
+2023,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",10,Hospital Diego Paroissien,permanente,542,0
+2023,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",11,Hospital A. Perrupato,permanente,735,0
+2023,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",12,Hospital Gral. Alvear,permanente,391,0
+2023,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",15,Hospital Victorino Tagarelli,permanente,165,0
+2023,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",16,Hospital Antonio J. Scaravelli,permanente,489,0
+2023,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",17,Hospital Saporitti,permanente,281,0
+2023,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",19,Hospital Malargue,permanente,178,0
+2023,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",24,Hospital Gral. Las Heras,permanente,168,0
+2023,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",25,"Dir.Gral.de Proteccion de Derechos de Niñas, Niños y Adolescentes",permanente,1005,0
+2023,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",25,"Dir.Gral.de Proteccion de Derechos de Niñas, Niños y Adolescentes",temporario,2,0
+2023,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",26,Direcc de Responsabilidad Penal y Juvenil,permanente,333,0
+2023,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",26,Direcc de Responsabilidad Penal y Juvenil,temporario,10,0
+2023,0,2,9,Ministerio de Planificacion e Infraestructura Publica,2,Direccion Provincial de Vialidad,permanente,776,0
+2023,0,2,9,Ministerio de Planificacion e Infraestructura Publica,2,Direccion Provincial de Vialidad,temporario,11,0
+2023,0,2,14,Direccion General de Escuelas,1,Dcción. Gral. de Escuelas,permanente,671,136
+2023,0,2,14,Direccion General de Escuelas,1,Dcción. Gral. de Escuelas,temporario,86,426
+2023,0,2,14,Direccion General de Escuelas,2,Dcción. de Educ.Inicial y Básica(1er.y 2do,permanente,23738,48556
+2023,0,2,14,Direccion General de Escuelas,2,Dcción. de Educ.Inicial y Básica(1er.y 2do,temporario,936,1688
+2023,0,2,14,Direccion General de Escuelas,3,Dcción. Educ.Básica(3er.cic.) y Polimodal,permanente,4313,159308
+2023,0,2,14,Direccion General de Escuelas,3,Dcción. Educ.Básica(3er.cic.) y Polimodal,temporario,174,1001
+2023,0,2,14,Direccion General de Escuelas,7,Dcción. de Educación Privada,permanente,7,0
+2023,0,2,14,Direccion General de Escuelas,8,Dcción. de Jóvenes y Adultos,permanente,2109,50956
+2023,0,2,14,Direccion General de Escuelas,8,Dcción. de Jóvenes y Adultos,temporario,111,672
+2023,0,2,14,Direccion General de Escuelas,9,Dcción. de Educación Especial,permanente,2191,5316
+2023,0,2,14,Direccion General de Escuelas,9,Dcción. de Educación Especial,temporario,71,134
+2023,0,2,14,Direccion General de Escuelas,10,Dcción. de Educación Superior,permanente,666,64183
+2023,0,2,14,Direccion General de Escuelas,10,Dcción. de Educación Superior,temporario,60,2314
+2023,0,2,14,Direccion General de Escuelas,11,Dirección de Educación Técnica y Trabajo,permanente,4140,91344
+2023,0,2,14,Direccion General de Escuelas,11,Dirección de Educación Técnica y Trabajo,temporario,108,471
+2023,0,2,16,Ministerio de Seguridad,1,INSPECCION GENERAL DE SEGURIDAD,permanente,14,0
+2023,0,5,6,Ministerio de Hacienda y Finanzas,2,Caja de Seguro Mutual,permanente,17,0
+2023,0,5,6,Ministerio de Hacienda y Finanzas,3,Instituto Pcial. de Juegos y Casinos,permanente,500,0
+2023,0,5,6,Ministerio de Hacienda y Finanzas,3,Instituto Pcial. de Juegos y Casinos,temporario,8,0
+2023,0,5,6,Ministerio de Hacienda y Finanzas,4,Administración Tributaria Mendoza,permanente,396,0
+2023,0,5,6,Ministerio de Hacienda y Finanzas,4,Administración Tributaria Mendoza,temporario,2,0
+2023,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,Dcción. Gral. Obra Social de Emp. Pcos.,permanente,1956,0
+2023,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,Dcción. Gral. Obra Social de Emp. Pcos.,temporario,13,0
+2023,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",2,Hospital El Carmen,permanente,855,0
+2023,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",2,Hospital El Carmen,temporario,3,0
+2023,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",3,Sanatorio Fleming -O.S.E.P.-,permanente,303,0
+2023,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",3,Sanatorio Fleming -O.S.E.P.-,temporario,2,0
+2023,0,5,9,Ministerio de Planificacion e Infraestructura Publica,3,Instituto Provincial de la Vivienda,permanente,387,0
+2023,0,5,22,Ministerio de Cultura y Turismo,1,Ente Mendoza Turismo,permanente,79,0
+2024,0,1,1,Poder Legislativo,1,Cámara de Senadores,permanente,336,0
+2024,0,1,1,Poder Legislativo,1,Cámara de Senadores,temporario,125,0
+2024,0,1,1,Poder Legislativo,2,Cámara de Diputados,permanente,413,0
+2024,0,1,1,Poder Legislativo,2,Cámara de Diputados,temporario,138,0
+2024,0,1,1,Poder Legislativo,3,Legislatura,permanente,104,0
+2024,0,1,1,Poder Legislativo,3,Legislatura,temporario,7,0
+2024,0,1,1,Poder Legislativo,4,Oficina de Investigaciones Administrativas y Etica Publica,permanente,1,0
+2024,0,1,2,Poder Judicial,1,Suprema Corte,permanente,3234,0
+2024,0,1,2,Poder Judicial,1,Suprema Corte,temporario,2,0
+2024,0,1,2,Poder Judicial,2,Ministerio Público,permanente,1565,0
+2024,0,1,2,Poder Judicial,3,Jury de enjuiciamiento,permanente,2,0
+2024,0,1,2,Poder Judicial,4,Junta Electoral,permanente,11,0
+2024,0,1,2,Poder Judicial,5,Consejo de la Magistratura,permanente,7,0
+2024,0,1,2,Poder Judicial,6,Ministerio Publico de la Defensa y Pupilar,permanente,294,0
+2024,0,1,3,Tribunal de Cuentas,1,Tribunal de Cuentas,permanente,270,0
+2024,0,1,3,Tribunal de Cuentas,1,Tribunal de Cuentas,temporario,1,0
+2024,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",1,"Ministerio de Gobierno,Trabajo y Justicia",permanente,156,0
+2024,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",2,Dcción.del Reg. Estado Civil y Capac. Pers,permanente,358,0
+2024,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",2,Dcción.del Reg. Estado Civil y Capac. Pers,temporario,2,0
+2024,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",9,Subsecretaría de Trabajo y Empleo,permanente,152,0
+2024,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",12,Dcción. de Personas Jurídicas,permanente,49,0
+2024,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",12,Dcción. de Personas Jurídicas,temporario,1,0
+2024,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",19,Dirección de Defensa al Consumidor,permanente,44,0
+2024,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",23,Dirección de Informática y Comunicaciones,permanente,25,0
+2024,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",23,Dirección de Informática y Comunicaciones,temporario,1,0
+2024,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",24,Asesoría de Gobierno,permanente,20,0
+2024,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",25,Escribanía General de Gobierno,permanente,9,0
+2024,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",26,Casa de Mendoza,permanente,5,0
+2024,0,1,5,"Ministerio de Gobierno,Trabajo y Justicia",27,Oficina Técnica Previsional,permanente,20,0
+2024,0,1,6,Ministerio de Hacienda y Finanzas,1,Ministerio de Hacienda y Finanzas,permanente,85,0
+2024,0,1,6,Ministerio de Hacienda y Finanzas,2,Direccion Gral. de Presupuesto,permanente,17,0
+2024,0,1,6,Ministerio de Hacienda y Finanzas,3,Contaduría Gral. de la Provincia,permanente,118,0
+2024,0,1,6,Ministerio de Hacienda y Finanzas,5,Tesorería Gral. de la Provincia,permanente,20,0
+2024,0,1,6,Ministerio de Hacienda y Finanzas,6,Dcción. Gral. de Contratac. Públ. y Gestión de Bienes,permanente,20,0
+2024,0,1,6,Ministerio de Hacienda y Finanzas,10,Dcción. Admin.de Activos ex Bcos.Oficiales,permanente,15,0
+2024,0,1,6,Ministerio de Hacienda y Finanzas,11,Dirección de Asuntos Legales,permanente,4,0
+2024,0,1,6,Ministerio de Hacienda y Finanzas,16,Dirección General de la Deuda Pública,permanente,4,0
+2024,0,1,6,Ministerio de Hacienda y Finanzas,19,Direccion de Seguimiento y Evaluacion del Gasto,permanente,1,0
+2024,0,1,6,Ministerio de Hacienda y Finanzas,20,Direccion Gral.de Inversion Publica y PPP,permanente,1,0
+2024,0,1,7,Ministerio de Economia y Energia,1,Ministerio de Economía y Energía,permanente,82,0
+2024,0,1,7,Ministerio de Economia y Energia,2,Dcción. de Estad. e Investigac. Económicas,permanente,34,0
+2024,0,1,7,Ministerio de Economia y Energia,3,Dirección de Fiscalización y Control,permanente,43,0
+2024,0,1,7,Ministerio de Economia y Energia,6,Dcción.de Agricultura y Contingencias Clim,permanente,33,0
+2024,0,1,7,Ministerio de Economia y Energia,7,Dcción. Pcial.de Ganadería,permanente,83,0
+2024,0,1,7,Ministerio de Economia y Energia,15,Dcción.de Asociativismo y Cooperativas,permanente,14,0
+2024,0,1,7,Ministerio de Economia y Energia,20,Subsecretaría de Energía y Minería,permanente,7,0
+2024,0,1,7,Ministerio de Economia y Energia,21,Dirección de Hidrocarburos,permanente,11,0
+2024,0,1,7,Ministerio de Economia y Energia,22,Dirección de Minería,permanente,14,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,"Ministerio de Salud, Desarr.Soc.y Deportes",permanente,333,49
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,"Ministerio de Salud, Desarr.Soc.y Deportes",temporario,574,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",7,Hospital José Nestor Lencinas,permanente,154,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",13,Hospital A. Metraux,permanente,80,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",14,Hospital H. Gailhac,permanente,124,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",18,Hospital Arturo Illia,permanente,79,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",20,Hospital D. Sícoli,permanente,111,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",21,Hospital Fernando Arenas Raffo,permanente,69,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",25,Hospital Ministro Dr. Ramón Carrillo,permanente,310,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",26,Hospital Luis Chrabalowski,permanente,80,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",28,Hospital Eva Perón,permanente,59,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",29,Servicio de Emergencia Coordinado,permanente,149,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",41,Area Departamental de Salud Capital,permanente,60,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",42,Area Departamental de Salud Gral. Alvear,permanente,124,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",43,Area Departamental de Salud Godoy Cruz,permanente,242,36
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",44,Area Departamental de Salud Guaymallén,permanente,256,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",45,Area Departamental de Salud Junín,permanente,124,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",46,Area Departamental de Salud La Paz,permanente,40,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",47,Area Departamental de Salud Las Heras,permanente,183,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",48,Area Departamental de Salud Lavalle,permanente,168,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",49,Area Departamental de Salud Luján,permanente,169,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",50,Area Departamental de Salud Maipú,permanente,169,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",51,Area Departamental de Salud Malargue,permanente,86,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",52,Area Departamental de Salud Rivadavia,permanente,117,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",53,Area Departamental de Salud San Carlos,permanente,102,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",54,Area Departamental de Salud San Martín,permanente,164,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",55,Area Departamental de Salud San Rafael,permanente,220,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",56,Area Departamental de Salud Santa Rosa,permanente,66,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",57,Area Departamental de Salud Tunuyán,permanente,115,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",58,Area Departamental de Salud Tupungato,permanente,68,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",75,Subsecretaría de Salud,permanente,673,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",80,Subsecretaría de Desarrollo Social,permanente,121,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",80,Subsecretaría de Desarrollo Social,temporario,1,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",81,Dir.Gral.de Administración de Desarrollo Social,permanente,1,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",82,Dirección de Derechos Humanos,permanente,6,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",83,Fondo de Inversión y Desarrollo,permanente,26,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",85,Direcc.de Economía Social y Asociatividad,permanente,53,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",86,Dirección de Contingencia,permanente,43,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",87,Dirección de Atención Adultos Mayores,permanente,200,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",88,Dirección de Atención a las Pers.c/Discap.,permanente,142,29
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",89,Dirección de Género y Diversidad,permanente,24,0
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",90,Subsecretaría de Deportes,permanente,125,58
+2024,0,1,8,"Ministerio de Salud, Desarrollo Social y Deportes",91,Dirección Gral. de Administración de Deportes,permanente,1,0
+2024,0,1,9,Ministerio de Planificacion e Infraestructura Publica,1,Ministerio de Planificacion e Infraestructura Publica,permanente,69,0
+2024,0,1,9,Ministerio de Planificacion e Infraestructura Publica,2,Subsecretaria de Planificacion y Seguimiento,permanente,25,0
+2024,0,1,9,Ministerio de Planificacion e Infraestructura Publica,4,Subsecretaría de Obras Públicas,permanente,54,0
+2024,0,1,9,Ministerio de Planificacion e Infraestructura Publica,8,Dirección de Hidráulica,permanente,44,0
+2024,0,1,9,Ministerio de Planificacion e Infraestructura Publica,23,Subsecretaria de Infraestructura Educativa,permanente,132,0
+2024,0,1,9,Ministerio de Planificacion e Infraestructura Publica,23,Subsecretaria de Infraestructura Educativa,temporario,1,0
+2024,0,1,15,Fiscalia de Estado,1,Fiscalía de Estado,permanente,115,0
+2024,0,1,15,Fiscalia de Estado,1,Fiscalía de Estado,temporario,1,0
+2024,0,1,16,Ministerio de Seguridad,1,Ministerio de Seguridad,permanente,172,0
+2024,0,1,16,Ministerio de Seguridad,2,Dcción. de Investigaciones,permanente,381,0
+2024,0,1,16,Ministerio de Seguridad,5,Dcción. de Defensa Civil,permanente,61,0
+2024,0,1,16,Ministerio de Seguridad,6,Dcción. General de Policia,permanente,8441,0
+2024,0,1,16,Ministerio de Seguridad,6,Dcción. General de Policia,temporario,1,0
+2024,0,1,16,Ministerio de Seguridad,7,Dcción. de Participación Comunitaria,permanente,1,0
+2024,0,1,16,Ministerio de Seguridad,9,Dirección Gral de Administración,permanente,343,0
+2024,0,1,16,Ministerio de Seguridad,10,Dcción. de Seguridad Vial,permanente,83,0
+2024,0,1,16,Ministerio de Seguridad,13,Dirección Gral. del Servicio Penitenciario,permanente,2756,0
+2024,0,1,22,Ministerio de Cultura y Turismo,1,Secretaría de Cultura,permanente,217,0
+2024,0,1,22,Ministerio de Cultura y Turismo,1,Secretaría de Cultura,temporario,1,48
+2024,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,1,Secretaría de Ambiente y Ordenamiento Territorial,permanente,62,0
+2024,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,3,Dirección de Protección Ambiental,permanente,37,0
+2024,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,4,Dirección de Recursos Naturales Renovables,permanente,209,0
+2024,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,4,Dirección de Recursos Naturales Renovables,temporario,1,0
+2024,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,6,Ecoparque Mendoza,permanente,57,0
+2024,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,7,Direccion de Parques y Paseos Publicos,permanente,100,0
+2024,0,1,23,Secretaria de Ambiente y Ordenamiento Territorial,7,Direccion de Parques y Paseos Publicos,temporario,5,0
+2024,0,1,26,Secretaria de Servicios Publicos,1,Secretaría de Servicios Públicos,permanente,8,0
+2024,0,1,26,Secretaria de Servicios Publicos,2,Dirección de Transporte,permanente,26,0
+2024,0,1,26,Secretaria de Servicios Publicos,3,Dirección de Asuntos Legales y Fiscalización,permanente,23,0
+2024,0,1,26,Secretaria de Servicios Publicos,4,Dirección de Planificación y Proyectos Especiales,permanente,27,0
+2024,0,1,26,Secretaria de Servicios Publicos,5,Coordinación de Gabinete,permanente,8,0
+2024,0,1,26,Secretaria de Servicios Publicos,14,Dirección de Servicios Eléctricos,permanente,7,0
+2024,0,2,7,Ministerio de Economia y Energia,1,Instituto de Sanid.y Calid.Agropec.Mendoza,permanente,199,0
+2024,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,Hospital Central,permanente,1379,0
+2024,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",2,Hospital Materno Infantil Humberto Notti,permanente,1446,51
+2024,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",2,Hospital Materno Infantil Humberto Notti,temporario,2,0
+2024,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",3,Hospital Teodoro Schestakow,permanente,630,0
+2024,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",4,Hospital Luis Lagomaggiore,permanente,1322,0
+2024,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",8,Hospital Carlos Pereyra,permanente,215,12
+2024,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",9,Hospital El Sauce,permanente,187,0
+2024,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",10,Hospital Diego Paroissien,permanente,523,0
+2024,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",11,Hospital A. Perrupato,permanente,714,0
+2024,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",12,Hospital Gral. Alvear,permanente,381,0
+2024,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",15,Hospital Victorino Tagarelli,permanente,172,0
+2024,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",16,Hospital Antonio J. Scaravelli,permanente,473,0
+2024,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",17,Hospital Saporitti,permanente,268,0
+2024,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",19,Hospital Malargue,permanente,169,0
+2024,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",24,Hospital Gral. Las Heras,permanente,165,0
+2024,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",25,"Dir.Gral.de Proteccion de Derechos de Niñas, Niños y Adolescentes",permanente,1032,0
+2024,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",25,"Dir.Gral.de Proteccion de Derechos de Niñas, Niños y Adolescentes",temporario,1,0
+2024,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",26,Direcc de Responsabilidad Penal y Juvenil,permanente,323,0
+2024,0,2,8,"Ministerio de Salud, Desarrollo Social y Deportes",26,Direcc de Responsabilidad Penal y Juvenil,temporario,10,0
+2024,0,2,9,Ministerio de Planificacion e Infraestructura Publica,2,Direccion Provincial de Vialidad,permanente,728,0
+2024,0,2,9,Ministerio de Planificacion e Infraestructura Publica,2,Direccion Provincial de Vialidad,temporario,11,0
+2024,0,2,14,Direccion General de Escuelas,1,Dcción. Gral. de Escuelas,permanente,639,145
+2024,0,2,14,Direccion General de Escuelas,1,Dcción. Gral. de Escuelas,temporario,92,396
+2024,0,2,14,Direccion General de Escuelas,2,Dcción. de Educ.Inicial y Básica(1er.y 2do,permanente,23915,62718
+2024,0,2,14,Direccion General de Escuelas,2,Dcción. de Educ.Inicial y Básica(1er.y 2do,temporario,1054,2789
+2024,0,2,14,Direccion General de Escuelas,3,Dcción. Educ.Básica(3er.cic.) y Polimodal,permanente,4256,158521
+2024,0,2,14,Direccion General de Escuelas,3,Dcción. Educ.Básica(3er.cic.) y Polimodal,temporario,263,2074
+2024,0,2,14,Direccion General de Escuelas,7,Dcción. de Educación Privada,permanente,6,0
+2024,0,2,14,Direccion General de Escuelas,8,Dcción. de Jóvenes y Adultos,permanente,2075,50965
+2024,0,2,14,Direccion General de Escuelas,8,Dcción. de Jóvenes y Adultos,temporario,134,768
+2024,0,2,14,Direccion General de Escuelas,9,Dcción. de Educación Especial,permanente,2380,6132
+2024,0,2,14,Direccion General de Escuelas,9,Dcción. de Educación Especial,temporario,72,154
+2024,0,2,14,Direccion General de Escuelas,10,Dcción. de Educación Superior,permanente,676,65562
+2024,0,2,14,Direccion General de Escuelas,10,Dcción. de Educación Superior,temporario,63,2075
+2024,0,2,14,Direccion General de Escuelas,11,Dirección de Educación Técnica y Trabajo,permanente,4180,92867
+2024,0,2,14,Direccion General de Escuelas,11,Dirección de Educación Técnica y Trabajo,temporario,133,561
+2024,0,2,16,Ministerio de Seguridad,1,INSPECCION GENERAL DE SEGURIDAD,permanente,12,0
+2024,0,5,6,Ministerio de Hacienda y Finanzas,2,Caja de Seguro Mutual,permanente,17,0
+2024,0,5,6,Ministerio de Hacienda y Finanzas,3,Instituto Pcial. de Juegos y Casinos,permanente,484,0
+2024,0,5,6,Ministerio de Hacienda y Finanzas,3,Instituto Pcial. de Juegos y Casinos,temporario,8,0
+2024,0,5,6,Ministerio de Hacienda y Finanzas,4,Administración Tributaria Mendoza,permanente,356,0
+2024,0,5,6,Ministerio de Hacienda y Finanzas,4,Administración Tributaria Mendoza,temporario,2,0
+2024,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,Dcción. Gral. Obra Social de Emp. Pcos.,permanente,1876,0
+2024,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",1,Dcción. Gral. Obra Social de Emp. Pcos.,temporario,16,0
+2024,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",2,Hospital El Carmen,permanente,806,0
+2024,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",2,Hospital El Carmen,temporario,15,0
+2024,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",3,Sanatorio Fleming -O.S.E.P.-,permanente,284,0
+2024,0,5,8,"Ministerio de Salud, Desarrollo Social y Deportes",3,Sanatorio Fleming -O.S.E.P.-,temporario,6,0
+2024,0,5,9,Ministerio de Planificacion e Infraestructura Publica,3,Instituto Provincial de la Vivienda,permanente,371,0
+2024,0,5,22,Ministerio de Cultura y Turismo,1,Ente Mendoza Turismo,permanente,75,0
+2025,0,1,1,Poder Legislativo,1,Cámara de Senadores,permanente,326,0
+2025,0,1,1,Poder Legislativo,1,Cámara de Senadores,temporario,125,0
+2025,0,1,1,Poder Legislativo,2,Cámara de Diputados,permanente,413,0
+2025,0,1,1,Poder Legislativo,2,Cámara de Diputados,temporario,138,0
+2025,0,1,1,Poder Legislativo,3,Legislatura,permanente,103,0
+2025,0,1,1,Poder Legislativo,3,Legislatura,temporario,7,0
+2025,0,1,1,Poder Legislativo,4,Of. Investigaciones Admin.y Etica Pública,permanente,1,0
+2025,0,1,2,Poder Judicial,1,Suprema Corte,permanente,3275,0
+2025,0,1,2,Poder Judicial,1,Suprema Corte,temporario,2,0
+2025,0,1,2,Poder Judicial,2,Ministerio Público,permanente,1564,0
+2025,0,1,2,Poder Judicial,3,Jury de enjuiciamiento,permanente,2,0
+2025,0,1,2,Poder Judicial,4,Junta Electoral,permanente,11,0
+2025,0,1,2,Poder Judicial,5,Consejo de la Magistratura,permanente,6,0
+2025,0,1,2,Poder Judicial,6,Ministerio Público de la Defensa,permanente,308,0
+2025,0,1,3,Tribunal de Cuentas,1,Tribunal de Cuentas,permanente,257,0
+2025,0,1,3,Tribunal de Cuentas,1,Tribunal de Cuentas,temporario,1,0
+2025,0,1,5,"Ministerio de Gobierno, Infraestructura y Desarr.Terr.",1,"Ministerio Gob, Infraestruc y Desarr. Terr",permanente,150,0
+2025,0,1,5,"Ministerio de Gobierno, Infraestructura y Desarr.Terr.",2,Dcción.del Reg. Estado Civil y Capac. Pers,permanente,345,0
+2025,0,1,5,"Ministerio de Gobierno, Infraestructura y Desarr.Terr.",2,Dcción.del Reg. Estado Civil y Capac. Pers,temporario,2,0
+2025,0,1,5,"Ministerio de Gobierno, Infraestructura y Desarr.Terr.",9,Subsecretaría de Trabajo y Empleo,permanente,138,0
+2025,0,1,5,"Ministerio de Gobierno, Infraestructura y Desarr.Terr.",12,Dcción. de Personas Jurídicas,permanente,44,0
+2025,0,1,5,"Ministerio de Gobierno, Infraestructura y Desarr.Terr.",12,Dcción. de Personas Jurídicas,temporario,1,0
+2025,0,1,5,"Ministerio de Gobierno, Infraestructura y Desarr.Terr.",19,Dirección de Defensa al Consumidor,permanente,40,0
+2025,0,1,5,"Ministerio de Gobierno, Infraestructura y Desarr.Terr.",23,Dirección Informática y Comunicaciones,permanente,24,0
+2025,0,1,5,"Ministerio de Gobierno, Infraestructura y Desarr.Terr.",23,Dirección Informática y Comunicaciones,temporario,1,0
+2025,0,1,5,"Ministerio de Gobierno, Infraestructura y Desarr.Terr.",24,Asesoría de Gobierno,permanente,21,0
+2025,0,1,5,"Ministerio de Gobierno, Infraestructura y Desarr.Terr.",25,Escribanía General de Gobierno,permanente,8,0
+2025,0,1,5,"Ministerio de Gobierno, Infraestructura y Desarr.Terr.",26,Casa de Mendoza,permanente,5,0
+2025,0,1,5,"Ministerio de Gobierno, Infraestructura y Desarr.Terr.",27,Oficina Técnica Previsional,permanente,20,0
+2025,0,1,5,"Ministerio de Gobierno, Infraestructura y Desarr.Terr.",29,Dir. de Estadísticas e Invest. Económicas,permanente,31,0
+2025,0,1,6,Ministerio de Hacienda y Finanzas,1,Ministerio de Hacienda y Finanzas,permanente,81,0
+2025,0,1,6,Ministerio de Hacienda y Finanzas,2,Dcción. Gral. de Presupuesto,permanente,17,0
+2025,0,1,6,Ministerio de Hacienda y Finanzas,3,Contaduría Gral. de la Provincia,permanente,117,0
+2025,0,1,6,Ministerio de Hacienda y Finanzas,5,Tesorería Gral. de la Provincia,permanente,18,0
+2025,0,1,6,Ministerio de Hacienda y Finanzas,6,Dcción. Gral. de Compras y Suministros,permanente,20,0
+2025,0,1,6,Ministerio de Hacienda y Finanzas,10,Dcción. Admin.de Activos ex Bcos.Oficiales,permanente,15,0
+2025,0,1,6,Ministerio de Hacienda y Finanzas,11,Dirección de Asuntos Legales,permanente,5,0
+2025,0,1,6,Ministerio de Hacienda y Finanzas,16,Dirección Gral de Crédito al Sector Públic,permanente,6,0
+2025,0,1,6,Ministerio de Hacienda y Finanzas,19,Dcción. de Seguimiento y Evaluación Gto.,permanente,1,0
+2025,0,1,6,Ministerio de Hacienda y Finanzas,26,Dcción. de Pol. Salarial y Análisis RRHH,permanente,1,0
+2025,0,1,7,Ministerio de Produccion,1,Ministerio de Producción,permanente,73,0
+2025,0,1,7,Ministerio de Produccion,3,"Dir de Fiscaliz, Control y Tecn. Agroind.",permanente,42,0
+2025,0,1,7,Ministerio de Produccion,6,Dirección de Contingencias Climáticas,permanente,36,0
+2025,0,1,7,Ministerio de Produccion,7,Dcción. Pcial.de Ganadería,permanente,77,0
+2025,0,1,7,Ministerio de Produccion,15,Dcción.de Emprendedores y Cooperativas,permanente,12,0
+2025,0,1,8,Ministerio de Salud y Deportes,1,"Ministerio de Salud, Desarr.Soc.y Deportes",permanente,319,47
+2025,0,1,8,Ministerio de Salud y Deportes,1,"Ministerio de Salud, Desarr.Soc.y Deportes",temporario,641,0
+2025,0,1,8,Ministerio de Salud y Deportes,7,Hospital José Nestor Lencinas,permanente,148,0
+2025,0,1,8,Ministerio de Salud y Deportes,13,Hospital A. Metraux,permanente,81,0
+2025,0,1,8,Ministerio de Salud y Deportes,14,Hospital H. Gailhac,permanente,122,0
+2025,0,1,8,Ministerio de Salud y Deportes,18,Hospital Arturo Illia,permanente,80,0
+2025,0,1,8,Ministerio de Salud y Deportes,20,Hospital D. Sícoli,permanente,111,0
+2025,0,1,8,Ministerio de Salud y Deportes,21,Hospital Fernando Arenas Raffo,permanente,67,0
+2025,0,1,8,Ministerio de Salud y Deportes,25,Hospital Ministro Dr. Ramón Carrillo,permanente,307,0
+2025,0,1,8,Ministerio de Salud y Deportes,26,Hospital Luis Chrabalowski,permanente,77,0
+2025,0,1,8,Ministerio de Salud y Deportes,28,Hospital Eva Perón,permanente,55,0
+2025,0,1,8,Ministerio de Salud y Deportes,29,Dirección de Emergencias,permanente,150,0
+2025,0,1,8,Ministerio de Salud y Deportes,41,Area Departamental de Salud Capital,permanente,58,0
+2025,0,1,8,Ministerio de Salud y Deportes,42,Area Departamental de Salud Gral. Alvear,permanente,125,0
+2025,0,1,8,Ministerio de Salud y Deportes,43,Area Departamental de Salud Godoy Cruz,permanente,227,36
+2025,0,1,8,Ministerio de Salud y Deportes,44,Area Departamental de Salud Guaymallén,permanente,244,0
+2025,0,1,8,Ministerio de Salud y Deportes,45,Area Departamental de Salud Junín,permanente,124,0
+2025,0,1,8,Ministerio de Salud y Deportes,46,Area Departamental de Salud La Paz,permanente,42,0
+2025,0,1,8,Ministerio de Salud y Deportes,47,Area Departamental de Salud Las Heras,permanente,168,0
+2025,0,1,8,Ministerio de Salud y Deportes,48,Area Departamental de Salud Lavalle,permanente,166,0
+2025,0,1,8,Ministerio de Salud y Deportes,49,Area Departamental de Salud Luján,permanente,163,0
+2025,0,1,8,Ministerio de Salud y Deportes,50,Area Departamental de Salud Maipú,permanente,163,0
+2025,0,1,8,Ministerio de Salud y Deportes,51,Area Departamental de Salud Malargue,permanente,86,0
+2025,0,1,8,Ministerio de Salud y Deportes,52,Area Departamental de Salud Rivadavia,permanente,114,0
+2025,0,1,8,Ministerio de Salud y Deportes,53,Area Departamental de Salud San Carlos,permanente,101,0
+2025,0,1,8,Ministerio de Salud y Deportes,54,Area Departamental de Salud San Martín,permanente,160,0
+2025,0,1,8,Ministerio de Salud y Deportes,55,Area Departamental de Salud San Rafael,permanente,218,0
+2025,0,1,8,Ministerio de Salud y Deportes,56,Area Sanitaria Santa Rosa,permanente,64,0
+2025,0,1,8,Ministerio de Salud y Deportes,56,Area Sanitaria Santa Rosa,temporario,1,0
+2025,0,1,8,Ministerio de Salud y Deportes,57,Area Departamental de Salud Tunuyán,permanente,111,0
+2025,0,1,8,Ministerio de Salud y Deportes,58,Area Departamental de Salud Tupungato,permanente,68,0
+2025,0,1,8,Ministerio de Salud y Deportes,75,Subsecretaría de Salud,permanente,645,0
+2025,0,1,8,Ministerio de Salud y Deportes,80,"Direccion Gral. de Desarrollo Comunitario Ministerio de Salud y Deportes - Nuevo Ministerio de Gobierno, Infraestructura y Desarrollo Territorial",permanente,115,0
+2025,0,1,8,Ministerio de Salud y Deportes,80,"Direccion Gral. de Desarrollo Comunitario Ministerio de Salud y Deportes - Nuevo Ministerio de Gobierno, Infraestructura y Desarrollo Territorial",temporario,1,0
+2025,0,1,8,Ministerio de Salud y Deportes,81,"Direccion Gral. de Adm. Desarrollo Social Ministerio de Salud y Deportes - Nuevo Ministerio de Gobierno, Infraestructura y Desarrollo Territorial",permanente,1,0
+2025,0,1,8,Ministerio de Salud y Deportes,82,"Direccion de Derechos Humanos Ministerio de Salud y Deportes - Nuevo Ministerio de Gobierno, Infraestructura y Desarrollo Territorial",permanente,6,0
+2025,0,1,8,Ministerio de Salud y Deportes,83,"Fondo de Inversion y Desarrollo Social Ministerio de Salud y Deportes - Nuevo Ministerio de Gobierno, Infraestructura y Desarrollo Territorial",permanente,24,0
+2025,0,1,8,Ministerio de Salud y Deportes,85,"Direccion de Economia Social Ministerio de Salud y Deporte s - Nuevo Ministerio de Gobierno, Infraestructura y Desarrollo Territorial",permanente,47,0
+2025,0,1,8,Ministerio de Salud y Deportes,86,"Direccion de Contingencia Ministerio de Salud y Deportes - Nuevo Ministerio de Gobierno, Infraestructura y Desarrollo Territorial",permanente,38,0
+2025,0,1,8,Ministerio de Salud y Deportes,87,Dirección de Atención Adultos Mayores,permanente,185,0
+2025,0,1,8,Ministerio de Salud y Deportes,88,Dirección de Atención a las Pers.c/Discap.,permanente,131,29
+2025,0,1,8,Ministerio de Salud y Deportes,89,"Direccion de Genero y Diversidad Ministerio de Salud y Deportes - Nuevo Ministerio de Gobierno, Infraestructura y Desarrollo Territorial",permanente,25,0
+2025,0,1,8,Ministerio de Salud y Deportes,90,Subsecretaría de Deportes,permanente,114,60
+2025,0,1,8,Ministerio de Salud y Deportes,91,Dirección de Administración de Deportes,permanente,1,0
+2025,0,1,9,"Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Ministerio de Planificacion e Infraestructura Publica)",1,"Subs. de Infraestructura y Desarrollo Terr Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Ministerio de Planificacion e Infraestructura Publica)",permanente,64,0
+2025,0,1,9,"Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Ministerio de Planificacion e Infraestructura Publica)",2,"Subs. de Infraestructura y Desarrollo Terr Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Ministerio de Planificacion e Infraestructura Publica)",permanente,20,0
+2025,0,1,9,"Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Ministerio de Planificacion e Infraestructura Publica)",4,"Subs. de Infraestructura y Desarrollo Terr Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Ministerio de Planificacion e Infraestructura Publica)",permanente,49,0
+2025,0,1,9,"Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Ministerio de Planificacion e Infraestructura Publica)",8,Dirección de Hidráulica Ministerio de Planificaci ó n e Infraestructura P ú blica - Nuevo Ministerio de Energía y Ambiente,permanente,40,0
+2025,0,1,9,"Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Ministerio de Planificacion e Infraestructura Publica)",23,"Sub. de Infraes tructura E scolar Ministerio de Planificacion e Infraestructura Publica - Ministerio de Educación, Cultura, Infancias y Dirección General de Escuelas (DGE)",permanente,126,0
+2025,0,1,9,"Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Ministerio de Planificacion e Infraestructura Publica)",23,"Sub. de Infraes tructura E scolar Ministerio de Planificacion e Infraestructura Publica - Ministerio de Educación, Cultura, Infancias y Dirección General de Escuelas (DGE)",temporario,1,0
+2025,0,1,15,Fiscalia de Estado,1,Fiscalía de Estado,permanente,112,0
+2025,0,1,15,Fiscalia de Estado,1,Fiscalía de Estado,temporario,1,0
+2025,0,1,16,Ministerio de Seguridad y Justicia,1,Ministerio de Seguridad,permanente,162,0
+2025,0,1,16,Ministerio de Seguridad y Justicia,2,Dcción. de Inteligencia Criminal,permanente,348,0
+2025,0,1,16,Ministerio de Seguridad y Justicia,5,Dcción. de Defensa Civil,permanente,55,0
+2025,0,1,16,Ministerio de Seguridad y Justicia,6,Dcción. General de Policia,permanente,8594,0
+2025,0,1,16,Ministerio de Seguridad y Justicia,6,Dcción. General de Policia,temporario,1,0
+2025,0,1,16,Ministerio de Seguridad y Justicia,7,Dcción. de Participación Comunitaria,permanente,1,0
+2025,0,1,16,Ministerio de Seguridad y Justicia,9,Dirección Gral de Administración,permanente,301,0
+2025,0,1,16,Ministerio de Seguridad y Justicia,10,Dcción. de Seguridad Vial,permanente,74,0
+2025,0,1,16,Ministerio de Seguridad y Justicia,13,Dirección Gral Servicio Penitenciario,permanente,2742,0
+2025,0,1,22,"Ministerio de Educacion, Cultura, Infancias y DGE (Ministerio de Cultura y Turismo)",1,"Subsecretaría de Cultura Ministerio de Educacion, Cultura, Infancias y DGE (Ministerio de Cultura y Turismo)",permanente,209,0
+2025,0,1,22,"Ministerio de Educacion, Cultura, Infancias y DGE (Ministerio de Cultura y Turismo)",1,"Subsecretaría de Cultura Ministerio de Educacion, Cultura, Infancias y DGE (Ministerio de Cultura y Turismo)",temporario,1,48
+2025,0,1,23,Ministerio de Energia y Ambiente,1,Ministerio de Energía y Ambiente,permanente,57,0
+2025,0,1,23,Ministerio de Energia y Ambiente,3,Dirección de Protección Ambiental,permanente,34,0
+2025,0,1,23,Ministerio de Energia y Ambiente,4,Dirección de Areas Protegidas,permanente,204,0
+2025,0,1,23,Ministerio de Energia y Ambiente,4,Dirección de Areas Protegidas,temporario,1,0
+2025,0,1,23,Ministerio de Energia y Ambiente,6,Dirección de Biodiversidad y Ecoparque,permanente,55,0
+2025,0,1,23,Ministerio de Energia y Ambiente,7,Dirección Parques y Paseos Públicos ( Biodiversidad y Ecoparque ),permanente,94,0
+2025,0,1,23,Ministerio de Energia y Ambiente,7,Dirección Parques y Paseos Públicos ( Biodiversidad y Ecoparque ),temporario,4,0
+2025,0,1,23,Ministerio de Energia y Ambiente,9,Dirección de Minería,permanente,15,0
+2025,0,1,23,Ministerio de Energia y Ambiente,10,Dirección de Hidrocarburos,permanente,11,0
+2025,0,1,23,Ministerio de Energia y Ambiente,12,Subsecretaria de Energía y Minería,permanente,12,0
+2025,0,1,26,"Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Secretaria de Servicios Publicos)",1,"Subsecretaria de Transporte Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Secretaria de Servicios Publicos)",permanente,5,0
+2025,0,1,26,"Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Secretaria de Servicios Publicos)",2,"Direccion de Transporte Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Secretaria de Servicios Publicos)",permanente,27,0
+2025,0,1,26,"Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Secretaria de Servicios Publicos)",3,"Subsecretaria de Transporte Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Secretaria de Servicios Publicos)",permanente,23,0
+2025,0,1,26,"Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Secretaria de Servicios Publicos)",4,"Subsecretaria de Transporte Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Secretaria de Servicios Publicos)",permanente,26,0
+2025,0,1,26,"Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Secretaria de Servicios Publicos)",5,"Subsecretaria de Transporte Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Secretaria de Servicios Publicos)",permanente,7,0
+2025,0,1,26,"Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Secretaria de Servicios Publicos)",14,"Dirección de Servicios Eléctricos Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Secretaria de Servicios Publicos)",permanente,7,0
+2025,0,2,7,Ministerio de Produccion,1,Instituto de Sanid.y Calid.Agropec.Mendoza,permanente,194,0
+2025,0,2,8,Ministerio de Salud y Deportes,1,Hospital Central,permanente,1319,0
+2025,0,2,8,Ministerio de Salud y Deportes,2,Hospital Materno Infantil Humberto Notti,permanente,1371,51
+2025,0,2,8,Ministerio de Salud y Deportes,2,Hospital Materno Infantil Humberto Notti,temporario,2,0
+2025,0,2,8,Ministerio de Salud y Deportes,3,Hospital Teodoro Schestakow,permanente,613,0
+2025,0,2,8,Ministerio de Salud y Deportes,4,Hospital Luis Lagomaggiore,permanente,1254,0
+2025,0,2,8,Ministerio de Salud y Deportes,8,Hospital Carlos Pereyra,permanente,206,0
+2025,0,2,8,Ministerio de Salud y Deportes,9,Hospital El Sauce,permanente,177,0
+2025,0,2,8,Ministerio de Salud y Deportes,10,Hospital Diego Paroissien,permanente,505,0
+2025,0,2,8,Ministerio de Salud y Deportes,11,Hospital A. Perrupato,permanente,702,0
+2025,0,2,8,Ministerio de Salud y Deportes,12,Hospital Gral. Alvear,permanente,372,0
+2025,0,2,8,Ministerio de Salud y Deportes,15,Hospital Victorino Tagarelli,permanente,170,0
+2025,0,2,8,Ministerio de Salud y Deportes,16,Hospital Antonio J. Scaravelli,permanente,466,0
+2025,0,2,8,Ministerio de Salud y Deportes,17,Hospital Saporitti,permanente,264,0
+2025,0,2,8,Ministerio de Salud y Deportes,19,Hospital Malargue,permanente,167,0
+2025,0,2,8,Ministerio de Salud y Deportes,24,Hospital Gral. Las Heras,permanente,153,0
+2025,0,2,8,Ministerio de Salud y Deportes,25,"D.G.de Protecci ó n de Der.Niños/as y Adolescentes Ministerio de Salud y Deportes - Nuevo Ministerio de Eduación, Cultura, Infancias y Dirección General de Escuelas (DGE)",permanente,971,0
+2025,0,2,8,Ministerio de Salud y Deportes,25,"D.G.de Protecci ó n de Der.Niños/as y Adolescentes Ministerio de Salud y Deportes - Nuevo Ministerio de Eduación, Cultura, Infancias y Dirección General de Escuelas (DGE)",temporario,1,0
+2025,0,2,8,Ministerio de Salud y Deportes,26,"Dir.de Responsabilidad Penal Juvenil Ministerio de Salud y Deportes - Nuevo Ministerio de Eduación, Cultura, Infancias y Dirección General de Escuelas (DGE)",permanente,315,0
+2025,0,2,8,Ministerio de Salud y Deportes,26,"Dir.de Responsabilidad Penal Juvenil Ministerio de Salud y Deportes - Nuevo Ministerio de Eduación, Cultura, Infancias y Dirección General de Escuelas (DGE)",temporario,12,0
+2025,0,2,9,"Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Ministerio de Planificacion e Infraestructura Publica)",2,"Dirección Provincial de Vialidad Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Ministerio de Planificacion e Infraestructura Publica)",permanente,685,0
+2025,0,2,9,"Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Ministerio de Planificacion e Infraestructura Publica)",2,"Dirección Provincial de Vialidad Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Ministerio de Planificacion e Infraestructura Publica)",temporario,11,0
+2025,0,2,14,"Ministerio de Educacion, Cultura, Infancias y DGE",1,Dcción. Gral. de Escuelas,permanente,617,145
+2025,0,2,14,"Ministerio de Educacion, Cultura, Infancias y DGE",1,Dcción. Gral. de Escuelas,temporario,67,376
+2025,0,2,14,"Ministerio de Educacion, Cultura, Infancias y DGE",2,Dcción. de Educ.Inicial y Básica(1er.y 2do,permanente,23743,58340
+2025,0,2,14,"Ministerio de Educacion, Cultura, Infancias y DGE",2,Dcción. de Educ.Inicial y Básica(1er.y 2do,temporario,984,3077
+2025,0,2,14,"Ministerio de Educacion, Cultura, Infancias y DGE",3,Dcción. Educ.Básica(3er.cic.) y Polimodal,permanente,4056,152519
+2025,0,2,14,"Ministerio de Educacion, Cultura, Infancias y DGE",3,Dcción. Educ.Básica(3er.cic.) y Polimodal,temporario,357,5540
+2025,0,2,14,"Ministerio de Educacion, Cultura, Infancias y DGE",7,Dcción. de Educación Privada,permanente,6,0
+2025,0,2,14,"Ministerio de Educacion, Cultura, Infancias y DGE",8,Dcción. de Jóvenes y Adultos,permanente,2008,49174
+2025,0,2,14,"Ministerio de Educacion, Cultura, Infancias y DGE",8,Dcción. de Jóvenes y Adultos,temporario,143,1179
+2025,0,2,14,"Ministerio de Educacion, Cultura, Infancias y DGE",9,Dcción. de Educación Especial,permanente,2435,5697
+2025,0,2,14,"Ministerio de Educacion, Cultura, Infancias y DGE",9,Dcción. de Educación Especial,temporario,61,106
+2025,0,2,14,"Ministerio de Educacion, Cultura, Infancias y DGE",10,Dcción. de Educación Superior,permanente,647,61784
+2025,0,2,14,"Ministerio de Educacion, Cultura, Infancias y DGE",10,Dcción. de Educación Superior,temporario,84,3971
+2025,0,2,14,"Ministerio de Educacion, Cultura, Infancias y DGE",11,Dirección de Educación Técnica y Trabajo,permanente,4061,90919
+2025,0,2,14,"Ministerio de Educacion, Cultura, Infancias y DGE",11,Dirección de Educación Técnica y Trabajo,temporario,273,2065
+2025,0,2,16,Ministerio de Seguridad y Justicia,1,INSPECCION GENERAL DE SEGURIDAD,permanente,13,0
+2025,0,5,6,Ministerio de Hacienda y Finanzas,2,Caja de Seguro Mutual,permanente,18,0
+2025,0,5,6,Ministerio de Hacienda y Finanzas,3,Instituto Pcial. de Juegos y Casinos,permanente,461,0
+2025,0,5,6,Ministerio de Hacienda y Finanzas,3,Instituto Pcial. de Juegos y Casinos,temporario,9,0
+2025,0,5,6,Ministerio de Hacienda y Finanzas,4,Administración Tributaria Mendoza,permanente,335,0
+2025,0,5,6,Ministerio de Hacienda y Finanzas,4,Administración Tributaria Mendoza,temporario,2,0
+2025,0,5,8,Ministerio de Salud y Deportes,1,Dcción. Gral. Obra Social de Emp. Pcos.,permanente,1810,0
+2025,0,5,8,Ministerio de Salud y Deportes,1,Dcción. Gral. Obra Social de Emp. Pcos.,temporario,12,0
+2025,0,5,8,Ministerio de Salud y Deportes,2,Hospital El Carmen,permanente,770,0
+2025,0,5,8,Ministerio de Salud y Deportes,2,Hospital El Carmen,temporario,10,0
+2025,0,5,8,Ministerio de Salud y Deportes,3,Sanatorio Fleming -O.S.E.P.-,permanente,282,0
+2025,0,5,8,Ministerio de Salud y Deportes,3,Sanatorio Fleming -O.S.E.P.-,temporario,5,0
+2025,0,5,9,"Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Ministerio de Planificacion e Infraestructura Publica)",3,"Instituto Provincial de la Vivienda Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Ministerio de Planificacion e Infraestructura Publica)",permanente,338,0
+2025,0,5,22,"Ministerio de Educacion, Cultura, Infancias y DGE (Ministerio de Cultura y Turismo)",1,Ente Mendoza Turismo Ministerio de Cultura y Turismo - Nuevo Ministerio de Producción,permanente,71,0
+2026,0,1,1,Poder Legislativo,1,Cámara de Senadores,permanente,327,0
+2026,0,1,1,Poder Legislativo,1,Cámara de Senadores,temporario,125,0
+2026,0,1,1,Poder Legislativo,2,Cámara de Diputados,permanente,398,0
+2026,0,1,1,Poder Legislativo,2,Cámara de Diputados,temporario,142,0
+2026,0,1,1,Poder Legislativo,3,Legislatura,permanente,104,0
+2026,0,1,1,Poder Legislativo,3,Legislatura,temporario,7,0
+2026,0,1,1,Poder Legislativo,4,Of. Inv. Administ. y Ética Pública,permanente,1,0
+2026,0,1,2,Poder Judicial,1,Suprema Corte,permanente,3207,0
+2026,0,1,2,Poder Judicial,1,Suprema Corte,temporario,2,0
+2026,0,1,2,Poder Judicial,2,Ministerio Público,permanente,1470,0
+2026,0,1,2,Poder Judicial,3,Jury de enjuiciamiento,permanente,2,0
+2026,0,1,2,Poder Judicial,4,Junta Electoral,permanente,11,0
+2026,0,1,2,Poder Judicial,5,Consejo de la Magistratura,permanente,7,0
+2026,0,1,2,Poder Judicial,6,Ministerio Público de la Defensa,permanente,300,0
+2026,0,1,3,Tribunal de Cuentas,1,Tribunal de Cuentas,permanente,249,0
+2026,0,1,3,Tribunal de Cuentas,1,Tribunal de Cuentas,temporario,1,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",1,"Ministerio Gob, Infraestruc y Desarr. Terr",permanente,170,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",2,Dcción.del Reg. Estado Civil y Capac. Pers,permanente,325,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",2,Dcción.del Reg. Estado Civil y Capac. Pers,temporario,2,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",9,Subsecretaría de Trabajo y Empleo,permanente,128,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",12,Dcción. de Personas Jurídicas,permanente,43,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",12,Dcción. de Personas Jurídicas,temporario,1,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",19,Dirección de Defensa al Consumidor,permanente,40,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",23,Dirección Informática y Comunicaciones,permanente,24,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",23,Dirección Informática y Comunicaciones,temporario,1,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",24,Asesoría de Gobierno,permanente,26,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",25,Escribanía General de Gobierno,permanente,8,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",26,Casa de Mendoza,permanente,6,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",27,Oficina Técnica Previsional,permanente,20,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",28,Subs. de Infraestructura y Desarrollo Terr,permanente,179,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",28,Subs. de Infraestructura y Desarrollo Terr,temporario,1,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",29,Dir. de Estadísticas e Invest. Económicas,permanente,37,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",31,Subsecretaría de Transporte,permanente,57,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",32,Dirección de Transporte,permanente,51,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",33,Dirección Gral. de Desarrollo Comunitario,permanente,60,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",33,Dirección Gral. de Desarrollo Comunitario,temporario,1,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",35,Dirección de Género y Diversidad,permanente,24,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",36,Dirección de Derechos Humanos,permanente,5,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",37,Fondo de Inversión y Desarrollo Social,permanente,22,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",38,Dirección de Contingencia,permanente,37,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",39,Dirección de Economía Social,permanente,43,0
+2026,0,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",40,Dirección de Gestión de Bienes Registrable,permanente,7,0
+2026,0,1,6,Ministerio de Hacienda y Finanzas,1,Ministerio de Hacienda y Finanzas,permanente,92,0
+2026,0,1,6,Ministerio de Hacienda y Finanzas,2,Dcción. Gral. de Presupuesto,permanente,16,0
+2026,0,1,6,Ministerio de Hacienda y Finanzas,3,Contaduría Gral. de la Provincia,permanente,117,0
+2026,0,1,6,Ministerio de Hacienda y Finanzas,5,Tesorería Gral. de la Provincia,permanente,16,0
+2026,0,1,6,Ministerio de Hacienda y Finanzas,6,Dcción. Gral. de Compras y Suministros,permanente,22,0
+2026,0,1,6,Ministerio de Hacienda y Finanzas,10,Dcción. Admin.de Activos ex Bcos.Oficiales,permanente,17,0
+2026,0,1,6,Ministerio de Hacienda y Finanzas,11,Dirección de Asuntos Legales,permanente,5,0
+2026,0,1,6,Ministerio de Hacienda y Finanzas,16,Dirección Gral de Crédito al Sector Públic,permanente,2,0
+2026,0,1,6,Ministerio de Hacienda y Finanzas,26,Dcción. de Pol. Salarial y Análisis RRHH,permanente,1,0
+2026,0,1,7,Ministerio de Producción,1,Ministerio de Producción,permanente,89,0
+2026,0,1,7,Ministerio de Producción,3,"Dir de Fiscaliz, Control y Tecn. Agroind.",permanente,46,0
+2026,0,1,7,Ministerio de Producción,6,Dirección de Contingencias Climáticas,permanente,31,0
+2026,0,1,7,Ministerio de Producción,7,Dcción. Pcial.de Ganadería,permanente,78,0
+2026,0,1,7,Ministerio de Producción,15,Dcción.de Emprendedores y Cooperativas,permanente,14,0
+2026,0,1,7,Ministerio de Producción,18,Dir. de Agricultura,permanente,4,0
+2026,0,1,8,Ministerio de Salud y Deportes,1,Ministerio de Salud y Deportes,permanente,345,40
+2026,0,1,8,Ministerio de Salud y Deportes,1,Ministerio de Salud y Deportes,temporario,391,0
+2026,0,1,8,Ministerio de Salud y Deportes,7,Hospital José Nestor Lencinas,permanente,137,0
+2026,0,1,8,Ministerio de Salud y Deportes,13,Hospital A. Metraux,permanente,79,0
+2026,0,1,8,Ministerio de Salud y Deportes,14,Hospital H. Gailhac,permanente,116,0
+2026,0,1,8,Ministerio de Salud y Deportes,18,Hospital Arturo Illia,permanente,74,0
+2026,0,1,8,Ministerio de Salud y Deportes,20,Hospital D. Sícoli,permanente,108,0
+2026,0,1,8,Ministerio de Salud y Deportes,21,Hospital Fernando Arenas Raffo,permanente,67,0
+2026,0,1,8,Ministerio de Salud y Deportes,25,Hospital Ministro Dr. Ramón Carrillo,permanente,294,0
+2026,0,1,8,Ministerio de Salud y Deportes,26,Hospital Luis Chrabalowski,permanente,74,0
+2026,0,1,8,Ministerio de Salud y Deportes,28,Hospital Eva Perón,permanente,54,0
+2026,0,1,8,Ministerio de Salud y Deportes,29,Dirección de Emergencias,permanente,147,0
+2026,0,1,8,Ministerio de Salud y Deportes,41,Area Departamental de Salud Capital,permanente,57,0
+2026,0,1,8,Ministerio de Salud y Deportes,42,Area Departamental de Salud Gral. Alvear,permanente,123,0
+2026,0,1,8,Ministerio de Salud y Deportes,43,Area Departamental de Salud Godoy Cruz,permanente,218,36
+2026,0,1,8,Ministerio de Salud y Deportes,44,Area Departamental de Salud Guaymallén,permanente,241,0
+2026,0,1,8,Ministerio de Salud y Deportes,45,Area Departamental de Salud Junín,permanente,122,0
+2026,0,1,8,Ministerio de Salud y Deportes,46,Area Departamental de Salud La Paz,permanente,40,0
+2026,0,1,8,Ministerio de Salud y Deportes,47,Area Departamental de Salud Las Heras,permanente,158,0
+2026,0,1,8,Ministerio de Salud y Deportes,48,Area Departamental de Salud Lavalle,permanente,154,0
+2026,0,1,8,Ministerio de Salud y Deportes,49,Area Departamental de Salud Luján,permanente,158,0
+2026,0,1,8,Ministerio de Salud y Deportes,50,Area Departamental de Salud Maipú,permanente,154,0
+2026,0,1,8,Ministerio de Salud y Deportes,51,Area Departamental de Salud Malargue,permanente,81,0
+2026,0,1,8,Ministerio de Salud y Deportes,52,Area Departamental de Salud Rivadavia,permanente,109,0
+2026,0,1,8,Ministerio de Salud y Deportes,53,Area Departamental de Salud San Carlos,permanente,97,0
+2026,0,1,8,Ministerio de Salud y Deportes,54,Area Departamental de Salud San Martín,permanente,154,0
+2026,0,1,8,Ministerio de Salud y Deportes,55,Area Departamental de Salud San Rafael,permanente,206,0
+2026,0,1,8,Ministerio de Salud y Deportes,56,Area Sanitaria Santa Rosa,permanente,58,0
+2026,0,1,8,Ministerio de Salud y Deportes,56,Area Sanitaria Santa Rosa,temporario,1,0
+2026,0,1,8,Ministerio de Salud y Deportes,57,Area Departamental de Salud Tunuyán,permanente,104,0
+2026,0,1,8,Ministerio de Salud y Deportes,58,Area Departamental de Salud Tupungato,permanente,64,0
+2026,0,1,8,Ministerio de Salud y Deportes,75,Subsecretaría de Salud,permanente,662,0
+2026,0,1,8,Ministerio de Salud y Deportes,87,Dirección de Atención Adultos Mayores,permanente,156,0
+2026,0,1,8,Ministerio de Salud y Deportes,88,Dirección de Atención a las Pers.c/Discap.,permanente,122,29
+2026,0,1,8,Ministerio de Salud y Deportes,90,Subsecretaría de Deportes,permanente,119,58
+2026,0,1,8,Ministerio de Salud y Deportes,91,Dirección de Administración de Deportes,permanente,1,0
+2026,0,1,14,"Min. Educación, Cultura, Infancias y DGE",2,"Min. de Educación, Cultura, Infancias",permanente,13,0
+2026,0,1,14,"Min. Educación, Cultura, Infancias y DGE",3,"Subs. de Infancias, Adolescencias y Juvent",permanente,7,0
+2026,0,1,14,"Min. Educación, Cultura, Infancias y DGE",4,"Sub. de Infraes E, Cultural y de Infancias",permanente,98,0
+2026,0,1,14,"Min. Educación, Cultura, Infancias y DGE",5,Subsecretaría de Cultura,permanente,205,0
+2026,0,1,14,"Min. Educación, Cultura, Infancias y DGE",5,Subsecretaría de Cultura,temporario,1,15
+2026,0,1,15,Fiscalía de Estado,1,Fiscalía de Estado,permanente,118,0
+2026,0,1,15,Fiscalía de Estado,1,Fiscalía de Estado,temporario,1,0
+2026,0,1,16,Ministerio de Seguridad y Justicia,1,Ministerio de Seguridad,permanente,157,0
+2026,0,1,16,Ministerio de Seguridad y Justicia,2,Dcción. de Inteligencia Criminal,permanente,305,0
+2026,0,1,16,Ministerio de Seguridad y Justicia,5,Dcción. de Defensa Civil,permanente,50,0
+2026,0,1,16,Ministerio de Seguridad y Justicia,6,Dcción. General de Policia,permanente,8726,0
+2026,0,1,16,Ministerio de Seguridad y Justicia,6,Dcción. General de Policia,temporario,3,0
+2026,0,1,16,Ministerio de Seguridad y Justicia,7,Dcción. de Participación Comunitaria,permanente,1,0
+2026,0,1,16,Ministerio de Seguridad y Justicia,9,Dcción. General de Administración,permanente,283,0
+2026,0,1,16,Ministerio de Seguridad y Justicia,9,Dcción. General de Administración,temporario,3,0
+2026,0,1,16,Ministerio de Seguridad y Justicia,10,Dcción. de Seguridad Vial,permanente,63,0
+2026,0,1,16,Ministerio de Seguridad y Justicia,13,Dirección Gral Servicio Penitenciario,permanente,2849,0
+2026,0,1,23,Ministerio de Energía y Ambiente,1,Ministerio de Energía y Ambiente,permanente,47,0
+2026,0,1,23,Ministerio de Energía y Ambiente,3,Dir. de Gestión y Fiscalización Ambiental,permanente,33,0
+2026,0,1,23,Ministerio de Energía y Ambiente,4,Dirección de Areas Protegidas,permanente,200,0
+2026,0,1,23,Ministerio de Energía y Ambiente,4,Dirección de Areas Protegidas,temporario,1,0
+2026,0,1,23,Ministerio de Energía y Ambiente,5,Dirección de Hidráulica,permanente,29,0
+2026,0,1,23,Ministerio de Energía y Ambiente,6,Dirección de Biodiversidad y Ecoparque,permanente,148,0
+2026,0,1,23,Ministerio de Energía y Ambiente,6,Dirección de Biodiversidad y Ecoparque,temporario,4,0
+2026,0,1,23,Ministerio de Energía y Ambiente,9,Dirección de Minería,permanente,15,0
+2026,0,1,23,Ministerio de Energía y Ambiente,10,Dirección de Hidrocarburos,permanente,14,0
+2026,0,1,23,Ministerio de Energía y Ambiente,11,Dirección de Servicios Eléctricos,permanente,4,0
+2026,0,1,23,Ministerio de Energía y Ambiente,12,Subsecretaria de Energía y Minería,permanente,18,0
+2026,0,2,5,"Ministerio Gob, Infraestruc y Desarr. Terr",2,Dcción.Pcial.de Vialidad,permanente,897,0
+2026,0,2,5,"Ministerio Gob, Infraestruc y Desarr. Terr",2,Dcción.Pcial.de Vialidad,temporario,14,0
+2026,0,2,7,Ministerio de Producción,1,Instituto de Sanid.y Calid.Agropec.Mendoza,permanente,189,0
+2026,0,2,8,Ministerio de Salud y Deportes,1,Hospital Central,permanente,1262,0
+2026,0,2,8,Ministerio de Salud y Deportes,2,Hospital Materno Infantil Humberto Notti,permanente,1322,51
+2026,0,2,8,Ministerio de Salud y Deportes,2,Hospital Materno Infantil Humberto Notti,temporario,2,0
+2026,0,2,8,Ministerio de Salud y Deportes,3,Hospital Teodoro Schestakow,permanente,603,0
+2026,0,2,8,Ministerio de Salud y Deportes,4,Hospital Luis Lagomaggiore,permanente,1172,0
+2026,0,2,8,Ministerio de Salud y Deportes,8,Hospital Carlos Pereyra,permanente,194,0
+2026,0,2,8,Ministerio de Salud y Deportes,9,Hospital El Sauce,permanente,170,0
+2026,0,2,8,Ministerio de Salud y Deportes,10,Hospital Diego Paroissien,permanente,493,0
+2026,0,2,8,Ministerio de Salud y Deportes,11,Hospital A. Perrupato,permanente,689,0
+2026,0,2,8,Ministerio de Salud y Deportes,12,Hospital Enfermeros Argentinos,permanente,364,0
+2026,0,2,8,Ministerio de Salud y Deportes,15,Hospital Victorino Tagarelli,permanente,163,0
+2026,0,2,8,Ministerio de Salud y Deportes,16,Hospital Antonio J. Scaravelli,permanente,452,0
+2026,0,2,8,Ministerio de Salud y Deportes,17,Hospital Saporitti,permanente,250,0
+2026,0,2,8,Ministerio de Salud y Deportes,19,Hospital Malargue,permanente,164,0
+2026,0,2,8,Ministerio de Salud y Deportes,24,Hospital Gral. Las Heras,permanente,155,0
+2026,0,2,14,"Min. Educación, Cultura, Infancias y DGE",1,Dcción. Gral. de Escuelas,permanente,646,135
+2026,0,2,14,"Min. Educación, Cultura, Infancias y DGE",1,Dcción. Gral. de Escuelas,temporario,70,327
+2026,0,2,14,"Min. Educación, Cultura, Infancias y DGE",2,Dcción. de Educ.Inicial y Básica(1er.y 2do,permanente,20808,59965
+2026,0,2,14,"Min. Educación, Cultura, Infancias y DGE",2,Dcción. de Educ.Inicial y Básica(1er.y 2do,temporario,1034,3264
+2026,0,2,14,"Min. Educación, Cultura, Infancias y DGE",3,Dcción. Educ.Básica(3er.cic.) y Polimodal,permanente,3778,149802
+2026,0,2,14,"Min. Educación, Cultura, Infancias y DGE",3,Dcción. Educ.Básica(3er.cic.) y Polimodal,temporario,425,8998
+2026,0,2,14,"Min. Educación, Cultura, Infancias y DGE",7,Dcción. de Educación Privada,permanente,5,0
+2026,0,2,14,"Min. Educación, Cultura, Infancias y DGE",8,Dcción. de Jóvenes y Adultos,permanente,1916,48520
+2026,0,2,14,"Min. Educación, Cultura, Infancias y DGE",8,Dcción. de Jóvenes y Adultos,temporario,129,908
+2026,0,2,14,"Min. Educación, Cultura, Infancias y DGE",9,Dcción. de Educación Especial,permanente,2377,6443
+2026,0,2,14,"Min. Educación, Cultura, Infancias y DGE",9,Dcción. de Educación Especial,temporario,55,130
+2026,0,2,14,"Min. Educación, Cultura, Infancias y DGE",10,Dcción. de Educación Superior,permanente,626,59658
+2026,0,2,14,"Min. Educación, Cultura, Infancias y DGE",10,Dcción. de Educación Superior,temporario,80,3884
+2026,0,2,14,"Min. Educación, Cultura, Infancias y DGE",11,Dirección de Educación Técnica y Trabajo,permanente,3814,90589
+2026,0,2,14,"Min. Educación, Cultura, Infancias y DGE",11,Dirección de Educación Técnica y Trabajo,temporario,316,2389
+2026,0,2,14,"Min. Educación, Cultura, Infancias y DGE",25,D.G.de Protección de Der.Niños/as y Adoles,permanente,955,0
+2026,0,2,14,"Min. Educación, Cultura, Infancias y DGE",25,D.G.de Protección de Der.Niños/as y Adoles,temporario,1,0
+2026,0,2,14,"Min. Educación, Cultura, Infancias y DGE",26,Dir. de Responsabilidad Penal Juvenil,permanente,308,0
+2026,0,2,14,"Min. Educación, Cultura, Infancias y DGE",26,Dir. de Responsabilidad Penal Juvenil,temporario,11,0
+2026,0,2,16,Ministerio de Seguridad y Justicia,1,Inspección General de Seguridad,permanente,12,0
+2026,0,5,5,"Ministerio Gob, Infraestruc y Desarr. Terr",1,Instituto Provincial de la Vivienda,permanente,320,0
+2026,0,5,6,Ministerio de Hacienda y Finanzas,2,Caja de Seguro Mutual,permanente,23,0
+2026,0,5,6,Ministerio de Hacienda y Finanzas,3,Instituto Pcial. de Juegos y Casinos,permanente,511,0
+2026,0,5,6,Ministerio de Hacienda y Finanzas,3,Instituto Pcial. de Juegos y Casinos,temporario,9,0
+2026,0,5,6,Ministerio de Hacienda y Finanzas,4,Administración Tributaria Mendoza,permanente,335,0
+2026,0,5,6,Ministerio de Hacienda y Finanzas,4,Administración Tributaria Mendoza,temporario,2,0
+2026,0,5,7,Ministerio de Producción,3,Ente Mendoza Turismo,permanente,72,0
+2026,0,5,8,Ministerio de Salud y Deportes,1,Dcción. Gral. Obra Social de Emp. Pcos.,permanente,1784,0
+2026,0,5,8,Ministerio de Salud y Deportes,1,Dcción. Gral. Obra Social de Emp. Pcos.,temporario,5,0
+2026,0,5,8,Ministerio de Salud y Deportes,2,Hospital El Carmen,permanente,785,0
+2026,0,5,8,Ministerio de Salud y Deportes,3,Sanatorio Fleming -O.S.E.P.-,permanente,282,0
+2026,0,5,8,Ministerio de Salud y Deportes,3,Sanatorio Fleming -O.S.E.P.-,temporario,1,0
+2027,1,1,1,Poder Legislativo,1,Cámara de Senadores,permanente,330,0
+2027,1,1,1,Poder Legislativo,1,Cámara de Senadores,temporario,125,0
+2027,1,1,1,Poder Legislativo,2,Cámara de Diputados,permanente,379,0
+2027,1,1,1,Poder Legislativo,2,Cámara de Diputados,temporario,140,0
+2027,1,1,1,Poder Legislativo,3,Legislatura,permanente,104,0
+2027,1,1,1,Poder Legislativo,3,Legislatura,temporario,17,0
+2027,1,1,1,Poder Legislativo,4,Of. Inv. Administ. y Ética Pública,permanente,1,0
+2027,1,1,2,Poder Judicial,1,Suprema Corte,permanente,3170,0
+2027,1,1,2,Poder Judicial,1,Suprema Corte,temporario,2,0
+2027,1,1,2,Poder Judicial,2,Ministerio Público,permanente,1616,0
+2027,1,1,2,Poder Judicial,3,Jury de enjuiciamiento,permanente,2,0
+2027,1,1,2,Poder Judicial,4,Junta Electoral,permanente,11,0
+2027,1,1,2,Poder Judicial,5,Consejo de la Magistratura,permanente,7,0
+2027,1,1,2,Poder Judicial,6,Ministerio Público de la Defensa,permanente,328,0
+2027,1,1,3,Tribunal de Cuentas,1,Tribunal de Cuentas,permanente,248,0
+2027,1,1,3,Tribunal de Cuentas,1,Tribunal de Cuentas,temporario,1,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",1,"Ministerio Gob, Infraestruc y Desarr. Terr",permanente,189,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",2,Dcción.del Reg. Estado Civil y Capac. Pers,permanente,317,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",2,Dcción.del Reg. Estado Civil y Capac. Pers,temporario,2,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",9,Subsecretaría de Trabajo y Empleo,permanente,118,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",12,Dcción. de Personas Jurídicas,permanente,41,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",23,Dirección Informática y Comunicaciones,permanente,22,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",23,Dirección Informática y Comunicaciones,temporario,1,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",24,Asesoría de Gobierno,permanente,24,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",25,Escribanía General de Gobierno,permanente,8,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",26,Casa de Mendoza,permanente,6,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",27,Oficina Técnica Previsional,permanente,19,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",28,Subs. de Infraestructura y Desarrollo Terr,permanente,162,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",28,Subs. de Infraestructura y Desarrollo Terr,temporario,1,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",29,Dir. de Estadísticas e Invest. Económicas,permanente,31,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",31,Subsecretaría de Transporte,permanente,32,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",32,Dirección de Transporte,permanente,51,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",33,Dirección Gral. de Desarrollo Comunitario,permanente,53,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",33,Dirección Gral. de Desarrollo Comunitario,temporario,1,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",35,Dirección de Género y Diversidad,permanente,24,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",36,Dirección de Derechos Humanos,permanente,6,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",37,Fondo de Inversión y Desarrollo Social,permanente,25,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",38,Dirección de Contingencia,permanente,35,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",39,Dirección de Economía Social,permanente,39,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",40,Dirección de Gestión de Bienes Registrable,permanente,7,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",41,Dirección de Defensa del Consumidor,permanente,41,0
+2027,1,1,5,"Ministerio Gob, Infraestruc y Desarr. Terr",42,DIGEBIRE Enlace DAABO,permanente,18,0
+2027,1,1,6,Ministerio de Hacienda y Finanzas,1,Ministerio de Hacienda y Finanzas,permanente,93,0
+2027,1,1,6,Ministerio de Hacienda y Finanzas,2,Dcción. Gral. de Presupuesto,permanente,19,0
+2027,1,1,6,Ministerio de Hacienda y Finanzas,3,Contaduría Gral. de la Provincia,permanente,118,0
+2027,1,1,6,Ministerio de Hacienda y Finanzas,5,Tesorería Gral. de la Provincia,permanente,18,0
+2027,1,1,6,Ministerio de Hacienda y Finanzas,6,Dcción. Gral. Contrat. y Gestión de Bienes,permanente,22,0
+2027,1,1,6,Ministerio de Hacienda y Finanzas,11,Dirección de Asuntos Legales,permanente,6,0
+2027,1,1,6,Ministerio de Hacienda y Finanzas,16,Dirección Gral de Crédito al Sector Públic,permanente,2,0
+2027,1,1,6,Ministerio de Hacienda y Finanzas,20,Dcción. Gral de Inversión Pública y PPP,permanente,3,0
+2027,1,1,6,Ministerio de Hacienda y Finanzas,26,Dcción. de Pol. Salarial y Análisis RRHH,permanente,3,0
+2027,1,1,7,Ministerio de Producción,1,Ministerio de Producción,permanente,88,0
+2027,1,1,7,Ministerio de Producción,3,"Dir de Fiscaliz, Control y Tecn. Agroind.",permanente,42,0
+2027,1,1,7,Ministerio de Producción,6,Dirección de Contingencias Climáticas,permanente,30,0
+2027,1,1,7,Ministerio de Producción,7,Dcción. Pcial.de Ganadería,permanente,76,0
+2027,1,1,7,Ministerio de Producción,15,Dcción.de Emprendedores y Cooperativas,permanente,15,0
+2027,1,1,7,Ministerio de Producción,18,Dir. de Agricultura,permanente,4,0
+2027,1,1,8,Ministerio de Salud y Deportes,1,"Ministerio de Salud, Desarr.Soc.y Deportes",permanente,330,38
+2027,1,1,8,Ministerio de Salud y Deportes,1,"Ministerio de Salud, Desarr.Soc.y Deportes",temporario,254,0
+2027,1,1,8,Ministerio de Salud y Deportes,7,Hospital José Nestor Lencinas,permanente,123,0
+2027,1,1,8,Ministerio de Salud y Deportes,13,Hospital A. Metraux,permanente,73,0
+2027,1,1,8,Ministerio de Salud y Deportes,14,Hospital H. Gailhac,permanente,106,0
+2027,1,1,8,Ministerio de Salud y Deportes,18,Hospital Arturo Illia,permanente,71,0
+2027,1,1,8,Ministerio de Salud y Deportes,20,Hospital D. Sícoli,permanente,98,0
+2027,1,1,8,Ministerio de Salud y Deportes,21,Hospital Fernando Arenas Raffo,permanente,68,0
+2027,1,1,8,Ministerio de Salud y Deportes,25,Hospital Ministro Dr. Ramón Carrillo,permanente,285,0
+2027,1,1,8,Ministerio de Salud y Deportes,26,Hospital Luis Chrabalowski,permanente,68,0
+2027,1,1,8,Ministerio de Salud y Deportes,28,Hospital Eva Perón,permanente,54,0
+2027,1,1,8,Ministerio de Salud y Deportes,29,Dirección de Emergencias,permanente,138,0
+2027,1,1,8,Ministerio de Salud y Deportes,41,Area Departamental de Salud Capital,permanente,52,0
+2027,1,1,8,Ministerio de Salud y Deportes,42,Area Departamental de Salud Gral. Alvear,permanente,116,0
+2027,1,1,8,Ministerio de Salud y Deportes,43,Area Departamental de Salud Godoy Cruz,permanente,220,36
+2027,1,1,8,Ministerio de Salud y Deportes,44,Area Departamental de Salud Guaymallén,permanente,237,0
+2027,1,1,8,Ministerio de Salud y Deportes,45,Area Departamental de Salud Junín,permanente,117,0
+2027,1,1,8,Ministerio de Salud y Deportes,46,Area Departamental de Salud La Paz,permanente,34,0
+2027,1,1,8,Ministerio de Salud y Deportes,47,Area Departamental de Salud Las Heras,permanente,151,0
+2027,1,1,8,Ministerio de Salud y Deportes,48,Area Departamental de Salud Lavalle,permanente,153,0
+2027,1,1,8,Ministerio de Salud y Deportes,49,Area Departamental de Salud Luján,permanente,153,0
+2027,1,1,8,Ministerio de Salud y Deportes,50,Area Departamental de Salud Maipú,permanente,156,0
+2027,1,1,8,Ministerio de Salud y Deportes,51,Area Departamental de Salud Malargue,permanente,80,0
+2027,1,1,8,Ministerio de Salud y Deportes,52,Area Departamental de Salud Rivadavia,permanente,104,0
+2027,1,1,8,Ministerio de Salud y Deportes,53,Area Departamental de Salud San Carlos,permanente,96,0
+2027,1,1,8,Ministerio de Salud y Deportes,54,Area Departamental de Salud San Martín,permanente,146,0
+2027,1,1,8,Ministerio de Salud y Deportes,55,Area Departamental de Salud San Rafael,permanente,200,0
+2027,1,1,8,Ministerio de Salud y Deportes,56,Area Sanitaria Santa Rosa,permanente,54,0
+2027,1,1,8,Ministerio de Salud y Deportes,56,Area Sanitaria Santa Rosa,temporario,1,0
+2027,1,1,8,Ministerio de Salud y Deportes,57,Area Departamental de Salud Tunuyán,permanente,104,0
+2027,1,1,8,Ministerio de Salud y Deportes,58,Area Departamental de Salud Tupungato,permanente,62,0
+2027,1,1,8,Ministerio de Salud y Deportes,75,Subsecretaría de Salud,permanente,628,0
+2027,1,1,8,Ministerio de Salud y Deportes,87,Dirección de Atención Adultos Mayores,permanente,142,0
+2027,1,1,8,Ministerio de Salud y Deportes,88,Dirección de Atención a las Pers.c/Discap.,permanente,114,0
+2027,1,1,8,Ministerio de Salud y Deportes,90,Subsecretaría de Deportes,permanente,115,60
+2027,1,1,8,Ministerio de Salud y Deportes,91,Dirección de Administración de Deportes,permanente,1,0
+2027,1,1,14,"Min. Educación, Cultura, Infancias y DGE",2,"Min. de Educación, Cultura, Infancias",permanente,10,0
+2027,1,1,14,"Min. Educación, Cultura, Infancias y DGE",3,"Subs. de Infancias, Adolescencias y Juvent",permanente,7,0
+2027,1,1,14,"Min. Educación, Cultura, Infancias y DGE",4,"Sub. de Infraes E, Cultural y de Infancias",permanente,97,0
+2027,1,1,14,"Min. Educación, Cultura, Infancias y DGE",5,Subsecretaría de Cultura,permanente,197,0
+2027,1,1,14,"Min. Educación, Cultura, Infancias y DGE",5,Subsecretaría de Cultura,temporario,1,15
+2027,1,1,15,Fiscalía de Estado,1,Fiscalía de Estado,permanente,111,0
+2027,1,1,15,Fiscalía de Estado,1,Fiscalía de Estado,temporario,1,0
+2027,1,1,16,Ministerio de Seguridad y Justicia,1,Ministerio de Seguridad,permanente,143,0
+2027,1,1,16,Ministerio de Seguridad y Justicia,2,Dcción. de Inteligencia Criminal,permanente,275,0
+2027,1,1,16,Ministerio de Seguridad y Justicia,5,Dcción. de Defensa Civil,permanente,46,0
+2027,1,1,16,Ministerio de Seguridad y Justicia,6,Dcción. General de Policia,permanente,8724,0
+2027,1,1,16,Ministerio de Seguridad y Justicia,6,Dcción. General de Policia,temporario,3,0
+2027,1,1,16,Ministerio de Seguridad y Justicia,7,Dcción. de Participación Comunitaria,permanente,1,0
+2027,1,1,16,Ministerio de Seguridad y Justicia,9,Dcción. General de Administración,permanente,273,0
+2027,1,1,16,Ministerio de Seguridad y Justicia,9,Dcción. General de Administración,temporario,3,0
+2027,1,1,16,Ministerio de Seguridad y Justicia,10,Dcción. de Seguridad Vial,permanente,53,0
+2027,1,1,16,Ministerio de Seguridad y Justicia,13,Dirección Gral Servicio Penitenciario,permanente,2794,0
+2027,1,1,23,Ministerio de Energía y Ambiente,1,Ministerio de Energía y Ambiente,permanente,47,0
+2027,1,1,23,Ministerio de Energía y Ambiente,3,Dir. de Gestión y Fiscalización Ambiental,permanente,30,0
+2027,1,1,23,Ministerio de Energía y Ambiente,4,Dirección de Areas Protegidas,permanente,193,0
+2027,1,1,23,Ministerio de Energía y Ambiente,4,Dirección de Areas Protegidas,temporario,1,0
+2027,1,1,23,Ministerio de Energía y Ambiente,5,Dirección de Hidráulica,permanente,34,0
+2027,1,1,23,Ministerio de Energía y Ambiente,6,Dirección de Biodiversidad y Ecoparque,permanente,140,0
+2027,1,1,23,Ministerio de Energía y Ambiente,6,Dirección de Biodiversidad y Ecoparque,temporario,2,0
+2027,1,1,23,Ministerio de Energía y Ambiente,9,Dirección de Minería,permanente,14,0
+2027,1,1,23,Ministerio de Energía y Ambiente,10,Dirección de Hidrocarburos,permanente,14,0
+2027,1,1,23,Ministerio de Energía y Ambiente,11,Dirección de Servicios Eléctricos,permanente,3,0
+2027,1,1,23,Ministerio de Energía y Ambiente,12,Subsecretaria de Energía y Minería,permanente,18,0
+2027,1,2,5,"Ministerio Gob, Infraestruc y Desarr. Terr",2,Dirección Provincial de Vialidad,permanente,867,0
+2027,1,2,5,"Ministerio Gob, Infraestruc y Desarr. Terr",2,Dirección Provincial de Vialidad,temporario,11,0
+2027,1,2,7,Ministerio de Producción,1,Instituto de Sanid.y Calid.Agropec.Mendoza,permanente,183,0
+2027,1,2,8,Ministerio de Salud y Deportes,1,Hospital Central,permanente,1230,0
+2027,1,2,8,Ministerio de Salud y Deportes,2,Hospital Materno Infantil Humberto Notti,permanente,1310,67
+2027,1,2,8,Ministerio de Salud y Deportes,2,Hospital Materno Infantil Humberto Notti,temporario,2,0
+2027,1,2,8,Ministerio de Salud y Deportes,3,Hospital Teodoro Schestakow,permanente,581,0
+2027,1,2,8,Ministerio de Salud y Deportes,4,Hospital Luis Lagomaggiore,permanente,1128,0
+2027,1,2,8,Ministerio de Salud y Deportes,8,Hospital Carlos Pereyra,permanente,181,0
+2027,1,2,8,Ministerio de Salud y Deportes,9,Hospital El Sauce,permanente,165,0
+2027,1,2,8,Ministerio de Salud y Deportes,10,Hospital Diego Paroissien,permanente,475,0
+2027,1,2,8,Ministerio de Salud y Deportes,11,Hospital A. Perrupato,permanente,676,0
+2027,1,2,8,Ministerio de Salud y Deportes,12,Hospital Enfermeros Argentinos,permanente,356,0
+2027,1,2,8,Ministerio de Salud y Deportes,15,Hospital Victorino Tagarelli,permanente,157,0
+2027,1,2,8,Ministerio de Salud y Deportes,16,Hospital Antonio J. Scaravelli,permanente,442,0
+2027,1,2,8,Ministerio de Salud y Deportes,17,Hospital Saporitti,permanente,243,0
+2027,1,2,8,Ministerio de Salud y Deportes,19,Hospital Malargue,permanente,159,0
+2027,1,2,8,Ministerio de Salud y Deportes,24,Hospital Gral. Las Heras,permanente,157,0
+2027,1,2,14,"Min. Educación, Cultura, Infancias y DGE",1,Dcción. Gral. de Escuelas,permanente,599,135
+2027,1,2,14,"Min. Educación, Cultura, Infancias y DGE",1,Dcción. Gral. de Escuelas,temporario,80,510
+2027,1,2,14,"Min. Educación, Cultura, Infancias y DGE",2,Dcción. de Educ.Inicial y Básica(1er.y 2do,permanente,19522,62235
+2027,1,2,14,"Min. Educación, Cultura, Infancias y DGE",2,Dcción. de Educ.Inicial y Básica(1er.y 2do,temporario,1217,3546
+2027,1,2,14,"Min. Educación, Cultura, Infancias y DGE",3,Dcción. Educ.Básica(3er.cic.) y Polimodal,permanente,3812,147707
+2027,1,2,14,"Min. Educación, Cultura, Infancias y DGE",3,Dcción. Educ.Básica(3er.cic.) y Polimodal,temporario,379,9184
+2027,1,2,14,"Min. Educación, Cultura, Infancias y DGE",7,Dcción. de Educación Privada,permanente,5,0
+2027,1,2,14,"Min. Educación, Cultura, Infancias y DGE",8,Dcción. de Jóvenes y Adultos,permanente,1818,48269
+2027,1,2,14,"Min. Educación, Cultura, Infancias y DGE",8,Dcción. de Jóvenes y Adultos,temporario,105,927
+2027,1,2,14,"Min. Educación, Cultura, Infancias y DGE",9,Dcción. de Educación Especial,permanente,2343,6452
+2027,1,2,14,"Min. Educación, Cultura, Infancias y DGE",9,Dcción. de Educación Especial,temporario,46,101
+2027,1,2,14,"Min. Educación, Cultura, Infancias y DGE",10,Dcción. de Educación Superior,permanente,644,58594
+2027,1,2,14,"Min. Educación, Cultura, Infancias y DGE",10,Dcción. de Educación Superior,temporario,61,2956
+2027,1,2,14,"Min. Educación, Cultura, Infancias y DGE",11,Dirección de Educación Técnica y Trabajo,permanente,3770,89252
+2027,1,2,14,"Min. Educación, Cultura, Infancias y DGE",11,Dirección de Educación Técnica y Trabajo,temporario,299,2510
+2027,1,2,14,"Min. Educación, Cultura, Infancias y DGE",25,D.G.de Protección de Der.Niños/as y Adoles,permanente,908,0
+2027,1,2,14,"Min. Educación, Cultura, Infancias y DGE",25,D.G.de Protección de Der.Niños/as y Adoles,temporario,1,0
+2027,1,2,14,"Min. Educación, Cultura, Infancias y DGE",26,Dir. de Responsabilidad Penal Juvenil,permanente,305,0
+2027,1,2,14,"Min. Educación, Cultura, Infancias y DGE",26,Dir. de Responsabilidad Penal Juvenil,temporario,11,0
+2027,1,2,16,Ministerio de Seguridad y Justicia,1,Inspección General de Seguridad,permanente,12,0
+2027,1,5,5,"Ministerio Gob, Infraestruc y Desarr. Terr",1,Instituto Provincial de la Vivienda,permanente,310,0
+2027,1,5,6,Ministerio de Hacienda y Finanzas,2,Caja de Seguro Mutual,permanente,20,0
+2027,1,5,6,Ministerio de Hacienda y Finanzas,3,Instituto Pcial. de Juegos y Casinos,permanente,496,0
+2027,1,5,6,Ministerio de Hacienda y Finanzas,3,Instituto Pcial. de Juegos y Casinos,temporario,9,0
+2027,1,5,6,Ministerio de Hacienda y Finanzas,4,Administración Tributaria Mendoza,permanente,315,0
+2027,1,5,6,Ministerio de Hacienda y Finanzas,4,Administración Tributaria Mendoza,temporario,2,0
+2027,1,5,7,Ministerio de Producción,3,Ente Mendoza Turismo,permanente,72,0
+2027,1,5,8,Ministerio de Salud y Deportes,1,Dcción. Gral. Obra Social de Emp. Pcos.,permanente,1716,0
+2027,1,5,8,Ministerio de Salud y Deportes,1,Dcción. Gral. Obra Social de Emp. Pcos.,temporario,3,0
+2027,1,5,8,Ministerio de Salud y Deportes,2,Hospital El Carmen,permanente,765,0
+2027,1,5,8,Ministerio de Salud y Deportes,3,Sanatorio Fleming -O.S.E.P.-,permanente,274,0
+2027,1,5,8,Ministerio de Salud y Deportes,3,Sanatorio Fleming -O.S.E.P.-,temporario,1,0

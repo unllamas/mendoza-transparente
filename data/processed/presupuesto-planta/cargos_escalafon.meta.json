@@ -1,0 +1,84 @@
+{
+  "titulo": "Cargos de la planta por escalafón y clase",
+  "descripcion": "Cada fila es un cargo (agrupamiento, tramo, subtramo y clase del escalafón) de una unidad organizativa, con su cantidad de permanentes y temporarios. Sale de la planilla 8.3 de la Ley de Presupuesto, 2020 a 2027. Son cargos OCUPADOS al mes de corte (agosto del año anterior), no todos los cargos autorizados: los retenidos y las vacantes en trámite van aparte (cargos_vacantes). No hay nombres ni sueldos. Las sumas por unidad coinciden con cargos.csv salvo tres unidades de 2026 donde las propias planillas difieren.",
+  "columnas": {
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio",
+      "descripcion": "Año del presupuesto."
+    },
+    "es_proyecto": {
+      "etiqueta": "Proyecto",
+      "tipo": "booleano",
+      "descripcion": "1 si es el proyecto de ley enviado a la Legislatura (2027); 0 si es la ley sancionada."
+    },
+    "codigo_caracter": {
+      "etiqueta": "Carácter",
+      "tipo": "texto",
+      "valores": {
+        "1": "Administración Central",
+        "2": "Organismos Descentralizados",
+        "5": "Otras Entidades"
+      },
+      "descripcion": "Clasificación institucional de la ley: 1 Administración Central, 2 Organismos Descentralizados, 5 Otras Entidades (el 3, Cuentas Especiales, no tiene planta)."
+    },
+    "codigo_jurisdiccion": {
+      "etiqueta": "Cód. jurisdicción",
+      "tipo": "texto",
+      "descripcion": "Código de jurisdicción del presupuesto. Se mantiene entre años aunque cambie el nombre (por ejemplo la 7 fue Economía y Energía hasta 2024 y Producción desde 2025)."
+    },
+    "codigo_unidad": {
+      "etiqueta": "Cód. unidad",
+      "tipo": "texto",
+      "descripcion": "Código de unidad organizativa dentro de la jurisdicción (el mismo número puede repetirse en otra jurisdicción)."
+    },
+    "unidad": {
+      "etiqueta": "Unidad organizativa",
+      "tipo": "texto"
+    },
+    "cargo": {
+      "etiqueta": "Cargo o situación",
+      "tipo": "texto",
+      "descripcion": "Denominación del cargo o agrupamiento escalafonario. En algunos años la planilla no la imprime (queda vacío) o la trae como agrupamiento (por ejemplo \"Agrupamiento Administrativo y Tecnico\")."
+    },
+    "codigo_escalafon": {
+      "etiqueta": "Código escalafonario",
+      "tipo": "texto",
+      "descripcion": "Régimen salarial + agrupamiento, tramo y subtramo, tal como lo imprime la planilla (el formato cambia entre años)."
+    },
+    "clase": {
+      "etiqueta": "Clase",
+      "tipo": "texto",
+      "descripcion": "Clase del cargo dentro del escalafón."
+    },
+    "cargos_permanentes": {
+      "etiqueta": "Permanentes",
+      "tipo": "numero",
+      "unidad": "cargos"
+    },
+    "cargos_temporarios": {
+      "etiqueta": "Temporarios",
+      "tipo": "numero",
+      "unidad": "cargos"
+    },
+    "cargos": {
+      "etiqueta": "Total",
+      "tipo": "numero",
+      "unidad": "cargos"
+    }
+  },
+  "orden": [
+    "anio",
+    "unidad",
+    "cargo",
+    "clase",
+    "cargos_permanentes",
+    "cargos_temporarios",
+    "cargos",
+    "codigo_escalafon",
+    "codigo_caracter",
+    "codigo_jurisdiccion",
+    "codigo_unidad",
+    "es_proyecto"
+  ]
+}

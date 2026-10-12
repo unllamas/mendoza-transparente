@@ -10,7 +10,7 @@ Workflow: `.github/workflows/actualizar-datos.yml`.
 |---|---|
 | Todos los días, 07:00 | Boletín Oficial (últimos 3 días) |
 | Lunes, 08:00 | Compras (OCDS), transferencias de Nación (DNAP), Ética Pública, índices, IPC de la DEIE |
-| Día 3 de cada mes, 09:00 | Hacienda (deuda y coparticipación), energía, población, Legislatura, autoridades, proveedores, personal por organismo (anexo 19 de Responsabilidad Fiscal) |
+| Día 3 de cada mes, 09:00 | Hacienda (deuda y coparticipación), energía, población, Legislatura, autoridades, proveedores, personal por organismo (anexo 19 de Responsabilidad Fiscal), planta del Presupuesto |
 
 Cómo funciona:
 

@@ -36,6 +36,7 @@ const TODAS = [
   "autoridades",
   "proveedores",
   "lrf-personal",
+  "presupuesto-planta",
   "designaciones",
 ];
 

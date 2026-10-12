@@ -196,6 +196,8 @@ export function AgencyPage() {
         </Section>
       )}
 
+      {a.budget.length > 1 && <BudgetSection agency={a} />}
+
       {a.units.length > 0 && (
         <Section title="Dónde están los cargos">
           <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
@@ -387,6 +389,39 @@ function Purchases({ agency: a }: { agency: AgencyDetail }) {
           </ul>
         </div>
       )}
+    </Section>
+  );
+}
+
+/** Positions in each year's budget law, compared with the latest quarterly report. */
+function BudgetSection({ agency: a }: { agency: AgencyDetail }) {
+  const current = [...a.budget].reverse().find((b) => !b.project);
+  const project = a.budget.find((b) => b.project);
+  return (
+    <Section title="Cargos en la Ley de Presupuesto">
+      <ColumnChart
+        columnas={a.budget.map((b) => ({
+          etiqueta: b.project ? `${b.year}*` : String(b.year),
+          valor: b.positions,
+          detalle: b.vacancies !== null ? `${formatNumber(b.vacancies)} sin ocupar` : undefined,
+        }))}
+        formatValue={(v) => `${formatNumber(v)} cargos`}
+        ariaLabel={`Cargos de ${a.name} en cada Ley de Presupuesto`}
+      />
+      <p className="text-sm text-ink-2 text-pretty">
+        {current && (
+          <>
+            El Presupuesto {current.year} registra {formatNumber(current.positions)} cargos ocupados
+            {current.vacancies ? ` y ${formatNumber(current.vacancies)} sin ocupar (retenidos o vacantes en trámite)` : ""}.
+          </>
+        )}
+        {a.staff && a.staffPeriod && ` El último informe trimestral (${periodLabel(a.staffPeriod)}) liquidó ${formatNumber(a.staff)}.`}
+        {project && ` El proyecto ${project.year} prevé ${formatNumber(project.positions)}.`}
+      </p>
+      <p className="text-xs text-ink-muted">
+        Planillas 8.2 y 8.6 de cada Ley de Presupuesto: cargos ocupados al mes de corte, sin contratados ni horas cátedra.
+        {project && " * Proyecto, todavía no aprobado."}
+      </p>
     </Section>
   );
 }

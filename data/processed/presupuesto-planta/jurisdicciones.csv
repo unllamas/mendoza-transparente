@@ -1,0 +1,152 @@
+anio,es_proyecto,codigo_caracter,jurisdiccion,cargos_permanentes,cargos_temporarios,horas_catedra_permanentes,horas_catedra_temporarias,costo_partida_personal
+2020,0,1,Poder Legislativo,902,270,0,0,1534624844
+2020,0,1,Poder Judicial,5234,1,0,0,9938393671
+2020,0,1,Tribunal de Cuentas,299,0,0,0,523530290
+2020,0,1,"Ministerio de Gobierno,Trabajo y Justicia",943,4,0,0,855621436
+2020,0,1,Ministerio de Hacienda y Finanzas,352,1,0,0,6858397604
+2020,0,1,Ministerio de Economia y Energia,782,2,0,0,727321243
+2020,0,1,"Ministerio de Salud, Desarrollo Social y Deportes",5367,525,237,0,7048401237
+2020,0,1,Fiscalia de Estado,129,1,0,0,215980866
+2020,0,1,Ministerio de Seguridad,12321,1,0,0,14485967771
+2020,0,1,Ministerio de Cultura y Turismo,243,0,0,51,272902302
+2020,0,1,Secretaria de Ambiente y Ordenamiento Territorial,518,8,0,0,520225281.8
+2020,0,1,Secretaria de Servicios Publicos,117,0,0,0,123612000
+2020,0,2,Ministerio de Economia y Energia,1127,11,0,0,1303869483
+2020,0,2,"Ministerio de Salud, Desarrollo Social y Deportes",8877,16,88,0,10238503974
+2020,0,2,Direccion General de Escuelas,35974,2531,401547,14151,37473037272
+2020,0,2,Ministerio de Seguridad,15,0,0,0,10970725
+2020,0,5,Ministerio de Hacienda y Finanzas,1069,13,0,0,1467080411.38
+2020,0,5,Ministerio de Economia y Energia,512,0,0,0,762470541
+2020,0,5,"Ministerio de Salud, Desarrollo Social y Deportes",2820,122,0,0,3572603473
+2021,0,1,Poder Legislativo,902,270,0,0,
+2021,0,1,Poder Judicial,5208,1,0,0,
+2021,0,1,Tribunal de Cuentas,288,0,0,0,
+2021,0,1,"Ministerio de Gobierno,Trabajo y Justicia",943,4,0,0,
+2021,0,1,Ministerio de Hacienda y Finanzas,317,1,0,0,
+2021,0,1,Ministerio de Economia y Energia,462,0,0,0,
+2021,0,1,"Ministerio de Salud, Desarrollo Social y Deportes",5267,504,236,0,
+2021,0,1,Ministerio de Planificacion e Infraestructura Publica,303,1,0,0,
+2021,0,1,Fiscalia de Estado,118,1,0,0,
+2021,0,1,Ministerio de Seguridad,12338,1,0,0,
+2021,0,1,Ministerio de Cultura y Turismo,238,0,0,48,
+2021,0,1,Secretaria de Ambiente y Ordenamiento Territorial,507,8,0,0,
+2021,0,1,Secretaria de Servicios Publicos,114,0,0,0,
+2021,0,2,Ministerio de Economia y Energia,215,0,0,0,
+2021,0,2,"Ministerio de Salud, Desarrollo Social y Deportes",8753,16,88,0,
+2021,0,2,Ministerio de Planificacion e Infraestructura Publica,879,10,0,0,
+2021,0,2,Direccion General de Escuelas,35974,2531,401547,14151,
+2021,0,2,Ministerio de Seguridad,14,0,0,0,
+2021,0,5,Ministerio de Hacienda y Finanzas,1031,12,0,0,
+2021,0,5,"Ministerio de Salud, Desarrollo Social y Deportes",2776,130,0,0,
+2021,0,5,Ministerio de Planificacion e Infraestructura Publica,421,0,0,0,
+2021,0,5,Ministerio de Cultura y Turismo,88,0,0,0,
+2022,0,1,Poder Legislativo,904,270,0,0,2296023682
+2022,0,1,Poder Judicial,5133,2,0,0,14621886026
+2022,0,1,Tribunal de Cuentas,281,0,0,0,849702467
+2022,0,1,"Ministerio de Gobierno,Trabajo y Justicia",928,4,0,0,1307528899
+2022,0,1,Ministerio de Hacienda y Finanzas,307,1,0,0,20248332014
+2022,0,1,Ministerio de Economia y Energia,366,0,0,0,582023957
+2022,0,1,"Ministerio de Salud, Desarrollo Social y Deportes",5346,542,208,0,10588969788
+2022,0,1,Ministerio de Planificacion e Infraestructura Publica,375,1,0,0,499365701
+2022,0,1,Fiscalia de Estado,119,1,0,0,362317309
+2022,0,1,Ministerio de Seguridad,12359,2,0,0,21732419148
+2022,0,1,Ministerio de Cultura y Turismo,232,1,0,48,389241367
+2022,0,1,Secretaria de Ambiente y Ordenamiento Territorial,509,7,0,0,770123008
+2022,0,1,Secretaria de Servicios Publicos,111,0,0,0,162469249
+2022,0,2,Ministerio de Economia y Energia,213,0,0,0,394650783
+2022,0,2,"Ministerio de Salud, Desarrollo Social y Deportes",8995,16,88,0,15612400964
+2022,0,2,Ministerio de Planificacion e Infraestructura Publica,828,10,0,0,1355643985
+2022,0,2,Direccion General de Escuelas,37682,1635,381409,6407,61250569665
+2022,0,2,Ministerio de Seguridad,14,0,0,0,16003722
+2022,0,5,Ministerio de Hacienda y Finanzas,969,11,0,0,2355738385
+2022,0,5,"Ministerio de Salud, Desarrollo Social y Deportes",3241,17,0,0,6038364000
+2022,0,5,Ministerio de Planificacion e Infraestructura Publica,403,0,0,0,981308849
+2022,0,5,Ministerio de Cultura y Turismo,81,0,0,0,88071732
+2023,0,1,Poder Legislativo,904,270,0,0,4800828722
+2023,0,1,Poder Judicial,5070,2,0,0,34540920585
+2023,0,1,Tribunal de Cuentas,273,1,0,0,1876323850
+2023,0,1,"Ministerio de Gobierno,Trabajo y Justicia",872,4,0,0,3051263268
+2023,0,1,Ministerio de Hacienda y Finanzas,296,0,0,0,3757885157
+2023,0,1,Ministerio de Economia y Energia,341,0,0,0,1342320438
+2023,0,1,"Ministerio de Salud, Desarrollo Social y Deportes",5564,553,182,0,25807782874
+2023,0,1,Ministerio de Planificacion e Infraestructura Publica,342,1,0,0,1159631497
+2023,0,1,Fiscalia de Estado,116,0,0,0,753976162
+2023,0,1,Ministerio de Seguridad,12299,1,0,0,50385120742
+2023,0,1,Ministerio de Cultura y Turismo,220,1,0,48,908647065
+2023,0,1,Secretaria de Ambiente y Ordenamiento Territorial,490,7,0,0,1716621094
+2023,0,1,Secretaria de Servicios Publicos,99,0,0,0,354969735
+2023,0,2,Ministerio de Economia y Energia,208,0,0,0,950209829
+2023,0,2,"Ministerio de Salud, Desarrollo Social y Deportes",9634,14,79,0,39545758825
+2023,0,2,Ministerio de Planificacion e Infraestructura Publica,776,11,0,0,3075771752
+2023,0,2,Direccion General de Escuelas,37835,1546,419799,6706,136322967695
+2023,0,2,Ministerio de Seguridad,14,0,0,0,39325432
+2023,0,5,Ministerio de Hacienda y Finanzas,913,10,0,0,4404569763
+2023,0,5,"Ministerio de Salud, Desarrollo Social y Deportes",3114,18,0,0,10609140408
+2023,0,5,Ministerio de Planificacion e Infraestructura Publica,387,0,0,0,1776277792
+2023,0,5,Ministerio de Cultura y Turismo,79,0,0,0,166373481
+2024,0,1,Poder Legislativo,854,270,0,0,7426971470
+2024,0,1,Poder Judicial,5113,2,0,0,91665745993
+2024,0,1,Tribunal de Cuentas,270,1,0,0,4196189781
+2024,0,1,"Ministerio de Gobierno,Trabajo y Justicia",838,4,0,0,6624000224
+2024,0,1,Ministerio de Hacienda y Finanzas,285,0,0,0,26306808429
+2024,0,1,Ministerio de Economia y Energia,321,0,0,0,3021844457
+2024,0,1,"Ministerio de Salud, Desarrollo Social y Deportes",5436,575,172,0,65483932123
+2024,0,1,Ministerio de Planificacion e Infraestructura Publica,324,1,0,0,2599389498
+2024,0,1,Fiscalia de Estado,115,1,0,0,1699107327
+2024,0,1,Ministerio de Seguridad,12238,1,0,0,120932288186
+2024,0,1,Ministerio de Cultura y Turismo,217,1,0,48,2119514492
+2024,0,1,Secretaria de Ambiente y Ordenamiento Territorial,465,6,0,0,4278102147
+2024,0,1,Secretaria de Servicios Publicos,99,0,0,0,819235786
+2024,0,2,Ministerio de Economia y Energia,199,0,0,0,2107069010
+2024,0,2,"Ministerio de Salud, Desarrollo Social y Deportes",9399,13,63,0,103618090506
+2024,0,2,Ministerio de Planificacion e Infraestructura Publica,728,11,0,0,8908860290
+2024,0,2,Direccion General de Escuelas,38127,1811,436910,8817,357820321337
+2024,0,2,Ministerio de Seguridad,12,0,0,0,93971141
+2024,0,5,Ministerio de Hacienda y Finanzas,857,10,0,0,9246929565
+2024,0,5,"Ministerio de Salud, Desarrollo Social y Deportes",2966,37,0,0,25365130911
+2024,0,5,Ministerio de Planificacion e Infraestructura Publica,371,0,0,0,5141598942
+2024,0,5,Ministerio de Cultura y Turismo,75,0,0,0,366585982
+2025,0,1,Poder Legislativo,843,270,0,0,
+2025,0,1,Poder Judicial,5166,2,0,0,
+2025,0,1,Tribunal de Cuentas,257,1,0,0,
+2025,0,1,"Ministerio de Gobierno, Infraestructura y Desarr.Terr.",826,4,0,0,
+2025,0,1,Ministerio de Hacienda y Finanzas,281,0,0,0,
+2025,0,1,Ministerio de Produccion,240,0,0,0,
+2025,0,1,Ministerio de Salud y Deportes,5251,643,172,0,
+2025,0,1,"Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Ministerio de Planificacion e Infraestructura Publica)",299,1,0,0,
+2025,0,1,Fiscalia de Estado,112,1,0,0,
+2025,0,1,Ministerio de Seguridad y Justicia,12277,1,0,0,
+2025,0,1,"Ministerio de Educacion, Cultura, Infancias y DGE (Ministerio de Cultura y Turismo)",209,1,0,48,
+2025,0,1,Ministerio de Energia y Ambiente,482,5,0,0,
+2025,0,1,"Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Secretaria de Servicios Publicos)",95,0,0,0,
+2025,0,2,Ministerio de Produccion,194,0,0,0,
+2025,0,2,Ministerio de Salud y Deportes,9025,15,51,0,
+2025,0,2,"Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Ministerio de Planificacion e Infraestructura Publica)",685,11,0,0,
+2025,0,2,"Ministerio de Educacion, Cultura, Infancias y DGE",37573,1969,418578,16314,
+2025,0,2,Ministerio de Seguridad y Justicia,13,0,0,0,
+2025,0,5,Ministerio de Hacienda y Finanzas,814,11,0,0,
+2025,0,5,Ministerio de Salud y Deportes,2862,27,0,0,
+2025,0,5,"Ministerio de Gobierno, Infraestructura y Desarr.Terr. (Ministerio de Planificacion e Infraestructura Publica)",338,0,0,0,
+2025,0,5,Ministerio de Producción (M inisterio de Cultura y Turismo),71,0,0,0,
+2026,0,0,Poder Legislativo,830,274,0,0,
+2026,0,0,Poder Judicial,4997,2,0,0,
+2026,0,0,Tribunal de Cuentas,249,1,0,0,
+2026,0,0,"Ministerio Gob, Infraestruc y Desarr. Terr",2529,20,0,0,
+2026,0,0,Ministerio de Hacienda y Finanzas,1157,11,0,0,
+2026,0,0,Ministerio de Producción,523,0,0,0,
+2026,0,0,Ministerio de Salud y Deportes,15157,400,214,0,
+2026,0,0,"Min. Educación, Cultura, Infancias y DGE",35556,2122,415112,19915,
+2026,0,0,Fiscalía de Estado,118,1,0,0,
+2026,0,0,Ministerio de Seguridad y Justicia,12446,6,0,0,
+2026,0,0,Ministerio de Energía y Ambiente,508,5,0,0,
+2027,1,0,Poder Legislativo,814,282,0,0,
+2027,1,0,Poder Judicial,5134,2,0,0,
+2027,1,0,Tribunal de Cuentas,248,1,0,0,
+2027,1,0,"Ministerio Gob, Infraestruc y Desarr. Terr",2445,16,0,0,
+2027,1,0,Ministerio de Hacienda y Finanzas,1115,11,0,0,
+2027,1,0,Ministerio de Producción,510,0,0,0,
+2027,1,0,Ministerio de Salud y Deportes,14664,261,201,0,
+2027,1,0,"Min. Educación, Cultura, Infancias y DGE",34037,2200,412643,19749,
+2027,1,0,Fiscalía de Estado,111,1,0,0,
+2027,1,0,Ministerio de Seguridad y Justicia,12321,6,0,0,
+2027,1,0,Ministerio de Energía y Ambiente,493,3,0,0,

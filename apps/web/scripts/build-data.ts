@@ -324,6 +324,8 @@ if (procesos && adjudicaciones) {
       organismos,
       proveedores,
       readTable("designaciones", "designaciones.csv") ?? [],
+      readTable("presupuesto-planta", "cargos.csv") ?? [],
+      readTable("presupuesto-planta", "cargos_vacantes.csv") ?? [],
       deflactor(ipcNacional ?? []),
       join(OUT, "temas"),
     );

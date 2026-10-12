@@ -79,6 +79,13 @@ function rank(role: string): number {
 
 const quarterKey = (r: Row) => `${r.anio}-T${r.trimestre}`;
 
+/** Budget/purchase code prefixes of an agency: purchase prefixes ("1-08-") plus full unit codes ("2-05-02"). */
+function prefixesFor(o: CuratedAgency): Set<string> {
+  const out = new Set(o.alias?.prefijos_compras ?? []);
+  for (const c of o.alias?.codigos_presupuesto ?? []) if (c.includes("-")) out.add(c);
+  return out;
+}
+
 export function buildGobierno(
   table: AgencyTable,
   lrf: Row[],
@@ -89,6 +96,8 @@ export function buildGobierno(
   buyers: OrganismoResumen[],
   suppliers: ProveedorResumen[],
   appointments: Row[],
+  budgetPositions: Row[],
+  budgetVacancies: Row[],
   inflation: Deflactor | null,
   outDir: string,
 ): AgencySummary[] {
@@ -152,6 +161,28 @@ export function buildGobierno(
             contracts: q.filter((r) => r.tipo_personal === "contratos_locacion").reduce((s, r) => s + (Number(r.cantidad) || 0), 0),
           };
         })
+      : [];
+
+    // Positions in the budget law (planillas 8.2 and 8.6), by "carácter-jurisdicción-unidad" code prefix.
+    const budgetPrefixes = [...prefixesFor(o)];
+    const budgetCode = (r: Row) => `${r.codigo_caracter}-${r.codigo_jurisdiccion!.padStart(2, "0")}-${r.codigo_unidad!.padStart(2, "0")}`;
+    const inBudget = (r: Row) => budgetPrefixes.some((p) => budgetCode(r).startsWith(p));
+    const budgetYears = [...new Set(budgetPositions.map((r) => Number(r.anio)))].sort();
+    const budget = budgetPrefixes.length
+      ? budgetYears
+          .map((year) => {
+            const yr = budgetPositions.filter((r) => Number(r.anio) === year && inBudget(r));
+            return {
+              year,
+              positions: yr.reduce((s, r) => s + (Number(r.cargos) || 0), 0),
+              // Only when the year's sheet has unit codes (2025's came without them: unknown per agency).
+              vacancies: budgetVacancies.some((r) => Number(r.anio) === year && r.codigo_caracter !== "0")
+                ? budgetVacancies.filter((r) => Number(r.anio) === year && inBudget(r)).reduce((s, r) => s + (Number(r.cargos) || 0), 0)
+                : null,
+              project: yr.some((r) => r.es_proyecto === "1"),
+            };
+          })
+          .filter((b) => b.positions > 0)
       : [];
 
     // Leadership: Executive officials from the officials page, plus Ética Pública declarants.
@@ -251,6 +282,7 @@ export function buildGobierno(
       teamTotal: team.length,
       purchases,
       appointments: agencyAppointments,
+      budget,
     };
     details.push(detail);
     for (const p of executives) p.agency ??= { slug: o.id, name: o.nombre };
