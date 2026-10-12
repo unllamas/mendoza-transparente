@@ -33,7 +33,7 @@
 import * as cheerio from "cheerio";
 import { extractText, getDocumentProxy } from "unpdf";
 
-import { archive, get, writeProcessed, type Row } from "@mt/core";
+import { archive, get, readProcessed, writeProcessed, type Row } from "@mt/core";
 
 const SOURCE = "legislatura";
 const HCD = "https://www.hcdmza.gob.ar";
@@ -286,9 +286,29 @@ async function archivarContexto() {
 
 // --------------------------------------------------------------------- main
 
+/** Filas ya procesadas de una cámara (de la corrida anterior), para no perderlas si su sitio falla. */
+async function anteriores(camara: string, archivo = "legisladores.csv"): Promise<Row[]> {
+  return (await readProcessed(SOURCE, archivo)).filter((r) => r.camara === camara);
+}
+
+/** Corre la parte de una cámara; si su sitio falla, conserva los datos anteriores y avisa. */
+async function camara<T>(nombre: string, fn: () => Promise<T[]>): Promise<{ filas: T[]; ok: boolean }> {
+  try {
+    return { filas: await fn(), ok: true };
+  } catch (err) {
+    const previas = await anteriores(nombre);
+    // Anotación visible en GitHub Actions.
+    console.log(`::warning title=Legislatura (${nombre})::No se pudo actualizar (${err instanceof Error ? err.message : err}). Se conservan ${previas.length} filas anteriores.`);
+    return { filas: previas as T[], ok: false };
+  }
+}
+
 export async function run(_args: string[]) {
-  const dip = await diputados();
-  const sen = await senado();
+  const d = await camara("diputados", diputados);
+  const s = await camara("senado", senado);
+  if (!d.ok && !s.ok) throw new Error("No se pudo actualizar ninguna de las dos cámaras");
+  const dip = d.filas;
+  const sen = s.filas;
   const todos = [...dip, ...sen].sort(
     (a, b) => a.camara!.localeCompare(b.camara!) || a.id!.localeCompare(b.id!),
   );
@@ -309,8 +329,11 @@ export async function run(_args: string[]) {
     for (const [b, n] of [...porBloque].sort((a, b) => b[1] - a[1])) console.log(`  ${b}: ${n}`);
   }
 
-  await archivarContexto();
-  const rem = [...(await diputadosViaticos()), ...(await senadoViaticos())];
+  await archivarContexto().catch((err) => console.log(`::warning title=Legislatura::No se archivó el contexto (${err}).`));
+  const rem = [
+    ...(await diputadosViaticos().catch(() => anteriores("diputados", "remuneraciones.csv"))),
+    ...(await senadoViaticos().catch(() => anteriores("senado", "remuneraciones.csv"))),
+  ];
   await writeProcessed(SOURCE, "remuneraciones.csv", rem, ["camara", "concepto", "periodo", "monto", "fuente_url"]);
   console.log(`remuneraciones.csv: ${rem.length} filas`);
 }

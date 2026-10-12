@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Tarea de macOS que corre scripts/actualizar-local.sh todos los días a las 08:30.
+  Si a esa hora la Mac está dormida o apagada, corre al despertarse.
+  Instalar:   scripts/instalar-actualizador.sh
+  Desinstalar: launchctl bootout gui/$(id -u)/so.mendozatransparente.actualizar && rm ~/Library/LaunchAgents/so.mendozatransparente.actualizar.plist
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>so.mendozatransparente.actualizar</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/zsh</string>
+    <string>-lc</string>
+    <string>__SCRIPT__</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>8</integer>
+    <key>Minute</key>
+    <integer>30</integer>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>__LOG__</string>
+  <key>StandardErrorPath</key>
+  <string>__LOG__</string>
+</dict>
+</plist>

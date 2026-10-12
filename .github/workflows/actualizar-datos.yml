@@ -1,8 +1,12 @@
 # Actualización automática de los datos.
 #
-# - Diario: Boletín Oficial (últimos 3 días, por si algún día falló).
 # - Semanal (lunes): compras, transferencias de Nación (DNAP), Ética Pública, índices e IPC.
-# - Mensual (día 3): Hacienda, energía, población, Legislatura, autoridades y proveedores.
+# - Mensual (día 3): Hacienda, energía, población, autoridades y proveedores.
+# - Diario: control de frescura de las fuentes que se actualizan desde una Mac en Argentina.
+#
+# El Boletín Oficial y el Senado de Mendoza bloquean conexiones desde los servidores de GitHub
+# (EE.UU.): esas fuentes las actualiza scripts/actualizar-local.sh (launchd). Este workflow solo
+# controla que no queden viejas y abre un issue si pasan demasiados días sin actualizarse.
 #
 # Cada fuente corre en su propio job. Al final, un único commit con todo lo nuevo, después de
 # comprobar que la web compila. Si una fuente falla se abre un issue «Scraper roto: <fuente>»,
@@ -14,13 +18,13 @@ name: Actualizar datos
 
 on:
   schedule:
-    - cron: "0 10 * * *" # todos los días, 07:00 en Mendoza
+    - cron: "0 15 * * *" # todos los días, 12:00 en Mendoza: control de frescura
     - cron: "0 11 * * 1" # lunes, 08:00 en Mendoza
     - cron: "0 12 3 * *" # día 3 de cada mes, 09:00 en Mendoza
   workflow_dispatch:
     inputs:
       fuentes:
-        description: "Fuentes separadas por coma (por ejemplo: boletin-oficial,compras-ocds). Vacío = todas."
+        description: "Fuentes separadas por coma (por ejemplo: compras-ocds,dnap). Vacío = todas las de GitHub."
         required: false
         default: ""
 
@@ -33,9 +37,8 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  DIARIO: "boletin-oficial"
   SEMANAL: "compras-ocds,dnap,etica-publica,indices,deie-ipc"
-  MENSUAL: "hacienda-deuda-stock,hacienda-participacion-municipal,energia-regalias,poblacion,legislatura,autoridades,proveedores"
+  MENSUAL: "hacienda-deuda-stock,hacienda-participacion-municipal,energia-regalias,poblacion,autoridades,proveedores"
 
 jobs:
   plan:
@@ -49,16 +52,42 @@ jobs:
           CRON: ${{ github.event.schedule }}
         run: |
           case "$CRON" in
-            "0 10 * * *") F="$DIARIO" ;;
+            "0 15 * * *") F="" ;;
             "0 11 * * 1") F="$SEMANAL" ;;
             "0 12 3 * *") F="$MENSUAL" ;;
-            *) F="${ENTRADA:-$DIARIO,$SEMANAL,$MENSUAL}" ;;
+            *) F="${ENTRADA:-$SEMANAL,$MENSUAL}" ;;
           esac
           echo "Fuentes: $F"
           echo "fuentes=$(echo "$F" | tr -d ' ' | jq -R -c 'split(",") | map(select(length > 0))')" >> "$GITHUB_OUTPUT"
 
+  frescura:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Controlar fuentes actualizadas desde la Mac
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create datos-viejos --color FBCA04 --description "Una fuente no se actualiza hace demasiado" --force || true
+          controlar() {
+            local fuente="$1" maximo="$2"
+            local ultima=$(tail -1 "data/raw/$fuente/manifest.jsonl" | jq -r .fetched_at | cut -c1-10)
+            local dias=$(( ( $(date -u +%s) - $(date -u -d "$ultima" +%s) ) / 86400 ))
+            local titulo="Datos sin actualizar: $fuente"
+            local n=$(gh issue list --state open --label datos-viejos --json number,title -q ".[] | select(.title == \"$titulo\") | .number" | head -1)
+            echo "$fuente: última descarga $ultima ($dias días, máximo $maximo)"
+            if (( dias > maximo )); then
+              [ -n "$n" ] || gh issue create --label datos-viejos --title "$titulo" --body "La última descarga de **$fuente** es del $ultima ($dias días). Esta fuente se actualiza desde una Mac en Argentina con \`scripts/actualizar-local.sh\`, porque bloquea conexiones desde GitHub. Revisá que la Mac haya estado encendida y el registro en ~/Library/Logs/mendoza-transparente-actualizador.log."
+            elif [ -n "$n" ]; then
+              gh issue close "$n" --comment "Actualizado: última descarga $ultima."
+            fi
+          }
+          controlar boletin-oficial 4
+          controlar legislatura 40
+
   scrape:
     needs: plan
+    if: ${{ needs.plan.outputs.fuentes != '[]' }}
     runs-on: ubuntu-latest
     timeout-minutes: 180
     strategy:
@@ -78,7 +107,6 @@ jobs:
           FUENTE: ${{ matrix.fuente }}
         run: |
           case "$FUENTE" in
-            boletin-oficial) ARGS="--desde $(date -u -d '3 days ago' +%F) --hasta $(date -u +%F)" ;;
             dnap) ARGS="--refresh" ;;
             etica-publica) ARGS="--refresh" ;;
             *) ARGS="" ;;

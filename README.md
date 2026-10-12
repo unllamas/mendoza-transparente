@@ -36,15 +36,16 @@ bun run typecheck
 
 ## Actualización automática
 
-Los datos se actualizan solos con GitHub Actions (`.github/workflows/actualizar-datos.yml`):
+La mayoría de las fuentes se actualizan solas con GitHub Actions (`.github/workflows/actualizar-datos.yml`):
 
 | Frecuencia | Fuentes |
 |---|---|
-| Diaria | Boletín Oficial |
 | Semanal (lunes) | Compras, transferencias de Nación, Ética Pública, índices e IPC |
-| Mensual (día 3) | Hacienda, energía, población, Legislatura, autoridades y proveedores |
+| Mensual (día 3) | Hacienda, energía, población, autoridades y proveedores |
 
 Cada fuente corre por separado y al final se hace un único commit, después de comprobar que la web compila. Si una fuente falla, se abre un issue con la etiqueta `scraper-roto`, que se cierra solo cuando vuelve a funcionar. Para correrlo a mano: pestaña Actions → «Actualizar datos» → «Run workflow».
+
+**Fuentes que se actualizan desde una Mac en Argentina.** El Boletín Oficial y el Senado de Mendoza bloquean conexiones desde los servidores de GitHub (EE.UU.). Esas dos fuentes las actualiza `scripts/actualizar-local.sh`, que corre todos los días con launchd sobre una copia aparte del repo (si la Mac estaba dormida, corre al despertarse). Para instalarlo: `scripts/instalar-actualizador.sh`. GitHub controla todos los días que no queden viejas: si el Boletín pasa más de 4 días (o la Legislatura más de 40) sin actualizarse, abre un issue con la etiqueta `datos-viejos`.
 
 Las fotos de funcionarios y el mapa se actualizan a mano (`bun run scrape fotos`, `bun run scrape geo`), porque cambian poco.
 

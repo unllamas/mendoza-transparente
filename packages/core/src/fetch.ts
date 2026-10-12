@@ -80,7 +80,14 @@ export async function archive(
   const dayDir = join(sourceDir, now.toISOString().slice(0, 10));
   await mkdir(dayDir, { recursive: true });
   const compressed = bytes.length > GZIP_THRESHOLD;
-  const path = join(dayDir, filename + (compressed ? ".gz" : ""));
+  // data/raw es de solo agregar: si ese día ya se archivó una versión distinta, la nueva va con la hora.
+  let path = join(dayDir, filename + (compressed ? ".gz" : ""));
+  if (existsSync(path)) {
+    const hora = now.toISOString().slice(11, 19).replaceAll(":", "");
+    const punto = filename.lastIndexOf(".");
+    const conHora = punto > 0 ? `${filename.slice(0, punto)}.${hora}${filename.slice(punto)}` : `${filename}.${hora}`;
+    path = join(dayDir, conHora + (compressed ? ".gz" : ""));
+  }
   await writeFile(path, compressed ? gzipSync(bytes) : bytes);
 
   const entry: ManifestEntry = {

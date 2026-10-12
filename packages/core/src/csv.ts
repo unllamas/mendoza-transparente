@@ -1,4 +1,5 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
 import { PROCESSED_DIR } from "./paths.ts";
@@ -31,4 +32,45 @@ export async function writeProcessed(
   await mkdir(dirname(path), { recursive: true });
   await writeFile(path, toCsv(rows, columns));
   return path;
+}
+
+/** Parser CSV mínimo (RFC 4180): comillas, comas y saltos de línea dentro de campos. */
+export function parseCsv(text: string): string[][] {
+  const rows: string[][] = [];
+  let row: string[] = [];
+  let field = "";
+  let quoted = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (quoted) {
+      if (c === '"' && text[i + 1] === '"') {
+        field += '"';
+        i++;
+      } else if (c === '"') quoted = false;
+      else field += c;
+    } else if (c === '"') quoted = true;
+    else if (c === ",") {
+      row.push(field);
+      field = "";
+    } else if (c === "\n" || c === "\r") {
+      if (c === "\r" && text[i + 1] === "\n") i++;
+      row.push(field);
+      rows.push(row);
+      row = [];
+      field = "";
+    } else field += c;
+  }
+  if (field || row.length) {
+    row.push(field);
+    rows.push(row);
+  }
+  return rows;
+}
+
+/** Lee un CSV de data/processed/<fuente>/<archivo> como filas con nombre de columna. Vacío si no existe. */
+export async function readProcessed(source: string, filename: string): Promise<Row[]> {
+  const path = join(PROCESSED_DIR, source, filename);
+  if (!existsSync(path)) return [];
+  const [header = [], ...rows] = parseCsv(await readFile(path, "utf8"));
+  return rows.map((r) => Object.fromEntries(header.map((h, i) => [h, r[i] ?? ""])));
 }
