@@ -2,6 +2,8 @@
 
 Proyecto cívico: recopilar los datos públicos de Mendoza, normalizarlos y publicarlos curados de cara a las elecciones de 2027. Ver `README.md` y `docs/relevamiento-fuentes.md`.
 
+**Los procesos internos están documentados en `docs/procesos/`** (agregar una fuente, actualización de datos, reglas de `data/`, la web, diseño, metodología y trabajo con agentes). Leer el que corresponda antes de empezar. **Todo proceso nuevo o cambio en uno existente se documenta ahí en el mismo commit.**
+
 ## Orquestación
 
 - La sesión principal orquesta. Las tareas acotadas (un scraper, un parser, una verificación) van a subagentes en Sonnet, en paralelo y sobre archivos distintos.
@@ -22,6 +24,12 @@ Proyecto cívico: recopilar los datos públicos de Mendoza, normalizarlos y publ
 - Monorepo con Bun workspaces y Turborepo, en TypeScript estricto. Bun ejecuta TS directo, sin build.
 - Un scraper por fuente en `packages/scrapers/src/sources/<id>.ts`, que exporta `async function run(args: string[])`. Se corre con `bun run scrape <id>`.
 - Dependencias ya disponibles en `@mt/scrapers`: `cheerio` (HTML), `xlsx` (SheetJS, para XLS y XLSX), `unpdf` (texto de PDF), `fflate` (ZIP) y `stream-json` (JSON grandes en streaming).
-- CSV con `writeProcessed()` y municipios con `normalizeMunicipio()`, ambos de `@mt/core`.
+- CSV con `writeProcessed()` y `readProcessed()`, y municipios con `normalizeMunicipio()`, todos de `@mt/core`.
 - Verificar tipos con `bunx tsc --noEmit` dentro del paquete.
 - Al terminar una fuente, actualizar su `estado` en `sources.yaml`. Lo hace la sesión principal.
+
+## Verificación
+
+- Tipos: `bun run typecheck`.
+- Web: `bun run verificar` (sin scroll horizontal en ningún ancho y consola limpia). Obligatorio antes de dar por terminado un cambio de interfaz.
+- Actualización manual de datos (respaldo de GitHub Actions): `bun run actualizar`.

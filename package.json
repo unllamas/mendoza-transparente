@@ -10,10 +10,13 @@
     "dev": "turbo run dev --filter=@mt/web",
     "build": "turbo run build --filter=@mt/web",
     "scrape": "bun packages/scrapers/src/cli.ts",
-    "typecheck": "turbo run typecheck"
+    "typecheck": "turbo run typecheck",
+    "actualizar": "bun scripts/actualizar.ts",
+    "verificar": "bun scripts/verificar-web.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
+    "playwright-core": "^1.64.0",
     "turbo": "^2",
     "typescript": "^5"
   }
