@@ -39,5 +39,8 @@
     "variacion_mensual",
     "indice",
     "fuente"
-  ]
+  ],
+  "agruparPor": "region",
+  "grupoInicial": "cuyo",
+  "vista": "ultimo"
 }

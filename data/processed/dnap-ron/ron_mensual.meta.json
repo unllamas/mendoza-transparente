@@ -33,5 +33,7 @@
     "provincia",
     "monto_pesos",
     "concepto"
-  ]
+  ],
+  "agruparPor": "provincia",
+  "grupoInicial": "Mendoza"
 }

@@ -6,8 +6,9 @@ export async function loadIndex(): Promise<DataIndex> {
   return resp.json();
 }
 
-export async function loadPreview(source: string, file: string): Promise<Preview> {
-  const resp = await fetch(`/data/${source}/${file.replace(/\.csv$/, ".preview.json")}`);
+export async function loadPreview(source: string, file: string, groupSlug?: string): Promise<Preview> {
+  const base = file.replace(/\.csv$/, "");
+  const resp = await fetch(groupSlug ? `/data/${source}/${base}/${groupSlug}.json` : `/data/${source}/${base}.preview.json`);
   if (!resp.ok) throw new Error(`No se pudo cargar ${file}`);
   return resp.json();
 }
@@ -15,6 +16,12 @@ export async function loadPreview(source: string, file: string): Promise<Preview
 export async function loadTema<T>(tema: string): Promise<T> {
   const resp = await fetch(`/data/temas/${tema}.json`);
   if (!resp.ok) throw new Error(`No se pudo cargar el tema ${tema}`);
+  return resp.json();
+}
+
+export async function loadJson<T>(path: string): Promise<T> {
+  const resp = await fetch(`/data/${path}`);
+  if (!resp.ok) throw new Error(`No se pudo cargar ${path}`);
   return resp.json();
 }
 

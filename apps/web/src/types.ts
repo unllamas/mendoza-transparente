@@ -31,6 +31,12 @@ export interface Diccionario {
   descripcion?: string;
   columnas?: Record<string, ColumnaDict>;
   orden?: string[];
+  /** Columna para separar la tabla en grupos (por ejemplo "provincia"), con un selector en la web. */
+  agruparPor?: string;
+  /** Grupo que se muestra al entrar (por ejemplo "Mendoza"). */
+  grupoInicial?: string;
+  /** "ultimo": en vez de la tabla, tarjetas con el dato más reciente. */
+  vista?: "tabla" | "ultimo";
 }
 
 export interface DatasetMeta {
@@ -40,6 +46,10 @@ export interface DatasetMeta {
   rowCount: number;
   bytes: number;
   dict: Diccionario | null;
+  /** Grupos disponibles si la tabla se agrupa; cada uno tiene su archivo de vista previa. */
+  groups: { value: string; slug: string; rowCount: number }[] | null;
+  /** Panel de detalle con datos relacionados: perfil del proveedor o adjudicaciones del proceso. */
+  detalle: "proveedor" | "proceso" | null;
 }
 
 export interface DataIndex {
@@ -93,4 +103,29 @@ export interface EmpleoTema {
   promedioPais: number;
   ranking: { provincia: string; cadaMil: number }[];
   serie: { anio: number; cadaMil: number }[];
+}
+
+export interface ProcesoDetalle {
+  ocid: string;
+  fecha: string;
+  comprador: string;
+  titulo: string;
+  metodo: string;
+  estado: string;
+  montoEstimado: number | null;
+  oferentes: number | null;
+  adjudicaciones: { proveedor: string; cuit: string; monto: number }[];
+}
+
+export interface ProveedorDetalle {
+  cuit: string;
+  nombre: string;
+  total: number;
+  adjudicaciones: number;
+  procesos: number;
+  primera: string;
+  ultima: string;
+  organismos: { nombre: string; monto: number; procesos: number }[];
+  porAnio: { anio: number; monto: number }[];
+  recientes: { ocid: string; fecha: string; titulo: string; comprador: string; metodo: string; monto: number }[];
 }

@@ -35,5 +35,7 @@
     "concepto",
     "valor",
     "unidad"
-  ]
+  ],
+  "agruparPor": "provincia",
+  "grupoInicial": "Mendoza"
 }

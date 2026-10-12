@@ -29,5 +29,7 @@
     "provincia",
     "poblacion",
     "tipo"
-  ]
+  ],
+  "agruparPor": "provincia",
+  "grupoInicial": "Mendoza"
 }

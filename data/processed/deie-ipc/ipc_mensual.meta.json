@@ -49,5 +49,6 @@
     "variacion_interanual",
     "indice_nivel_general",
     "indice_mes_anterior"
-  ]
+  ],
+  "vista": "ultimo"
 }

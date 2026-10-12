@@ -39,5 +39,6 @@
     "cba_adulto_equivalente",
     "cbt_adulto_equivalente",
     "inversa_coef_engel"
-  ]
+  ],
+  "vista": "ultimo"
 }

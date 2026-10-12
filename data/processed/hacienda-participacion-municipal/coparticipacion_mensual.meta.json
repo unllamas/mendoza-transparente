@@ -34,5 +34,7 @@
     "municipio",
     "monto_pesos",
     "concepto"
-  ]
+  ],
+  "agruparPor": "municipio",
+  "grupoInicial": "Capital"
 }

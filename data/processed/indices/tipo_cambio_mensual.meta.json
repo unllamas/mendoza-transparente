@@ -37,5 +37,6 @@
     "tipo_cambio_oficial_promedio",
     "tipo_cambio_minorista",
     "dias_habiles_mayorista"
-  ]
+  ],
+  "vista": "ultimo"
 }

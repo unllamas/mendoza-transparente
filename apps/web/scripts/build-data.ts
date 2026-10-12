@@ -12,13 +12,14 @@ import { parse as parseYaml } from "yaml";
 
 import type { DataIndex, DatasetMeta, Diccionario, Preview, SourceMeta } from "../src/types.ts";
 import { buildDeuda } from "./temas/deuda.ts";
+import { buildCompras } from "./temas/compras.ts";
 import { buildEmpleo } from "./temas/empleo.ts";
 
 const ROOT = join(import.meta.dir, "..", "..", "..");
 const RAW_DIR = join(ROOT, "data", "raw");
 const PROCESSED_DIR = join(ROOT, "data", "processed");
 const OUT = join(import.meta.dir, "..", "public", "data");
-const PREVIEW_ROWS = 200;
+const PREVIEW_ROWS = 500;
 
 interface ManifestEntry {
   filename: string;
@@ -103,6 +104,32 @@ const sources: SourceMeta[] = [...ids].sort().map((id) => {
   };
 });
 
+/**
+ * Clave para ordenar de lo más reciente a lo más viejo: la primera columna de tipo fecha,
+ * o año + mes/trimestre. Devuelve null si la tabla no tiene dimensión temporal.
+ */
+function sortKey(columns: string[], dict: Diccionario | null): ((row: string[]) => string) | null {
+  const defs = dict?.columnas ?? {};
+  const candidatas = [...(dict?.orden ?? []), ...columns];
+  const fecha = candidatas.find((c) => columns.includes(c) && (defs[c]?.tipo === "fecha" || /^fecha/.test(c)));
+  if (fecha) {
+    const i = columns.indexOf(fecha);
+    return (row) => row[i] ?? "";
+  }
+  const anio = columns.indexOf("anio");
+  if (anio < 0) return null;
+  const sub = ["mes", "trimestre"].map((c) => columns.indexOf(c)).find((i) => i >= 0) ?? -1;
+  return (row) => `${(row[anio] ?? "").padStart(4, "0")}-${sub >= 0 ? (row[sub] ?? "").padStart(2, "0") : "00"}`;
+}
+
+const slug = (s: string) =>
+  s.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "sin-dato";
+
+const DETALLE: Record<string, DatasetMeta["detalle"]> = {
+  "compras-ocds/adjudicaciones.csv": "proveedor",
+  "compras-ocds/procesos.csv": "proceso",
+};
+
 const datasets: DatasetMeta[] = [];
 for (const id of listDirs(PROCESSED_DIR)) {
   const dir = join(PROCESSED_DIR, id);
@@ -110,13 +137,43 @@ for (const id of listDirs(PROCESSED_DIR)) {
   for (const file of readdirSync(dir).filter((f) => f.endsWith(".csv")).sort()) {
     const path = join(dir, file);
     const [columns = [], ...rows] = parseCsv(readFileSync(path, "utf8"));
-    mkdirSync(outDir, { recursive: true });
-    cpSync(path, join(outDir, file));
-    const preview: Preview = { columns, rows: rows.slice(0, PREVIEW_ROWS) };
-    writeFileSync(join(outDir, file.replace(/\.csv$/, ".preview.json")), JSON.stringify(preview));
     const dictPath = join(dir, file.replace(/\.csv$/, ".meta.json"));
     const dict = existsSync(dictPath) ? (JSON.parse(readFileSync(dictPath, "utf8")) as Diccionario) : null;
-    datasets.push({ source: id, file, columns, rowCount: rows.length, bytes: statSync(path).size, dict });
+    mkdirSync(outDir, { recursive: true });
+    cpSync(path, join(outDir, file));
+
+    const key = sortKey(columns, dict);
+    // Orden estable: a igual fecha se respeta el orden original.
+    const sorted = key ? rows.map((r, i) => [r, i] as const).sort((a, b) => key(b[0]).localeCompare(key(a[0])) || a[1] - b[1]).map(([r]) => r) : rows;
+
+    const base = file.replace(/\.csv$/, "");
+    let groups: DatasetMeta["groups"] = null;
+    const groupIdx = dict?.agruparPor ? columns.indexOf(dict.agruparPor) : -1;
+    if (groupIdx >= 0) {
+      const byGroup = new Map<string, string[][]>();
+      for (const r of sorted) byGroup.set(r[groupIdx] ?? "", [...(byGroup.get(r[groupIdx] ?? "") ?? []), r]);
+      mkdirSync(join(outDir, base), { recursive: true });
+      groups = [...byGroup.keys()].sort((a, b) => a.localeCompare(b, "es")).map((value) => {
+        const groupRows = byGroup.get(value)!;
+        const preview: Preview = { columns, rows: groupRows.slice(0, PREVIEW_ROWS) };
+        writeFileSync(join(outDir, base, `${slug(value)}.json`), JSON.stringify(preview));
+        return { value, slug: slug(value), rowCount: groupRows.length };
+      });
+    } else {
+      const preview: Preview = { columns, rows: sorted.slice(0, PREVIEW_ROWS) };
+      writeFileSync(join(outDir, `${base}.preview.json`), JSON.stringify(preview));
+    }
+
+    datasets.push({
+      source: id,
+      file,
+      columns,
+      rowCount: rows.length,
+      bytes: statSync(path).size,
+      dict,
+      groups,
+      detalle: DETALLE[`${id}/${file}`] ?? null,
+    });
   }
 }
 
@@ -145,6 +202,10 @@ if (trimestral && stock) {
 
 const ocupacion = readTable("dnap-ocupacion", "ocupacion_salarios.csv");
 if (ocupacion) writeFileSync(join(OUT, "temas", "empleo.json"), JSON.stringify(buildEmpleo(ocupacion)));
+
+const procesos = readTable("compras-ocds", "procesos.csv");
+const adjudicaciones = readTable("compras-ocds", "adjudicaciones.csv");
+if (procesos && adjudicaciones) buildCompras(procesos, adjudicaciones, join(OUT, "temas", "compras"));
 
 const index: DataIndex = { generatedAt: new Date().toISOString(), sources, datasets };
 writeFileSync(join(OUT, "index.json"), JSON.stringify(index));

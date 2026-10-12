@@ -1,9 +1,11 @@
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 
-import { columnasVisibles } from "../celdas.ts";
+import { columnasVisibles, type ColumnaVista } from "../celdas.ts";
 import { formatBytes, formatDate, formatNumber, humanize, loadPreview } from "../lib.ts";
 import type { DatasetMeta, Preview } from "../types.ts";
+import { StatTile } from "./components.tsx";
+import { PanelDetalle } from "./detalle.tsx";
 
 const route = getRouteApi("/datos/$fuente");
 
@@ -56,81 +58,155 @@ export function DatosPage() {
 }
 
 function DatasetView({ dataset }: { dataset: DatasetMeta }) {
+  const dict = dataset.dict;
+  const groups = dataset.groups;
+  const inicial = groups?.find((g) => g.value === dict?.grupoInicial) ?? groups?.[0];
+  const [groupSlug, setGroupSlug] = useState(inicial?.slug);
+  const group = groups?.find((g) => g.slug === groupSlug);
   const [preview, setPreview] = useState<Preview | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const columnas = useMemo(() => columnasVisibles(dataset.columns, dataset.dict), [dataset]);
-  const tieneMillones = dataset.dict && Object.values(dataset.dict.columnas ?? {}).some((c) => c.tipo === "moneda");
+  const [selected, setSelected] = useState<number | null>(null);
+  const columnas = useMemo(
+    () => columnasVisibles(dataset.columns, dict).filter((c) => c.key !== dict?.agruparPor),
+    [dataset, dict],
+  );
+  const tieneMontos = Object.values(dict?.columnas ?? {}).some((c) => c.tipo === "moneda");
+  const rowCount = group?.rowCount ?? dataset.rowCount;
 
   useEffect(() => {
-    loadPreview(dataset.source, dataset.file).then(setPreview, (e: Error) => setError(e.message));
-  }, [dataset.source, dataset.file]);
+    setPreview(null);
+    setSelected(null);
+    loadPreview(dataset.source, dataset.file, groupSlug).then(setPreview, (e: Error) => setError(e.message));
+  }, [dataset.source, dataset.file, groupSlug]);
+
+  const fila = selected !== null ? preview?.rows[selected] : undefined;
 
   return (
-    <section className="flex flex-col gap-3">
+    <section className="flex flex-col gap-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div className="flex max-w-2xl flex-col gap-1">
-          <h2 className="text-lg font-semibold tracking-tight">{dataset.dict?.titulo ?? humanize(dataset.file)}</h2>
-          {dataset.dict?.descripcion && <p className="text-sm text-ink-2 text-pretty">{dataset.dict.descripcion}</p>}
+          <h2 className="text-lg font-semibold tracking-tight">{dict?.titulo ?? humanize(dataset.file)}</h2>
+          {dict?.descripcion && <p className="text-sm text-ink-2 text-pretty">{dict.descripcion}</p>}
           <p className="text-sm text-ink-muted">
-            {formatNumber(dataset.rowCount)} filas · {formatBytes(dataset.bytes)}
+            {formatNumber(rowCount)} filas{group ? ` de ${group.value}` : ""} · CSV completo: {formatBytes(dataset.bytes)}
           </p>
         </div>
-        <a
-          href={`/data/${dataset.source}/${dataset.file}`}
-          download
-          className="whitespace-nowrap rounded-lg border border-line px-3 py-1.5 text-sm hover:border-axis"
-        >
-          Descargar CSV
-        </a>
+        <div className="flex flex-wrap items-center gap-2">
+          {groups && groups.length > 1 && (
+            <label className="flex items-center gap-2 text-sm text-ink-2">
+              <span>{columnaEtiqueta(dict, dict?.agruparPor)}</span>
+              <select
+                value={groupSlug}
+                onChange={(e) => setGroupSlug(e.target.value)}
+                className="rounded-lg border border-line bg-surface px-2 py-1.5 text-sm text-ink hover:border-axis"
+              >
+                {groups.map((g) => (
+                  <option key={g.slug} value={g.slug}>
+                    {formatGrupo(g.value)}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
+          <a
+            href={`/data/${dataset.source}/${dataset.file}`}
+            download
+            className="whitespace-nowrap rounded-lg border border-line px-3 py-1.5 text-sm hover:border-axis"
+          >
+            Descargar CSV
+          </a>
+        </div>
       </div>
 
-      <div className="max-h-[28rem] overflow-auto rounded-xl bg-tile">
-        {error && <p className="p-4 text-sm text-ink-2">{error}</p>}
-        {!preview && !error && <p className="p-4 text-sm text-ink-muted">Cargando…</p>}
-        {preview && (
-          <table className="w-full text-left text-sm tabular-nums">
-            <thead className="sticky top-0 bg-tile text-ink-muted shadow-[0_1px_0_var(--border)]">
-              <tr>
-                {columnas.map((c) => (
-                  <th
-                    key={c.key}
-                    title={c.descripcion}
-                    className={`whitespace-nowrap px-3 py-2 font-medium ${c.numerica ? "text-right" : ""} ${
-                      c.descripcion ? "cursor-help underline decoration-dotted underline-offset-4" : ""
-                    }`}
-                  >
-                    {c.etiqueta}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-line">
-              {preview.rows.map((row, i) => (
-                <tr key={i}>
-                  {columnas.map((c) => {
-                    const valor = c.formato(row[c.index] ?? "", row);
-                    return (
-                      <td
-                        key={c.key}
-                        title={valor}
-                        className={`max-w-xs truncate whitespace-nowrap px-3 py-1.5 text-ink-2 ${c.numerica ? "text-right" : ""}`}
-                      >
-                        {valor}
-                      </td>
-                    );
-                  })}
+      {error && <p className="text-sm text-ink-2">{error}</p>}
+      {!preview && !error && <p className="text-sm text-ink-muted">Cargando…</p>}
+
+      {preview && dict?.vista === "ultimo" && <UltimoDato columnas={columnas} fila={preview.rows[0]} />}
+
+      {preview && dict?.vista !== "ultimo" && (
+        <div className={fila ? "grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_22rem]" : ""}>
+          <div className="max-h-[32rem] overflow-auto rounded-xl bg-tile">
+            <table className="w-full text-left text-sm tabular-nums">
+              <thead className="sticky top-0 bg-tile text-ink-muted shadow-[0_1px_0_var(--border)]">
+                <tr>
+                  {columnas.map((c) => (
+                    <th
+                      key={c.key}
+                      title={c.descripcion}
+                      className={`whitespace-nowrap px-3 py-2 font-medium ${c.numerica ? "text-right" : ""} ${
+                        c.descripcion ? "cursor-help underline decoration-dotted underline-offset-4" : ""
+                      }`}
+                    >
+                      {c.etiqueta}
+                    </th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
+              </thead>
+              <tbody className="divide-y divide-line">
+                {preview.rows.map((row, i) => (
+                  <tr
+                    key={i}
+                    onClick={() => setSelected(i === selected ? null : i)}
+                    aria-selected={i === selected}
+                    className={`cursor-pointer ${i === selected ? "bg-grid" : "hover:bg-grid/50"}`}
+                  >
+                    {columnas.map((c) => {
+                      const valor = c.formato(row[c.index] ?? "", row);
+                      return (
+                        <td
+                          key={c.key}
+                          className={`max-w-xs truncate whitespace-nowrap px-3 py-1.5 text-ink-2 ${c.numerica ? "text-right" : ""}`}
+                        >
+                          {valor}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {fila && <PanelDetalle dataset={dataset} columnas={columnas} fila={fila} onClose={() => setSelected(null)} />}
+        </div>
+      )}
+
       <p className="text-xs text-ink-muted">
-        {preview && dataset.rowCount > preview.rows.length && (
-          <>Mostrando las primeras {formatNumber(preview.rows.length)} filas. Descargá el CSV para ver todo. </>
+        {dict?.vista !== "ultimo" && <>Tocá una fila para ver el detalle. </>}
+        {preview && rowCount > preview.rows.length && (
+          <>Mostrando las {formatNumber(preview.rows.length)} filas más recientes. Descargá el CSV para ver todo. </>
         )}
-        {tieneMillones && <>M = millones. Montos en valores nominales, sin ajustar por inflación.</>}
+        {tieneMontos && <>M = millones. Montos nominales, sin ajustar por inflación.</>}
       </p>
     </section>
   );
+}
+
+/** Tarjetas con la fila más reciente: para series donde importa el último dato, no el histórico. */
+function UltimoDato({ columnas, fila }: { columnas: ColumnaVista[]; fila?: string[] }) {
+  if (!fila) return null;
+  const periodo = columnas.filter((c) => ["anio", "mes", "fecha"].includes(c.key) || /^fecha/.test(c.key));
+  const valores = columnas.filter((c) => c.numerica && fila[c.index] !== "");
+  const etiquetaPeriodo = periodo.map((c) => c.formato(fila[c.index] ?? "", fila)).reverse().join(" ");
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
+        {valores.map((c) => (
+          <StatTile key={c.key} label={c.etiqueta} value={c.formato(fila[c.index] ?? "", fila)} note={c.descripcion} />
+        ))}
+      </div>
+      {etiquetaPeriodo && <p className="text-sm text-ink-muted">Último dato: {etiquetaPeriodo}</p>}
+    </div>
+  );
+}
+
+function columnaEtiqueta(dict: DatasetMeta["dict"], key?: string) {
+  return (key && dict?.columnas?.[key]?.etiqueta) ?? "Grupo";
+}
+
+/** "MENDOZA" → "Mendoza", "cuyo" → "Cuyo" */
+function formatGrupo(value: string) {
+  if (value === value.toUpperCase() || value === value.toLowerCase()) {
+    return value.toLowerCase().replace(/(^|\s)\p{L}/gu, (m) => m.toUpperCase());
+  }
+  return value;
 }

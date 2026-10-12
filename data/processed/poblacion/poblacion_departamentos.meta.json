@@ -29,5 +29,7 @@
     "municipio",
     "poblacion",
     "tipo"
-  ]
+  ],
+  "agruparPor": "municipio",
+  "grupoInicial": "Capital"
 }
