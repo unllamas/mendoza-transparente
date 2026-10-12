@@ -1,4 +1,4 @@
-import { type LucideIcon, X } from "lucide-react";
+import { Info, type LucideIcon, TriangleAlert, X } from "lucide-react";
 import { type ReactNode, useEffect } from "react";
 
 /** Dato informativo: solo fondo, sin borde. El borde queda reservado para lo que se puede tocar. */
@@ -136,5 +136,38 @@ export function Sheet({ titulo, onClose, children }: { titulo: string; onClose: 
         <div className="flex flex-col gap-6 overflow-y-auto p-4">{children}</div>
       </aside>
     </>
+  );
+}
+
+/**
+ * Recuadro para lo que hay que leer sí o sí.
+ * - advertencia (ámbar): un problema o una señal: por qué importa un dato faltante, un sueldo no
+ *   publicado, fuentes que no coinciden, una sola oferta, una empresa recién creada.
+ * - nota (neutra): una aclaración de método para leer bien un número (inflación, devaluación, límites).
+ */
+export function Aviso({
+  tipo = "advertencia",
+  titulo,
+  children,
+}: {
+  tipo?: "advertencia" | "nota";
+  titulo?: string;
+  children: ReactNode;
+}) {
+  const advertencia = tipo === "advertencia";
+  const Icon = advertencia ? TriangleAlert : Info;
+  return (
+    <div
+      role={advertencia ? "note" : undefined}
+      className={`flex items-start gap-3 rounded-xl p-4 text-sm ${
+        advertencia ? "border border-aviso-borde bg-aviso-fondo" : "bg-tile"
+      }`}
+    >
+      <Icon className={`mt-0.5 size-4 shrink-0 ${advertencia ? "text-aviso" : "text-ink-muted"}`} aria-hidden />
+      <div className="flex min-w-0 flex-col gap-1">
+        {titulo && <span className="font-medium text-ink">{titulo}</span>}
+        <div className="text-ink-2 text-pretty">{children}</div>
+      </div>
+    </div>
   );
 }

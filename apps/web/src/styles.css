@@ -19,6 +19,10 @@
   --brand-hover: #6f102c;
   --on-brand: #ffffff;
   --link: #8a1538;
+  /* Ámbar de advertencia: color de estado, siempre con ícono y texto. */
+  --aviso: #b45309;
+  --aviso-fondo: rgba(250, 178, 25, 0.12);
+  --aviso-borde: rgba(217, 119, 6, 0.35);
   /* Rampa del mapa: de poco (rosa claro) a mucho (borravino profundo). Validada por modo. */
   --map-0: #e3a2b5;
   --map-1: #cf7792;
@@ -44,6 +48,9 @@
     --brand-hover: #c4375f;
     --on-brand: #ffffff;
     --link: #f2809b;
+    --aviso: #fab219;
+    --aviso-fondo: rgba(250, 178, 25, 0.1);
+    --aviso-borde: rgba(250, 178, 25, 0.3);
     --map-0: #ffb3cc;
     --map-1: #f47ea4;
     --map-2: #dc5785;
@@ -67,6 +74,9 @@
   --color-brand-hover: var(--brand-hover);
   --color-on-brand: var(--on-brand);
   --color-link: var(--link);
+  --color-aviso: var(--aviso);
+  --color-aviso-fondo: var(--aviso-fondo);
+  --color-aviso-borde: var(--aviso-borde);
   --color-good: #0ca30c;
   --color-warning: #fab219;
   --color-critical: #d03b3b;

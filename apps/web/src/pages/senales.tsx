@@ -6,7 +6,7 @@ import { formatMoneda } from "../celdas.ts";
 import { FuentesOficiales } from "../fuente.tsx";
 import { formatDate } from "../lib.ts";
 import type { Senal } from "../types.ts";
-import { PageHeader, Sheet } from "./components.tsx";
+import { Aviso, PageHeader, Sheet } from "./components.tsx";
 import { Proceso, Proveedor } from "./detalle.tsx";
 
 const route = getRouteApi("/senales");
@@ -79,10 +79,7 @@ function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }
             <p className="text-sm text-ink-2 text-pretty">{s.matiz}</p>
           </div>
 
-          <div className="flex flex-col gap-1 rounded-xl bg-tile p-4 text-sm">
-            <span className="font-medium">Por qué importa</span>
-            <span className="text-ink-2 text-pretty">{s.porQueImporta}</span>
-          </div>
+          <Aviso titulo="Por qué importa">{s.porQueImporta}</Aviso>
 
           {s.casos.length > 0 && (
             <section className="flex flex-col gap-2">

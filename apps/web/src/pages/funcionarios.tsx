@@ -7,7 +7,7 @@ import { formatMoneda } from "../celdas.ts";
 import { formatDate } from "../lib.ts";
 import { FuentesOficiales } from "../fuente.tsx";
 import type { Funcionario, GrupoFuncionario } from "../types.ts";
-import { PageHeader, Segmented, Sheet } from "./components.tsx";
+import { Aviso, PageHeader, Segmented, Sheet } from "./components.tsx";
 
 const route = getRouteApi("/funcionarios");
 
@@ -187,9 +187,11 @@ function FichaSheet({ persona: p, onClose }: { persona: Funcionario; onClose: ()
         <div className="flex min-w-0 flex-col gap-0.5">
           <h3 className="text-xl font-semibold tracking-tight text-balance">{p.nombre}</h3>
           <span className="text-sm text-ink-2">{p.cargo}</span>
-          {p.nota && <span className="text-sm text-ink-muted">{p.nota}</span>}
+
         </div>
       </div>
+
+      {p.nota && <Aviso titulo="Atención">{p.nota}</Aviso>}
 
       <dl className="grid grid-cols-2 gap-x-3 gap-y-4 rounded-xl bg-tile p-4 text-sm">
         <Campo label="Organismo" value={p.organismo} wide />
@@ -221,14 +223,14 @@ function FichaSheet({ persona: p, onClose }: { persona: Funcionario; onClose: ()
             </p>
           </>
         ) : (
-          <p className="text-sm text-ink-2">
-            No está publicado.{" "}
+          <Aviso titulo="No está publicado">
+            El sueldo de este cargo no figura en ningún sitio oficial.{" "}
             {pedido && (
               <Link to="/no-publicado" hash={pedido} className="font-medium text-link hover:underline">
                 Pedilo con la Ley 9070 ›
               </Link>
             )}
-          </p>
+          </Aviso>
         )}
       </section>
 
@@ -286,12 +288,14 @@ function Declaracion({ persona: p }: { persona: Funcionario }) {
               <span className="font-medium tabular-nums">{d.rodados}</span>
             </div>
           </div>
-          <p className="text-xs text-ink-muted text-pretty">
+          <p className="text-xs text-ink-muted">
             Última declaración publicada{d.fecha ? ` el ${formatDate(d.fecha)}` : ""} ({d.declaracionesPublicadas}{" "}
-            {d.declaracionesPublicadas === 1 ? "declaración" : "declaraciones"} en total). El valor fiscal suele ser bastante menor
-            que el de mercado. El sitio oficial solo permite ver la última declaración y no informa montos de cuentas,
-            deudas ni ingresos.
+            {d.declaracionesPublicadas === 1 ? "declaración" : "declaraciones"} en total).
           </p>
+          <Aviso tipo="nota" titulo="Cómo leer este dato">
+            El valor fiscal suele ser bastante menor que el de mercado. El sitio oficial solo permite ver la última
+            declaración y no informa montos de cuentas, deudas ni ingresos.
+          </Aviso>
         </>
       ) : (
         <p className="text-sm text-ink-2">

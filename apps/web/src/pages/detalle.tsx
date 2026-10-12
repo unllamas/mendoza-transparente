@@ -6,7 +6,6 @@ import {
   Building2,
   CalendarDays,
   ChevronRight,
-  Clock,
   ExternalLink,
   FileText,
   Landmark,
@@ -21,6 +20,7 @@ import { archivoUrl, useFuentes } from "../fuente.tsx";
 import { formatDate, formatNumber, limpiarOrganismo, loadJson } from "../lib.ts";
 import { procesoShard } from "../shard.ts";
 import type { DatasetMeta, ProcesoDetalle, ProveedorDetalle } from "../types.ts";
+import { Aviso } from "./components.tsx";
 
 type Vista = { tipo: "fila" } | { tipo: "proveedor"; cuit: string } | { tipo: "proceso"; ocid: string };
 
@@ -229,7 +229,7 @@ export function Proveedor({ cuit, onProceso }: { cuit: string; onProceso: (ocid:
             </li>
           ))}
         </ul>
-        <p className="text-xs text-ink-muted">Montos nominales, sin ajustar por inflación.</p>
+        <Aviso tipo="nota">Montos nominales, sin ajustar por inflación: los años no son comparables directamente.</Aviso>
       </Bloque>
 
       <Bloque titulo="Quién le compra">
@@ -316,11 +316,11 @@ function QuienEs({ proveedor: p }: { proveedor: ProveedorDetalle }) {
         <p className="text-sm text-ink-muted">No figura en el Registro Nacional de Sociedades.</p>
       )}
       {e?.mesesHastaPrimeraAdjudicacion !== null && e?.mesesHastaPrimeraAdjudicacion !== undefined && e.mesesHastaPrimeraAdjudicacion < 12 && (
-        <p className="flex items-start gap-2 rounded-xl bg-tile p-3 text-sm text-ink-2">
-          <Clock className="mt-0.5 size-4 shrink-0 text-ink-muted" aria-hidden />
+        <Aviso titulo="Empresa recién creada">
           Ganó su primera adjudicación a los {e.mesesHastaPrimeraAdjudicacion}{" "}
-          {e.mesesHastaPrimeraAdjudicacion === 1 ? "mes" : "meses"} de constituida.
-        </p>
+          {e.mesesHastaPrimeraAdjudicacion === 1 ? "mes" : "meses"} de constituida. No es una irregularidad en sí, pero
+          es un patrón que los organismos de control miran de cerca.
+        </Aviso>
       )}
       <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm">
         <a href={ARCA_CONSTANCIA} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-link hover:underline">
@@ -406,7 +406,7 @@ export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cui
           ))}
         </ul>
         {p.oferentes === 1 && (
-          <p className="text-xs text-ink-muted">Este proceso recibió una sola oferta.</p>
+          <Aviso titulo="Una sola oferta">Sin competencia, el Estado no pudo comparar precios en este proceso.</Aviso>
         )}
       </Bloque>
     </>

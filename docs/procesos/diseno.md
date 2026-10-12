@@ -25,6 +25,17 @@ Reglas de interfaz que salieron de revisar el sitio con ojos de ciudadano común
 - Todo lo navegable dentro de una hoja lleva flecha ›, se resalta al pasar el mouse y tiene un texto de ayuda («Tocá una para ver el proceso completo»).
 - Castellano rioplatense llano. Títulos como preguntas cuando ayuda («¿Cuánto debe Mendoza?»).
 
+## Avisos
+
+Componente `Aviso` (`apps/web/src/pages/components.tsx`) para lo que hay que leer sí o sí. Dos variantes:
+
+| Variante | Cuándo | Ejemplos |
+|---|---|---|
+| `advertencia` (ámbar, ⚠) | Un problema o una señal | «Por qué importa» en datos no publicados y en señales; sueldo no publicado; fuentes oficiales que no coinciden; proceso con una sola oferta; empresa que ganó antes de cumplir un año |
+| `nota` (neutra, ⓘ) | Una aclaración de método para leer bien un número | La deuda en pesos baja con la devaluación; por qué los municipios chicos reciben más por habitante; salto entre proyecciones de población; límites de las declaraciones juradas; montos sin ajustar por inflación |
+
+El ámbar es un color de estado, como el verde y el rojo: va siempre con ícono y título, y no reemplaza al borravino de la marca. No abusar: un aviso por bloque como máximo, y solo si cambia cómo se interpreta el dato.
+
 ## Gráficos
 
 - Una sola serie por gráfico de línea; el eje Y sin unidad (va en el título) y el eje X con etiquetas espaciadas según el ancho.

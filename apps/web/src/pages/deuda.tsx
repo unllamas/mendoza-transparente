@@ -6,7 +6,7 @@ import { LineChart } from "../charts/line-chart.tsx";
 import { GOBIERNOS } from "../gobiernos.ts";
 import { formatDate, formatNumber } from "../lib.ts";
 import { FuentesOficiales } from "../fuente.tsx";
-import { PageHeader, Section, StatTile } from "./components.tsx";
+import { Aviso, PageHeader, Section, StatTile } from "./components.tsx";
 
 const route = getRouteApi("/deuda");
 
@@ -55,8 +55,11 @@ export function DeudaPage() {
         </div>
         <p className="text-sm text-ink-muted text-pretty">
           Deuda consolidada en millones de dólares al cierre de cada trimestre. Las franjas marcan cada gobernación.
-          Ojo: la deuda tomada en pesos baja medida en dólares cuando el peso se devalúa, aunque no se haya pagado.
         </p>
+        <Aviso tipo="nota" titulo="Cómo leer este gráfico">
+          La deuda tomada en pesos baja medida en dólares cuando el peso se devalúa, aunque no se haya pagado. Una
+          caída en el gráfico no siempre significa que se pagó deuda.
+        </Aviso>
       </Section>
 
       <Section title="Por mandato">

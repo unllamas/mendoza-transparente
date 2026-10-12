@@ -7,7 +7,7 @@ import { MapaMendoza } from "../charts/mapa.tsx";
 import { formatNumber } from "../lib.ts";
 import type { PoblacionTema } from "../types.ts";
 import { FuentesOficiales } from "../fuente.tsx";
-import { PageHeader, Section, Segmented, StatTile } from "./components.tsx";
+import { Aviso, PageHeader, Section, Segmented, StatTile } from "./components.tsx";
 
 const route = getRouteApi("/poblacion");
 
@@ -57,10 +57,10 @@ export function PoblacionPage() {
             ariaLabel="Población de Mendoza por año"
           />
         </div>
-        <p className="text-sm text-ink-muted text-pretty">
+        <Aviso tipo="nota">
           Hasta 2021 la proyección parte del Censo 2010 y desde 2022 del Censo 2022, por eso hay un pequeño salto entre
           esos años.
-        </p>
+        </Aviso>
       </Section>
 
       <Section title="Por departamento">

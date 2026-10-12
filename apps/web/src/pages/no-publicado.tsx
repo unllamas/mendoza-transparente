@@ -3,7 +3,7 @@ import { Check, ChevronRight, Copy, ExternalLink, EyeOff, Search } from "lucide-
 import { useState } from "react";
 
 import type { NoPublicado } from "../types.ts";
-import { PageHeader, Sheet } from "./components.tsx";
+import { Aviso, PageHeader, Sheet } from "./components.tsx";
 
 const route = getRouteApi("/no-publicado");
 
@@ -103,11 +103,10 @@ function DetalleSheet({ item, onClose }: { item: NoPublicado; onClose: () => voi
         <p className="text-ink-2 text-pretty">{item.que_es}</p>
       </div>
 
-      <div className="flex flex-col gap-1 rounded-xl bg-tile p-4 text-sm">
-        <span className="font-medium">Por qué importa</span>
-        <span className="text-ink-2 text-pretty">{item.por_que_importa}</span>
-        {item.detalle_estado && <span className="mt-1 text-ink-muted text-pretty">{item.detalle_estado}</span>}
-      </div>
+      <Aviso titulo="Por qué importa">
+        {item.por_que_importa}
+        {item.detalle_estado && <p className="mt-1 text-ink-muted">{item.detalle_estado}</p>}
+      </Aviso>
 
       <div className="flex flex-col gap-3">
         <div className="flex items-baseline justify-between gap-3">

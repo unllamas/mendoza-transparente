@@ -9,7 +9,7 @@ import { GOBIERNOS } from "../gobiernos.ts";
 import { formatNumber } from "../lib.ts";
 import type { CoparticipacionTema } from "../types.ts";
 import { FuentesOficiales } from "../fuente.tsx";
-import { PageHeader, Section, StatTile } from "./components.tsx";
+import { Aviso, PageHeader, Section, StatTile } from "./components.tsx";
 
 const route = getRouteApi("/coparticipacion");
 
@@ -82,10 +82,9 @@ export function CoparticipacionPage() {
             </ol>
           )}
         </div>
-        <p className="text-sm text-ink-muted text-pretty">
-          Los municipios con poca población reciben más por habitante porque una parte del reparto es fija o se
-          distribuye en partes iguales, sin importar cuánta gente vive en cada uno.
-        </p>
+        <Aviso tipo="nota" titulo="Por qué los municipios chicos reciben más por habitante">
+          Una parte del reparto es fija o se distribuye en partes iguales, sin importar cuánta gente vive en cada uno.
+        </Aviso>
       </Section>
 
       <Section title={`Total repartido por año, en millones de pesos de ${tema.referencia}`}>
