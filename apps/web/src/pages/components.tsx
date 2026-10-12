@@ -328,7 +328,7 @@ export function IconButton({
       onClick={onClick}
       aria-label={label}
       title={label}
-      className={`flex size-11 shrink-0 items-center justify-center rounded-lg text-ink-2 hover:bg-tile hover:text-ink ${className}`}
+      className={`flex size-11 shrink-0 items-center justify-center rounded-lg border border-line bg-tile text-ink hover:border-link hover:text-link ${className}`}
       {...rest}
     >
       {children}

@@ -15,7 +15,7 @@ Reglas de interfaz que salieron de revisar el sitio con ojos de ciudadano común
 - **Borde = clickeable.** Las tarjetas informativas llevan solo fondo (`bg-tile`).
 - **Lo accionable se ve antes del hover** (en el celular no hay hover): las filas que llevan a otra página tienen la flecha en el color de link (`text-link`) siempre. En listas de navegación, como "Todo lo que hay", el nombre del destino también va en ese color.
 - **Tamaño mínimo para tocar: 44 px de alto** (`min-h-11`) en filas y botones.
-- **Botones de solo ícono: cuadrados de 44 × 44 px**, con `IconButton` (`components.tsx`), que exige un nombre accesible (`label`).
+- **Botones de solo ícono: cuadrados de 44 × 44 px**, con `IconButton` (`components.tsx`), que exige un nombre accesible (`label`). Llevan borde y fondo gris (estilo secundario) para que se vean como botón antes del hover; un ícono suelto no se reconoce como botón.
 - **Encabezados de 48 a 60 px de alto:** el del sitio, el de las hojas y el del buscador miden 56 px (`h-14`).
 - `bun run verificar` controla las tres medidas en todas las páginas y en todos los anchos.
 - **Nada se corta en dos líneas**: cifras, títulos de tarjetas, fechas y montos. La unidad va aparte y en chico («$ 965.709» + «millones»). Montos grandes en «mil M».
@@ -36,7 +36,8 @@ Reglas de interfaz que salieron de revisar el sitio con ojos de ciudadano común
 
 ## Avisos
 
-- **Varias alertas sobre lo mismo** (un proceso de compra con desvío, una sola oferta y contratación directa): **etiquetas ámbar compactas** arriba, que se despliegan de a una con su explicación en dos líneas (`Flags` en `detalle.tsx`). No apilar cajas de aviso: generan scroll y nadie las lee.
+- **Varias alertas sobre lo mismo** (un proceso de compra con desvío, una sola oferta y contratación directa): **etiquetas ámbar compactas** arriba. Al tocar una se abre su explicación como nota flotante, sin empujar el contenido (`Flags` en `detalle.tsx`). Se cierra al tocar afuera o con Escape.
+- **Montos grandes:** en millones con la palabra entera ("$ 1.673 millones"), nunca "M" ni "mil M". En las tarjetas destacadas, la unidad va aparte y en chico (`Amount` en `detalle.tsx`). Los desvíos van en porcentaje ("+526.069 % sobre lo estimado"). No apilar cajas de aviso: generan scroll y nadie las lee.
 - **Lo que define el caso va con protagonismo,** no al fondo. Por ejemplo, con una sola oferta adjudicada, la sección dice "Ganó sin competencia" y destaca al ganador con su monto.
 
 Componente `Aviso` (`apps/web/src/pages/components.tsx`) para lo que hay que leer sí o sí. Dos variantes:

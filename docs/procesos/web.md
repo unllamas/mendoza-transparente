@@ -48,7 +48,10 @@ Las hojas de detalle se abren con parámetros en la URL, así cada caso se puede
 - `?proceso=<ocid>` y `?proveedor=<cuit>`: los maneja `DetailSheet` (`src/detail-sheet.tsx`), montado una sola vez en el layout, así que funcionan sobre cualquier página. Desde código: `useDetail().open("proceso", ocid)`.
 - `?senal=<id>`: la señal abierta en `/senales`. Sus casos abren la hoja del proceso o del proveedor encima (`/senales?senal=adjudicado-sobre-estimado&proceso=ocds-…`).
 
-Pasar de un proceso a un proveedor agrega un paso al historial: el botón "atrás" vuelve a la hoja anterior y la X la cierra. En la tabla de datos de compras, cada fila abre la hoja de su proceso o de su proveedor.
+Pasar de un proceso a un proveedor agrega un paso al historial: el botón "atrás" vuelve a la hoja anterior y la X la cierra.
+
+- **La página no se mueve al abrir o cerrar una hoja:** se navega con `router.navigate({ href, resetScroll: false })`. Sin eso, el router vuelve al principio de la página en cada cambio de URL.
+- **Los ids numéricos llegan como número:** el router convierte `?proveedor=30717479188` en número. Por eso `DetailSheet` los pasa a texto antes de usarlos; sin eso, la hoja del proveedor no abría. En la tabla de datos de compras, cada fila abre la hoja de su proceso o de su proveedor.
 
 ## Sumar una página temática
 

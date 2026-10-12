@@ -23,8 +23,9 @@ export function useDetail() {
     return `${url.pathname}${url.search}${url.hash}`;
   };
   return {
-    open: (param: DetailParam, id: string) => router.history.push(href({ [param]: id })),
-    close: () => router.history.replace(href({})),
+    // resetScroll: false keeps the page where it was under the sheet (the router scrolls to the top by default).
+    open: (param: DetailParam, id: string) => router.navigate({ href: href({ [param]: id }), resetScroll: false }),
+    close: () => router.navigate({ href: href({}), replace: true, resetScroll: false }),
   };
 }
 
@@ -32,8 +33,10 @@ export function useDetail() {
 export function DetailSheet() {
   const search = useRouterState({ select: (s) => s.location.search as Record<string, unknown> });
   const { open, close } = useDetail();
-  const proceso = typeof search.proceso === "string" ? search.proceso : null;
-  const proveedor = typeof search.proveedor === "string" ? search.proveedor : null;
+  // The router parses numeric values: a CUIT like 30717479188 arrives as a number.
+  const asId = (v: unknown) => (typeof v === "string" || typeof v === "number" ? String(v) : null);
+  const proceso = asId(search.proceso);
+  const proveedor = asId(search.proveedor);
   if (!proceso && !proveedor) return null;
   return (
     <Sheet titulo={proceso ? "Proceso de compra" : "Proveedor"} onClose={close} trackId={proceso ? "purchase.process" : "purchase.supplier"}>

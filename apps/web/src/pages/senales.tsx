@@ -25,7 +25,9 @@ export function SenalesPage() {
     else url.searchParams.delete("senal");
     return `${url.pathname}${url.search}`;
   };
-  const setAbierta = (x: Senal | null) => (x ? router.history.push(withSignal(x.id)) : router.history.replace(withSignal(null)));
+  // resetScroll: false keeps the list where it was: opening a card at the bottom must not jump to the top.
+  const setAbierta = (x: Senal | null) =>
+    router.navigate({ href: withSignal(x?.id ?? null), replace: !x, resetScroll: false });
 
   return (
     <div className="flex flex-col gap-10">

@@ -7,13 +7,12 @@ const entero = new Intl.NumberFormat("es-AR", { maximumFractionDigits: 0 });
 const decimal = new Intl.NumberFormat("es-AR", { maximumFractionDigits: 2 });
 const unDecimal = new Intl.NumberFormat("es-AR", { maximumFractionDigits: 1 });
 
-/** Montos: completos hasta un millón, en millones ("$ 54,1 M") y en miles de millones ("$ 965,7 mil M"). */
+/** Montos: completos hasta un millón y desde ahí en millones ("$ 54,1 millones", "$ 1.673 millones"). */
 export function formatMoneda(valor: number, moneda: string): string {
   const signo = moneda === "USD" ? "US$" : "$";
   const abs = Math.abs(valor);
   const menos = valor < 0 ? "−" : "";
-  if (abs >= 1e9) return `${menos}${signo} ${unDecimal.format(abs / 1e9)} mil M`;
-  if (abs >= 1e6) return `${menos}${signo} ${unDecimal.format(abs / 1e6)} M`;
+  if (abs >= 1e6) return `${menos}${signo} ${(abs >= 1e8 ? entero : unDecimal).format(abs / 1e6)} millones`;
   return `${menos}${signo} ${entero.format(abs)}`;
 }
 

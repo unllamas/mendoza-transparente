@@ -8,6 +8,7 @@ import {
   ChevronDown,
   ChevronRight,
   ExternalLink,
+  Info,
   FileText,
   Landmark,
   Search,
@@ -15,6 +16,7 @@ import {
   UserRound,
   X,
 } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 
 import { formatMoneda, type ColumnaVista } from "../celdas.ts";
@@ -22,7 +24,7 @@ import { ColumnChart } from "../charts/column-chart.tsx";
 import { archivoUrl, useFuentes } from "../fuente.tsx";
 import { formatDate, formatNumber, limpiarOrganismo, loadJson } from "../lib.ts";
 import { procesoShard } from "../shard.ts";
-import type { DatasetMeta, ProcesoDetalle, ProveedorDetalle } from "../types.ts";
+import type { DatasetMeta, OrganismoResumen, ProcesoDetalle, ProveedorDetalle } from "../types.ts";
 import { Aviso, IconButton, Segmented, useScrollLock } from "./components.tsx";
 
 type Vista = { tipo: "fila" } | { tipo: "proveedor"; cuit: string } | { tipo: "proceso"; ocid: string };
@@ -189,6 +191,9 @@ function useCarga<T>(path: string, pick?: (data: unknown) => T | undefined) {
 
 export function Proveedor({ cuit, onProceso, sinTitulo }: { cuit: string; onProceso: (ocid: string) => void; sinTitulo?: boolean }) {
   const { data: p, error } = useCarga<ProveedorDetalle>(`temas/compras/proveedores/${cuit}.json`);
+  // Agencies with their own page (the ones with enough processes), by their name in the purchase data.
+  const { data: agencies } = useCarga<OrganismoResumen[]>("temas/organismos.json");
+  const agencySlug = new Map((agencies ?? []).map((a) => [a.buyer, a.slug]));
   if (error) return <p className="text-sm text-ink-2">No hay más datos de este proveedor.</p>;
   if (!p) return <p className="text-sm text-ink-muted">Cargando proveedor…</p>;
 
@@ -226,15 +231,18 @@ export function Proveedor({ cuit, onProceso, sinTitulo }: { cuit: string; onProc
         </Bloque>
       )}
 
-      <Bloque titulo="Quién le compra">
-        <ul className="flex flex-col gap-3 text-sm">
-          {p.organismos.map((o) => (
-            <li key={o.nombre} className="flex flex-col gap-1">
-              <div className="flex items-baseline justify-between gap-3">
-                <span className="min-w-0 truncate" title={o.nombre}>
+      <Bloque titulo="Quién le compra" ayuda={agencySlug.size ? "Tocá un organismo para ver todo lo que compra" : undefined}>
+        <ul className="flex flex-col gap-1 text-sm">
+          {p.organismos.map((o) => {
+            const to = agencySlug.get(o.nombre);
+            const body = (
+              <>
+              <div className="flex items-center justify-between gap-3">
+                <span className={`min-w-0 flex-1 truncate ${to ? "text-link" : ""}`} title={o.nombre}>
                   {limpiarOrganismo(o.nombre)}
                 </span>
                 <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(o.monto, "ARS")}</span>
+                {to && <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />}
               </div>
               <div className="flex items-center gap-2">
                 <span className="h-1.5 flex-1 rounded-full bg-grid/60">
@@ -246,9 +254,27 @@ export function Proveedor({ cuit, onProceso, sinTitulo }: { cuit: string; onProc
                 <span className="w-20 text-right text-xs text-ink-muted tabular-nums">
                   {o.procesos} {o.procesos === 1 ? "proceso" : "procesos"}
                 </span>
+                {to && <span className="size-4 shrink-0" aria-hidden />}
               </div>
-            </li>
-          ))}
+              </>
+            );
+            return (
+              <li key={o.nombre}>
+                {to ? (
+                  <Link
+                    to="/organismos/$slug"
+                    params={{ slug: to }}
+                    data-track="purchase.supplier.agency_open"
+                    className="-mx-2 flex min-h-11 flex-col justify-center gap-1 rounded-lg px-2 py-2 hover:bg-tile"
+                  >
+                    {body}
+                  </Link>
+                ) : (
+                  <div className="flex flex-col gap-1 py-2">{body}</div>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </Bloque>
 
@@ -397,12 +423,15 @@ export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cui
           <button
             type="button"
             onClick={() => onProveedor(p.adjudicaciones[0]!.cuit)}
-            className="group flex min-h-11 items-center gap-3 rounded-xl border border-aviso-borde bg-aviso-fondo p-4 text-left hover:border-link"
+            data-track="purchase.winner.open"
+            className="group flex min-h-11 items-center gap-3 rounded-xl border border-line bg-surface p-4 text-left hover:border-link"
           >
-            <Building2 className="size-5 shrink-0 text-aviso" aria-hidden />
-            <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-              <span className="font-medium text-pretty group-hover:text-link">{p.adjudicaciones[0]!.proveedor}</span>
-              <span className="text-xl font-semibold whitespace-nowrap tabular-nums">{formatMoneda(p.adjudicaciones[0]!.monto, "ARS")}</span>
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-tile text-ink-muted">
+              <Building2 className="size-5" aria-hidden />
+            </span>
+            <span className="flex min-w-0 flex-1 flex-col gap-1">
+              <span className="font-medium text-pretty text-link">{p.adjudicaciones[0]!.proveedor}</span>
+              <Amount value={p.adjudicaciones[0]!.monto} />
             </span>
             <ChevronRight className="size-5 shrink-0 text-link" aria-hidden />
           </button>
@@ -442,6 +471,18 @@ export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cui
   );
 }
 
+/** A big amount with its unit apart and smaller: "$ 1.673" + "millones". */
+function Amount({ value }: { value: number }) {
+  const millions = Math.abs(value) >= 1e6;
+  const n = millions ? value / 1e6 : value;
+  return (
+    <span className="flex items-baseline gap-1.5 whitespace-nowrap">
+      <span className="text-xl font-semibold tabular-nums">$ {formatNumber(millions && Math.abs(n) < 100 ? Math.round(n * 10) / 10 : Math.round(n))}</span>
+      {millions && <span className="text-sm text-ink-muted">millones</span>}
+    </span>
+  );
+}
+
 interface Flag {
   id: string;
   label: string;
@@ -463,7 +504,7 @@ function processFlags(p: ProcesoDetalle, awarded: number): Flag[] {
     else if (ratio >= 2)
       flags.push({
         id: "sobre-estimado",
-        label: `${formatNumber(ratio >= 10 ? Math.round(ratio) : Math.round(ratio * 10) / 10)} × lo estimado`,
+        label: `+${formatNumber(Math.round((ratio - 1) * 100))} % sobre lo estimado`,
         text: "Puede haber una explicación (error de carga, cambio de alcance, precios que subieron), pero un desvío así merece una respuesta del organismo.",
       });
   }
@@ -476,32 +517,50 @@ function processFlags(p: ProcesoDetalle, awarded: number): Flag[] {
 
 function Flags({ flags }: { flags: Flag[] }) {
   const [open, setOpen] = useState<string | null>(null);
+  useEffect(() => {
+    if (!open) return;
+    const close = (e: Event) => {
+      if (e instanceof KeyboardEvent ? e.key === "Escape" : !(e.target as Element).closest("[data-flag]")) setOpen(null);
+    };
+    document.addEventListener("pointerdown", close);
+    document.addEventListener("keydown", close);
+    return () => {
+      document.removeEventListener("pointerdown", close);
+      document.removeEventListener("keydown", close);
+    };
+  }, [open]);
   if (!flags.length) return null;
-  const current = flags.find((f) => f.id === open);
   return (
-    <div className="flex flex-col gap-2">
-      <ul className="flex flex-wrap gap-2" aria-label="Para mirar de cerca">
-        {flags.map((f) => (
-          <li key={f.id}>
-            <button
-              type="button"
-              aria-expanded={open === f.id}
-              onClick={() => setOpen(open === f.id ? null : f.id)}
-              data-track="purchase.flag.toggle"
-              data-track-flag={f.id}
-              className={`inline-flex min-h-9 items-center gap-1.5 rounded-full border px-3 text-sm font-medium whitespace-nowrap ${
-                open === f.id ? "border-aviso bg-aviso-fondo" : "border-aviso-borde bg-aviso-fondo/60 hover:border-aviso"
-              }`}
+    <ul className="flex flex-wrap gap-2" aria-label="Para mirar de cerca">
+      {flags.map((f) => (
+        <li key={f.id} className="relative" data-flag>
+          <button
+            type="button"
+            aria-expanded={open === f.id}
+            aria-describedby={open === f.id ? `flag-${f.id}` : undefined}
+            onClick={() => setOpen(open === f.id ? null : f.id)}
+            data-track="purchase.flag.toggle"
+            data-track-flag={f.id}
+            className={`inline-flex min-h-11 items-center gap-1.5 rounded-full border px-3.5 text-sm font-medium whitespace-nowrap ${
+              open === f.id ? "border-aviso bg-aviso-fondo" : "border-aviso-borde bg-aviso-fondo/60 hover:border-aviso"
+            }`}
+          >
+            <TriangleAlert className="size-4 text-aviso" aria-hidden />
+            {f.label}
+            <Info className="size-3.5 text-ink-muted" aria-hidden />
+          </button>
+          {open === f.id && (
+            <p
+              id={`flag-${f.id}`}
+              role="tooltip"
+              className="absolute top-full left-0 z-10 mt-1.5 w-64 max-w-[calc(100vw-3rem)] rounded-lg border border-aviso-borde bg-surface px-3 py-2 text-sm text-ink-2 text-pretty shadow-lg"
             >
-              <TriangleAlert className="size-3.5 text-aviso" aria-hidden />
-              {f.label}
-              <ChevronDown className={`size-3.5 text-ink-muted transition-transform ${open === f.id ? "rotate-180" : ""}`} aria-hidden />
-            </button>
-          </li>
-        ))}
-      </ul>
-      {current && <p className="rounded-lg bg-aviso-fondo px-3 py-2 text-sm text-ink-2 text-pretty">{current.text}</p>}
-    </div>
+              {f.text}
+            </p>
+          )}
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -539,7 +598,7 @@ function Montos({ estimado, adjudicado }: { estimado: number | null; adjudicado:
 /** Below this, an estimate is symbolic ($1, $2…): the agency did not really estimate the price. */
 const SYMBOLIC_ESTIMATE = 1000;
 
-/** Difference between estimate and award, readable at any size ("5.262 veces lo estimado", not "526069 %"). */
+/** Difference between estimate and award, as a percentage ("un 526.100 % más de lo estimado"). */
 function Desvio({ estimado, adjudicado }: { estimado: number; adjudicado: number }) {
   const ratio = adjudicado / estimado;
   const pct = Math.abs(ratio - 1) * 100;
@@ -548,9 +607,7 @@ function Desvio({ estimado, adjudicado }: { estimado: number; adjudicado: number
     return <p className="text-sm text-ink-2">El estimado cargado es simbólico: no permite comparar.</p>;
   return (
     <p className="text-sm text-ink-2">
-      {ratio >= 2
-        ? `Se adjudicó ${formatNumber(ratio >= 10 ? Math.round(ratio) : Math.round(ratio * 10) / 10)} veces lo estimado.`
-        : `Se adjudicó un ${formatNumber(Math.round(pct))} % ${ratio > 1 ? "más" : "menos"} de lo estimado.`}
+      Se adjudicó un {formatNumber(Math.round(pct))} % {ratio > 1 ? "más" : "menos"} de lo estimado.
     </p>
   );
 }
