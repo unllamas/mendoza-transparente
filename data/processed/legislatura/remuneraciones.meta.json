@@ -1,0 +1,12 @@
+{
+  "titulo": "Viáticos y pasajes de la Legislatura de Mendoza",
+  "descripcion": "Cada fila es el total de viáticos o de pasajes que una cámara informó en un período. Diputados publica un listado por legislador (todos figuran sin consumo); el Senado publica un listado trimestral de solicitudes, mayormente de personal y autoridades, del que se suma el total. No es la dieta de los legisladores: ninguna cámara publica dietas, gastos de representación ni escalas salariales. Montos en pesos nominales; los períodos son años, trimestres (T1 a T4) o un rango de meses.",
+  "columnas": {
+    "camara": { "etiqueta": "Cámara", "tipo": "texto", "valores": { "diputados": "Diputados", "senado": "Senado" } },
+    "concepto": { "etiqueta": "Concepto", "tipo": "texto" },
+    "periodo": { "etiqueta": "Período", "tipo": "texto" },
+    "monto": { "etiqueta": "Monto", "tipo": "moneda", "moneda": "ARS", "escala": 1 },
+    "fuente_url": { "etiqueta": "Fuente", "tipo": "url" }
+  },
+  "orden": ["camara", "periodo", "concepto", "monto", "fuente_url"]
+}

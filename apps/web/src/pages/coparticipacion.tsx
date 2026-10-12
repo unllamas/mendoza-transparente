@@ -8,6 +8,7 @@ import { MapaMendoza } from "../charts/mapa.tsx";
 import { GOBIERNOS } from "../gobiernos.ts";
 import { formatNumber } from "../lib.ts";
 import type { CoparticipacionTema } from "../types.ts";
+import { FuentesOficiales } from "../fuente.tsx";
 import { PageHeader, Section, StatTile } from "./components.tsx";
 
 const route = getRouteApi("/coparticipacion");
@@ -28,6 +29,7 @@ export function CoparticipacionPage() {
         La provincia reparte entre los 18 municipios una parte de lo que recauda y de lo que le manda Nación
           (coparticipación). Todo está en pesos de {tema.referencia}, para que se pueda comparar entre años.
       </PageHeader>
+      <FuentesOficiales ids={["hacienda-participacion-municipal", "indices", "poblacion"]} />
 
       <div className="grid gap-3 md:grid-cols-3">
         <StatTile

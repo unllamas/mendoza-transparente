@@ -5,6 +5,7 @@ import { BarList } from "../charts/bar-list.tsx";
 import { LineChart } from "../charts/line-chart.tsx";
 import { GOBIERNOS } from "../gobiernos.ts";
 import { formatDate, formatNumber } from "../lib.ts";
+import { FuentesOficiales } from "../fuente.tsx";
 import { PageHeader, Section, StatTile } from "./components.tsx";
 
 const route = getRouteApi("/deuda");
@@ -28,6 +29,7 @@ export function DeudaPage() {
         La deuda pública consolidada de la provincia: bonos, préstamos de organismos internacionales y de bancos. Los
           montos están en dólares para poder comparar años con distinta inflación.
       </PageHeader>
+      <FuentesOficiales ids={["hacienda-deuda-stock"]} />
 
       <div className="grid gap-3 md:grid-cols-3">
         <StatTile icon={Landmark} label="Deuda consolidada" value={usdM(deuda.totalUsd)} note={`Al ${formatDate(deuda.corte)}`} />

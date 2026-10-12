@@ -74,6 +74,20 @@
   pedido: Registro de votaciones nominales y de asistencia de cada legislador en todas las sesiones desde diciembre de 2023, en formato CSV o XLSX.
   pedidos: []
 
+- id: dieta-legisladores
+  titulo: Cuánto cobra cada legislador
+  que_es: La dieta mensual de diputados y senadores provinciales, sus gastos de representación y las escalas salariales de la Legislatura.
+  por_que_importa: Las cámaras publican viáticos y pasajes, pero no el sueldo de quienes votan las leyes y el presupuesto.
+  organismo: Cámara de Diputados y Cámara de Senadores de Mendoza
+  marco_legal: Ley 9070 de Acceso a la Información Pública
+  estado: sin_publicar
+  donde_buscamos:
+    - https://www.hcdmza.gob.ar/site/informacion-publica/informacion-economica
+    - https://www.senadomendoza.gob.ar/viaticos-pasajes-y-contratos/
+  detalle_estado: Se publican viáticos y pasajes por legislador; la dieta y los gastos de representación, no.
+  pedido: Monto bruto mensual de la dieta de diputados y senadores provinciales, gastos de representación y cualquier otro concepto que perciban por su cargo, desde diciembre de 2023 a la fecha.
+  pedidos: []
+
 - id: turnos-salud
   titulo: Turnos y esperas en la salud pública
   que_es: Cuánto hay que esperar para conseguir un turno o una cirugía en los hospitales y centros de salud provinciales.

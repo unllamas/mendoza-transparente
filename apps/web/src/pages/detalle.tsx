@@ -1,9 +1,21 @@
 /** Panel lateral con el detalle de una fila y, en compras, los datos relacionados. */
 
-import { ArrowLeft, Building2, CalendarDays, ChevronRight, FileText, X } from "lucide-react";
+import {
+  Archive,
+  ArrowLeft,
+  Building2,
+  CalendarDays,
+  ChevronRight,
+  ExternalLink,
+  FileText,
+  Landmark,
+  Search,
+  X,
+} from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 
 import { formatMoneda, type ColumnaVista } from "../celdas.ts";
+import { archivoUrl, useFuentes } from "../fuente.tsx";
 import { formatDate, formatNumber, limpiarOrganismo, loadJson } from "../lib.ts";
 import { procesoShard } from "../shard.ts";
 import type { DatasetMeta, ProcesoDetalle, ProveedorDetalle } from "../types.ts";
@@ -81,9 +93,59 @@ export function PanelDetalle({
         {vista.tipo === "proveedor" && <Proveedor cuit={vista.cuit} onProceso={(ocid) => ir({ tipo: "proceso", ocid })} />}
         {vista.tipo === "proceso" && <Proceso ocid={vista.ocid} onProveedor={(cuit) => ir({ tipo: "proveedor", cuit })} />}
         {historial.length === 1 && <CamposFila columnas={columnas} fila={fila} titulo={vista.tipo === "fila" ? undefined : "Esta fila"} />}
+        <OrigenDato dataset={dataset} fila={fila} ocid={vista.tipo === "proceso" ? vista.ocid : undefined} />
       </div>
       </aside>
     </>
+  );
+}
+
+/** De dónde sale el dato: la fuente oficial, el documento de la fila si existe y nuestra copia archivada. */
+function OrigenDato({ dataset, fila, ocid }: { dataset: DatasetMeta; fila: string[]; ocid?: string }) {
+  const [fuente] = useFuentes([dataset.source]);
+  const urlFila = ["url_pdf", "fuente_url", "url"]
+    .map((c) => fila[dataset.columns.indexOf(c)])
+    .find((v) => v && /^https?:\/\//.test(v));
+  const esCompra = dataset.source === "compras-ocds";
+
+  return (
+    <section className="flex flex-col gap-2 rounded-xl bg-tile p-4 text-sm">
+      <h4 className="flex items-center gap-1.5 font-semibold">
+        <Landmark className="size-4 text-ink-muted" aria-hidden /> De dónde sale este dato
+      </h4>
+      {fuente && <p className="text-ink-2">{fuente.organismo || fuente.nombre}</p>}
+      <div className="flex flex-col gap-1.5">
+        {urlFila && (
+          <a href={urlFila} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-accent hover:underline">
+            <FileText className="size-3.5" aria-hidden /> Documento original <ExternalLink className="size-3" aria-hidden />
+          </a>
+        )}
+        {esCompra && ocid && (
+          <a
+            href="https://comprar.mendoza.gov.ar/"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 text-accent hover:underline"
+          >
+            <Search className="size-3.5" aria-hidden /> Buscar el proceso {ocid.replace(/^ocds-ppv9mm-/, "")} en COMPR.AR{" "}
+            <ExternalLink className="size-3" aria-hidden />
+          </a>
+        )}
+        {fuente?.url && (
+          <a href={fuente.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-accent hover:underline">
+            <Landmark className="size-3.5" aria-hidden /> Sitio oficial de la fuente <ExternalLink className="size-3" aria-hidden />
+          </a>
+        )}
+        <a
+          href={archivoUrl(dataset.source)}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-1.5 text-ink-muted hover:text-ink hover:underline"
+        >
+          <Archive className="size-3.5" aria-hidden /> Copia archivada del archivo original
+        </a>
+      </div>
+    </section>
   );
 }
 

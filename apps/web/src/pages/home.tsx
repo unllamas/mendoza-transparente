@@ -4,6 +4,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   Coins,
+  ExternalLink,
   EyeOff,
   Landmark,
   type LucideIcon,
@@ -22,6 +23,7 @@ import { MapaMendoza } from "../charts/mapa.tsx";
 import { Sparkline } from "../charts/sparkline.tsx";
 import { CountUp } from "../count-up.tsx";
 import { formatDate, formatNumber } from "../lib.ts";
+import type { SourceMeta } from "../types.ts";
 
 const route = getRouteApi("/");
 
@@ -37,6 +39,7 @@ export function HomePage() {
   const fuentesConDatos = index.sources.filter((s) => index.datasets.some((d) => d.source === s.id)).length;
   const registros = index.datasets.reduce((s, d) => s + d.rowCount, 0);
   const { deuda, coparticipacion, empleo, poblacion, compras, boletin, inflacion, dolar } = home;
+  const fuente = (id: string) => index.sources.find((s) => s.id === id);
 
   return (
     <div className="flex flex-col gap-20">
@@ -94,6 +97,7 @@ export function HomePage() {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {deuda && (
             <Cifra
+              fuente={fuente("hacienda-deuda-stock")}
               to="/deuda"
               icon={Landmark}
               titulo="Deuda pública"
@@ -105,6 +109,7 @@ export function HomePage() {
           )}
           {coparticipacion && (
             <Cifra
+              fuente={fuente("hacienda-participacion-municipal")}
               to="/coparticipacion"
               icon={Coins}
               titulo={`Coparticipación ${coparticipacion.anio}`}
@@ -116,6 +121,7 @@ export function HomePage() {
           )}
           {empleo && (
             <Cifra
+              fuente={fuente("dnap-ocupacion")}
               to="/empleo-publico"
               icon={UsersRound}
               titulo="Empleo público"
@@ -127,6 +133,7 @@ export function HomePage() {
           )}
           {compras && (
             <Cifra
+              fuente={fuente("compras-ocds")}
               to="/datos/$fuente"
               params={{ fuente: "compras-ocds" }}
               icon={ShoppingCart}
@@ -139,6 +146,7 @@ export function HomePage() {
           )}
           {poblacion && (
             <Cifra
+              fuente={fuente("poblacion")}
               to="/poblacion"
               icon={Users}
               titulo={`Población ${poblacion.anio}`}
@@ -150,6 +158,7 @@ export function HomePage() {
           )}
           {boletin && (
             <Cifra
+              fuente={fuente("boletin-oficial")}
               to="/datos/$fuente"
               params={{ fuente: "boletin-oficial" }}
               icon={ScrollText}
@@ -297,6 +306,7 @@ type CifraProps = {
   valor: ReactNode;
   /** Unidad chica al lado de la cifra ("millones", "hab."), para que el número no se corte. */
   unidad?: string;
+  fuente?: SourceMeta;
   detalle: string;
   serie?: number[];
 } & (
@@ -305,14 +315,25 @@ type CifraProps = {
 );
 
 /** Cifra principal clickeable: lleva borde porque abre su página. */
-function Cifra({ icon: Icon, titulo, valor, unidad, detalle, serie, to, params }: CifraProps) {
-  const className = "group flex flex-col gap-4 rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-axis";
-  const contenido = (
-    <>
+function Cifra({ icon: Icon, titulo, valor, unidad, detalle, serie, fuente, to, params }: CifraProps) {
+  // La tarjeta entera abre su página; el enlace a la fuente oficial queda por encima y abre el sitio del organismo.
+  const linkClass = "after:absolute after:inset-0 after:rounded-2xl";
+  const tituloLink =
+    to === "/datos/$fuente" ? (
+      <Link to={to} params={params} className={linkClass}>
+        {titulo}
+      </Link>
+    ) : (
+      <Link to={to} className={linkClass}>
+        {titulo}
+      </Link>
+    );
+  return (
+    <div className="group relative flex flex-col gap-4 rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-axis">
       <div className="flex items-center justify-between gap-3">
         <span className="flex min-w-0 items-center gap-2 text-sm text-ink-2">
           <Icon className="size-4 shrink-0 text-ink-muted" aria-hidden />
-          <span className="truncate">{titulo}</span>
+          <span className="truncate">{tituloLink}</span>
         </span>
         <ArrowUpRight
           className="size-4 shrink-0 text-ink-muted transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
@@ -324,17 +345,22 @@ function Cifra({ icon: Icon, titulo, valor, unidad, detalle, serie, to, params }
         {unidad && <span className="text-sm text-ink-muted">{unidad}</span>}
       </div>
       {serie && <Sparkline values={serie} width={320} className="w-full" />}
-      <p className="mt-auto text-sm text-ink-muted text-pretty">{detalle}</p>
-    </>
-  );
-  return to === "/datos/$fuente" ? (
-    <Link to={to} params={params} className={className}>
-      {contenido}
-    </Link>
-  ) : (
-    <Link to={to} className={className}>
-      {contenido}
-    </Link>
+      <p className="text-sm text-ink-muted text-pretty">{detalle}</p>
+      {fuente?.url && (
+        <div className="mt-auto border-t border-line pt-3">
+          <a
+            href={fuente.url}
+            target="_blank"
+            rel="noreferrer"
+            className="relative z-10 inline-flex max-w-full items-center gap-1 text-xs text-ink-muted hover:text-accent"
+          >
+            <Landmark className="size-3.5 shrink-0" aria-hidden />
+            <span className="truncate">Fuente: {fuente.organismo || fuente.nombre}</span>
+            <ExternalLink className="size-3 shrink-0" aria-hidden />
+          </a>
+        </div>
+      )}
+    </div>
   );
 }
 

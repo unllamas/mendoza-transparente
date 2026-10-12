@@ -141,3 +141,13 @@
   frecuencia: eventual
   dificultad: facil
   estado: activo
+
+- id: legislatura
+  nombre: Legisladores provinciales (diputados y senadores) y sus viáticos
+  organismo: Cámara de Diputados y Cámara de Senadores de Mendoza
+  url: https://www.hcdmza.gob.ar/site/
+  descripcion: Quiénes son los 48 diputados y 38 senadores provinciales, a qué bloque pertenecen, por qué sección fueron electos y hasta cuándo dura su mandato.
+  formato: html, api wordpress, pdf
+  frecuencia: eventual
+  dificultad: media
+  estado: activo

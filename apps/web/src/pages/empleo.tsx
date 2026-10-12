@@ -6,6 +6,7 @@ import { BarList } from "../charts/bar-list.tsx";
 import { LineChart } from "../charts/line-chart.tsx";
 import { GOBIERNOS } from "../gobiernos.ts";
 import { formatNumber } from "../lib.ts";
+import { FuentesOficiales } from "../fuente.tsx";
 import { PageHeader, Section, Segmented, StatTile } from "./components.tsx";
 
 const route = getRouteApi("/empleo-publico");
@@ -35,6 +36,7 @@ export function EmpleoPage() {
         Personal ocupado en la administración pública provincial, comparado con la población. Medirlo cada mil
           habitantes permite comparar provincias de distinto tamaño.
       </PageHeader>
+      <FuentesOficiales ids={["dnap-ocupacion"]} />
 
       <div className="grid gap-3 md:grid-cols-3">
         <StatTile

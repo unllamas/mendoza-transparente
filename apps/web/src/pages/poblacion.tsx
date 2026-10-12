@@ -6,6 +6,7 @@ import { LineChart } from "../charts/line-chart.tsx";
 import { MapaMendoza } from "../charts/mapa.tsx";
 import { formatNumber } from "../lib.ts";
 import type { PoblacionTema } from "../types.ts";
+import { FuentesOficiales } from "../fuente.tsx";
 import { PageHeader, Section, Segmented, StatTile } from "./components.tsx";
 
 const route = getRouteApi("/poblacion");
@@ -29,6 +30,7 @@ export function PoblacionPage() {
         Población de la provincia y de cada departamento según los censos 2010 y 2022, y las proyecciones oficiales de
           INDEC para los años sin censo.
       </PageHeader>
+      <FuentesOficiales ids={["poblacion"]} />
 
       <div className="grid gap-3 md:grid-cols-3">
         <StatTile icon={Users} label={`Habitantes en ${tema.anioActual}`} value={personas(tema.actual)} note="Proyección INDEC" />

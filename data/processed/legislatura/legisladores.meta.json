@@ -1,0 +1,23 @@
+{
+  "titulo": "Legisladores provinciales de Mendoza (composición actual)",
+  "descripcion": "Cada fila es un integrante en funciones de la Legislatura de Mendoza: 48 diputados y 38 senadores. Fuente: sitios oficiales del Honorable Senado y de la Cámara de Diputados (bloques y autoridades). El partido o frente por el que fue electo no lo publica ninguna de las dos cámaras: figura el bloque legislativo actual. La sección electoral es el \"distrito\" que informa cada cámara. El Senado no publica emails; el de Diputados es institucional. La vicegobernadora, que preside el Senado, no ocupa una de las 38 bancas y no figura.",
+  "columnas": {
+    "id": { "etiqueta": "Identificador", "tipo": "texto", "oculta": true },
+    "nombre": { "etiqueta": "Legislador/a", "tipo": "texto", "descripcion": "Nombre tal como lo publica la cámara." },
+    "camara": {
+      "etiqueta": "Cámara",
+      "tipo": "texto",
+      "valores": { "diputados": "Diputados", "senado": "Senado" }
+    },
+    "cargo": { "etiqueta": "Cargo", "tipo": "texto", "descripcion": "Diputado/a o senador/a; si integra la mesa de conducción, el cargo en ella (presidente, vicepresidente)." },
+    "bloque": { "etiqueta": "Bloque", "tipo": "texto", "descripcion": "Bloque legislativo actual, con el nombre que usa la cámara. Puede diferir del partido o frente por el que fue electo." },
+    "partido": { "etiqueta": "Partido o frente", "tipo": "texto", "descripcion": "Vacío: ninguna de las dos cámaras publica el frente o partido por el que fue electo cada legislador." },
+    "seccion_electoral": { "etiqueta": "Sección electoral", "tipo": "texto", "descripcion": "Primera a Cuarta, según el \"distrito\" que figura en el sitio de la cámara." },
+    "mandato_desde": { "etiqueta": "Mandato desde", "tipo": "anio" },
+    "mandato_hasta": { "etiqueta": "Mandato hasta", "tipo": "anio", "descripcion": "Año de fin del período legislativo que informa la cámara." },
+    "email": { "etiqueta": "Email institucional", "tipo": "texto" },
+    "perfil_url": { "etiqueta": "Página oficial", "tipo": "url", "descripcion": "Perfil del senador en su sitio; para diputados, la página de su bloque (no tienen perfil individual)." },
+    "fuente_url": { "etiqueta": "Fuente", "tipo": "url", "oculta": true }
+  },
+  "orden": ["nombre", "camara", "bloque", "partido", "seccion_electoral", "mandato_hasta", "cargo", "mandato_desde", "email", "perfil_url", "id", "fuente_url"]
+}
