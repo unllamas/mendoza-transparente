@@ -24,7 +24,7 @@ const DIST = join(WEB, "dist");
 const DATA = join(WEB, "public", "data");
 const FONTS = join(import.meta.dirname, "fonts");
 
-const ACCENT = "#3987e5";
+const ACCENT = "#c0395f";
 const nf = new Intl.NumberFormat("es-AR");
 const nf1 = new Intl.NumberFormat("es-AR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 const fechaLarga = (iso: string) =>

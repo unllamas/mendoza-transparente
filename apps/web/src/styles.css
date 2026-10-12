@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
-/* Tokens de la guía de visualización. Modo claro y oscuro elegidos por separado, no invertidos. */
+/* Tokens de diseño. Toda la identidad gira en torno al borravino Malbec: acciones y datos usan la misma familia.
+   Lo accionable se distingue por la forma (botón relleno, subrayado, borde, flecha), no por otro color. */
 :root {
   color-scheme: light;
   --page: #f9f9f7;
@@ -12,12 +13,19 @@
   --grid: #e1e0d9;
   --axis: #c3c2b7;
   --border: rgba(11, 11, 11, 0.1);
-  --accent: #2a78d6;
-  /* Marca: borravino Malbec. Solo para lo accionable (botones, links, foco). El azul queda para los datos. */
+  --accent: #9b2348;
+  /* Marca: borravino Malbec, para botones, links y foco. */
   --brand: #8a1538;
   --brand-hover: #6f102c;
   --on-brand: #ffffff;
   --link: #8a1538;
+  /* Rampa del mapa, de poco a mucho (validada: un tono, pasos visibles, contraste con el fondo). */
+  --map-0: #e3a2b5;
+  --map-1: #d47f99;
+  --map-2: #c15d7e;
+  --map-3: #a63f63;
+  --map-4: #842a4b;
+  --map-5: #5f1834;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -32,11 +40,18 @@
     --grid: #2c2c2a;
     --axis: #383835;
     --border: rgba(255, 255, 255, 0.1);
-    --accent: #3987e5;
+    --accent: #e06a8a;
     --brand: #b0284f;
     --brand-hover: #c4375f;
     --on-brand: #ffffff;
     --link: #f2809b;
+    /* En oscuro, más es más claro. */
+    --map-0: #b23a62;
+    --map-1: #c4527a;
+    --map-2: #d46d91;
+    --map-3: #e28aa8;
+    --map-4: #eeaac0;
+    --map-5: #f7cdd9;
   }
 }
 

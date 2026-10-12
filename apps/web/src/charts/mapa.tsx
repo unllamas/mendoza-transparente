@@ -2,8 +2,8 @@ import { useMemo, useState } from "react";
 
 import type { MapaMendoza as MapaData } from "../types.ts";
 
-/** Rampa secuencial azul de la guía de visualización: de poco (claro) a mucho (oscuro). */
-const RAMPA = ["#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95"];
+/** Rampa secuencial borravino de poco a mucho; los valores por modo están en styles.css (--map-0 a --map-5). */
+const RAMPA = Array.from({ length: 6 }, (_, i) => `var(--map-${i})`);
 
 // Departamentos chicos del Gran Mendoza: se muestran ampliados en un recuadro.
 const GRAN_MENDOZA = ["Capital", "Godoy Cruz", "Guaymallén", "Maipú", "Las Heras", "Luján de Cuyo"];
@@ -50,7 +50,7 @@ export function MapaMendoza({ mapa, valores, formatValue, seleccionado, onSelect
           <path
             key={d.municipio}
             d={d.path}
-            fill={color(valores[d.municipio])}
+            style={{ fill: color(valores[d.municipio]) }}
             stroke={sel ? "var(--ink)" : "var(--surface)"}
             strokeWidth={sel ? (zoom ? 0.8 : 3) : zoom ? 0.3 : 1.2}
             vectorEffect="non-scaling-stroke"
