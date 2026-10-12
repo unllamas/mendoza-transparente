@@ -6,7 +6,60 @@ type CsvRow = Record<string, string>;
 
 const anio = (s: string) => (s ? s.slice(0, 4) : null);
 
-export function buildFuncionarios(legisladores: CsvRow[], autoridades: CsvRow[], remuneraciones: CsvRow[]): FuncionariosTema {
+/** "Janina Ortiz Suspendida Res.1135 (27/03/2024)" → nombre "Janina Ortiz" y nota "Suspendida Res.1135 (27/03/2024)". */
+function separarNota(nombre: string): { nombre: string; nota: string | null } {
+  const m = /\s+((?:Suspendid|Licencia|En uso de licencia|Renunci)[\s\S]*)$/i.exec(nombre);
+  return m ? { nombre: nombre.slice(0, m.index).trim(), nota: m[1]!.trim() } : { nombre, nota: null };
+}
+
+const tokens = (s: string) =>
+  s
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toUpperCase()
+    .replace(/[^A-Z ]/g, " ")
+    .split(/\s+/)
+    .filter((w) => w.length > 1);
+
+/**
+ * Cruce con las declaraciones juradas por nombre (la API no expone otro identificador común).
+ * Criterio conservador: todas las palabras del nombre más corto están en el otro y la coincidencia es única.
+ */
+function cruzarDeclaraciones(eticaFuncionarios: CsvRow[], declaraciones: CsvRow[]) {
+  const porId = new Map(declaraciones.map((d) => [d.official_id!, d]));
+  const candidatos = eticaFuncionarios
+    .filter((f) => porId.has(f.official_id!))
+    .map((f) => ({ f, tokens: new Set(tokens(f.nombre!)) }));
+  return (nombre: string): Funcionario["ddjj"] => {
+    const t = tokens(nombre);
+    const matches = candidatos.filter(({ tokens: c }) => {
+      const [chico, grande] = t.length <= c.size ? [t, c] : [[...c], new Set(t)];
+      return chico.length >= 2 && chico.every((w) => grande.has(w));
+    });
+    if (matches.length !== 1) return null;
+    const { f } = matches[0]!;
+    const d = porId.get(f.official_id!)!;
+    return {
+      fecha: d.fecha_publicacion || null,
+      periodo: d.periodo || null,
+      totalBienes: Number(d.total_bienes_propios || d.total_bienes || 0),
+      inmuebles: Number(d.n_inmuebles || 0),
+      rodados: Number(d.n_rodados || 0),
+      cargoDeclarado: f.cargo || null,
+      reparticion: f.reparticion || null,
+      declaracionesPublicadas: Number(d.declaraciones_publicadas || f.declaraciones_publicadas || 0),
+    };
+  };
+}
+
+export function buildFuncionarios(
+  legisladores: CsvRow[],
+  autoridades: CsvRow[],
+  remuneraciones: CsvRow[],
+  eticaFuncionarios: CsvRow[] = [],
+  declaraciones: CsvRow[] = [],
+): FuncionariosTema {
+  const ddjj = cruzarDeclaraciones(eticaFuncionarios, declaraciones);
   const sueldo = (prefijo: string) =>
     remuneraciones
       .filter((r) => r.cargo_o_persona?.startsWith(prefijo) && !/desarraigo|movilidad/i.test(r.concepto ?? ""))
@@ -24,7 +77,7 @@ export function buildFuncionarios(legisladores: CsvRow[], autoridades: CsvRow[],
               : "diputados_nacional";
       return {
         id: a.id!,
-        nombre: a.nombre!,
+        ...separarNota(a.nombre!),
         cargo: a.cargo!,
         grupo,
         organismo: a.organismo!,
@@ -38,12 +91,14 @@ export function buildFuncionarios(legisladores: CsvRow[], autoridades: CsvRow[],
         fuenteUrl: a.fuente_url!,
         remuneracion:
           grupo === "diputados_nacional" ? sueldo("Diputado") : grupo === "senado_nacional" ? sueldo("Senador") : [],
+        // Los legisladores nacionales declaran ante la Oficina Anticorrupción, no ante Ética Pública de Mendoza.
+        ddjj: grupo === "diputados_nacional" || grupo === "senado_nacional" ? null : ddjj(a.nombre!),
       };
     }),
     ...legisladores.map(
       (l): Funcionario => ({
         id: l.id!,
-        nombre: l.nombre!,
+        ...separarNota(l.nombre!),
         cargo: l.cargo!.replace("diputado/a", "Diputado/a provincial").replace("senador/a", "Senador/a provincial"),
         grupo: l.camara === "senado" ? "senado_provincial" : "diputados_provincial",
         organismo: l.camara === "senado" ? "Cámara de Senadores de Mendoza" : "Cámara de Diputados de Mendoza",
@@ -56,6 +111,7 @@ export function buildFuncionarios(legisladores: CsvRow[], autoridades: CsvRow[],
         perfilUrl: l.perfil_url || null,
         fuenteUrl: l.fuente_url!,
         remuneracion: [],
+        ddjj: ddjj(separarNota(l.nombre!).nombre),
       }),
     ),
   ];

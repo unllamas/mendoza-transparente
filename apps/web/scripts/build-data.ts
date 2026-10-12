@@ -226,7 +226,15 @@ const autoridades = readTable("autoridades", "autoridades.csv");
 if (legisladores && autoridades) {
   writeFileSync(
     join(OUT, "temas", "funcionarios.json"),
-    JSON.stringify(buildFuncionarios(legisladores, autoridades, readTable("autoridades", "remuneraciones.csv") ?? [])),
+    JSON.stringify(
+      buildFuncionarios(
+        legisladores,
+        autoridades,
+        readTable("autoridades", "remuneraciones.csv") ?? [],
+        readTable("etica-publica", "funcionarios.csv") ?? [],
+        readTable("etica-publica", "declaraciones.csv") ?? [],
+      ),
+    ),
   );
 }
 

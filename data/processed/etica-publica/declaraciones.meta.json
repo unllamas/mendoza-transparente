@@ -1,0 +1,171 @@
+{
+  "titulo": "Declaraciones juradas patrimoniales",
+  "descripcion": "Última declaración jurada publicada por cada funcionario provincial. Los bienes están a valor fiscal (suele ser menor al de mercado). El sitio oficial no informa montos de cuentas, deudas ni ingresos.",
+  "columnas": {
+    "official_id": {
+      "etiqueta": "Funcionario (ID)",
+      "tipo": "texto",
+      "descripcion": "Identificador del funcionario en Ética Pública; ver tabla de funcionarios."
+    },
+    "declaration_id": {
+      "oculta": true
+    },
+    "fecha_publicacion": {
+      "etiqueta": "Publicada",
+      "tipo": "fecha"
+    },
+    "periodo": {
+      "etiqueta": "Período",
+      "tipo": "texto"
+    },
+    "declaraciones_publicadas": {
+      "etiqueta": "Declaraciones publicadas",
+      "tipo": "numero"
+    },
+    "total_bienes": {
+      "etiqueta": "Bienes declarados (valor fiscal)",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1
+    },
+    "total_bienes_propios": {
+      "etiqueta": "Bienes propios (valor fiscal)",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Suma de inmuebles y vehículos según el porcentaje que le pertenece."
+    },
+    "n_inmuebles": {
+      "etiqueta": "Inmuebles",
+      "tipo": "numero"
+    },
+    "valor_inmuebles": {
+      "oculta": true
+    },
+    "n_rodados": {
+      "etiqueta": "Vehículos",
+      "tipo": "numero"
+    },
+    "valor_rodados": {
+      "oculta": true
+    },
+    "n_fuentes_ingreso_dependencia": {
+      "oculta": true
+    },
+    "n_fuentes_ingreso_independiente": {
+      "oculta": true
+    },
+    "n_inmuebles_campo": {
+      "oculta": true
+    },
+    "n_inmuebles_casa": {
+      "oculta": true
+    },
+    "n_inmuebles_cochera": {
+      "oculta": true
+    },
+    "n_inmuebles_departamento": {
+      "oculta": true
+    },
+    "n_inmuebles_finca": {
+      "oculta": true
+    },
+    "n_inmuebles_local": {
+      "oculta": true
+    },
+    "n_inmuebles_lote": {
+      "oculta": true
+    },
+    "n_inmuebles_otro": {
+      "oculta": true
+    },
+    "n_inmuebles_terreno": {
+      "oculta": true
+    },
+    "n_rodados_auto": {
+      "oculta": true
+    },
+    "n_rodados_camion": {
+      "oculta": true
+    },
+    "n_rodados_camioneta": {
+      "oculta": true
+    },
+    "n_rodados_casa": {
+      "oculta": true
+    },
+    "n_rodados_moto": {
+      "oculta": true
+    },
+    "n_rodados_otro": {
+      "oculta": true
+    },
+    "n_rodados_terreno": {
+      "oculta": true
+    },
+    "n_rodados_tractor": {
+      "oculta": true
+    },
+    "valor_inmuebles_campo": {
+      "oculta": true
+    },
+    "valor_inmuebles_casa": {
+      "oculta": true
+    },
+    "valor_inmuebles_cochera": {
+      "oculta": true
+    },
+    "valor_inmuebles_departamento": {
+      "oculta": true
+    },
+    "valor_inmuebles_finca": {
+      "oculta": true
+    },
+    "valor_inmuebles_local": {
+      "oculta": true
+    },
+    "valor_inmuebles_lote": {
+      "oculta": true
+    },
+    "valor_inmuebles_otro": {
+      "oculta": true
+    },
+    "valor_inmuebles_terreno": {
+      "oculta": true
+    },
+    "valor_rodados_auto": {
+      "oculta": true
+    },
+    "valor_rodados_camion": {
+      "oculta": true
+    },
+    "valor_rodados_camioneta": {
+      "oculta": true
+    },
+    "valor_rodados_casa": {
+      "oculta": true
+    },
+    "valor_rodados_moto": {
+      "oculta": true
+    },
+    "valor_rodados_otro": {
+      "oculta": true
+    },
+    "valor_rodados_terreno": {
+      "oculta": true
+    },
+    "valor_rodados_tractor": {
+      "oculta": true
+    }
+  },
+  "orden": [
+    "fecha_publicacion",
+    "official_id",
+    "total_bienes_propios",
+    "total_bienes",
+    "n_inmuebles",
+    "n_rodados",
+    "declaraciones_publicadas",
+    "periodo"
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "titulo": "Funcionarios registrados en Ética Pública",
+  "descripcion": "Funcionarios provinciales obligados a presentar declaración jurada, con su cargo y repartición.",
+  "columnas": {
+    "official_id": {
+      "etiqueta": "ID",
+      "tipo": "texto"
+    },
+    "nombre": {
+      "etiqueta": "Nombre",
+      "tipo": "texto"
+    },
+    "cargo": {
+      "etiqueta": "Cargo",
+      "tipo": "texto"
+    },
+    "reparticion": {
+      "etiqueta": "Repartición",
+      "tipo": "texto"
+    },
+    "fecha_inicio_cargo": {
+      "etiqueta": "Desde",
+      "tipo": "fecha"
+    },
+    "fecha_fin_cargo": {
+      "etiqueta": "Hasta",
+      "tipo": "fecha"
+    },
+    "cargos_registrados": {
+      "oculta": true
+    },
+    "declaraciones_publicadas": {
+      "etiqueta": "Declaraciones",
+      "tipo": "numero"
+    },
+    "ultima_declaracion_id": {
+      "oculta": true
+    },
+    "fecha_ultima_declaracion": {
+      "etiqueta": "Última declaración",
+      "tipo": "fecha"
+    }
+  },
+  "orden": [
+    "nombre",
+    "cargo",
+    "reparticion",
+    "fecha_ultima_declaracion",
+    "declaraciones_publicadas",
+    "fecha_inicio_cargo",
+    "fecha_fin_cargo",
+    "official_id"
+  ]
+}

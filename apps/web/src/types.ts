@@ -231,6 +231,8 @@ export type GrupoFuncionario =
 export interface Funcionario {
   id: string;
   nombre: string;
+  /** Aclaración publicada junto al nombre (suspensión, licencia). */
+  nota: string | null;
   cargo: string;
   grupo: GrupoFuncionario;
   organismo: string;
@@ -244,6 +246,18 @@ export interface Funcionario {
   fuenteUrl: string;
   /** Solo remuneraciones publicadas oficialmente; vacío si no hay fuente. */
   remuneracion: { concepto: string; monto: number; periodo: string; fuenteUrl: string }[];
+  /** Última declaración jurada publicada por la Oficina de Ética Pública, si se pudo cruzar con certeza. */
+  ddjj: {
+    fecha: string | null;
+    periodo: string | null;
+    /** Suma de valuaciones fiscales de inmuebles y rodados, según el porcentaje propio. */
+    totalBienes: number;
+    inmuebles: number;
+    rodados: number;
+    cargoDeclarado: string | null;
+    reparticion: string | null;
+    declaracionesPublicadas: number;
+  } | null;
 }
 
 export interface FuncionariosTema {

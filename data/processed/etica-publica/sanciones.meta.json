@@ -1,0 +1,36 @@
+{
+  "titulo": "Registro de sumariados y sancionados",
+  "descripcion": "Agentes públicos con sumarios o sanciones registrados por la Oficina de Ética Pública. Publicado sin DNI.",
+  "columnas": {
+    "sancion_id": {
+      "oculta": true
+    },
+    "nombre": {
+      "etiqueta": "Nombre",
+      "tipo": "texto"
+    },
+    "reparticion": {
+      "etiqueta": "Repartición",
+      "tipo": "texto"
+    },
+    "expediente": {
+      "etiqueta": "Expediente",
+      "tipo": "texto"
+    },
+    "motivo": {
+      "etiqueta": "Motivo",
+      "tipo": "texto"
+    },
+    "fecha_vencimiento": {
+      "etiqueta": "Vence",
+      "tipo": "fecha"
+    }
+  },
+  "orden": [
+    "nombre",
+    "reparticion",
+    "motivo",
+    "expediente",
+    "fecha_vencimiento"
+  ]
+}

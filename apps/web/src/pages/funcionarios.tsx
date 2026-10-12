@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 
 import { BarList } from "../charts/bar-list.tsx";
 import { formatMoneda } from "../celdas.ts";
+import { formatDate } from "../lib.ts";
 import { FuentesOficiales } from "../fuente.tsx";
 import type { Funcionario, GrupoFuncionario } from "../types.ts";
 import { PageHeader, Segmented, Sheet } from "./components.tsx";
@@ -169,6 +170,7 @@ function FichaSheet({ persona: p, onClose }: { persona: Funcionario; onClose: ()
         <div className="flex min-w-0 flex-col gap-0.5">
           <h3 className="text-xl font-semibold tracking-tight text-balance">{p.nombre}</h3>
           <span className="text-sm text-ink-2">{p.cargo}</span>
+          {p.nota && <span className="text-sm text-ink-muted">{p.nota}</span>}
         </div>
       </div>
 
@@ -213,17 +215,11 @@ function FichaSheet({ persona: p, onClose }: { persona: Funcionario; onClose: ()
         )}
       </section>
 
-      <section className="flex flex-col gap-2">
-        <h4 className="text-sm font-semibold">Próximamente</h4>
-        <ul className="flex flex-col gap-2 text-sm text-ink-muted">
-          <li className="flex items-center gap-2">
-            <FileText className="size-4 shrink-0" aria-hidden /> Su declaración jurada patrimonial, de la Oficina de Ética Pública
-          </li>
-          <li className="flex items-center gap-2">
-            <Vote className="size-4 shrink-0" aria-hidden /> Los proyectos que presentó y cómo votó
-          </li>
-        </ul>
-      </section>
+      <Declaracion persona={p} />
+
+      <p className="flex items-center gap-2 text-sm text-ink-muted">
+        <Vote className="size-4 shrink-0" aria-hidden /> Próximamente: los proyectos que presentó y cómo votó.
+      </p>
 
       <div className="flex flex-col gap-2 border-t border-line pt-4 text-sm">
         {p.email && (
@@ -241,6 +237,58 @@ function FichaSheet({ persona: p, onClose }: { persona: Funcionario; onClose: ()
         </a>
       </div>
     </Sheet>
+  );
+}
+
+const ETICA = "https://eticapublica.mendoza.gov.ar/declaraciones";
+
+function Declaracion({ persona: p }: { persona: Funcionario }) {
+  const nacional = p.grupo === "diputados_nacional" || p.grupo === "senado_nacional";
+  const d = p.ddjj;
+  return (
+    <section className="flex flex-col gap-3">
+      <h4 className="flex items-center gap-1.5 text-sm font-semibold">
+        <FileText className="size-4 text-ink-muted" aria-hidden /> Qué declara
+      </h4>
+      {d ? (
+        <>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="col-span-2 flex flex-col gap-0.5 rounded-lg bg-tile p-3">
+              <span className="text-xs text-ink-muted">Bienes declarados, a valor fiscal</span>
+              <span className="text-lg font-semibold tabular-nums">{formatMoneda(d.totalBienes, "ARS")}</span>
+            </div>
+            <div className="flex flex-col gap-0.5 rounded-lg bg-tile p-3">
+              <span className="text-xs text-ink-muted">Inmuebles</span>
+              <span className="font-medium tabular-nums">{d.inmuebles}</span>
+            </div>
+            <div className="flex flex-col gap-0.5 rounded-lg bg-tile p-3">
+              <span className="text-xs text-ink-muted">Vehículos</span>
+              <span className="font-medium tabular-nums">{d.rodados}</span>
+            </div>
+          </div>
+          <p className="text-xs text-ink-muted text-pretty">
+            Última declaración publicada{d.fecha ? ` el ${formatDate(d.fecha)}` : ""} ({d.declaracionesPublicadas}{" "}
+            {d.declaracionesPublicadas === 1 ? "declaración" : "declaraciones"} en total). El valor fiscal suele ser bastante menor
+            que el de mercado. El sitio oficial solo permite ver la última declaración y no informa montos de cuentas,
+            deudas ni ingresos.
+          </p>
+        </>
+      ) : (
+        <p className="text-sm text-ink-2">
+          {nacional
+            ? "Los legisladores nacionales presentan su declaración ante la Oficina Anticorrupción de la Nación."
+            : "No encontramos su declaración publicada en la Oficina de Ética Pública."}
+        </p>
+      )}
+      <a
+        href={nacional ? "https://www.argentina.gob.ar/anticorrupcion" : ETICA}
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex w-fit items-center gap-1.5 text-sm text-link hover:underline"
+      >
+        {nacional ? "Oficina Anticorrupción" : "Ver en Ética Pública"} <ExternalLink className="size-3.5" aria-hidden />
+      </a>
+    </section>
   );
 }
 
