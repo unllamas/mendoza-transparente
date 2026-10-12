@@ -69,15 +69,57 @@ export async function get(url: string, init: RequestInit = {}, retries = 3): Pro
   }
 }
 
-async function lastSha(manifest: string, filename: string): Promise<string | undefined> {
+async function lastEntry(manifest: string, filename: string): Promise<ManifestEntry | undefined> {
   if (!existsSync(manifest)) return undefined;
-  let last: string | undefined;
+  let last: ManifestEntry | undefined;
   for (const line of (await readFile(manifest, "utf8")).split("\n")) {
     if (!line) continue;
     const entry = JSON.parse(line) as ManifestEntry;
-    if (entry.filename === filename) last = entry.sha256;
+    if (entry.filename === filename) last = entry;
   }
   return last;
+}
+
+/**
+ * Para decidir si una página HTML cambió se compara solo lo que ve una persona: el texto visible, los
+ * links (un PDF nuevo suele aparecer como un link nuevo) y las imágenes. Se ignoran scripts, estilos, metadatos y
+ * comentarios, donde viven los tokens de seguridad, nonces, identificadores de rastreo, horas de caché
+ * y el código antibots que cambian en cada visita. El archivo se guarda completo, tal cual llegó.
+ */
+const VOLATILES_EN_LINKS = [
+  /([?&](?:_wpnonce|nonce|token|_ts|ver|v)=)[^&"']*/gi, // tokens y versiones en la URL
+  /(AgendaWeb\/)\d{1,2},\d{1,2},\d{4}/g, // Senado de la Nación: link a la agenda del día
+];
+
+const esHtml = (filename: string) => /\.html?$/i.test(filename);
+
+/** Huella del contenido para comparar versiones: en HTML, texto visible, links e imágenes. */
+export function huella(filename: string, bytes: Uint8Array): string {
+  if (!esHtml(filename)) return createHash("sha256").update(bytes).digest("hex");
+  const sinCodigo = new TextDecoder()
+    .decode(bytes)
+    .replace(/<script\b[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style\b[\s\S]*?<\/style>/gi, " ")
+    .replace(/<!--[\s\S]*?-->/g, " ");
+  let links = [...sinCodigo.matchAll(/<(?:a\b[^>]*?\bhref|img\b[^>]*?\bsrc)\s*=\s*["']([^"']+)["']/gi)].map((m) => m[1]).join("\n");
+  for (const re of VOLATILES_EN_LINKS) links = links.replace(re, "$1");
+  const texto = sinCodigo
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return createHash("sha256").update(`${texto}\n${links}`).digest("hex");
+}
+
+/** ¿El contenido nuevo es igual al de la última versión archivada (ignorando lo volátil)? */
+async function sinCambios(manifest: string, filename: string, bytes: Uint8Array, sha256: string): Promise<boolean> {
+  const last = await lastEntry(manifest, filename);
+  if (!last) return false;
+  if (last.sha256 === sha256) return true;
+  if (!esHtml(filename)) return false;
+  const anterior = join(ROOT, last.path);
+  if (!existsSync(anterior)) return false;
+  return huella(filename, await readRaw(anterior)) === huella(filename, bytes);
 }
 
 /** Guarda `content` en el archivo crudo de la fuente. Devuelve la ruta, o null si no cambió. */
@@ -91,7 +133,7 @@ export async function archive(
   const sourceDir = join(RAW_DIR, source);
   const manifest = join(sourceDir, "manifest.jsonl");
   const sha256 = createHash("sha256").update(bytes).digest("hex");
-  if ((await lastSha(manifest, filename)) === sha256) return null;
+  if (await sinCambios(manifest, filename, bytes, sha256)) return null;
 
   const now = new Date();
   const dayDir = join(sourceDir, now.toISOString().slice(0, 10));
