@@ -5,3 +5,6 @@ dist/
 .env
 .DS_Store
 /tmp/
+
+# Credenciales de Cloudflare de la cuenta personal, solo para este repo (docs/procesos/web.md#publicar)
+.env.cloudflare
