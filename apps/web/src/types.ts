@@ -232,6 +232,11 @@ export type GrupoFuncionario =
 
 export interface Funcionario {
   id: string;
+  /** URL: /funcionarios/<role>/<slug> (cargo y nombre). */
+  role: string;
+  slug: string;
+  /** Municipalities this person governs or represents (intendente: one; provincial legislators: their section). */
+  municipalities: { slug: string; name: string }[];
   nombre: string;
   /** Aclaración publicada junto al nombre (suspensión, licencia). */
   nota: string | null;
@@ -301,7 +306,7 @@ export interface SenalesTema {
 export interface MunicipioPagina {
   slug: string;
   nombre: string;
-  intendente: { id: string; nombre: string; partido: string | null; foto: string | null; mandatoHasta: string | null } | null;
+  intendente: { id: string; role: string; slug: string; nombre: string; partido: string | null; foto: string | null; mandatoHasta: string | null } | null;
   poblacion: {
     actual: number;
     censo2010: number;
@@ -321,7 +326,7 @@ export interface MunicipioPagina {
     serie: { anio: number; perCapita: number }[];
   } | null;
   seccion: string | null;
-  legisladores: { id: string; nombre: string; cargo: string; bloque: string | null; foto: string | null }[];
+  legisladores: { id: string; role: string; slug: string; nombre: string; cargo: string; bloque: string | null; foto: string | null }[];
 }
 
 export interface OrganismoResumen {

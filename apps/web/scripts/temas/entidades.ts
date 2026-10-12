@@ -50,12 +50,14 @@ export function buildMunicipios(
     const seccion = SECCION_ELECTORAL[d.municipio] ?? null;
     const legisladores = funcionarios.personas
       .filter((p) => (p.grupo === "diputados_provincial" || p.grupo === "senado_provincial") && seccion && p.seccion?.startsWith(seccion))
-      .map((p) => ({ id: p.id, nombre: p.nombre, cargo: p.cargo, bloque: p.bloque, foto: p.foto }));
+      .map((p) => ({ id: p.id, role: p.role, slug: p.slug, nombre: p.nombre, cargo: p.cargo, bloque: p.bloque, foto: p.foto }));
     return {
       slug: slug(d.municipio),
       nombre: d.municipio,
       intendente: intendente && {
         id: intendente.id,
+        role: intendente.role,
+        slug: intendente.slug,
         nombre: intendente.nombre,
         partido: intendente.partido,
         foto: intendente.foto,

@@ -14,6 +14,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 import { datosMeta, PAGES, SITE_NAME, SITE_URL, TITLE_SUFFIX } from "../src/seo.ts";
+import { ROLES } from "../src/slug.ts";
 import type {
   CoparticipacionTema,
   DataIndex,
@@ -371,21 +372,44 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
       resumen: "Quiénes representan a Mendoza: gobernador, ministros, diputados y senadores provinciales, intendentes y legisladores nacionales, con su partido o bloque, mandato, declaración jurada y sueldo cuando es público.",
       secciones: Object.entries(GRUPO).map(([g, t]) => ({
         titulo: t,
-        items: funcionarios.personas.filter((p) => p.grupo === g).map((p) => ({ texto: `${p.nombre}, ${p.cargo}`, href: `/funcionarios/${p.id}` })),
+        items: funcionarios.personas.filter((p) => p.grupo === g).map((p) => ({ texto: `${p.nombre}, ${p.cargo}`, href: `/funcionarios/${p.role}/${p.slug}` })),
       })),
     }),
     lastmod: hoy,
     prioridad: 0.9,
   });
 
+  // One page per role: /funcionarios/diputados-provinciales
+  for (const [key, role] of Object.entries(ROLES)) {
+    const people = funcionarios.personas.filter((p) => p.grupo === key);
+    if (!people.length) continue;
+    const path = `/funcionarios/${role.slug}`;
+    const migas: Miga[] = [["/", "Inicio"], ["/funcionarios", "Funcionarios"], [path, role.title]];
+    paginas.push({
+      path,
+      title: titulo(role.title),
+      description: descripcion(role.description),
+      og: { slug: `cargo-${role.slug}`, eyebrow: "FUNCIONARIOS", titulo: role.title, figura: `${people.length} ${people.length === 1 ? "persona" : "personas"}`, bajada: role.description },
+      ld: [breadcrumb(migas)],
+      html: cuerpo({
+        migas,
+        h1: role.title,
+        resumen: role.description,
+        secciones: [{ titulo: role.title, items: people.map((p) => ({ texto: `${p.nombre}, ${[p.cargo, p.bloque ?? p.partido, p.seccion].filter(Boolean).join(", ")}`, href: `/funcionarios/${p.role}/${p.slug}` })) }],
+      }),
+      lastmod: hoy,
+      prioridad: 0.8,
+    });
+  }
+
   for (const p of funcionarios.personas) {
-    const path = `/funcionarios/${p.id}`;
+    const path = `/funcionarios/${p.role}/${p.slug}`;
     const lugar = p.grupo === "intendentes" ? `intendente de ${p.organismo}` : p.cargo.replace(/\s*\(.*\)$/, "");
     const filiacion = p.partido ?? p.bloque;
     const bienes = p.ddjj ? `Declaró bienes por ${pesos(p.ddjj.totalBienes)} a valor fiscal (${p.ddjj.inmuebles} inmuebles y ${p.ddjj.rodados} vehículos).` : "";
     const sueldo = p.remuneracion.length ? `Cobra una dieta de ${pesos(p.remuneracion[0]!.monto)} brutos.` : "Su sueldo no está publicado.";
     const resumen = `${p.nombre} es ${lugar}${p.grupo.endsWith("nacional") ? "" : " de Mendoza"}${filiacion ? ` (${filiacion})` : ""}${p.mandatoHasta ? `, con mandato hasta ${p.mandatoHasta}` : ""}. ${bienes} ${sueldo}`.replace(/\s+/g, " ").trim();
-    const migas: Miga[] = [["/", "Inicio"], ["/funcionarios", "Funcionarios"], [path, p.nombre]];
+    const migas: Miga[] = [["/", "Inicio"], ["/funcionarios", "Funcionarios"], [`/funcionarios/${p.role}`, ROLES[p.grupo].title], [path, p.nombre]];
     const datos: [string, string][] = [
       ["Cargo", p.cargo],
       ["Organismo", p.organismo],
@@ -425,7 +449,16 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
           ...(p.ddjj ? ([[`¿Qué patrimonio declaró ${p.nombre}?`, bienes]] as [string, string][]) : []),
         ]),
       ],
-      html: cuerpo({ migas, h1: `${p.nombre}, ${lugar}`, resumen, datos, fuente: { nombre: "Fuentes oficiales: Legislatura, Gobierno de Mendoza, Junta Electoral, Congreso y Oficina de Ética Pública", url: p.fuenteUrl } }),
+      html: cuerpo({
+        migas,
+        h1: `${p.nombre}, ${lugar}`,
+        resumen,
+        datos,
+        secciones: p.municipalities.length
+          ? [{ titulo: p.grupo === "intendentes" ? "Gobierna" : `Representa a la ${p.seccion?.toLowerCase() ?? "sección"}`, items: p.municipalities.map((m) => ({ texto: m.name, href: `/municipios/${m.slug}` })) }]
+          : [],
+        fuente: { nombre: "Fuentes oficiales: Legislatura, Gobierno de Mendoza, Junta Electoral, Congreso y Oficina de Ética Pública", url: p.fuenteUrl },
+      }),
       lastmod: p.ddjj?.fecha ?? hoy,
       prioridad: 0.7,
     });
@@ -476,7 +509,7 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
           "@type": "GovernmentOrganization",
           name: `Municipalidad de ${m.nombre}`,
           areaServed: { "@type": "AdministrativeArea", name: m.nombre, containedInPlace: MENDOZA },
-          ...(m.intendente ? { employee: { "@type": "Person", name: m.intendente.nombre, jobTitle: "Intendente", url: url(`/funcionarios/${m.intendente.id}`) } } : {}),
+          ...(m.intendente ? { employee: { "@type": "Person", name: m.intendente.nombre, jobTitle: "Intendente", url: url(`/funcionarios/${m.intendente.role}/${m.intendente.slug}`) } } : {}),
         },
         breadcrumb(migas),
         faq([
@@ -496,8 +529,8 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
           ...(m.seccion ? ([["Sección electoral", m.seccion]] as [string, string][]) : []),
         ],
         secciones: [
-          ...(m.intendente ? [{ titulo: "Intendente", items: [{ texto: m.intendente.nombre, href: `/funcionarios/${m.intendente.id}` }] }] : []),
-          { titulo: `Legisladores provinciales de la ${m.seccion ?? ""} sección`, items: m.legisladores.map((l) => ({ texto: `${l.nombre}, ${l.cargo}${l.bloque ? ` (${l.bloque})` : ""}`, href: `/funcionarios/${l.id}` })) },
+          ...(m.intendente ? [{ titulo: "Intendente", items: [{ texto: m.intendente.nombre, href: `/funcionarios/${m.intendente.role}/${m.intendente.slug}` }] }] : []),
+          { titulo: `Legisladores provinciales de la ${m.seccion ?? ""} sección`, items: m.legisladores.map((l) => ({ texto: `${l.nombre}, ${l.cargo}${l.bloque ? ` (${l.bloque})` : ""}`, href: `/funcionarios/${l.role}/${l.slug}` })) },
         ],
         fuente: { nombre: "Ministerio de Hacienda, INDEC y Junta Electoral de Mendoza" },
       }),

@@ -120,3 +120,79 @@ export function MapaMendoza({ mapa, valores, formatValue, seleccionado, onSelect
     </div>
   );
 }
+
+/**
+ * Locator map: every department dimmed except `focus`, highlighted in the brand color. Other departments
+ * are links to their own page (`onOpen`), so the map doubles as navigation between municipalities.
+ */
+export function MunicipalityLocator({
+  mapa,
+  focus,
+  onOpen,
+}: {
+  mapa: MapaData;
+  focus: string;
+  onOpen: (municipio: string) => void;
+}) {
+  const [hover, setHover] = useState<string | null>(null);
+  const zoomed = GRAN_MENDOZA.includes(focus);
+  const inset = useMemo(() => {
+    const pts = mapa.departamentos.filter((d) => NUCLEO.includes(d.municipio)).map((d) => d.centroide);
+    const xs = pts.map((p) => p[0]);
+    const ys = pts.map((p) => p[1]);
+    const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
+    const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+    const size = Math.max(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys)) * 2.4;
+    return `${cx - size / 2} ${cy - size / 2} ${size} ${size}`;
+  }, [mapa]);
+
+  const paths = (zoom: boolean) =>
+    mapa.departamentos
+      .filter((d) => !zoom || GRAN_MENDOZA.includes(d.municipio))
+      .map((d) => {
+        const isFocus = d.municipio === focus;
+        const isHover = d.municipio === hover && !isFocus;
+        return (
+          <path
+            key={d.municipio}
+            d={d.path}
+            style={{ fill: isFocus ? "var(--brand)" : isHover ? "var(--map-1)" : "var(--grid)" }}
+            stroke="var(--surface)"
+            strokeWidth={zoom ? 0.3 : 1.2}
+            vectorEffect="non-scaling-stroke"
+            role={isFocus ? "img" : "link"}
+            tabIndex={isFocus || zoom ? -1 : 0}
+            aria-label={isFocus ? `${d.municipio}, seleccionado` : `Ir a ${d.municipio}`}
+            className={isFocus ? "" : "cursor-pointer outline-none"}
+            onPointerEnter={() => setHover(d.municipio)}
+            onPointerLeave={() => setHover(null)}
+            onClick={() => !isFocus && onOpen(d.municipio)}
+            onKeyDown={(e) => {
+              if (!isFocus && (e.key === "Enter" || e.key === " ")) {
+                e.preventDefault();
+                onOpen(d.municipio);
+              }
+            }}
+          />
+        );
+      });
+
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="grid grid-cols-[3fr_2fr] items-start gap-3">
+        <svg viewBox={mapa.viewBox} className="block h-auto max-h-[22rem] w-full" role="group" aria-label={`Ubicación de ${focus} en Mendoza`}>
+          {paths(false)}
+        </svg>
+        <div className={`flex min-w-0 flex-col gap-1.5 overflow-hidden rounded-lg bg-surface p-1.5 ${zoomed ? "" : "opacity-70"}`}>
+          <svg viewBox={inset} className="block aspect-square w-full overflow-hidden" aria-hidden>
+            {paths(true)}
+          </svg>
+          <span className="px-1 text-xs text-ink-muted">Gran Mendoza, ampliado</span>
+        </div>
+      </div>
+      <span className="min-h-5 truncate text-xs text-ink-muted" aria-live="polite">
+        {hover && hover !== focus ? `Ir a ${hover} ›` : "Tocá otro departamento para ir a su página."}
+      </span>
+    </div>
+  );
+}

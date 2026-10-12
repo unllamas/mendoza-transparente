@@ -7,6 +7,7 @@ import { LineChart } from "../charts/line-chart.tsx";
 import { MapaMendoza } from "../charts/mapa.tsx";
 import { GOBIERNOS } from "../gobiernos.ts";
 import { formatNumber } from "../lib.ts";
+import { slug } from "../slug.ts";
 import type { CoparticipacionTema } from "../types.ts";
 import { FuentesOficiales } from "../fuente.tsx";
 import { Aviso, PageHeader, Section, StatTile } from "./components.tsx";
@@ -132,7 +133,12 @@ function DetalleMunicipio({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-start justify-between gap-2">
-        <h3 className="text-xl font-semibold tracking-tight">{m.municipio}</h3>
+        <span className="flex min-w-0 flex-col gap-0.5">
+          <h3 className="truncate text-xl font-semibold tracking-tight">{m.municipio}</h3>
+          <Link to="/municipios/$slug" params={{ slug: slug(m.municipio) }} className="text-sm whitespace-nowrap text-link hover:underline">
+            Ver todo sobre {m.municipio} ›
+          </Link>
+        </span>
         <button
           type="button"
           onClick={onClose}

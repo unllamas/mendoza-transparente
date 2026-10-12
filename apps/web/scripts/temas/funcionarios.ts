@@ -1,5 +1,6 @@
 /** Quiénes representan a Mendoza: Ejecutivo, Legislatura, intendentes y Congreso nacional. */
 
+import { municipalitiesInSection, ROLES, slug } from "../../src/slug.ts";
 import type { FuncionariosTema, Funcionario } from "../../src/types.ts";
 
 type CsvRow = Record<string, string>;
@@ -102,6 +103,9 @@ export function buildFuncionarios(
       const separado = separarNota(a.nombre!);
       return {
         id: a.id!,
+        role: "",
+        slug: "",
+        municipalities: [],
         nombre: separado.nombre,
         nota: a.nota_curada || separado.nota,
         cargo: a.cargo!,
@@ -126,6 +130,9 @@ export function buildFuncionarios(
     ...legisladores.map(
       (l): Funcionario => ({
         id: l.id!,
+        role: "",
+        slug: "",
+        municipalities: [],
         ...separarNota(l.nombre!),
         cargo: l.cargo!.replace("diputado/a", "Diputado/a provincial").replace("senador/a", "Senador/a provincial"),
         grupo: l.camara === "senado" ? "senado_provincial" : "diputados_provincial",
@@ -150,6 +157,19 @@ export function buildFuncionarios(
     const f = fotoPorId.get(p.id);
     p.foto = f ? `/data/fotos/${f.foto}` : null;
     p.fotoCredito = f?.credito ?? null;
+  }
+
+  // URL by role and name, unique within each role; and the municipalities each person is tied to.
+  const used = new Set<string>();
+  for (const p of personas) {
+    p.role = ROLES[p.grupo].slug;
+    let s = slug(p.nombre);
+    for (let n = 2; used.has(`${p.role}/${s}`); n++) s = `${slug(p.nombre)}-${n}`;
+    used.add(`${p.role}/${s}`);
+    p.slug = s;
+    const names =
+      p.grupo === "intendentes" ? [p.organismo] : p.seccion && /provincial/.test(p.grupo) ? municipalitiesInSection(p.seccion) : [];
+    p.municipalities = names.map((name) => ({ slug: slug(name), name }));
   }
 
   // El Ejecutivo va por jerarquía (gobernador, vice, ministros, resto); los demás grupos, por apellido.

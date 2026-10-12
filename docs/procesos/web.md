@@ -50,6 +50,21 @@ Objetivo: que la gente encuentre el sitio cuando busca "intendente de Maipú", "
   - `llms.txt` ([llmstxt.org](https://llmstxt.org)), un índice del sitio pensado para modelos de lenguaje.
 - `index.html` lleva las etiquetas geográficas: `geo.region` AR-M, `geo.placename`, `geo.position` e `ICBM`.
 
+**URLs y enlaces internos.** Las URLs son legibles y jerárquicas:
+
+- `/funcionarios/<cargo>/<nombre>`, por ejemplo `/funcionarios/diputados-provinciales/edgardo-civit-evans`. Cada cargo tiene su página (`/funcionarios/intendentes`). Los cargos están en `ROLES` (`src/slug.ts`).
+- `/municipios/<nombre>`, `/proveedores/<nombre>-<cuit>`, `/organismos/<nombre>` y `/leyes/<número>`.
+
+Toda entidad enlaza a las relacionadas, en los dos sentidos:
+
+- **Intendente ↔ municipio.**
+- **Legislador provincial ↔ municipios de su sección electoral.**
+- **Organismo ↔ proveedores.**
+- **Coparticipación y población → página del municipio.**
+- **Mapa:** en la página de un municipio, el mapa resalta ese departamento y lleva a los demás.
+
+Al sumar una entidad, pensar qué la conecta con las otras y enlazarlo, también en el `html` de `scripts/paginas.ts`.
+
 **Cuándo una entidad tiene página.** Solo si tiene contenido suficiente, para no llenar el buscador de páginas vacías. Los umbrales están en `UMBRAL` de `scripts/temas/entidades.ts`:
 
 - Proveedores: solo personas jurídicas, con al menos $ 100 millones adjudicados y 3 procesos. A las personas humanas nunca se las perfila.

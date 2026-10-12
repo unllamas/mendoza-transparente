@@ -1,16 +1,18 @@
 import { getRouteApi, Link } from "@tanstack/react-router";
-import { ChevronRight, ExternalLink, FileText, Landmark, Mail, Search, Vote } from "lucide-react";
+import { ChevronRight, ExternalLink, FileText, Landmark, Mail, MapPin, Search, Vote } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { BarList } from "../charts/bar-list.tsx";
 import { formatMoneda } from "../celdas.ts";
 import { formatDate } from "../lib.ts";
 import { FuentesOficiales } from "../fuente.tsx";
+import { ROLES, roleBySlug } from "../slug.ts";
 import type { Funcionario, GrupoFuncionario } from "../types.ts";
 import { Aviso, Migas, PageHeader, Segmented } from "./components.tsx";
 
 const route = getRouteApi("/funcionarios");
-const routeFicha = getRouteApi("/funcionarios/$id");
+const routeFicha = getRouteApi("/funcionarios/$role/$slug");
+const roleApi = getRouteApi("/funcionarios/$role");
 
 type Pestana = "ejecutivo" | "legislatura" | "intendentes" | "nacion";
 
@@ -84,7 +86,7 @@ export function FuncionariosPage() {
           return (
             <div key={g} className="flex flex-col gap-4">
               {(g === "diputados_provincial" || g === "senado_provincial") && <Bloques personas={delGrupo} />}
-              <Lista titulo={`${NOMBRE_GRUPO[g]} (${delGrupo.length})`} personas={delGrupo} />
+              <Lista titulo={`${NOMBRE_GRUPO[g]} (${delGrupo.length})`} personas={delGrupo} role={ROLES[g].slug} />
             </div>
           );
         })
@@ -118,16 +120,23 @@ function subtitulo(p: Funcionario) {
   return [p.bloque ?? p.partido, p.seccion].filter(Boolean).join(" · ");
 }
 
-function Lista({ titulo, personas }: { titulo: string; personas: Funcionario[] }) {
+function Lista({ titulo, personas, role }: { titulo: string; personas: Funcionario[]; role?: string }) {
   return (
     <section className="flex flex-col gap-3">
-      <h2 className="text-lg font-semibold tracking-tight">{titulo}</h2>
+      <h2 className="flex min-w-0 items-baseline justify-between gap-3 text-lg font-semibold tracking-tight">
+        <span className="truncate">{titulo}</span>
+        {role && (
+          <Link to="/funcionarios/$role" params={{ role }} className="shrink-0 text-sm font-normal whitespace-nowrap text-link hover:underline">
+            Ver página ›
+          </Link>
+        )}
+      </h2>
       <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
         {personas.map((p) => (
           <li key={p.id}>
             <Link
-              to="/funcionarios/$id"
-              params={{ id: p.id }}
+              to="/funcionarios/$role/$slug"
+              params={{ role: p.role, slug: p.slug }}
               className="group flex w-full items-center gap-4 px-4 py-3 text-left hover:bg-grid/50 sm:px-5"
             >
               <Avatar persona={p} className="size-10 text-xs" />
@@ -176,25 +185,66 @@ const iniciales = (nombre: string) =>
     .map((w) => w[0])
     .join("");
 
-/** Página de la ficha de una persona (`/funcionarios/$id`). */
+/** Página de un cargo: `/funcionarios/diputados-provinciales`. */
+export function RolePage() {
+  const { personas } = roleApi.useLoaderData();
+  const { role } = roleApi.useParams();
+  const key = roleBySlug(role);
+  if (!key) return <NotFound />;
+  const r = ROLES[key];
+  const people = personas.filter((p) => p.grupo === key);
+  const legislature = key === "diputados_provincial" || key === "senado_provincial";
+  // Provincial legislators are listed by electoral section (who each area elects).
+  const sections = legislature ? [...new Set(people.map((p) => p.seccion ?? "Sin sección"))].sort(sectionOrder) : [null];
+  return (
+    <div className="flex flex-col gap-10">
+      <Migas items={[{ label: "Funcionarios", to: "/funcionarios" }, { label: r.title }]} />
+      <PageHeader icon={Landmark} tema="Funcionarios" titulo={r.title}>
+        {r.description}
+      </PageHeader>
+      <FuentesOficiales ids={["autoridades", "legislatura"]} />
+      {legislature && <Bloques personas={people} />}
+      {sections.map((sec) => {
+        const list = sec === null ? people : people.filter((p) => (p.seccion ?? "Sin sección") === sec);
+        return <Lista key={sec ?? "todos"} titulo={`${sec ?? r.title} (${list.length})`} personas={list} />;
+      })}
+    </div>
+  );
+}
+
+const ORDINALS = ["Primera", "Segunda", "Tercera", "Cuarta"];
+const sectionOrder = (a: string, b: string) =>
+  (ORDINALS.findIndex((o) => a.startsWith(o)) + 1 || 9) - (ORDINALS.findIndex((o) => b.startsWith(o)) + 1 || 9);
+
+function NotFound() {
+  return (
+    <div className="flex flex-col gap-3">
+      <Migas items={[{ label: "Funcionarios", to: "/funcionarios" }, { label: "No encontrada" }]} />
+      <h1 className="text-2xl font-semibold tracking-tight">No encontramos a esa persona</h1>
+      <p className="text-ink-2">Puede que haya dejado el cargo o que el enlace esté mal escrito.</p>
+      <Link to="/funcionarios" className="w-fit text-link hover:underline">
+        Ver todos los funcionarios ›
+      </Link>
+    </div>
+  );
+}
+
+/** Página de la ficha de una persona: `/funcionarios/<cargo>/<nombre>`. */
 export function FuncionarioPage() {
   const { personas } = routeFicha.useLoaderData();
-  const { id } = routeFicha.useParams();
-  const p = personas.find((x) => x.id === id);
+  const { role, slug } = routeFicha.useParams();
+  const p = personas.find((x) => x.role === role && x.slug === slug);
+  if (!p) return <NotFound />;
   return (
     <div className="flex max-w-2xl flex-col gap-6">
-      <Migas items={[{ label: "Funcionarios", to: "/funcionarios" }, { label: p?.nombre ?? "No encontrada" }]} />
-      {p ? (
-        <FichaFuncionario persona={p} />
-      ) : (
-        <div className="flex flex-col gap-3">
-          <h1 className="text-2xl font-semibold tracking-tight">No encontramos a esa persona</h1>
-          <p className="text-ink-2">Puede que haya dejado el cargo o que el enlace esté mal escrito.</p>
-          <Link to="/funcionarios" className="w-fit text-link hover:underline">
-            Ver todos los funcionarios ›
-          </Link>
-        </div>
-      )}
+      <Migas
+        items={[
+          { label: "Funcionarios", to: "/funcionarios" },
+          { label: ROLES[p.grupo].title, to: `/funcionarios/${p.role}` },
+          { label: p.nombre },
+        ]}
+      />
+      <FichaFuncionario persona={p} />
     </div>
   );
 }
@@ -214,6 +264,8 @@ export function FichaFuncionario({ persona: p }: { persona: Funcionario }) {
       </div>
 
       {p.nota && <Aviso titulo="Atención">{p.nota}</Aviso>}
+
+      <Territorio persona={p} />
 
       <dl className="grid grid-cols-2 gap-x-3 gap-y-4 rounded-xl bg-tile p-4 text-sm">
         <Campo label="Organismo" value={p.organismo} wide />
@@ -281,6 +333,44 @@ export function FichaFuncionario({ persona: p }: { persona: Funcionario }) {
         </a>
       </div>
     </div>
+  );
+}
+
+/** Where this person governs or who they represent, linked to the municipality pages. */
+function Territorio({ persona: p }: { persona: Funcionario }) {
+  if (!p.municipalities.length) {
+    const nacional = p.grupo === "diputados_nacional" || p.grupo === "senado_nacional";
+    return (
+      <p className="flex items-center gap-2 text-sm text-ink-2">
+        <MapPin className="size-4 shrink-0 text-ink-muted" aria-hidden />
+        {nacional ? "Representa a toda la provincia de Mendoza en el Congreso." : "Su cargo abarca toda la provincia."}{" "}
+        <Link to="/municipios" className="whitespace-nowrap text-link hover:underline">
+          Ver municipios ›
+        </Link>
+      </p>
+    );
+  }
+  const intendente = p.grupo === "intendentes";
+  return (
+    <section className="flex flex-col gap-2">
+      <h2 className="flex items-center gap-1.5 text-sm font-semibold">
+        <MapPin className="size-4 text-ink-muted" aria-hidden />
+        {intendente ? "Gobierna" : `Representa a la ${p.seccion?.toLowerCase() ?? "sección"}`}
+      </h2>
+      <ul className="flex flex-wrap gap-2">
+        {p.municipalities.map((m) => (
+          <li key={m.slug}>
+            <Link
+              to="/municipios/$slug"
+              params={{ slug: m.slug }}
+              className="inline-flex items-center gap-1 rounded-full border border-line px-3 py-1.5 text-sm whitespace-nowrap hover:border-link hover:text-link"
+            >
+              {m.name} <ChevronRight className="size-3.5" aria-hidden />
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 

@@ -8,7 +8,7 @@ import { CoparticipacionPage } from "./pages/coparticipacion.tsx";
 import { DatosPage } from "./pages/datos.tsx";
 import { DeudaPage } from "./pages/deuda.tsx";
 import { OrganismoPage, OrganismosPage, ProveedorPage, ProveedoresPage } from "./pages/compras.tsx";
-import { FuncionarioPage, FuncionariosPage } from "./pages/funcionarios.tsx";
+import { FuncionarioPage, FuncionariosPage , RolePage } from "./pages/funcionarios.tsx";
 import { LeyesPage, LeyPage } from "./pages/leyes.tsx";
 import { MunicipioPage, MunicipiosPage } from "./pages/municipios.tsx";
 import { EmpleoPage } from "./pages/empleo.tsx";
@@ -100,9 +100,16 @@ const funcionariosRoute = createRoute({
   component: FuncionariosPage,
 });
 
+const roleRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/funcionarios/$role",
+  loader: () => loadTema<FuncionariosTema>("funcionarios"),
+  component: RolePage,
+});
+
 const funcionarioRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/funcionarios/$id",
+  path: "/funcionarios/$role/$slug",
   loader: () => loadTema<FuncionariosTema>("funcionarios"),
   component: FuncionarioPage,
 });
@@ -110,14 +117,20 @@ const funcionarioRoute = createRoute({
 const municipiosRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/municipios",
-  loader: () => loadTema<MunicipioPagina[]>("municipios"),
+  loader: async () => {
+    const [municipios, mapa] = await Promise.all([loadTema<MunicipioPagina[]>("municipios"), loadTema<MapaMendoza>("mapa").catch(() => null)]);
+    return { municipios, mapa };
+  },
   component: MunicipiosPage,
 });
 
 const municipioRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/municipios/$slug",
-  loader: () => loadTema<MunicipioPagina[]>("municipios"),
+  loader: async () => {
+    const [municipios, mapa] = await Promise.all([loadTema<MunicipioPagina[]>("municipios"), loadTema<MapaMendoza>("mapa").catch(() => null)]);
+    return { municipios, mapa };
+  },
   component: MunicipioPage,
 });
 
@@ -175,7 +188,7 @@ const senalesRoute = createRoute({
 });
 
 const router = createRouter({
-  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, coparticipacionRoute, empleoRoute, poblacionRoute, funcionariosRoute, funcionarioRoute, municipiosRoute, municipioRoute, proveedoresRoute, proveedorRoute, organismosRoute, organismoRoute, leyesRoute, leyRoute, senalesRoute, noPublicadoRoute, fuentesRoute, datosRoute]),
+  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, coparticipacionRoute, empleoRoute, poblacionRoute, funcionariosRoute, roleRoute, funcionarioRoute, municipiosRoute, municipioRoute, proveedoresRoute, proveedorRoute, organismosRoute, organismoRoute, leyesRoute, leyRoute, senalesRoute, noPublicadoRoute, fuentesRoute, datosRoute]),
   defaultPreload: "intent",
   scrollRestoration: true,
 });

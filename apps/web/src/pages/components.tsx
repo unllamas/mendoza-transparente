@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ChevronRight, Info, Search, type LucideIcon, TriangleAlert, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Info, Search, type LucideIcon, TriangleAlert, X } from "lucide-react";
 import { type ReactNode, useEffect } from "react";
 
 /** Dato informativo: solo fondo, sin borde. El borde queda reservado para lo que se puede tocar. */
@@ -191,27 +191,37 @@ export function Aviso({
   );
 }
 
-/** Miga de pan: Inicio › Sección › Página. El último elemento (sin `to`) es la página actual. */
+/**
+ * Miga de pan: Inicio › Sección › Página. El último elemento (sin `to`) es la página actual.
+ * On phones only the parent is shown ("‹ Diputados provinciales"), so long trails never overlap.
+ */
 export function Migas({ items }: { items: { label: string; to?: string }[] }) {
+  const parent = [...items].reverse().find((it) => it.to) ?? { label: "Inicio", to: "/" };
   return (
-    <nav aria-label="Ruta" className="flex min-w-0 items-center gap-1.5 text-sm text-ink-muted">
-      <Link to="/" className="shrink-0 hover:text-link hover:underline">
-        Inicio
+    <nav aria-label="Ruta" className="text-sm text-ink-muted">
+      <Link to={parent.to!} className="flex min-w-0 items-center gap-1 hover:text-link sm:hidden">
+        <ChevronLeft className="size-4 shrink-0" aria-hidden />
+        <span className="truncate">{parent.label}</span>
       </Link>
-      {items.map((it) => (
-        <span key={it.label} className="flex min-w-0 items-center gap-1.5">
-          <ChevronRight className="size-3.5 shrink-0" aria-hidden />
-          {it.to ? (
-            <Link to={it.to} className="whitespace-nowrap hover:text-link hover:underline">
-              {it.label}
-            </Link>
-          ) : (
-            <span className="truncate text-ink-2" aria-current="page" title={it.label}>
-              {it.label}
-            </span>
-          )}
-        </span>
-      ))}
+      <span className="hidden min-w-0 items-center gap-1.5 sm:flex">
+        <Link to="/" className="shrink-0 hover:text-link hover:underline">
+          Inicio
+        </Link>
+        {items.map((it) => (
+          <span key={it.label} className="flex min-w-0 items-center gap-1.5">
+            <ChevronRight className="size-3.5 shrink-0" aria-hidden />
+            {it.to ? (
+              <Link to={it.to} className="truncate whitespace-nowrap hover:text-link hover:underline">
+                {it.label}
+              </Link>
+            ) : (
+              <span className="truncate text-ink-2" aria-current="page" title={it.label}>
+                {it.label}
+              </span>
+            )}
+          </span>
+        ))}
+      </span>
     </nav>
   );
 }

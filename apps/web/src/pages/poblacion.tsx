@@ -5,6 +5,7 @@ import { useState } from "react";
 import { LineChart } from "../charts/line-chart.tsx";
 import { MapaMendoza } from "../charts/mapa.tsx";
 import { formatNumber } from "../lib.ts";
+import { slug } from "../slug.ts";
 import type { PoblacionTema } from "../types.ts";
 import { FuentesOficiales } from "../fuente.tsx";
 import { Aviso, PageHeader, Section, Segmented, StatTile } from "./components.tsx";
@@ -137,7 +138,12 @@ function Detalle({ depto: d, onClose }: { depto: PoblacionTema["departamentos"][
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-start justify-between gap-2">
-        <h3 className="text-xl font-semibold tracking-tight">{d.municipio}</h3>
+        <span className="flex min-w-0 flex-col gap-0.5">
+          <h3 className="truncate text-xl font-semibold tracking-tight">{d.municipio}</h3>
+          <Link to="/municipios/$slug" params={{ slug: slug(d.municipio) }} className="text-sm whitespace-nowrap text-link hover:underline">
+            Ver todo sobre {d.municipio} ›
+          </Link>
+        </span>
         <button
           type="button"
           onClick={onClose}
