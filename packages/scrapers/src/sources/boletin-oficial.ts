@@ -1,7 +1,18 @@
 /**
  * Boletín Oficial de Mendoza (API no documentada de portalgateway.mendoza.gov.ar).
  *
- * Uso: bun run scrape boletin-oficial [--desde YYYY-MM-DD] [--hasta YYYY-MM-DD]   (por defecto, hoy)
+ * Uso: bun run scrape boletin-oficial [--desde YYYY-MM-DD] [--hasta YYYY-MM-DD] [--solo-tipo=ley[,tipo2]]
+ *      (por defecto, hoy)
+ *
+ * --solo-tipo=<tipos>  Backfill liviano: recorre todas las ediciones del rango y archiva el índice de cada una,
+ *   pero solo baja el detalle (texto completo) de las normas de esos tipos (lista separada por comas; el tipo es
+ *   el del índice en minúscula: ley, decreto, resolucion...). Las demás normas se agregan a normas.csv con los
+ *   datos del índice (sumario = lo que dice el índice, sin texto ni categoría) si todavía no están; un
+ *   corrida normal posterior les baja el detalle. Nunca borra ni pisa filas existentes; se puede cortar y
+ *   retomar (lo ya bajado se saltea).
+ *
+ * titulo_ley (solo leyes): objeto de la ley, tomado de la primera oración del artículo 1 (el texto publicado no
+ *   trae título), hasta ~180 caracteres.
  *
  * Endpoints (todos POST form-urlencoded salvo `current`):
  *  - find   fecha                  -> cabecera de la edición (data-boe-nro). Cuerpo "0" si no hubo edición.
@@ -29,7 +40,7 @@ const OUT_DIR = join(PROCESSED_DIR, SOURCE);
 
 const COLUMNS = [
   "fecha", "nro_boletin", "norma_id", "tipo", "numero", "organismo", "expediente",
-  "sumario", "largo_texto", "url_pdf", "categoria", "fecha_norma",
+  "sumario", "largo_texto", "url_pdf", "categoria", "fecha_norma", "titulo_ley",
 ];
 
 type Categoria =
@@ -66,8 +77,10 @@ async function post(path: string, params: Record<string, string>): Promise<strin
       await sleep(500);
       return await resp.text();
     } catch (err) {
-      if (attempt >= 5) throw err;
-      await sleep(/429/.test(String(err)) ? 20_000 * (attempt + 1) : 3_000 * (attempt + 1));
+      const limitado = /429/.test(String(err));
+      // Ante 429 se insiste mucho más (hasta ~1 h acumulada): el límite del gateway se libera con el tiempo.
+      if (attempt >= (limitado ? 15 : 5)) throw err;
+      await sleep(limitado ? Math.min(20_000 * (attempt + 1), 300_000) : 3_000 * (attempt + 1));
     }
   }
 }
@@ -136,6 +149,31 @@ function parseDetail(html: string) {
   return { texto, url_pdf, tema };
 }
 
+/** Objeto de la ley: primera oración del artículo 1 (después de "SANCIONAN CON FUERZA DE LEY"), hasta ~180 caracteres. */
+function tituloLey(texto: string): string {
+  const t = texto.replace(/\s+/g, " ");
+  const ley = t.match(/FUERZA\s+DE\s+L\s*E\s*Y\s*:?/i);
+  let resto = ley ? t.slice(ley.index! + ley[0].length) : t;
+  const art = resto.match(/(?:Art[ií]culo|ART\.?)\s*1\s*[º°o.]?\s*[-–.:)]*\s*/i);
+  if (art) resto = resto.slice(art.index! + art[0].length);
+  resto = resto.replace(/^[\s\-–.:]+/, "");
+  // Primera oración: corta en ". " (salvo abreviaturas y números de artículo) o en ":" (fin del encabezado).
+  let fin = resto.length;
+  for (const m of resto.matchAll(/([.:])\s+(?=[A-ZÁÉÍÓÚa-z"“(])/g)) {
+    const antes = resto.slice(Math.max(0, m.index! - 6), m.index!);
+    if (m[1] === "." && (/(Art|N[º°]|inc|Dr|Dra|Sr|Lic|Ing|Nro|apdo|Depto|Dpto|Pto|Av|Gral|Cnel)$/i.test(antes) || !/[A-ZÁÉÍÓÚ"“(]/.test(resto[m.index! + m[0].length]!))) continue;
+    fin = m.index! + (m[1] === "." ? 1 : 0);
+    break;
+  }
+  let frase = resto.slice(0, fin).trim();
+  if (frase.length > 180) {
+    const corte = frase.slice(0, 180);
+    const coma = corte.lastIndexOf(", ");
+    frase = (coma > 100 ? corte.slice(0, coma) : corte.replace(/\s+\S*$/, "")).replace(/[\s,;:(–-]+$/, "") + "…";
+  }
+  return frase;
+}
+
 // CSV mínimo con comillas, para releer normas.csv.
 function parseCsv(text: string): Row[] {
   const rows: string[][] = [];
@@ -164,7 +202,8 @@ function parseArgs(args: string[]) {
   const desde = val("--desde") ?? val("--hasta") ?? today;
   const hasta = val("--hasta") ?? today;
   for (const d of [desde, hasta]) if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) throw new Error(`Fecha inválida: ${d}`);
-  return { desde, hasta };
+  const soloTipo = (val("--solo-tipo") ?? "").split(",").map((x) => x.trim().toLowerCase()).filter(Boolean);
+  return { desde, hasta, soloTipo };
 }
 
 function* dias(desde: string, hasta: string) {
@@ -172,11 +211,17 @@ function* dias(desde: string, hasta: string) {
 }
 
 export async function run(args: string[]) {
-  const { desde, hasta } = parseArgs(args);
+  const { desde, hasta, soloTipo } = parseArgs(args);
   const csvPath = join(OUT_DIR, "normas.csv");
   const existing = new Map<string, Row>();
   if (existsSync(csvPath)) for (const r of parseCsv(await readFile(csvPath, "utf8"))) existing.set(String(r.norma_id), r);
   const before = existing.size;
+  // Completa titulo_ley de las leyes ya descargadas (sin red).
+  for (const r of existing.values()) {
+    if (r.tipo !== "ley" || r.titulo_ley) continue;
+    const p = join(OUT_DIR, "textos", String(r.fecha), `${r.norma_id}.txt`);
+    if (existsSync(p)) r.titulo_ley = tituloLey(await readFile(p, "utf8"));
+  }
   if (args.includes("--reclasificar")) {
     // Recalcula la categoría de lo ya descargado, sin tocar la red.
     for (const r of existing.values()) {
@@ -218,6 +263,19 @@ export async function run(args: string[]) {
     let nuevas = 0;
 
     for (const n of normas) {
+      if (soloTipo.length && !soloTipo.includes(n.tipo)) {
+        // Fuera del filtro: queda el dato del índice, sin texto (un fila existente no se toca).
+        if (!existing.has(n.id)) {
+          nuevas++;
+          existing.set(n.id, {
+            fecha, nro_boletin: nro, norma_id: n.id, tipo: n.tipo, numero: n.numero,
+            organismo: n.organismo, expediente: n.tema.match(/EX-\d{4}-\d+-[\w-]+/)?.[0] ?? "",
+            sumario: n.tema.slice(0, 300), largo_texto: "", url_pdf: "", categoria: "",
+            fecha_norma: n.fechaNorma, titulo_ley: "",
+          });
+        }
+        continue;
+      }
       const txtPath = join(OUT_DIR, "textos", fecha, `${n.id}.txt`);
       if (existing.has(n.id) && existsSync(txtPath)) continue;
       try {
@@ -242,6 +300,7 @@ export async function run(args: string[]) {
           fecha, nro_boletin: nro, norma_id: n.id, tipo: n.tipo, numero: n.numero,
           organismo: n.organismo, expediente, sumario, largo_texto: d.texto.length,
           url_pdf: d.url_pdf, categoria: classify(n.tipo, sumario, d.texto), fecha_norma: n.fechaNorma,
+          titulo_ley: n.tipo === "ley" ? tituloLey(d.texto) : "",
         });
       } catch (err) {
         failed.push(`${fecha}/${n.id}`);
@@ -249,6 +308,7 @@ export async function run(args: string[]) {
       }
     }
     await flush();
+    await sleep(1_500); // pausa extra entre ediciones: con el ritmo mínimo el gateway empieza a responder 429
     console.log(`${fecha} BO ${nro}: ${normas.length} normas (${nuevas} nuevas), ${items.length - normas.length} edictos`);
   }
 

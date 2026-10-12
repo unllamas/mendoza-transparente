@@ -1,0 +1,315 @@
+EL SENADO Y CÁMARA DE DIPUTADOS DE LA PROVINCIA DE MENDOZA,
+
+SANCIONAN CON FUERZA DE
+
+LEY:
+
+SISTEMA DE ADMINISTRACIÓN PÚBLICA DIGITAL DE MENDOZA
+
+TÍTULO I
+
+OBJETO. ÁMBITO Y AUTORIDAD DE APLICACIÓN. PRINCIPIOS.
+
+ART. 1 OBJETO. La presente ley tiene por objeto establecer los principios rectores que impulsen la transformación digital de Mendoza, con el fin de facilitar la interacción de los administrados con el Estado, agilizar y garantizar el acceso al ejercicio de los derechos de los administrados, el cumplimiento de sus obligaciones, mejorar la eficiencia y transparencia de los servicios, fomentar la competitividad del Estado y promover una sociedad digital inclusiva.
+
+ART. 2 ÁMBITO DE APLICACIÓN. La presente ley y sus normas reglamentarias tienen por objeto regular el Sistema de Administración Pública Digital de la Provincia.
+
+ART. 3 SUJETOS OBLIGADOS. El cumplimiento de la presente Ley será obligatorio para:
+
+a. Ministerios Provinciales.
+
+b. Secretarías del Poder Ejecutivo Provincial.
+
+c. Entes Descentralizados y Autárquicos.
+
+d. Empresas y Sociedades del Estado o con Participación Estatal Mayoritaria.
+
+e. Poder Legislativo.
+
+f. Poder Judicial.
+
+ART. 4 AUTORIDAD DE APLICACIÓN. La Autoridad de Aplicación y reglamentación de las normas contenidas en esta ley será el Ministerio de Gobierno, Infraestructura y Desarrollo Territorial, o el organismo que, en virtud de la ley de Ministerios, asuma la competencia de organizar y coordinar los sistemas provinciales de informática, comunicación, gobierno electrónico y tecnologías de la información.
+
+ART. 5 PRINCIPIOS. EI Sistema se regirá por los siguientes principios para garantizar que los servicios electrónicos y/o digitales sean accesibles, equitativos y seguros para todos los administrados:
+
+a. Orientación al usuario y las personas: Los servicios se diseñarán y se ofrecerán teniendo en cuenta las necesidades de los ciudadanos, las organizaciones públicas y privadas, garantizando la accesibilidad y la inclusión.
+
+b. Reutilización: Se promoverá la reutilización de soluciones, información y datos, tanto a nivel interno como externo, reduciendo costos y mejorando la eficiencia.
+
+c. Neutralidad tecnológica: Se evitará imponer tecnologías específicas, permitiendo la adaptación a las necesidades cambiantes y fomentando la innovación.
+
+d. Seguridad y privacidad de la información: Se protegerá la información respecto de la autenticidad, confidencialidad, integridad, disponibilidad y no repudio, cuando es compartida entre organismos y/o ciudadanía.
+
+e. Simplificación administrativa: Se reducirá la burocracia y se facilitarán los procesos para ciudadanos y empresas, promoviendo la digitalización.
+
+f. Evaluación continua: Se evaluarán de manera periódica la eficacia y eficiencia de los servicios, incorporando la perspectiva del usuario.
+
+g. Inclusión y accesibilidad: Se garantizará que todos los ciudadanos puedan acceder a los servicios, incluyendo a personas con discapacidad, a través de diseños inclusivos. Además, el Poder Ejecutivo dispondrá de personal idóneo a fin de proceder a capacitar a adultos mayores y a todas aquellas personas con dificultades de accesibilidad.
+
+h. Subsidiariedad: Las decisiones se tomarán al nivel más cercano a los ciudadanos, pero se justifica un marco superior para superar las diferencias y fomentar la integración.
+
+i. Apertura: Se promoverá la apertura de datos, especificaciones y software, fomentando el uso de software libre y especificaciones abiertas.
+
+j. Transparencia: Se garantizará la visibilidad de las normas administrativas, procesos y datos, facilitando la interoperabilidad y la confianza.
+
+k. Conservación de la información: Se garantizará la preservación a largo plazo de los datos, asegurando su legibilidad y accesibilidad futuras.
+
+l. Digital primero: Se ofrecerán los servicios en formato digital como primera opción, manteniendo abiertos otros canales para aquellos que no estén conectados.
+
+m. Sólo una vez: Las personas y organizaciones proporcionarán datos una sola vez, y éstos se reutilizan internamente, respetando las normas de protección de datos.
+
+n. Confianza: Se generará un ambiente de confianza a través del cumplimiento de normas y estándares, y la transparencia en los procesos.
+
+ñ. Proactividad: Se anticiparán a las necesidades de los usuarios y se propondrán soluciones innovadoras.
+
+o. Colaboración: Se fomentará la colaboración entre las organizaciones miembro, estimulando la interoperabilidad.
+
+Estos principios buscan garantizar que los servicios electrónicos y/o digitales sean accesibles, equitativos y seguros para todos los administrados, en línea con los objetivos de la Ley de Procedimiento Administrativo de Mendoza y la Ley Nº 8706 y/o las que en el futuro las reemplacen.
+
+TÍTULO II
+
+ECOSISTEMA DIGITAL DE INTEGRABILIDAD
+
+Capítulo 1
+
+Ecosistema Digital de lntegrabilidad
+
+ART. 6 CREACIÓN ECOSISTEMA. Se crea el Ecosistema Digital de lntegrabilidad de la Provincia de Mendoza, el que a los fines prácticos se denominará “Ecosistema Digital de Integrabilidad de la Provincia de Mendoza - EDI Mza” con el fin de garantizar la seguridad, confiabilidad, trazabilidad y no repudio en el intercambio de datos, procesos y servicios digitales entre las organizaciones miembros del EDI Mza.
+
+El Ecosistema será desarrollado bajo las buenas prácticas, recomendaciones y los estándares de más alta calidad actuales y los que se establezcan a futuro.
+
+El acceso digital será considerado una prioridad para el ejercicio de los derechos ciudadanos. La Provincia garantizará:
+
+a. Conectividad gratuita en oficinas públicas.
+
+b. Puntos de atención presencial con asesoramiento en trámites digitales.
+
+c. Formación básica en competencias digitales para la ciudadanía, en articulación con el sistema educativo y organizaciones sociales.
+
+ART. 7 GOBERNANZA DEL ECOSISTEMA DIGITAL DE INTEGRABILIDAD DE LA PROVINCIA DE MENDOZA. Entendiéndose que se refiere a las decisiones sobre los marcos de interoperabilidad, los acuerdos institucionales, las estructuras organizativas, las funciones y responsabilidades, las políticas y demás aspectos cuyo objetivo es garantizar y supervisar la interoperabilidad.
+
+ART. 8 COMITÉ DE ALTO NIVEL DEL ECOSISTEMA DIGITAL DE INTEGRABILIDAD DE LA PROVINCIA DE MENDOZA. Estará integrado por un representante titular y un representante suplente, del Poder Ejecutivo, Poder Legislativo y Poder Judicial del Estado Provincial. EI Poder Ejecutivo presidirá el mismo, a través del Ministro de Gobierno, Infraestructura y Desarrollo Territorial, siendo la Autoridad de Aplicación de la presente ley. Tendrá como funciones mínimas:
+
+a. Establecer mecanismos de coordinación y acuerdos claros sobre cómo abordar las diferencias en la legislación y adoptar nuevas para facilitar la colaboración entre entidades con marcos jurídicos y estrategias diversas, en el EDI Mza.
+
+b. Desarrollar e implementar mecanismos de resolución estratégica de conflictos para abordar de manera proactiva y eficaz las divergencias que puedan surgir en el marco de la colaboración entre las entidades.
+
+c. Definir los lineamientos en materia de protección de datos, estándares técnicos y planes de interoperabilidad.
+
+d. Dar seguimiento a la ejecución del Plan de Ecosistema Digital de lntegrabilidad, estableciendo indicadores de resultado e impacto.
+
+e. Proponer medidas correctivas para garantizar el cumplimiento de los objetivos del plan de Ecosistema Digital de lntegrabilidad.
+
+ART. 9 AMPLIACIÓN DE FUNCIONES. EI Ministerio de Gobierno, Infraestructura y Desarrollo Territorial podrá ampliar las funciones y representantes del Comité por vía reglamentaria, con el objetivo de brindar gobernanza al Ecosistema Digital de lntegrabilidad.
+
+ART. 10 ORGANISMO RECTOR. La Dirección General de Modernización del Ministerio de Gobierno, Infraestructura y Desarrollo Territorial, o la que en el futura la reemplace, ejercerá el rol de Organismo Rector del Ecosistema Digital de lntegrabilidad. Tendrá por objetivos:
+
+a. Asegurar la coherencia y la alineación de los esfuerzos de interoperabilidad.
+
+b. Facilitar el intercambio de información y la prestación de servicios entre diversos niveles de gobierno.
+
+c. Promover la reutilización de componentes y soluciones digitales.
+
+d. Garantizar la sostenibilidad de los servicios interoperables a largo plazo.
+
+ART. 11 FUNCIONES DEL ORGANISMO RECTOR:
+
+a. Elaborar un plan de interoperabilidad para que todas las instituciones indicadas en el Artículo 3º, y que en el futuro adhieran, se adapten a los requisitos de la presente ley de forma progresiva, consistente y sostenible.
+
+b. Establecer guías, estándares, acuerdos y planes de interoperabilidad a ser implementados por los organismos mencionados en el Artículo 3º de la presente ley.
+
+c. Contribuir a formalizar la asistencia mutua, la actuación conjunta y los procesos institucionales interconectados, mediante Memorandos de Entendimiento y Acuerdos de Prestación de Servicios (APS) entre las instituciones participantes.
+
+d. Impulsar la formación, comprensión y el tratamiento de los datos y la información como un bien público valioso, promoviendo su uso responsable y eficiente.
+
+e. Establecer mecanismos de interoperabilidad y verificación automática que permitan el cumplimiento efectivo del principio “solo una vez” en todos los trámites administrativos. Los organismos alcanzados por la presente ley no podrán requerir a los ciudadanos información o documentación que ya se encuentre en poder del Estado, salvo disposición legal expresa en contrario.
+
+ART. 12 La Dirección de lnformática del Ministerio de Gobierno, Infraestructura y Desarrollo Territorial actuará como Ente Ejecutor de la lmplementación del Ecosistema Digital de lntegrabilidad. Será responsable, en forma enunciativa, de:
+
+a. Ejecución del plan de interoperabilidad: Se avanzará en la implementación del plan de interoperabilidad, fijando la definición de directrices, apoyando el desarrollo de la infraestructura tecnológica y la capacitación del personal.
+
+b. Garantizar que el formato y el significado de la información intercambiada por las instituciones cumplan los estándares fijados en cuanto a la seguridad, trazabilidad, comprensión, valor y conservación en todos los intercambios entre las partes.
+
+c. Supervisión y evaluación de los servicios de interoperabilidad de datos, procesos y servicios digitales incluidos en el EDI Mza.
+
+d. Definir y promover arquitecturas tecnológicas abiertas y flexibles, contribuyendo en las especificaciones de interfaz, servicios de interconexión, servicios de integración de datos, presentación e intercambio de datos y protocolos de comunicación seguros.
+
+e. Gestionar la incorporación de nuevos miembros y fuentes auténticas al ecosistema de integrabilidad
+
+f. Proveer y gestionar un catálogo de servicios de interoperabilidad, esquemas y metadatos, de fuentes de información (aplicaciones) y de recursos reutilizables de interoperabilidad entre instituciones.
+
+g. Monitorear el funcionamiento del ecosistema y hacer cumplir a sus participantes los estándares, funcionamiento de sus servicios y buenas prácticas establecidas.
+
+h. Proveer y administrar mecanismos de seguridad y privacidad de acceso a la información interoperable.
+
+ART. 13 PLAZOS. Dispóngase que los distintos organismos alcanzados por esta ley en el Artículo 3º deberán incorporarse al EDI Mza en un plazo no mayor a los doce (12) meses con una prórroga excepcional de doce (12) meses más por razón fundada.
+
+Capítulo 2
+
+Gobernanza de datos y responsabilidades de los
+
+Organismos miembros del ecosistema
+
+ART.14 Con el fin de garantizar la seguridad y eficiencia en el intercambio de información, el Ecosistema Digital de lntegrabilidad implementará un modelo de interoperabilidad federada. En este modelo, cada organismo que forme parte del Ecosistema administra sus propios datos que compartirá dentro del Ecosistema, bajo las directrices técnicas impartidas por el organismo ejecutor.
+
+ART. 15 GOBERNANZA DE DATOS Y DATOS COMO ACTIVOS ESTRATÉGICOS. La gobernanza de los datos implica las políticas, procesos y controles necesarios de cada organismo para asegurar la calidad, integridad, seguridad y disponibilidad de los mismos durante todo su ciclo de vida, desde su creación hasta su eliminación.
+
+Los datos generados y/o administrados por los organismos miembros del EDI Mza se consideran activos estratégicos intangibles.
+
+ART. 16 RESPONSABILIDAD EN LA GOBERNANZA DE DATOS. Cada Organismo miembro del Ecosistema, será responsable de la gobernanza de sus datos, debiendo establecer roles, responsabilidades y estructuras organizativas claras, así como políticas precisas que regulen el ciclo de vida de los datos desde su creación hasta su eliminación.
+
+El organismo es responsable de decidir qué datos son compartidos dentro del Ecosistema y a qué organismos comparten dichos datos.
+
+Deberá promover procesos que aseguren la calidad de los datos en todas sus etapas, definir indicadores claves para evaluar la efectividad de su gestión y fomentar un monitoreo continuo de su desempeño.
+
+Será obligatorio adoptar tecnologías adecuadas para el almacenamiento, protección y administración de los datos, aplicar medidas sólidas de privacidad y seguridad para resguardar la información sensible y cumplir con las normativas vigentes, e implementar estándares de calidad, formatos y metadatos que aseguren la precisión y confiabilidad.
+
+El cumplimiento de estas disposiciones será obligatorio y constituirá una responsabilidad ineludible de cada organismo, para garantizar la exactitud, calidad, confiabilidad, seguridad y disponibilidad de la información que comparte dentro del Ecosistema de lntegrabilidad.
+
+TÍTULO III
+
+CIUDADANÍA DIGITAL Y SU INTERACCIÓN CON EL ESTADO
+
+Capítulo 1
+
+Plataforma lntegral de Servicios Ciudadanos y sus herramientas
+
+ART. 17 Plataforma lntegral de Servicios Ciudadanos “Mendoza por Mí” (MxM) es la plataforma de servicios de la Provincia de Mendoza que centraliza y facilita a la ciudadanía el acceso a los servicios digitales que brinda el Estado provincial, comprendiendo la misma la ldentidad Digital, el Portadocumento Digital Ciudadano, la gestión de comunicaciones y notificaciones, documentación digitalizada, gestión de turnos, acceso a trámites, y/o cualquier otro componente que a futuro se incorpore, conforme con los términos establecidos en la presente ley.
+
+Este nuevo canal de comunicación ofrece soluciones digitales integrales pensadas desde las necesidades ciudadanas, desde donde se pueden consultar y realizar trámites en línea sin necesidad de ir a una oficina pública.
+
+La plataforma de servicios “Mendoza por Mí” atenderá la relación del Estado provincial con toda persona humana o jurídica, a través de sus respectivas autoridades y/o representantes legales.
+
+ART. 18 Son finalidades de la presente ley:
+
+a. Identificación única y segura: con un mismo y único usuario se accederá a todos los trámites, servicios, información y gestiones realizadas por una persona en su relación con el Estado provincial.
+
+b. Simplificación Administrativa: permite la realización de trámites de manera más simple y clara, con una visión centrada en las personas, reduciendo tiempos administrativos y la solicitud de información y documentos en poder del Estado cumpliendo el principio de “Solo una Vez”.
+
+c. Arquitectura tecnológica robusta y confiable integrada al Ecosistema de lntegrabilidad: el intercambio de datos e información que se realiza en cada interacción entre la ciudadanía y los organismos públicos cumple con los principios de seguridad, no repudio y auditoría exigidos por los más altos estándares internacionales de la interoperabilidad.
+
+d. Accesibilidad: garantiza el acceso a los servicios públicos y trámites de manera fácil, rápida y equitativa para todas las personas humanas y jurídicas.
+
+e. Transparencia: Promover la transparencia en la gestión pública al facilitar el acceso a la información y los datos gubernamentales.
+
+f. Seguridad digital: asegura el estricto cumplimiento de toda la normativa vigente en materia de protección de datos personales y ciberseguridad, garantizando la confidencialidad, integridad y disponibilidad de la información personal para los administrados.
+
+Capítulo 2
+
+De las herramientas de la Plataforma Mendoza por Mí
+
+ART. 19 IDENTIDAD DIGITAL. CONCEPTO. A los fines de la presente ley, se entiende por identidad digital al conjunto de atributos y características que permiten individualizar a una persona en el espacio digital, y al uso de tecnologías de información y comunicación para autenticar y verificar la identidad de las personas, como requisito indispensable para realizar transacciones electrónicas dentro del Estado provincial.
+
+Se podrá requerir que toda persona que se presente y actúe ante la Administración tenga registrada su identidad digital a través de la plataforma "Mendoza por Mí" o los mecanismos y herramientas tecnológicas que establezca la reglamentación.
+
+Estas herramientas deberán garantizar la identificación del autor de la actuación y asegurar que los contenidos no sean modificados.
+
+La utilización de las herramientas asociadas a la identidad digital será considerada personalísima e intransferible, siendo responsable el titular de su utilización de acuerdo con las normas y reglas que la rigen.
+
+ART. 20 GESTIÓN DE LA IDENTIDAD DIGITAL. La gestión de la identidad digital es competencia exclusiva del Ministerio de Gobierno, Infraestructura y Desarrollo Territorial, que por vía reglamentaria establecerá el procedimiento para su utilización en todos los trámites y servicios proporcionados por la Administración Pública Provincial en virtud de lo definido en el artículo 17 de la presente ley.
+
+ART. 21 OBLIGATORIEDAD Y ALCANCE. La utilización de la ldentidad Digital será obligatoria para:
+
+a. Los organismos públicos enumerados en el Artículo 3º de la presente ley.
+
+b. Las personas humanas que soliciten servicios o trámites ante la Administración Pública Provincial.
+
+El uso de los servicios de autenticación y validación de ldentidad Digital será extensible para todos los organismos públicos o privados que deseen integrar sus aplicaciones a dichos servicios. El organismo ejecutor, mencionado en el artículo 12 será el encargado de evaluar, homologar y aceptar, según los criterios de aceptación fijados en la reglamentación de la presente, el acceso a los servicios por parte de un organismo.
+
+Su aplicación a personas jurídicas será evaluada por la autoridad competente conforme a lo que disponga la reglamentación pertinente.
+
+ART. 22 PRINCIPIOS PARA LA IDENTIDAD DIGITAL EN LA PROVINCIA DE MENDOZA. Toda aplicación o plataforma diseñada para implementar la ldentidad Digital de la Provincia deberá ajustarse a los siguientes principios fundamentales:
+
+a. Seguridad e integridad: Implementar medidas de seguridad avanzadas, acordes con los estándares y normativas vigentes, para garantizar la protección de la información de los usuarios y prevenir posibles vulneraciones.
+
+b. Privacidad: Resguardar la privacidad de los datos personales de los usuarios, cumpliendo estrictamente con la Ley de Protección de Datos Personales vigente y normativas complementarias, asegurando así la confidencialidad y seguridad de la información personal.
+
+c. Usabilidad y disponibilidad: Facilitar la integración con otros sistemas y aplicaciones, garantizando la fluidez y coherencia en los procesos digitales y permitiendo una comunicación efectiva entre diferentes plataformas.
+
+d. Accesibilidad: Se garantizará que los servicios digitales sean diseñados de manera inclusiva, considerando las diversas necesidades de los ciudadanos, independientemente de su ubicación geográfica, nivel educativo, situación socioeconómica o discapacidad.
+
+Estos principios buscan garantizar la seguridad, integridad, privacidad, disponibilidad y accesibilidad de los ciudadanos en el ámbito digital.
+
+ART. 23 PORTADOCUMENTO DIGITAL CIUDADANO. El Portadocumento Digital Ciudadano es un espacio virtual, personal e intransferible, destinado a cada persona de la Provincia de Mendoza.
+
+Su función es brindar un acceso único a documentos digitales provisto por organismos públicos y privados que sean de valor para los ciudadanos.
+
+Estos documentos contarán con mecanismos de seguridad válidos, tales como firma digital, códigos QR, o cualquier otro mecanismo que permita validar la autenticidad de los mismos ante terceros.
+
+El acceso a los mismos será estrictamente personal, accediendo con su correspondiente identidad digital y se podrá visualizar y gestionar a través de la Plataforma Mendoza Por Mí. El uso o visualización de estos documentos, a través de herramientas digitales asociadas al EDI Mza, será posible bajo consentimiento del usuario, conforme a la Constitución, Código Civil y Comercial de la Nación, y Ley 25326 de Protección de Datos Personales.
+
+ART. 24 VALIDEZ LEGAL. La documentación disponibilizada en el Portadocumento Digital Ciudadano tendrá la misma validez legal y jurídica que cualquier documento original en formato papel y su contenido será utilizado de igual manera en un formato u otro, siempre y cuando sea presentada o disponibilizada en formato digital.
+
+ART. 25 PLAZOS. Dispóngase que los organismos alcanzados por esta ley en el Artículo 3º deberán disponibilizar en el Portadocumento Digital Ciudadano todo tipo de documentación de valor para el ciudadano en un plazo no mayor a los doce (12) meses con una prórroga excepcional de doce (12) meses más por razón fundada.
+
+ART. 26 CASILLA DIGITAL DE NOTIFICACIONES. La Casilla Digital de Notificaciones es una casilla de mensajería privada entre el Gobierno y cada ciudadano.
+
+El acceso a la misma será estrictamente personal, por medio de la identidad digital, la cual se podrá visualizar y gestionar a través de Mendoza Por Mi. La reglamentación establecerá la forma, requisitos y condiciones en las cuales deben ser realizadas las notificaciones electrónicas, siendo su acceso seguro y gratuito para todos los ciudadanos.
+
+Las comunicaciones enviadas a la Casilla Digital de Notificaciones son certificadas (registrando hora, contenido y organismo notificador) y se dan por notificadas. Esto quiere decir que, todas las semanas, los mensajes se entenderán como leídos y aceptados, aunque no se hubiera ingresado al servicio o abierto la comunicación.
+
+La persona podrá ingresar otros medios de comunicación donde podrá recibir o descargar las notificaciones de la casilla, tales como emails o servicios de mensajería. No obstante, el Ente Ejecutor, de la casilla digital de notificaciones no será responsable en caso de que la comunicación a otros medios digitales no se realice por problemas técnicos.
+
+La casilla digital de notificaciones producirá en el ámbito administrativo los efectos del domicilio constituido, siendo válidas y eficaces todas las notificaciones, emplazamientos y comunicaciones que allí se practiquen.
+
+La reglamentación establecerá la forma, requisitos y condiciones para su constitución, implementación y cambio al igual que las excepciones a su obligatoriedad basadas en razones de conectividad o circunstancias que obstaculicen o hagan desaconsejable su uso.
+
+ART. 27 PLAZOS. Los organismos alcanzados por esta ley en el Artículo 3º deberán cursar a la Casilla Digital de notificaciones todo tipo de comunicación dirigida a una persona humana o jurídica.
+
+La implementación de la casilla mencionada en el artículo anterior deberá efectuarse en un plazo no mayor a los doce (12) meses con una prórroga excepcional de doce (12) meses más por razón fundada.
+
+En el caso de aquellos organismos que cuenten con casillas de notificaciones habilitadas y éstas sean de amplio uso y aceptación podrán continuar utilizando sus casillas, como complemento de la Casilla Digital de Notificaciones de Mendoza por Mí, siempre que permitan tener constancia de la fecha de recepción y del contenido del acto notificado.
+
+ART. 28 FIRMA DIGITAL Y FIRMA ELECTRÓNICA DE LOS ADMINISTRADOS. Los documentos que requieran de la firma de su emisor deben ser suscriptos con firma electrónica o firma digital y tienen idéntica eficacia jurídica y valor probatorio que sus equivalentes en soporte papel o cualquier otro soporte que se utilice a futuro.
+
+El Gobierno de Mendoza proveerá de una plataforma de firma electrónica segura. Esta plataforma de firmado podrá ser utilizada a través de Mendoza por Mi para la firma de documentos que intervengan en actos administrativos públicos o privados en todo el territorio provincial y fuera de él, entre privados o entre privados y organismos públicos, de manera gratuita y segura por todas las personas siendo único requisito que posean su ldentidad Digital.
+
+El Gobierno de Mendoza establecerá los mecanismos de validación, auditoría y resguardo de la información necesaria para comprobar la validez de un documento firmado por medio de la Plataforma de firma electrónica entre una o más partes.
+
+ART. 29 USO OBLIGATORIO. El uso de la firma mencionada en el artículo anterior será obligatorio para todos los trámites digitales de los Sujetos Obligados por esta ley, y donde se requiera adjuntar documentación por parte del ciudadano.
+
+TÍTULO IV
+
+CONTRATACIONES PÚBLICAS EN PLATAFORMAS Y
+
+EN ENTORNOS DE LAS TIC`S
+
+ART. 30 Incorpórase el inciso s) al Artículo 144 de la Ley Nº 8706 de Administración Financiera, el que quedará redactado de la siguiente forma:
+
+“Artículo 144 inciso s): Las adquisiciones de bienes nuevos y la prestación de servicios que se contraten a proveedores que oferten los mismos a potenciales consumidores indeterminados, a través de "plataformas de comercio electrónico'' o "Marketplace'', bajo las condiciones de contratación propuestas por los proveedores que operan en las mismas. Tales tecnologías deberán disponer, como mínimo, de las siguientes características operativas:
+
+a. Los bienes y servicios ofertados deben estar disponibles a través de un catálogo o listado de productos o servicios, mediante el cual se detallen las marcas, especificaciones, condiciones y plazo de entrega, precios y, en su caso, imágenes y/o tutoriales ilustrativos;
+
+b. La plataforma debe habilitar el pago a través de medios digitales o virtuales y/o pasarelas de pago electrónicas;
+
+c. La plataforma debe habilitar la generación de las facturas y comprobantes de compra;
+
+d. La plataforma debe habilitar el seguimiento y estados de entrega;
+
+e El proveedor titular del Marketplace debe informar las reglas aplicables para los casos de devoluciones y reembolsos, como asimismo el procedimiento de solución de conflictos.
+
+Quedan comprendidas dentro de la modalidad prevista en el párrafo anterior, la contratación y compra de servicios de infraestructuras tecnológicas, licencias, servicios de consultoría y soporte tecnológicos, y desarrollos de software, que sean comercializadas bajo la modalidad de plataformas digitales o páginas oficiales, de prestadores nacionales o internacionales, cuyas condiciones técnicas y económicas sean ofertadas de manera pública por sus proveedores titulares o desarrolladores, de forma estandarizada u homogénea, para el consumo masivo de los potenciales clientes del país, más países determinados o regiones o continentes.
+
+En casos de que los servicios o licencias, puedan ser prestados por distintos prestadores, se dejara constancia del “precio oficial'' publicado en su canal electrónico de venta, debiendo fundarse la elección de “la mejor propuesta'' que se elija.
+
+A los efectos de la evaluación y perfeccionamiento de las contrataciones autorizadas en el presente inciso, se observará el principio de la oferta más conveniente previsto por el Artículo 149 de la presente Ley. Las obligaciones comprometidas en virtud de tales contrataciones serán cumplidas mediante los instrumentos de pago y en las oportunidades que detallen las reglas de uso y/o las condiciones previstas por los proveedores respectivos.”
+
+ART. 31 Facúltase al Poder Ejecutivo para regular a través de la reglamentación pertinente, la implementación y/o la actualización de las distintas normas e instrumentos de gestión de los sistemas de administración financiera, debiendo asegurarse a través de tales adecuaciones, los principios de buena administración y de eficiencia del gasto público.
+
+TITULO V
+
+DISPOSICIONES GENERALES
+
+ART. 32 Invítase a los Municipios a adherir a la presente ley en el ámbito de sus respectivas competencias.
+
+ART. 33 Comuníquese al Poder Ejecutivo.
+
+DADA EN EL RECINTO DE SESIONES DE LA HONORABLE LEGISLATURA DE LA PROVINCIA DE MENDOZA, a los treinta días del mes de abril del año dos mil veinticinco.
+
+SDOR. MARTÍN KERCHNER TOMBA
+
+LIC. PABLO ANDRÉS LOMBARDI
+
+LIC. LUCAS ADRIÁN FAURE
+
+DRA. MARÍA CAROLINA LETTRY

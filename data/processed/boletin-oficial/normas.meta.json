@@ -73,6 +73,11 @@
       "etiqueta": "Fecha de la norma",
       "tipo": "fecha",
       "descripcion": "Fecha en que se firmó la norma; suele ser anterior a su publicación."
+    },
+    "titulo_ley": {
+      "etiqueta": "Título de la ley",
+      "tipo": "texto",
+      "descripcion": "Objeto de la ley, tomado de la primera oración de su artículo 1. Solo para leyes."
     }
   },
   "orden": [

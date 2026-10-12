@@ -63,6 +63,18 @@ Qué hace (`scripts/actualizar.ts`):
 3. Comprueba que la web compile con los datos nuevos.
 4. **Pregunta antes de publicar** y hace commit y push **solo de `data/`**: nunca sube código que se esté editando.
 
+### Completar años anteriores del Boletín Oficial
+
+```bash
+bun run scrape boletin-oficial --desde 2024-01-01 --hasta 2026-10-12 --solo-tipo=ley
+```
+
+Recorre todas las ediciones del rango y archiva sus índices, pero solo baja el texto completo de los tipos pedidos (por ejemplo `ley` o `ley,decreto`). Las demás normas quedan en `normas.csv` solo con los datos del índice.
+
+- **Se puede cortar y retomar:** lo que ya está bajado se saltea.
+- **Duración:** el sitio limita los pedidos (error 429) y el scraper espera hasta una hora antes de seguir. Un backfill de casi 3 años de leyes tardó unas 9 horas.
+- **Después de un backfill de leyes:** correr `bun run resumir-leyes`, o pedirle los resúmenes a un agente con los mismos criterios.
+
 ## Qué hacer cuando falla una fuente
 
 1. Abrir el issue y el registro del job.
