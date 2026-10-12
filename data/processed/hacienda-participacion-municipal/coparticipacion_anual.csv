@@ -1,0 +1,541 @@
+anio,municipio,concepto,monto_pesos,parcial
+1997,Capital,participacion_total,18636892.41,0
+1997,General Alvear,participacion_total,5414211.99,0
+1997,Godoy Cruz,participacion_total,18286080.38,0
+1997,Guaymallén,participacion_total,20015635.45,0
+1997,Junín,participacion_total,3851501.18,0
+1997,La Paz,participacion_total,3063972.33,0
+1997,Las Heras,participacion_total,14209323.26,0
+1997,Lavalle,participacion_total,4019133.53,0
+1997,Luján de Cuyo,participacion_total,10233131.53,0
+1997,Maipú,participacion_total,12072074.41,0
+1997,Malargüe,participacion_total,6360444.399999999,0
+1997,Rivadavia,participacion_total,5764577.45,0
+1997,San Carlos,participacion_total,4268535.99,0
+1997,San Martín,participacion_total,9238349.209999999,0
+1997,San Rafael,participacion_total,15008313.3,0
+1997,Santa Rosa,participacion_total,3112824.87,0
+1997,Tunuyán,participacion_total,4816578.41,0
+1997,Tupungato,participacion_total,3391578.55,0
+1998,Capital,participacion_total,19500270.63,0
+1998,General Alvear,participacion_total,5642001.24,0
+1998,Godoy Cruz,participacion_total,18943084.92,0
+1998,Guaymallén,participacion_total,20817528.04,0
+1998,Junín,participacion_total,4031060.4,0
+1998,La Paz,participacion_total,3204109.36,0
+1998,Las Heras,participacion_total,14894360.12,0
+1998,Lavalle,participacion_total,4227066.5,0
+1998,Luján de Cuyo,participacion_total,9795279.07,0
+1998,Maipú,participacion_total,12583352.53,0
+1998,Malargüe,participacion_total,5923102.86,0
+1998,Rivadavia,participacion_total,5226945,0
+1998,San Carlos,participacion_total,3854344.3,0
+1998,San Martín,participacion_total,9683512.67,0
+1998,San Rafael,participacion_total,15498287.96,0
+1998,Santa Rosa,participacion_total,3265234.27,0
+1998,Tunuyán,participacion_total,5068889.17,0
+1998,Tupungato,participacion_total,3235526.17,0
+1999,Capital,participacion_total,18560571.79,0
+1999,General Alvear,participacion_total,5467624.93,0
+1999,Godoy Cruz,participacion_total,18501829.26,0
+1999,Guaymallén,participacion_total,20389656.98,0
+1999,Junín,participacion_total,3961000.42,0
+1999,La Paz,participacion_total,3123227.81,0
+1999,Las Heras,participacion_total,14599306.82,0
+1999,Lavalle,participacion_total,4143022.9,0
+1999,Luján de Cuyo,participacion_total,9699197.62,0
+1999,Maipú,participacion_total,12417138.69,0
+1999,Malargüe,participacion_total,6792751.5,0
+1999,Rivadavia,participacion_total,5298459.48,0
+1999,San Carlos,participacion_total,3873953.38,0
+1999,San Martín,participacion_total,9428707.1,0
+1999,San Rafael,participacion_total,15514630.16,0
+1999,Santa Rosa,participacion_total,3179652.71,0
+1999,Tunuyán,participacion_total,4943802.51,0
+1999,Tupungato,participacion_total,3185569.48,0
+2000,Capital,participacion_total,17691135.26,0
+2000,General Alvear,participacion_total,5187391.883390011,0
+2000,Godoy Cruz,participacion_total,17352412.872937102,0
+2000,Guaymallén,participacion_total,19121004.59174892,0
+2000,Junín,participacion_total,3779605.75906753,0
+2000,La Paz,participacion_total,3007603.7649764405,0
+2000,Las Heras,participacion_total,13934093.85542188,0
+2000,Lavalle,participacion_total,3993492.6129239397,0
+2000,Luján de Cuyo,participacion_total,10016444.735050265,0
+2000,Maipú,participacion_total,11925125.949877253,0
+2000,Malargüe,participacion_total,10156515.883169997,0
+2000,Rivadavia,participacion_total,5656402.573827961,0
+2000,San Carlos,participacion_total,4395360.380336041,0
+2000,San Martín,participacion_total,8932447.52630461,0
+2000,San Rafael,participacion_total,14430964.829481933,0
+2000,Santa Rosa,participacion_total,3062557.6122516203,0
+2000,Tunuyán,participacion_total,4722644.458509949,0
+2000,Tupungato,participacion_total,3396997.959922392,0
+2001,Capital,participacion_total,17966456.804107744,0
+2001,General Alvear,participacion_total,5310469.156154197,0
+2001,Godoy Cruz,participacion_total,17663080.071441036,0
+2001,Guaymallén,participacion_total,19577271.155906104,0
+2001,Junín,participacion_total,3873661.6524511524,0
+2001,La Paz,participacion_total,3073173.11593459,0
+2001,Las Heras,participacion_total,14297669.371629717,0
+2001,Lavalle,participacion_total,4105040.932740286,0
+2001,Luján de Cuyo,participacion_total,9971917.235306848,0
+2001,Maipú,participacion_total,12218834.737043746,0
+2001,Malargüe,participacion_total,9745217.598234702,0
+2001,Rivadavia,participacion_total,5442288.237526989,0
+2001,San Carlos,participacion_total,4368837.307266168,0
+2001,San Martín,participacion_total,9154955.194840783,0
+2001,San Rafael,participacion_total,14977894.562156107,0
+2001,Santa Rosa,participacion_total,3134388.0393102965,0
+2001,Tunuyán,participacion_total,4837720.444809066,0
+2001,Tupungato,participacion_total,3359874.752540472,0
+2002,Capital,participacion_total,14845734.24026291,0
+2002,General Alvear,participacion_total,4576790.45766335,0
+2002,Godoy Cruz,participacion_total,15378251.852317221,0
+2002,Guaymallén,participacion_total,18426230.48466147,0
+2002,Junín,participacion_total,3682265.0372587596,0
+2002,La Paz,participacion_total,2896716.60413846,0
+2002,Las Heras,participacion_total,13183110.551599268,0
+2002,Lavalle,participacion_total,3725614.79509704,0
+2002,Luján de Cuyo,participacion_total,11174066.641408453,0
+2002,Maipú,participacion_total,11557971.942807492,0
+2002,Malargüe,participacion_total,22420609.844350558,0
+2002,Rivadavia,participacion_total,7710749.520576125,0
+2002,San Carlos,participacion_total,8191734.64841566,0
+2002,San Martín,participacion_total,8178766.05080391,0
+2002,San Rafael,participacion_total,12961831.948790029,0
+2002,Santa Rosa,participacion_total,2725701.3862411594,0
+2002,Tunuyán,participacion_total,4462337.35399011,0
+2002,Tupungato,participacion_total,3949404.740218034,0
+2003,Capital,participacion_total,19145360.04,0
+2003,General Alvear,participacion_total,6525530.35,0
+2003,Godoy Cruz,participacion_total,21025692.76,0
+2003,Guaymallén,participacion_total,24511316.48,0
+2003,Junín,participacion_total,4958359.73,0
+2003,La Paz,participacion_total,3872858.1,0
+2003,Las Heras,participacion_total,18300096.48,0
+2003,Lavalle,participacion_total,5213615,0
+2003,Luján de Cuyo,participacion_total,15035746.05,0
+2003,Maipú,participacion_total,15880300.46,0
+2003,Malargüe,participacion_total,26762622.69,0
+2003,Rivadavia,participacion_total,9479423.6,0
+2003,San Carlos,participacion_total,9593533.64,0
+2003,San Martín,participacion_total,11283001.09,0
+2003,San Rafael,participacion_total,18566017.12,0
+2003,Santa Rosa,participacion_total,3951013.84,0
+2003,Tunuyán,participacion_total,6135118.98,0
+2003,Tupungato,participacion_total,5328558.46,0
+2004,Capital,participacion_total,24167394.21,0
+2004,General Alvear,participacion_total,8837737.17,0
+2004,Godoy Cruz,participacion_total,28266358.240000002,0
+2004,Guaymallén,participacion_total,32758789.6,0
+2004,Junín,participacion_total,6716023.99,0
+2004,La Paz,participacion_total,5274709.22,0
+2004,Las Heras,participacion_total,24742445.33,0
+2004,Lavalle,participacion_total,7147347.43,0
+2004,Luján de Cuyo,participacion_total,19806146.02,0
+2004,Maipú,participacion_total,21408775.31,0
+2004,Malargüe,participacion_total,31356216.73,0
+2004,Rivadavia,participacion_total,11868513.29,0
+2004,San Carlos,participacion_total,10868145.94,0
+2004,San Martín,participacion_total,15172572.49,0
+2004,San Rafael,participacion_total,24597075.71,0
+2004,Santa Rosa,participacion_total,5423210.39,0
+2004,Tunuyán,participacion_total,8386448.11,0
+2004,Tupungato,participacion_total,7596818.9399999995,0
+2005,Capital,participacion_total,29396335.64,0
+2005,General Alvear,participacion_total,11098858,0
+2005,Godoy Cruz,participacion_total,35394719.49,0
+2005,Guaymallén,participacion_total,41037063.36,0
+2005,Junín,participacion_total,8424124.96,0
+2005,La Paz,participacion_total,6561916.2,0
+2005,Las Heras,participacion_total,30998894.37,0
+2005,Lavalle,participacion_total,8967600.46,0
+2005,Luján de Cuyo,participacion_total,24439714.4,0
+2005,Maipú,participacion_total,26893047.27,0
+2005,Malargüe,participacion_total,36784388.86,0
+2005,Rivadavia,participacion_total,13987154.66,0
+2005,San Carlos,participacion_total,12793196.3,0
+2005,San Martín,participacion_total,19054878.21,0
+2005,San Rafael,participacion_total,30876189.46,0
+2005,Santa Rosa,participacion_total,6793862.1,0
+2005,Tunuyán,participacion_total,10561686.29,0
+2005,Tupungato,participacion_total,9319573.42,0
+2006,Capital,participacion_total,35841512.25,0
+2006,General Alvear,participacion_total,14077997.24,0
+2006,Godoy Cruz,participacion_total,44725654.46,0
+2006,Guaymallén,participacion_total,51629824.79,0
+2006,Junín,participacion_total,10737262.85,0
+2006,La Paz,participacion_total,8334770.85,0
+2006,Las Heras,participacion_total,39270663.51,0
+2006,Lavalle,participacion_total,11468212.21,0
+2006,Luján de Cuyo,participacion_total,31678394.96,0
+2006,Maipú,participacion_total,34091851.48,0
+2006,Malargüe,participacion_total,49677575.29,0
+2006,Rivadavia,participacion_total,18265799.76,0
+2006,San Carlos,participacion_total,16378126.02,0
+2006,San Martín,participacion_total,24081072.14,0
+2006,San Rafael,participacion_total,40038387.53,0
+2006,Santa Rosa,participacion_total,8662077.16,0
+2006,Tunuyán,participacion_total,13549337.629999999,0
+2006,Tupungato,participacion_total,13193403.36,0
+2007,Capital,participacion_total,41844808.75,0
+2007,General Alvear,participacion_total,17482128.38,0
+2007,Godoy Cruz,participacion_total,56747536.01,0
+2007,Guaymallén,participacion_total,71083897.63,0
+2007,Junín,participacion_total,13525263.5,0
+2007,La Paz,participacion_total,10548573.95,0
+2007,Las Heras,participacion_total,50873328.09,0
+2007,Lavalle,participacion_total,14541490.81,0
+2007,Luján de Cuyo,participacion_total,36924454.8,0
+2007,Maipú,participacion_total,43348563.78,0
+2007,Malargüe,participacion_total,48391632.269999996,0
+2007,Rivadavia,participacion_total,19532010.24,0
+2007,San Carlos,participacion_total,17083605.49,0
+2007,San Martín,participacion_total,30083755.27,0
+2007,San Rafael,participacion_total,49797416.82,0
+2007,Santa Rosa,participacion_total,10974135.71,0
+2007,Tunuyán,participacion_total,17078272.68,0
+2007,Tupungato,participacion_total,15133854.39,0
+2008,Capital,participacion_total,56548939.72,0
+2008,General Alvear,participacion_total,22178025.619999997,0
+2008,Godoy Cruz,participacion_total,70528160.86,0
+2008,Guaymallén,participacion_total,88723147.21000001,0
+2008,Junín,participacion_total,17175901.88,0
+2008,La Paz,participacion_total,13547103.41,0
+2008,Las Heras,participacion_total,63627183.95999999,0
+2008,Lavalle,participacion_total,18462137.8,0
+2008,Luján de Cuyo,participacion_total,45869604.410000004,0
+2008,Maipú,participacion_total,53918876.25,0
+2008,Malargüe,participacion_total,62914195.92,0
+2008,Rivadavia,participacion_total,23386354.61,0
+2008,San Carlos,participacion_total,20036156,0
+2008,San Martín,participacion_total,37954455.92,0
+2008,San Rafael,participacion_total,61908900.809999995,0
+2008,Santa Rosa,participacion_total,13915279.950000001,0
+2008,Tunuyán,participacion_total,21687724.389999997,0
+2008,Tupungato,participacion_total,17963799.32,0
+2009,Capital,participacion_total,60574480.63,0
+2009,General Alvear,participacion_total,23960075.47,0
+2009,Godoy Cruz,participacion_total,75862089.73,0
+2009,Guaymallén,participacion_total,95949506.47,0
+2009,Junín,participacion_total,18569738.1,0
+2009,La Paz,participacion_total,14611400.86,0
+2009,Las Heras,participacion_total,68884268.24,0
+2009,Lavalle,participacion_total,20085710.430000003,0
+2009,Luján de Cuyo,participacion_total,49736033.78,0
+2009,Maipú,participacion_total,58432616.94,0
+2009,Malargüe,participacion_total,66839524.85,0
+2009,Rivadavia,participacion_total,24942680.720000003,0
+2009,San Carlos,participacion_total,21245944.500000004,0
+2009,San Martín,participacion_total,41140739.26,0
+2009,San Rafael,participacion_total,66778068.05,0
+2009,Santa Rosa,participacion_total,15052794.67,0
+2009,Tunuyán,participacion_total,23525447.02,0
+2009,Tupungato,participacion_total,19590213.34,0
+2010,Capital,participacion_total,89780527.37,0
+2010,General Alvear,participacion_total,38205372.5,0
+2010,Godoy Cruz,participacion_total,117782182.31,0
+2010,Guaymallén,participacion_total,147350809.6646758,0
+2010,Junín,participacion_total,29828900.95,0
+2010,La Paz,participacion_total,23763374.79,0
+2010,Las Heras,participacion_total,108913851.76,0
+2010,Lavalle,participacion_total,32638592.05,0
+2010,Luján de Cuyo,participacion_total,75344680.77,0
+2010,Maipú,participacion_total,91748120.53,0
+2010,Malargüe,participacion_total,84918223.37,0
+2010,Rivadavia,participacion_total,36567571.86,0
+2010,San Carlos,participacion_total,30846905.88,0
+2010,San Martín,participacion_total,64834830.69,0
+2010,San Rafael,participacion_total,104395049.41,0
+2010,Santa Rosa,participacion_total,24528970.81,0
+2010,Tunuyán,participacion_total,37831050.75,0
+2010,Tupungato,participacion_total,29321347.28,0
+2011,Capital,participacion_total,121984027.56,0
+2011,General Alvear,participacion_total,55107095.68,0
+2011,Godoy Cruz,participacion_total,169253441.01,0
+2011,Guaymallén,participacion_total,220547567.57999998,0
+2011,Junín,participacion_total,43098920.22,0
+2011,La Paz,participacion_total,34227386.08,0
+2011,Las Heras,participacion_total,158315736.46,0
+2011,Lavalle,participacion_total,47580893.91,0
+2011,Luján de Cuyo,participacion_total,108322512.74,0
+2011,Maipú,participacion_total,133993887.17,0
+2011,Malargüe,participacion_total,99756415.01,0
+2011,Rivadavia,participacion_total,50337997.28,0
+2011,San Carlos,participacion_total,44747396.56,0
+2011,San Martín,participacion_total,93459230.13,0
+2011,San Rafael,participacion_total,150576329.05,0
+2011,Santa Rosa,participacion_total,35160297.5,0
+2011,Tunuyán,participacion_total,55903386.32,0
+2011,Tupungato,participacion_total,39710839.75,0
+2012,Capital,participacion_total,158134363.33,0
+2012,General Alvear,participacion_total,76086820.35,0
+2012,Godoy Cruz,participacion_total,231176914.01,0
+2012,Guaymallén,participacion_total,304739827,0
+2012,Junín,participacion_total,59418366.89,0
+2012,La Paz,participacion_total,47270416.71,0
+2012,Las Heras,participacion_total,219095592.44,0
+2012,Lavalle,participacion_total,66120753.37,0
+2012,Luján de Cuyo,participacion_total,146116838.66,0
+2012,Maipú,participacion_total,185586867.22,0
+2012,Malargüe,participacion_total,126155606.27,0
+2012,Rivadavia,participacion_total,67855388.43,0
+2012,San Carlos,participacion_total,61731644.69,0
+2012,San Martín,participacion_total,128666727.43,0
+2012,San Rafael,participacion_total,204857776.74,0
+2012,Santa Rosa,participacion_total,48776866.78,0
+2012,Tunuyán,participacion_total,77299334.4,0
+2012,Tupungato,participacion_total,54425826.03,0
+2013,Capital,participacion_total,214557556.14,0
+2013,General Alvear,participacion_total,106615613.82,0
+2013,Godoy Cruz,participacion_total,319932842.4,0
+2013,Guaymallén,participacion_total,423871939.87,0
+2013,Junín,participacion_total,83277489.91,0
+2013,La Paz,participacion_total,66165039.44,0
+2013,Las Heras,participacion_total,304905726.71,0
+2013,Lavalle,participacion_total,93047251.38,0
+2013,Luján de Cuyo,participacion_total,201784465.43,0
+2013,Maipú,participacion_total,258553041.07,0
+2013,Malargüe,participacion_total,161656226.24,0
+2013,Rivadavia,participacion_total,92866800.08,0
+2013,San Carlos,participacion_total,85008803.7,0
+2013,San Martín,participacion_total,179623755.31,0
+2013,San Rafael,participacion_total,285749653.83,0
+2013,Santa Rosa,participacion_total,68561216.13,0
+2013,Tunuyán,participacion_total,108590367.13,0
+2013,Tupungato,participacion_total,74896630.54,0
+2014,Capital,participacion_total,291712414.2,0
+2014,General Alvear,participacion_total,147137348.7,0
+2014,Godoy Cruz,participacion_total,437802387.66,0
+2014,Guaymallén,participacion_total,586043687.52,0
+2014,Junín,participacion_total,115007215.32,0
+2014,La Paz,participacion_total,91256123.61,0
+2014,Las Heras,participacion_total,422259334.07,0
+2014,Lavalle,participacion_total,129045993.57,0
+2014,Luján de Cuyo,participacion_total,281571661.4,0
+2014,Maipú,participacion_total,358064052.16,0
+2014,Malargüe,participacion_total,236335364.61,0
+2014,Rivadavia,participacion_total,129207198.5,0
+2014,San Carlos,participacion_total,119653108.16,0
+2014,San Martín,participacion_total,248488818.98,0
+2014,San Rafael,participacion_total,394455103.96,0
+2014,Santa Rosa,participacion_total,94727197.87,0
+2014,Tunuyán,participacion_total,150738953.03,0
+2014,Tupungato,participacion_total,104606917.32,0
+2015,Capital,participacion_total,385464181.07,0
+2015,General Alvear,participacion_total,195174068.74,0
+2015,Godoy Cruz,participacion_total,581739261.3,0
+2015,Guaymallén,participacion_total,775673259.41,0
+2015,Junín,participacion_total,152269093.1,0
+2015,La Paz,participacion_total,120502197.6,0
+2015,Las Heras,participacion_total,559612779.26,0
+2015,Lavalle,participacion_total,171292243.48,0
+2015,Luján de Cuyo,participacion_total,368846643.71,0
+2015,Maipú,participacion_total,474919259.44,0
+2015,Malargüe,participacion_total,280993749.68,0
+2015,Rivadavia,participacion_total,165318394.12,0
+2015,San Carlos,participacion_total,150173021.65,0
+2015,San Martín,participacion_total,329358839.25,0
+2015,San Rafael,participacion_total,524602511.9,0
+2015,Santa Rosa,participacion_total,125204819.35,0
+2015,Tunuyán,participacion_total,200342352.85,0
+2015,Tupungato,participacion_total,133184285.91,0
+2016,Capital,participacion_total,509029768.75,0
+2016,General Alvear,participacion_total,258673455.02,0
+2016,Godoy Cruz,participacion_total,774253784.89,0
+2016,Guaymallén,participacion_total,1031487642.32,0
+2016,Junín,participacion_total,201995551.4,0
+2016,La Paz,participacion_total,159337305.98,0
+2016,Las Heras,participacion_total,745135479.36,0
+2016,Lavalle,participacion_total,227448232.2,0
+2016,Luján de Cuyo,participacion_total,493776211.05,0
+2016,Maipú,participacion_total,633010416.28,0
+2016,Malargüe,participacion_total,396950754.51,0
+2016,Rivadavia,participacion_total,219503260.71,0
+2016,San Carlos,participacion_total,197523966.75,0
+2016,San Martín,participacion_total,437667884.54,0
+2016,San Rafael,participacion_total,695939849.7,0
+2016,Santa Rosa,participacion_total,165628590.43,0
+2016,Tunuyán,participacion_total,266216118.53,0
+2016,Tupungato,participacion_total,177547122.05,0
+2017,Capital,participacion_total,690941639.88,0
+2017,General Alvear,participacion_total,352031421.14,0
+2017,Godoy Cruz,participacion_total,1051181387.4,0
+2017,Guaymallén,participacion_total,1396497696.64,0
+2017,Junín,participacion_total,273800601.49,0
+2017,La Paz,participacion_total,214903496.99,0
+2017,Las Heras,participacion_total,1010398633.03,0
+2017,Lavalle,participacion_total,307986491.27,0
+2017,Luján de Cuyo,participacion_total,662781464.08,0
+2017,Maipú,participacion_total,859216701.1,0
+2017,Malargüe,participacion_total,443937491.01,0
+2017,Rivadavia,participacion_total,284911338.89,0
+2017,San Carlos,participacion_total,251784883,0
+2017,San Martín,participacion_total,595423932.27,0
+2017,San Rafael,participacion_total,941343171.12,0
+2017,Santa Rosa,participacion_total,223907052.99,0
+2017,Tunuyán,participacion_total,361795927.37,0
+2017,Tupungato,participacion_total,235110454.45,0
+2018,Capital,participacion_total,902626443.31,0
+2018,General Alvear,participacion_total,466891669.02,0
+2018,Godoy Cruz,participacion_total,1393740872.54,0
+2018,Guaymallén,participacion_total,1859334375.19,0
+2018,Junín,participacion_total,365666755.4,0
+2018,La Paz,participacion_total,287127222.51,0
+2018,Las Heras,participacion_total,1346962701.03,0
+2018,Lavalle,participacion_total,412964668.21,0
+2018,Luján de Cuyo,participacion_total,898704532.04,0
+2018,Maipú,participacion_total,1145833537.51,0
+2018,Malargüe,participacion_total,743419153.45,0
+2018,Rivadavia,participacion_total,392671644.64,0
+2018,San Carlos,participacion_total,350737402.79,0
+2018,San Martín,participacion_total,793271235.86,0
+2018,San Rafael,participacion_total,1260811114.65,0
+2018,Santa Rosa,participacion_total,299271638.88,0
+2018,Tunuyán,participacion_total,482926410.15999997,0
+2018,Tupungato,participacion_total,339556876.85,0
+2019,Capital,participacion_total,1266588761.15,0
+2019,General Alvear,participacion_total,659863200.6,0
+2019,Godoy Cruz,participacion_total,1969663575.4,0
+2019,Guaymallén,participacion_total,2641689698.57,0
+2019,Junín,participacion_total,519356815.83,0
+2019,La Paz,participacion_total,408849091.43,0
+2019,Las Heras,participacion_total,1916431165.34,0
+2019,Lavalle,participacion_total,589506685.21,0
+2019,Luján de Cuyo,participacion_total,1261816071.35,0
+2019,Maipú,participacion_total,1632656971.19,0
+2019,Malargüe,participacion_total,945463128.31,0
+2019,Rivadavia,participacion_total,550419393.09,0
+2019,San Carlos,participacion_total,492523335.28,0
+2019,San Martín,participacion_total,1127746660.54,0
+2019,San Rafael,participacion_total,1794081359.15,0
+2019,Santa Rosa,participacion_total,427054159.35,0
+2019,Tunuyán,participacion_total,686501072.04,0
+2019,Tupungato,participacion_total,482621290.53,0
+2020,Capital,participacion_total,1705335700.84,0
+2020,General Alvear,participacion_total,883322457.3,0
+2020,Godoy Cruz,participacion_total,2642357424.35,0
+2020,Guaymallén,participacion_total,3531388345.23,0
+2020,Junín,participacion_total,695948196.15,0
+2020,La Paz,participacion_total,545572928.57,0
+2020,Las Heras,participacion_total,2563277050.1,0
+2020,Lavalle,participacion_total,789670971.39,0
+2020,Luján de Cuyo,participacion_total,1688866598.73,0
+2020,Maipú,participacion_total,2187341073.47,0
+2020,Malargüe,participacion_total,1073614233.49,0
+2020,Rivadavia,participacion_total,720690195.5699999,0
+2020,San Carlos,participacion_total,638895675.12,0
+2020,San Martín,participacion_total,1509603499.04,0
+2020,San Rafael,participacion_total,2389469640.52,0
+2020,Santa Rosa,participacion_total,569661720.62,0
+2020,Tunuyán,participacion_total,920734506.77,0
+2020,Tupungato,participacion_total,615034824.36,0
+2021,Capital,participacion_total,2728780756.38,0
+2021,General Alvear,participacion_total,1436728039.49,0
+2021,Godoy Cruz,participacion_total,4262676224.2799997,0
+2021,Guaymallén,participacion_total,5726923482.53,0
+2021,Junín,participacion_total,1130837127.3899999,0
+2021,La Paz,participacion_total,889238909.81,0
+2021,Las Heras,participacion_total,4162535899.66,0
+2021,Lavalle,participacion_total,1290460531.12,0
+2021,Luján de Cuyo,participacion_total,2722598803.26,0
+2021,Maipú,participacion_total,3559302743.64,0
+2021,Malargüe,participacion_total,1701395046.8600001,0
+2021,Rivadavia,participacion_total,1161020060.66,0
+2021,San Carlos,participacion_total,1034731318.1800001,0
+2021,San Martín,participacion_total,2446134525.06,0
+2021,San Rafael,participacion_total,3857756145.77,0
+2021,Santa Rosa,participacion_total,929120610.56,0
+2021,Tunuyán,participacion_total,1499599243.29,0
+2021,Tupungato,participacion_total,1022272328.56,0
+2022,Capital,participacion_total,4820159398.694819,0
+2022,General Alvear,participacion_total,2591955139.185604,0
+2022,Godoy Cruz,participacion_total,7602757350.757548,0
+2022,Guaymallén,participacion_total,10315558891.88415,0
+2022,Junín,participacion_total,2043107938.6299129,0
+2022,La Paz,participacion_total,1620277186.677071,0
+2022,Las Heras,participacion_total,7501859715.807301,0
+2022,Lavalle,participacion_total,2343612385.7001357,0
+2022,Luján de Cuyo,participacion_total,4858684742.793146,0
+2022,Maipú,participacion_total,6425413227.992359,0
+2022,Malargüe,participacion_total,2880100809.5208964,0
+2022,Rivadavia,participacion_total,2064135948.6103966,0
+2022,San Carlos,participacion_total,1834916406.9282634,0
+2022,San Martín,participacion_total,4420862675.031483,0
+2022,San Rafael,participacion_total,6909909244.908765,0
+2022,Santa Rosa,participacion_total,1694025291.0096872,0
+2022,Tunuyán,participacion_total,2716496372.868693,0
+2022,Tupungato,participacion_total,1818725266.3806481,0
+2023,Capital,participacion_total,11023494637.91,0
+2023,General Alvear,participacion_total,6016858475.47,0
+2023,Godoy Cruz,participacion_total,17594291958.54,0
+2023,Guaymallén,participacion_total,24017003922.56,0
+2023,Junín,participacion_total,4768122127.34,0
+2023,La Paz,participacion_total,3784459887.43,0
+2023,Las Heras,participacion_total,17481236354.2,0
+2023,Lavalle,participacion_total,5488165863.1,0
+2023,Luján de Cuyo,participacion_total,11224164480.65,0
+2023,Maipú,participacion_total,15003794513.330002,0
+2023,Malargüe,participacion_total,6925359796.07,0
+2023,Rivadavia,participacion_total,4785892603.89,0
+2023,San Carlos,participacion_total,4241775457.22,0
+2023,San Martín,participacion_total,10257187950.35,0
+2023,San Rafael,participacion_total,16029391883.93,0
+2023,Santa Rosa,participacion_total,3954668724.05,0
+2023,Tunuyán,participacion_total,6344731522.9,0
+2023,Tupungato,participacion_total,4210276400.8199997,0
+2024,Capital,participacion_total,33402307055.03,0
+2024,General Alvear,participacion_total,17686029125.86,0
+2024,Godoy Cruz,participacion_total,49772072672.91,0
+2024,Guaymallén,participacion_total,67919705404.72,0
+2024,Junín,participacion_total,14235750108.4,0
+2024,La Paz,participacion_total,11052285593.06,0
+2024,Las Heras,participacion_total,50663492151.08,0
+2024,Lavalle,participacion_total,16108373562.79,0
+2024,Luján de Cuyo,participacion_total,36928594787.62,0
+2024,Maipú,participacion_total,46283518151.93,0
+2024,Malargüe,participacion_total,21798741217.21,0
+2024,Rivadavia,participacion_total,13911283214.27,0
+2024,San Carlos,participacion_total,12394066649.52,0
+2024,San Martín,participacion_total,30315075949.19,0
+2024,San Rafael,participacion_total,47188002338.43,0
+2024,Santa Rosa,participacion_total,11515698057.31,0
+2024,Tunuyán,participacion_total,18550128538.03,0
+2024,Tupungato,participacion_total,12374310276.72,0
+2025,Capital,participacion_total,47018172476.51,0
+2025,General Alvear,participacion_total,24652687937.72,0
+2025,Godoy Cruz,participacion_total,69698127476.95,0
+2025,Guaymallén,participacion_total,92377331782.96,0
+2025,Junín,participacion_total,19738592696.88,0
+2025,La Paz,participacion_total,15427181381.45,0
+2025,Las Heras,participacion_total,70500304105.31,0
+2025,Lavalle,participacion_total,22436771679.189995,0
+2025,Luján de Cuyo,participacion_total,50594108802.84,0
+2025,Maipú,participacion_total,63175293927.27,0
+2025,Malargüe,participacion_total,27230720997.39,0
+2025,Rivadavia,participacion_total,19031575049.39,0
+2025,San Carlos,participacion_total,16928192150.79,0
+2025,San Martín,participacion_total,42139806756.25,0
+2025,San Rafael,participacion_total,65668776880.13,0
+2025,Santa Rosa,participacion_total,16076569721.990002,0
+2025,Tunuyán,participacion_total,25865474691.15,0
+2025,Tupungato,participacion_total,16732783212.76,0
+2026,Capital,participacion_total,42873863202,1
+2026,General Alvear,participacion_total,22667515634,1
+2026,Godoy Cruz,participacion_total,64255227887,1
+2026,Guaymallén,participacion_total,84965164600,1
+2026,Junín,participacion_total,18225655927,1
+2026,La Paz,participacion_total,14190813825,1
+2026,Las Heras,participacion_total,65208096336,1
+2026,Lavalle,participacion_total,20692166397,1
+2026,Luján de Cuyo,participacion_total,46851207493,1
+2026,Maipú,participacion_total,58164970898,1
+2026,Malargüe,participacion_total,25469060240,1
+2026,Rivadavia,participacion_total,17488029299,1
+2026,San Carlos,participacion_total,15528270416,1
+2026,San Martín,participacion_total,38854617966,1
+2026,San Rafael,participacion_total,60536474339,1
+2026,Santa Rosa,participacion_total,14801742756,1
+2026,Tunuyán,participacion_total,23808154633,1
+2026,Tupungato,participacion_total,15324623530,1

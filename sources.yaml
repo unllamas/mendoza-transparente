@@ -9,7 +9,7 @@
   formato: xlsx
   frecuencia: trimestral
   dificultad: facil
-  estado: pendiente
+  estado: activo
 
 - id: hacienda-participacion-municipal
   nombre: Coparticipación de la provincia a los municipios
@@ -18,7 +18,7 @@
   formato: xls
   frecuencia: mensual
   dificultad: facil
-  estado: pendiente
+  estado: activo
 
 - id: dnap-ron
   nombre: Recursos de origen nacional (transferencias automáticas de Nación a provincias)
