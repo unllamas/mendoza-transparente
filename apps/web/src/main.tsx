@@ -12,14 +12,21 @@ import { HomePage } from "./pages/home.tsx";
 import { Layout } from "./pages/layout.tsx";
 import { PoblacionPage } from "./pages/poblacion.tsx";
 import "./styles.css";
-import type { CoparticipacionTema, DeudaTema, EmpleoTema, MapaMendoza, PoblacionTema } from "./types.ts";
+import type { CoparticipacionTema, DeudaTema, EmpleoTema, HomeTema, MapaMendoza, PoblacionTema } from "./types.ts";
 
 const rootRoute = createRootRoute({ component: Layout });
 
 const homeRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
-  loader: loadIndex,
+  loader: async () => {
+    const [index, home, mapa] = await Promise.all([
+      loadIndex(),
+      loadTema<HomeTema>("home"),
+      loadTema<MapaMendoza>("mapa").catch(() => null),
+    ]);
+    return { index, home, mapa };
+  },
   component: HomePage,
 });
 

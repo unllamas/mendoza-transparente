@@ -1,10 +1,14 @@
+import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 
 /** Dato informativo: solo fondo, sin borde. El borde queda reservado para lo que se puede tocar. */
-export function StatTile({ label, value, note }: { label: string; value: string; note?: string }) {
+export function StatTile({ label, value, note, icon: Icon }: { label: string; value: string; note?: string; icon?: LucideIcon }) {
   return (
     <div className="flex flex-col gap-1 rounded-xl bg-tile p-4">
-      <span className="text-sm text-ink-2">{label}</span>
+      <span className="flex items-center gap-2 text-sm text-ink-2">
+        {Icon && <Icon className="size-4 shrink-0 text-ink-muted" aria-hidden />}
+        {label}
+      </span>
       <span className="text-3xl font-semibold tracking-tight">{value}</span>
       {note && <span className="text-xs text-ink-muted">{note}</span>}
     </div>
@@ -70,6 +74,20 @@ export function Segmented<T extends string>({
           {o.label}
         </button>
       ))}
+    </div>
+  );
+}
+
+/** Encabezado de las páginas temáticas: ícono y nombre del tema arriba del título. */
+export function PageHeader({ icon: Icon, tema, titulo, children }: { icon: LucideIcon; tema: string; titulo: string; children: ReactNode }) {
+  return (
+    <div className="flex max-w-2xl flex-col gap-3">
+      <span className="flex items-center gap-2 text-sm text-ink-muted">
+        <Icon className="size-4 text-accent" aria-hidden />
+        {tema}
+      </span>
+      <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">{titulo}</h1>
+      <p className="text-ink-2 text-pretty">{children}</p>
     </div>
   );
 }

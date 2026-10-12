@@ -167,3 +167,31 @@ export interface MapaMendoza {
   fuente: string;
   departamentos: { municipio: string; path: string; centroide: [number, number] }[];
 }
+
+export interface HomeTema {
+  deuda?: { totalUsd: number; porHabitanteUsd: number; corte: string; maximo: PuntoSerie; serie: number[] };
+  coparticipacion?: {
+    totalReal: number;
+    anio: number;
+    referencia: string;
+    top: { municipio: string; perCapita: number };
+    serie: number[];
+    porMunicipio: Record<string, number>;
+  };
+  empleo?: { cadaMil: number; promedioPais: number; posicion: number; anio: number; serie: number[] };
+  poblacion?: { actual: number; anio: number; variacionCensos: number; serie: number[] };
+  compras?: {
+    procesos: number;
+    proveedores: number;
+    totalAdjudicado: number;
+    pctDirectas: number;
+    pctMontoDirectas: number;
+    pctUnaOferta: number;
+    desde: string;
+    hasta: string;
+    serie: number[];
+  };
+  boletin?: { normas: number; designaciones: number; contrataciones: number; presupuesto: number; desde: string; hasta: string };
+  inflacion?: { mensual: number; interanual: number; periodo: string; serie: number[] };
+  dolar?: { oficial: number; periodo: string };
+}

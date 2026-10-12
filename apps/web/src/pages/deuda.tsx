@@ -1,10 +1,11 @@
 import { getRouteApi, Link } from "@tanstack/react-router";
+import { Landmark, TrendingUp, UserRound } from "lucide-react";
 
 import { BarList } from "../charts/bar-list.tsx";
 import { LineChart } from "../charts/line-chart.tsx";
 import { GOBIERNOS } from "../gobiernos.ts";
 import { formatDate, formatNumber } from "../lib.ts";
-import { Section, StatTile } from "./components.tsx";
+import { PageHeader, Section, StatTile } from "./components.tsx";
 
 const route = getRouteApi("/deuda");
 
@@ -23,22 +24,20 @@ export function DeudaPage() {
 
   return (
     <div className="flex flex-col gap-12">
-      <div className="flex max-w-2xl flex-col gap-3">
-        <h1 className="text-3xl font-semibold tracking-tight">¿Cuánto debe Mendoza?</h1>
-        <p className="text-ink-2 text-pretty">
-          La deuda pública consolidada de la provincia: bonos, préstamos de organismos internacionales y de bancos. Los
+      <PageHeader icon={Landmark} tema="Deuda pública" titulo="¿Cuánto debe Mendoza?">
+        La deuda pública consolidada de la provincia: bonos, préstamos de organismos internacionales y de bancos. Los
           montos están en dólares para poder comparar años con distinta inflación.
-        </p>
-      </div>
+      </PageHeader>
 
       <div className="grid gap-3 md:grid-cols-3">
-        <StatTile label="Deuda consolidada" value={usdM(deuda.totalUsd)} note={`Al ${formatDate(deuda.corte)}`} />
+        <StatTile icon={Landmark} label="Deuda consolidada" value={usdM(deuda.totalUsd)} note={`Al ${formatDate(deuda.corte)}`} />
         <StatTile
+          icon={UserRound}
           label="Por habitante"
           value={`US$ ${formatNumber(Math.round(deuda.porHabitanteUsd))}`}
           note={`Sobre ${formatNumber(deuda.poblacion)} habitantes (proyección INDEC)`}
         />
-        <StatTile label="Máximo de la serie" value={usdM(pico.usd)} note={trimestre(pico.fecha)} />
+        <StatTile icon={TrendingUp} label="Máximo de la serie" value={usdM(pico.usd)} note={trimestre(pico.fecha)} />
       </div>
 
       <Section title="Evolución de la deuda, en millones de dólares">

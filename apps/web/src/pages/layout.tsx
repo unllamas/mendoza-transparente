@@ -1,4 +1,6 @@
-import { Link, Outlet } from "@tanstack/react-router";
+import { Link, Outlet, useRouterState } from "@tanstack/react-router";
+
+import { usePageMeta } from "../seo.ts";
 
 const REPO = "https://github.com/unllamas/mendoza-transparente";
 
@@ -11,6 +13,8 @@ const NAV = [
 ] as const;
 
 export function Layout() {
+  usePageMeta(useRouterState({ select: (s) => s.location.pathname }));
+
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="border-b border-line">

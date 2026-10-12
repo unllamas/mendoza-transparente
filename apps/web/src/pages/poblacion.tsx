@@ -1,11 +1,12 @@
 import { getRouteApi, Link } from "@tanstack/react-router";
+import { MapPin, TrendingUp, Users } from "lucide-react";
 import { useState } from "react";
 
 import { LineChart } from "../charts/line-chart.tsx";
 import { MapaMendoza } from "../charts/mapa.tsx";
 import { formatNumber } from "../lib.ts";
 import type { PoblacionTema } from "../types.ts";
-import { Section, Segmented, StatTile } from "./components.tsx";
+import { PageHeader, Section, Segmented, StatTile } from "./components.tsx";
 
 const route = getRouteApi("/poblacion");
 
@@ -24,18 +25,16 @@ export function PoblacionPage() {
 
   return (
     <div className="flex flex-col gap-12">
-      <div className="flex max-w-2xl flex-col gap-3">
-        <h1 className="text-3xl font-semibold tracking-tight">¿Cuántos somos en Mendoza?</h1>
-        <p className="text-ink-2 text-pretty">
-          Población de la provincia y de cada departamento según los censos 2010 y 2022, y las proyecciones oficiales de
+      <PageHeader icon={Users} tema="Población" titulo="¿Cuántos somos en Mendoza?">
+        Población de la provincia y de cada departamento según los censos 2010 y 2022, y las proyecciones oficiales de
           INDEC para los años sin censo.
-        </p>
-      </div>
+      </PageHeader>
 
       <div className="grid gap-3 md:grid-cols-3">
-        <StatTile label={`Habitantes en ${tema.anioActual}`} value={personas(tema.actual)} note="Proyección INDEC" />
-        <StatTile label="Crecimiento entre censos" value={porcentaje(variacionProv)} note="De 2010 a 2022" />
+        <StatTile icon={Users} label={`Habitantes en ${tema.anioActual}`} value={personas(tema.actual)} note="Proyección INDEC" />
+        <StatTile icon={TrendingUp} label="Crecimiento entre censos" value={porcentaje(variacionProv)} note="De 2010 a 2022" />
         <StatTile
+          icon={MapPin}
           label="Creció más"
           value={porCrecimiento[0]!.municipio}
           note={`${porcentaje(porCrecimiento[0]!.variacion)} entre 2010 y 2022`}

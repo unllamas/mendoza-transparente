@@ -1,11 +1,12 @@
 import { getRouteApi, Link } from "@tanstack/react-router";
+import { BriefcaseBusiness, Trophy, UsersRound } from "lucide-react";
 import { useState } from "react";
 
 import { BarList } from "../charts/bar-list.tsx";
 import { LineChart } from "../charts/line-chart.tsx";
 import { GOBIERNOS } from "../gobiernos.ts";
 import { formatNumber } from "../lib.ts";
-import { Section, Segmented, StatTile } from "./components.tsx";
+import { PageHeader, Section, Segmented, StatTile } from "./components.tsx";
 
 const route = getRouteApi("/empleo-publico");
 
@@ -30,26 +31,25 @@ export function EmpleoPage() {
 
   return (
     <div className="flex flex-col gap-12">
-      <div className="flex max-w-2xl flex-col gap-3">
-        <h1 className="text-3xl font-semibold tracking-tight">¿Cuántos empleados públicos tiene Mendoza?</h1>
-        <p className="text-ink-2 text-pretty">
-          Personal ocupado en la administración pública provincial, comparado con la población. Medirlo cada mil
+      <PageHeader icon={UsersRound} tema="Empleo público" titulo="¿Cuántos empleados públicos tiene Mendoza?">
+        Personal ocupado en la administración pública provincial, comparado con la población. Medirlo cada mil
           habitantes permite comparar provincias de distinto tamaño.
-        </p>
-      </div>
+      </PageHeader>
 
       <div className="grid gap-3 md:grid-cols-3">
         <StatTile
+          icon={UsersRound}
           label="Empleados cada mil habitantes"
           value={decimal.format(empleo.cadaMilMendoza)}
           note={`Promedio de las provincias: ${decimal.format(empleo.promedioPais)} · ${empleo.anio}`}
         />
         <StatTile
+          icon={Trophy}
           label="Puesto entre 24 jurisdicciones"
           value={`${empleo.posicion}.º`}
           note="Ordenadas de menos a más empleados por habitante"
         />
-        <StatTile label="Planta ocupada" value={formatNumber(Math.round(empleo.plantaMendoza))} note={`Cargos, ${empleo.anio}`} />
+        <StatTile icon={BriefcaseBusiness} label="Planta ocupada" value={formatNumber(Math.round(empleo.plantaMendoza))} note={`Cargos, ${empleo.anio}`} />
       </div>
 
       <Section title={`Todas las provincias, ${empleo.anio}`}>

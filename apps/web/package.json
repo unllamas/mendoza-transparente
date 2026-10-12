@@ -6,17 +6,19 @@
   "scripts": {
     "data": "bun scripts/build-data.ts",
     "dev": "bun run data && vite",
-    "build": "bun run data && vite build",
+    "build": "bun run data && vite build && bun scripts/seo.ts",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@tanstack/react-router": "^1.170.42",
+    "lucide-react": "^1.55.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "yaml": "^2.9.1"
   },
   "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^26.6.5",
     "@types/react": "^19.3.0",

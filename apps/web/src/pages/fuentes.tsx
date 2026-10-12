@@ -1,4 +1,5 @@
 import { getRouteApi, Link } from "@tanstack/react-router";
+import { ExternalLink, Table2 } from "lucide-react";
 
 import { formatBytes, formatDate } from "../lib.ts";
 import type { SourceMeta } from "../types.ts";
@@ -66,17 +67,17 @@ function FuenteItem({ source: s, tables }: { source: SourceMeta; tables: number 
             <Link
               to="/datos/$fuente"
               params={{ fuente: s.id }}
-              className="whitespace-nowrap rounded-lg border border-line px-3 py-1.5 text-sm hover:border-axis"
+              className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-line px-3 py-1.5 text-sm hover:border-axis"
             >
-              Ver datos
+              <Table2 className="size-4" aria-hidden /> Ver datos
             </Link>
           )}
           {s.url && (
             <a
               href={s.url}
-              className="whitespace-nowrap rounded-lg border border-line px-3 py-1.5 text-sm text-ink-2 hover:border-axis hover:text-ink"
+              className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-line px-3 py-1.5 text-sm text-ink-2 hover:border-axis hover:text-ink"
             >
-              Fuente oficial ↗
+              Fuente oficial <ExternalLink className="size-3.5" aria-hidden />
             </a>
           )}
         </div>

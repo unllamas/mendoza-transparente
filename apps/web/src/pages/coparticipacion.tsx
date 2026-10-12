@@ -1,4 +1,5 @@
 import { getRouteApi, Link } from "@tanstack/react-router";
+import { Coins, MapPin, UserRound } from "lucide-react";
 import { useState } from "react";
 
 import { formatMoneda } from "../celdas.ts";
@@ -7,7 +8,7 @@ import { MapaMendoza } from "../charts/mapa.tsx";
 import { GOBIERNOS } from "../gobiernos.ts";
 import { formatNumber } from "../lib.ts";
 import type { CoparticipacionTema } from "../types.ts";
-import { Section, StatTile } from "./components.tsx";
+import { PageHeader, Section, StatTile } from "./components.tsx";
 
 const route = getRouteApi("/coparticipacion");
 
@@ -23,26 +24,26 @@ export function CoparticipacionPage() {
 
   return (
     <div className="flex flex-col gap-12">
-      <div className="flex max-w-2xl flex-col gap-3">
-        <h1 className="text-3xl font-semibold tracking-tight text-balance">¿Cuánta plata reciben los municipios?</h1>
-        <p className="text-ink-2 text-pretty">
-          La provincia reparte entre los 18 municipios una parte de lo que recauda y de lo que le manda Nación
+      <PageHeader icon={Coins} tema="Coparticipación" titulo="¿Cuánta plata reciben los municipios?">
+        La provincia reparte entre los 18 municipios una parte de lo que recauda y de lo que le manda Nación
           (coparticipación). Todo está en pesos de {tema.referencia}, para que se pueda comparar entre años.
-        </p>
-      </div>
+      </PageHeader>
 
       <div className="grid gap-3 md:grid-cols-3">
         <StatTile
+          icon={Coins}
           label={`Repartido en ${tema.anioCompleto}`}
           value={formatMoneda(tema.totalReal, "ARS")}
           note={`En pesos de ${tema.referencia}`}
         />
         <StatTile
+          icon={UserRound}
           label="Promedio por habitante"
           value={provincial.perCapita ? pesos(provincial.perCapita) : "—"}
           note={`Toda la provincia, ${tema.anioCompleto}`}
         />
         <StatTile
+          icon={MapPin}
           label="Recibe más por habitante"
           value={ranking[0]!.municipio}
           note={`${pesos(ranking[0]!.perCapita)} por habitante`}

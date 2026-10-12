@@ -1,4 +1,5 @@
 import { getRouteApi, Link } from "@tanstack/react-router";
+import { ArrowLeft, Download, ExternalLink, MousePointerClick } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { columnasVisibles, type ColumnaVista } from "../celdas.ts";
@@ -29,8 +30,8 @@ export function DatosPage() {
   return (
     <div className="flex flex-col gap-12">
       <div className="flex max-w-2xl flex-col gap-3">
-        <Link to="/fuentes" className="text-sm text-ink-muted hover:text-ink">
-          ← Fuentes
+        <Link to="/fuentes" className="flex w-fit items-center gap-1 text-sm text-ink-muted hover:text-ink">
+          <ArrowLeft className="size-4" aria-hidden /> Fuentes
         </Link>
         <h1 className="text-3xl font-semibold tracking-tight text-balance">{source.nombre}</h1>
         {source.descripcion && <p className="text-ink-2 text-pretty">{source.descripcion}</p>}
@@ -40,8 +41,8 @@ export function DatosPage() {
           {source.url && (
             <>
               {" · "}
-              <a href={source.url} className="text-accent hover:underline">
-                Fuente oficial ↗
+              <a href={source.url} className="inline-flex items-center gap-1 text-accent hover:underline">
+                Fuente oficial <ExternalLink className="size-3.5" aria-hidden />
               </a>
             </>
           )}
@@ -115,9 +116,9 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
           <a
             href={`/data/${dataset.source}/${dataset.file}`}
             download
-            className="whitespace-nowrap rounded-lg border border-line px-3 py-1.5 text-sm hover:border-axis"
+            className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-line px-3 py-1.5 text-sm hover:border-axis"
           >
-            Descargar CSV
+            <Download className="size-4" aria-hidden /> Descargar CSV
           </a>
         </div>
       </div>
@@ -187,7 +188,12 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
       )}
 
       <p className="text-xs text-ink-muted">
-        {dict?.vista !== "ultimo" && <>Tocá una fila para ver el detalle. </>}
+        {dict?.vista !== "ultimo" && (
+          <>
+            <MousePointerClick className="mr-1 inline size-3.5 align-[-2px]" aria-hidden />
+            Tocá una fila para ver el detalle.{" "}
+          </>
+        )}
         {preview && rowCount > preview.rows.length && (
           <>Mostrando las {formatNumber(preview.rows.length)} filas más recientes. Descargá el CSV para ver todo. </>
         )}

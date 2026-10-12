@@ -1,5 +1,6 @@
 /** Panel lateral con el detalle de una fila y, en compras, los datos relacionados. */
 
+import { ArrowLeft, Building2, FileText, X } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 
 import { formatMoneda, type ColumnaVista } from "../celdas.ts";
@@ -61,7 +62,8 @@ export function PanelDetalle({
             onClick={() => setHistorial((h) => h.slice(0, -1))}
             className="rounded-md px-2 py-1 text-sm text-ink-2 hover:bg-grid hover:text-ink"
           >
-            ← Volver
+            <ArrowLeft className="mr-1 inline size-4 align-[-3px]" aria-hidden />
+            Volver
           </button>
         )}
         <span className="mr-auto text-sm font-medium">Detalle</span>
@@ -71,7 +73,7 @@ export function PanelDetalle({
           aria-label="Cerrar detalle"
           className="rounded-md px-2 py-1 text-sm text-ink-2 hover:bg-grid hover:text-ink"
         >
-          ✕
+          <X className="size-4" aria-hidden />
         </button>
       </div>
 
@@ -136,7 +138,9 @@ function Proveedor({ cuit, onProceso }: { cuit: string; onProceso: (ocid: string
   return (
     <>
       <div className="flex flex-col gap-1">
-        <span className="text-xs text-ink-muted">Proveedor · CUIT {cuit}</span>
+        <span className="flex items-center gap-1.5 text-xs text-ink-muted">
+          <Building2 className="size-3.5" aria-hidden /> Proveedor · CUIT {cuit}
+        </span>
         <h3 className="text-lg font-semibold tracking-tight text-balance">{p.nombre}</h3>
       </div>
 
@@ -214,7 +218,9 @@ function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cuit: stri
   return (
     <>
       <div className="flex flex-col gap-1">
-        <span className="text-xs text-ink-muted">Proceso de compra · N.º {ocid.replace(/^ocds-ppv9mm-/, "")}</span>
+        <span className="flex items-center gap-1.5 text-xs text-ink-muted">
+          <FileText className="size-3.5" aria-hidden /> Proceso de compra · N.º {ocid.replace(/^ocds-ppv9mm-/, "")}
+        </span>
         <h3 className="text-lg font-semibold tracking-tight text-pretty">{p.titulo}</h3>
         <span className="text-sm text-ink-2">{p.comprador}</span>
       </div>

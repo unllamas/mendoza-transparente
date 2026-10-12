@@ -15,6 +15,7 @@ import { buildDeuda } from "./temas/deuda.ts";
 import { buildCompras } from "./temas/compras.ts";
 import { buildCoparticipacion } from "./temas/coparticipacion.ts";
 import { buildEmpleo } from "./temas/empleo.ts";
+import { buildHome } from "./temas/home.ts";
 import { buildPoblacion } from "./temas/poblacion.ts";
 
 const ROOT = join(import.meta.dir, "..", "..", "..");
@@ -198,12 +199,12 @@ const POBLACION_MENDOZA = Number(
 mkdirSync(join(OUT, "temas"), { recursive: true });
 const trimestral = readTable("hacienda-deuda-stock", "deuda_total_trimestral.csv");
 const stock = readTable("hacienda-deuda-stock", "deuda_stock.csv");
-if (trimestral && stock) {
-  writeFileSync(join(OUT, "temas", "deuda.json"), JSON.stringify(buildDeuda(trimestral, stock, POBLACION_MENDOZA)));
-}
+const deudaTema = trimestral && stock ? buildDeuda(trimestral, stock, POBLACION_MENDOZA) : undefined;
+if (deudaTema) writeFileSync(join(OUT, "temas", "deuda.json"), JSON.stringify(deudaTema));
 
 const ocupacion = readTable("dnap-ocupacion", "ocupacion_salarios.csv");
-if (ocupacion) writeFileSync(join(OUT, "temas", "empleo.json"), JSON.stringify(buildEmpleo(ocupacion)));
+const empleoTema = ocupacion ? buildEmpleo(ocupacion) : undefined;
+if (empleoTema) writeFileSync(join(OUT, "temas", "empleo.json"), JSON.stringify(empleoTema));
 
 const procesos = readTable("compras-ocds", "procesos.csv");
 const adjudicaciones = readTable("compras-ocds", "adjudicaciones.csv");
@@ -212,16 +213,31 @@ if (procesos && adjudicaciones) buildCompras(procesos, adjudicaciones, join(OUT,
 const copaAnual = readTable("hacienda-participacion-municipal", "coparticipacion_anual.csv");
 const ipcNacional = readTable("indices", "ipc_nacional_mensual.csv");
 const pobDeptos = readTable("poblacion", "poblacion_departamentos.csv");
-if (copaAnual && ipcNacional && pobDeptos) {
-  writeFileSync(join(OUT, "temas", "coparticipacion.json"), JSON.stringify(buildCoparticipacion(copaAnual, ipcNacional, pobDeptos)));
-}
-if (pobDeptos && poblacionProv.length) {
-  writeFileSync(join(OUT, "temas", "poblacion.json"), JSON.stringify(buildPoblacion(pobDeptos, poblacionProv)));
-}
+const copaTema = copaAnual && ipcNacional && pobDeptos ? buildCoparticipacion(copaAnual, ipcNacional, pobDeptos) : undefined;
+if (copaTema) writeFileSync(join(OUT, "temas", "coparticipacion.json"), JSON.stringify(copaTema));
+const poblacionTema = pobDeptos && poblacionProv.length ? buildPoblacion(pobDeptos, poblacionProv) : undefined;
+if (poblacionTema) writeFileSync(join(OUT, "temas", "poblacion.json"), JSON.stringify(poblacionTema));
 
 // Mapa de departamentos (lo genera el scraper "geo").
 const mapa = join(PROCESSED_DIR, "geo", "mendoza_departamentos.json");
 if (existsSync(mapa)) cpSync(mapa, join(OUT, "temas", "mapa.json"));
+
+writeFileSync(
+  join(OUT, "temas", "home.json"),
+  JSON.stringify(
+    buildHome({
+      deuda: deudaTema,
+      coparticipacion: copaTema,
+      empleo: empleoTema,
+      poblacion: poblacionTema,
+      procesos: procesos ?? undefined,
+      adjudicaciones: adjudicaciones ?? undefined,
+      normas: readTable("boletin-oficial", "normas.csv") ?? undefined,
+      ipc: ipcNacional ?? undefined,
+      dolar: readTable("indices", "tipo_cambio_mensual.csv") ?? undefined,
+    }),
+  ),
+);
 
 const index: DataIndex = { generatedAt: new Date().toISOString(), sources, datasets };
 writeFileSync(join(OUT, "index.json"), JSON.stringify(index));
