@@ -3,7 +3,11 @@
  * swapped by editing only this file. Documented in docs/procesos/analitica.md.
  *
  * - No key (VITE_POSTHOG_KEY unset, e.g. in development) → nothing is loaded or sent.
- * - Cookieless: memory persistence, no cookies or localStorage, so no consent banner is needed.
+ * - Cookieless (`cookieless_mode: "always"`): no cookies, localStorage or sessionStorage, so no consent banner
+ *   is needed. PostHog's servers derive the visitor from a hash of IP + browser + domain with a salt that
+ *   changes every day, without storing the IP. Requires "cookieless server hash mode" on in the project
+ *   (cookieless_server_hash_mode = 2); otherwise PostHog drops the events. Before this, `persistence: "memory"`
+ *   counted every page load as a new visitor.
  * - Events are named `area.element.action`, in English snake_case (catalog in the docs). Clicks on any
  *   element with `data-track="…"` are sent automatically, with every `data-track-*` attribute as a property.
  */
@@ -24,12 +28,13 @@ if (KEY && typeof window !== "undefined") {
   void import("posthog-js").then(({ default: posthog }) => {
     posthog.init(KEY, {
       api_host: HOST,
-      persistence: "memory",
+      cookieless_mode: "always",
       autocapture: false,
       capture_pageview: false, // sent by trackPageview on every route change
       capture_pageleave: true,
       disable_session_recording: true,
-      ip: false,
+      // No `ip: false`: the cookieless hash needs the IP at ingestion (events without it are dropped).
+      // PostHog deletes it right after hashing, and the project also anonymizes IPs.
     });
     provider = { capture: (event, props) => posthog.capture(event, props) };
     for (const [event, props] of queue.splice(0)) provider.capture(event, props);

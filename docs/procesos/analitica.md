@@ -4,7 +4,12 @@ Para entender cómo se usa el sitio: qué páginas se visitan, qué se busca y q
 
 ## Proveedor y privacidad
 
-- **PostHog**, en modo sin cookies (`persistence: "memory"`): no guarda nada en el navegador, así que no hace falta banner de cookies. Tampoco graba sesiones ni guarda la IP (`ip: false`).
+- **PostHog**, en modo sin cookies (`cookieless_mode: "always"`): no guarda nada en el navegador, así que no hace falta banner de cookies. Tampoco graba sesiones.
+  - **Cómo cuenta visitantes:** el servidor de PostHog arma el identificador con `hash(proyecto, sal diaria, IP, navegador, dominio)` y después borra la IP. La sal cambia todos los días: la misma persona cuenta como una por día. En semanas o meses, los visitantes únicos quedan inflados, y dos personas con la misma red y el mismo navegador pueden contar como una.
+  - **Requisito en el proyecto:** "Cookieless server hash mode" activado (`cookieless_server_hash_mode = 2`, en Project settings > Web analytics). Sin eso, PostHog descarta los eventos.
+  - **No usar `ip: false`:** el hash necesita la IP; los eventos sin IP se descartan.
+  - **Sin ubicación:** en este modo PostHog no agrega país ni ciudad, así que el mapa del panel queda vacío.
+  - **Antes** se usaba `persistence: "memory"`, que contaba cada carga de página como un visitante nuevo. Los datos hasta el 12 oct 2026 están inflados por eso.
 - **Activación:** solo funciona si existe `VITE_POSTHOG_KEY` (y opcionalmente `VITE_POSTHOG_HOST`, por defecto `https://us.i.posthog.com`) en las variables de entorno del build de Cloudflare Pages. Sin clave, por ejemplo en desarrollo, no se carga ni se envía nada.
 - **Cambiar de proveedor:** se edita solo `analytics.ts`. El resto del sitio llama a `track()` y no sabe quién recibe los eventos.
 - **En el proyecto de PostHog:** activar "Discard client IP data" y desactivar la grabación de sesiones.
