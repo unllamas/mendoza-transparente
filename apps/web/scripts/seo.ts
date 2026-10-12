@@ -29,7 +29,8 @@ const jsonLd = (o: unknown) => JSON.stringify(o).replace(/</g, "\\u003c");
 function headTags(p: Pagina): string {
   const { path, title, description } = p;
   const url = canonicalUrl(path);
-  const image = ogImageUrl(p.og.slug);
+  // Social networks cache images by URL: a hash of the image content makes them fetch it again when it changes.
+  const image = `${ogImageUrl(p.og.slug)}?v=${new Bun.CryptoHasher("sha1").update(JSON.stringify(p.og)).digest("hex").slice(0, 8)}`;
   const lines = [
     `<title>${esc(title)}</title>`,
     `<meta name="description" content="${esc(description)}" />`,

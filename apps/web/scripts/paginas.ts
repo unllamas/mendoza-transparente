@@ -186,9 +186,11 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
   };
 
   // ---------------------------------------------------------------- portada y temas
+  // The share image leads with the number of records analyzed: more striking than the number of sources.
+  const records = index.datasets.reduce((sum, d) => sum + d.rowCount, 0);
   estatica("/", {
-    figura: `${index.sources.length} fuentes`,
-    bajada: "Funcionarios, leyes, compras del Estado, deuda y municipios de Mendoza, con su fuente oficial.",
+    figura: `${nf.format(records)} registros`,
+    bajada: `De ${index.sources.length} fuentes oficiales: funcionarios, leyes, compras del Estado, deuda y municipios.`,
     ld: [
       {
         "@type": "WebSite",
