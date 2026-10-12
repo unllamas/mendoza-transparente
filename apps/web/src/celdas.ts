@@ -22,6 +22,8 @@ export interface ColumnaVista {
   etiqueta: string;
   descripcion?: string;
   numerica: boolean;
+  /** La celda es un enlace: el valor crudo es la URL y `formato` devuelve el texto a mostrar. */
+  url: boolean;
   formato: (valor: string, fila: string[]) => string;
 }
 
@@ -43,6 +45,7 @@ export function columnasVisibles(columns: string[], dict: Diccionario | null): C
         etiqueta: def.etiqueta ?? key,
         descripcion: def.descripcion,
         numerica: ["numero", "moneda", "porcentaje"].includes(tipo),
+        url: tipo === "url",
         formato: (valor: string, fila: string[]) => {
           if (valor === "") return "—";
           const n = Number(valor) * (def.escala ?? 1);
@@ -57,6 +60,8 @@ export function columnasVisibles(columns: string[], dict: Diccionario | null): C
               return /^\d{4}-\d{2}-\d{2}/.test(valor) ? formatDate(valor) : valor;
             case "mes":
               return Number.isFinite(Number(valor)) ? mesCorto(Number(valor)) : valor;
+            case "url":
+              return "Abrir ↗";
             case "booleano":
               return ["1", "true", "si", "sí"].includes(valor.toLowerCase()) ? "Sí" : "No";
             default: {

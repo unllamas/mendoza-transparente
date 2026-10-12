@@ -42,7 +42,7 @@ Cada CSV de `data/processed/<fuente>/<archivo>.csv` tiene al lado un `<archivo>.
 | Campo | Uso |
 |---|---|
 | `etiqueta` | Nombre legible para el encabezado ("Monto adjudicado", no "monto"). Corto. |
-| `tipo` | `texto`, `numero`, `moneda`, `fecha`, `anio`, `mes`, `porcentaje`, `booleano` |
+| `tipo` | `texto`, `numero`, `moneda`, `fecha`, `anio`, `mes`, `porcentaje`, `booleano`, `url` (enlace) |
 | `descripcion` | Opcional. Se muestra al pasar el mouse por el encabezado. Para todo lo que no sea obvio. |
 | `oculta` | `true` para columnas puramente técnicas o redundantes (por ejemplo `moneda` si ya está en el tipo, el nombre del archivo de origen, hashes). |
 | `moneda` | Solo para `tipo: moneda`: `ARS` o `USD`. Si la moneda cambia fila a fila, usar `monedaColumna` con el nombre de la columna que la indica. |

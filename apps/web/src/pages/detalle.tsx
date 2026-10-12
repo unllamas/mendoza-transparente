@@ -33,17 +33,27 @@ export function PanelDetalle({
 
   useEffect(() => setHistorial([inicial]), [fila]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Hoja modal: Escape cierra y la página de fondo no se desplaza mientras está abierta.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = overflow;
+    };
   }, [onClose]);
 
   return (
-    <aside
-      aria-label="Detalle"
-      className="fixed inset-0 z-20 flex flex-col overflow-hidden bg-page lg:sticky lg:inset-auto lg:top-4 lg:z-auto lg:max-h-[calc(100dvh-2rem)] lg:rounded-xl lg:border lg:border-line lg:bg-surface"
-    >
+    <>
+      <div aria-hidden onClick={onClose} className="fixed inset-0 z-30 bg-black/50 backdrop-blur-[1px]" />
+      <aside
+        role="dialog"
+        aria-modal="true"
+        aria-label="Detalle"
+        className="fixed inset-y-0 right-0 z-40 flex w-full flex-col overflow-hidden border-l border-line bg-surface shadow-2xl sm:w-[30rem]"
+      >
       <div className="flex items-center gap-2 border-b border-line px-4 py-3">
         {historial.length > 1 && (
           <button
@@ -70,7 +80,8 @@ export function PanelDetalle({
         {vista.tipo === "proceso" && <Proceso ocid={vista.ocid} onProveedor={(cuit) => ir({ tipo: "proveedor", cuit })} />}
         {historial.length === 1 && <CamposFila columnas={columnas} fila={fila} titulo={vista.tipo === "fila" ? undefined : "Esta fila"} />}
       </div>
-    </aside>
+      </aside>
+    </>
   );
 }
 
@@ -81,7 +92,15 @@ function CamposFila({ columnas, fila, titulo }: { columnas: ColumnaVista[]; fila
         {columnas.map((c) => (
           <div key={c.key} className="flex flex-col gap-0.5">
             <dt className="text-xs text-ink-muted">{c.etiqueta}</dt>
-            <dd className="text-sm break-words">{c.formato(fila[c.index] ?? "", fila)}</dd>
+            <dd className="text-sm break-words">
+              {c.url && fila[c.index] ? (
+                <a href={fila[c.index]} target="_blank" rel="noreferrer" className="text-accent hover:underline">
+                  {c.formato(fila[c.index]!, fila)}
+                </a>
+              ) : (
+                c.formato(fila[c.index] ?? "", fila)
+              )}
+            </dd>
             {c.descripcion && <dd className="text-xs text-ink-muted text-pretty">{c.descripcion}</dd>}
           </div>
         ))}
@@ -124,8 +143,8 @@ function Proveedor({ cuit, onProceso }: { cuit: string; onProceso: (ocid: string
       <div className="grid grid-cols-2 gap-2">
         <Dato label="Total adjudicado" value={formatMoneda(p.total, "ARS")} />
         <Dato label="Procesos ganados" value={formatNumber(p.procesos)} />
-        <Dato label="Primera adjudicación" value={formatDate(p.primera)} />
-        <Dato label="Última adjudicación" value={formatDate(p.ultima)} />
+        <Dato label="Primera adjudicación" value={p.primera ? formatDate(p.primera) : "—"} />
+        <Dato label="Última adjudicación" value={p.ultima ? formatDate(p.ultima) : "—"} />
       </div>
 
       <Bloque titulo="Por año">
@@ -165,7 +184,8 @@ function Proveedor({ cuit, onProceso }: { cuit: string; onProceso: (ocid: string
               >
                 <span className="text-sm text-pretty">{r.titulo || "Sin título"}</span>
                 <span className="text-xs text-ink-muted tabular-nums">
-                  {formatDate(r.fecha)} · {r.metodo} · {formatMoneda(r.monto, "ARS")}
+                  {r.fecha ? `${formatDate(r.fecha)} · ` : ""}
+                  {r.metodo} · {formatMoneda(r.monto, "ARS")}
                 </span>
               </button>
             </li>

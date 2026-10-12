@@ -51,18 +51,19 @@ export function buildCompras(procesos: CsvRow[], adjudicaciones: CsvRow[], outDi
       o.monto += Number(a.monto);
       o.procesos.add(a.ocid!);
       organismos.set(comprador, o);
-      const anio = a.fecha_adjudicacion!.slice(0, 4);
-      porAnio.set(anio, (porAnio.get(anio) ?? 0) + Number(a.monto));
+      // Algunas adjudicaciones vienen sin fecha en el origen: cuentan en el total, no en el desglose por año.
+      const anio = (a.fecha_adjudicacion || porOcid.get(a.ocid!)?.fecha || "").slice(0, 4);
+      if (anio) porAnio.set(anio, (porAnio.get(anio) ?? 0) + Number(a.monto));
     }
-    const fechas = filas.map((a) => a.fecha_adjudicacion!).sort();
+    const fechas = filas.map((a) => a.fecha_adjudicacion!).filter(Boolean).sort();
     const detalle: ProveedorDetalle = {
       cuit,
       nombre: filas.at(-1)!.proveedor_nombre!,
       total: filas.reduce((s, a) => s + Number(a.monto), 0),
       adjudicaciones: filas.length,
       procesos: new Set(filas.map((a) => a.ocid)).size,
-      primera: fechas[0]!,
-      ultima: fechas.at(-1)!,
+      primera: fechas[0] ?? "",
+      ultima: fechas.at(-1) ?? "",
       organismos: [...organismos]
         .map(([nombre, o]) => ({ nombre, monto: o.monto, procesos: o.procesos.size }))
         .sort((a, b) => b.monto - a.monto)
@@ -75,7 +76,7 @@ export function buildCompras(procesos: CsvRow[], adjudicaciones: CsvRow[], outDi
           const p = porOcid.get(a.ocid!);
           return {
             ocid: a.ocid!,
-            fecha: a.fecha_adjudicacion!,
+            fecha: a.fecha_adjudicacion || p?.fecha || "",
             titulo: p?.titulo ?? "",
             comprador: p?.comprador ?? "",
             metodo: p?.metodo_contratacion ?? "",

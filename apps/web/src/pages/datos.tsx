@@ -1,5 +1,5 @@
 import { getRouteApi, Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { columnasVisibles, type ColumnaVista } from "../celdas.ts";
 import { formatBytes, formatDate, formatNumber, humanize, loadPreview } from "../lib.ts";
@@ -51,7 +51,10 @@ export function DatosPage() {
       {own.length === 0 ? (
         <p className="text-ink-2">Esta fuente todavía no tiene datos procesados.</p>
       ) : (
-        own.map((d) => <DatasetView key={d.file} dataset={d} />)
+        // Primero lo informativo (tarjetas de último dato), después las tablas crudas.
+        [...own]
+          .sort((a, b) => Number(b.dict?.vista === "ultimo") - Number(a.dict?.vista === "ultimo"))
+          .map((d) => <DatasetView key={d.file} dataset={d} />)
       )}
     </div>
   );
@@ -80,6 +83,7 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
   }, [dataset.source, dataset.file, groupSlug]);
 
   const fila = selected !== null ? preview?.rows[selected] : undefined;
+  const cerrar = useCallback(() => setSelected(null), []);
 
   return (
     <section className="flex flex-col gap-4">
@@ -124,7 +128,7 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
       {preview && dict?.vista === "ultimo" && <UltimoDato columnas={columnas} fila={preview.rows[0]} />}
 
       {preview && dict?.vista !== "ultimo" && (
-        <div className={fila ? "grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_22rem]" : ""}>
+        <>
           <div className="max-h-[32rem] overflow-auto rounded-xl bg-tile">
             <table className="w-full text-left text-sm tabular-nums">
               <thead className="sticky top-0 bg-tile text-ink-muted shadow-[0_1px_0_var(--border)]">
@@ -157,7 +161,19 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
                           key={c.key}
                           className={`max-w-xs truncate whitespace-nowrap px-3 py-1.5 text-ink-2 ${c.numerica ? "text-right" : ""}`}
                         >
-                          {valor}
+                          {c.url && row[c.index] ? (
+                            <a
+                              href={row[c.index]}
+                              target="_blank"
+                              rel="noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="text-accent hover:underline"
+                            >
+                              {valor}
+                            </a>
+                          ) : (
+                            valor
+                          )}
                         </td>
                       );
                     })}
@@ -166,8 +182,8 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
               </tbody>
             </table>
           </div>
-          {fila && <PanelDetalle dataset={dataset} columnas={columnas} fila={fila} onClose={() => setSelected(null)} />}
-        </div>
+          {fila && <PanelDetalle dataset={dataset} columnas={columnas} fila={fila} onClose={cerrar} />}
+        </>
       )}
 
       <p className="text-xs text-ink-muted">

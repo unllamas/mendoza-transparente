@@ -1,0 +1,90 @@
+{
+  "titulo": "Normas publicadas en el Boletín Oficial",
+  "descripcion": "Cada fila es una norma (decreto, resolución, ley, ordenanza o fallo) publicada en el Boletín Oficial de Mendoza. La categoría se asigna automáticamente leyendo el texto y puede tener errores.",
+  "columnas": {
+    "fecha": {
+      "etiqueta": "Publicada",
+      "tipo": "fecha",
+      "descripcion": "Fecha de la edición del Boletín Oficial en que salió la norma."
+    },
+    "nro_boletin": {
+      "etiqueta": "N.º de boletín",
+      "tipo": "texto"
+    },
+    "norma_id": {
+      "oculta": true
+    },
+    "tipo": {
+      "etiqueta": "Tipo",
+      "tipo": "texto",
+      "valores": {
+        "decreto": "Decreto",
+        "resolucion": "Resolución",
+        "decretos municipales": "Decreto municipal",
+        "ordenanzas": "Ordenanza",
+        "fallos": "Fallo",
+        "ley": "Ley",
+        "resoluciones municipales": "Resolución municipal",
+        "acordadas": "Acordada",
+        "fe de erratas (norma)": "Fe de erratas"
+      }
+    },
+    "numero": {
+      "etiqueta": "N.º",
+      "tipo": "texto"
+    },
+    "organismo": {
+      "etiqueta": "Organismo",
+      "tipo": "texto"
+    },
+    "expediente": {
+      "etiqueta": "Expediente",
+      "tipo": "texto",
+      "descripcion": "Número de expediente electrónico (GDE) del trámite."
+    },
+    "sumario": {
+      "etiqueta": "De qué se trata",
+      "tipo": "texto",
+      "descripcion": "Comienzo del texto de la norma."
+    },
+    "largo_texto": {
+      "oculta": true
+    },
+    "url_pdf": {
+      "etiqueta": "Texto original",
+      "tipo": "url",
+      "descripcion": "PDF publicado en el Boletín Oficial."
+    },
+    "categoria": {
+      "etiqueta": "Tema",
+      "tipo": "texto",
+      "valores": {
+        "otro": "Otro",
+        "designacion": "Designación",
+        "presupuesto": "Presupuesto",
+        "contratacion": "Contratación",
+        "ley": "Ley",
+        "deuda": "Deuda",
+        "coparticipacion": "Coparticipación",
+        "convocatoria_electoral": "Convocatoria electoral"
+      }
+    },
+    "fecha_norma": {
+      "etiqueta": "Fecha de la norma",
+      "tipo": "fecha",
+      "descripcion": "Fecha en que se firmó la norma; suele ser anterior a su publicación."
+    }
+  },
+  "orden": [
+    "fecha",
+    "tipo",
+    "numero",
+    "categoria",
+    "organismo",
+    "sumario",
+    "fecha_norma",
+    "expediente",
+    "nro_boletin",
+    "url_pdf"
+  ]
+}

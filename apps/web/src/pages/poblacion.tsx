@@ -5,7 +5,7 @@ import { LineChart } from "../charts/line-chart.tsx";
 import { MapaMendoza } from "../charts/mapa.tsx";
 import { formatNumber } from "../lib.ts";
 import type { PoblacionTema } from "../types.ts";
-import { Section, StatTile } from "./components.tsx";
+import { Section, Segmented, StatTile } from "./components.tsx";
 
 const route = getRouteApi("/poblacion");
 
@@ -16,7 +16,9 @@ const personas = (v: number) => formatNumber(Math.round(v));
 export function PoblacionPage() {
   const { tema, mapa } = route.useLoaderData();
   const [sel, setSel] = useState<string | null>(null);
-  const ranking = [...tema.departamentos].sort((a, b) => b.variacion - a.variacion);
+  const [medida, setMedida] = useState<"habitantes" | "crecimiento">("habitantes");
+  const porCrecimiento = [...tema.departamentos].sort((a, b) => b.variacion - a.variacion);
+  const ranking = medida === "habitantes" ? [...tema.departamentos].sort((a, b) => b.actual - a.actual) : porCrecimiento;
   const depto = ranking.find((d) => d.municipio === sel);
   const variacionProv = (tema.censo2022 / tema.censo2010 - 1) * 100;
 
@@ -33,7 +35,11 @@ export function PoblacionPage() {
       <div className="grid gap-3 md:grid-cols-3">
         <StatTile label={`Habitantes en ${tema.anioActual}`} value={personas(tema.actual)} note="Proyección INDEC" />
         <StatTile label="Crecimiento entre censos" value={porcentaje(variacionProv)} note="De 2010 a 2022" />
-        <StatTile label="Creció más" value={ranking[0]!.municipio} note={`${porcentaje(ranking[0]!.variacion)} entre 2010 y 2022`} />
+        <StatTile
+          label="Creció más"
+          value={porCrecimiento[0]!.municipio}
+          note={`${porcentaje(porCrecimiento[0]!.variacion)} entre 2010 y 2022`}
+        />
       </div>
 
       <Section title="Habitantes por año">
@@ -56,15 +62,30 @@ export function PoblacionPage() {
         </p>
       </Section>
 
-      <Section title="Crecimiento por departamento, 2010–2022">
+      <Section title="Por departamento">
+        <Segmented
+          label="Qué mostrar"
+          value={medida}
+          onChange={setMedida}
+          options={[
+            { value: "habitantes", label: `Habitantes en ${tema.anioActual}` },
+            { value: "crecimiento", label: "Crecimiento 2010–2022" },
+          ]}
+        />
         <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_22rem]">
           <MapaMendoza
             mapa={mapa}
-            valores={Object.fromEntries(tema.departamentos.map((d) => [d.municipio, d.variacion]))}
-            formatValue={porcentaje}
+            valores={Object.fromEntries(
+              tema.departamentos.map((d) => [d.municipio, medida === "habitantes" ? d.actual : d.variacion]),
+            )}
+            formatValue={medida === "habitantes" ? (v) => `${personas(v)} hab.` : porcentaje}
             seleccionado={sel}
             onSelect={setSel}
-            leyenda="Variación de población entre los censos 2010 y 2022"
+            leyenda={
+              medida === "habitantes"
+                ? `Habitantes en ${tema.anioActual} (proyección INDEC)`
+                : "Variación de población entre los censos 2010 y 2022"
+            }
           />
           {depto ? (
             <Detalle depto={depto} onClose={() => setSel(null)} />
@@ -79,7 +100,19 @@ export function PoblacionPage() {
                   >
                     <span className="text-ink-muted tabular-nums">{i + 1}</span>
                     <span>{d.municipio}</span>
-                    <span className="tabular-nums text-ink-2">{porcentaje(d.variacion)}</span>
+                    <span className="flex items-baseline gap-2 tabular-nums">
+                      {medida === "habitantes" ? (
+                        <>
+                          <span className="text-ink-2">{personas(d.actual)}</span>
+                          <span className="w-14 text-right text-xs text-ink-muted">{porcentaje(d.variacion)}</span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-ink-2">{porcentaje(d.variacion)}</span>
+                          <span className="w-20 text-right text-xs text-ink-muted">{personas(d.actual)}</span>
+                        </>
+                      )}
+                    </span>
                   </button>
                 </li>
               ))}

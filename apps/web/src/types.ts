@@ -13,7 +13,7 @@ export interface SourceMeta {
 
 export interface ColumnaDict {
   etiqueta?: string;
-  tipo?: "texto" | "numero" | "moneda" | "fecha" | "anio" | "mes" | "porcentaje" | "booleano";
+  tipo?: "texto" | "numero" | "moneda" | "fecha" | "anio" | "mes" | "porcentaje" | "booleano" | "url";
   descripcion?: string;
   oculta?: boolean;
   moneda?: "ARS" | "USD";
