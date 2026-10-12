@@ -98,7 +98,7 @@ function AgencyRow({ agency: a }: { agency: AgencySummary }) {
           <span className="text-xs whitespace-nowrap text-ink-muted">cargos</span>
         </span>
       ) : null}
-      <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+      <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
     </Link>
   );
 }
@@ -238,7 +238,7 @@ export function AgencyPage() {
                     <span className="truncate text-sm text-ink-muted">{t.role}</span>
                   </span>
                   {t.since && <span className="hidden shrink-0 text-sm whitespace-nowrap text-ink-muted sm:block">desde {formatDate(t.since)}</span>}
-                  {t.path && <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />}
+                  {t.path && <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />}
                 </>
               );
               return (
@@ -274,7 +274,7 @@ export function AgencyPage() {
                     <span className="truncate text-sm text-ink-muted">{[ACTIONS[d.action] ?? d.action, d.role, d.unit].filter(Boolean).join(" · ")}</span>
                   </span>
                   <span className="shrink-0 text-sm whitespace-nowrap text-ink-muted">{formatDate(d.date)}</span>
-                  <ExternalLink className="size-3.5 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+                  <ExternalLink className="size-3.5 shrink-0 text-link" aria-hidden />
                 </a>
               </li>
             ))}
@@ -340,7 +340,7 @@ function HeadCard({ head }: { head: NonNullable<AgencyDetail["head"]> }) {
         <span className={`truncate text-lg font-medium ${head.path ? "group-hover:text-link" : ""}`}>{head.name}</span>
         <span className="truncate text-sm text-ink-2">{head.role}</span>
       </span>
-      {head.path && <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />}
+      {head.path && <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />}
     </>
   );
   return head.path ? (
@@ -368,7 +368,7 @@ function Purchases({ agency: a }: { agency: AgencyDetail }) {
               <>
                 <span className={`min-w-0 flex-1 truncate ${s.slug ? "group-hover:text-link" : ""}`}>{s.name}</span>
                 <span className="shrink-0 font-medium whitespace-nowrap tabular-nums">{millionsOrBillions(s.amount)}</span>
-                {s.slug && <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />}
+                {s.slug && <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />}
               </>
             );
             return (
@@ -493,7 +493,7 @@ function Overview({ overview: o }: { overview: GobiernoOverview }) {
                       </span>
                     </span>
                     <span className="shrink-0 font-medium whitespace-nowrap tabular-nums">{Math.round(c.ratio)}</span>
-                    <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+                    <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
                   </Link>
                 </li>
               ))}
@@ -532,7 +532,7 @@ function ChangeList({ title, items }: { title: string; items: GobiernoOverview["
                 {c.pct > 0 ? "+" : ""}
                 {Math.round(c.pct)} %
               </span>
-              <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+              <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
             </Link>
           </li>
         ))}

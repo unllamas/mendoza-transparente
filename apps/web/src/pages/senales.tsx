@@ -110,7 +110,7 @@ function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }
                       {c.monto !== null && (
                         <span className="text-sm font-medium whitespace-nowrap tabular-nums">{formatMoneda(c.monto, "ARS")}</span>
                       )}
-                      <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+                      <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
                     </button>
                   </li>
                 ))}

@@ -276,7 +276,7 @@ export function Proveedor({ cuit, onProceso, sinTitulo }: { cuit: string; onProc
                   </span>
                 </span>
                 <span className="text-sm font-medium whitespace-nowrap tabular-nums">{formatMoneda(r.monto, "ARS")}</span>
-                <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+                <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
               </button>
             </li>
           ))}
@@ -397,7 +397,7 @@ export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cui
                 <Building2 className="size-4 shrink-0 text-ink-muted" aria-hidden />
                 <span className="min-w-0 flex-1 group-hover:text-link">{a.proveedor}</span>
                 <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(a.monto, "ARS")}</span>
-                <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+                <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
               </button>
             </li>
           ))}

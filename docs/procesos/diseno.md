@@ -13,6 +13,8 @@ Reglas de interfaz que salieron de revisar el sitio con ojos de ciudadano común
 ## Forma
 
 - **Borde = clickeable.** Las tarjetas informativas llevan solo fondo (`bg-tile`).
+- **Lo accionable se ve antes del hover** (en el celular no hay hover): las filas que llevan a otra página tienen la flecha en el color de link (`text-link`) siempre. En listas de navegación, como "Todo lo que hay", el nombre del destino también va en ese color.
+- **Tamaño mínimo para tocar: 44 px de alto** (`min-h-11`) en filas y botones.
 - **Nada se corta en dos líneas**: cifras, títulos de tarjetas, fechas y montos. La unidad va aparte y en chico («$ 965.709» + «millones»). Montos grandes en «mil M».
 - **Nunca scroll horizontal**, en ningún ancho. Hay una red de seguridad global (`overflow-x: clip`), pero la causa se corrige igual.
 - **Mobile first**: menú hamburguesa por debajo de 1024 px, pestañas desplazables, hojas a pantalla completa en celular.

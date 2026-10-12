@@ -24,7 +24,8 @@ import {
 import type { ReactNode } from "react";
 
 import { MapaMendoza } from "../charts/mapa.tsx";
-import { DepartmentPicker, EcosystemMap, GlobalSearch, ReadingRules, StartingQuestions, WhatsNew } from "./home-guide.tsx";
+import { SearchTrigger } from "../search.tsx";
+import { DepartmentPicker, EcosystemMap, ReadingRules, StartingQuestions, WhatsNew } from "./home-guide.tsx";
 import { Sparkline } from "../charts/sparkline.tsx";
 import { CountUp } from "../count-up.tsx";
 import { formatDate, formatNumber } from "../lib.ts";
@@ -64,7 +65,7 @@ export function HomePage() {
           </p>
         </div>
         <div className="flex flex-col gap-4">
-          <GlobalSearch />
+          <SearchTrigger />
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             <DepartmentPicker />
             <Link to="/como-leer" data-track="home.hero.reading_guide" className="inline-flex items-center gap-1.5 text-sm text-link hover:underline">

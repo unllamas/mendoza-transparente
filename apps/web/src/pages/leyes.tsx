@@ -40,7 +40,7 @@ export function LeyesPage() {
                     {[l.tema, l.fecha && formatDate(l.fecha)].filter(Boolean).join(" · ")}
                   </span>
                 </span>
-                <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+                <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
               </Link>
             </li>
           ))}

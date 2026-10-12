@@ -494,12 +494,14 @@ export interface HomeGuide {
 export interface SearchEntry {
   /** Path. */
   p: string;
-  /** Title. */
-  t: string;
-  /** Kind: "Ley", "Funcionario", "Municipio"… */
+  /** Kind: "Ley", "Funcionario", "Municipio"… (the results are grouped by it). */
   k: string;
-  /** Short description. */
-  d: string;
-  /** Photo, for people. */
+  /** Short name. */
+  t: string;
+  /** One line with what matters for this kind (never the name again). */
+  s: string;
+  /** Photo, for people (and municipalities, their mayor's). */
   i?: string;
+  /** Extra text to match against, not shown (party, CUIT, description). */
+  q?: string;
 }

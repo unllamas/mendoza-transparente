@@ -27,6 +27,7 @@ import { useEffect, useRef, useState } from "react";
 import { REPO } from "../fuente.tsx";
 import { trackPageview } from "../analytics.ts";
 import { usePageMeta } from "../seo.ts";
+import { HeaderSearchButton, SearchDialog } from "../search.tsx";
 import { useScrollLock } from "./components.tsx";
 
 type Item = { to: string; label: string; descripcion: string; icon: LucideIcon };
@@ -115,6 +116,7 @@ export function Layout() {
               <Desplegable key={g.label} grupo={g} pathname={pathname} />
             ))}
           </nav>
+          <HeaderSearchButton />
           <button
             type="button"
             onClick={() => setAbierto(true)}
@@ -198,6 +200,7 @@ export function Layout() {
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-5 sm:py-10">
         <Outlet />
+        <SearchDialog />
       </main>
 
       <footer className="border-t border-line">

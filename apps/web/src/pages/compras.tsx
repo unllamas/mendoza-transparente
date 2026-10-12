@@ -68,7 +68,7 @@ export function ProveedoresPage() {
                   </span>
                 </span>
                 <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(p.total, "ARS")}</span>
-                <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+                <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
               </Link>
             </li>
           ))}
@@ -144,7 +144,7 @@ export function OrganismosPage() {
                   </span>
                 </span>
                 <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(o.total, "ARS")}</span>
-                <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+                <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
               </Link>
             </li>
           ))}
@@ -255,7 +255,7 @@ export function OrganismoPage() {
                   </span>
                 </span>
                 <span className="text-sm font-medium whitespace-nowrap tabular-nums">{r.monto ? formatMoneda(r.monto, "ARS") : "—"}</span>
-                <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+                <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
               </button>
             </li>
           ))}

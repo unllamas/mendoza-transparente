@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight, BookOpen, Bug, Compass, MousePointerClick, Search, ShieldCheck } from "lucide-react";
 
 import { GLOSSARY } from "../glossary.ts";
+import { openSearch } from "../search.tsx";
 import { Migas, PageHeader, Section } from "./components.tsx";
 import { READING_RULES } from "./home-guide.tsx";
 
@@ -9,7 +10,7 @@ const STEPS = [
   {
     icon: Search,
     title: "Buscá lo que te interesa",
-    text: "Escribí el nombre de un funcionario, una ley, una empresa o tu departamento en el buscador de la portada.",
+    text: "Tocá la lupa (arriba, en cualquier página) y escribí el nombre de un funcionario, una ley, una empresa o tu departamento.",
   },
   {
     icon: Compass,
@@ -54,13 +55,13 @@ export function ComoLeerPage() {
             </li>
           ))}
         </ol>
-        <Link
-          to="/"
-          hash="buscador-global"
+        <button
+          type="button"
+          onClick={() => openSearch("guide")}
           className="inline-flex w-fit items-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-medium text-on-brand hover:bg-brand-hover"
         >
-          Ir al buscador <ArrowRight className="size-4" aria-hidden />
-        </Link>
+          Abrir el buscador <ArrowRight className="size-4" aria-hidden />
+        </button>
       </Section>
 
       <Section title="Reglas para leer los datos">

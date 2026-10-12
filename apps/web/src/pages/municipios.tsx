@@ -72,7 +72,7 @@ export function MunicipiosPage() {
                   </span>
                   <span className="text-xs whitespace-nowrap text-ink-muted">{metric === "poblacion" ? "habitantes" : "por habitante"}</span>
                 </span>
-                <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+                <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
               </Link>
             </li>
           ))}
@@ -130,7 +130,7 @@ export function MunicipioPage() {
                 <span className="truncate text-lg font-medium group-hover:text-link">{i.nombre}</span>
                 <span className="truncate text-sm text-ink-2">{[i.partido, i.mandatoHasta && `hasta ${i.mandatoHasta}`].filter(Boolean).join(" · ")}</span>
               </span>
-              <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+              <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
             </Link>
           )}
           <StatTile icon={Users} label="Habitantes" value={formatNumber(m.poblacion.actual)} note={`Puesto ${m.poblacion.puesto} de 18 en la provincia`} />
@@ -172,7 +172,7 @@ export function MunicipioPage() {
                     <span className="truncate font-medium group-hover:text-link">{l.nombre}</span>
                     <span className="truncate text-sm text-ink-muted">{[l.cargo, l.bloque].filter(Boolean).join(" · ")}</span>
                   </span>
-                  <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+                  <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
                 </Link>
               </li>
             ))}

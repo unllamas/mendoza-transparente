@@ -20,11 +20,19 @@ En desarrollo (`bun run dev`), el plugin de `vite.config.ts` regenera todo y rec
 
 La portada está pensada para quien llega sin saber por dónde empezar. Los componentes están en `src/pages/home-guide.tsx` y los datos en `temas/guia.json` y `data/search.json` (`scripts/temas/guide.ts`):
 
-1. **Buscador global:** busca entre todas las páginas y los proveedores sin página propia.
-   - Encuentra "9735" y "9.735", "ecoclean" y "ECO CLEAN", y las palabras se pueden escribir en cualquier orden.
-   - El índice se descarga recién la primera vez que alguien usa el buscador.
-   - Las búsquedas sin resultados se registran (`home.search.no_results`): son la lista de lo que falta.
-   - Al lado está el selector "¿Dónde vivís?", que lleva a la página del departamento.
+1. **Buscador avanzado** (`src/search.tsx`):
+   - **Formato:** un panel por encima de todo. En el celular ocupa la pantalla completa; en escritorio es un panel centrado.
+   - **Cómo se abre:** desde el campo de la portada, desde la lupa del header (en todas las páginas) o con `/` y Ctrl/⌘+K.
+   - **Qué busca:** todas las páginas y también los proveedores sin página propia.
+   - **Resultados:**
+     - Agrupados por tipo, con tres por grupo, y un filtro por tipo que muestra todos los de ese tipo.
+     - Cada resultado ocupa dos líneas: el nombre y lo que importa de ese tipo, sin repetir el nombre. Por ejemplo: cargo, partido y mandato; monto y procesos; o intendente y habitantes.
+     - Los funcionarios llevan su foto.
+   - **Coincidencias:** encuentra "9735" y "9.735", "ecoclean" y "ECO CLEAN", y las palabras pueden ir en cualquier orden.
+   - **Antes de escribir:** muestra ejemplos para probar y accesos directos.
+   - **Índice:** `data/search.json`, con nombre (`t`), línea de detalle (`s`), tipo (`k`), foto (`i`) y texto oculto para buscar (`q`: partido, CUIT, descripción). Se descarga la primera vez que se abre el buscador.
+   - **Medición:** las búsquedas sin resultados se registran (`search.no_results`); son la lista de lo que falta.
+   - **Selector:** al lado del campo de la portada está "¿Dónde vivís?", que lleva a la página del departamento.
 2. **Empezá por una pregunta:** seis preguntas frecuentes, cada una con un dato real y un link a la respuesta.
    - Para la pregunta del personal, el dato se elige entre los organismos que no cambiaron de estructura, para que la comparación sea justa.
 3. **Lo nuevo:** leyes recién publicadas, designaciones del Boletín y las últimas cifras de deuda y personal. Cada ítem va fechado por el dato, no por la descarga.

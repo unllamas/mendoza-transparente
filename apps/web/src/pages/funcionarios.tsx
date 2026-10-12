@@ -147,7 +147,7 @@ function Lista({ titulo, personas, role }: { titulo: string; personas: Funcionar
               {p.mandatoHasta && (
                 <span className="hidden text-sm whitespace-nowrap text-ink-muted tabular-nums sm:block">hasta {p.mandatoHasta}</span>
               )}
-              <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+              <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
             </Link>
           </li>
         ))}
@@ -326,7 +326,7 @@ function Territorio({ persona: p }: { persona: Funcionario }) {
           <span className="text-ink-muted">Organismo que conduce o integra</span>
           <span className="truncate font-medium group-hover:text-link">{p.agency.name}</span>
         </span>
-        <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+        <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
       </Link>
     );
   }

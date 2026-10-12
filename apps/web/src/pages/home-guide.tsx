@@ -9,6 +9,9 @@ import {
   ArrowRight,
   BookOpen,
   Building2,
+  Database,
+  LayoutGrid,
+  Store,
   ChevronRight,
   Coins,
   EyeOff,
@@ -28,164 +31,6 @@ import { formatNumber } from "../lib.ts";
 import { SECCION_ELECTORAL, slug } from "../slug.ts";
 import type { HomeGuide, SearchEntry } from "../types.ts";
 import { PersonAvatar } from "./components.tsx";
-
-// ------------------------------------------------------------------ search
-
-let searchIndex: Promise<SearchEntry[]> | null = null;
-const loadSearchIndex = () =>
-  (searchIndex ??= fetch("/data/search.json")
-    .then((r) => (r.ok ? (r.json() as Promise<SearchEntry[]>) : []))
-    .catch(() => {
-      searchIndex = null;
-      return [];
-    }));
-
-/** Lowercase, no accents, and "9.735" → "9735" so law numbers match with or without dots. */
-const fold = (s: string) =>
-  s
-    .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "")
-    .toLowerCase()
-    .replace(/(\d)\.(?=\d)/g, "$1");
-
-/** People, places and laws first: they are what most searches are about. */
-const KIND_WEIGHT: Record<string, number> = { Municipio: 6, Funcionario: 5, Ley: 4, Organismo: 4, Proveedor: 3, Sección: 3 };
-
-function rank(entries: SearchEntry[], query: string): SearchEntry[] {
-  const words = fold(query).split(/\s+/).filter(Boolean);
-  if (!words.length) return [];
-  const scored: [number, SearchEntry][] = [];
-  for (const e of entries) {
-    const title = fold(e.t);
-    const all = `${title} ${fold(e.d)} ${fold(e.k)}`;
-    // "ecoclean" finds "ECO CLEAN S.A.S." and "acp" finds "A.C.P.": also compare without spaces or dots.
-    const compact = all.replace(/[\s.\-]/g, "");
-    if (!words.every((w) => all.includes(w) || compact.includes(w.replace(/[.\-]/g, "")))) continue;
-    let score = KIND_WEIGHT[e.k] ?? 1;
-    if (words.every((w) => title.includes(w))) score += 20;
-    if (title.startsWith(words[0]!)) score += 15;
-    if (words.some((w) => new RegExp(`\\b${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`).test(title))) score += 5;
-    scored.push([score, e]);
-  }
-  return scored.sort((a, b) => b[0] - a[0] || a[1].t.length - b[1].t.length).slice(0, 8).map(([, e]) => e);
-}
-
-export function GlobalSearch() {
-  const navigate = useNavigate();
-  const listId = useId();
-  const [query, setQuery] = useState("");
-  const [entries, setEntries] = useState<SearchEntry[] | null>(null);
-  const [active, setActive] = useState(0);
-  const [open, setOpen] = useState(false);
-  const box = useRef<HTMLDivElement>(null);
-  const results = useMemo(() => (entries ? rank(entries, query) : []), [entries, query]);
-  const q = query.trim();
-
-  useEffect(() => setActive(0), [query]);
-  useEffect(() => {
-    const outside = (e: PointerEvent) => box.current && !box.current.contains(e.target as Node) && setOpen(false);
-    document.addEventListener("pointerdown", outside);
-    return () => document.removeEventListener("pointerdown", outside);
-  }, []);
-  // A search with no results tells us what content is missing.
-  useEffect(() => {
-    if (!entries || q.length < 3 || results.length) return;
-    const t = setTimeout(() => track("home.search.no_results", { query: q.slice(0, 80) }), 1200);
-    return () => clearTimeout(t);
-  }, [entries, q, results.length]);
-
-  const go = (e: SearchEntry, position: number) => {
-    track("home.search.select", { query: q.slice(0, 80), kind: e.k, path: e.p, position });
-    setOpen(false);
-    void navigate({ to: e.p });
-  };
-
-  return (
-    <div ref={box} className="relative w-full max-w-2xl">
-      <label className="relative flex items-center">
-        <span className="sr-only">Buscar en Mendoza Transparente</span>
-        <Search className="pointer-events-none absolute left-4 size-5 text-ink-muted" aria-hidden />
-        <input
-          id="buscador-global"
-          type="search"
-          role="combobox"
-          aria-expanded={open && q.length > 0}
-          aria-controls={listId}
-          aria-autocomplete="list"
-          autoComplete="off"
-          value={query}
-          placeholder="Buscá funcionarios, leyes, empresas…"
-          onFocus={() => {
-            void loadSearchIndex().then(setEntries);
-            setOpen(true);
-          }}
-          onChange={(e) => {
-            setQuery(e.target.value);
-            setOpen(true);
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "ArrowDown") {
-              e.preventDefault();
-              setActive((i) => Math.min(i + 1, results.length - 1));
-            } else if (e.key === "ArrowUp") {
-              e.preventDefault();
-              setActive((i) => Math.max(i - 1, 0));
-            } else if (e.key === "Enter" && results[active]) {
-              e.preventDefault();
-              go(results[active], active);
-            } else if (e.key === "Escape") setOpen(false);
-          }}
-          className="w-full rounded-xl border border-line bg-surface py-3.5 pr-4 pl-12 text-base text-ink shadow-sm outline-none placeholder:text-ink-muted focus:border-link"
-        />
-      </label>
-      {open && q.length > 0 && (
-        <div className="absolute inset-x-0 top-full z-30 mt-2 overflow-hidden rounded-xl border border-line bg-surface shadow-xl">
-          {!entries ? (
-            <p className="px-4 py-3 text-sm text-ink-muted">Buscando…</p>
-          ) : results.length ? (
-            <ul id={listId} role="listbox" aria-label="Resultados" className="max-h-[60vh] overflow-y-auto overscroll-contain py-1">
-              {results.map((e, i) => (
-                <li key={e.p} role="option" aria-selected={i === active}>
-                  <Link
-                    to={e.p}
-                    onClick={(ev) => {
-                      ev.preventDefault();
-                      go(e, i);
-                    }}
-                    onMouseEnter={() => setActive(i)}
-                    className={`flex min-w-0 flex-col gap-0.5 px-4 py-2.5 ${i === active ? "bg-tile" : ""}`}
-                  >
-                    <span className="flex min-w-0 items-center gap-3">
-                      {e.k === "Funcionario" && <PersonAvatar name={e.t} photo={e.i} className="size-9 text-xs" />}
-                      <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                        <span className="flex min-w-0 items-center gap-2">
-                          <span className="shrink-0 rounded bg-grid px-1.5 py-0.5 text-[11px] font-medium text-ink-2">{e.k}</span>
-                          <span className={`truncate font-medium ${i === active ? "text-link" : ""}`}>{e.t}</span>
-                        </span>
-                        <span className="truncate text-sm text-ink-muted">{e.d}</span>
-                      </span>
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <div className="flex flex-col gap-1 px-4 py-3 text-sm">
-              <span>No encontramos nada con «{q}».</span>
-              <span className="text-ink-muted">
-                Probá con otra palabra, o{" "}
-                <Link to="/participar" search={{ tipo: "dato" }} className="text-link hover:underline">
-                  sugerinos ese dato
-                </Link>
-                .
-              </span>
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  );
-}
 
 /** "¿Dónde vivís?" → the municipality page. */
 export function DepartmentPicker() {
@@ -301,7 +146,7 @@ export function EcosystemMap({ guide }: { guide: HomeGuide }) {
     },
   ];
   return (
-    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-3 md:grid-cols-2">
       {groups.map(({ title, description, icon: Icon, items }) => (
         <section key={title} className="flex min-w-0 flex-col gap-3 rounded-2xl bg-tile p-4" aria-label={title}>
           <div className="flex items-start gap-2.5">
@@ -311,18 +156,18 @@ export function EcosystemMap({ guide }: { guide: HomeGuide }) {
               <span className="text-sm text-ink-muted">{description}</span>
             </span>
           </div>
-          <ul className="flex flex-col">
+          <ul className="flex flex-col divide-y divide-line/60">
             {items.map((i) => (
               <li key={i.label}>
                 <Link
                   to={i.to}
                   data-track="home.map.open"
                   data-track-section={i.to}
-                  className="group flex items-center gap-2 rounded-lg px-2 py-2 hover:bg-grid/60"
+                  className="group flex min-h-11 items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-grid/60"
                 >
-                  <span className="min-w-0 flex-1 truncate text-sm group-hover:text-link">{i.label}</span>
-                  {i.count !== undefined && <span className="shrink-0 text-sm font-medium tabular-nums text-ink-2">{formatNumber(i.count)}</span>}
-                  <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+                  <span className="min-w-0 flex-1 truncate font-medium text-link group-hover:underline">{i.label}</span>
+                  {i.count !== undefined && <span className="shrink-0 text-sm tabular-nums text-ink-muted">{formatNumber(i.count)}</span>}
+                  <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
                 </Link>
               </li>
             ))}
@@ -393,7 +238,7 @@ export function WhatsNew({ guide }: { guide: HomeGuide }) {
               </span>
               <span className="line-clamp-2 group-hover:text-link sm:line-clamp-1">{n.title}</span>
             </span>
-            <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+            <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
           </Link>
         </li>
       ))}

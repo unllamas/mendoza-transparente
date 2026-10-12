@@ -8,13 +8,16 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 import type {
+  AgencySummary,
   DataIndex,
   DeudaTema,
   FuncionariosTema,
   GobiernoOverview,
   HomeGuide,
   LeyResumen,
+  MunicipioPagina,
   NoPublicado,
+  OrganismoResumen,
   ProveedorResumen,
   SearchEntry,
 } from "../../src/types.ts";
@@ -109,33 +112,102 @@ const unescape = (s: string) => s.replace(/&quot;/g, '"').replace(/&lt;/g, "<").
 const short = (s: string) => (s.length > 140 ? `${s.slice(0, 139).replace(/\s+\S*$/, "")}…` : s);
 const pesos = (v: number) => (v >= 1e9 ? `$ ${nf1.format(v / 1e9)} mil millones` : `$ ${nf1.format(v / 1e6)} millones`);
 
+/** "I F E L S R L" → "IFELSRL": some supplier names come letter by letter from the source. */
+const tidyName = (n: string) => n.replace(/\b(?:\p{L} ){2,}\p{L}\b/gu, (m) => m.replace(/ /g, "")).replace(/\s+/g, " ").trim();
+const amount = (v: number) => (v >= 1e9 ? `$ ${nf1.format(v / 1e9)} mil M` : v >= 1e6 ? `$ ${nf1.format(v / 1e6)} M` : `$ ${nf.format(Math.round(v))}`);
+const plural = (n: number, one: string, many: string) => `${nf.format(n)} ${n === 1 ? one : many}`;
+
+/** Where an official sits, without the gendered "Senador/a": the chamber or the office. */
+function officialPlace(o: FuncionariosTema["personas"][number]): string {
+  switch (o.grupo) {
+    case "intendentes":
+      return `Intendente de ${o.organismo}`;
+    case "diputados_provincial":
+      return "Diputados de Mendoza";
+    case "senado_provincial":
+      return "Senado de Mendoza";
+    case "diputados_nacional":
+      return "Diputados de la Nación";
+    case "senado_nacional":
+      return "Senado de la Nación";
+    default:
+      return o.cargo.replace(/\s*\(.*\)$/, "");
+  }
+}
+
 /**
- * Search index: every page (with its full heading, not the 60-character SEO title) plus the suppliers that
- * have no page of their own (the app still shows them at /proveedores/<slug>).
+ * Search index: a short name and one line with what matters for each kind (no repeated text), plus hidden
+ * text to match against (party, CUIT, description). Covers every page and the suppliers without a page of
+ * their own (the app still shows them at /proveedores/<slug>).
  */
 export function writeSearchIndex(paginas: Pagina[], outDir: string) {
-  const entries: SearchEntry[] = paginas.map((p) => ({
-    p: p.path,
-    t: unescape(/<h1>(.*?)<\/h1>/.exec(p.html)?.[1] ?? p.title.replace(/ · Mendoza Transparente$/, "")),
-    k: KIND_BY_PREFIX.find(([re]) => re.test(p.path))?.[1] ?? "Sección",
-    d: short(p.description),
-  }));
-  // People carry their photo, so results can show their face.
-  const officials = (JSON.parse(readFileSync(join(outDir, "temas", "funcionarios.json"), "utf8")) as FuncionariosTema).personas;
-  const photoByPath = new Map(officials.filter((o) => o.foto).map((o) => [`/funcionarios/${o.role}/${o.slug}`, o.foto!]));
-  for (const e of entries) if (photoByPath.has(e.p)) e.i = photoByPath.get(e.p);
-  const paths = new Set(entries.map((e) => e.p));
-  const suppliers = JSON.parse(readFileSync(join(outDir, "temas", "proveedores.json"), "utf8")) as ProveedorResumen[];
-  for (const s of suppliers) {
-    const path = `/proveedores/${s.slug}`;
-    if (paths.has(path)) continue;
-    entries.push({
-      p: path,
-      t: s.nombre,
-      k: "Proveedor",
-      d: short(`Proveedor del Estado de Mendoza: ${pesos(s.total)} adjudicados en ${s.procesos} ${s.procesos === 1 ? "proceso" : "procesos"}. CUIT ${s.cuit}.`),
+  const read = <T>(file: string, fallback: T): T => {
+    try {
+      return JSON.parse(readFileSync(join(outDir, file), "utf8")) as T;
+    } catch {
+      return fallback;
+    }
+  };
+  const officials = read<FuncionariosTema>("temas/funcionarios.json", { personas: [] }).personas;
+  const municipalities = read<MunicipioPagina[]>("temas/municipios.json", []);
+  const laws = read<LeyResumen[]>("temas/leyes.json", []);
+  const suppliers = read<ProveedorResumen[]>("temas/proveedores.json", []);
+  const buyers = read<OrganismoResumen[]>("temas/organismos.json", []);
+  const agencies = read<AgencySummary[]>("temas/gobierno.json", []);
+  const index = read<DataIndex>("index.json", { generatedAt: "", sources: [], datasets: [] });
+
+  const byPath = new Map<string, Omit<SearchEntry, "p" | "k">>();
+  for (const o of officials) {
+    const party = o.partido ?? o.bloque;
+    byPath.set(`/funcionarios/${o.role}/${o.slug}`, {
+      t: o.nombre,
+      s: [officialPlace(o), party, o.mandatoHasta && `hasta ${o.mandatoHasta}`].filter(Boolean).join(" · "),
+      i: o.foto ?? undefined,
+      q: [o.cargo, o.organismo, o.seccion, ...o.municipalities.map((m) => m.name)].filter(Boolean).join(" "),
     });
   }
+  for (const m of municipalities)
+    byPath.set(`/municipios/${m.slug}`, {
+      t: m.nombre,
+      s: [m.intendente && `Intendente: ${m.intendente.nombre}`, `${nf.format(m.poblacion.actual)} habitantes`].filter(Boolean).join(" · "),
+      i: m.intendente?.foto ?? undefined,
+      q: `departamento municipio ${m.seccion ?? ""} seccion`,
+    });
+  for (const l of laws)
+    byPath.set(`/leyes/${l.numero}`, { t: `Ley ${nf.format(Number(l.numero))}`, s: l.titulo, q: `${l.numero} ${l.tema ?? ""}` });
+  for (const p of suppliers)
+    byPath.set(`/proveedores/${p.slug}`, {
+      t: tidyName(p.nombre),
+      s: `${amount(p.total)} en ${plural(p.procesos, "proceso", "procesos")} con el Estado`,
+      q: `${p.cuit} ${p.localidad ?? ""} ${p.actividad ?? ""}`,
+    });
+  for (const b of buyers)
+    byPath.set(`/organismos/${b.slug}`, { t: b.nombre, s: `Compró ${amount(b.total)} en ${plural(b.procesos, "proceso", "procesos")}`, q: "compras" });
+  for (const a of agencies)
+    byPath.set(`/gobierno/${a.slug}`, {
+      t: a.name,
+      s: [a.head && `${a.head.name}, ${a.head.role.toLowerCase()}`, a.staff && `${nf.format(a.staff)} cargos`].filter(Boolean).join(" · "),
+      i: a.head?.photo ?? undefined,
+      q: "organismo ministerio gobierno personal",
+    });
+  for (const src of index.sources)
+    byPath.set(`/datos/${src.id}`, { t: src.nombre, s: `Datos abiertos de ${src.organismo}`, q: src.descripcion });
+
+  const entries: SearchEntry[] = paginas.map((p) => {
+    const known = byPath.get(p.path);
+    const k = KIND_BY_PREFIX.find(([re]) => re.test(p.path))?.[1] ?? "Sección";
+    if (known) return { p: p.path, k, ...known, q: `${known.q ?? ""} ${p.description}`.trim() };
+    // Sections and role pages: their heading and the first sentence of their description.
+    return {
+      p: p.path,
+      k,
+      t: unescape(/<h1>(.*?)<\/h1>/.exec(p.html)?.[1] ?? p.title.replace(/ · Mendoza Transparente$/, "")),
+      s: short(p.description.split(/(?<=\.)\s/)[0]!),
+      q: p.description,
+    };
+  });
+  const paths = new Set(entries.map((e) => e.p));
+  for (const [path, e] of byPath) if (path.startsWith("/proveedores/") && !paths.has(path)) entries.push({ p: path, k: "Proveedor", ...e });
   writeFileSync(join(outDir, "search.json"), JSON.stringify(entries));
   return entries.length;
 }

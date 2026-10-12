@@ -167,13 +167,13 @@ const INSIGHTS: { name: string; description: string; query: unknown }[] = [
   },
   {
     name: "Búsquedas sin resultados",
-    description: "Lo que la gente buscó en la portada y no encontró: la lista de contenido que falta.",
-    query: ranking("home.search.no_results", "query"),
+    description: "Lo que la gente buscó y no encontró: la lista de contenido que falta.",
+    query: ranking("search.no_results", "query"),
   },
   {
-    name: "Portada: qué abre la gente desde el buscador",
-    description: "Tipo de página que la gente elige en el buscador de la portada (ley, funcionario, municipio, proveedor…).",
-    query: ranking("home.search.select", "kind"),
+    name: "Qué abre la gente desde el buscador",
+    description: "Tipo de página que la gente elige en el buscador (ley, funcionario, municipio, proveedor…).",
+    query: ranking("search.select", "kind"),
   },
   {
     name: "Hojas de detalle más abiertas",
