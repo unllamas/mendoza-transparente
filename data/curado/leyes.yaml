@@ -2,366 +2,2445 @@
 # Se pueden corregir a mano: al revisar uno, agregar "revisado: AAAA-MM-DD". Criterios en docs/procesos/metodologia.md.
 
 - numero: "9735"
-  titulo: "Régimen penal juvenil y su organización administrativa"
-  tema: "Seguridad y justicia"
-  resumen: "Establece el régimen especial penal juvenil para adolescentes en conflicto con la ley penal, de acuerdo con la Ley Nacional 27.801. Aprueba el Código Procesal Penal Juvenil, que está en el anexo, y organiza la Dirección de Responsabilidad Penal Juvenil."
+  titulo: Régimen penal juvenil y su organización administrativa
+  tema: Seguridad y justicia
+  resumen: Establece el régimen especial penal juvenil para adolescentes en conflicto con la ley penal, de acuerdo con la Ley Nacional 27.801. Aprueba el Código Procesal Penal Juvenil, que está en el anexo, y organiza la Dirección de Responsabilidad Penal Juvenil.
   puntos:
-    - "Aprueba el Código Procesal Penal Juvenil (el texto está en el anexo)."
-    - "La Dirección de Responsabilidad Penal Juvenil aplica las medidas y programas que ordene la Justicia."
-    - "La Dirección tiene una unidad de privación de libertad y una de medidas alternativas."
-    - "Crea la función de Supervisor Especializado y un registro de supervisores y facilitadores."
-    - "Modifica los artículos 47 y 103 del Código Procesal Penal y deroga la Ley 6354."
+    - Aprueba el Código Procesal Penal Juvenil (el texto está en el anexo).
+    - La Dirección de Responsabilidad Penal Juvenil aplica las medidas y programas que ordene la Justicia.
+    - La Dirección tiene una unidad de privación de libertad y una de medidas alternativas.
+    - Crea la función de Supervisor Especializado y un registro de supervisores y facilitadores.
+    - Modifica los artículos 47 y 103 del Código Procesal Penal y deroga la Ley 6354.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9733"
-  titulo: "Expropiación en Junín del solar histórico Molino Orfila"
-  tema: "Tierras y expropiaciones"
-  resumen: "Declara de utilidad pública y sujetos a expropiación unos inmuebles de unos 3.782 m2 en Orfila y Chileno Herrera, Junín. El fin es mantener, conservar y poner en valor el Solar Histórico Molino Orfila. La Municipalidad de Junín expropia y paga los gastos."
+  titulo: Expropiación en Junín del solar histórico Molino Orfila
+  tema: Tierras y expropiaciones
+  resumen: Declara de utilidad pública y sujetos a expropiación unos inmuebles de unos 3.782 m2 en Orfila y Chileno Herrera, Junín. El fin es mantener, conservar y poner en valor el Solar Histórico Molino Orfila. La Municipalidad de Junín expropia y paga los gastos.
   puntos:
-    - "Terreno de aproximadamente 3.782 m2, formado por la Fracción A y una parte de la Fracción B."
+    - Terreno de aproximadamente 3.782 m2, formado por la Fracción A y una parte de la Fracción B.
     - "Destino: mantenimiento, conservación y puesta en valor del Solar Histórico Molino Orfila."
-    - "La Municipalidad de Junín es quien expropia, según el Decreto-Ley 1.447/75."
-    - "Los gastos, incluido el plano de mensura, los paga la Municipalidad."
+    - La Municipalidad de Junín es quien expropia, según el Decreto-Ley 1.447/75.
+    - Los gastos, incluido el plano de mensura, los paga la Municipalidad.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9730"
   titulo: "Alivio financiero: beneficios impositivos por refinanciar deudas"
-  tema: "Impuestos"
-  resumen: "Promueve la refinanciación de deudas de personas y empresas en Mendoza. Las operaciones de refinanciación quedan exentas de Sellos y pagan Ingresos Brutos con alícuota reducida del 5% si cumplen ciertas condiciones. Rige hasta el 31 de diciembre de 2026."
+  tema: Impuestos
+  resumen: Promueve la refinanciación de deudas de personas y empresas en Mendoza. Las operaciones de refinanciación quedan exentas de Sellos y pagan Ingresos Brutos con alícuota reducida del 5% si cumplen ciertas condiciones. Rige hasta el 31 de diciembre de 2026.
   puntos:
-    - "Refinanciar es cambiar las condiciones de una deuda (plazos, cuotas, tasas o garantías). Ceder o vender la cartera no cuenta."
-    - "Exención del Impuesto de Sellos para esas operaciones."
-    - "Ingresos Brutos del 5% si la tasa nominal anual no pasa el 40% y el plazo es de al menos 24 meses."
-    - "Las entidades presentan cada mes una declaración jurada ante Administración Tributaria Mendoza."
-    - "Vigencia hasta el 31/12/2026, con posible prórroga de hasta 6 meses por el Poder Ejecutivo."
+    - Refinanciar es cambiar las condiciones de una deuda (plazos, cuotas, tasas o garantías). Ceder o vender la cartera no cuenta.
+    - Exención del Impuesto de Sellos para esas operaciones.
+    - Ingresos Brutos del 5% si la tasa nominal anual no pasa el 40% y el plazo es de al menos 24 meses.
+    - Las entidades presentan cada mes una declaración jurada ante Administración Tributaria Mendoza.
+    - Vigencia hasta el 31/12/2026, con posible prórroga de hasta 6 meses por el Poder Ejecutivo.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9728"
-  titulo: "Aprueba un convenio entre Mendoza y la Nación"
-  tema: "Convenios y ratificaciones"
+  titulo: Aprueba un convenio entre Mendoza y la Nación
+  tema: Convenios y ratificaciones
   resumen: "Aprueba el Decreto 1691 del 18 de agosto de 2026, que aprueba un convenio firmado el 27 de julio de 2026 entre la Provincia y el Estado Nacional, representado por el Ministerio de Economía. El texto de la ley no dice de qué trata el convenio: el detalle está en el anexo."
   puntos:
-    - "Aprueba el Decreto 1691 de fecha 18 de agosto de 2026."
-    - "El convenio es entre la Provincia de Mendoza y el Estado Nacional, y se firmó el 27 de julio de 2026."
-    - "El contenido del convenio está en el anexo de la ley."
+    - Aprueba el Decreto 1691 de fecha 18 de agosto de 2026.
+    - El convenio es entre la Provincia de Mendoza y el Estado Nacional, y se firmó el 27 de julio de 2026.
+    - El contenido del convenio está en el anexo de la ley.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9727"
-  titulo: "Intervención preventiva de inmuebles por seguridad pública"
-  tema: "Seguridad y justicia"
-  resumen: "Crea un régimen para que el Ministerio de Seguridad y Justicia tome medidas preventivas y temporales sobre inmuebles que, por su uso o estado, representen un riesgo para la seguridad. Las medidas pueden ser sellar, cerrar o demoler en forma controlada. No se aplica a inmuebles ocupados de forma permanente."
+  titulo: Intervención preventiva de inmuebles por seguridad pública
+  tema: Seguridad y justicia
+  resumen: Crea un régimen para que el Ministerio de Seguridad y Justicia tome medidas preventivas y temporales sobre inmuebles que, por su uso o estado, representen un riesgo para la seguridad. Las medidas pueden ser sellar, cerrar o demoler en forma controlada. No se aplica a inmuebles ocupados de forma permanente.
   puntos:
-    - "Alcanza a inmuebles usados para delitos o venta de estupefacientes, o en ruina o abandono con riesgo."
-    - "Se puede pedir de oficio, por vecinos, municipios, organismos o la Justicia."
-    - "El propietario es citado por 5 días y puede oponerse en 5 días hábiles a la medida concreta."
-    - "En riesgo grave o inminente se puede actuar de urgencia. Las medidas se revisan una vez por año."
-    - "Crea el Registro Provincial de Inmuebles Intervenidos. Los municipios pueden reclamar los gastos al titular."
+    - Alcanza a inmuebles usados para delitos o venta de estupefacientes, o en ruina o abandono con riesgo.
+    - Se puede pedir de oficio, por vecinos, municipios, organismos o la Justicia.
+    - El propietario es citado por 5 días y puede oponerse en 5 días hábiles a la medida concreta.
+    - En riesgo grave o inminente se puede actuar de urgencia. Las medidas se revisan una vez por año.
+    - Crea el Registro Provincial de Inmuebles Intervenidos. Los municipios pueden reclamar los gastos al titular.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9726"
-  titulo: "Marco provincial de ciberseguridad"
-  tema: "Seguridad y justicia"
-  resumen: "Establece cómo se organiza y controla la ciberseguridad del Estado provincial. Crea el Comité de Conducción Estratégica de Ciberseguridad, que elabora un plan provincial con reglas obligatorias, y una Autoridad de Ejecución Operativa que lo aplica. Prevé sanciones por incumplimiento."
+  titulo: Marco provincial de ciberseguridad
+  tema: Seguridad y justicia
+  resumen: Establece cómo se organiza y controla la ciberseguridad del Estado provincial. Crea el Comité de Conducción Estratégica de Ciberseguridad, que elabora un plan provincial con reglas obligatorias, y una Autoridad de Ejecución Operativa que lo aplica. Prevé sanciones por incumplimiento.
   puntos:
-    - "El Comité de Conducción Estratégica de Ciberseguridad es la autoridad de aplicación y elabora el Plan Provincial."
-    - "El Poder Ejecutivo designa una Autoridad de Ejecución Operativa; la fiscalización queda separada de la ejecución."
-    - "Alcanza al Poder Ejecutivo y a terceros que presten servicios digitales o tecnológicos."
-    - "Crea un Registro Provincial de Incidentes de Ciberseguridad y un esquema de reporte de incidentes."
-    - "Invita a los municipios a adherir y convoca al Poder Judicial y al Legislativo a sumar representantes. Reglamentación en 90 días."
+    - El Comité de Conducción Estratégica de Ciberseguridad es la autoridad de aplicación y elabora el Plan Provincial.
+    - El Poder Ejecutivo designa una Autoridad de Ejecución Operativa; la fiscalización queda separada de la ejecución.
+    - Alcanza al Poder Ejecutivo y a terceros que presten servicios digitales o tecnológicos.
+    - Crea un Registro Provincial de Incidentes de Ciberseguridad y un esquema de reporte de incidentes.
+    - Invita a los municipios a adherir y convoca al Poder Judicial y al Legislativo a sumar representantes. Reglamentación en 90 días.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9725"
-  titulo: "Cambios al Fondo Escolar Permanente"
-  tema: "Educación"
-  resumen: "Modifica la Ley 9545 del Fondo Escolar Permanente. Suma al fondo lo que se obtenga de la venta o alquiler de bienes de la DGE y del Ministerio de Educación. Autoriza a usar recursos del fondo como garantía de operaciones financieras, y evita que sus saldos pasen a rentas generales."
+  titulo: Cambios al Fondo Escolar Permanente
+  tema: Educación
+  resumen: Modifica la Ley 9545 del Fondo Escolar Permanente. Suma al fondo lo que se obtenga de la venta o alquiler de bienes de la DGE y del Ministerio de Educación. Autoriza a usar recursos del fondo como garantía de operaciones financieras, y evita que sus saldos pasen a rentas generales.
   puntos:
-    - "Se suman al fondo los ingresos por venta, subasta o alquiler de bienes de la DGE y del Ministerio de Educación."
-    - "Las rentas se usan para comprar terrenos y construir, reparar y equipar edificios escolares."
-    - "La DGE puede usar recursos del fondo como garantía de operaciones de crédito, incluidas las de vivienda para docentes."
+    - Se suman al fondo los ingresos por venta, subasta o alquiler de bienes de la DGE y del Ministerio de Educación.
+    - Las rentas se usan para comprar terrenos y construir, reparar y equipar edificios escolares.
+    - La DGE puede usar recursos del fondo como garantía de operaciones de crédito, incluidas las de vivienda para docentes.
     - "No se pueden dar en garantía inmuebles ni la totalidad de los recursos líquidos: debe quedar un saldo mínimo."
-    - "Los saldos del fondo no se transforman en rentas generales al cierre del ejercicio."
+    - Los saldos del fondo no se transforman en rentas generales al cierre del ejercicio.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9724"
-  titulo: "Venta en subasta de un departamento provincial en Capital"
-  tema: "Economía y finanzas"
-  resumen: "Autoriza al Poder Ejecutivo a vender en subasta un departamento de la Provincia en calle Coronel Plaza 572, piso 1, depto. E, Ciudad de Mendoza. Lo recaudado va al destino que fija el artículo 69 de la Ley de Presupuesto 9681 (Fondo Di.Ge.Bi.R.E.)."
+  titulo: Venta en subasta de un departamento provincial en Capital
+  tema: Economía y finanzas
+  resumen: Autoriza al Poder Ejecutivo a vender en subasta un departamento de la Provincia en calle Coronel Plaza 572, piso 1, depto. E, Ciudad de Mendoza. Lo recaudado va al destino que fija el artículo 69 de la Ley de Presupuesto 9681 (Fondo Di.Ge.Bi.R.E.).
   puntos:
-    - "Inmueble en Coronel Plaza 572, piso 1, depto. E, Capital, a nombre de la Provincia."
-    - "Superficie cubierta total de 66,99 m2 y patio de uso exclusivo de 10,20 m2."
-    - "Los fondos se destinan según el artículo 69 de la Ley 9681 (Fondo Di.Ge.Bi.R.E.)."
+    - Inmueble en Coronel Plaza 572, piso 1, depto. E, Capital, a nombre de la Provincia.
+    - Superficie cubierta total de 66,99 m2 y patio de uso exclusivo de 10,20 m2.
+    - Los fondos se destinan según el artículo 69 de la Ley 9681 (Fondo Di.Ge.Bi.R.E.).
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
+- numero: "9723"
+  titulo: Aprobación de los decretos 1471/25 y 1250/26
+  tema: Convenios y ratificaciones
+  resumen: Aprueba los Decretos 1471/25 y 1250/26. El texto de la ley no dice de qué tratan; los decretos forman parte de la ley como anexos.
+  puntos:
+    - Decretos 1471/25 y 1250/26.
+    - El contenido está en los anexos de la ley.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9722"
+  titulo: Derogación de leyes y restablecimiento de la Ley 1118
+  tema: Otros
+  resumen: Deroga las leyes del Anexo I, con sus modificatorias y las leyes que ellas derogaban. Deja sin efecto la inclusión de la Ley 1118 en el Anexo I de la Ley 9653 y restablece la vigencia de la Ley 1118.
+  puntos:
+    - La lista de leyes derogadas está en el anexo.
+    - La Ley 1118 vuelve a regir con el texto que tenía antes de ser derogada por la Ley 9653.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9721"
+  titulo: Expropiación de 38 inmuebles para abrir el Callejón Martínez
+  tema: Tierras y expropiaciones
+  resumen: Declara de utilidad pública y sujetos a expropiación 38 inmuebles para abrir el Callejón Martínez, en Rodeo de la Cruz, Guaymallén. La Municipalidad de Guaymallén expropia y paga los gastos.
+  puntos:
+    - Son 38 inmuebles detallados en la ley.
+    - La Municipalidad de Guaymallén expropia según el Decreto-Ley 1447/75.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9720"
+  titulo: La Ruta del Vitimigrante es Patrimonio Cultural Inmaterial
+  tema: Derechos y sociedad
+  resumen: Declara Patrimonio Cultural Inmaterial de Mendoza a la Ruta del Vitimigrante, un itinerario histórico, simbólico y cultural por Rivadavia, San Martín, Junín, Santa Rosa y La Paz. Allí se asentaron inmigrantes entre 1870 y 1960.
+  puntos:
+    - Recorre cinco departamentos del Este mendocino.
+    - La declaración se hace en el marco de la Convención de la UNESCO sobre patrimonio cultural inmaterial y la Ley provincial 6.034.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9719"
+  titulo: Expropiación para ensanchar calle Urquiza en Guaymallén
+  tema: Tierras y expropiaciones
+  resumen: Declara de utilidad pública y sujetas a expropiación parcelas afectadas por el ensanche de calle General Justo José de Urquiza, en el tramo Pedro del Castillo - Bandera de los Andes, Guaymallén. La Municipalidad de Guaymallén expropia y paga los gastos.
+  puntos:
+    - La ley detalla cada parcela con su nomenclatura catastral, padrones y superficie afectada.
+    - La Municipalidad de Guaymallén expropia según el Decreto-Ley 1447/75.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9718"
+  titulo: Adhesión al RIMI, cierre de la Administradora del Fondo y reformas
+  tema: Economía y finanzas
+  resumen: Adhiere Mendoza al Régimen de Incentivo para Medianas Inversiones (RIMI) y suma beneficios provinciales por diez años. Disuelve la Administradora Provincial del Fondo para la Transformación y el Crecimiento, reorganiza el Instituto de Juegos y Casinos y da de baja deudas incobrables de ex bancos oficiales.
+  puntos:
+    - Las empresas del RIMI con inversiones en Mendoza tienen estabilidad impositiva por diez años y necesitan certificado de cumplimiento fiscal de ATM.
+    - La Administradora del Fondo se liquida; sus acciones en Mendoza Fiduciaria S.A. pasan al Gobierno, que la reemplaza como fiduciaria.
+    - El Instituto de Juegos y Casinos puede por un año suprimir o modificar estructuras y puestos para equilibrar sus cuentas.
+    - Retiro voluntario con 120% de la indemnización del artículo 17 del Decreto-Ley 560/73, y continuidad en OSEP.
+    - Exime de Sellos las refinanciaciones de deudas contraídas entre el 30/6/2025 y el 31/3/2026, firmadas antes del 31/12/2026.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9717"
+  titulo: Aprobación del impacto ambiental del proyecto Don Luis y otro
+  tema: Energía y minería
+  resumen: Aprueba la Declaración de Impacto Ambiental del proyecto Don Luis y otro, en San Rafael y Malargüe. La declaración fue emitida por la Resolución Conjunta 194/26 de la Dirección de Minería y 32/26 de Gestión y Fiscalización Ambiental. Rige desde el día siguiente a su publicación.
+  puntos:
+    - Lo dispuesto por la Declaración de Impacto Ambiental es de cumplimiento obligatorio.
+    - El proyecto se desarrolla en los departamentos de San Rafael y Malargüe.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9716"
+  titulo: Comisión Bicameral de Futuro en la Legislatura
+  tema: Otros
+  resumen: Crea la Comisión Bicameral de Futuro, permanente y consultiva, en la Legislatura. Explora escenarios futuros, identifica riesgos y oportunidades y propone políticas públicas. La integran 16 legisladores.
+  puntos:
+    - Se compone de 8 senadores y 8 diputados, procurando representar a las minorías.
+    - Elabora Informes Provinciales de Futuro con un horizonte mínimo de 15 años.
+    - Crea un Consejo Consultivo Académico Permanente con universidades y el sector científico.
+    - Sus informes y documentos son públicos y se publican en el sitio de la Legislatura.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9715"
+  titulo: Desadjudicación de viviendas del IPV y desalojo más ágil
+  tema: Derechos y sociedad
+  resumen: Modifica el artículo 14 de la Ley 4203 y el Código Procesal Civil, Comercial y Tributario. Prevé el trámite para recuperar inmuebles cuando el Instituto Provincial de la Vivienda desadjudica una vivienda mediante acto administrativo. Rige a los 30 días de su publicación.
+  puntos:
+    - El Directorio del IPV dicta, con aprobación del Poder Ejecutivo, un reglamento sobre precio, reajustes, pago, adjudicaciones y desadjudicaciones.
+    - Agrega al artículo 232 del Código Procesal la restitución de inmuebles por desadjudicaciones del IPV.
+    - Modifica los artículos 5 y 237 del Código Procesal sobre el proceso de desalojo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9714"
+  titulo: "Polo Logístico del Este en San Martín: expropiación de 90 ha"
+  tema: Tierras y expropiaciones
+  resumen: Declara de interés público el desarrollo del Polo Logístico del Este, en San Martín. Declara de utilidad pública y sujetas a expropiación de urgencia 90 hectáreas al norte de la Ruta 7, en el PASIP. El Poder Ejecutivo expropia y paga los gastos.
+  puntos:
+    - Aprueba el Plan de Directrices para el Polo Logístico del Este, que está en el anexo.
+    - Autoriza a transferir el dominio fiduciario de los bienes, una vez expropiados, para ejecutar el desarrollo.
+    - Los inmuebles dejan el destino fijado por la Ley 6658.
+    - El Poder Ejecutivo expropia según el Decreto-Ley 1447/75.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9713"
+  titulo: Donación al IPV de 11 hectáreas en Capital para viviendas
+  tema: Obras e infraestructura
+  resumen: Autoriza al Poder Ejecutivo a donar con cargo al Instituto Provincial de la Vivienda una fracción de 11 ha 7.077,54 m2 en Ciudad, Capital. El IPV debe destinarla a construir viviendas, y se deja sin efecto cualquier destino anterior.
+  puntos:
+    - "La fracción tiene dos títulos: uno de 5 ha 9.354,16 m2 y otro de 5 ha 7.723,38 m2."
+    - El cargo es construir viviendas, desafectando el predio de cualquier otro destino previo.
+    - Escribanía General de Gobierno hace la inscripción registral a nombre del IPV.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9712"
+  titulo: Aprobación de dos decretos del Poder Ejecutivo
+  tema: Convenios y ratificaciones
+  resumen: Aprueba los Decretos 2728, del 17 de diciembre de 2024, y 2615, del 27 de noviembre de 2025. El texto de la ley no dice de qué tratan; los decretos están en el anexo.
+  puntos:
+    - Decreto 2728, del 17 de diciembre de 2024.
+    - Decreto 2615, del 27 de noviembre de 2025.
+    - El contenido está en el anexo de la ley.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9711"
+  titulo: Terreno de 117 hectáreas en Capital para actividades deportivas
+  tema: Tierras y expropiaciones
+  resumen: Destina una fracción de 117 ha 9.857 m2 a proyectos deportivos, recreativos y afines. El Poder Ejecutivo, mediante Di.Ge.Bi.R.E., puede dar parcelas en concesión por 10 a 30 años a instituciones deportivas inscriptas. Deroga la Ley 2536 y artículos de la Ley 3608.
+  puntos:
+    - La concesión es por un mínimo de 10 años y un máximo de 30, con posible prórroga de hasta 10 años.
+    - Se otorga a instituciones deportivas inscriptas según la Ley 6457.
+    - Las concesionarias proveen a su costa las instalaciones; al terminar dejan las obras y mejoras al Estado provincial.
+    - Si incumplen el plan de inversión o el plan de trabajo, caduca la concesión y el terreno vuelve al Estado.
+    - El Ministerio de Gobierno, Infraestructura y Desarrollo Territorial hace la mensura, el deslinde y la planificación de la zona.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9710"
+  titulo: Aprobación de decretos de aumentos salariales a estatales
+  tema: Trabajo y empleo público
+  resumen: Aprueba cuatro decretos, fechados entre diciembre de 2025 y marzo de 2026. Esos decretos homologan actas acuerdo firmadas en la Subsecretaría de Trabajo y Empleo entre el Poder Ejecutivo y gremios de distintos sectores de la Administración Pública, y otorgan aumentos.
+  puntos:
+    - Los decretos son los números 2730, 08, 628 y 636.
+    - Homologan actas acuerdo con entidades sindicales de distintos sectores de la Administración Pública.
+    - El detalle de los aumentos está en el anexo de la ley.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9709"
+  titulo: Reforma constitucional sobre autonomía municipal
+  tema: Municipios
+  resumen: Declara la necesidad de reformar el artículo 197 de la Constitución provincial para dar autonomía institucional, política, administrativa y económica financiera a los municipios. La reforma se vota en la próxima elección de diputados.
+  puntos:
+    - Los municipios podrán dictar sus Cartas Orgánicas; donde no lo hagan, sigue rigiendo la Ley Orgánica de Municipalidades.
+    - Los miembros de los Departamentos Ejecutivo y Deliberativo duran cuatro años.
+    - El pueblo vota a favor o en contra en la próxima elección de diputados.
+    - Si se ratifica, el Poder Ejecutivo promulga la reforma y la incorpora al texto constitucional.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9708"
+  titulo: Cambios en la ley apícola y creación del Mapa Apícola Provincial
+  tema: Producción
+  resumen: Modifica los artículos 2, 3, 4 y 9 de la Ley apícola 6.817 y crea el Mapa Apícola Provincial. El mapa identifica la ubicación de los apiarios con un sistema informático. La autoridad tiene 180 días desde la reglamentación para crear ese sistema.
+  puntos:
+    - "Objetivos: fomentar la actividad apícola, ordenar el territorio con criterios técnicos y sanitarios, y proteger la sanidad de las abejas."
+    - El sistema registra y renueva apiarios con georreferenciación.
+    - Plazo de 180 días desde la reglamentación para crear y adecuar el sistema informático.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9707"
+  titulo: Registro Provincial obligatorio de Guardavidas
+  tema: Salud
+  resumen: Crea el Registro Obligatorio de Guardavidas de la provincia. Los titulares de instalaciones acuáticas y los organismos públicos que necesiten guardavidas deben contratar a personas inscriptas. La autoridad de aplicación es el Ministerio de Salud y Deportes.
+  puntos:
+    - "Requisitos: ser mayor de edad, tener título de guardavidas reconocido, no tener sanciones inhabilitantes y presentar certificado de antecedentes penales."
+    - El Ministerio puede firmar convenios con los municipios para cumplir la ley.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9706"
+  titulo: Control del transporte de efluentes cloacales e industriales
+  tema: Ambiente y agua
+  resumen: Regula la recolección, el transporte, la descarga y la disposición final de efluentes cloacales e industriales. El Departamento General de Irrigación es la autoridad de aplicación y crea un registro de transportistas.
+  puntos:
+    - Los transportistas con camiones atmosféricos se inscriben en un registro público y pagan un canon para el control del recurso hídrico.
+    - Antes de cada vuelco se presenta un Manifiesto de Carga electrónico con carácter de declaración jurada.
+    - Está prohibido mezclar efluentes, almacenar la carga más de 48 horas y descargar fuera de los lugares autorizados.
+    - Los operadores en actividad tienen 180 días desde la reglamentación para declarar sus puntos de descarga.
+    - La autoridad reglamenta la ley en 90 días desde la promulgación.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9705"
+  titulo: Cambios en el régimen de jardines maternales de gestión privada
+  tema: Educación
+  resumen: Modifica varios artículos de la Ley 9201 sobre jardines maternales de gestión privada, que atienden a niños y niñas desde 45 días hasta 3 años. La Dirección General de Escuelas los inspecciona y supervisa, y se crea un registro único.
+  puntos:
+    - Alcanza a instituciones privadas, cooperativas y sociales no incorporadas a la enseñanza oficial de la DGE.
+    - La DGE tiene la inspección y supervisión pedagógica y técnica; el control administrativo y comercial lo ejerce la autoridad municipal o provincial.
+    - Crea en la DGE el Registro Único de Jardines Maternales de Gestión Privada, de inscripción obligatoria.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9704"
+  titulo: Lista de animales silvestres declarados Monumento Natural Provincial
+  tema: Ambiente y agua
+  resumen: Modifica el artículo 1 de la Ley 6599 y declara Monumento Natural Provincial a 14 especies de animales silvestres y sus hábitats naturales.
+  puntos:
+    - Incluye al cóndor, el guanaco, el choique o suri, la liebre mara y el gato andino.
+    - También al pichiciego, el piche, el cardenal amarillo, el águila coronada y la lagartija del Nihuil.
+    - Suma la tortuga del macizo extracordillerano del Nevado, el siete cuchillos, la ranita del Pehuenche y el bagre otuno.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9703"
+  titulo: Nuevo procedimiento de flagrancia en el Código Procesal Penal
+  tema: Seguridad y justicia
+  resumen: Cambia los artículos 348 y 439 bis a quáter del Código Procesal Penal, sobre prisión preventiva y el procedimiento de flagrancia, e incorpora el 439 quinquies. Rige a los 30 días hábiles de su publicación.
+  puntos:
+    - El fiscal debe pedir la prisión preventiva en 10 días desde la imputación formal; en flagrancia con procedimiento directísimo, en la audiencia inicial.
+    - El vencimiento de un plazo en flagrancia no anula ni retrotrae el trámite por sí mismo.
+    - La Suprema Corte y las OGAP adecuan protocolos y turnos en 30 días hábiles.
+    - La Procuración General organiza la especialización funcional para los casos de flagrancia.
+    - Deroga el inciso 5 del artículo 295.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9702"
+  titulo: Cambios en la Ley de Arbolado Público
+  tema: Ambiente y agua
+  resumen: Modifica seis artículos de la Ley de Arbolado Público 7874 y el artículo 78 de la Ley Orgánica de Municipalidades 1079. Aclara qué arbolado está bajo jurisdicción provincial y cuál bajo jurisdicción municipal exclusiva.
+  puntos:
+    - La Provincia tiene jurisdicción sobre el arbolado de Vialidad, Irrigación, Inspecciones de Cauce y Nación; los municipios, sobre el municipal.
+    - Los municipios presentan a la autoridad provincial un Plan de Manejo Integral del Arbolado cada cuatro años.
+    - Las municipalidades pueden disponer por ordenanza monumentos conmemorativos y nombres de calles y paseos.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9701"
+  titulo: Videos ciudadanos de infracciones viales por canales digitales
+  tema: Transporte
+  resumen: Incorpora el artículo 120 bis a la Ley de Tránsito 9024. Cualquier persona puede enviar a los municipios o al Ministerio de Seguridad y Justicia material audiovisual de posibles infracciones viales, por canales digitales oficiales como WhatsApp. No es una denuncia formal.
+  puntos:
+    - El material recibido es una comunicación ciudadana y no da fe pública de su autenticidad.
+    - La autoridad puede eximir de publicar lo que no parezca de su jurisdicción o tenga indicios vehementes de falsedad.
+    - Si hay datos suficientes, lo remite al Juzgado Vial con un informe preliminar.
+    - Los Juzgados Viales analizan la información y deciden cómo validarla.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9700"
+  titulo: Nuevas funciones y reglas de uso de armas en la Ley 6722
+  tema: Seguridad y justicia
+  resumen: Agrega funciones al artículo 2 de la Ley 6722 y cambia el artículo 9 sobre el uso de armas de fuego. También agrega el artículo 322 bis, sobre un pago para personal convocado con tareas directivas.
+  puntos:
+    - "Nuevas funciones: asegurar personas y bienes ante peligro inminente, defender bienes del Estado y mantener el orden en espacios públicos."
+    - Permite usar armas de fuego en estado de necesidad, defensa propia o de terceros, o ante peligro inminente de muerte o lesiones graves.
+    - El personal convocado con tareas directivas y disponibilidad horaria permanente cobra hasta el 100% de la asignación de clase del grado.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9699"
+  titulo: Semana de concientización del cáncer de colon y recto
+  tema: Salud
+  resumen: Instituye la última semana de marzo de cada año como semana de concientización, difusión y detección del cáncer de colon y recto. Se hacen actividades para visibilizar esta enfermedad en la provincia.
+  puntos:
+    - La autoridad de aplicación es el Ministerio de Salud, Desarrollo Social y Deportes.
+    - Se invita a los municipios a adherir y a replicar las actividades.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9698"
+  titulo: Cambios en la Dirección de Protección y Restitución de Derechos
+  tema: Derechos y sociedad
+  resumen: Modifica seis artículos de la Ley 9139 y deroga los artículos 27 y 28. Redefine la Dirección de Protección y Restitución de Derechos de niños, niñas y adolescentes y sus Equipos Técnicos Interdisciplinarios, que deben atender las 24 horas.
+  puntos:
+    - La Dirección está a cargo de un director o directora con conocimiento en niñez, adolescencia y familia.
+    - Los Equipos Técnicos Interdisciplinarios atienden por turnos rotativos las 24 horas, los 365 días del año.
+    - La Dirección articula con Cuidados Alternativos y con instituciones educativas, sociales, de salud y deportivas.
+    - La autoridad de aplicación puede hacer los ajustes administrativos y presupuestarios necesarios.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9697"
+  titulo: Derogación de leyes provinciales listadas en un anexo
+  tema: Otros
+  resumen: Deroga las leyes que se detallan en el Anexo I, junto con sus modificatorias. El texto publicado no incluye la lista, que está en el anexo.
+  puntos:
+    - El artículo único deroga las leyes del Anexo I y sus modificatorias.
+    - La lista de leyes derogadas está en el anexo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9696"
+  titulo: Expropiación en Chapanay (San Martín) de cinco calles públicas
+  tema: Tierras y expropiaciones
+  resumen: Declara de utilidad pública y sujetas a expropiación cinco parcelas para calles públicas, que forman parte de un inmueble en calle Bonanno s/n, Chapanay, San Martín. La Municipalidad de San Martín expropia y paga los gastos.
+  puntos:
+    - Calles 1 a 5, de entre 1.696,39 m2 y 2.525,60 m2 cada una según mensura.
+    - Pertenecen a un inmueble de 6 ha 5.081,91 m2 según mensura.
+    - La Municipalidad de San Martín es la expropiante, según el Decreto-Ley 1447/75.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9695"
+  titulo: Plazo hasta fines de 2027 para Tunuyán en la Ley 9509
+  tema: Municipios
+  resumen: Incorpora el artículo 2 bis a la Ley 9509. Fija hasta el 31 de diciembre de 2027 el plazo para que la Municipalidad de Tunuyán haga las gestiones para cumplir el objeto de esa ley.
+  puntos:
+    - "Plazo: hasta el 31 de diciembre de 2027."
+    - Corresponde a las gestiones de la Municipalidad de Tunuyán.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9694"
+  titulo: Donación de un inmueble en San Martín para un hospital veterinario
+  tema: Tierras y expropiaciones
+  resumen: Autoriza a la Provincia a donar a la Municipalidad de General San Martín un inmueble urbano de 246 m2, en calle Perrupato esquina Diego Paroissien. Debe destinarse a construir un Hospital Veterinario.
+  puntos:
+    - Inmueble de 246,00 m2 en el distrito Ciudad, General San Martín.
+    - El cargo es afectarlo a la construcción de un Hospital Veterinario.
+    - Los gastos de la transferencia del dominio los paga la Municipalidad.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9693"
+  titulo: Suspensión de procesos ampliada hasta el 31 de diciembre de 2026
+  tema: Seguridad y justicia
+  resumen: Modifica el artículo 1 de la Ley 9297. A los efectos del artículo 39 de la Ley 6.086, amplía hasta el 31 de diciembre de 2026 la suspensión de los procesos iniciados, cualquiera sea su estado, incluidos los que están en ejecución de sentencia.
+  puntos:
+    - "Nuevo plazo de la suspensión: hasta el 31 de diciembre de 2026."
+    - Alcanza a procesos iniciados en cualquier estado, incluso en ejecución de sentencia.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9692"
+  titulo: Adicional Asesoría de Gobierno para agentes del organismo
+  tema: Trabajo y empleo público
+  resumen: Crea el Adicional Asesoría de Gobierno para los agentes profesionales y administrativos que prestan funciones en forma normal, habitual y permanente en ese organismo. Rige desde la publicación en el Boletín Oficial.
+  puntos:
+    - "Para abogados: el doble de lo que cobra un agente del Régimen Salarial 05, Clase 13 (Ley 5126), por clase, título y responsabilidad."
+    - "Para agentes administrativos: la mitad de ese adicional."
+    - El Asesor de Gobierno puede subirlo o bajarlo por resolución fundada y con disponibilidad presupuestaria.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9691"
+  titulo: Donación de la calle Los Pozos a la Provincia
+  tema: Tierras y expropiaciones
+  resumen: Aprueba el Decreto 2453, del 17 de noviembre de 2023, y su aclaratorio, el Decreto 2072, del 29 de septiembre de 2025. Aceptan la donación a la Provincia de una fracción de 14 ha 1.230,05 m2 de la calle Los Pozos, con cargo de custodia, mantenimiento y conservación.
+  puntos:
+    - "Superficie donada: 14 ha 1.230,05 m2 de la calle Los Pozos."
+    - El cargo es la custodia, el mantenimiento y la conservación en toda su extensión.
+    - Los decretos forman parte de la ley como anexo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9690"
+  titulo: Coexistencia de cultivos para proteger la calidad de las semillas
+  tema: Producción
+  resumen: Regula la coexistencia entre cultivos agrícolas para garantizar la calidad genética de las semillas y evitar su contaminación genética. La autoridad de aplicación es el ISCAMEN. Quien produzca, multiplique o comercialice semillas debe inscribir los inmuebles en el Registro de Uso de la Tierra.
+  puntos:
+    - La inscripción en el RUT es anual e incluye ubicación georreferenciada, especie y programas de siembra.
+    - "Sanciones: multas de 100 a 100.000 UF e inhabilitación temporal para registrar lotes semilleros."
+    - Responde por el daño el productor que introduzca o mantenga un cultivo que genere riesgo comprobado sobre lotes registrados, con responsabilidad objetiva.
+    - El Poder Ejecutivo la reglamenta dentro de los 60 días de la promulgación.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9689"
+  titulo: 2026 será el Año del 90° Aniversario de la Fiesta de la Vendimia
+  tema: Derechos y sociedad
+  resumen: Declara el año 2026 como Año del 90° Aniversario de la Fiesta Nacional de la Vendimia. Durante 2026 la documentación oficial gráfica y digital de la Administración Pública provincial debe llevar esa leyenda.
+  puntos:
+    - Alcanza a la administración centralizada y descentralizada y a los entes autárquicos.
+    - Se invita a los municipios a adherir.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9688"
+  titulo: "Certificado de protección contra incendios: quién lo emite"
+  tema: Seguridad y justicia
+  resumen: Modifica la Ley 7499 sobre el Certificado de Medidas de Protección Aptas Contra Incendios (Ce.Me.P.A.C.I.). Define qué edificios y locales requieren el certificado y que, donde el municipio tiene un área técnica en seguridad contra incendios, lo emite el propio municipio.
+  puntos:
+    - Alcanza a edificios públicos y a locales y actividades privadas de más de 450 m2 en municipios sin área técnica específica.
+    - Donde hay área técnica, el municipio emite el certificado sobre informes de un profesional idóneo.
+    - Los municipios pueden pedir colaboración y asesoramiento a la Dirección de Bomberos.
+    - El Poder Ejecutivo registra y habilita las actividades que obtengan el certificado, independientemente de la habilitación municipal.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9687"
+  titulo: Régimen de regalías mineras y fondo de desarrollo socioambiental
+  tema: Energía y minería
+  resumen: Establece el régimen de las regalías mineras por la explotación de minerales de primera y segunda categoría en Mendoza. La alícuota general es del 3% del valor boca mina. Crea el Fondo de Desarrollo Económico y Socioambiental y fija cómo se reparte lo recaudado.
+  puntos:
+    - Alícuota del 3%; para proyectos que no empezaron la etapa de explotación, un porcentaje progresivo y móvil de hasta 5%, que fija la reglamentación.
+    - "Reparto: 88% a Rentas Generales, con 15% de ese monto para el Fondo, y 12% a municipios donde se extrae y que adhieran."
+    - Declaración jurada trimestral y pago dentro de los 15 días posteriores al fin de cada trimestre.
+    - Multas del 50% al 100% de la regalía omitida o inexacta, y suspensión del Certificado de Productor Minero.
+    - Los municipios deben renunciar a todo tipo de imposición a la actividad minera para acceder al reparto.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9686"
+  titulo: Fondo de Compensación Ambiental de Mendoza
+  tema: Ambiente y agua
+  resumen: Crea el Fondo de Compensación Ambiental, que administra el Ministerio de Energía y Ambiente. Sirve para obras y acciones de cese, restauración o mitigación de un daño ambiental colectivo cuando los responsables no pueden pagar todo. El Poder Ejecutivo la reglamenta en 180 días corridos.
+  puntos:
+    - "Recursos: multas, tasas y otros tributos de la normativa ambiental, y montos por daño ambiental fijados junto con las multas."
+    - Está prohibido usarlo para proyectos de terceros, consultorías o gastos corrientes, bajo pena de nulidad.
+    - La autoridad puede reclamar después a los responsables del daño que el Fondo cubrió (acción de repetición).
+    - Queda exento de impuestos y tasas provinciales; se invita a los municipios a adherir.
+    - La autoridad elabora un informe anual sobre la gestión, los ingresos y los destinos del Fondo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9685"
+  titulo: Aprobación de 27 declaraciones de impacto ambiental en Malargüe
+  tema: Energía y minería
+  resumen: Aprueba 27 Declaraciones de Impacto Ambiental emitidas por resoluciones conjuntas de la Dirección de Minería y la Dirección de Gestión y Fiscalización Ambiental. Corresponden al proyecto El Destino y otros, llamado Malargüe Distrito Minero Occidental 2, en Malargüe.
+  puntos:
+    - Son las resoluciones conjuntas 408/25 a 434/25 de Minería, con sus números 74/25 a 100/25 de Gestión y Fiscalización Ambiental.
+    - Lo dispuesto por esas declaraciones es de cumplimiento obligatorio y forman parte de la ley como anexo.
+    - Rige desde el día siguiente a su publicación en el Boletín Oficial.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9684"
+  titulo: Aprobación del impacto ambiental del proyecto PSJ Cobre Mendocino
+  tema: Energía y minería
+  resumen: Aprueba la Declaración de Impacto Ambiental del proyecto PSJ Cobre Mendocino, en Uspallata, Las Heras. La declaración fue emitida por la Resolución Conjunta 405/25 de la Dirección de Minería y 71/25 de Gestión y Fiscalización Ambiental. Rige desde el día siguiente a su publicación.
+  puntos:
+    - Todo lo dispuesto por la Declaración de Impacto Ambiental es de cumplimiento obligatorio.
+    - La declaración forma parte de la ley como anexo.
+    - El proyecto se desarrolla en el distrito de Uspallata, departamento de Las Heras.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9683"
+  titulo: Las Verbenas Españolas son Fiesta de la Hispanidad en Mendoza
+  tema: Derechos y sociedad
+  resumen: Declara Fiesta de la Hispanidad en Mendoza a las Verbenas Españolas, que cada octubre organiza la Agrupación de Entidades Españolas de Mendoza, con sede principal en Guaymallén. La Subsecretaría de Cultura la difunde y EMETUR colabora en su promoción turística.
+  puntos:
+    - La Subsecretaría de Cultura adopta medidas para difundir y fortalecer la fiesta en toda la provincia.
+    - El Ente Mendoza Turismo (EMETUR) colabora en la promoción turística.
+    - La entidad organizadora comunica a Cultura la fecha de cada edición antes del 30 de junio.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9682"
+  titulo: Sanciones a madres y padres por el bullying de sus hijos
+  tema: Seguridad y justicia
+  resumen: Incorpora al Código de Contravenciones los artículos 100 bis, ter y quater sobre acoso escolar. Sanciona a madres, padres o tutores que, ya notificados, no actúen para evitar que el bullying se repita o repare el daño.
+  puntos:
+    - "Sanción: multa de 1.500 a 3.000 UF o tareas educativas o comunitarias de hasta 30 días, según la gravedad."
+    - Las multas van al Fondo Provincial de la Ley 9545 para prevenir y asistir a víctimas de acoso escolar, y a Bibliotecas Populares.
+    - La escuela actúa primero con el Protocolo de Actuación en Casos de Bullying (Resolución 5679 de la DGE).
+    - Si el intento falla, la escuela remite las actuaciones al Juzgado Contravencional competente.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9681"
+  titulo: Presupuesto de la Provincia para 2026
+  tema: Economía y finanzas
+  resumen: "Es la Ley de Presupuesto 2026 de Mendoza. El Boletín Oficial no publicó el texto: solo una nota que remite al expediente EX-2025-09615520-GDEMZA-HCS y a un anexo. El texto y sus planillas están en el sitio del Ministerio de Hacienda."
+  puntos:
+    - Fija los gastos y recursos del Estado provincial para 2026.
+    - Sus planillas incluyen la planta de cargos de cada organismo, que usamos en Gobierno por dentro.
+    - Se publicó el 16 de diciembre de 2025 con una nota en lugar del texto.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+  revisado: 2026-10-12
+- numero: "9680"
+  titulo: Ley cuyo texto completo está en un anexo (expediente 09570988)
+  tema: Otros
+  resumen: El Boletín Oficial publicó solo una nota que indica que el texto de la ley se puede consultar completo en el expediente EX-2025-09570988-GDEMZA-HCS o en su anexo. El contenido no está en el texto publicado.
+  puntos:
+    - La ley se publicó el 16 de diciembre de 2025 con una nota en lugar del texto.
+    - El texto íntegro está en el expediente EX-2025-09570988-GDEMZA-HCS o en el anexo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9679"
+  titulo: Ley cuyo texto completo está en un anexo (expediente 09570180)
+  tema: Otros
+  resumen: El Boletín Oficial publicó solo una nota que indica que el texto de la ley se puede consultar completo en el expediente EX-2025-09570180-GDEMZA-HCS o en su anexo. El contenido no está en el texto publicado.
+  puntos:
+    - La ley se publicó el 16 de diciembre de 2025 con una nota en lugar del texto.
+    - El texto íntegro está en el expediente EX-2025-09570180-GDEMZA-HCS o en el anexo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9678"
+  titulo: Acta acuerdo del Tren de Cercanías Mendoza con Belgrano Cargas
+  tema: Transporte
+  resumen: Aprueba el Decreto 2268, del 21 de octubre de 2025, que aprobó el Acta Acuerdo Tren de Cercanías - Mendoza entre el Gobierno de Mendoza y Belgrano Cargas y Logística S.A., firmada el 12 de agosto de 2025. El detalle está en el anexo.
+  puntos:
+    - Las partes son el Gobierno de Mendoza y Belgrano Cargas y Logística S.A.
+    - El acta se firmó el 12 de agosto de 2025 y forma parte de la ley como anexo.
+    - La concesión que resulte del acta queda exceptuada del artículo 10, inciso g, de la Ley 5507 y del artículo 15 de la Ley 9086.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9677"
+  titulo: Facturas con el teléfono de denuncias de Defensa del Consumidor
+  tema: Derechos y sociedad
+  resumen: Modifica los artículos 1 y 2 de la Ley 7538. Las facturas y tickets a consumidor final emitidos en Mendoza deben llevar impreso, de forma legible y destacada, el teléfono gratuito o canal digital de denuncias de la Dirección de Defensa del Consumidor.
+  puntos:
+    - Alcanza a facturas y tickets a consumidor final emitidos en la provincia.
+    - La impresión sigue el texto que indique la Dirección de Defensa del Consumidor, con los canales de contacto actualizados.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9676"
+  titulo: Cambios en las reglas del transporte por plataformas
+  tema: Transporte
+  resumen: Modifica artículos de la Ley 9086 y de la Ley 7412. Cambia los permisos de explotación de los vehículos, las sanciones a las empresas de plataformas y las controversias, que van primero ante el Ente de la Movilidad Provincial.
+  puntos:
+    - El permiso de explotación es precario y revocable, solo para personas humanas, y nadie puede tener más de uno, salvo vehículos eléctricos.
+    - "Sanciones a las plataformas: suspensión temporal de hasta dos años, multas o inhabilitación definitiva."
+    - Las plataformas no pueden asignar viajes a conductores sin permiso ni a vehículos sin registrar.
+    - Las controversias del servicio se someten primero y de forma obligatoria al Ente de la Movilidad Provincial.
+    - Rige desde su publicación en el Boletín Oficial.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9675"
+  titulo: Licencia de conducir digital y seguro en cualquier formato
+  tema: Transporte
+  resumen: Modifica los artículos 21, 40 y 43 de la Ley de Tránsito 9.024. La licencia nacional de conducir física o digital valen por igual, y el comprobante del seguro obligatorio puede presentarse en cualquier formato.
+  puntos:
+    - Ante la autoridad se puede mostrar la licencia física o digital, indistintamente.
+    - El comprobante de pago del seguro de responsabilidad civil se acredita en cualquier formato.
+    - La Provincia delega en los municipios, mediante convenios, la emisión de la Licencia Nacional de Conducir.
+    - La Unidad Ejecutiva de Seguridad Vial audita los centros de emisión e informa a la Agencia Nacional de Seguridad Vial.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9674"
+  titulo: Donaciones de terrenos de Lavalle y San Carlos para AySAM
+  tema: Ambiente y agua
+  resumen: Aprueba dos decretos que aceptan donaciones con cargo a la Provincia, para que se usen en la prestación del servicio de la empresa AySAM S.A. Son un inmueble de la Municipalidad de Lavalle y dos fracciones de terreno de la Municipalidad de San Carlos.
+  puntos:
+    - "Decreto 1734, del 12 de agosto de 2025: acepta un inmueble de la Municipalidad de Lavalle."
+    - "Decreto 1876, del 29 de agosto de 2025: acepta dos fracciones de terreno de la Municipalidad de San Carlos."
+    - El detalle de los inmuebles está en el anexo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9673"
+  titulo: Reestructuración de los servicios sanitarios extrahospitalarios
+  tema: Salud
+  resumen: Establece la modernización y reestructuración de los servicios sanitarios extrahospitalarios de la provincia, para mejorar y homogeneizar la respuesta en traslados, urgencias, emergencias, catástrofes y atención domiciliaria. La autoridad de aplicación es el Ministerio de Salud y Deportes.
+  puntos:
+    - Alcanza a los sectores público y privado, que deben acudir ante el requerimiento del Organismo Coordinador de la Red.
+    - Los servicios se habilitan y categorizan según las unidades móviles, el equipamiento, los recursos físicos y humanos y su capacitación.
+    - Los prestadores deben registrar por escrito todas las acciones de cada evento.
+    - Los equipos son médicos, enfermeros-choferes, técnicos de salud, técnicos en emergentología y choferes.
+    - Los ciudadanos deben usar con responsabilidad los medios y la línea telefónica gratuita, y dar información veraz.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9672"
+  titulo: Régimen legal del Técnico Superior en Emergentología
+  tema: Salud
+  resumen: Regula el ejercicio del Técnico Superior en Emergentología en servicios de salud públicos y privados, bajo la supervisión del profesional médico. Define sus competencias en emergencias y catástrofes. El Poder Ejecutivo reglamenta la ley en 180 días corridos.
+  puntos:
+    - Es un profesional de la salud con título de nivel superior, entrenado para tareas extrahospitalarias de soporte sanitario.
+    - Sus competencias abarcan antes, durante y después de emergencias y catástrofes, incluida la prevención del daño.
+    - Si se aprueba la Licenciatura en Emergentología, el Poder Ejecutivo puede aplicarle la ley por reglamentación.
+    - El Poder Ejecutivo fija las condiciones para reconocer la especialidad en profesiones de salud de grado universitario.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9671"
+  titulo: El buceo en altura es actividad de interés provincial
+  tema: Producción
+  resumen: Declara al buceo en altura como actividad de interés provincial. El objetivo es contribuir al desarrollo, crecimiento y posicionamiento de la provincia en esa actividad, como atractivo turístico y deportivo.
+  puntos:
+    - Es una declaración de interés provincial.
+    - Se enfoca en su valor como atractivo turístico y deportivo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9670"
+  titulo: Expropiación en Lavalle para calles, servicios y viviendas
+  tema: Tierras y expropiaciones
+  resumen: Declara de utilidad pública y sujeta a expropiación una fracción de unos 7 ha en Ruta Provincial 34 al 4355, Barrio El Palmeral, Villa Tulumaya, Lavalle. Se destina a abrir calles, obras de servicios públicos, regularizar el dominio de las familias que viven allí y dar soluciones habitacionales.
+  puntos:
+    - "Superficie: 7 ha 997,36 m2, fracción 23 del plano de mensura 13-15527."
+    - La Municipalidad de Lavalle expropia, según el Decreto-Ley 1.447/75.
+    - La Municipalidad paga los gastos que demande la ley.
+    - El destino puede cumplirse por sí o en asocio con terceros.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9669"
+  titulo: Donación de un terreno en Godoy Cruz para viviendas sociales
+  tema: Tierras y expropiaciones
+  resumen: Autoriza al Instituto Provincial de la Vivienda a aceptar la donación con cargo de un inmueble de 2.412,87 m2 en Godoy Cruz, entre las calles José Manuel Estrada, Cruz del Eje y General Paz. Debe usarse para viviendas de interés social. También cambia la afectación de fracciones municipales.
+  puntos:
+    - El cargo es construir viviendas de interés social, urbanizar y adjudicarlas mediante los programas del Instituto.
+    - Pasa del dominio público al privado de la Municipalidad de Godoy Cruz la fracción de 2.412,87 m2 destinada a viviendas sociales.
+    - Pasa del dominio privado al público municipal otra fracción, el polígono 1-2-3-4-5-6, de 3.942,36 m2.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9668"
+  titulo: Convenio específico de colaboración entre Mendoza y San Juan
+  tema: Convenios y ratificaciones
+  resumen: Aprueba el Decreto 1927, del 8 de septiembre de 2025, que aprobó un convenio específico de colaboración interjurisdiccional entre Mendoza y San Juan. Se firmó el 30 de mayo de 2025 y el detalle está en el anexo.
+  puntos:
+    - Participan los gobiernos de Mendoza y San Juan.
+    - El convenio se firmó el 30 de mayo de 2025.
+    - El contenido del convenio y su anexo forman parte de la ley.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9667"
+  titulo: Convenio interjurisdiccional entre Mendoza, San Juan y San Luis
+  tema: Convenios y ratificaciones
+  resumen: Aprueba el Decreto 754, del 14 de abril de 2025, que aprobó un convenio de colaboración interjurisdiccional entre las provincias de Mendoza, San Juan y San Luis. El convenio se firmó el 31 de mayo de 2024 y el detalle está en el anexo.
+  puntos:
+    - Participan los gobiernos de Mendoza, San Juan y San Luis.
+    - El convenio se firmó el 31 de mayo de 2024.
+    - El contenido del convenio está en el anexo de la ley.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9666"
+  titulo: Reforma de artículos del Código Procesal Penal
+  tema: Seguridad y justicia
+  resumen: Modifica doce artículos del Código Procesal Penal (Ley 6.730) e incorpora nuevos. Los cambios tocan el Tribunal Penal Colegiado, los jueces y fiscales, las actas, las resoluciones, las audiencias orales y la audiencia de acusación.
+  puntos:
+    - El Tribunal Penal Colegiado actúa en Salas Unipersonales o en Colegio de tres jueces si lo piden las partes al apelar o al citar a juicio.
+    - Las decisiones sobre criterios de oportunidad, juicio abreviado y otros trámites se resuelven en audiencia oral.
+    - La audiencia de acusación se fija dentro de los cinco días.
+    - Las actas son nulas si les falta la fecha, la hora o la firma, entre otros requisitos.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9665"
+  titulo: Cambios en el estatuto del empleado público (Decreto-Ley 560/73)
+  tema: Trabajo y empleo público
+  resumen: Modifica varios artículos del estatuto general del empleo público de Mendoza, el Decreto-Ley 560/73. Cambia, entre otros temas, la estabilidad, las indemnizaciones, la reincorporación tras una baja anulada y los recursos de los agentes.
+  puntos:
+    - Todo nombramiento que cumple los requisitos de ingreso o ascenso es efectivo y permanente, salvo que el acto de designación diga lo contrario.
+    - Las indemnizaciones se pagan dentro de los 30 días de producido el hecho que las genera.
+    - Si se anula una baja o cesantía, el agente vuelve a su cargo, pero no se reconocen salarios caídos.
+    - Tras agotar la vía administrativa, el agente puede demandar mediante la acción procesal administrativa de la Ley 3918.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9664"
+  titulo: Día de la Concientización de la Enfermedad Cardiovascular en la Mujer
+  tema: Salud
+  resumen: Instituye el 9 de octubre de cada año como Día Provincial de la Concientización de la Enfermedad Cardiovascular en la Mujer. Busca prevenir, informar y promover la detección temprana de esta enfermedad.
+  puntos:
+    - El Ministerio de Salud y Deportes promueve acciones de prevención, investigación y estudios epidemiológicos.
+    - En el mes previo a la fecha se promueven campañas en medios gráficos, digitales, radiofónicos y audiovisuales.
+    - Las campañas se hacen con la colaboración de instituciones especializadas.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9663"
+  titulo: Programa de Compromiso Ambiental Educativo en escuelas
+  tema: Educación
+  resumen: Crea el Programa de Compromiso Ambiental Educativo en instituciones educativas de la provincia. Incluye voluntariados ambientales, un Juramento Ambiental y la Bandera del Compromiso Ambiental.
+  puntos:
+    - El Juramento Ambiental es voluntario, para estudiantes de sexto grado de primaria y tercer año de secundaria, en torno al Día Mundial del Ambiente.
+    - La autoridad de aplicación puede convocar a estudiantes a voluntariados de acción climática.
+    - Puede reconocer la participación de docentes, incluso con un sistema de créditos.
+    - La autoridad de aplicación es el Ministerio de Educación, Cultura, Infancias y Dirección General de Escuelas.
+    - El Poder Ejecutivo la reglamenta dentro de los 180 días de la promulgación.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9662"
+  titulo: Aprobación de decretos de aumentos salariales a estatales
+  tema: Trabajo y empleo público
+  resumen: Aprueba once decretos, fechados entre octubre de 2024 y agosto de 2025. Esos decretos homologan actas acuerdo firmadas en la Subsecretaría de Trabajo y Empleo entre el Poder Ejecutivo y gremios de distintos sectores de la Administración Pública, y otorgan aumentos.
+  puntos:
+    - Los decretos son los números 2139, 1396, 1602, 1611, 1612, 1613, 1635, 1778, 1779, 1803 y 1815.
+    - Homologan actas acuerdo con entidades sindicales de distintos sectores de la Administración Pública.
+    - El detalle de los aumentos está en el anexo de la ley.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9661"
+  titulo: Nuevo monto de la pensión honorífica de la Ley 6.772
+  tema: Trabajo y empleo público
+  resumen: Modifica el artículo 4 de la Ley 6.772 y fija el monto de la pensión honorífica mensual en tres veces la asignación de la clase 013 del Escalafón General de la Ley 5.126.
+  puntos:
+    - "Monto: tres veces la asignación de la clase 013 del Escalafón General."
+    - La pensión es mensual, inembargable y vitalicia.
+    - Es compatible con cualquier otro beneficio previsional, pensión nacional o empleo.
+    - No requiere contraprestación.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9660"
+  titulo: "Reclamos de consumo de menor cuantía: tope de 5 JUS"
+  tema: Derechos y sociedad
+  resumen: Modifica el artículo 218 del Código Procesal Civil, Comercial y Tributario sobre reclamos de consumo de menor cuantía. El procedimiento especial rige cuando el reclamo no supera 5 JUS y lo inicia el consumidor o usuario en forma individual.
+  puntos:
+    - El tope es el equivalente a cinco (5) JUS.
+    - Vale cuando la acción la ejerce el consumidor o usuario de manera individual.
+    - En los demás procesos de consumo de menor cuantía se aplica el procedimiento de conocimiento de los artículos 204 y siguientes.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9659"
+  titulo: Sistema provincial de gestión integral de residuos sólidos urbanos
+  tema: Ambiente y agua
+  resumen: Establece un Sistema de Gestión Integral de Residuos Sólidos Urbanos para la provincia, respetando las competencias de los municipios. El Ministerio de Energía y Ambiente es la autoridad de aplicación. Deroga la Ley 5.970.
+  puntos:
+    - La autoridad de aplicación elabora el Plan Provincial de Residuos Sólidos Urbanos.
+    - Divide la provincia en zonas para la gestión de residuos, como la Zona Metropolitana y la Zona Este.
+    - Los municipios pueden formar consorcios entre sí y deben hacer su plan municipal o interjurisdiccional de gestión de residuos.
+    - La ley tiene títulos sobre recolección diferenciada, tratamiento y disposición final, recuperadores urbanos y educación.
+    - El Poder Ejecutivo la reglamenta en 180 días corridos desde la promulgación.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9658"
+  titulo: Trámite automatizado del beneficio de litigar sin gastos
+  tema: Seguridad y justicia
+  resumen: Modifica el artículo 96 del Código Procesal Civil, Comercial y Tributario. Crea un trámite automatizado para el beneficio de litigar sin gastos, que consiste en una consulta web a un sistema informático de la Suprema Corte.
+  puntos:
+    - Quien quiera litigar sin gastos lo indica en su primera presentación judicial y el Juzgado consulta el sistema.
+    - La Sala Administrativa de la Suprema Corte fija, al menos una vez al año, los parámetros objetivos para dar el beneficio.
+    - Si el sistema indica que se cumplen, el Juzgado lo comunica en el primer decreto con una constancia con firma digital.
+    - Si no se cumplen, el Juzgado se lo informa y lo emplaza a pagar las tasas de juicio.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9657"
+  titulo: Cámaras de la Primera Circunscripción revisan apelaciones de otras
+  tema: Seguridad y justicia
+  resumen: Las Cámaras de apelaciones civiles, comerciales y de minas de la Primera Circunscripción también resuelven apelaciones de causas de paz y tributarias de la Tercera y Cuarta Circunscripción. Modifica la Ley 5384 sobre las Cámaras del Trabajo y deroga el artículo 5 de la Ley 2775.
+  puntos:
+    - Se suma esa competencia a la que ya tienen.
+    - "Tercera Circunscripción: la Segunda Cámara del Trabajo tiene asiento en San Martín."
+    - "Cuarta Circunscripción: la Primera Cámara del Trabajo tiene asiento en Tunuyán."
+    - Deroga el artículo 5 de la Ley 2775 y lo que se oponga.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9656"
+  titulo: Expropiaciones para prolongar calle Alsina en Guaymallén
+  tema: Tierras y expropiaciones
+  resumen: Modifica los artículos 1 y 2 de la Ley 9303 y deroga los artículos 3 y 4. Detalla los inmuebles sujetos a expropiación para prolongar la calle Alsina, entre Las Cañas y Estrada y la rotonda de Elpidio González y Estrada, en Las Cañas, Guaymallén.
+  puntos:
+    - Declara de utilidad pública y sujetos a expropiación inmuebles identificados como parcelas A, B, C y D, entre otras.
+    - "Destino: prolongación de calle Alsina, distrito Las Cañas."
+    - Deroga los artículos 3 y 4 de la Ley 9303.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9655"
+  titulo: "Transparencia fiscal: las facturas deben mostrar Ingresos Brutos"
+  tema: Impuestos
+  resumen: Mendoza adhiere al Régimen de Transparencia Fiscal al Consumidor de la Ley Nacional 27.743. Las facturas, tickets y similares deben detallar la alícuota de Ingresos Brutos de la actividad de quien los emite. Controla Administración Tributaria Mendoza y rige desde el 1 de enero de 2026.
+  puntos:
+    - Adhiere al Título VII de la Ley Nacional 27.743.
+    - Los comprobantes fiscales indican la alícuota de Ingresos Brutos del emisor.
+    - Administración Tributaria Mendoza supervisa y controla.
+    - Vigencia desde el 1 de enero de 2026.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9654"
+  titulo: Terreno en La Consulta para la Escuela 4-234 Lanati
+  tema: Educación
+  resumen: Deja sin efecto el uso fijado por la Resolución 122/78 a un terreno de unas 6 ha en La Consulta, San Carlos. Autoriza a donarlo a la Dirección General de Escuelas para construir el edificio de la Escuela Nº 4-234 "Ing. Silvio José Lanati".
+  puntos:
+    - Fracción II del plano 16/14720, frente a calle San Martín s/n, en La Consulta.
+    - La donación a la DGE tiene el cargo de construir ahí el edificio de la escuela.
+    - La Escribanía General de Gobierno formaliza la donación.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9653"
+  titulo: Deroga un listado de leyes detalladas en un anexo
+  tema: Otros
+  resumen: Deroga las leyes y sus modificatorias que figuran en el Anexo I. El texto de la ley no dice cuáles son; el listado está en el anexo.
+  puntos:
+    - Deroga las leyes del Anexo I y sus modificatorias.
+    - El listado de leyes está en el anexo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9652"
+  titulo: Límite al número de máquinas tragamonedas
+  tema: Derechos y sociedad
+  resumen: Prohíbe ampliar la cantidad de máquinas tragamonedas en las salas de juego de la provincia, tomando como límite el mayor número histórico autorizado. Exige programas de juego responsable y fija multas y suspensiones por incumplir.
+  puntos:
+    - No se puede ampliar el número de máquinas; el tope es el mayor número histórico autorizado de cada sala.
+    - El Instituto Provincial de Juegos y Casinos puede reducir las máquinas de los contratos del Casino de Mendoza.
+    - Las salas deben informar sobre riesgos, ofrecer líneas de asistencia gratuita y capacitar al personal.
+    - Multas del 1% al 20% de la recaudación mensual promedio y suspensiones de hasta 30 días.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9651"
+  titulo: Aprueba nuevas condiciones del transporte contratado y por plataformas
+  tema: Transporte
+  resumen: "Aprueba el Decreto 2731 del 18 de diciembre de 2024, que revisa las condiciones de varios servicios de transporte de pasajeros: contratado general, turístico, por comitente determinado, para personas con discapacidad, escolar, institucional y privado por plataformas electrónicas. El detalle está en el anexo."
+  puntos:
+    - Aprueba el Decreto 2731/2024.
+    - Alcanza al servicio escolar, turístico, para personas con discapacidad y al transporte privado por plataformas electrónicas, entre otros.
+    - Las nuevas condiciones están en el anexo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9650"
+  titulo: Endeudamiento de hasta USD 160 millones para salud y educación digital
+  tema: Economía y finanzas
+  resumen: "Autoriza al Poder Ejecutivo a tomar crédito con organismos multilaterales: hasta USD 85 millones para la transformación digital del sistema de salud y hasta USD 75 millones para el programa EDUTEC. Ambas autorizaciones rigen hasta el 31 de diciembre de 2026."
+  puntos:
+    - "Salud: USD 85 millones para infraestructura, equipamiento tecnológico y sistemas de atención."
+    - "Educación: USD 75 millones para conectividad, equipamiento, plataformas y capacitación en el programa EDUTEC."
+    - Permite modificar el Presupuesto vigente por estos créditos.
+    - El Ejecutivo envía a la Legislatura la documentación firmada en 10 días hábiles.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9649"
+  titulo: Expropiación de tres fracciones para ensanchar calle Antonelli
+  tema: Tierras y expropiaciones
+  resumen: Declara de utilidad pública y sujetas a expropiación tres fracciones de terreno para ensanchar la calle Antonelli, desde Los Guindos hasta Juan Martínez de Rosas, en Capilla del Rosario, Guaymallén. La Municipalidad de Guaymallén expropia y paga los gastos.
+  puntos:
+    - Tres fracciones afectadas de unos 398, 94 y 130 m2.
+    - "Destino: ensanche de calle Antonelli, en Capilla del Rosario."
+    - Expropia la Municipalidad de Guaymallén según el Decreto-Ley 1447/75.
+    - La Municipalidad paga los gastos.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9648"
+  titulo: "Compras de municipios: nuevo inciso en el Código Fiscal"
+  tema: Impuestos
+  resumen: Agrega el inciso 42 al artículo 238 del Código Fiscal. Alcanza a las contrataciones de bienes y servicios de los municipios, siempre que el monto no supere el que se fija cada año para la Licitación Pública en su monto mayor, según el artículo 140 de la Ley 8706.
+  puntos:
+    - Alcanza a contrataciones de bienes y servicios de los municipios de la Provincia.
+    - El tope es el monto anual de Licitación Pública en su monto mayor (artículo 140 de la Ley 8706 y su decreto).
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9647"
+  titulo: Expropiación en Guaymallén para ensanchar calle Alem
+  tema: Tierras y expropiaciones
+  resumen: Declara de utilidad pública y sujeta a expropiación una fracción de 17,10 m2 en Vélez Sarsfield 1012 esquina Alem, distrito Dorrego, Guaymallén. Se destina al ensanche de calle Alem. La Municipalidad de Guaymallén expropia y paga los gastos.
+  puntos:
+    - Fracción de 17,10 m2, parte de una parcela mayor.
+    - "Destino: ensanche de calle Alem."
+    - Expropia la Municipalidad de Guaymallén según el Decreto-Ley 1447/75.
+    - La Municipalidad paga los gastos.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9646"
+  titulo: Expropiación en Rivadavia para calles del Barrio Confraternidad
+  tema: Tierras y expropiaciones
+  resumen: Declara de utilidad pública y sujeta a expropiación una fracción de 1.049,10 m2 en calle Sur del loteo Barrio Confraternidad, Rivadavia, para ensanche y trazado de calles. La Municipalidad de Rivadavia expropia y paga los gastos.
+  puntos:
+    - Fracción de 1.049,10 m2, entre calles Arenales y Corrientes.
+    - Es un acceso comunero de indivisión forzosa, según el plano 10-7481.
+    - "Destino: ensanche y trazado de calles."
+    - Expropia la Municipalidad de Rivadavia según el Decreto-Ley 1447/75 y paga los gastos.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9645"
+  titulo: Cambios al plan de alfabetización y habilidades matemáticas
+  tema: Educación
+  resumen: Modifica la Ley 9438. Declara política educativa prioritaria la alfabetización y las habilidades matemáticas, con un plan estratégico (PEAMM) obligatorio en toda la provincia. Destina al menos el 2% del Fondo de Financiamiento Educativo y da 60 días para elaborarlo.
+  puntos:
+    - El PEAMM es de aplicación obligatoria y parte de la formación docente.
+    - Usa jornada extendida, Centros de Apoyo Escolar y bibliotecas para estudiantes por debajo del nivel esperado.
+    - Afecta al menos el 2% anual del Fondo de Financiamiento Educativo (Ley 26.075).
+    - La autoridad lo elabora en 60 días, prorrogables 30 más.
+    - El Director General de Escuelas puede determinar unidades pedagógicas.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9644"
+  titulo: Terreno de 38 ha en Luján de Cuyo pasa a administración municipal
+  tema: Tierras y expropiaciones
+  resumen: Deja sin efecto el destino que tenía un inmueble de unas 38 ha en La Puntilla, Luján de Cuyo, fijado por el Decreto-Ley 463/73. Se lo asigna a la Municipalidad de Luján de Cuyo, que lo administra y usa según el ordenamiento territorial del departamento.
+  puntos:
+    - Inmueble de 38 ha 7.961,60 m2 en el distrito La Puntilla.
+    - Se desafecta el destino del artículo 1 del Decreto-Ley 463/73.
+    - La Municipalidad de Luján de Cuyo lo administra con uso exclusivo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9643"
+  titulo: Se suspenden las PASO provinciales en 2025 y 2026
+  tema: Derechos y sociedad
+  resumen: Suspende en 2025 y 2026 las elecciones primarias abiertas, simultáneas y obligatorias (PASO) de la Ley 8619. La Junta Electoral Provincial debe adecuar y publicar los nuevos plazos del cronograma electoral en 10 días corridos.
+  puntos:
+    - Suspende las PASO y las obligaciones sobre su organización durante 2025 y 2026.
+    - La Junta Electoral Provincial publica el nuevo cronograma en 10 días corridos desde las convocatorias.
+    - Los plazos se compatibilizan con la Ley Nacional 27.781, modificada por la 27.783.
+    - Rige desde el día siguiente a su publicación.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9642"
+  titulo: Amparo por mora contra demoras de la Administración
+  tema: Derechos y sociedad
+  resumen: Modifica el artículo 219 de la Ley 9001. Se puede hacer un amparo contra la Administración provincial o municipal que no resuelve las peticiones en los plazos legales, si la demora es excesiva y perjudica derechos. El informe lo da el órgano o agente competente.
+  puntos:
+    - Procede contra la Administración provincial o municipal que no resuelve en término.
+    - La demora debe ser excesiva y perjudicar los derechos de quien reclama.
+    - El informe lo debe presentar el órgano o agente que tenga la competencia de resolver, según la Ley 9003.
+    - Eso define quién responde por las costas si el amparo prospera.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9641"
+  titulo: El tribunal identifica al funcionario responsable de la demora
+  tema: Derechos y sociedad
+  resumen: Agrega el artículo 38 bis a la Ley 3918. Cuando se admite una acción por denegación tácita, el tribunal debe identificar al agente o funcionario responsable de la demora y pedir al organismo que le aplique la sanción disciplinaria del artículo 2 de la Ley 9003.
+  puntos:
+    - Rige cuando la acción se admite por denegación tácita (artículo 6 de la Ley 3918).
+    - El tribunal nombra al agente o funcionario responsable de la mora en el auto de admisión formal.
+    - Pide al organismo aplicar la falta disciplinaria prevista en la Ley 9003.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9640"
+  titulo: Aprueba convenio con Vialidad Nacional para obras y mantenimiento
+  tema: Convenios y ratificaciones
+  resumen: Aprueba el Decreto 1165 del 29 de mayo de 2025, que aprobó el convenio entre la Provincia de Mendoza y la Dirección Nacional de Vialidad para ejecución de obras, conservación y mantenimiento. Se firmó el 14 de mayo de 2025 y su texto está en el anexo.
+  puntos:
+    - Aprueba el Decreto 1165/2025.
+    - Convenio entre Mendoza y la Dirección Nacional de Vialidad, firmado el 14 de mayo de 2025.
+    - Trata de ejecución de obras, conservación y mantenimiento; el detalle está en el anexo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9639"
+  titulo: Expropiación en Guaymallén en Nicolás Avellaneda esquina Mathus Hoyos
+  tema: Tierras y expropiaciones
+  resumen: Declara de utilidad pública y sujeta a expropiación una fracción de 285,81 m2 de una parcela en calle Nicolás Avellaneda esquina Mathus Hoyos, en El Bermejo, Guaymallén. La Municipalidad de Guaymallén expropia y paga los gastos.
+  puntos:
+    - Fracción de 285,81 m2, parte de una parcela mayor.
+    - Ubicada en El Bermejo, Guaymallén.
+    - Expropia la Municipalidad de Guaymallén según el Decreto-Ley 1447/75.
+    - La Municipalidad paga los gastos.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9638"
+  titulo: Expropiación en Guaymallén en Nicolás Avellaneda y Mathus Hoyos
+  tema: Tierras y expropiaciones
+  resumen: Declara de utilidad pública y sujeta a expropiación una fracción de unos 93 m2 de una parcela en calle Nicolás Avellaneda y Mathus Hoyos, en El Bermejo, Guaymallén. La Municipalidad de Guaymallén expropia y paga los gastos.
+  puntos:
+    - Fracción de 92,81 m2 según título y 93,45 m2 según mensura, de una parcela mayor.
+    - Ubicada en El Bermejo, Guaymallén.
+    - Expropia la Municipalidad de Guaymallén según el Decreto-Ley 1447/75.
+    - La Municipalidad paga los gastos.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9637"
+  titulo: Cuerpos municipales de seguridad ciudadana
+  tema: Seguridad y justicia
+  resumen: Fija las bases para que los municipios que quieran creen cuerpos de seguridad ciudadana, con función preventiva y auxiliar. Pueden labrar actas, tomar denuncias y aprehender en flagrancia, pero no tienen estado policial ni pueden portar armas de fuego.
+  puntos:
+    - Es obligatorio solo para los municipios que decidan formar estos cuerpos.
+    - Pueden usar armas de baja letalidad, como bastón PR-24 o spray de pimienta.
+    - No pueden usar la palabra "policía" en su nombre.
+    - Deben tener estructura jerárquica, capacitación continua y coordinarse con la policía y la Justicia.
+    - Modifica la Ley 1079 sobre organización del cuerpo municipal.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9636"
+  titulo: Aprueba acuerdos paritarios con gremios estatales
+  tema: Trabajo y empleo público
+  resumen: Aprueba el Decreto 896 del 30 de abril de 2025, que homologó actas acuerdo firmadas en la Subsecretaría de Trabajo y Empleo entre el Poder Ejecutivo y gremios de la Administración Pública. El contenido está en el anexo.
+  puntos:
+    - Aprueba el Decreto 896/2025.
+    - Las actas se firmaron entre el Poder Ejecutivo y entidades sindicales.
+    - El detalle está en el anexo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9635"
+  titulo: Aprueba una excepción a la Ley 8727 para una médica del Schestakow
+  tema: Salud
+  resumen: Aprueba el Decreto 722 del 10 de abril de 2025, que exceptúa de la aplicación de la Ley 8727 a la doctora Natalia Emilce Bustos, de la Terapia Intensiva Pediátrica del Hospital Teodoro J. Schestakow. El decreto está en el anexo.
+  puntos:
+    - Aprueba el Decreto 722/2025.
+    - Exceptúa a una profesional de la Terapia Intensiva Pediátrica del Hospital Schestakow.
+    - El motivo y el detalle están en el anexo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9634"
+  titulo: Aprueba emergencia aluvional en el sur y del servicio eléctrico
+  tema: Ambiente y agua
+  resumen: Aprueba el Decreto 792/2025, que declara la Emergencia Aluvional en el sur de la Provincia por un año y la Emergencia del Servicio Eléctrico por 14 meses. El decreto está en el anexo.
+  puntos:
+    - "Emergencia Aluvional en el sur de Mendoza: 1 año."
+    - "Emergencia del Servicio Eléctrico: 14 meses."
+    - El decreto forma parte de la ley como anexo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9633"
+  titulo: Donación de terrenos para la calle Santa Bernardette
+  tema: Obras e infraestructura
+  resumen: "Autoriza al Poder Ejecutivo a donar un inmueble de la Ruta Provincial 99, en dos polígonos: el I a la Municipalidad de la Ciudad de Mendoza y el II a la de Las Heras. Deben destinarlo a la extensión y traza de la calle Santa Bernardette."
+  puntos:
+    - Polígono I para la Ciudad de Mendoza y Polígono II para Las Heras.
+    - "Cargo: extensión y traza de la calle pública Santa Bernardette."
+    - Los dos municipios pagan los gastos en forma proporcional y hacen las mensuras.
+    - La Escribanía General de Gobierno hace las escrituras.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9632"
+  titulo: Programa Mi Escritura para escriturar viviendas
+  tema: Derechos y sociedad
+  resumen: Crea el Programa Mi Escritura para facilitar las escrituras de inmuebles que cumplan la Ley 8475 y su modificatoria 9602, entre otros casos. Las escrituras quedan exentas de dos tasas y los beneficiarios pueden pagar el financiamiento con un acuerdo.
+  puntos:
+    - "Autoridad: el Ministerio de Gobierno, Infraestructura y Desarrollo Territorial junto al IPV."
+    - Exime el Certificado Libre Deuda y la Inscripción Registral.
+    - El IPV define cómo se repaga el financiamiento; si hay mora, lo recupera Administración Tributaria Mendoza.
+    - Se pueden levantar inhibiciones o embargos solo para escriturar, si el beneficiario reconoce la deuda.
+    - Invita a AySAM, Irrigación y municipios a eximir derechos de transferencia.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9631"
+  titulo: Régimen de proyectos de desarrollo productivo en tierras del Estado
+  tema: Producción
+  resumen: Establece cómo se adjudican y venden tierras privadas del Estado para proyectos agropecuarios, industriales, comerciales, turísticos, deportivos y sociales. Regula quiénes pueden recibirlas, los precios y las causas de extinción. Deroga la Ley 4711.
+  puntos:
+    - Se usa tierra privada del Estado sin otro destino, y la que adquiera la Provincia.
+    - Pueden recibir tierra personas humanas y, si hay obras de infraestructura, personas jurídicas.
+    - Las personas humanas deben ser mayores y no tener condena por delito doloso en los últimos 5 años, entre otros requisitos.
+    - La falta de pago de 2 cuotas da derecho a resolver el contrato.
+    - Deroga la Ley 4711 de Planes de Colonización.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9630"
+  titulo: Emergencia del sistema hidroeléctrico Los Nihuiles
+  tema: Energía y minería
+  resumen: Declara por 14 meses la emergencia del Sistema Hidroeléctrico Los Nihuiles. Permite contratar de forma directa para operarlo, seguir con las empresas HINISA e HIDISA hasta cumplir los contratos, y licitar los sistemas Los Nihuiles y Diamante.
+  puntos:
+    - La emergencia dura 14 meses desde la promulgación.
+    - HINISA sigue en transición y HIDISA sigue usando el agua del Río Diamante hasta cumplir sus contratos.
+    - El Poder Ejecutivo puede concesionar el sistema Diamante por hasta 30 años.
+    - Puede contratar de manera directa, sin el régimen general de contrataciones, y reasignar partidas.
+    - Debe informar a la Legislatura cada 90 días.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9629"
+  titulo: Adicional del 50% para personal de cuidado directo de menores
+  tema: Trabajo y empleo público
+  resumen: Crea el Adicional Cuidado Directo y Permanente para personal de Responsabilidad Penal Juvenil y de Protección de Derechos de Niñas, Niños y Adolescentes con contacto directo en el cuidado. Equivale al 50% de los haberes y puede implementarse de forma gradual.
+  puntos:
+    - Equivale al 50% del total de haberes, sin contar el ítem Paritaria 2022 Régimen 15; es remunerativo y no bonificable.
+    - Se cobra solo mientras se presta el cuidado directo.
+    - Cada mes, entre el 1 y el 10, la Dirección envía a Contaduría el listado de agentes.
+    - Puede aplicarse gradualmente, según el presupuesto del Ministerio de Educación y la DGE.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9628"
+  titulo: Terrenos en General Alvear para la Dirección General de Escuelas
+  tema: Educación
+  resumen: Modifica el artículo 1 de la Ley 8480. Transfiere por donación a la Dirección General de Escuelas dos lotes del Gobierno de Mendoza en San Pedro del Atuel, General Alvear, de unas 23 y 24 hectáreas.
+  puntos:
+    - "Lote 11: 23 ha 6.357 m2. Lote 10: 24 ha 549 m2."
+    - Están sobre la Ruta Nacional 143, distrito San Pedro del Atuel.
+    - Los terrenos son del Gobierno de Mendoza y pasan a la DGE por donación.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9627"
+  titulo: La IV Brigada Aérea es declarada "Brigada Heroica"
+  tema: Derechos y sociedad
+  resumen: Declara a la IV Brigada Aérea, con sede en Mendoza, como "Brigada Heroica". Es un homenaje y reconocimiento a la formación de los pilotos que combatieron en la guerra de Malvinas.
+  puntos:
+    - Se declara "Brigada Heroica" a la IV Brigada Aérea con asiento en Mendoza.
+    - El motivo es la formación de pilotos que combatieron en Malvinas.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9626"
+  titulo: Nombre "Sonia Santillán" para el Centro de Salud 132 de Malargüe
+  tema: Salud
+  resumen: Pone el nombre de Sonia Santillán al Centro de Salud Nº 132, en el paraje Bardas Blancas, departamento de Malargüe.
+  puntos:
+    - Centro de Salud Nº 132.
+    - Ubicado en el Paraje de Bardas Blancas, Malargüe.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9625"
+  titulo: Sistema de Administración Pública Digital de Mendoza
+  tema: Otros
+  resumen: Crea el Sistema de Administración Pública Digital para los trámites del Estado provincial. Establece un ecosistema para intercambiar datos entre organismos, la plataforma Mendoza por Mí con identidad digital y reglas para contrataciones por internet.
+  puntos:
+    - Obliga a ministerios, entes, empresas estatales y a los poderes Legislativo y Judicial.
+    - Crea el Ecosistema Digital de Integrabilidad (EDI Mza) para compartir datos entre organismos.
+    - Los organismos deben sumarse al EDI Mza en 12 meses, con una prórroga excepcional de 12.
+    - Mendoza por Mí reúne identidad digital y portadocumento digital con un único usuario.
+    - Invita a los municipios a adherir.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9624"
+  titulo: "Billeteras virtuales de menores: control de los padres"
+  tema: Derechos y sociedad
+  resumen: Agrega el artículo 44 quinquies a la Ley de Defensa del Consumidor (5547). Si un menor tiene una billetera electrónica y sus padres o tutores son responsables de la cuenta, el proveedor debe darles acceso total a la información y permitirles cerrar la cuenta.
+  puntos:
+    - Los padres o tutores acceden sin restricción a consumos, movimientos y transferencias de la cuenta.
+    - También ven las inversiones de la cuenta.
+    - Pueden cerrar la cuenta en cualquier momento, sin intervención del menor.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9623"
+  titulo: Aprueba aumentos salariales de policías y penitenciarios
+  tema: Trabajo y empleo público
+  resumen: Aprueba el Decreto 615 de 2025, que otorga incrementos salariales al personal policial y penitenciario, y los decretos 619 y 649 de 2025, que homologan actas acuerdo con gremios de la Administración Pública. Los montos no figuran en el texto de la ley.
+  puntos:
+    - Aprueba el Decreto 615/2025, de incrementos salariales para policías y penitenciarios.
+    - Aprueba los decretos 619/2025 y 649/2025, que homologan actas acuerdo con gremios.
+    - Las actas se firmaron en la Subsecretaría de Trabajo y Empleo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9622"
+  titulo: Aprueba acuerdos salariales de técnicos en Rayos X y bioimágenes
+  tema: Trabajo y empleo público
+  resumen: Aprueba el Decreto 427 del 6 de marzo de 2025, que homologó las actas acuerdo de Técnicos en Rayos X y Licenciados en Bioimágenes firmadas por ATE y ATSA. Las actas están en el anexo.
+  puntos:
+    - Aprueba el Decreto 427/2025.
+    - Las actas fueron firmadas por los gremios ATE y ATSA.
+    - El contenido de los acuerdos está en el anexo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9621"
+  titulo: Aprueba una adenda al fideicomiso de infraestructura eléctrica
+  tema: Energía y minería
+  resumen: Aprueba el Decreto 330/2025, que aprobó la adenda al Fideicomiso de Administración del Fondo Fiduciario del Plan de Infraestructura Eléctrica de Alta Tensión, Zonas Aisladas y Zonas a Desarrollar (FOPIATZAD). El detalle de la adenda está en el anexo.
+  puntos:
+    - Aprueba el Decreto 330/2025.
+    - La adenda modifica el fideicomiso FOPIATZAD; su texto está en el anexo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9620"
+  titulo: Guardianes de las rutas contra la trata de personas
+  tema: Seguridad y justicia
+  resumen: "Crea la figura de Guardianes de las rutas contra la trata de personas: personas capacitadas que alertan a las autoridades ante posibles casos. Los cursos están dirigidos sobre todo a personal de vialidad, taxistas, choferes y transportistas."
+  puntos:
+    - Cursos para personal de vialidad, taxistas, conductores de micros y transportistas, camioneros e ISCAMEN, entre otros.
+    - Los dictan ONG sin fines de lucro con más de 2 años de experiencia, bajo supervisión del Estado.
+    - Quien quiera ser guardián no puede tener antecedentes penales.
+    - Aplica la Dirección de Derechos Humanos del Ministerio de Gobierno, Infraestructura y Desarrollo Territorial.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9619"
+  titulo: Expropiación en General San Martín para una escombrera municipal
+  tema: Tierras y expropiaciones
+  resumen: Declara de utilidad pública y sujeto a expropiación un inmueble de unos 474.543 m2 en Alto Salvador, General San Martín, para instalar la Escombrera Municipal. La Municipalidad expropia y paga los gastos.
+  puntos:
+    - Inmueble en calle Oratorio s/n, distrito Alto Salvador, de 474.543,31 m2 según mensura.
+    - "Destino: emplazar la Escombrera Municipal."
+    - Expropia la Municipalidad de General San Martín según el Decreto-Ley 1447/75.
+    - La Municipalidad paga los gastos.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9618"
+  titulo: Amplía los datos del Registro de Huellas Genéticas
+  tema: Seguridad y justicia
+  resumen: Agrega dos incisos al artículo 6 de la Ley 8611. Se podrán registrar huellas genéticas tomadas en aprehensiones policiales e investigaciones penales, y las tomadas en trámites administrativos con consentimiento de la persona.
+  puntos:
+    - Se incluyen huellas extraídas en aprehensiones policiales legales y en medidas de una investigación penal.
+    - En esos casos la persona debe ser informada antes sobre los alcances de la ley.
+    - También las de trámites ante entidades provinciales o nacionales según convenio, con consentimiento informado.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9617"
+  titulo: Registro Provincial del Cannabis y Cáñamo Industrial
+  tema: Producción
+  resumen: Crea el Registro Provincial del Cannabis y Cáñamo Industrial, que autoriza y controla la producción, distribución y venta de cannabis medicinal y cáñamo industrial. Crea un Consejo Asesor y tasas por los trámites. La reglamentación debe salir en 90 días.
+  puntos:
+    - "Autoridad de aplicación: el Ministerio de Gobierno, Infraestructura y Desarrollo Territorial, junto con otros organismos."
+    - Personas y asociaciones civiles, fundaciones y ONG pueden cultivar con fines medicinales si cumplen los requisitos.
+    - Quienes ya tienen autorización nacional tienen un régimen simplificado.
+    - Crea un Consejo Asesor no vinculante de 7 miembros ad honorem y tasas por trámites.
+    - Deroga los artículos 2 a 6 de la Ley 9298.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9616"
+  titulo: Expropiaciones en Guaymallén para ensanchar calle Antonelli
+  tema: Tierras y expropiaciones
+  resumen: Declara de utilidad pública y sujetas a expropiación varias parcelas pequeñas afectadas al ensanche de calle Antonelli, en Guaymallén. La Municipalidad de Guaymallén expropia y paga los gastos.
+  puntos:
+    - Son varias parcelas, con superficies afectadas de entre unos 64 y 327 m2 cada una.
+    - "Destino: ensanche de calle Antonelli, Guaymallén."
+    - Expropia la Municipalidad de Guaymallén según el Decreto-Ley 1447/75.
+    - La Municipalidad paga los gastos.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9615"
+  titulo: Dos nuevas Salas Unipersonales en las Cámaras del Trabajo
+  tema: Seguridad y justicia
+  resumen: Crea dos Salas Unipersonales en las Cámaras del Trabajo de la Primera Circunscripción Judicial. Se pagan con el crédito de la Acordada 29.411. El Consejo de la Magistratura inicia el proceso para nombrar a los jueces.
+  puntos:
+    - Dos cargos nuevos, a cubrir con el crédito presupuestario de la Acordada 29.411.
+    - El Consejo de la Magistratura inicia el procedimiento del artículo 150 de la Constitución.
+    - La Suprema Corte fija cómo terminan su tarea los conjueces actuales.
+    - La Corte reasigna al personal de los conjueces a otras Cámaras, con igual carga de trabajo para todos los jueces.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9614"
+  titulo: Nuevas reglas para el Centro Cívico de la Ciudad de Mendoza
+  tema: Municipios
+  resumen: Modifica la Ley 3401 sobre el Centro Cívico. Define cómo se construye en terrenos públicos y privados, da a la Municipalidad el control del tránsito y el estacionamiento medido, y prohíbe enajenar bienes públicos provinciales de la zona.
+  puntos:
+    - Los edificios públicos necesitan aprobación de la Municipalidad de Mendoza para proyecto, ejecución y destino.
+    - En predios privados rigen las ordenanzas municipales de uso del suelo.
+    - La Municipalidad controla el tránsito y hace las actas de infracción según la Ley 9024.
+    - La Municipalidad establece el Estacionamiento Medido.
+    - Se prohíbe vender o ceder bienes públicos provinciales del Centro Cívico, salvo para dependencias oficiales.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9613"
+  titulo: Aprueba acuerdos salariales con gremios estatales
+  tema: Trabajo y empleo público
+  resumen: Aprueba el Decreto 2797 del 26 de diciembre de 2024, que homologó actas acuerdo firmadas en la Subsecretaría de Trabajo y Empleo entre el Poder Ejecutivo y gremios de distintos sectores de la Administración Pública. El contenido de las actas no está en el texto.
+  puntos:
+    - Aprueba el Decreto 2797/2024.
+    - Las actas se firmaron entre el Poder Ejecutivo y entidades sindicales de la Administración Pública.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9612"
+  titulo: Adicional por mayor responsabilidad para personal penitenciario
+  tema: Trabajo y empleo público
+  resumen: Modifica la Ley 7493. Fija una escala del adicional por Mayor Responsabilidad Penitenciaria para oficiales jefes y superiores y encargados generales con funciones de conducción. También cambia lo que cobra el personal retirado que es convocado.
+  puntos:
+    - El adicional se calcula como porcentaje de la asignación de clase de Jefe de la Policía.
+    - "Escala: Dirección General 100%, Subdirección General 93%, Direcciones Regionales 80%."
+    - El personal convocado cobra el haber de retiro, la mitad de la asignación de clase de su grado y los adicionales de prestación efectiva.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9611"
+  titulo: Uso de celulares y tecnología en las escuelas
+  tema: Educación
+  resumen: Modifica la Ley 7861. Autoriza el uso de dispositivos móviles y otras tecnologías en escuelas públicas y privadas para actividades pedagógicas supervisadas por el docente, y en emergencias. Deroga los artículos 2 y 3 de esa ley.
+  puntos:
+    - Alcanza a docentes, personal no docente y alumnos, en todos los niveles y modalidades.
+    - El uso pedagógico es supervisado por el docente; la autoridad puede autorizarlo diferenciado por nivel.
+    - En emergencias se autoriza si es imprescindible, con permiso de la autoridad escolar.
+    - El Ministerio de Educación y la DGE evalúan nuevas herramientas y hacen una campaña sobre uso responsable.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9610"
+  titulo: Expropiación en Guaymallén para ensanchar calle Nicolás Avellaneda
+  tema: Tierras y expropiaciones
+  resumen: Declara de utilidad pública y sujeto a expropiación un inmueble de 225,41 m2 en calle Nicolás Avellaneda 3790, Guaymallén, para ensanchar la calle desde el Canal Lagunita hasta calle Mathus Hoyos, en Bermejo. La Municipalidad de Guaymallén expropia y paga los gastos.
+  puntos:
+    - Superficie de 225,41 m2, parte de una propiedad mayor, en Nicolás Avellaneda 3790.
+    - "Destino: ensanche de calle Nicolás Avellaneda, distrito Bermejo."
+    - Expropia la Municipalidad de Guaymallén según el Decreto-Ley 1447/75.
+    - La Municipalidad paga los gastos.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9609"
+  titulo: Notificaciones por mensajería y mediación en causas de familia
+  tema: Seguridad y justicia
+  resumen: Modifica el Código Procesal de Familia y Violencia Familiar (Ley 9120). Permite notificar por mensajería instantánea en ciertos casos, hace obligatoria la mediación previa en varias acciones de familia y ajusta plazos de audiencias y medidas.
+  puntos:
+    - Se notifica por mensajería instantánea medidas de protección, citaciones y autorizaciones de viaje, entre otros casos.
+    - El juzgado usa telefonía celular oficial y envía un PDF de la resolución.
+    - La mediación es previa en acciones de uniones convivenciales, parentesco, responsabilidad parental, guarda y tutela.
+    - En esos casos las actuaciones de mediación son gratuitas.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9608"
+  titulo: Cambios en el Código Procesal Penal sobre archivo y sobreseimiento
+  tema: Seguridad y justicia
+  resumen: Modifica 12 artículos del Código Procesal Penal (Ley 6730) y agrega el 362 bis. Cambia cómo se tramitan nulidades, archivos, oposiciones a decisiones del fiscal, elevación a juicio, apelaciones y recursos.
+  puntos:
+    - Las nulidades se pueden pedir solo en las oportunidades que fija la ley, bajo pena de caducidad.
+    - El fiscal puede archivar por decreto fundado y el querellante puede oponerse ante el Juez de Garantías.
+    - Si el juez no acepta un sobreseimiento pedido por el fiscal, interviene el Fiscal Adjunto Penal.
+    - Se precisan qué resoluciones de los jueces de Garantías se pueden apelar.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9607"
+  titulo: Aprueba otro convenio entre la Provincia y Las Heras
+  tema: Convenios y ratificaciones
+  resumen: Aprueba el Decreto 2504 del 29 de noviembre de 2024, que aprobó un convenio entre el Gobierno de Mendoza y la Municipalidad de Las Heras, firmado el 20 de noviembre de 2024. El detalle del convenio está en el anexo.
+  puntos:
+    - Aprueba el Decreto 2504/2024.
+    - Convenio entre el Gobierno de Mendoza y la Municipalidad de Las Heras, del 20 de noviembre de 2024.
+    - El contenido está en el anexo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9606"
+  titulo: Docentes condenados por delitos graves no pueden enseñar
+  tema: Educación
+  resumen: Modifica el Estatuto del Docente (Ley 4934). Quien tenga condena a prisión, aunque sea en primera instancia y en suspenso, por ciertos delitos del Código Penal no puede ingresar como docente, celador ni personal administrativo. Crea un registro de sumarios y sanciones.
+  puntos:
+    - No se puede ingresar a la docencia con condena a prisión por los delitos indicados, aunque sea en primera instancia.
+    - La exoneración por esos delitos implica inhabilitación permanente para enseñar.
+    - La cesantía inhabilita 3 años y la exoneración 10 años, salvo esos delitos.
+    - Rige también para docentes suplentes, celadores y personal administrativo.
+    - Crea el Registro único de sumarios, sanciones e inhabilitaciones (RUSSI) en la DGE.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9605"
+  titulo: Suspende hasta 2025 ejecuciones de deudas hipotecarias (Ley 8182)
+  tema: Derechos y sociedad
+  resumen: Suspende hasta el 31 de diciembre de 2025 los trámites de ejecución de sentencias por deudas hipotecarias de las personas comprendidas en el artículo 2 de la Ley 8182. Esos deudores no tienen que hacer trámites mientras el Poder Ejecutivo cumple lo que esa ley le encomienda.
+  puntos:
+    - Suspensión hasta el 31 de diciembre de 2025.
+    - Alcanza a deudores comprendidos en el artículo 2 de la Ley 8182.
+    - No deben hacer trámites ante el Ejecutivo ni la Justicia mientras tanto.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9604"
+  titulo: Aprueba el Decreto 2096/24
+  tema: Convenios y ratificaciones
+  resumen: Aprueba el Decreto 2096 de 2024. Una copia certificada del decreto forma parte de la ley como anexo; el texto de la ley no dice de qué trata, el detalle está en el anexo.
+  puntos:
+    - Aprueba el Decreto 2096/24.
+    - El contenido está en el anexo, en copia certificada.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9603"
+  titulo: Se extiende hasta 2025 la suspensión de ciertos juicios
+  tema: Derechos y sociedad
+  resumen: Modifica el artículo 1 de la Ley 9297 y amplía hasta el 31 de diciembre de 2025 la suspensión de los procesos iniciados, incluso los que están en ejecución de sentencia, a los fines del artículo 39 de la Ley 6086.
+  puntos:
+    - "Nuevo plazo: hasta el 31 de diciembre de 2025."
+    - Alcanza procesos en cualquier estado, también en ejecución de sentencia.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9602"
+  titulo: Cambios en la regularización de viviendas por Ley 8475
+  tema: Derechos y sociedad
+  resumen: Modifica la Ley 8475, que aplica en Mendoza la Ley Nacional 24.374 de regularización de la propiedad. Cambia quiénes pueden pedirla, qué inmuebles entran y establece que los trámites no pagan tributos.
+  puntos:
+    - Puede pedirlo quien ocupa el inmueble como casa única y permanente, o como residencia y producción si es agricultor familiar.
+    - Entran inmuebles de hasta 1.000 m2, salvo que el plan de ordenamiento municipal fije otra medida.
+    - Los trámites están exentos de tributos nacionales, provinciales y, según ordenanza, municipales.
+    - Se agrega el certificado de regularización dominial del IPV como documento.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9601"
+  titulo: "Ley publicada con nota: el texto completo está en un anexo"
+  tema: Otros
+  resumen: El Boletín Oficial publicó solo una nota que dice que el texto de la ley se puede consultar completo en el expediente EX-2024-09619509-GDEMZA-HCS o en un anexo. Con lo publicado no se puede saber de qué trata.
+  puntos:
+    - "El texto no está en el Boletín: remite al expediente EX-2024-09619509-GDEMZA-HCS."
+    - También se puede ver como anexo en el enlace indicado.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9600"
+  titulo: Nuevos perfiles laborales para docentes con cambio de funciones
+  tema: Trabajo y empleo público
+  resumen: Regula el cambio de funciones de docentes titulares que cambiaron de tareas por razones de salud, excepto enfermedades psiquiátricas. Crea un registro de perfiles laborales a los que pueden optar de forma voluntaria.
+  puntos:
+    - "Es opcional: hace falta el consentimiento del docente."
+    - La DGE evalúa las solicitudes en hasta 30 días hábiles.
+    - Quienes sean aceptados deben hacer programas de recalificación laboral si se establece la necesidad.
+    - Crea el perfil de Tutor/a de Apoyo Escolar, con grupos de hasta 5 alumnos.
+    - Puede haber incentivos para perfiles críticos. La reglamentación, dentro de 90 días.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9599"
+  titulo: Sistema de Gestión Educativa Integral obligatorio en escuelas
+  tema: Educación
+  resumen: Obliga a usar el Sistema de Gestión Educativa Integral (G.E.I.) en las escuelas de la Dirección General de Escuelas. Define quién lo controla, quién carga los datos y que se sanciona a quien omita o use mal la información.
+  puntos:
+    - La DGE aplica la ley y la Coordinación de Sistemas controla el sistema.
+    - Cada Dirección de Línea designa un referente informático.
+    - Cada escuela o dependencia designa un responsable de carga, que responde por la información.
+    - Hay sanciones disciplinarias por no cargar, cargar incompleto o usar mal los perfiles.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9598"
+  titulo: Incentivos y misiones especiales para docentes
+  tema: Educación
+  resumen: Crea los incentivos Dedicación Docente y Especialización Docente, un régimen de Misiones Especiales y reglas sobre especialidades prioritarias. Los pagos dependen de la reglamentación y del presupuesto. Tiene 90 días hábiles para implementarse.
+  puntos:
+    - "Dedicación Docente: adicional para quien trabaja 2 años o más en el mismo establecimiento, hasta el 60% de la asignación de clase, antigüedad y estado docente."
+    - "Especialización Docente: por posgrado en su área, hasta el 40%, por un máximo de 5 años."
+    - La DGE define cada año las Especialidades Prioritarias, con posible adicional y becas.
+    - Crea el Registro de Misiones Especiales y una bonificación por función diferenciada.
+    - Modifica los estatutos de las leyes 4934 y 6929.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9597"
+  titulo: "Ley publicada con nota: el texto completo está en un anexo"
+  tema: Otros
+  resumen: El Boletín Oficial publicó solo una nota que dice que el texto de la ley se puede consultar completo en el expediente EX-2024-09323149-GDEMZA-HCS o en un anexo. Con lo publicado no se puede saber de qué trata.
+  puntos:
+    - "El texto no está en el Boletín: remite al expediente EX-2024-09323149-GDEMZA-HCS."
+    - También se puede ver como anexo en el enlace indicado.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9596"
+  titulo: "Ley publicada con nota: el texto completo está en un anexo"
+  tema: Otros
+  resumen: El Boletín Oficial publicó solo una nota que dice que el texto de la ley se puede consultar completo en el expediente EX-2024-09322413-GDEMZA-HCS o en un anexo. Con lo publicado no se puede saber de qué trata.
+  puntos:
+    - "El texto no está en el Boletín: remite al expediente EX-2024-09322413-GDEMZA-HCS."
+    - También se puede ver como anexo en el enlace indicado.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9595"
+  titulo: Multas de agua en Unidades Fiscales del Agua (UFA)
+  tema: Ambiente y agua
+  resumen: Pasa las multas de la Ley General de Aguas y de otras leyes de agua a la Unidad Fiscal del Agua (UFA), creada por la Ley 9589. En la mayoría de las infracciones, la multa queda entre 100 y 10.000 UFA.
+  puntos:
+    - Modifica artículos de la Ley General de Aguas y de las leyes 971, 368, 1920, 4035, 4306 y 5302.
+    - "Usar el agua para un fin distinto al concedido: multa de 100 a 10.000 UFA."
+    - "Hacer un pozo para sacar agua subterránea sin autorización: de 3.000 a 100.000 UFA."
+    - "No votar en elecciones de irrigación: multa de 10 UFA."
+    - Las multas las imponen el Departamento General de Irrigación y las Inspecciones de Cauces.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9594"
+  titulo: Aprueba un convenio entre la Provincia y Las Heras
+  tema: Convenios y ratificaciones
+  resumen: Aprueba el Decreto 2250 del 1 de noviembre de 2024, que a su vez aprobó un convenio entre el Gobierno de Mendoza y la Municipalidad de Las Heras, firmado el 2 de julio de 2024. El texto del convenio está en el anexo.
+  puntos:
+    - Aprueba el Decreto 2250/2024.
+    - El convenio es entre el Gobierno de Mendoza y la Municipalidad de Las Heras.
+    - Fue firmado el 2 de julio de 2024.
+    - El contenido del convenio está en el anexo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9593"
+  titulo: Godoy Cruz dona un terreno al IPV para construir viviendas
+  tema: Obras e infraestructura
+  resumen: Autoriza a la Municipalidad de Godoy Cruz a donar al Instituto Provincial de la Vivienda un terreno de unas 6 ha. El IPV debe usarlo para construir o urbanizar y adjudicar viviendas a familias de Godoy Cruz.
+  puntos:
+    - "Terreno: Fracción 1, de 6 ha 2.196,02 m2."
+    - Las obras deben empezar a los 2 años de aceptada la donación, como máximo.
+    - Deben terminar dentro de los 48 meses desde que empiezan.
+    - Si no se cumple, el inmueble vuelve a la Municipalidad sin indemnización.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9592"
+  titulo: Reglas sobre celulares y pantallas al manejar
+  tema: Transporte
+  resumen: Modifica la Ley de Tránsito 9024 sobre el uso de dispositivos al conducir. Prohíbe el uso manual del celular, los mensajes y los auriculares, salvo con manos libres. No se pueden ver videos en el lugar del conductor.
+  puntos:
+    - Se prohíbe operar el celular con la mano, leer mensajes y usar auriculares, salvo manos libres que no interfieran.
+    - Los videos solo pueden verse en pantallas de las plazas traseras.
+    - En transporte o delivery, el celular puede usarse como GPS si está en un soporte que no tape la visión.
+    - Quien lo use así debe acreditar que lo necesita para el servicio.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9591"
+  titulo: Tunuyán tiene hasta 2030 para cumplir el objeto de la Ley 9446
+  tema: Municipios
+  resumen: Agrega un artículo a la Ley 9446 y fija el 31 de diciembre de 2030 como plazo para que la Municipalidad de Tunuyán haga las gestiones para cumplir lo que esa ley establece.
+  puntos:
+    - Agrega el artículo 2 bis a la Ley 9446.
+    - "Plazo: hasta el 31 de diciembre de 2030."
+    - Lo debe hacer la Municipalidad de Tunuyán.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9590"
+  titulo: Donación de dos inmuebles de la Provincia a Malargüe
+  tema: Tierras y expropiaciones
+  resumen: Autoriza al Poder Ejecutivo a donar a la Municipalidad de Malargüe dos inmuebles que son de la Provincia, de unas 8 ha y 5 ha. La Escribanía General de Gobierno hace las escrituras.
+  puntos:
+    - "Primer inmueble: polígono 2 del plano 19-3089, de 8 ha 8.762,95 m2."
+    - "Segundo inmueble: polígono 3 del mismo plano, de 5 ha 2.598,44 m2."
+    - La Escribanía General de Gobierno hace los actos necesarios para las escrituras.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9589"
+  titulo: Régimen de agua potable y saneamiento; Irrigación como ente regulador
+  tema: Ambiente y agua
+  resumen: Regula los servicios de agua potable y saneamiento. El Departamento General de Irrigación pasa a ser el Ente Regulador y se disuelve el Ente Provincial del Agua y de Saneamiento (EPAS), cuyo patrimonio pasa a la Provincia.
+  puntos:
+    - Irrigación controla inversiones, tarifas y calidad, y resuelve en primera instancia las controversias.
+    - Se financia con tasas, multas y otros recursos.
+    - Se convoca audiencia pública para mejorar la calidad del servicio.
+    - El personal del EPAS puede incorporarse al Ente Regulador o a Agua y Saneamiento Mendoza SAPEM.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9588"
+  titulo: Aprueba 34 impactos ambientales de permisos de exploración
+  tema: Energía y minería
+  resumen: Aprueba las Declaraciones de Impacto Ambiental emitidas por Resoluciones Conjuntas de la Dirección de Minería y la Dirección de Protección Ambiental para 34 permisos de exploración, como El Seguro, Campeones y Canillitas.
+  puntos:
+    - Cada permiso tiene su resolución conjunta DM y DPA.
+    - Rige desde el día siguiente de su publicación.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9587"
+  titulo: Unidad Ejecutiva de Seguridad Vial y cambios a la Ley de Tránsito
+  tema: Transporte
+  resumen: Modifica las Leyes 9501 y 9024. La Dirección de Seguridad Vial y la Unidad Ejecutiva de Seguridad Vial, entre otros organismos, aplican la Ley de Tránsito.
+  puntos:
+    - Agrega la administración de la Unidad Ejecutiva de Seguridad Vial a las funciones del artículo 12 de la Ley 9501.
+    - Cambia los artículos 5 y 22 de la Ley 9024 e incorpora los artículos 22 bis y 22 ter.
+    - Rige desde que el Ejecutivo, mediante la Unidad Ejecutiva, la reglamente.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9586"
+  titulo: Venta en subasta de un inmueble de Irrigación en Ciudad
+  tema: Ambiente y agua
+  resumen: Autoriza al Departamento General de Irrigación a vender en subasta pública su inmueble de calle 25 de Mayo 1245, Ciudad de Mendoza. Lo recaudado no puede usarse en gastos corrientes.
+  puntos:
+    - Los fondos se destinan a bienes de capital o inversiones.
+    - Se vende libre de ocupantes, que tienen 30 días corridos para desalojar.
+    - Vencido el plazo, la Justicia ordena el lanzamiento.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9585"
+  titulo: Directrices para la política provincial de cambio climático
+  tema: Ambiente y agua
+  resumen: Establece directrices para la gestión del cambio climático en Mendoza, en línea con la Ley Nacional 27.520. La autoridad de aplicación es el Ministerio de Energía y Ambiente.
+  puntos:
+    - Debe hacer un Inventario de Gases de Efecto Invernadero, actualizado al menos cada 5 años.
+    - Debe elaborar el Plan Provincial de Mitigación y Adaptación al Cambio Climático, con metas de carbono neutralidad.
+    - El Ejecutivo puede dar incentivos a particulares que tomen acciones de adaptación y mitigación.
+    - Debe reglamentarse en 180 días.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9584"
+  titulo: Promoción de inversiones en zonas de montaña y Uspallata
+  tema: Producción
+  resumen: Crea un régimen de promoción de inversiones para unidades territoriales como Oasis Uspallata, Montañas y Piedemonte Uspallata. Busca dotar de servicios turísticos, comerciales y logísticos.
+  puntos:
+    - Alcanza nuevas inversiones en bienes de capital y edificaciones o adecuaciones de infraestructura.
+    - Los proyectos los aprueba el Ministerio de Gobierno, Infraestructura y Desarrollo Territorial con EMETUR.
+    - La actividad debe empezar dentro de los 2 años de aprobado el proyecto.
+    - Crea un Fondo para Financiación de Obras Hídricas, administrado por Irrigación.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9583"
+  titulo: Expropiación de terrenos de Los Penitentes, en Uspallata
+  tema: Tierras y expropiaciones
+  resumen: Declara de utilidad pública y sujetos a expropiación tres polígonos de Los Penitentes Centro de Esquí S.A. en Uspallata, Las Heras, de 6 ha 8774,21 m2. La Provincia expropia para un polo de actividades de montaña.
+  puntos:
+    - El destino es la explotación turística, deportiva y comercial, sola o con terceros.
+    - La Provincia puede compensar créditos que tenga contra los expropiados con el precio.
+    - El Ejecutivo puede ceder sin cargo superficies para calles e infraestructura y dar opción de compra a concesionarios.
+    - Los gastos salen del Presupuesto provincial.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9582"
+  titulo: Aprueba decretos de aumentos y acuerdos con gremios estatales
+  tema: Trabajo y empleo público
+  resumen: Aprueba ocho decretos de 2024 que homologan acuerdos con gremios, entre ellos S.U.T.E., y otorgan incrementos salariales, incluidos los del personal policial y penitenciario.
+  puntos:
+    - El Decreto 332 dio un aumento al personal policial y penitenciario de noviembre de 2023 a marzo de 2024.
+    - El Decreto 1421 fijó un aumento para el tercer trimestre de 2024.
+    - Los Decretos 1326, 1419 y 1687 homologan acuerdos con gremios.
+    - Incluye los Decretos 317, 332, 383, 1326, 1419, 1421, 1686 y 1687.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9581"
+  titulo: Expropiación en Guaymallén para abrir y prolongar calles
+  tema: Tierras y expropiaciones
+  resumen: Declara de utilidad pública y sujetas a expropiación superficies de parcelas en el distrito Kilómetro 11, Guaymallén, para abrir y prolongar calles. El texto detalla las parcelas.
+  puntos:
+    - La Municipalidad de Guaymallén es quien expropia, según el Decreto-Ley 1447/75.
+    - La Municipalidad paga los gastos.
+    - La parcela 1 tiene unos 636,18 m2 afectados.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9580"
+  titulo: Recursos y ejecución de multas de defensa del consumidor
+  tema: Derechos y sociedad
+  resumen: Modifica los artículos 41 y 42 de la Ley 9314 y el artículo 61 de la Ley 5547. Los recursos contra sanciones no suspenden las multas, y las impagas se cobran por apremio.
+  puntos:
+    - Los montos de multas y tasas se depositan en una cuenta especial.
+    - Las multas impagas dan lugar a boleta de deuda y ejecución judicial por apremio.
+    - Alcanza a multas de la Ley 5547 y de la Ley Nacional 24.240, entre otras.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9579"
+  titulo: Recibos a productores primarios por materias primas
+  tema: Producción
+  resumen: Los establecimientos que reciben materias primas para industrializar, acopiar o transportar deben dar al productor un recibo con cantidades, calidades, precio y forma de pago. El Ministerio de Producción difunde información agropecuaria.
+  puntos:
+    - Los informes agropecuarios son de acceso general y gratuito.
+    - La autoridad de aplicación es el Ministerio de Producción.
+    - Deroga la Ley 9133.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9578"
+  titulo: Regulación de la seguridad privada y su registro
+  tema: Seguridad y justicia
+  resumen: Regula los servicios de seguridad privada humana, interna y tecnológica en Mendoza. Crea un registro provincial a cargo del Ministerio de Seguridad y Justicia, que habilita y controla a las empresas.
+  puntos:
+    - Alcanza a vigilancia, custodias, seguridad interna y alarmas y videovigilancia.
+    - Excluye el transporte de caudales y los sistemas de seguridad ciudadana del Estado.
+    - Las empresas existentes tienen 90 días desde la reglamentación para adecuarse.
+    - Deroga la Ley 6441.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9577"
+  titulo: Nueva ley de Personas Jurídicas y Registro Público
+  tema: Economía y finanzas
+  resumen: Regula la Dirección de Personas Jurídicas y Registro Público, que controla sociedades, asociaciones civiles y fundaciones en Mendoza. Define su organización, deberes y funciones.
+  puntos:
+    - Está a cargo de un Director abogado, escribano o contador, con al menos 5 años de matrícula.
+    - Rubrica los libros, incluso digitales, de las personas jurídicas.
+    - Todas las personas jurídicas deben reempadronarse digitalmente; el primer año es sin tasa.
+    - Deroga la Ley 9002.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9576"
+  titulo: Transferencia de las acciones de IMPSA de la Provincia
+  tema: Economía y finanzas
+  resumen: Autoriza al Poder Ejecutivo a transferir las 454.300.000 acciones Clase C de IMPSA S.A. que tiene la Provincia. El proceso debe asegurar concurrencia, publicidad, igualdad y transparencia.
+  puntos:
+    - Son todas las acciones ordinarias nominativas no endosables Clase C de la Provincia.
+    - El Ejecutivo realiza los actos necesarios para la transferencia.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9575"
+  titulo: Adhesión provincial al Régimen de Regularización de Activos
+  tema: Impuestos
+  resumen: Adhiere Mendoza al Régimen de Regularización de Activos de la Ley Nacional 27.743 respecto de los tributos locales. Libera de sanciones y de tributos provinciales a los bienes declarados.
+  puntos:
+    - Alcanza a contribuyentes que al 31/12/2024 no tengan deudas anteriores al 30/09/2024.
+    - Los depósitos del régimen no sufren retenciones ni percepciones provinciales.
+    - Registrar los bienes a su nombre paga el Impuesto de Sellos.
+    - La Administración Tributaria Mendoza conserva sus facultades de fiscalización.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9574"
+  titulo: Expropiación de un callejón comunero en Tupungato
+  tema: Tierras y expropiaciones
+  resumen: Declara de utilidad pública y sujetos a expropiación dos inmuebles inscriptos como Callejón Comunero de Indivisión Forzosa, de 8.369,03 m2 y 3.232,14 m2, en Tupungato.
+  puntos:
+    - La Municipalidad de Tupungato es quien expropia, según el Decreto-Ley 1447/75.
+    - Los gastos los paga la Municipalidad de Tupungato.
+    - Los inmuebles son las matrículas 174.065/14 y 166.300/14.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9573"
+  titulo: Duración y reelección de concejales e intendentes
+  tema: Municipios
+  resumen: Modifica la Ley 1079. Concejales e intendentes duran cuatro años y pueden ser reelectos por un solo período consecutivo. Deroga el artículo 47.
+  puntos:
+    - Los concejos se renuevan por mitades cada dos años.
+    - Quien fue reelecto solo puede volver a ser elegido con un período de intervalo.
+    - Los intendentes son elegidos por simple mayoría de votos válidos.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9572"
+  titulo: Actas policiales y audiencias unilaterales en el Código Procesal Penal
+  tema: Seguridad y justicia
+  resumen: Modifica el Código Procesal Penal. Las actas policiales firmadas sirven como elemento de convicción sin citar al policía como testigo, salvo que haya controversia. En casos graves, allanamientos e intervenciones se piden en audiencia unilateral.
+  puntos:
+    - La audiencia por allanamiento debe fijarse dentro de 24 horas.
+    - Para allanamientos en esos casos debe estar presente un Juez Penal.
+    - La intervención de comunicaciones se resuelve en una audiencia unilateral, con registro audiovisual.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9571"
+  titulo: Cancelación anticipada con descuentos de viviendas y créditos del IPV
+  tema: Derechos y sociedad
+  resumen: Modifica la Ley 9378. Permite cancelar en un solo pago viviendas o créditos con quitas de entre 40% y 60% según el monto y la fecha de otorgamiento, con 10% extra para quienes están al día.
+  puntos:
+    - "Deudas de hasta 2 SMVM: quita del 60%."
+    - "Créditos hasta 2005: 50%; de 2006 a noviembre de 2017: 40%."
+    - Saldos de hasta el 30% de un SMVM pueden darse por cancelados, con un arancel del 15% de un SMVM.
+    - Se paga en un solo pago y en moneda de curso legal.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9570"
+  titulo: Zonificación del Parque Provincial Aconcagua
+  tema: Ambiente y agua
+  resumen: Aprueba la zonificación del Parque Provincial Aconcagua (Anexo I) y lineamientos para planes de gestión de áreas naturales protegidas (Anexo II), orientados a conservar los ecosistemas y la biodiversidad.
+  puntos:
+    - Las revisiones de la zonificación deben seguir los lineamientos del Anexo II.
+    - El canon de concesionarios y permisionarios se calcula con una fórmula que considera el volumen y tipo de servicios, la superficie y el valor ambiental.
+    - Deroga el artículo 1 de la Ley 5463.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9569"
+  titulo: Organización del Servicio Penitenciario Provincial
+  tema: Seguridad y justicia
+  resumen: Regula el Servicio Penitenciario Provincial, que custodia a personas procesadas o condenadas a penas de prisión y ejecuta esas penas. Depende del Ministerio de Seguridad y Justicia.
+  puntos:
+    - Está formado por la Dirección General, los establecimientos, el personal y el Instituto de Formación Penitenciaria.
+    - El Director General es designado por el Poder Ejecutivo; un oficial debe ser Prefecto General con título universitario.
+    - "Tiene direcciones principales y tres direcciones regionales: Centro, Oeste y Sur."
+    - Deroga la Ley 7976 y partes de la Ley 8465.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9568"
+  titulo: Agrupamiento de horas recreativas en el escalafón municipal
+  tema: Municipios
+  resumen: Agrega el inciso d) al artículo 5 de la Ley 5892, el escalafón de empleados municipales. Crea el agrupamiento de horas recreativas para tareas en horarios rotativos o discontinuos.
+  puntos:
+    - Incluye a quienes realizan tareas de deportes, actividades lúdicas, al aire libre o culturales.
+    - No constituye categoría de cargo.
+    - La única incompatibilidad es la superposición horaria con cargos administrativos u otras horas recreativas.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9567"
+  titulo: Adhesión de Mendoza al Régimen de Incentivo para Grandes Inversiones
+  tema: Economía y finanzas
+  resumen: Adhiere la Provincia de Mendoza al Régimen de Incentivo para Grandes Inversiones (RIGI) del Título VII de la Ley Nacional 27.742, según el artículo 224 de esa ley.
+  puntos:
+    - Rige desde su publicación en el Boletín Oficial.
+    - La adhesión es al Título VII de la Ley Nacional 27.742.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9566"
+  titulo: Aprueba el Decreto 1085/24, cuyo texto está en el anexo
+  tema: Otros
+  resumen: "Aprueba el Decreto 1085 de 2024. El texto de la ley no dice de qué trata el decreto: su detalle está en la copia certificada que integra la ley como anexo."
+  puntos:
+    - La ley tiene un solo artículo.
+    - El contenido del decreto figura solo en el anexo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9565"
+  titulo: Dirección de Promoción y Control de Liberados
+  tema: Seguridad y justicia
+  resumen: Crea en el Ministerio de Seguridad y Justicia la Dirección de Promoción y Control de Liberados, parte del Sistema Penitenciario Provincial, para asistir y controlar a liberados de la Justicia Provincial.
+  puntos:
+    - Empieza el pre-egreso con al menos 6 meses de anticipación a una posible liberación.
+    - Lleva un registro y legajo actualizado de liberados y orienta su capacitación e inserción laboral.
+    - Prioriza sistemas de seguridad inteligente para el control.
+    - Deroga la Ley 7503 y partes de la Ley 8465.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9564"
+  titulo: Actividad física escolar sin electrocardiograma ni apto físico
+  tema: Educación
+  resumen: Busca resguardar la salud de niños y adolescentes y facilitar su actividad física. Quienes no tengan antecedentes y tengan su control de salud normal quedan exentos de presentar electrocardiograma y apto físico para la actividad escolar.
+  puntos:
+    - Hay una excepción para adolescentes con enfermedades cardíacas de origen genético sin electrocardiograma previo.
+    - Se aplica a establecimientos públicos y privados de educación y salud.
+    - El Estado promueve el control integral de salud periódico sin condicionar la educación física.
+    - La aplican Educación y Salud en conjunto.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9563"
+  titulo: Donación a Godoy Cruz de terrenos para abrir una calle
+  tema: Tierras y expropiaciones
+  resumen: Autoriza al Poder Ejecutivo a donar con cargo a la Municipalidad de Godoy Cruz dos franjas de terreno en San Francisco del Monte. Servirán para abrir una calle entre Valle Grande y Cubillos.
+  puntos:
+    - Las franjas son parte de fracciones de inmuebles de la Provincia de la ex Corporación Mixta de Fruticultores.
+    - La Municipalidad tiene hasta 4 años para hacer las obras de apertura.
+    - Los gastos y el plano de mensura los paga la Municipalidad.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9562"
+  titulo: Regulación de videocámaras en lugares públicos
+  tema: Seguridad y justicia
+  resumen: Regula el uso de videocámaras, con o sin inteligencia artificial, para grabar en lugares públicos y el tratamiento de esas imágenes y datos. El fin es la seguridad pública y prevenir delitos y contravenciones.
+  puntos:
+    - Prohíbe grabar el interior de propiedades privadas sin consentimiento o autorización judicial.
+    - Debe informarse a la ciudadanía de la existencia de cámaras, sin precisar su ubicación.
+    - Los registros son confidenciales y solo los puede pedir una autoridad judicial o administrativa.
+    - Las personas pueden pedir acceso y cancelación de las grabaciones. Deroga las Leyes 7924 y 8741.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9561"
+  titulo: Ingreso directo a la Policía de personal en informática
+  tema: Seguridad y justicia
+  resumen: Agrega el artículo 48 bis a la Ley 6722. Permite ingresar directamente a grados intermedios de la Policía, hasta oficial jefe, a quienes acrediten idoneidad en tecnología, sistemas y bases de datos.
+  puntos:
+    - Deben aprobar antes un examen de aptitud.
+    - Es excepcional y depende de necesidades del área informática del Ministerio de Seguridad y Justicia.
+    - El Ministerio puede exceptuarlos del uso de arma de fuego.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9560"
+  titulo: Modelo único para pedidos de captura y otras medidas judiciales
+  tema: Seguridad y justicia
+  resumen: Modifica la Ley 9019. La Justicia Penal y Contravencional y el Ministerio Público Fiscal deben usar un modelo único para pedidos de captura, comparendo, prohibiciones de acercamiento, inhabilitaciones para conducir y otras medidas.
+  puntos:
+    - La Subsecretaría de Tecnología Aplicada a la Seguridad fija los protocolos para cargarlos al sistema.
+    - Los pedidos se hacen solo con los formularios de la reglamentación y por correo oficial o tecnología equivalente.
+    - Deben comunicar cualquier modificación o baja de lo pedido.
+    - Los registros caducan automáticamente pasados los plazos del artículo 4.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9559"
+  titulo: "Cambios al Código de Contravenciones: alcohol y acoso callejero"
+  tema: Seguridad y justicia
+  resumen: Modifica la Ley 9099. Cambia los mínimos y máximos de sanciones, endurece las penas por alcoholemia de 1 gramo por litro o más y define el acoso sexual callejero con sanciones.
+  puntos:
+    - Arresto de 1 a 120 días; multa de 100 a 12.000 Unidades Fijas; trabajo comunitario de 4 a 80 días.
+    - "Conducir con alcohol de 1 g/l o más: multa de 4000 a 11.000 U.F. o arresto y inhabilitación de 90 a 545 días."
+    - "Acoso sexual callejero: multa de 200 a 2000 U.F. o 8 a 20 días de trabajo comunitario; se duplica si la víctima es menor o tiene discapacidad."
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9558"
+  titulo: "Cambios en la Ley de Tránsito: alcoholímetros y vehículos retenidos"
+  tema: Transporte
+  resumen: Modifica la Ley de Tránsito 9024. Permite firmar convenios para calibrar alcoholímetros, extiende la inhabilitación por reincidencia y cambia las reglas sobre vehículos retenidos.
+  puntos:
+    - Permite convenios con universidades y otras entidades para certificar la calibración de los alcoholímetros.
+    - En la primera reincidencia del inciso 7 del artículo 52, la inhabilitación puede llegar a 365 días.
+    - El juez puede ordenar cursos de capacitación y conducción responsable.
+    - Los vehículos retenidos quedan a disposición del juez correspondiente.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9557"
+  titulo: Aprueba decretos de acuerdos salariales con gremios estatales
+  tema: Trabajo y empleo público
+  resumen: Aprueba seis decretos de 2024 que homologan actas acuerdo entre el Poder Ejecutivo y los gremios de la administración pública, incluidos docentes. Fija adicionales de seguridad para policías y penitenciarios.
+  puntos:
+    - Desde el 1 de junio de 2024, el Adicional General por Función Fuerzas de Seguridad (Ítem 1629) es del 20%.
+    - Desde esa fecha, el Adicional Personal de Seguridad (Ítem 1433) es del 19%.
+    - Los decretos son los 306, 405, 433, 804, 964 y 1073 de 2024; el detalle está en el anexo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9556"
+  titulo: Registro y control de compra y venta de bienes muebles usados
+  tema: Seguridad y justicia
+  resumen: Crea un sistema preventivo de control y sanción para la compra y venta de bienes muebles usados y un Registro público de Bienes Muebles Usados, a cargo del Ministerio de Seguridad y Justicia.
+  puntos:
+    - Quienes compran y venden usados de forma habitual deben registrarse, anotar sus operaciones y tener inventario.
+    - Los agentes pueden inspeccionar, suspender actividades y secuestrar mercadería.
+    - "Pone a la venta bienes sin origen lícito: multa de 1000 a 4000 Unidades Fijas o arresto de 40 a 60 días."
+    - Deroga las Leyes 8124 y 9169; se reglamenta en 180 días.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9555"
+  titulo: Recupero del costo de salud de conductores que causen accidentes
+  tema: Salud
+  resumen: Faculta al Ministerio de Salud y Deportes, a través del ente de la Ley 9535, a cobrar las prestaciones de salud al conductor que haya incurrido en las prohibiciones del artículo 52 incisos 7 y 8 de la Ley 9024 y cause o participe de un accidente.
+  puntos:
+    - El cobro depende de la responsabilidad que fije la autoridad competente.
+    - Lo hace el ente REFORSAL, creado por la Ley 9535.
+    - El Poder Ejecutivo reglamenta los procedimientos.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9554"
+  titulo: Cambios en juicios por jurados populares
+  tema: Seguridad y justicia
+  resumen: Modifica la Ley 9106. Fija qué delitos se juzgan por jurados, quién dirige el proceso y permite cambiar la circunscripción de los jurados si el hecho conmocionó a una comunidad.
+  puntos:
+    - Los jurados juzgan delitos de los artículos 79, 80, 124, 165 y 166 inciso 1 del Código Penal consumados, y los concurrentes.
+    - El juez puede disponer, a pedido del acusado, sortear jurados de otra circunscripción.
+    - La OGAP determina qué juez tramita la causa y otro para impugnaciones.
+    - Para los artículos 79 y 166 inciso 1, rige para casos elevados a juicio desde la vigencia.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9553"
+  titulo: Funciones de los licenciados en Enfermería
+  tema: Salud
+  resumen: Define las funciones específicas de los Licenciados en Enfermería en Mendoza, que además pueden hacer las de enfermeros profesionales y auxiliares.
+  puntos:
+    - Gerencian servicios de enfermería y dirigen instituciones de salud, docencia e investigación.
+    - Planifican y evalúan proyectos y programas de salud de su servicio.
+    - Se acreditan con certificación de la Dirección de Recursos Humanos del Ministerio.
+    - El Ministerio debe reglamentar en 60 días.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9552"
+  titulo: Día del jugador de básquet mendocino el 28 de febrero
+  tema: Otros
+  resumen: Declara el 28 de febrero como Día del/la jugador/a de básquet mendocino/a. Recuerda el día de 1959 en que Mendoza fue campeón argentino de básquet en el campeonato jugado en Neuquén.
+  puntos:
+    - La fecha conmemora el título argentino de Mendoza del 28 de febrero de 1959.
+    - El campeonato se jugó en la provincia de Neuquén.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9551"
+  titulo: Donación del terreno de la Policía Rural en General Alvear
+  tema: Seguridad y justicia
+  resumen: Modifica el artículo 1 de la Ley 9440. Acepta la donación con cargo del inmueble donde funciona la Policía Rural, en Los Compartos, General Alvear, de 499,80 m2, a favor del Poder Ejecutivo.
+  puntos:
+    - El terreno está inscripto a nombre de Francisco Brosio y mide 499,80 m2.
+    - Linda con una calle pública, con un Centro de Salud y con sucesores de Francisco Brosio.
+    - La donación es con cargo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9550"
+  titulo: "Reformas varias: Caja de Seguro Mutual, créditos del IPV y más"
+  tema: Economía y finanzas
+  resumen: Reúne reformas de varias leyes. Disuelve la Caja de Seguro Mutual, permite ceder carteras de crédito del IPV y del Fondo para la Transformación y autoriza la venta de bienes de ex bancos oficiales.
+  puntos:
+    - Disuelve y liquida la Caja de Seguro Mutual; el Estado asume sus deudas y se deroga la Ley 9121.
+    - Autoriza al IPV y al Fondo para la Transformación a ceder sus carteras de créditos.
+    - "Agrega causales de sanción a empleados públicos: certificado médico falso y quiebra."
+    - Autoriza vender los activos del fideicomiso Acequia y bienes vía D.A.A.B.O.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9549"
+  titulo: Aprueba adenda al acuerdo por la obra Portezuelo del Viento
+  tema: Obras e infraestructura
+  resumen: Aprueba el Decreto 883/2024, que aprobó una adenda al acuerdo de 2019 entre la Nación y Mendoza para la obra Aprovechamiento Hídrico Multipropósito Portezuelo del Viento. La adenda se firmó el 25 de abril de 2024 y está en el anexo.
+  puntos:
+    - La adenda modifica el acuerdo firmado el 19 de junio de 2019.
+    - Los firmantes fueron ministros nacionales y el Gobernador.
+    - El contenido de la adenda está en el anexo de la ley.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9548"
+  titulo: Capacitación en género para clubes deportivos
+  tema: Derechos y sociedad
+  resumen: Obliga a capacitarse en género y violencia contra las mujeres a quienes integran la comisión directiva de asociaciones civiles deportivas de primer y segundo grado de Mendoza.
+  puntos:
+    - La autoridad de aplicación es el Ministerio de Gobierno, Infraestructura y Desarrollo Territorial.
+    - Define los contenidos junto con la Dirección de Género y Diversidad.
+    - Si no presentan el certificado, la asociación pierde el acceso a subsidios y programas del Ejecutivo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9547"
+  titulo: Agencia Provincial de Evaluación de Tecnologías Sanitarias
+  tema: Salud
+  resumen: Crea la Agencia Provincial de Evaluación de Tecnologías Sanitarias (AGPET), un ente autárquico que evalúa medicamentos, equipos y procedimientos médicos. Sus dictámenes son obligatorios para los organismos de salud provinciales.
+  puntos:
+    - La dirige un Director designado por el Ejecutivo por 4 años, sin intereses en empresas de tecnologías de salud.
+    - Crea un Comité Técnico Consultivo de carácter ad hoc y transitorio.
+    - Recibe fondos del presupuesto, de su gestión y el 50% de lo generado en el registro de investigación científica patrocinada.
+    - Debe procurar autofinanciarse.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9546"
+  titulo: Emergencia del sistema sanitario público por 12 meses
+  tema: Salud
+  resumen: Declara la emergencia del sistema sanitario público por 12 meses, prorrogable por igual período. Permite reorganizar el Ministerio de Salud y Deportes y simplificar compras y contrataciones.
+  puntos:
+    - Los agentes pueden ser destinados a otras dependencias por necesidad del servicio.
+    - Se permiten compras directas hasta 80 veces el Salario Mínimo Vital y Móvil.
+    - El Ministerio puede hacer modificaciones presupuestarias entre partidas, avisando al Ministerio de Hacienda y Finanzas.
+    - Alcanza a personal permanente, transitorio y contratado del Ministerio y de OSEP.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9545"
+  titulo: Fondo Escolar Permanente para infraestructura de escuelas
+  tema: Educación
+  resumen: Crea el Fondo Escolar Permanente, con bienes de herencias vacantes y donaciones a nombre de la Dirección General de Escuelas. Se usa para terrenos, construcción, reparación y equipamiento de escuelas.
+  puntos:
+    - La Dirección General de Escuelas puede vender o alquilar bienes por licitación o subasta; el detalle de inmuebles está en el Anexo I.
+    - Quien denuncia una herencia vacante cobra el 15% de lo obtenido por la venta.
+    - Los ocupantes de los inmuebles tienen 5 días para desocupar.
+    - Bancos y cajas de seguridad deben informar sobre titulares fallecidos con cuentas inactivas.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9544"
+  titulo: Prohibición de fumar en casinos, incluidos balcones y patios
+  tema: Salud
+  resumen: Agrega el artículo 1 bis a la Ley 8382. La adhesión a la ley nacional antitabaco no incluye el inciso a) del artículo 24 para casinos, y Mendoza prohíbe fumar en esos lugares.
+  puntos:
+    - La prohibición abarca salas, balcones, patios, terrazas y áreas similares de los casinos de la Provincia.
+    - Se aplica a los casinos ubicados en el territorio de Mendoza.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9543"
+  titulo: Control de equipos que emiten radiaciones ionizantes
+  tema: Salud
+  resumen: Regula la instalación, habilitación y control de los dispositivos que emiten radiaciones ionizantes en Mendoza, junto con la Ley Nacional 17.557. La autoridad de aplicación es el Ministerio de Salud y Deportes.
+  puntos:
+    - El Ministerio habilita establecimientos, lleva el registro y sanciona incumplimientos.
+    - Las multas van de 5 a 500 Unidades Fijas.
+    - Los laboratorios de dosimetría personal deben hacer ejercicios de intercomparación al menos cada dos años.
+    - Deroga la Ley 4966.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9542"
+  titulo: Matriculación de profesionales sanitarios
+  tema: Salud
+  resumen: Establece un nuevo régimen de matriculación de profesionales sanitarios, a cargo del Ministerio de Salud y Deportes. La matrícula autoriza a ejercer en Mendoza y se emite una sola vez.
+  puntos:
+    - Fija quiénes pueden matricularse, incluso con títulos extranjeros, y los requisitos de la inscripción.
+    - Ejercer sin matrícula se sanciona con multa; también define causas de suspensión y cancelación.
+    - Permite una matrícula provisoria de un año en zonas con pocos profesionales.
+    - Deroga artículos de la Ley 2636.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9541"
+  titulo: Cambios a la Defensoría de las Personas con Discapacidad
+  tema: Derechos y sociedad
+  resumen: Modifica los artículos 1, 3, 4, 12 y 16 de la Ley 8345. La Defensoría es un órgano unipersonal e independiente que funciona en la Legislatura. Define cómo se designan el Defensor y su adjunto.
+  puntos:
+    - El Defensor se elige a partir de una terna; las organizaciones de personas con discapacidad con personería jurídica pueden postular.
+    - El adjunto se designa del mismo modo y por el mismo período, con una terna del Ministerio de Salud y Deportes.
+    - Si el Defensor muere, renuncia o es removido, el Ejecutivo debe iniciar la designación del nuevo en 10 días hábiles.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9540"
+  titulo: Incompatibilidades de los farmacéuticos y bloqueo de título
+  tema: Trabajo y empleo público
+  resumen: Modifica los artículos 19 y 20 de la Ley 5411. Los farmacéuticos pueden ejercer en el ámbito estatal y privado, respetando las incompatibilidades. Limita el adicional por bloqueo de título.
+  puntos:
+    - Es incompatible ejercer en más de un cargo público a la vez.
+    - La actividad docente no cuenta como incompatibilidad.
+    - El adicional por bloqueo de título solo se da si hay incompatibilidad en el Ministerio de Salud y Deportes y el sector privado.
+    - El Estado promueve la educación continua de los farmacéuticos de planta.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9539"
+  titulo: Régimen especial voluntario para médicos del sistema público
+  tema: Trabajo y empleo público
+  resumen: Crea un régimen especial y voluntario de empleo para médicos del sistema público de salud, con ingreso por concurso. No deroga el régimen vigente. Fija derechos, deberes, prohibiciones y el valor de la Unidad Sanitaria.
+  puntos:
+    - Alcanza a médicos con título que presten servicios permanentes; deben optar por ingresar.
+    - Garantiza estabilidad, retribución, capacitación y licencias.
+    - Fija la Unidad Sanitaria en $130.000; luego la define el Poder Ejecutivo.
+    - El Ejecutivo debe reglamentar en 120 días.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9538"
+  titulo: Control de estudios de investigación en farmacología clínica
+  tema: Salud
+  resumen: Fija un marco para regular y controlar las investigaciones de farmacología clínica en personas, protegiendo sus derechos. Crea un registro de investigadores y exige la aprobación de un Comité de Ética.
+  puntos:
+    - Crea el Registro Provincial de Investigadores, Centros de Investigación y Comités de Ética de Investigación.
+    - El dictamen del Comité de Ética es vinculante.
+    - Los comités no pueden estar dirigidos por empresas interesadas en los resultados.
+    - El Ministerio de Salud y Deportes es la autoridad de aplicación; se reglamenta en 180 días.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9537"
+  titulo: Regulación de la venta y distribución de productos médicos
+  tema: Salud
+  resumen: Regula la selección, compra, almacenamiento, distribución y venta de productos médicos en Mendoza. Solo pueden hacerlo personas habilitadas por el Ministerio de Salud y Deportes.
+  puntos:
+    - Las distribuidoras necesitan habilitación previa y un profesional matriculado como Supervisor Técnico.
+    - Distribuidora y Supervisor Técnico son responsables solidarios por el origen legal y la documentación de los productos.
+    - En caso de reincidencia se puede inhabilitar de 1 mes a 5 años.
+    - Deja sin efecto el Decreto 199/11.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9536"
+  titulo: Habilitación y categorización de establecimientos de salud
+  tema: Salud
+  resumen: Regula cómo se habilitan y categorizan los establecimientos de salud públicos y privados de Mendoza. Exige factibilidad del proyecto edilicio y habilitación previa al funcionamiento.
+  puntos:
+    - La habilitación dura 5 años con internación y 10 años sin internación.
+    - Los establecimientos públicos quedan habilitados sin plazo, pero los controla el Ministerio de Salud y Deportes.
+    - Los privados sin habilitación que ya funcionan tienen 10 meses para pedir una habilitación provisoria.
+    - Deroga la Ley 5532.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9535"
+  titulo: Cobro a obras sociales y prepagas por atención en hospitales públicos
+  tema: Salud
+  resumen: Los hospitales públicos atienden gratis a quien no tiene cobertura. Si el paciente tiene obra social, PAMI, prepaga u otro tercero obligado, estos deben pagar la atención. Crea el ente REFORSAL para facturar y cobrar.
+  puntos:
+    - Toda persona atendida debe declarar su cobertura; las obras sociales deben informar sus padrones.
+    - REFORSAL gestiona la cobranza judicial y extrajudicial; se financia con presupuesto y el 5% de lo cobrado.
+    - Los gastos de extranjeros no residentes con cobertura en su país los cubre esa cobertura.
+    - Modifica las Leyes 6015 y 8872 y deroga lo que se oponga; la Ley 5578 sigue solo para reclamos ya iniciados.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9534"
+  titulo: 25% del impuesto a juegos de azar para salud mental y adicciones
+  tema: Salud
+  resumen: Destina cada mes el 25% de lo recaudado por Ingresos Brutos de los servicios de juegos de azar y apuestas, incluidas las online, a los programas de Salud mental y adicciones del Ministerio de Salud y Deportes.
+  puntos:
+    - Alcanza a las actividades con códigos 920009 (juegos de azar y apuestas) y 920004 (apuestas online).
+    - Se aplica desde el ejercicio presupuestario 2025.
+    - El Poder Ejecutivo debe reglamentarla en 90 días desde su publicación.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9533"
+  titulo: Entrega de bienes no subastados a la Dirección General de Escuelas
+  tema: Seguridad y justicia
+  resumen: Modifica el artículo 210 del Código Procesal Civil, Comercial y Tributario. Si el remate de bienes es muy poco conveniente o la primera subasta fracasa, el juez puede entregarlos a la Dirección General de Escuelas.
+  puntos:
+    - El juez decide con una resolución fundada.
+    - La Dirección General de Escuelas tiene 90 días hábiles para informar al Tribunal el destino de cada bien.
+    - Lo recaudado en una subasta, descontados los gastos, ingresa a Tesorería General de la Provincia.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9532"
+  titulo: Destino de medicamentos decomisados por el Departamento de Farmacia
+  tema: Salud
+  resumen: Cambia el artículo 13 del Decreto 3857/69. Los productos de salud decomisados o bajo custodia del Departamento de Farmacia pasan a ser de la Provincia a los 60 días.
+  puntos:
+    - Alcanza a medicamentos, productos médicos, cosméticos y otros productos de uso en salud humana.
+    - Cuentan 60 días desde el procedimiento.
+    - El Ministerio de Salud y Deportes decide el destino de los productos.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9531"
+  titulo: Cambios a la ley provincial de sangre y hemoterapia
+  tema: Salud
+  resumen: Modifica la Ley 8631 sobre sangre humana, sus componentes y derivados. Redefine los principios, el capítulo II y las funciones del Centro Regional de Hemoterapia, y suprime el Instituto Provincial de Medicina Transfusional.
+  puntos:
+    - Prohíbe la intermediación comercial y adhiere al Plan Nacional de Sangre, con donación voluntaria y altruista.
+    - La sangre no usada antes de su vencimiento debe entregarse al establecimiento que fije la reglamentación.
+    - El Centro Regional de Hemoterapia dicta las normas técnicas y administrativas del sistema.
+    - Suprime el Capítulo III; las menciones al Instituto pasan a la autoridad de aplicación o al Centro.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9530"
+  titulo: Registro Provincial de Financiadores de Salud
+  tema: Salud
+  resumen: Obliga al Ministerio de Salud y Deportes a controlar a los financiadores del sistema de salud, como obras sociales y prepagas, que prestan servicios en Mendoza. Crea un registro donde deben inscribirse.
+  puntos:
+    - Al inscribirse deben presentar sus programas de prestaciones, el listado de beneficiarios, las instituciones y los convenios.
+    - El Ministerio puede hacer convenios con ellos y denunciar penal y administrativamente los incumplimientos.
+    - El Ministerio debe reglamentar la ley en 120 días.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9529"
+  titulo: Procedimiento minero provincial y Autoridad Minera
+  tema: Energía y minería
+  resumen: Establece el procedimiento para las actividades reguladas por el Código de Minería en Mendoza. La Autoridad Minera es la Dirección de Minería y, en segunda instancia, el Consejo de Minería, bajo el Ministerio de Energía y Ambiente.
+  puntos:
+    - La Dirección de Minería concede, deniega o declara caducos los derechos mineros.
+    - Los expedientes son públicos y pueden tramitarse con firma digital y en formato electrónico.
+    - Si el trámite se frena 90 días por culpa del interesado, se lo intima 10 días antes de declarar el abandono.
+    - Deroga las Leyes 3790, 6654, 6913 y 8434.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9528"
+  titulo: Multas por no llevar la guía de tránsito de minerales
+  tema: Transporte
+  resumen: Modifica la Ley de Tránsito 9024. Agrega como infracción conducir sin la guía de tránsito de minerales y la clasifica como falta gravísima.
+  puntos:
+    - "Incorpora el inciso g) al artículo 40 de la Ley 9024: el conductor que no acredite la guía de tránsito de minerales."
+    - "Incorpora el inciso 53 al artículo 52: carecer de la guía conforme a la normativa vigente."
+    - Reordena en el artículo 78 qué faltas son gravísimas, graves y leves; el inciso 53 es gravísimo.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9527"
+  titulo: Fiesta Provincial del Cordero en Malargüe
+  tema: Producción
+  resumen: Denomina Fiesta Provincial del Cordero a la fiesta que se hace cada abril en Malargüe y designa al departamento como sede permanente. La fiesta debe promover actividades relacionadas con el ganado ovino.
+  puntos:
+    - Malargüe es la sede permanente de la fiesta.
+    - Debe incluir actividades gastronómicas, turísticas, culturales, tradicionales, seminarios, capacitaciones y exposiciones.
+    - EMETUR la incorpora al calendario turístico y cultural de la Provincia.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9526"
+  titulo: Sistema Provincial de Residencias de salud con beca formativa
+  tema: Salud
+  resumen: Regula las residencias, que son la formación de posgrado de profesionales de la salud en servicio, en la administración pública, OSEP y efectores privados. Define dos niveles, los requisitos de ingreso y una beca que no es sueldo.
+  puntos:
+    - Las residencias de primer nivel duran hasta 5 años; las de segundo nivel exigen haber completado una de primer nivel.
+    - La beca se calcula en Unidades Formativas; cada una vale el 35% del sueldo bruto del Ministro de Salud y Deportes.
+    - Los programas de formación se presentan al menos 6 meses antes del concurso de ingreso.
+    - Rige desde su reglamentación, que el Ejecutivo debe hacer en 120 días.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
 - numero: "9525"
-  titulo: "Promoción de la salud y prevención de enfermedades"
-  tema: "Salud"
+  titulo: Promoción de la salud y prevención de enfermedades
+  tema: Salud
   resumen: "Busca mejorar la salud de la población con hábitos saludables y menos enfermedades crónicas. El Ministerio de Salud y Deportes debe destinar un porcentaje creciente de su presupuesto a promoción y prevención: 3%, 5% y 8% según los años de vigencia. Prohíbe vender y publicitar en escuelas alimentos que superen los límites de la Ley 27.642."
   puntos:
     - "Presupuesto de promoción y prevención: 3% los primeros 5 años, 5% del año 5 al 9 y 8% desde el año 10."
-    - "En escuelas no se pueden vender ni publicitar alimentos con nutrientes críticos o calorías sobre lo que fija la Ley 27.642."
-    - "Se promueve que los comercios informen la composición nutricional de sus alimentos y que haya entornos escolares saludables."
-    - "La autoridad de aplicación manda un informe anual a las Cámaras. Reglamentación en 120 días."
+    - En escuelas no se pueden vender ni publicitar alimentos con nutrientes críticos o calorías sobre lo que fija la Ley 27.642.
+    - Se promueve que los comercios informen la composición nutricional de sus alimentos y que haya entornos escolares saludables.
+    - La autoridad de aplicación manda un informe anual a las Cámaras. Reglamentación en 120 días.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
+- numero: "9524"
+  titulo: Reducción de la morbimortalidad materno infantil en maternidades
+  tema: Salud
+  resumen: Establece acciones para disminuir la morbimortalidad materno infantil en Mendoza. Se aplica a los establecimientos de salud públicos y privados que atienden partos o recién nacidos, bajo el Ministerio de Salud y Deportes.
+  puntos:
+    - Todo establecimiento donde nazcan bebés debe cumplir las Condiciones Obstétricas y Neonatales Esenciales (CONE).
+    - Crea la Unidad Coordinadora de Derivaciones Perinatales para derivar rápido a las personas gestantes.
+    - Las maternidades públicas y privadas se categorizan según lo que fije la reglamentación.
+    - La autoridad de aplicación es el Ministerio de Salud y Deportes.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9523"
+  titulo: Expropiación en Guaymallén para ensanchar calle Pedro Molina
+  tema: Tierras y expropiaciones
+  resumen: Declara de utilidad pública y sujeto a expropiación un inmueble de 300 m2 en calle Pedro Molina 1282, distrito General Belgrano, Guaymallén. El fin es ensanchar la calle Pedro Molina en la esquina con Mitre.
+  puntos:
+    - "Superficie afectada: 300 m2, con Padrón Municipal 14632."
+    - La Municipalidad de Guaymallén es quien expropia, según el Decreto-Ley 1447/75.
+    - Los gastos los paga la Municipalidad de Guaymallén.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
+- numero: "9522"
+  titulo: Unidad de medida JUS para la competencia judicial y los honorarios
+  tema: Seguridad y justicia
+  resumen: Modifica el artículo 7 del Código Procesal Civil, Comercial y Tributario y crea el JUS, una unidad de medida igual a un décimo de la asignación básica de un Juez de primera instancia. Se usa para determinar la competencia por monto y para regular honorarios.
+  puntos:
+    - La Suprema Corte comunica el valor del JUS cada diciembre y rige todo el año siguiente.
+    - Para honorarios de abogados, procuradores y auxiliares de justicia, el valor se actualiza junto con el salario del Juez.
+    - También se aplica al anticipo de honorarios del artículo 180 inciso V.
+    - Rige desde su publicación.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
 - numero: "9521"
-  titulo: "Reglas para recetar psicofármacos y estupefacientes"
-  tema: "Salud"
-  resumen: "Fija reglas para prescribir y dispensar psicofármacos y estupefacientes. Las recetas deben llevar el tipo y número de documento del paciente. Si la dosis supera lo permitido, debe figurar la leyenda superdosis. Las farmacias no pueden dispensar recetas con más de 30 días desde su fecha."
+  titulo: Reglas para recetar psicofármacos y estupefacientes
+  tema: Salud
+  resumen: Fija reglas para prescribir y dispensar psicofármacos y estupefacientes. Las recetas deben llevar el tipo y número de documento del paciente. Si la dosis supera lo permitido, debe figurar la leyenda superdosis. Las farmacias no pueden dispensar recetas con más de 30 días desde su fecha.
   puntos:
-    - "La receta debe incluir tipo y número de documento del paciente. La farmacia registra los datos de quien retira el medicamento."
-    - "Si la dosis supera la indicada por la autoridad sanitaria nacional, se escribe superdosis."
-    - "Los médicos custodian los recetarios oficiales, los archivan 2 años y avisan si se pierden o se los roban."
-    - "Si alguien consulta a varios médicos por los mismos medicamentos, el Departamento de Farmacia avisa a los médicos y, si corresponde, a la Justicia."
-    - "Deroga la Ley 5152."
+    - La receta debe incluir tipo y número de documento del paciente. La farmacia registra los datos de quien retira el medicamento.
+    - Si la dosis supera la indicada por la autoridad sanitaria nacional, se escribe superdosis.
+    - Los médicos custodian los recetarios oficiales, los archivan 2 años y avisan si se pierden o se los roban.
+    - Si alguien consulta a varios médicos por los mismos medicamentos, el Departamento de Farmacia avisa a los médicos y, si corresponde, a la Justicia.
+    - Deroga la Ley 5152.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9520"
-  titulo: "Cooperadora del Hospital Central y fondos de un programa"
-  tema: "Salud"
-  resumen: "Modifica el artículo 3 de la Ley 5579. El Ministerio de Salud y Deportes administra el programa y puede delegar total o parcialmente la gestión de sus fondos en la Cooperadora del Hospital Central. La Cooperadora puede disponer de esos fondos con normas predominantemente del Derecho Privado."
+  titulo: Cooperadora del Hospital Central y fondos de un programa
+  tema: Salud
+  resumen: Modifica el artículo 3 de la Ley 5579. El Ministerio de Salud y Deportes administra el programa y puede delegar total o parcialmente la gestión de sus fondos en la Cooperadora del Hospital Central. La Cooperadora puede disponer de esos fondos con normas predominantemente del Derecho Privado.
   puntos:
-    - "El Ministerio puede delegar la gestión administrativa de los fondos en la Cooperadora del Hospital Central."
-    - "La reglamentación debe fijar un sistema contable y controles para seguir los ingresos y gastos."
-    - "La autoridad de aplicación envía un informe anual a las Cámaras de Senadores y Diputados."
+    - El Ministerio puede delegar la gestión administrativa de los fondos en la Cooperadora del Hospital Central.
+    - La reglamentación debe fijar un sistema contable y controles para seguir los ingresos y gastos.
+    - La autoridad de aplicación envía un informe anual a las Cámaras de Senadores y Diputados.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9519"
-  titulo: "Nuevo régimen para droguerías"
-  tema: "Salud"
+  titulo: Nuevo régimen para droguerías
+  tema: Salud
   resumen: "Regula la habilitación, funcionamiento y control de las droguerías de Mendoza, en tres tipos: farmacéuticas, de especialidades medicinales e industriales. El Ministerio de Salud y Deportes habilita, inspecciona y sanciona. Deroga la Ley 2577."
   puntos:
     - "Hay tres categorías: A (farmacéuticas y laboratorios de preparados), B (especialidades medicinales) y C (industriales)."
-    - "Para instalar una droguería hay que pedir habilitación previa al Ministerio, con director técnico y otros requisitos."
-    - "Las droguerías farmacéuticas venden solo al por mayor y deben seguir las Buenas Prácticas de Almacenamiento, Distribución y Transporte."
-    - "Las infracciones se sancionan con apercibimiento, multas o inhabilitación de 1 mes a 5 años en caso de reincidencia."
-    - "Deroga la Ley 2577."
+    - Para instalar una droguería hay que pedir habilitación previa al Ministerio, con director técnico y otros requisitos.
+    - Las droguerías farmacéuticas venden solo al por mayor y deben seguir las Buenas Prácticas de Almacenamiento, Distribución y Transporte.
+    - Las infracciones se sancionan con apercibimiento, multas o inhabilitación de 1 mes a 5 años en caso de reincidencia.
+    - Deroga la Ley 2577.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9518"
-  titulo: "Cambios en el Consejo Provincial de Salud"
-  tema: "Salud"
-  resumen: "Modifica la Ley 8164. El Consejo Provincial de Salud, presidido por el Ministro de Salud y Deportes, es un espacio de diálogo y consenso sobre la política sanitaria. Define quiénes lo integran, cada cuánto se reúne y que sus cargos son ad honorem por 2 años."
+  titulo: Cambios en el Consejo Provincial de Salud
+  tema: Salud
+  resumen: Modifica la Ley 8164. El Consejo Provincial de Salud, presidido por el Ministro de Salud y Deportes, es un espacio de diálogo y consenso sobre la política sanitaria. Define quiénes lo integran, cada cuánto se reúne y que sus cargos son ad honorem por 2 años.
   puntos:
-    - "Lo integran, entre otros, representantes del Ministerio, PAMI, OSEP, obras sociales y prepagas, clínicas, universidades, municipios y sindicatos."
-    - "Es un órgano consultivo permanente que no obliga al Ministerio."
-    - "Se reúne ordinariamente cada 30 días. Las reuniones extraordinarias pueden pedirlas al menos 4 miembros."
-    - "Los miembros trabajan ad honorem por 2 años."
+    - Lo integran, entre otros, representantes del Ministerio, PAMI, OSEP, obras sociales y prepagas, clínicas, universidades, municipios y sindicatos.
+    - Es un órgano consultivo permanente que no obliga al Ministerio.
+    - Se reúne ordinariamente cada 30 días. Las reuniones extraordinarias pueden pedirlas al menos 4 miembros.
+    - Los miembros trabajan ad honorem por 2 años.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9517"
-  titulo: "Planes estratégicos de salud cada cuatro años"
-  tema: "Salud"
-  resumen: "Obliga al Ministerio de Salud y Deportes a presentar planes estratégicos de salud pública con un horizonte de cuatro años. Los planes se presentan al Poder Ejecutivo, al Legislativo y a la comunidad para su debate. Cada año debe haber un informe de avances."
+  titulo: Planes estratégicos de salud cada cuatro años
+  tema: Salud
+  resumen: Obliga al Ministerio de Salud y Deportes a presentar planes estratégicos de salud pública con un horizonte de cuatro años. Los planes se presentan al Poder Ejecutivo, al Legislativo y a la comunidad para su debate. Cada año debe haber un informe de avances.
   puntos:
-    - "Los planes tienen horizonte de cuatro años y un proceso transparente y participativo."
-    - "Se presentan ante el Ejecutivo, el Legislativo y la comunidad."
-    - "Deben incluir análisis del entorno, análisis interno, problemas principales y objetivos estratégicos."
-    - "Se presenta un informe anual de avances."
+    - Los planes tienen horizonte de cuatro años y un proceso transparente y participativo.
+    - Se presentan ante el Ejecutivo, el Legislativo y la comunidad.
+    - Deben incluir análisis del entorno, análisis interno, problemas principales y objetivos estratégicos.
+    - Se presenta un informe anual de avances.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9516"
-  titulo: "Tasa de interés por mora en deudas de dinero"
-  tema: "Economía y finanzas"
-  resumen: "Modifica el artículo 1 de la Ley 9041. Si las partes no acordaron otra cosa, las deudas de dinero pagan como interés moratorio la tasa nominal anual de préstamos de libre destino a hasta 72 meses para no clientes del Banco de la Nación, desde la mora hasta el pago."
+  titulo: Tasa de interés por mora en deudas de dinero
+  tema: Economía y finanzas
+  resumen: Modifica el artículo 1 de la Ley 9041. Si las partes no acordaron otra cosa, las deudas de dinero pagan como interés moratorio la tasa nominal anual de préstamos de libre destino a hasta 72 meses para no clientes del Banco de la Nación, desde la mora hasta el pago.
   puntos:
-    - "Se aplica cuando no hay acuerdo entre las partes ni otra ley especial."
-    - "La tasa es la nominal anual de préstamos de libre destino hasta 72 meses para no clientes del Banco de la Nación Argentina."
-    - "Para ciertos casos del Código Civil y Comercial, rige la tasa de préstamos personales a más de 180 días que informa el Banco Central."
+    - Se aplica cuando no hay acuerdo entre las partes ni otra ley especial.
+    - La tasa es la nominal anual de préstamos de libre destino hasta 72 meses para no clientes del Banco de la Nación Argentina.
+    - Para ciertos casos del Código Civil y Comercial, rige la tasa de préstamos personales a más de 180 días que informa el Banco Central.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
+- numero: "9515"
+  titulo: Servidumbre de tránsito sobre un terreno fiscal en Luján de Cuyo
+  tema: Tierras y expropiaciones
+  resumen: Aprueba el Decreto 3094/2023, que ordena a la Escribanía General de Gobierno constituir una servidumbre de tránsito, gratuita y perpetua, sobre 258,71 m2 de un inmueble fiscal de Luján de Cuyo. Beneficia al inmueble de la empresa Sustenta Desarrollos S.A.
+  puntos:
+    - La servidumbre es forzosa, gratuita y perpetua.
+    - Afecta una franja de 258,71 m2, parte de un inmueble a nombre de la Provincia en Luján de Cuyo.
+    - El inmueble favorecido es de Sustenta Desarrollos S.A.
+    - El plano de mensura figura como anexo de la ley.
+  hecho_con: claude-sonnet
+  fecha: 2026-10-12
 - numero: "9514"
-  titulo: "Aprueba dos donaciones de inmuebles para AySAM"
-  tema: "Convenios y ratificaciones"
-  resumen: "Aprueba los decretos 2780 y 3010 de 2023, que aceptan donaciones con cargo a la Provincia. Son un inmueble de la Municipalidad de San Martín y otro de la Municipalidad de San Rafael, afectados al servicio de la empresa AySAM S.A. Los decretos están en el anexo."
+  titulo: Aprueba dos donaciones de inmuebles para AySAM
+  tema: Convenios y ratificaciones
+  resumen: Aprueba los decretos 2780 y 3010 de 2023, que aceptan donaciones con cargo a la Provincia. Son un inmueble de la Municipalidad de San Martín y otro de la Municipalidad de San Rafael, afectados al servicio de la empresa AySAM S.A. Los decretos están en el anexo.
   puntos:
     - "Decreto 2780 del 30/11/2023: inmueble de la Municipalidad de San Martín."
     - "Decreto 3010 del 08/12/2023: inmueble de la Municipalidad de San Rafael."
-    - "Ambos se usan para la prestación del servicio de AySAM S.A."
+    - Ambos se usan para la prestación del servicio de AySAM S.A.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9513"
-  titulo: "Adhesión a la ley nacional de cáncer infantil"
-  tema: "Salud"
-  resumen: "Agrega dos artículos a la Ley 9287 del Programa Provincial de Cuidado Integral de Niños, Niñas y Adolescentes con Cáncer. Mendoza adhiere a la Ley Nacional 27.674 y el Ministerio de Salud y Deportes puede firmar convenios con su autoridad de aplicación."
+  titulo: Adhesión a la ley nacional de cáncer infantil
+  tema: Salud
+  resumen: Agrega dos artículos a la Ley 9287 del Programa Provincial de Cuidado Integral de Niños, Niñas y Adolescentes con Cáncer. Mendoza adhiere a la Ley Nacional 27.674 y el Ministerio de Salud y Deportes puede firmar convenios con su autoridad de aplicación.
   puntos:
-    - "Mendoza adhiere a la Ley Nacional 27.674, según su artículo 15."
-    - "El Ministerio de Salud y Deportes puede firmar convenios de cooperación y coordinación con la autoridad nacional."
+    - Mendoza adhiere a la Ley Nacional 27.674, según su artículo 15.
+    - El Ministerio de Salud y Deportes puede firmar convenios de cooperación y coordinación con la autoridad nacional.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9512"
-  titulo: "Aprueba la concesión de residuos patogénicos y farmacéuticos"
-  tema: "Ambiente y agua"
-  resumen: "Aprueba el Decreto 2840 del 6 de diciembre de 2023, que adjudicó la licitación pública del servicio de recolección, transporte, tratamiento y disposición final de residuos patogénicos y farmacéuticos. También aprueba el contrato con la empresa Tecnologías y Servicios Ambientales S.A."
+  titulo: Aprueba la concesión de residuos patogénicos y farmacéuticos
+  tema: Ambiente y agua
+  resumen: Aprueba el Decreto 2840 del 6 de diciembre de 2023, que adjudicó la licitación pública del servicio de recolección, transporte, tratamiento y disposición final de residuos patogénicos y farmacéuticos. También aprueba el contrato con la empresa Tecnologías y Servicios Ambientales S.A.
   puntos:
-    - "Aprueba el decreto que adjudica la licitación pública del servicio."
-    - "Aprueba el contrato de concesión entre la Provincia y Tecnologías y Servicios Ambientales S.A."
-    - "El servicio cubre recolección, transporte, tratamiento y disposición final. El detalle está en los anexos."
+    - Aprueba el decreto que adjudica la licitación pública del servicio.
+    - Aprueba el contrato de concesión entre la Provincia y Tecnologías y Servicios Ambientales S.A.
+    - El servicio cubre recolección, transporte, tratamiento y disposición final. El detalle está en los anexos.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9511"
-  titulo: "Cambios en el régimen de notarios y registros notariales"
-  tema: "Seguridad y justicia"
-  resumen: "Modifica la Ley 3058 sobre el notariado. Cambia cuántos registros notariales hay, los requisitos para ser notario y las vías para ser titular de un registro. Cada registro puede tener hasta dos notarios adscriptos."
+  titulo: Cambios en el régimen de notarios y registros notariales
+  tema: Seguridad y justicia
+  resumen: Modifica la Ley 3058 sobre el notariado. Cambia cuántos registros notariales hay, los requisitos para ser notario y las vías para ser titular de un registro. Cada registro puede tener hasta dos notarios adscriptos.
   puntos:
-    - "Un registro notarial por cada 5.000 habitantes, o fracción no menor de 2.500."
+    - Un registro notarial por cada 5.000 habitantes, o fracción no menor de 2.500.
     - "Para ser notario: título de escribano o de abogado con materias de notariado, buena conducta y no estar concursado ni fallido."
-    - "Residencia de 5 años en Mendoza (2 años para quienes nacieron en la provincia) y examen psicofísico periódico."
+    - Residencia de 5 años en Mendoza (2 años para quienes nacieron en la provincia) y examen psicofísico periódico.
     - "Para ser titular de un registro: ganar un concurso, o haber sido adscripto 10 años y autorizar al menos 200 escrituras de derechos reales."
-    - "Cada registro puede tener hasta 2 adscriptos, nombrados por la Suprema Corte sin concurso a propuesta del titular."
+    - Cada registro puede tener hasta 2 adscriptos, nombrados por la Suprema Corte sin concurso a propuesta del titular.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9510"
-  titulo: "Agente encubierto digital y pedidos de datos informáticos"
-  tema: "Seguridad y justicia"
-  resumen: "Modifica el Código Procesal Penal. Permite al fiscal pedir al juez la actuación de un agente encubierto digital en investigaciones de delitos, por hasta 180 días. También permite ordenar la entrega y el resguardo de datos informáticos."
+  titulo: Agente encubierto digital y pedidos de datos informáticos
+  tema: Seguridad y justicia
+  resumen: Modifica el Código Procesal Penal. Permite al fiscal pedir al juez la actuación de un agente encubierto digital en investigaciones de delitos, por hasta 180 días. También permite ordenar la entrega y el resguardo de datos informáticos.
   puntos:
-    - "El fiscal puede pedir fundadamente al Juez Penal Colegiado un agente encubierto digital, por hasta 180 días."
-    - "Los perfiles digitales no pueden usar imágenes de personas reales."
-    - "El fiscal puede ordenar a personas y proveedores de internet entregar datos de usuarios, y asegurar datos informáticos almacenados."
-    - "Con orden del juez, se pueden registrar y secuestrar computadoras y datos. También cambia cómo se guardan los bienes secuestrados."
+    - El fiscal puede pedir fundadamente al Juez Penal Colegiado un agente encubierto digital, por hasta 180 días.
+    - Los perfiles digitales no pueden usar imágenes de personas reales.
+    - El fiscal puede ordenar a personas y proveedores de internet entregar datos de usuarios, y asegurar datos informáticos almacenados.
+    - Con orden del juez, se pueden registrar y secuestrar computadoras y datos. También cambia cómo se guardan los bienes secuestrados.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9509"
-  titulo: "Expropiación en Tunuyán para un club deportivo"
-  tema: "Tierras y expropiaciones"
-  resumen: "Declara de utilidad pública y sujetas a expropiación dos fracciones de terreno en Tunuyán, de 9.683,79 m2 y 673,39 m2. Se expropian para donarlas al Club Deportivo Corredor Productivo Tunuyán, del distrito Villa Seca. La Municipalidad de Tunuyán expropia y paga."
+  titulo: Expropiación en Tunuyán para un club deportivo
+  tema: Tierras y expropiaciones
+  resumen: Declara de utilidad pública y sujetas a expropiación dos fracciones de terreno en Tunuyán, de 9.683,79 m2 y 673,39 m2. Se expropian para donarlas al Club Deportivo Corredor Productivo Tunuyán, del distrito Villa Seca. La Municipalidad de Tunuyán expropia y paga.
   puntos:
     - "Dos fracciones: 9.683,79 m2 y 673,39 m2, partes de inmuebles mayores."
     - "Destino: donación al Club Deportivo Corredor Productivo Tunuyán, para sus actividades recreativas, culturales y deportivas."
-    - "La Municipalidad de Tunuyán expropia y soporta el gasto."
+    - La Municipalidad de Tunuyán expropia y soporta el gasto.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9508"
-  titulo: "Aprueba actas de aumentos salariales para empleados públicos"
-  tema: "Trabajo y empleo público"
-  resumen: "Aprueba el Decreto 2728 del 30 de noviembre de 2023. Ese decreto homologa actas acuerdo firmadas en la Subsecretaría de Trabajo y Empleo entre el Poder Ejecutivo y los sindicatos de agentes públicos provinciales, donde se acuerdan aumentos salariales. Las actas están en el anexo."
+  titulo: Aprueba actas de aumentos salariales para empleados públicos
+  tema: Trabajo y empleo público
+  resumen: Aprueba el Decreto 2728 del 30 de noviembre de 2023. Ese decreto homologa actas acuerdo firmadas en la Subsecretaría de Trabajo y Empleo entre el Poder Ejecutivo y los sindicatos de agentes públicos provinciales, donde se acuerdan aumentos salariales. Las actas están en el anexo.
   puntos:
-    - "Aprueba el Decreto 2728 del 30 de noviembre de 2023."
-    - "Las actas acuerdan incrementos salariales para agentes públicos provinciales."
-    - "Los montos y fechas están en el anexo."
+    - Aprueba el Decreto 2728 del 30 de noviembre de 2023.
+    - Las actas acuerdan incrementos salariales para agentes públicos provinciales.
+    - Los montos y fechas están en el anexo.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9507"
-  titulo: "Jubilados que pueden integrar cuerpos de magistrados y conjueces"
-  tema: "Seguridad y justicia"
-  resumen: "Modifica los artículos 3 y 12 de la Ley 7294. Pueden integrar el Cuerpo de Magistrados Subrogantes quienes se jubilaron como magistrados en los últimos 10 años, y el de Conjueces Especiales los abogados jubilados en ese plazo. Se excluye a quienes se jubilaron por incapacidad."
+  titulo: Jubilados que pueden integrar cuerpos de magistrados y conjueces
+  tema: Seguridad y justicia
+  resumen: Modifica los artículos 3 y 12 de la Ley 7294. Pueden integrar el Cuerpo de Magistrados Subrogantes quienes se jubilaron como magistrados en los últimos 10 años, y el de Conjueces Especiales los abogados jubilados en ese plazo. Se excluye a quienes se jubilaron por incapacidad.
   puntos:
     - "Magistrados Subrogantes: jubilados como magistrados en los últimos 10 años."
     - "Conjueces Especiales: abogados jubilados en los últimos 10 años que no ejerzan otra actividad profesional, salvo la docencia."
-    - "Quedan excluidos quienes se jubilaron por incapacidad o razones similares."
-    - "Se inscriben en la Suprema Corte de Justicia, que arma las listas por fuero y circunscripción."
+    - Quedan excluidos quienes se jubilaron por incapacidad o razones similares.
+    - Se inscriben en la Suprema Corte de Justicia, que arma las listas por fuero y circunscripción.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9506"
-  titulo: "Aprueba impacto ambiental del proyecto minero La Adriana"
-  tema: "Energía y minería"
-  resumen: "Aprueba la Resolución Conjunta 052 de la Dirección de Minería y 19 de la Dirección de Protección Ambiental, del 9 de noviembre de 2023, y su rectificatoria. Otorga la Declaración de Impacto Ambiental al proyecto La Adriana, en Malargüe, en etapa de prospección, de la empresa Geometales S.A."
+  titulo: Aprueba impacto ambiental del proyecto minero La Adriana
+  tema: Energía y minería
+  resumen: Aprueba la Resolución Conjunta 052 de la Dirección de Minería y 19 de la Dirección de Protección Ambiental, del 9 de noviembre de 2023, y su rectificatoria. Otorga la Declaración de Impacto Ambiental al proyecto La Adriana, en Malargüe, en etapa de prospección, de la empresa Geometales S.A.
   puntos:
-    - "Proyecto La Adriana, en el Departamento de Malargüe."
-    - "Etapa de prospección, según el Decreto 820/2006."
+    - Proyecto La Adriana, en el Departamento de Malargüe.
+    - Etapa de prospección, según el Decreto 820/2006.
     - "Titular: Empresa Minera Geometales S.A."
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9505"
-  titulo: "Aprueba impacto ambiental del proyecto minero El Burrero"
-  tema: "Energía y minería"
-  resumen: "Aprueba la Resolución Conjunta 054 de la Dirección de Minería y 21 de la Dirección de Protección Ambiental, del 9 de noviembre de 2023, y su rectificatoria. Otorga la Declaración de Impacto Ambiental al proyecto El Burrero, en Malargüe, en etapa de exploración, de la empresa Geometales S.A."
+  titulo: Aprueba impacto ambiental del proyecto minero El Burrero
+  tema: Energía y minería
+  resumen: Aprueba la Resolución Conjunta 054 de la Dirección de Minería y 21 de la Dirección de Protección Ambiental, del 9 de noviembre de 2023, y su rectificatoria. Otorga la Declaración de Impacto Ambiental al proyecto El Burrero, en Malargüe, en etapa de exploración, de la empresa Geometales S.A.
   puntos:
-    - "Proyecto El Burrero, en el Departamento de Malargüe."
-    - "Etapa de exploración, según el Decreto 820/2006."
+    - Proyecto El Burrero, en el Departamento de Malargüe.
+    - Etapa de exploración, según el Decreto 820/2006.
     - "Titular: Empresa Minera Geometales S.A."
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9504"
-  titulo: "Aprueba impacto ambiental del proyecto minero Las Choicas"
-  tema: "Energía y minería"
-  resumen: "Aprueba la Resolución Conjunta 053 de la Dirección de Minería y 20 de la Dirección de Protección Ambiental, del 9 de noviembre de 2023, y su rectificatoria. Otorga la Declaración de Impacto Ambiental al proyecto Las Choicas, en Malargüe, en etapa de exploración, de la empresa Geometales S.A."
+  titulo: Aprueba impacto ambiental del proyecto minero Las Choicas
+  tema: Energía y minería
+  resumen: Aprueba la Resolución Conjunta 053 de la Dirección de Minería y 20 de la Dirección de Protección Ambiental, del 9 de noviembre de 2023, y su rectificatoria. Otorga la Declaración de Impacto Ambiental al proyecto Las Choicas, en Malargüe, en etapa de exploración, de la empresa Geometales S.A.
   puntos:
-    - "Proyecto Las Choicas, en el Departamento de Malargüe."
-    - "Etapa de exploración, según el Decreto 820/2006."
+    - Proyecto Las Choicas, en el Departamento de Malargüe.
+    - Etapa de exploración, según el Decreto 820/2006.
     - "Titular: Empresa Minera Geometales S.A."
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9503"
-  titulo: "Suspende ejecuciones de deudas hipotecarias hasta fin de 2024"
-  tema: "Derechos y sociedad"
-  resumen: "Suspende los trámites de ejecución de sentencias sobre deudas hipotecarias de los deudores comprendidos en el artículo 2 de la Ley 8.182, hasta el 31 de diciembre de 2024. Esos deudores no tienen que hacer trámites ante el Ejecutivo ni la Justicia mientras el Ejecutivo cumple con la Ley 8.182."
+  titulo: Suspende ejecuciones de deudas hipotecarias hasta fin de 2024
+  tema: Derechos y sociedad
+  resumen: Suspende los trámites de ejecución de sentencias sobre deudas hipotecarias de los deudores comprendidos en el artículo 2 de la Ley 8.182, hasta el 31 de diciembre de 2024. Esos deudores no tienen que hacer trámites ante el Ejecutivo ni la Justicia mientras el Ejecutivo cumple con la Ley 8.182.
   puntos:
-    - "Suspensión hasta el 31 de diciembre de 2024."
-    - "Alcanza a los deudores hipotecarios comprendidos en el artículo 2 de la Ley 8.182."
-    - "No están obligados a hacer trámites administrativos, y su ausencia no se toma como abuso ni dilación."
-    - "La norma es de orden público y de cumplimiento obligatorio."
+    - Suspensión hasta el 31 de diciembre de 2024.
+    - Alcanza a los deudores hipotecarios comprendidos en el artículo 2 de la Ley 8.182.
+    - No están obligados a hacer trámites administrativos, y su ausencia no se toma como abuso ni dilación.
+    - La norma es de orden público y de cumplimiento obligatorio.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9502"
-  titulo: "Expropiación en Lavalle para un parque público municipal"
-  tema: "Tierras y expropiaciones"
-  resumen: "Declara de utilidad pública y sujeto a expropiación un terreno en Lavalle de 1 hectárea y 1.517,74 m2. La Municipalidad de Lavalle expropia y paga los gastos. El destino es un parque público municipal, un espacio verde y churrasqueras."
+  titulo: Expropiación en Lavalle para un parque público municipal
+  tema: Tierras y expropiaciones
+  resumen: Declara de utilidad pública y sujeto a expropiación un terreno en Lavalle de 1 hectárea y 1.517,74 m2. La Municipalidad de Lavalle expropia y paga los gastos. El destino es un parque público municipal, un espacio verde y churrasqueras.
   puntos:
-    - "Terreno de 1 ha 1.517,74 m2 en Lavalle, con Nomenclatura Catastral 13-99-00-0900-560740-0000-9."
+    - Terreno de 1 ha 1.517,74 m2 en Lavalle, con Nomenclatura Catastral 13-99-00-0900-560740-0000-9.
     - "Destino: parque público municipal, espacio verde y churrasqueras."
-    - "La Municipalidad de Lavalle expropia, según el Decreto-Ley 1.447/75, y paga los gastos."
+    - La Municipalidad de Lavalle expropia, según el Decreto-Ley 1.447/75, y paga los gastos.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9500"
-  titulo: "Aprueba decretos sobre profesionales críticos de salud"
-  tema: "Salud"
-  resumen: "Aprueba los decretos 1883 y 2291 de 2023. Ambos incorporan profesionales al anexo del Decreto 1006/23, que exceptuó de la Ley 8727 a quienes trabajan como recurso humano crítico en efectores de salud de la Provincia. Los decretos están en el anexo."
+  titulo: Aprueba decretos sobre profesionales críticos de salud
+  tema: Salud
+  resumen: Aprueba los decretos 1883 y 2291 de 2023. Ambos incorporan profesionales al anexo del Decreto 1006/23, que exceptuó de la Ley 8727 a quienes trabajan como recurso humano crítico en efectores de salud de la Provincia. Los decretos están en el anexo.
   puntos:
-    - "Decreto 1883 del 12 de septiembre de 2023."
-    - "Decreto 2291 del 1 de noviembre de 2023."
-    - "Amplían el anexo del Decreto 1006/23, que exceptúa de la Ley 8727 al recurso humano crítico de los efectores de salud."
+    - Decreto 1883 del 12 de septiembre de 2023.
+    - Decreto 2291 del 1 de noviembre de 2023.
+    - Amplían el anexo del Decreto 1006/23, que exceptúa de la Ley 8727 al recurso humano crítico de los efectores de salud.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9499"
-  titulo: "Expropiación en Lavalle para tratar escombros"
-  tema: "Tierras y expropiaciones"
-  resumen: "Declara de utilidad pública y sujeto a expropiación un terreno en Lavalle. La Municipalidad de Lavalle lo expropia para el vuelco y tratamiento de escombros de obras de construcción y demolición, y para resolver la situación del dominio del puestero que vive allí. Paga los gastos."
+  titulo: Expropiación en Lavalle para tratar escombros
+  tema: Tierras y expropiaciones
+  resumen: Declara de utilidad pública y sujeto a expropiación un terreno en Lavalle. La Municipalidad de Lavalle lo expropia para el vuelco y tratamiento de escombros de obras de construcción y demolición, y para resolver la situación del dominio del puestero que vive allí. Paga los gastos.
   puntos:
-    - "Terreno con Nomenclatura Catastral 13-99-00-0900-780860-0000-1."
+    - Terreno con Nomenclatura Catastral 13-99-00-0900-780860-0000-1.
     - "Destino: vuelco y tratamiento de escombros."
-    - "También busca solucionar la situación dominial del puestero que habita el terreno."
-    - "La Municipalidad de Lavalle expropia y soporta el gasto."
+    - También busca solucionar la situación dominial del puestero que habita el terreno.
+    - La Municipalidad de Lavalle expropia y soporta el gasto.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
-
 - numero: "9498"
-  titulo: "Donación de inmueble a Inspecciones de Cauce del Río Diamante"
-  tema: "Tierras y expropiaciones"
-  resumen: "Autoriza donar a la Asociación de Inspecciones de Cauce del Río Diamante un inmueble de 34 hectáreas en La Llave, que es del Departamento General de Irrigación. La donación es con el cargo de venderlo en 3 años para construir o comprar la sede de la Asociación."
+  titulo: Donación de inmueble a Inspecciones de Cauce del Río Diamante
+  tema: Tierras y expropiaciones
+  resumen: Autoriza donar a la Asociación de Inspecciones de Cauce del Río Diamante un inmueble de 34 hectáreas en La Llave, que es del Departamento General de Irrigación. La donación es con el cargo de venderlo en 3 años para construir o comprar la sede de la Asociación.
   puntos:
-    - "Inmueble en La Llave, en Sboccia y Candel, de 34 ha 1.923,87 m2, con derecho de riego y una perforación."
+    - Inmueble en La Llave, en Sboccia y Candel, de 34 ha 1.923,87 m2, con derecho de riego y una perforación.
     - "Cargo: venderlo para conseguir fondos para construir o comprar la sede social."
     - "Plazo para cumplir el cargo: 3 años desde la aceptación."
-    - "Los gastos de escrituras los paga la Asociación."
+    - Los gastos de escrituras los paga la Asociación.
   hecho_con: claude-sonnet
   fecha: 2026-10-12
