@@ -1,0 +1,33 @@
+{
+  "titulo": "Población por provincia",
+  "descripcion": "Cada fila es la población de una provincia en un año, según los censos 2010 y 2022 y las proyecciones del INDEC hasta 2040. Un mismo año puede tener una fila de censo y otra de proyección. Las proyecciones anteriores y posteriores a 2022 usan bases distintas.",
+  "columnas": {
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio"
+    },
+    "provincia": {
+      "etiqueta": "Provincia",
+      "tipo": "texto"
+    },
+    "poblacion": {
+      "etiqueta": "Población",
+      "tipo": "numero",
+      "unidad": "hab."
+    },
+    "tipo": {
+      "etiqueta": "Tipo de dato",
+      "tipo": "texto",
+      "descripcion": "censo: población contada en el censo. proyeccion: estimación oficial del INDEC. Hay un quiebre entre 2021 y 2022 porque cambia la base de cálculo."
+    },
+    "fuente_url": {
+      "oculta": true
+    }
+  },
+  "orden": [
+    "anio",
+    "provincia",
+    "poblacion",
+    "tipo"
+  ]
+}

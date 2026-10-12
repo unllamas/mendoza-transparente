@@ -27,9 +27,16 @@ export function formatBytes(bytes: number): string {
   return `${(bytes / 1024 ** 2).toFixed(1)} MB`;
 }
 
+const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+
+/** "2026-10-11..." → "11 oct 2026" */
 export function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("es-AR", { day: "numeric", month: "short", year: "numeric" });
+  const [y, m, d] = iso.slice(0, 10).split("-").map(Number);
+  return `${d} ${MESES[m! - 1]} ${y}`;
 }
+
+/** 7 → "jul" */
+export const mesCorto = (mes: number) => MESES[mes - 1] ?? String(mes);
 
 /** "coparticipacion_mensual.csv" → "Coparticipacion mensual" */
 export function humanize(file: string): string {

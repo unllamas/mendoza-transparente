@@ -1,0 +1,43 @@
+{
+  "titulo": "Canasta básica en el Gran Mendoza",
+  "descripcion": "Cada fila es un mes con el costo de la Canasta Básica Alimentaria (alcanza para no ser indigente) y la Canasta Básica Total (alcanza para no ser pobre) de un adulto equivalente en el Gran Mendoza. Montos en pesos nominales de cada mes.",
+  "columnas": {
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio"
+    },
+    "mes": {
+      "etiqueta": "Mes",
+      "tipo": "mes"
+    },
+    "cba_adulto_equivalente": {
+      "etiqueta": "Canasta alimentaria (indigencia)",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Costo mensual de los alimentos básicos para un adulto equivalente. Por debajo de este ingreso se considera indigencia."
+    },
+    "cbt_adulto_equivalente": {
+      "etiqueta": "Canasta total (pobreza)",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Costo mensual de alimentos y otros bienes y servicios básicos para un adulto equivalente. Por debajo de este ingreso se considera pobreza."
+    },
+    "inversa_coef_engel": {
+      "etiqueta": "Coeficiente de Engel (inversa)",
+      "tipo": "numero",
+      "descripcion": "Número por el que se multiplica la canasta alimentaria para obtener la total."
+    },
+    "fuente_url": {
+      "oculta": true
+    }
+  },
+  "orden": [
+    "anio",
+    "mes",
+    "cba_adulto_equivalente",
+    "cbt_adulto_equivalente",
+    "inversa_coef_engel"
+  ]
+}

@@ -10,7 +10,7 @@ import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statS
 import { join } from "node:path";
 import { parse as parseYaml } from "yaml";
 
-import type { DataIndex, DatasetMeta, Preview, SourceMeta } from "../src/types.ts";
+import type { DataIndex, DatasetMeta, Diccionario, Preview, SourceMeta } from "../src/types.ts";
 import { buildDeuda } from "./temas/deuda.ts";
 import { buildEmpleo } from "./temas/empleo.ts";
 
@@ -88,6 +88,7 @@ const sources: SourceMeta[] = [...ids].sort().map((id) => {
   return {
     id,
     nombre: entry?.nombre ?? id,
+    descripcion: entry?.descripcion ?? "",
     organismo: entry?.organismo ?? "",
     url: entry?.url ?? last?.url ?? "",
     formato: entry?.formato ?? "",
@@ -113,7 +114,9 @@ for (const id of listDirs(PROCESSED_DIR)) {
     cpSync(path, join(outDir, file));
     const preview: Preview = { columns, rows: rows.slice(0, PREVIEW_ROWS) };
     writeFileSync(join(outDir, file.replace(/\.csv$/, ".preview.json")), JSON.stringify(preview));
-    datasets.push({ source: id, file, columns, rowCount: rows.length, bytes: statSync(path).size });
+    const dictPath = join(dir, file.replace(/\.csv$/, ".meta.json"));
+    const dict = existsSync(dictPath) ? (JSON.parse(readFileSync(dictPath, "utf8")) as Diccionario) : null;
+    datasets.push({ source: id, file, columns, rowCount: rows.length, bytes: statSync(path).size, dict });
   }
 }
 

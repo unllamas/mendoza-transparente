@@ -1,0 +1,41 @@
+{
+  "titulo": "Cuentas de las provincias: ingresos, gastos y resultado",
+  "descripcion": "Cada fila es un concepto de la ejecución presupuestaria de una provincia (ingresos corrientes, gastos de personal, resultado, etc.) en un trimestre. Los valores son acumulados del año hasta ese trimestre (el cuarto trimestre es el año completo), en pesos nominales sin ajustar por inflación.",
+  "columnas": {
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio"
+    },
+    "trimestre": {
+      "etiqueta": "Trimestre",
+      "tipo": "numero",
+      "descripcion": "Trimestre del año (1 a 4)."
+    },
+    "provincia": {
+      "etiqueta": "Provincia",
+      "tipo": "texto"
+    },
+    "concepto": {
+      "etiqueta": "Concepto",
+      "tipo": "texto",
+      "descripcion": "Rubro de las cuentas públicas. Los niveles van separados con \">\": por ejemplo, \"ingresos corrientes > tributarios\" es una parte de \"ingresos corrientes\"."
+    },
+    "valor": {
+      "etiqueta": "Monto",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1000000,
+      "descripcion": "Acumulado del año hasta el trimestre, en pesos nominales. Puede ser negativo (déficit o egresos netos)."
+    },
+    "unidad": {
+      "oculta": true
+    }
+  },
+  "orden": [
+    "anio",
+    "trimestre",
+    "provincia",
+    "concepto",
+    "valor"
+  ]
+}

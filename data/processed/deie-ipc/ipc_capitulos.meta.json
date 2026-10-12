@@ -1,0 +1,53 @@
+{
+  "titulo": "Inflación por rubro en el Gran Mendoza",
+  "descripcion": "Cada fila es un rubro de gasto (alimentos, transporte, educación, etc.) en un mes, según el IPC del Gran Mendoza de la DEIE. Las variaciones son porcentajes. Por ahora la serie empieza en enero de 2026.",
+  "columnas": {
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio"
+    },
+    "mes": {
+      "etiqueta": "Mes",
+      "tipo": "mes"
+    },
+    "capitulo": {
+      "etiqueta": "Rubro",
+      "tipo": "texto"
+    },
+    "variacion_mensual": {
+      "etiqueta": "Inflación del mes",
+      "tipo": "porcentaje",
+      "escala": 1,
+      "descripcion": "Cuánto subió el rubro respecto del mes anterior."
+    },
+    "variacion_acumulada": {
+      "etiqueta": "Acumulada del año",
+      "tipo": "porcentaje",
+      "escala": 1,
+      "descripcion": "Cuánto subió el rubro desde diciembre del año anterior."
+    },
+    "variacion_interanual": {
+      "etiqueta": "Interanual",
+      "tipo": "porcentaje",
+      "escala": 1,
+      "descripcion": "Cuánto subió el rubro respecto del mismo mes del año anterior."
+    },
+    "indice": {
+      "etiqueta": "Índice del rubro",
+      "tipo": "numero",
+      "descripcion": "Nivel del índice de ese rubro. Sirve para comparar entre meses del mismo rubro, no entre rubros."
+    },
+    "fuente_url": {
+      "oculta": true
+    }
+  },
+  "orden": [
+    "anio",
+    "mes",
+    "capitulo",
+    "variacion_mensual",
+    "variacion_acumulada",
+    "variacion_interanual",
+    "indice"
+  ]
+}

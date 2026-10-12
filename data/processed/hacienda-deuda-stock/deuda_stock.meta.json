@@ -1,0 +1,105 @@
+{
+  "titulo": "Deuda de Mendoza por instrumento",
+  "descripcion": "Cada fila es una deuda concreta de la provincia (un bono, un préstamo, una letra) con su saldo al cierre de un trimestre. Los saldos están en millones; el de dólares permite comparar deudas en distintas monedas. Son valores nominales.",
+  "columnas": {
+    "fecha_corte": {
+      "etiqueta": "Fecha de corte",
+      "tipo": "fecha",
+      "descripcion": "Fecha a la que corresponde el saldo."
+    },
+    "instrumento": {
+      "etiqueta": "Deuda",
+      "tipo": "texto",
+      "descripcion": "Nombre del bono, préstamo o letra."
+    },
+    "acreedor": {
+      "etiqueta": "Acreedor",
+      "tipo": "texto",
+      "descripcion": "A quién se le debe."
+    },
+    "acreedor_grupo": {
+      "etiqueta": "Grupo de acreedor",
+      "tipo": "texto",
+      "descripcion": "Gobierno Federal, Banco de la Nación, bancos, organismos multilaterales, tenedores de bonos o Letras de Tesorería."
+    },
+    "saldo_usd": {
+      "etiqueta": "Saldo en dólares",
+      "tipo": "moneda",
+      "moneda": "USD",
+      "escala": 1000000,
+      "descripcion": "Saldo adeudado convertido a dólares."
+    },
+    "saldo_moneda_origen": {
+      "etiqueta": "Saldo en moneda original",
+      "tipo": "numero",
+      "escala": 1000000,
+      "descripcion": "Saldo en la moneda en que se contrajo la deuda (columna Moneda), en unidades de esa moneda."
+    },
+    "moneda": {
+      "etiqueta": "Moneda",
+      "tipo": "texto",
+      "descripcion": "Pesos, Pesos ajustados (por índice), USD o UVA (unidad que se ajusta por inflación)."
+    },
+    "tasa": {
+      "etiqueta": "Tasa de interés",
+      "tipo": "texto"
+    },
+    "vencimiento": {
+      "etiqueta": "Vencimiento",
+      "tipo": "fecha"
+    },
+    "fecha_inicio": {
+      "etiqueta": "Fecha de inicio",
+      "tipo": "fecha"
+    },
+    "duracion_meses": {
+      "etiqueta": "Duración",
+      "tipo": "numero",
+      "unidad": "meses"
+    },
+    "frecuencia_pago": {
+      "etiqueta": "Frecuencia de pago",
+      "tipo": "texto"
+    },
+    "garantia": {
+      "etiqueta": "Garantía",
+      "tipo": "texto",
+      "descripcion": "Recurso que respalda el pago, por ejemplo la coparticipación federal."
+    },
+    "forma_pago": {
+      "etiqueta": "Forma de pago",
+      "tipo": "texto"
+    },
+    "consolidada": {
+      "etiqueta": "Deuda consolidada",
+      "tipo": "booleano",
+      "descripcion": "1 si cuenta en el total de deuda; 0 para operaciones no consolidadas (Letras de Tesorería de 2021 y 2022), que quedan fuera del total."
+    },
+    "id_instrumento": {
+      "oculta": true
+    },
+    "formato": {
+      "oculta": true
+    },
+    "archivo_origen": {
+      "oculta": true
+    }
+  },
+  "orden": [
+    "fecha_corte",
+    "instrumento",
+    "acreedor",
+    "saldo_usd",
+    "saldo_moneda_origen",
+    "moneda",
+    "tasa",
+    "vencimiento",
+    "fecha_inicio",
+    "duracion_meses",
+    "frecuencia_pago",
+    "garantia",
+    "forma_pago",
+    "acreedor_grupo",
+    "consolidada"
+  ]
+}

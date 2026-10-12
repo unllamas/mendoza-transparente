@@ -1,0 +1,41 @@
+{
+  "titulo": "Deuda de las provincias por acreedor",
+  "descripcion": "Cada fila es el saldo de deuda de una provincia con un tipo de acreedor (bonos, bancos, Nación, organismos internacionales) al cierre de un trimestre. Pesos nominales, sin ajustar por inflación: las deudas en dólares aparecen convertidas a pesos, así que el saldo sube con el tipo de cambio.",
+  "columnas": {
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio"
+    },
+    "trimestre": {
+      "etiqueta": "Trimestre",
+      "tipo": "numero",
+      "descripcion": "Trimestre del año (1 a 4)."
+    },
+    "provincia": {
+      "etiqueta": "Provincia",
+      "tipo": "texto"
+    },
+    "concepto": {
+      "etiqueta": "Concepto",
+      "tipo": "texto",
+      "descripcion": "Tipo de deuda: total sin deuda flotante, deuda consolidada, bonos, bancos, gobierno nacional, organismos internacionales, FFFIR y FFDP (fondos nacionales de financiamiento)."
+    },
+    "valor": {
+      "etiqueta": "Saldo",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1000000,
+      "descripcion": "Saldo adeudado al cierre del trimestre, en pesos nominales."
+    },
+    "unidad": {
+      "oculta": true
+    }
+  },
+  "orden": [
+    "anio",
+    "trimestre",
+    "provincia",
+    "concepto",
+    "valor"
+  ]
+}

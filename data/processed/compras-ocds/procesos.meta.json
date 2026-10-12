@@ -1,0 +1,70 @@
+{
+  "titulo": "Procesos de compra del Estado",
+  "descripcion": "Cada fila es un proceso de compra o contratación del Estado provincial publicado en COMPR.AR (licitación, concurso o contratación directa), con su monto estimado. Los montos son pesos nominales, sin ajustar por inflación, y son lo que se estimó gastar, no lo que finalmente se pagó.",
+  "columnas": {
+    "ocid": {
+      "etiqueta": "N.º de proceso",
+      "tipo": "texto",
+      "quitarPrefijo": "ocds-ppv9mm-",
+      "descripcion": "Identificador del proceso en COMPR.AR."
+    },
+    "fecha": {
+      "etiqueta": "Fecha",
+      "tipo": "fecha",
+      "descripcion": "Fecha de publicación del proceso."
+    },
+    "comprador": {
+      "etiqueta": "Organismo comprador",
+      "tipo": "texto",
+      "descripcion": "Repartición del Estado que hace la compra, con su código administrativo. A veces falta."
+    },
+    "titulo": {
+      "etiqueta": "Objeto",
+      "tipo": "texto",
+      "descripcion": "Lo que se quiere comprar o contratar, tal como lo escribió el organismo."
+    },
+    "metodo_contratacion": {
+      "etiqueta": "Modalidad",
+      "tipo": "texto",
+      "descripcion": "Licitación Pública, Concurso Público o Contratación Directa."
+    },
+    "estado": {
+      "etiqueta": "Estado",
+      "tipo": "texto",
+      "valores": {
+        "active": "En curso",
+        "complete": "Finalizado",
+        "unsuccessful": "Desierto o fracasado"
+      },
+      "descripcion": "Desierto o fracasado: no hubo ofertas válidas y el proceso no se adjudicó."
+    },
+    "monto_estimado": {
+      "etiqueta": "Monto estimado",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Presupuesto estimado del proceso en pesos nominales. Puede estar vacío."
+    },
+    "cantidad_oferentes": {
+      "etiqueta": "Ofertas recibidas",
+      "tipo": "numero",
+      "descripcion": "Cuántos oferentes se presentaron."
+    },
+    "metodo_ocds": {
+      "oculta": true
+    },
+    "categoria": {
+      "oculta": true
+    }
+  },
+  "orden": [
+    "fecha",
+    "comprador",
+    "titulo",
+    "monto_estimado",
+    "metodo_contratacion",
+    "estado",
+    "cantidad_oferentes",
+    "ocid"
+  ]
+}

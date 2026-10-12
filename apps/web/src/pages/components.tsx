@@ -1,8 +1,9 @@
 import type { ReactNode } from "react";
 
+/** Dato informativo: solo fondo, sin borde. El borde queda reservado para lo que se puede tocar. */
 export function StatTile({ label, value, note }: { label: string; value: string; note?: string }) {
   return (
-    <div className="flex flex-col gap-1 rounded-xl border border-line bg-surface p-4">
+    <div className="flex flex-col gap-1 rounded-xl bg-tile p-4">
       <span className="text-sm text-ink-2">{label}</span>
       <span className="text-3xl font-semibold tracking-tight">{value}</span>
       {note && <span className="text-xs text-ink-muted">{note}</span>}
@@ -38,5 +39,37 @@ export function Section({ title, children }: { title: string; children: ReactNod
       <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
       {children}
     </section>
+  );
+}
+
+/** Selector de opciones excluyentes (por ejemplo, el período de un gráfico). */
+export function Segmented<T extends string>({
+  options,
+  value,
+  onChange,
+  label,
+}: {
+  options: { value: T; label: string }[];
+  value: T;
+  onChange: (value: T) => void;
+  label: string;
+}) {
+  return (
+    <div role="radiogroup" aria-label={label} className="inline-flex rounded-lg border border-line bg-surface p-0.5 text-sm">
+      {options.map((o) => (
+        <button
+          key={o.value}
+          type="button"
+          role="radio"
+          aria-checked={o.value === value}
+          onClick={() => onChange(o.value)}
+          className={`rounded-md px-3 py-1 transition-colors ${
+            o.value === value ? "bg-grid font-medium text-ink" : "text-ink-2 hover:text-ink"
+          }`}
+        >
+          {o.label}
+        </button>
+      ))}
+    </div>
   );
 }

@@ -1,0 +1,38 @@
+{
+  "titulo": "Coparticipación mensual por municipio",
+  "descripcion": "Cada fila es lo que la Provincia le giró a un municipio de Mendoza en un mes por coparticipación. Montos en pesos nominales, sin ajustar por inflación: los de años anteriores no se pueden comparar directamente con los actuales.",
+  "columnas": {
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio"
+    },
+    "mes": {
+      "etiqueta": "Mes",
+      "tipo": "mes"
+    },
+    "municipio": {
+      "etiqueta": "Municipio",
+      "tipo": "texto",
+      "descripcion": "Departamento de Mendoza."
+    },
+    "concepto": {
+      "etiqueta": "Concepto",
+      "tipo": "texto",
+      "descripcion": "La fuente publica un único total por municipio. Incluye Fondo Compensador, Subsidio per cápita y, desde 2022, Financiamiento Educativo."
+    },
+    "monto_pesos": {
+      "etiqueta": "Monto recibido",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Pesos nominales recibidos en el mes."
+    }
+  },
+  "orden": [
+    "anio",
+    "mes",
+    "municipio",
+    "monto_pesos",
+    "concepto"
+  ]
+}

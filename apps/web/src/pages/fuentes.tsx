@@ -1,67 +1,86 @@
-import { getRouteApi } from "@tanstack/react-router";
+import { getRouteApi, Link } from "@tanstack/react-router";
 
 import { formatBytes, formatDate } from "../lib.ts";
-import { EstadoBadge } from "./components.tsx";
+import type { SourceMeta } from "../types.ts";
+import { EstadoBadge, Section } from "./components.tsx";
 
 const route = getRouteApi("/fuentes");
 
 export function FuentesPage() {
-  const { sources } = route.useLoaderData();
+  const { sources, datasets } = route.useLoaderData();
+  const conDatos = sources.filter((s) => datasets.some((d) => d.source === s.id));
+  const pendientes = sources.filter((s) => !datasets.some((d) => d.source === s.id));
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-12">
       <div className="flex max-w-2xl flex-col gap-2">
         <h1 className="text-3xl font-semibold tracking-tight">Fuentes</h1>
-        <p className="text-ink-2">
-          De dónde sale cada dato. Descargamos los archivos oficiales periódicamente y guardamos cada versión con su
-          fecha, para que nada se pierda aunque el organismo lo borre.
+        <p className="text-ink-2 text-pretty">
+          De dónde sale cada dato. Descargamos los archivos oficiales de cada organismo y guardamos cada versión con su
+          fecha, para que nada se pierda aunque después lo borren o lo cambien.
         </p>
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-line bg-surface">
-        <table className="w-full text-left text-sm">
-          <thead className="border-b border-line text-ink-muted">
-            <tr>
-              <th className="px-4 py-3 font-medium">Fuente</th>
-              <th className="px-4 py-3 font-medium">Frecuencia</th>
-              <th className="px-4 py-3 font-medium">Estado</th>
-              <th className="px-4 py-3 font-medium">Última descarga</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-line">
-            {sources.map((s) => (
-              <tr key={s.id} className="align-top">
-                <td className="flex flex-col gap-0.5 px-4 py-3">
-                  {s.url ? (
-                    <a href={s.url} className="font-medium hover:underline">
-                      {s.nombre}
-                    </a>
-                  ) : (
-                    <span className="font-medium">{s.nombre}</span>
-                  )}
-                  {s.organismo && <span className="text-ink-muted">{s.organismo}</span>}
-                </td>
-                <td className="px-4 py-3 text-ink-2">{s.frecuencia}</td>
-                <td className="px-4 py-3">
-                  <EstadoBadge estado={s.estado} />
-                </td>
-                <td className="px-4 py-3 text-ink-2 tabular-nums">
-                  {s.raw.lastFetch ? (
-                    <>
-                      {formatDate(s.raw.lastFetch)}
-                      <span className="block text-ink-muted">
-                        {s.raw.files} {s.raw.files === 1 ? "archivo" : "archivos"} · {formatBytes(s.raw.bytes)}
-                      </span>
-                    </>
-                  ) : (
-                    "—"
-                  )}
-                </td>
-              </tr>
+      <Section title="Con datos">
+        <ul className="flex flex-col gap-3">
+          {conDatos.map((s) => (
+            <FuenteItem key={s.id} source={s} tables={datasets.filter((d) => d.source === s.id).length} />
+          ))}
+        </ul>
+      </Section>
+
+      {pendientes.length > 0 && (
+        <Section title="En preparación">
+          <ul className="flex flex-col gap-3">
+            {pendientes.map((s) => (
+              <FuenteItem key={s.id} source={s} tables={0} />
             ))}
-          </tbody>
-        </table>
-      </div>
+          </ul>
+        </Section>
+      )}
     </div>
+  );
+}
+
+function FuenteItem({ source: s, tables }: { source: SourceMeta; tables: number }) {
+  return (
+    <li className="flex flex-col gap-3 rounded-xl bg-tile p-4 md:flex-row md:items-start md:justify-between">
+      <div className="flex max-w-2xl flex-col gap-1">
+        <span className="font-medium">{s.nombre}</span>
+        {s.descripcion && <span className="text-sm text-ink-2 text-pretty">{s.descripcion}</span>}
+        <span className="flex flex-wrap gap-x-3 gap-y-1 text-sm text-ink-muted">
+          {s.organismo && <span>{s.organismo}</span>}
+          {s.frecuencia && <span className="whitespace-nowrap">Se publica: {s.frecuencia}</span>}
+          {s.raw.lastFetch && (
+            <span className="whitespace-nowrap">
+              Última descarga: {formatDate(s.raw.lastFetch)} ({formatBytes(s.raw.bytes)})
+            </span>
+          )}
+        </span>
+      </div>
+
+      <div className="flex shrink-0 flex-wrap items-center gap-2 md:flex-col md:items-end">
+        <EstadoBadge estado={s.estado} />
+        <div className="flex gap-2">
+          {tables > 0 && (
+            <Link
+              to="/datos/$fuente"
+              params={{ fuente: s.id }}
+              className="whitespace-nowrap rounded-lg border border-line px-3 py-1.5 text-sm hover:border-axis"
+            >
+              Ver datos
+            </Link>
+          )}
+          {s.url && (
+            <a
+              href={s.url}
+              className="whitespace-nowrap rounded-lg border border-line px-3 py-1.5 text-sm text-ink-2 hover:border-axis hover:text-ink"
+            >
+              Fuente oficial ↗
+            </a>
+          )}
+        </div>
+      </div>
+    </li>
   );
 }

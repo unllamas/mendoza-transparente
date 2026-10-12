@@ -4,6 +4,7 @@
 
 - id: hacienda-deuda-stock
   nombre: Deuda pública provincial, stock vigente y tableros trimestrales
+  descripcion: "Cuánto debe la Provincia, a quién y en qué moneda, deuda por deuda y trimestre a trimestre."
   organismo: Ministerio de Hacienda y Finanzas de Mendoza
   url: https://sitios.mendoza.gob.ar/haciendayfinanzas/stock-vigente/
   formato: xlsx
@@ -13,6 +14,7 @@
 
 - id: hacienda-participacion-municipal
   nombre: Coparticipación de la provincia a los municipios
+  descripcion: "Cuánta plata de coparticipación le gira la Provincia a cada municipio de Mendoza, mes a mes y año a año desde 1997."
   organismo: Ministerio de Hacienda y Finanzas de Mendoza
   url: https://sitios.mendoza.gob.ar/haciendayfinanzas/participacion-municipal/
   formato: xls
@@ -22,6 +24,7 @@
 
 - id: dnap-ron
   nombre: Recursos de origen nacional (transferencias automáticas de Nación a provincias)
+  descripcion: "Cuánto dinero le transfiere Nación a cada provincia por coparticipación y otros regímenes, mes a mes."
   organismo: Dirección Nacional de Asuntos Provinciales
   url: https://www.argentina.gob.ar/economia/sechacienda/asuntosprovinciales/ron
   formato: xls, csv
@@ -31,6 +34,7 @@
 
 - id: boletin-oficial
   nombre: Boletín Oficial de Mendoza (índice y texto completo de normas)
+  descripcion: "Qué decretos, resoluciones y leyes publica el Gobierno de Mendoza, con su texto completo."
   organismo: Gobierno de Mendoza
   url: https://portalgateway.mendoza.gov.ar/api/boe/
   formato: api (html en json)
@@ -40,6 +44,7 @@
 
 - id: etica-publica
   nombre: Declaraciones juradas patrimoniales y registro de sanciones
+  descripcion: "Los patrimonios que declaran los funcionarios y las sanciones que recibieron."
   organismo: Oficina de Investigaciones Administrativas y Ética Pública
   url: https://eticapublica.mendoza.gov.ar/api/v1/public/
   formato: api json
@@ -49,6 +54,7 @@
 
 - id: compras-ocds
   nombre: Contrataciones abiertas de COMPR.AR Mendoza (OCDS)
+  descripcion: "Qué compra el Estado provincial, a qué proveedores y por cuánta plata."
   organismo: Dirección General de Contrataciones Públicas
   url: https://datosabiertos-compras.mendoza.gov.ar/datasets/
   formato: json ocds
@@ -58,6 +64,7 @@
 
 - id: energia-regalias
   nombre: Regalías de petróleo y gas por provincia
+  descripcion: "Cuánto cobran Mendoza y las demás provincias por regalías de petróleo y gas."
   organismo: Secretaría de Energía de la Nación
   url: http://datos.energia.gob.ar/dataset/regalias-de-petroleo-crudo-gas-natural-glp-gasolina-y-condensado
   formato: zip, csv
@@ -67,6 +74,7 @@
 
 - id: deie-ipc
   nombre: IPC Gran Mendoza y canasta básica
+  descripcion: "Cuánto suben los precios en el Gran Mendoza y cuánto cuesta la canasta básica."
   organismo: DEIE Mendoza
   url: https://sitios.mendoza.gob.ar/deie/category/economia/precios-e-indices/ipc/feed/
   formato: rss, pdf
@@ -76,6 +84,7 @@
 
 - id: dnap-aif
   nombre: Ejecución presupuestaria de las 24 provincias (esquema ahorro-inversión-financiamiento)
+  descripcion: "En qué gastan y de dónde sacan la plata las 24 provincias, y cómo les cierra el resultado."
   organismo: Dirección Nacional de Asuntos Provinciales
   url: https://www.argentina.gob.ar/economia/sechacienda/coordinacion-fiscal-provincial/ejecucion-presupuestaria-provincial/ejecuciones
   formato: xlsx
@@ -85,6 +94,7 @@
 
 - id: dnap-deuda
   nombre: Deuda pública de las 24 provincias
+  descripcion: "Cuánto debe cada provincia y a qué tipo de acreedor, para comparar a Mendoza con el resto."
   organismo: Dirección Nacional de Asuntos Provinciales
   url: https://www.argentina.gob.ar/economia/sechacienda/coordinacion-fiscal-provincial/deuda-publica-provincial/evolucion-de-stock
   formato: xlsx
@@ -94,6 +104,7 @@
 
 - id: dnap-ocupacion
   nombre: Empleo público y salarios de las 24 provincias
+  descripcion: "Cuántos empleados públicos tiene cada provincia y cuánto gasta en sueldos."
   organismo: Dirección Nacional de Asuntos Provinciales
   url: https://www.argentina.gob.ar/economia/sechacienda/coordinacion-fiscal-provincial/ejecucion-presupuestaria-provincial/ocupacion-y
   formato: xlsx
@@ -103,6 +114,7 @@
 
 - id: poblacion
   nombre: Población por departamento y por provincia (censos y proyecciones)
+  descripcion: "Cuántos habitantes tiene cada departamento de Mendoza y cada provincia, para comparar por habitante."
   organismo: INDEC
   url: https://censo.gob.ar/
   formato: xlsx, pdf
@@ -112,6 +124,7 @@
 
 - id: indices
   nombre: Inflación (IPC nacional y Cuyo, empalmado desde 1997) y tipo de cambio oficial
+  descripcion: "Cómo subieron los precios y el dólar desde 1997, para pasar cualquier monto a pesos de hoy o a dólares."
   organismo: INDEC y Banco Central
   url: https://www.indec.gob.ar/indec/web/Nivel4-Tema-3-5-31
   formato: csv, xls, api

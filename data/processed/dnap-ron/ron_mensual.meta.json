@@ -1,0 +1,37 @@
+{
+  "titulo": "Transferencias de Nación a las provincias",
+  "descripcion": "Cada fila es lo que Nación le transfirió a una provincia en un mes por un impuesto o régimen (coparticipación federal, IVA, ganancias, etc.). Montos en pesos nominales, sin ajustar por inflación: los de años lejanos no se pueden comparar con los actuales sin deflactar.",
+  "columnas": {
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio"
+    },
+    "mes": {
+      "etiqueta": "Mes",
+      "tipo": "mes"
+    },
+    "provincia": {
+      "etiqueta": "Provincia",
+      "tipo": "texto"
+    },
+    "concepto": {
+      "etiqueta": "Concepto",
+      "tipo": "texto",
+      "descripcion": "Impuesto o régimen por el que se transfirió el dinero, por ejemplo coparticipacion_federal."
+    },
+    "monto_pesos": {
+      "etiqueta": "Monto transferido",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Pesos nominales transferidos en el mes."
+    }
+  },
+  "orden": [
+    "anio",
+    "mes",
+    "provincia",
+    "monto_pesos",
+    "concepto"
+  ]
+}

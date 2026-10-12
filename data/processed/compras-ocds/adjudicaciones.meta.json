@@ -1,0 +1,49 @@
+{
+  "titulo": "Adjudicaciones de compras",
+  "descripcion": "Cada fila es un proveedor que ganó un proceso de compra del Estado provincial en COMPR.AR. Los montos están en pesos nominales del momento de la adjudicación, sin ajustar por inflación. Hay adjudicaciones sin fecha cargada.",
+  "columnas": {
+    "ocid": {
+      "etiqueta": "N.º de proceso",
+      "tipo": "texto",
+      "quitarPrefijo": "ocds-ppv9mm-",
+      "descripcion": "Identificador del proceso en COMPR.AR. Sirve para cruzar con la tabla de procesos."
+    },
+    "fecha_adjudicacion": {
+      "etiqueta": "Fecha",
+      "tipo": "fecha",
+      "descripcion": "Fecha en que se adjudicó el proceso. Puede estar vacía."
+    },
+    "proveedor_nombre": {
+      "etiqueta": "Proveedor",
+      "tipo": "texto"
+    },
+    "proveedor_cuit": {
+      "etiqueta": "CUIT",
+      "tipo": "texto",
+      "descripcion": "CUIT del proveedor, sin guiones."
+    },
+    "monto": {
+      "etiqueta": "Monto adjudicado",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Monto adjudicado en pesos nominales."
+    },
+    "moneda": {
+      "oculta": true
+    },
+    "estado_adjudicacion": {
+      "oculta": true
+    },
+    "proveedores_en_adjudicacion": {
+      "oculta": true
+    }
+  },
+  "orden": [
+    "fecha_adjudicacion",
+    "proveedor_nombre",
+    "monto",
+    "ocid",
+    "proveedor_cuit"
+  ]
+}

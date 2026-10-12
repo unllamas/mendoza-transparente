@@ -1,12 +1,20 @@
 import { getRouteApi, Link } from "@tanstack/react-router";
+import { useState } from "react";
 
 import { BarList } from "../charts/bar-list.tsx";
 import { LineChart } from "../charts/line-chart.tsx";
 import { GOBIERNOS } from "../gobiernos.ts";
 import { formatNumber } from "../lib.ts";
-import { Section, StatTile } from "./components.tsx";
+import { Section, Segmented, StatTile } from "./components.tsx";
 
 const route = getRouteApi("/empleo-publico");
+
+type Periodo = "4" | "8" | "todo";
+const PERIODOS: { value: Periodo; label: string }[] = [
+  { value: "4", label: "Últimos 4 gobiernos" },
+  { value: "8", label: "Últimos 8" },
+  { value: "todo", label: "Desde 1987" },
+];
 
 const decimal = new Intl.NumberFormat("es-AR", { maximumFractionDigits: 1 });
 const FUENTE =
@@ -15,6 +23,10 @@ const FUENTE =
 export function EmpleoPage() {
   const empleo = route.useLoaderData();
   const pico = empleo.serie.reduce((max, p) => (p.cadaMil > max.cadaMil ? p : max));
+  const [periodo, setPeriodo] = useState<Periodo>("4");
+  const gobiernos = periodo === "todo" ? GOBIERNOS : GOBIERNOS.slice(-Number(periodo));
+  const desde = Number(gobiernos[0]!.desde.slice(0, 4));
+  const serie = empleo.serie.filter((p) => p.anio >= desde);
 
   return (
     <div className="flex flex-col gap-12">
@@ -52,12 +64,14 @@ export function EmpleoPage() {
         <p className="text-sm text-ink-muted">Empleados públicos provinciales cada mil habitantes. No incluye municipios ni Nación.</p>
       </Section>
 
-      <Section title="Evolución en Mendoza">
-        <div className="rounded-xl border border-line bg-surface p-4">
+      <Section title="Evolución en Mendoza, empleados cada mil habitantes">
+        <Segmented label="Período" options={PERIODOS} value={periodo} onChange={setPeriodo} />
+        <div className="rounded-xl bg-tile p-4">
           <LineChart
-            data={empleo.serie.map((p) => ({ fecha: `${p.anio}-07-01`, valor: p.cadaMil }))}
-            bands={GOBIERNOS.map((g) => ({ desde: g.desde, hasta: g.hasta, label: g.nombre }))}
-            formatValue={(v) => decimal.format(v)}
+            data={serie.map((p) => ({ fecha: `${p.anio}-01-01`, valor: p.cadaMil }))}
+            bands={gobiernos.map((g) => ({ desde: g.desde, hasta: g.hasta, label: g.nombre }))}
+            formatValue={(v) => `${decimal.format(v)} cada mil hab.`}
+            formatAxis={(v) => decimal.format(v)}
             formatDate={(f) => f.slice(0, 4)}
             ariaLabel="Empleados públicos provinciales cada mil habitantes en Mendoza, por año"
           />

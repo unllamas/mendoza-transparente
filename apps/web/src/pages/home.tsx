@@ -91,7 +91,7 @@ export function HomePage() {
 
       {pending.length > 0 && (
         <Section title="En preparación">
-          <ul className="flex flex-col divide-y divide-line rounded-xl border border-line bg-surface">
+          <ul className="flex flex-col divide-y divide-line rounded-xl bg-tile">
             {pending.map((s) => (
               <li key={s.id} className="flex flex-col gap-0.5 px-4 py-3">
                 <span className="text-sm font-medium">{s.nombre}</span>

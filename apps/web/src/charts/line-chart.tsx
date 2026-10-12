@@ -9,13 +9,18 @@ export interface Band {
 interface Props {
   data: { fecha: string; valor: number }[];
   bands?: Band[];
+  /** Valor completo, para el tooltip ("US$ 775 M"). */
   formatValue: (v: number) => string;
+  /** Valor corto para el eje Y, sin unidad ("775"): la unidad va en el título del gráfico. */
+  formatAxis?: (v: number) => string;
   formatDate: (fecha: string) => string;
   height?: number;
   ariaLabel: string;
 }
 
-const MARGIN = { top: 28, right: 16, bottom: 28, left: 56 };
+const MARGIN_BASE = { top: 28, right: 16, bottom: 28 };
+// Ancho aproximado de un carácter de 11px, para reservar lugar a las etiquetas del eje Y.
+const CHAR_W = 6.6;
 
 /** Escala "linda" para el eje Y: 4-5 marcas redondas que cubren [0, max]. */
 function niceTicks(max: number): number[] {
@@ -29,7 +34,7 @@ function niceTicks(max: number): number[] {
 }
 
 /** Línea de una sola serie, con franjas temporales opcionales y tooltip con línea guía. */
-export function LineChart({ data, bands = [], formatValue, formatDate, height = 280, ariaLabel }: Props) {
+export function LineChart({ data, bands = [], formatValue, formatAxis = formatValue, formatDate, height = 280, ariaLabel }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(640);
   const [hover, setHover] = useState<number | null>(null);
@@ -47,6 +52,7 @@ export function LineChart({ data, bands = [], formatValue, formatDate, height = 
   const t1 = Date.parse(data.at(-1)!.fecha);
   const ticks = niceTicks(Math.max(...data.map((d) => d.valor)));
   const yMax = ticks.at(-1)!;
+  const MARGIN = { ...MARGIN_BASE, left: Math.max(...ticks.map((v) => formatAxis(v).length)) * CHAR_W + 14 };
   const innerW = width - MARGIN.left - MARGIN.right;
   const innerH = height - MARGIN.top - MARGIN.bottom;
   const x = (fecha: string) => MARGIN.left + ((Date.parse(fecha) - t0) / (t1 - t0)) * innerW;
@@ -55,10 +61,13 @@ export function LineChart({ data, bands = [], formatValue, formatDate, height = 
 
   const path = data.map((d, i) => `${i ? "L" : "M"}${x(d.fecha).toFixed(1)},${y(d.valor).toFixed(1)}`).join("");
   const years: number[] = [];
-  const firstYear = new Date(t0).getUTCFullYear() + 1;
+  const startYear = new Date(t0).getUTCFullYear();
+  const firstYear = Date.parse(`${startYear}-01-01`) >= t0 ? startYear : startYear + 1;
   const lastYear = new Date(t1).getUTCFullYear();
-  const yearStep = innerW < 480 ? 2 : 1;
-  for (let yr = firstYear; yr <= lastYear; yr += yearStep) years.push(yr);
+  // Un año cada ~48px como mínimo, en pasos redondos, para que las etiquetas no se pisen.
+  const span = Math.max(lastYear - firstYear, 1);
+  const yearStep = [1, 2, 5, 10, 20].find((s) => (innerW / span) * s >= 48) ?? 20;
+  for (let yr = firstYear; yr <= lastYear; yr++) if ((yr - firstYear) % yearStep === 0) years.push(yr);
 
   function onMove(e: React.PointerEvent<SVGRectElement>) {
     const box = e.currentTarget.getBoundingClientRect();
@@ -97,7 +106,7 @@ export function LineChart({ data, bands = [], formatValue, formatDate, height = 
           <g key={t}>
             <line x1={MARGIN.left} x2={MARGIN.left + innerW} y1={y(t)} y2={y(t)} className={t === 0 ? "stroke-axis" : "stroke-grid"} />
             <text x={MARGIN.left - 8} y={y(t)} dy="0.32em" textAnchor="end" className="fill-ink-muted text-[11px] tabular-nums">
-              {formatValue(t)}
+              {formatAxis(t)}
             </text>
           </g>
         ))}

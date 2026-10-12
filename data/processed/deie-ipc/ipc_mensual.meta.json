@@ -1,0 +1,53 @@
+{
+  "titulo": "Inflación mensual en el Gran Mendoza",
+  "descripcion": "Cada fila es un mes del índice de precios al consumidor (IPC) del Gran Mendoza, medido por la DEIE provincial. Las variaciones son porcentajes. Por ahora la serie empieza en enero de 2026.",
+  "columnas": {
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio"
+    },
+    "mes": {
+      "etiqueta": "Mes",
+      "tipo": "mes"
+    },
+    "variacion_mensual": {
+      "etiqueta": "Inflación del mes",
+      "tipo": "porcentaje",
+      "escala": 1,
+      "descripcion": "Cuánto subieron los precios respecto del mes anterior."
+    },
+    "variacion_acumulada": {
+      "etiqueta": "Acumulada del año",
+      "tipo": "porcentaje",
+      "escala": 1,
+      "descripcion": "Cuánto subieron los precios desde diciembre del año anterior."
+    },
+    "variacion_interanual": {
+      "etiqueta": "Interanual",
+      "tipo": "porcentaje",
+      "escala": 1,
+      "descripcion": "Cuánto subieron los precios respecto del mismo mes del año anterior."
+    },
+    "indice_nivel_general": {
+      "etiqueta": "Índice general",
+      "tipo": "numero",
+      "descripcion": "Nivel del índice de precios del mes. Sirve para comparar entre meses."
+    },
+    "indice_mes_anterior": {
+      "etiqueta": "Índice del mes anterior",
+      "tipo": "numero"
+    },
+    "fuente_url": {
+      "oculta": true
+    }
+  },
+  "orden": [
+    "anio",
+    "mes",
+    "variacion_mensual",
+    "variacion_acumulada",
+    "variacion_interanual",
+    "indice_nivel_general",
+    "indice_mes_anterior"
+  ]
+}

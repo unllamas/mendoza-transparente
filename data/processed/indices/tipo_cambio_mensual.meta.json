@@ -1,0 +1,41 @@
+{
+  "titulo": "Dólar oficial mensual",
+  "descripcion": "Cada fila es un mes con el promedio del dólar oficial mayorista (referencia del Banco Central) y del minorista, en pesos por dólar. Sirve para pasar montos de pesos a dólares.",
+  "columnas": {
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio"
+    },
+    "mes": {
+      "etiqueta": "Mes",
+      "tipo": "mes"
+    },
+    "tipo_cambio_oficial_promedio": {
+      "etiqueta": "Dólar mayorista",
+      "tipo": "numero",
+      "unidad": "$ por USD",
+      "descripcion": "Promedio del mes del dólar mayorista de referencia (Com. A 3500 del BCRA)."
+    },
+    "tipo_cambio_minorista": {
+      "etiqueta": "Dólar minorista",
+      "tipo": "numero",
+      "unidad": "$ por USD",
+      "descripcion": "Promedio del mes del precio de venta minorista. Sólo desde junio de 2010."
+    },
+    "dias_habiles_mayorista": {
+      "etiqueta": "Días hábiles",
+      "tipo": "numero",
+      "descripcion": "Cantidad de días con cotización usados para el promedio."
+    },
+    "fuente": {
+      "oculta": true
+    }
+  },
+  "orden": [
+    "anio",
+    "mes",
+    "tipo_cambio_oficial_promedio",
+    "tipo_cambio_minorista",
+    "dias_habiles_mayorista"
+  ]
+}

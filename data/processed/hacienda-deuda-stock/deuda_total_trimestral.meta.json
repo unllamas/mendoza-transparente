@@ -1,0 +1,94 @@
+{
+  "titulo": "Deuda total de Mendoza por trimestre",
+  "descripcion": "Cada fila es un trimestre con la deuda total de la provincia (consolidada más deuda flotante) en pesos y en dólares, en millones. Los pesos son nominales, salvo la columna de pesos reales, que está expresada en pesos del último trimestre disponible.",
+  "columnas": {
+    "fecha_corte": {
+      "etiqueta": "Fecha de corte",
+      "tipo": "fecha"
+    },
+    "deuda_total_ars_mill": {
+      "etiqueta": "Deuda total (pesos)",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1000000,
+      "descripcion": "Deuda consolidada más flotante, en pesos nominales."
+    },
+    "deuda_total_usd_mill": {
+      "etiqueta": "Deuda total (dólares)",
+      "tipo": "moneda",
+      "moneda": "USD",
+      "escala": 1000000,
+      "descripcion": "Deuda consolidada más flotante, en dólares."
+    },
+    "deuda_total_ars_reales_mill": {
+      "etiqueta": "Deuda total en pesos reales",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1000000,
+      "descripcion": "Deuda total ajustada por inflación, en pesos del último trimestre disponible."
+    },
+    "deuda_total_sobre_pbg": {
+      "etiqueta": "Deuda sobre el PBG",
+      "tipo": "porcentaje",
+      "escala": 100,
+      "descripcion": "Deuda total como porcentaje del producto bruto geográfico de la provincia. Falta en los últimos trimestres."
+    },
+    "deuda_consolidada_ars_mill": {
+      "etiqueta": "Deuda consolidada (pesos)",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1000000,
+      "descripcion": "Deuda financiera en bonos, préstamos y otros instrumentos, en pesos nominales."
+    },
+    "deuda_flotante_ars_mill": {
+      "etiqueta": "Deuda flotante (pesos)",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1000000,
+      "descripcion": "Deuda de corto plazo con proveedores y otros compromisos pendientes, en pesos nominales."
+    },
+    "deuda_consolidada_usd_mill": {
+      "etiqueta": "Deuda consolidada (dólares)",
+      "tipo": "moneda",
+      "moneda": "USD",
+      "escala": 1000000
+    },
+    "deuda_flotante_descentralizadas_ars_mill": {
+      "etiqueta": "Flotante de organismos descentralizados",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1000000,
+      "descripcion": "Parte de la deuda flotante que corresponde a organismos descentralizados, en pesos nominales."
+    },
+    "tipo_cambio_com3500": {
+      "etiqueta": "Tipo de cambio",
+      "tipo": "numero",
+      "unidad": "$ por USD",
+      "descripcion": "Dólar mayorista de referencia (Com. A 3500 del BCRA) usado para convertir."
+    },
+    "factor_ipc": {
+      "etiqueta": "Factor de inflación",
+      "tipo": "numero",
+      "descripcion": "Número por el que se multiplicó la deuda en pesos para llevarla a pesos del último trimestre."
+    },
+    "fecha_corte_tablero": {
+      "oculta": true
+    },
+    "stock_instrumentos_usd_mill": {
+      "oculta": true
+    }
+  },
+  "orden": [
+    "fecha_corte",
+    "deuda_total_ars_mill",
+    "deuda_total_usd_mill",
+    "deuda_total_ars_reales_mill",
+    "deuda_total_sobre_pbg",
+    "deuda_consolidada_ars_mill",
+    "deuda_flotante_ars_mill",
+    "deuda_consolidada_usd_mill",
+    "deuda_flotante_descentralizadas_ars_mill",
+    "tipo_cambio_com3500",
+    "factor_ipc"
+  ]
+}

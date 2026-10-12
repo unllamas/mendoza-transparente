@@ -13,6 +13,8 @@ const trimestre = (fecha: string) => {
   const [y, m] = fecha.split("-");
   return `${Math.ceil(Number(m) / 3)}.º trim. ${y}`;
 };
+const mesAnio = (fecha: string) =>
+  new Date(`${fecha.slice(0, 7)}-15`).toLocaleDateString("es-AR", { month: "short", year: "numeric" });
 const FUENTE = "https://sitios.mendoza.gob.ar/haciendayfinanzas/stock-vigente/";
 
 export function DeudaPage() {
@@ -39,12 +41,13 @@ export function DeudaPage() {
         <StatTile label="Máximo de la serie" value={usdM(pico.usd)} note={trimestre(pico.fecha)} />
       </div>
 
-      <Section title="Evolución de la deuda">
-        <div className="rounded-xl border border-line bg-surface p-4">
+      <Section title="Evolución de la deuda, en millones de dólares">
+        <div className="rounded-xl bg-tile p-4">
           <LineChart
             data={deuda.serie.map((p) => ({ fecha: p.fecha, valor: p.usd }))}
             bands={GOBIERNOS.map((g) => ({ desde: g.desde, hasta: g.hasta, label: g.nombre }))}
             formatValue={usdM}
+            formatAxis={(v) => formatNumber(v)}
             formatDate={trimestre}
             ariaLabel="Deuda consolidada de Mendoza en millones de dólares, por trimestre"
           />
@@ -60,7 +63,7 @@ export function DeudaPage() {
           {deuda.mandatos.map((m) => {
             const delta = m.fin.usd - m.inicio.usd;
             return (
-              <div key={m.desde} className="flex flex-col gap-1 rounded-xl border border-line bg-surface p-4">
+              <div key={m.desde} className="flex flex-col gap-1 rounded-xl bg-tile p-4">
                 <span className="text-sm text-ink-2">
                   {m.gobierno} {m.desde.slice(0, 4)}–{m.hasta ? m.hasta.slice(0, 4) : "hoy"}
                 </span>
@@ -105,14 +108,14 @@ export function DeudaPage() {
       </div>
 
       <Section title="Instrumentos vigentes">
-        <div className="overflow-x-auto rounded-xl border border-line bg-surface">
+        <div className="overflow-x-auto rounded-xl bg-tile">
           <table className="w-full text-left text-sm">
             <thead className="border-b border-line text-ink-muted">
               <tr>
                 <th className="px-4 py-3 font-medium">Instrumento</th>
                 <th className="px-4 py-3 font-medium">Acreedor</th>
                 <th className="px-4 py-3 font-medium">Moneda</th>
-                <th className="px-4 py-3 text-right font-medium">Saldo</th>
+                <th className="whitespace-nowrap px-4 py-3 text-right font-medium">Saldo</th>
                 <th className="px-4 py-3 font-medium">Tasa</th>
                 <th className="px-4 py-3 font-medium">Vence</th>
               </tr>
@@ -122,10 +125,10 @@ export function DeudaPage() {
                 <tr key={i.instrumento + i.vencimiento}>
                   <td className="px-4 py-2">{i.instrumento}</td>
                   <td className="px-4 py-2 text-ink-2">{i.acreedor}</td>
-                  <td className="px-4 py-2 text-ink-2">{i.moneda}</td>
-                  <td className="px-4 py-2 text-right">{usdM(i.usd)}</td>
+                  <td className="whitespace-nowrap px-4 py-2 text-ink-2">{i.moneda}</td>
+                  <td className="whitespace-nowrap px-4 py-2 text-right">{usdM(i.usd)}</td>
                   <td className="px-4 py-2 text-ink-2">{i.tasa || "—"}</td>
-                  <td className="px-4 py-2 text-ink-2">{i.vencimiento ? i.vencimiento.slice(0, 7) : "—"}</td>
+                  <td className="whitespace-nowrap px-4 py-2 text-ink-2">{i.vencimiento ? mesAnio(i.vencimiento) : "—"}</td>
                 </tr>
               ))}
             </tbody>

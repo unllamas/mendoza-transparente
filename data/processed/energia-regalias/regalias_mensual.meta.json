@@ -1,0 +1,50 @@
+{
+  "titulo": "Regalías de petróleo y gas",
+  "descripcion": "Cada fila es lo que se cobró en un mes por regalías de un producto (petróleo, gas, GLP, gasolina) en una provincia o cuenca. La moneda cambia según el producto: petróleo y gasolina en dólares, gas natural y GLP en pesos. Son valores nominales, sin ajustar por inflación.",
+  "columnas": {
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio"
+    },
+    "mes": {
+      "etiqueta": "Mes",
+      "tipo": "mes"
+    },
+    "provincia": {
+      "etiqueta": "Provincia o cuenca",
+      "tipo": "texto",
+      "descripcion": "Provincia productora o, para el GLP, cuenca petrolera. También aparece \"Estado Nacional\"."
+    },
+    "producto": {
+      "etiqueta": "Producto",
+      "tipo": "texto",
+      "descripcion": "petroleo_crudo, gas_natural, gasolina_condensado o glp."
+    },
+    "monto": {
+      "etiqueta": "Regalías",
+      "tipo": "moneda",
+      "monedaColumna": "moneda",
+      "escala": 1,
+      "descripcion": "Monto en la moneda indicada en la columna Moneda."
+    },
+    "moneda": {
+      "etiqueta": "Moneda",
+      "tipo": "texto",
+      "descripcion": "USD (dólares) o ARS (pesos)."
+    },
+    "ambito": {
+      "etiqueta": "Ámbito",
+      "tipo": "texto",
+      "descripcion": "Si la fila corresponde a una provincia o a una cuenca petrolera."
+    }
+  },
+  "orden": [
+    "anio",
+    "mes",
+    "provincia",
+    "producto",
+    "monto",
+    "moneda",
+    "ambito"
+  ]
+}

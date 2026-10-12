@@ -5,6 +5,7 @@
   color-scheme: light;
   --page: #f9f9f7;
   --surface: #fcfcfb;
+  --tile: #f0efec;
   --ink: #0b0b0b;
   --ink-2: #52514e;
   --ink-muted: #898781;
@@ -19,6 +20,7 @@
     color-scheme: dark;
     --page: #0d0d0d;
     --surface: #1a1a19;
+    --tile: #1a1a19;
     --ink: #f0efec;
     --ink-2: #c3c2b7;
     --ink-muted: #898781;
@@ -32,6 +34,7 @@
 @theme inline {
   --color-page: var(--page);
   --color-surface: var(--surface);
+  --color-tile: var(--tile);
   --color-ink: var(--ink);
   --color-ink-2: var(--ink-2);
   --color-ink-muted: var(--ink-muted);

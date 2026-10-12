@@ -1,0 +1,43 @@
+{
+  "titulo": "Inflación mensual (IPC) desde 1997",
+  "descripcion": "Cada fila es un mes del índice de precios al consumidor, nacional o de la región Cuyo, con base diciembre de 2016 = 100. Sirve para pasar montos a pesos de hoy. Antes de 2016 la serie es un empalme aproximado y entre 2007 y 2015 refleja el IPC oficial, muy cuestionado por subestimar la inflación.",
+  "columnas": {
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio"
+    },
+    "mes": {
+      "etiqueta": "Mes",
+      "tipo": "mes"
+    },
+    "indice": {
+      "etiqueta": "Índice de precios",
+      "tipo": "numero",
+      "descripcion": "Nivel de precios con base diciembre de 2016 = 100."
+    },
+    "variacion_mensual": {
+      "etiqueta": "Inflación del mes",
+      "tipo": "porcentaje",
+      "escala": 1,
+      "descripcion": "Variación de precios respecto del mes anterior."
+    },
+    "region": {
+      "etiqueta": "Región",
+      "tipo": "texto",
+      "descripcion": "nacional o cuyo. Cuyo (que incluye Mendoza) existe sólo desde diciembre de 2016."
+    },
+    "fuente": {
+      "etiqueta": "Fuente y método",
+      "tipo": "texto",
+      "descripcion": "De dónde sale ese dato y cómo se empalmó la serie."
+    }
+  },
+  "orden": [
+    "anio",
+    "mes",
+    "region",
+    "variacion_mensual",
+    "indice",
+    "fuente"
+  ]
+}

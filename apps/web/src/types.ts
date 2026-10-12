@@ -1,6 +1,7 @@
 export interface SourceMeta {
   id: string;
   nombre: string;
+  descripcion: string;
   organismo: string;
   url: string;
   formato: string;
@@ -10,12 +11,35 @@ export interface SourceMeta {
   raw: { files: number; bytes: number; lastFetch: string | null };
 }
 
+export interface ColumnaDict {
+  etiqueta?: string;
+  tipo?: "texto" | "numero" | "moneda" | "fecha" | "anio" | "mes" | "porcentaje" | "booleano";
+  descripcion?: string;
+  oculta?: boolean;
+  moneda?: "ARS" | "USD";
+  monedaColumna?: string;
+  escala?: number;
+  quitarPrefijo?: string;
+  unidad?: string;
+  /** Traducción de códigos a texto legible ({"active": "En curso"}). */
+  valores?: Record<string, string>;
+}
+
+/** Diccionario de una tabla: data/processed/<fuente>/<archivo>.meta.json (ver docs/diccionario-de-datos.md). */
+export interface Diccionario {
+  titulo?: string;
+  descripcion?: string;
+  columnas?: Record<string, ColumnaDict>;
+  orden?: string[];
+}
+
 export interface DatasetMeta {
   source: string;
   file: string;
   columns: string[];
   rowCount: number;
   bytes: number;
+  dict: Diccionario | null;
 }
 
 export interface DataIndex {

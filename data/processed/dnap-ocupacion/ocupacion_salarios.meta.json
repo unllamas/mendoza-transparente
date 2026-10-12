@@ -1,0 +1,39 @@
+{
+  "titulo": "Empleo público y salarios de las provincias",
+  "descripcion": "Cada fila es un dato anual de una provincia sobre empleo público: cargos ocupados, gasto en personal, gasto medio mensual por cargo, habitantes y empleados cada mil habitantes. Cada dato viene en una unidad distinta (ver columna Unidad). Los montos son pesos nominales sin ajustar por inflación.",
+  "columnas": {
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio"
+    },
+    "provincia": {
+      "etiqueta": "Provincia",
+      "tipo": "texto"
+    },
+    "trimestre": {
+      "oculta": true
+    },
+    "concepto": {
+      "etiqueta": "Concepto",
+      "tipo": "texto",
+      "descripcion": "Qué se mide: gasto_personal, planta_ocupada (cargos), gasto_medio_mensual (por cargo), habitantes o empleados_cada_mil_habitantes."
+    },
+    "valor": {
+      "etiqueta": "Valor",
+      "tipo": "numero",
+      "descripcion": "Depende del concepto, mirar la unidad. Ojo: el gasto en personal está en miles de pesos (multiplicar por 1.000) y el gasto medio mensual en pesos."
+    },
+    "unidad": {
+      "etiqueta": "Unidad",
+      "tipo": "texto",
+      "descripcion": "miles_pesos, pesos, cargos, personas o por_mil_habitantes."
+    }
+  },
+  "orden": [
+    "anio",
+    "provincia",
+    "concepto",
+    "valor",
+    "unidad"
+  ]
+}

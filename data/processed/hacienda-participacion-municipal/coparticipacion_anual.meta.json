@@ -1,0 +1,39 @@
+{
+  "titulo": "Coparticipación anual por municipio",
+  "descripcion": "Cada fila es el total que la Provincia le giró a un municipio de Mendoza en un año, desde 1997. Montos en pesos nominales, sin ajustar por inflación. El año en curso es parcial.",
+  "columnas": {
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio"
+    },
+    "municipio": {
+      "etiqueta": "Municipio",
+      "tipo": "texto",
+      "descripcion": "Departamento de Mendoza."
+    },
+    "concepto": {
+      "etiqueta": "Concepto",
+      "tipo": "texto",
+      "descripcion": "La fuente publica un único total por municipio. Incluye Fondo Compensador, Subsidio per cápita y, desde 2022, Financiamiento Educativo."
+    },
+    "monto_pesos": {
+      "etiqueta": "Monto recibido",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Pesos nominales recibidos en el año."
+    },
+    "parcial": {
+      "etiqueta": "Año incompleto",
+      "tipo": "booleano",
+      "descripcion": "1 si el año todavía no terminó y el total es parcial; 0 si es el año completo."
+    }
+  },
+  "orden": [
+    "anio",
+    "municipio",
+    "monto_pesos",
+    "parcial",
+    "concepto"
+  ]
+}
