@@ -27,7 +27,7 @@
   formato: xls, csv
   frecuencia: diaria
   dificultad: facil
-  estado: pendiente
+  estado: activo
 
 - id: boletin-oficial
   nombre: Boletín Oficial de Mendoza (índice y texto completo de normas)
@@ -71,5 +71,32 @@
   url: https://sitios.mendoza.gob.ar/deie/category/economia/precios-e-indices/ipc/feed/
   formato: rss, pdf
   frecuencia: mensual
+  dificultad: facil
+  estado: activo
+
+- id: dnap-aif
+  nombre: Ejecución presupuestaria de las 24 provincias (esquema ahorro-inversión-financiamiento)
+  organismo: Dirección Nacional de Asuntos Provinciales
+  url: https://www.argentina.gob.ar/economia/sechacienda/coordinacion-fiscal-provincial/ejecucion-presupuestaria-provincial/ejecuciones
+  formato: xlsx
+  frecuencia: trimestral
+  dificultad: facil
+  estado: activo
+
+- id: dnap-deuda
+  nombre: Deuda pública de las 24 provincias
+  organismo: Dirección Nacional de Asuntos Provinciales
+  url: https://www.argentina.gob.ar/economia/sechacienda/coordinacion-fiscal-provincial/deuda-publica-provincial/evolucion-de-stock
+  formato: xlsx
+  frecuencia: trimestral
+  dificultad: facil
+  estado: activo
+
+- id: dnap-ocupacion
+  nombre: Empleo público y salarios de las 24 provincias
+  organismo: Dirección Nacional de Asuntos Provinciales
+  url: https://www.argentina.gob.ar/economia/sechacienda/coordinacion-fiscal-provincial/ejecucion-presupuestaria-provincial/ocupacion-y
+  formato: xlsx
+  frecuencia: anual
   dificultad: facil
   estado: activo
