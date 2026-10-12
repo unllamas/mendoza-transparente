@@ -52,14 +52,36 @@ function cruzarDeclaraciones(eticaFuncionarios: CsvRow[], declaraciones: CsvRow[
   };
 }
 
+export interface Correccion {
+  id: string;
+  nombre?: string;
+  partido?: string | null;
+  nota?: string;
+  fuente_url?: string;
+}
+
 export function buildFuncionarios(
   legisladores: CsvRow[],
-  autoridades: CsvRow[],
+  autoridadesOriginales: CsvRow[],
   remuneraciones: CsvRow[],
   eticaFuncionarios: CsvRow[] = [],
   declaraciones: CsvRow[] = [],
+  correcciones: Correccion[] = [],
 ): FuncionariosTema {
   const ddjj = cruzarDeclaraciones(eticaFuncionarios, declaraciones);
+  // Correcciones curadas (data/curado/correcciones.yaml): cuando dos fuentes oficiales no coinciden.
+  const porId = new Map(correcciones.map((c) => [c.id, c]));
+  const autoridades = autoridadesOriginales.map((a) => {
+    const c = porId.get(a.id!);
+    if (!c) return a;
+    return {
+      ...a,
+      nombre: c.nombre ?? a.nombre!,
+      partido: c.partido === null ? "" : (c.partido ?? a.partido!),
+      fuente_url: c.fuente_url ?? a.fuente_url!,
+      nota_curada: c.nota ?? "",
+    };
+  });
   const sueldo = (prefijo: string) =>
     remuneraciones
       .filter((r) => r.cargo_o_persona?.startsWith(prefijo) && !/desarraigo|movilidad/i.test(r.concepto ?? ""))
@@ -75,9 +97,11 @@ export function buildFuncionarios(
             : /senado/i.test(a.organismo ?? "")
               ? "senado_nacional"
               : "diputados_nacional";
+      const separado = separarNota(a.nombre!);
       return {
         id: a.id!,
-        ...separarNota(a.nombre!),
+        nombre: separado.nombre,
+        nota: a.nota_curada || separado.nota,
         cargo: a.cargo!,
         grupo,
         organismo: a.organismo!,

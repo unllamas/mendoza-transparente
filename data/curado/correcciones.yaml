@@ -1,0 +1,9 @@
+# Correcciones curadas a los datos de funcionarios cuando dos fuentes oficiales no coinciden.
+# Se aplican por id al generar la web. Cada corrección explica la diferencia y cita la fuente.
+
+- id: ricardo-alfredo-mansur
+  nombre: Sergio Miodowsky
+  partido: null
+  nota: El acta de proclamación de 2023 de la Junta Electoral consigna como intendente electo a Ricardo Alfredo Mansur (Partido Sembrar). El sitio oficial de la Municipalidad de Rivadavia informa hoy a Sergio Miodowsky como intendente.
+  fuente_url: https://rivadavia.gob.ar/gobierno/intendente/
+  revisado: 2026-10-12

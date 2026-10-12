@@ -15,7 +15,7 @@ import { buildDeuda } from "./temas/deuda.ts";
 import { buildCompras } from "./temas/compras.ts";
 import { buildCoparticipacion } from "./temas/coparticipacion.ts";
 import { buildEmpleo } from "./temas/empleo.ts";
-import { buildFuncionarios } from "./temas/funcionarios.ts";
+import { buildFuncionarios, type Correccion } from "./temas/funcionarios.ts";
 import { buildHome } from "./temas/home.ts";
 import { buildPoblacion } from "./temas/poblacion.ts";
 
@@ -233,6 +233,9 @@ if (legisladores && autoridades) {
         readTable("autoridades", "remuneraciones.csv") ?? [],
         readTable("etica-publica", "funcionarios.csv") ?? [],
         readTable("etica-publica", "declaraciones.csv") ?? [],
+        existsSync(join(ROOT, "data", "curado", "correcciones.yaml"))
+          ? (parseYaml(readFileSync(join(ROOT, "data", "curado", "correcciones.yaml"), "utf8")) as Correccion[])
+          : [],
       ),
     ),
   );
