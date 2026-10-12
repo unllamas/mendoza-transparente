@@ -1,5 +1,5 @@
 import { getRouteApi, Link } from "@tanstack/react-router";
-import { ChevronDown, ChevronRight, ExternalLink, FileText, Scale, Sparkles } from "lucide-react";
+import { BadgeCheck, ChevronDown, ChevronRight, CircleHelp, ExternalLink, FileText, MapPin, Scale, Sparkles, Users } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { FuentesOficiales } from "../fuente.tsx";
@@ -101,19 +101,64 @@ export function LeyPage() {
         {ley.resumen ? (
           <>
             <p className="text-lg leading-relaxed text-pretty text-ink">{ley.resumen.texto}</p>
-            {ley.resumen.puntos.length > 0 && (
-              <ul className="flex flex-col gap-2.5">
-                {ley.resumen.puntos.map((p) => (
-                  <li key={p} className="flex gap-3 text-ink-2">
-                    <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
-                    <span className="text-pretty">{p}</span>
+            {ley.resumen.aQuien && (
+              <p className="flex items-start gap-2.5 text-ink-2">
+                <Users className="mt-0.5 size-4 shrink-0 text-ink-muted" aria-hidden />
+                <span className="text-pretty">
+                  <span className="text-ink-muted">A quién le toca: </span>
+                  {ley.resumen.aQuien}
+                </span>
+              </p>
+            )}
+            {ley.places.length > 0 && (
+              <ul className="flex flex-wrap gap-2" aria-label="Departamentos">
+                {ley.places.map((m) => (
+                  <li key={m.slug}>
+                    <Link
+                      to="/municipios/$slug"
+                      params={{ slug: m.slug }}
+                      data-track="law.place.open"
+                      data-track-law={ley.numero}
+                      className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-line px-4 text-link hover:border-link"
+                    >
+                      <MapPin className="size-4" aria-hidden />
+                      {m.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
             )}
+            {ley.resumen.puntos.length > 0 && (
+              <div className="flex flex-col gap-2.5">
+                <h3 className="text-sm font-medium text-ink-muted">Qué cambia</h3>
+                <ul className="flex flex-col gap-2.5">
+                  {ley.resumen.puntos.map((p) => (
+                    <li key={p} className="flex gap-3 text-ink-2">
+                      <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
+                      <span className="text-pretty">{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {ley.resumen.noDice.length > 0 && (
+              <div className="flex flex-col gap-2.5">
+                <h3 className="text-sm font-medium text-ink-muted">Lo que el texto publicado no dice</h3>
+                <ul className="flex flex-col gap-2.5">
+                  {ley.resumen.noDice.map((p) => (
+                    <li key={p} className="flex gap-3 text-ink-muted">
+                      <CircleHelp className="mt-1 size-4 shrink-0" aria-hidden />
+                      <span className="text-pretty">{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
             <p className="flex items-start gap-2 text-xs text-ink-muted">
-              <Sparkles className="mt-0.5 size-3.5 shrink-0" aria-hidden />
-              Resumen hecho con IA a partir del texto oficial. Ante cualquier duda, vale el texto oficial.
+              {ley.resumen.revisado ? <BadgeCheck className="mt-0.5 size-3.5 shrink-0" aria-hidden /> : <Sparkles className="mt-0.5 size-3.5 shrink-0" aria-hidden />}
+              {ley.resumen.revisado
+                ? `Resumen revisado a mano el ${formatDate(ley.resumen.revisado)}. Ante cualquier duda, vale el texto oficial.`
+                : "Resumen hecho con IA a partir del texto oficial. Ante cualquier duda, vale el texto oficial."}
             </p>
           </>
         ) : (

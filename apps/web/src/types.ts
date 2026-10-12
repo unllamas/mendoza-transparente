@@ -381,6 +381,8 @@ export interface LeyResumen {
   publicada: string | null;
   boletin: string | null;
   urlPdf: string | null;
+  /** Departments where the law does something concrete (slugs of /municipios). */
+  municipios: string[];
 }
 
 export type LeyBloque =
@@ -398,7 +400,18 @@ export interface LeyDetalle extends LeyResumen {
   /** Nombre que se da la propia ley, si lo tiene. */
   encabezado: string | null;
   /** Resumen en lenguaje simple, hecho con IA a partir del texto oficial (data/curado/leyes.yaml). */
-  resumen: { texto: string; puntos: string[] } | null;
+  resumen: {
+    texto: string;
+    /** A quién le toca ("Vecinos de Junín", "Toda la provincia"). */
+    aQuien: string | null;
+    puntos: string[];
+    /** Lo que un vecino querría saber y el texto publicado no dice (anexos sin publicar, montos…). */
+    noDice: string[];
+    /** Date it was checked by hand against the official text, if it was. */
+    revisado: string | null;
+  } | null;
+  /** Departments with name, for the chips that link to their page. */
+  places: { slug: string; name: string }[];
   bloques: LeyBloque[];
   cierre: LeyCierre | null;
   /** Who signed it, with photo and page when they are officials. */

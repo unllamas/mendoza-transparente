@@ -41,34 +41,48 @@ export const TEMAS = [
   "Otros",
 ] as const;
 
-export const INSTRUCCIONES = `Resumís leyes de la provincia de Mendoza (Argentina) para ciudadanos que no manejan lenguaje jurídico.
+export const MUNICIPIOS = [
+  "Capital", "General Alvear", "Godoy Cruz", "Guaymallén", "Junín", "La Paz", "Las Heras", "Lavalle", "Luján de Cuyo",
+  "Maipú", "Malargüe", "Rivadavia", "San Carlos", "San Martín", "San Rafael", "Santa Rosa", "Tunuyán", "Tupungato",
+] as const;
+
+export const INSTRUCCIONES = `Explicás leyes de la provincia de Mendoza (Argentina) a vecinos que no siguen la política ni manejan lenguaje jurídico. Entran para saber qué pasa donde viven. La pregunta que tenés que contestar es: "¿qué cambia en la práctica y a quién le toca?".
 
 Reglas:
 - Usá solo lo que dice el texto. No inventes, no supongas intenciones ni consecuencias que el texto no menciona.
 - Neutral: sin adjetivos valorativos ni opiniones ("importante", "polémica", "beneficia"…).
-- Español rioplatense claro, oraciones cortas, sin jerga ("ratifícase" → "aprueba"; "sujeto a expropiación" → "el Estado puede expropiar").
-- Explicá qué cambia en concreto: quién, qué, dónde, cuánta plata o qué plazo, si el texto lo dice.
-- Si la ley aprueba un decreto, convenio o resolución, decí de qué trata ese documento según el texto; si el texto no lo dice, decí que el detalle está en el anexo.
+- Español rioplatense claro, oraciones cortas, sin jerga ("ratifícase" → "aprueba"; "sujeto a expropiación" → "el Estado puede expropiar"). Si un término técnico es inevitable, explicalo en la misma oración.
+- Cada punto se entiende solo y es concreto: edades, montos, plazos, lugares, metros, cantidades, qué se permite y qué se prohíbe.
+- Nunca nombres algo sin decir qué es. Prohibido "aplica medidas y programas", "crea alternativas", "establece requisitos" si no decís cuáles. Si el texto los enumera, contá los más relevantes; si no los enumera (porque están en un anexo o en otra ley), no los menciones en los puntos y anotalo en no_dice.
+- Primero lo que le pasa a la gente (derechos, obligaciones, trámites, servicios, plata, lugares). El organigrama interno (quién depende de quién, requisitos para un cargo, nombres de oficinas) va solo si es todo lo que hace la ley; en ese caso decilo así: "Es una ley de organización interna del Estado: no cambia trámites ni derechos de los vecinos".
+- No cites artículos ni números de otras leyes salvo que expliques qué dicen ("deroga la Ley 6354, el régimen anterior para menores").
+- Si la ley aprueba un convenio, decreto o anexo, contá de qué trata según el texto; si el texto no lo trae, va a no_dice.
 - Nombres de personas: solo si son parte del contenido (no los firmantes).
 
 Devolvé:
-- titulo: hasta 70 caracteres, descriptivo, sin "Ley N°" (ej.: "Nuevo régimen penal para adolescentes", "Expropiación de un terreno en Lavalle para un barrio").
+- titulo: hasta 70 caracteres, dice qué hace la ley, sin "Ley N°" (ej.: "Nuevas reglas para juzgar a adolescentes acusados de delitos", "Junín expropia el Molino Orfila para conservarlo").
 - tema: uno de la lista.
-- resumen: 2 o 3 oraciones, hasta 400 caracteres.
-- puntos: de 2 a 5 puntos concretos, hasta 160 caracteres cada uno.`;
+- resumen: qué cambia en la práctica, en 1 o 2 oraciones (hasta 280 caracteres), como se lo contarías a un vecino.
+- a_quien: a quién le toca, hasta 120 caracteres (ej.: "Adolescentes acusados de delitos y sus familias", "Vecinos de Junín", "Empleados de la administración pública", "Toda la provincia").
+- municipios: los departamentos de Mendoza donde pasa algo concreto (un terreno, una obra, un convenio con ese municipio). Vacío si alcanza a toda la provincia.
+- puntos: de 2 a 4 cambios concretos, hasta 160 caracteres cada uno.
+- no_dice: de 0 a 3 cosas que un vecino querría saber y el texto publicado no dice (ej.: "Desde qué edad se aplica: está en el Código del anexo, que no se publicó con la ley"). Vacío si el texto está completo.`;
 
 const HERRAMIENTA = {
   name: "resumen_ley",
-  description: "Resumen en lenguaje simple de una ley provincial.",
+  description: "Explicación en lenguaje simple de una ley provincial: qué cambia y a quién le toca.",
   input_schema: {
     type: "object",
     properties: {
       titulo: { type: "string", maxLength: 80 },
       tema: { type: "string", enum: TEMAS },
-      resumen: { type: "string", maxLength: 450 },
-      puntos: { type: "array", items: { type: "string", maxLength: 180 }, minItems: 2, maxItems: 5 },
+      resumen: { type: "string", maxLength: 320 },
+      a_quien: { type: "string", maxLength: 140 },
+      municipios: { type: "array", items: { type: "string", enum: MUNICIPIOS } },
+      puntos: { type: "array", items: { type: "string", maxLength: 180 }, minItems: 2, maxItems: 4 },
+      no_dice: { type: "array", items: { type: "string", maxLength: 180 }, maxItems: 3 },
     },
-    required: ["titulo", "tema", "resumen", "puntos"],
+    required: ["titulo", "tema", "resumen", "a_quien", "municipios", "puntos", "no_dice"],
   },
 };
 
@@ -77,7 +91,10 @@ interface Entrada {
   titulo: string;
   tema: string;
   resumen: string;
+  a_quien: string;
+  municipios: string[];
   puntos: string[];
+  no_dice: string[];
   hecho_con: string;
   fecha: string;
   revisado?: string;
@@ -150,7 +167,7 @@ if (import.meta.main) {
       continue;
     }
     const r = await resumir(ley, apiKey);
-    nuevas.push({ numero: n, titulo: r.titulo, tema: r.tema, resumen: r.resumen, puntos: r.puntos, hecho_con: MODELO, fecha: hoy });
+    nuevas.push({ numero: n, ...r, municipios: r.municipios ?? [], no_dice: r.no_dice ?? [], hecho_con: MODELO, fecha: hoy });
     console.log(`- Ley ${n}: ${r.titulo}`);
   }
   const rehechas = new Set(nuevas.map((e) => e.numero));

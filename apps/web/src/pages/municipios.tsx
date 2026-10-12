@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { ColumnChart } from "../charts/column-chart.tsx";
 import { MapaMendoza, MunicipalityLocator } from "../charts/mapa.tsx";
 import { FuentesOficiales } from "../fuente.tsx";
-import { formatNumber } from "../lib.ts";
+import { formatDate, formatNumber } from "../lib.ts";
 import { slug } from "../slug.ts";
 import type { MunicipioPagina } from "../types.ts";
 import { Aviso, Migas, PageHeader, PersonAvatar, Section, Segmented, StatTile } from "./components.tsx";
@@ -85,7 +85,7 @@ export function MunicipiosPage() {
 }
 
 export function MunicipioPage() {
-  const { municipios, mapa } = detailApi.useLoaderData();
+  const { municipios, mapa, leyes } = detailApi.useLoaderData();
   const { slug: current } = detailApi.useParams();
   const navigate = useNavigate();
   const m = municipios.find((x) => x.slug === current);
@@ -102,6 +102,7 @@ export function MunicipioPage() {
   }
   const c = m.coparticipacion;
   const i = m.intendente;
+  const localLaws = leyes.filter((l) => l.municipios.includes(m.slug));
   return (
     <div className="flex flex-col gap-10">
       <Migas items={[{ label: "Municipios", to: "/municipios" }, { label: m.nombre }]} />
@@ -157,6 +158,33 @@ export function MunicipioPage() {
           <Link to="/coparticipacion" className="w-fit text-sm text-link hover:underline">
             Comparar con los demás municipios ›
           </Link>
+        </Section>
+      )}
+
+      {localLaws.length > 0 && (
+        <Section title={`Leyes que tocan a ${m.nombre}`}>
+          <p className="-mt-2 text-sm text-ink-muted">Leyes provinciales que hacen algo concreto en el departamento: un terreno, una obra, un convenio.</p>
+          <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
+            {localLaws.map((l) => (
+              <li key={l.numero}>
+                <Link
+                  to="/leyes/$numero"
+                  params={{ numero: l.numero }}
+                  data-track="municipality.law.open"
+                  data-track-law={l.numero}
+                  className="group flex min-h-11 items-center gap-4 px-4 py-3 hover:bg-grid/50"
+                >
+                  <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                    <span className="truncate font-medium group-hover:text-link" title={l.titulo}>{l.titulo}</span>
+                    <span className="truncate text-sm whitespace-nowrap text-ink-muted">
+                      {[`Ley ${l.numero}`, l.fecha && formatDate(l.fecha)].filter(Boolean).join(" · ")}
+                    </span>
+                  </span>
+                  <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
+                </Link>
+              </li>
+            ))}
+          </ul>
         </Section>
       )}
 

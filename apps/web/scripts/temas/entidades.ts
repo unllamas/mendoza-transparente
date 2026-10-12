@@ -240,6 +240,7 @@ export function buildLeyes(
     const texto = existsSync(textoPath) ? readFileSync(textoPath, "utf8").trim() : "";
     const estructura = estructurarLey(texto);
     const r = curado.get(numero);
+    const places = (r?.municipios ?? []).map((name) => ({ slug: slug(name), name }));
     const resumen: LeyResumen = {
       numero,
       titulo: tituloLey(r, estructura, (n.titulo_ley || n.sumario || "").replace(/\s+/g, " ").trim()),
@@ -248,6 +249,7 @@ export function buildLeyes(
       publicada: n.fecha || null,
       boletin: n.nro_boletin || null,
       urlPdf: n.url_pdf || null,
+      municipios: places.map((p) => p.slug),
     };
     leyes.push(resumen);
     // Signers with their face and page when they are officials (vice governor, chamber presidents…).
@@ -259,7 +261,8 @@ export function buildLeyes(
       ...resumen,
       ...estructura,
       signers,
-      resumen: r ? { texto: r.resumen, puntos: r.puntos ?? [] } : null,
+      resumen: r ? { texto: r.resumen, aQuien: r.a_quien ?? null, puntos: r.puntos ?? [], noDice: r.no_dice ?? [], revisado: r.revisado ? String(r.revisado) : null } : null,
+      places,
     };
     writeFileSync(join(outDir, "leyes", `${numero}.json`), JSON.stringify(detalle));
   }

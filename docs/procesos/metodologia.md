@@ -35,15 +35,26 @@ El activo principal del proyecto es la credibilidad. Estos criterios se aplican 
 
 ## Resúmenes de leyes
 
-Cada ley tiene un resumen en lenguaje simple para quien no maneja el vocabulario jurídico. Quien quiera el detalle tiene el texto completo, ordenado por artículos, y el PDF oficial.
+Cada ley tiene un resumen en lenguaje simple para un vecino que no sigue la política ni maneja el vocabulario jurídico, y que entra a saber qué pasa donde vive. El resumen contesta una sola pregunta: **¿qué cambia en la práctica y a quién le toca?** Quien quiera el detalle tiene el texto completo, ordenado por artículos, y el PDF oficial.
 
 - **De dónde salen:** `data/curado/leyes.yaml`. Los escribe un modelo de IA (`apps/web/scripts/resumir-leyes.ts`, con la API de Claude) a partir del texto oficial de la ley, y se pueden corregir a mano.
 - **Criterios** (la constante `INSTRUCCIONES` del script):
   - Solo lo que dice el texto.
   - Neutral, sin valoraciones.
-  - Concreto: quién, qué, dónde, cuánta plata y qué plazo.
-  - Título de hasta 70 caracteres, un tema de una lista fija, 2 o 3 oraciones y de 2 a 5 puntos.
-- **En la web** el resumen siempre se presenta como hecho con IA, con la aclaración de que vale el texto oficial.
+  - Concreto: edades, montos, plazos, lugares, metros, qué se permite y qué se prohíbe.
+  - **Nunca nombrar algo sin decir qué es.** "Aplica medidas y programas" no sirve si no dice cuáles. Si el texto no lo dice (porque está en un anexo o en otra ley), va a "lo que no dice", no a los puntos.
+  - Primero lo que le pasa a la gente. El organigrama interno solo cuenta si es todo lo que hace la ley, y entonces se dice así: "es una ley de organización interna".
+  - Sin números de artículos ni de otras leyes, salvo que se explique qué dicen.
+- **Campos** de cada ley en el YAML:
+  - `titulo`: hasta 70 caracteres, dice qué hace la ley.
+  - `tema`: uno de una lista fija.
+  - `resumen`: qué cambia, en 1 o 2 oraciones.
+  - `a_quien`: a quién le toca.
+  - `municipios`: los departamentos donde pasa algo concreto. Con ellos la ley aparece en la página del departamento ("Leyes que tocan a…").
+  - `puntos`: de 2 a 4 cambios concretos.
+  - `no_dice`: de 0 a 3 cosas que un vecino querría saber y el texto publicado no trae.
+- **Ejemplo de referencia:** la Ley 9735 (régimen penal juvenil), escrita a mano. Antes decía "la Dirección aplica medidas y programas"; ahora cuenta cuáles (acompañante que informa al juez, guardia 24 horas, hogares abiertos, escuela obligatoria en el encierro, castigos prohibidos) y avisa que la edad y las penas están en un anexo sin publicar.
+- **En la web** el resumen se presenta como hecho con IA (o revisado a mano, si tiene `revisado`), con la aclaración de que vale el texto oficial.
 - **Revisión:** al corregir o validar un resumen a mano, agregarle `revisado: AAAA-MM-DD`. Un resumen editado no se vuelve a generar solo; para rehacerlo: `bun run resumir-leyes <número>`.
 - **Sin resumen** (por ejemplo, si falta la clave de la API): la página muestra el título que sale del texto (el nombre que se da la propia ley o su primer artículo) y el primer artículo.
 

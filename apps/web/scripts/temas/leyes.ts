@@ -11,7 +11,11 @@ export interface ResumenLey {
   titulo: string;
   tema: string;
   resumen: string;
+  a_quien?: string;
+  municipios?: string[];
   puntos: string[];
+  no_dice?: string[];
+  revisado?: string;
 }
 
 export interface LeyEstructurada {

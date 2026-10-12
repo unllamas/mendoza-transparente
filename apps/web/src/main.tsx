@@ -171,8 +171,12 @@ const municipioRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/municipios/$slug",
   loader: async () => {
-    const [municipios, mapa] = await Promise.all([loadTema<MunicipioPagina[]>("municipios"), loadTema<MapaMendoza>("mapa").catch(() => null)]);
-    return { municipios, mapa };
+    const [municipios, mapa, leyes] = await Promise.all([
+      loadTema<MunicipioPagina[]>("municipios"),
+      loadTema<MapaMendoza>("mapa").catch(() => null),
+      loadTema<LeyResumen[]>("leyes").catch(() => []),
+    ]);
+    return { municipios, mapa, leyes };
   },
   component: MunicipioPage,
 });
