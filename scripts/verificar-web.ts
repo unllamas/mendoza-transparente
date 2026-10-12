@@ -92,23 +92,29 @@ try {
     await page.goto(BASE + ruta, { waitUntil: "networkidle" });
     await page.waitForTimeout(600);
   }
-  // 3. Menú móvil: con el menú abierto, la página de atrás queda bloqueada (un solo scroll, el del menú).
+  // 3. Menú móvil: se puede cerrar aunque la página esté bajada, y la página de atrás queda bloqueada
+  //    (un solo scroll, el del menú).
   {
     const mobile = await browser.newPage({ viewport: { width: 375, height: 700 }, isMobile: true, hasTouch: true });
     await mobile.goto(BASE + "/leyes", { waitUntil: "networkidle" });
+    await mobile.evaluate(() => window.scrollTo(0, 1500));
+    await mobile.waitForTimeout(200);
     await mobile.getByRole("button", { name: "Abrir menú" }).click();
     await mobile.waitForTimeout(300);
     const state = await mobile.evaluate(() => {
       const menu = document.getElementById("menu-movil")!;
+      const close = document.getElementById("menu-movil-cerrar")!.getBoundingClientRect();
       return {
         pageLocked: getComputedStyle(document.scrollingElement!).overflowY === "hidden",
         menuScrolls: ["auto", "scroll"].includes(getComputedStyle(menu).overflowY),
         contained: getComputedStyle(menu).overscrollBehaviorY === "contain",
+        closeVisible: close.top >= 0 && close.bottom <= window.innerHeight && close.width > 0,
       };
     });
     if (!state.pageLocked) problemas.push("Menú móvil: la página de atrás se puede desplazar con el menú abierto");
     if (!state.menuScrolls || !state.contained) problemas.push("Menú móvil: el menú no tiene su propio scroll contenido");
-    await mobile.getByRole("button", { name: "Cerrar menú" }).click();
+    if (!state.closeVisible) problemas.push("Menú móvil: con la página bajada, el botón de cerrar no se ve");
+    await mobile.locator("#menu-movil-cerrar").click();
     if (await mobile.evaluate(() => getComputedStyle(document.scrollingElement!).overflowY === "hidden"))
       problemas.push("Menú móvil: al cerrarlo, la página queda bloqueada");
     await mobile.close();

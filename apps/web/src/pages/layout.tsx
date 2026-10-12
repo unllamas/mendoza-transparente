@@ -85,6 +85,12 @@ export function Layout() {
   // El menú se cierra al navegar y la página no se desplaza detrás mientras está abierto.
   useEffect(() => setAbierto(false), [pathname]);
   useScrollLock(abierto);
+  useEffect(() => {
+    if (!abierto) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setAbierto(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [abierto]);
 
   return (
     <div className="flex min-h-dvh flex-col">
@@ -109,16 +115,16 @@ export function Layout() {
           </nav>
           <button
             type="button"
-            onClick={() => setAbierto((v) => !v)}
+            onClick={() => setAbierto(true)}
             aria-expanded={abierto}
             aria-controls="menu-movil"
             id="menu-movil-boton"
             data-track="nav.mobile_menu.toggle"
-            data-track-open={String(!abierto)}
-            aria-label={abierto ? "Cerrar menú" : "Abrir menú"}
+            data-track-open="true"
+            aria-label="Abrir menú"
             className="-mr-2 flex size-10 items-center justify-center rounded-lg text-ink hover:bg-tile lg:hidden"
           >
-            {abierto ? <X className="size-5" aria-hidden /> : <Menu className="size-5" aria-hidden />}
+            <Menu className="size-5" aria-hidden />
           </button>
         </div>
 
@@ -126,10 +132,33 @@ export function Layout() {
 
       {/* Fuera del header: su backdrop-blur haría que el panel fijo se mida contra el header y no contra la pantalla. */}
       {abierto && (
+        // Full-screen panel with its own top bar: it never depends on the page header, which can scroll away on
+        // phones while the page is scroll-locked (sticky stops working when <html> has overflow: hidden).
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menú"
+          className="fixed inset-0 z-50 flex flex-col bg-page lg:hidden"
+        >
+          <div className="flex h-14 shrink-0 items-center gap-6 border-b border-line px-4 sm:px-5">
+            <Link to="/" className="mr-auto text-base font-semibold tracking-tight whitespace-nowrap">
+              Mendoza Transparente
+            </Link>
+            <button
+              type="button"
+              onClick={() => setAbierto(false)}
+              id="menu-movil-cerrar"
+              data-track="nav.mobile_menu.close"
+              aria-label="Cerrar menú"
+              className="-mr-2 flex size-10 items-center justify-center rounded-lg text-ink hover:bg-tile"
+            >
+              <X className="size-5" aria-hidden />
+            </button>
+          </div>
         <nav
           id="menu-movil"
           aria-label="Principal"
-          className="fixed inset-x-0 top-14 bottom-0 z-20 flex flex-col gap-6 overflow-y-auto overscroll-contain border-t border-line bg-page px-4 py-5 lg:hidden"
+          className="flex flex-1 flex-col gap-6 overflow-y-auto overscroll-contain px-4 py-5"
         >
           <div className="flex flex-col">
             {PRINCIPALES.map((item) => (
@@ -162,6 +191,7 @@ export function Layout() {
             </div>
           ))}
         </nav>
+        </div>
       )}
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-5 sm:py-10">
