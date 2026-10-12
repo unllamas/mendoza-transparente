@@ -4,6 +4,23 @@ Proyecto cívico: recopilar los datos públicos de Mendoza, normalizarlos y publ
 
 **Los procesos internos están documentados en `docs/procesos/`** (agregar una fuente, actualización de datos, reglas de `data/`, la web, diseño, metodología y trabajo con agentes). Leer el que corresponda antes de empezar. **Todo proceso nuevo o cambio en uno existente se documenta ahí en el mismo commit.**
 
+## Skills: qué cargar según la tarea
+
+Las skills del proyecto (`.claude/skills/`) son la puerta de entrada a cada proceso: dicen cuándo se usan y traen la checklist; el detalle vive en `docs/procesos/`. **Cargar la que corresponda antes de empezar**, y más de una si la tarea cruza procesos.
+
+| Si vas a… | Skill |
+|---|---|
+| Escribir o cambiar código, en cualquier parte | `codigo` |
+| Crear o retocar una pantalla, un componente, un gráfico o un texto visible | `diseno` |
+| Agregar un botón, un link, un formulario o una interacción; tocar PostHog | `analitica` |
+| Crear o tocar un scraper; relevar o procesar una fuente | `datos-y-fuentes` |
+| Escribir un texto que interpreta datos, calcular una cifra o una señal, editar `data/curado` | `contenido-y-metodologia` |
+| Crear una página o un tipo de entidad; títulos, rutas, buscador o previsualizaciones | `seo-y-geo` |
+| Publicar o tocar Cloudflare, D1 o PostHog; diagnosticar el sitio en vivo | `produccion` |
+| Lanzar un subagente o integrar lo que devolvió | `delegar-en-agentes` |
+
+**Proceso nuevo = documento en `docs/procesos/` + skill (o sección en una existente) + fila en esta tabla, en el mismo commit.**
+
 ## Orquestación
 
 - La sesión principal orquesta. Las tareas acotadas (un scraper, un parser, una verificación) van a subagentes en Sonnet, en paralelo y sobre archivos distintos.
