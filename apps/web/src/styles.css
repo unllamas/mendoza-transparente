@@ -19,13 +19,12 @@
   --brand-hover: #6f102c;
   --on-brand: #ffffff;
   --link: #8a1538;
-  /* Rampa del mapa, de poco a mucho (validada: un tono, pasos visibles, contraste con el fondo). */
+  /* Rampa del mapa: de poco (rosa claro) a mucho (borravino profundo). Validada por modo. */
   --map-0: #e3a2b5;
-  --map-1: #d47f99;
-  --map-2: #c15d7e;
-  --map-3: #a63f63;
-  --map-4: #842a4b;
-  --map-5: #5f1834;
+  --map-1: #cf7792;
+  --map-2: #b5506f;
+  --map-3: #8d2d4f;
+  --map-4: #5f1834;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -45,13 +44,11 @@
     --brand-hover: #c4375f;
     --on-brand: #ffffff;
     --link: #f2809b;
-    /* En oscuro, más es más claro. */
-    --map-0: #b23a62;
-    --map-1: #c4527a;
-    --map-2: #d46d91;
-    --map-3: #e28aa8;
-    --map-4: #eeaac0;
-    --map-5: #f7cdd9;
+    --map-0: #ffb3cc;
+    --map-1: #f47ea4;
+    --map-2: #dc5785;
+    --map-3: #b93e68;
+    --map-4: #952d4f;
   }
 }
 

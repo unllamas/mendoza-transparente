@@ -329,7 +329,7 @@ function Cifra({ icon: Icon, titulo, valor, unidad, detalle, serie, fuente, to, 
       </Link>
     );
   return (
-    <div className="group relative flex flex-col gap-4 rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-link/50">
+    <div className="group relative flex min-w-0 flex-col gap-4 rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-link/50">
       <div className="flex items-center justify-between gap-3">
         <span className="flex min-w-0 items-center gap-2 text-sm text-ink-2">
           <Icon className="size-4 shrink-0 text-ink-muted" aria-hidden />

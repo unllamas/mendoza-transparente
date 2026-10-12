@@ -2,8 +2,8 @@ import { useMemo, useState } from "react";
 
 import type { MapaMendoza as MapaData } from "../types.ts";
 
-/** Rampa secuencial borravino de poco a mucho; los valores por modo están en styles.css (--map-0 a --map-5). */
-const RAMPA = Array.from({ length: 6 }, (_, i) => `var(--map-${i})`);
+/** Rampa secuencial borravino de poco a mucho; los valores por modo están en styles.css (--map-0 a --map-4). */
+const RAMPA = Array.from({ length: 5 }, (_, i) => `var(--map-${i})`);
 
 // Departamentos chicos del Gran Mendoza: se muestran ampliados en un recuadro.
 const GRAN_MENDOZA = ["Capital", "Godoy Cruz", "Guaymallén", "Maipú", "Las Heras", "Luján de Cuyo"];
@@ -25,8 +25,14 @@ export function MapaMendoza({ mapa, valores, formatValue, seleccionado, onSelect
   const nums = Object.values(valores);
   const min = Math.min(...nums);
   const max = Math.max(...nums);
-  const color = (v: number | undefined) =>
-    v === undefined ? "var(--grid)" : RAMPA[Math.min(Math.floor(((v - min) / (max - min || 1)) * RAMPA.length), RAMPA.length - 1)]!;
+  // Escala por cuantiles: cada tono agrupa una cantidad parecida de departamentos, así un valor
+  // extremo (por ejemplo La Paz en coparticipación por habitante) no deja a todos los demás del mismo color.
+  const ordenados = [...nums].sort((a, b) => a - b);
+  const color = (v: number | undefined) => {
+    if (v === undefined) return "var(--grid)";
+    const rank = ordenados.findIndex((x) => x >= v);
+    return RAMPA[Math.min(Math.floor((rank / ordenados.length) * RAMPA.length), RAMPA.length - 1)]!;
+  };
 
   // Encuadre del recuadro: los centroides del núcleo del Gran Mendoza con margen.
   const inset = useMemo(() => {
@@ -73,43 +79,42 @@ export function MapaMendoza({ mapa, valores, formatValue, seleccionado, onSelect
       });
 
   return (
-    <div className="grid items-start gap-4 sm:grid-cols-[3fr_2fr]">
-      <svg viewBox={mapa.viewBox} className="block h-auto max-h-[36rem] w-full" role="group" aria-label="Mapa de departamentos de Mendoza">
-        {paths(false)}
-      </svg>
-
-      <div className="flex flex-col gap-3">
-        <div className="rounded-lg bg-tile p-2">
+    <div className="flex flex-col gap-3">
+      <div className="grid grid-cols-[3fr_2fr] items-start gap-3 sm:gap-4">
+        <svg viewBox={mapa.viewBox} className="block h-auto max-h-[22rem] w-full sm:max-h-[36rem]" role="group" aria-label="Mapa de departamentos de Mendoza">
+          {paths(false)}
+        </svg>
+        <div className="flex flex-col gap-1.5 rounded-lg bg-surface p-1.5 sm:p-2">
           <svg viewBox={inset} className="block aspect-square w-full" aria-hidden>
             {paths(true)}
           </svg>
-          <span className="block px-1 pt-1 text-xs text-ink-muted">Gran Mendoza, ampliado</span>
+          <span className="px-1 text-xs text-ink-muted">Gran Mendoza, ampliado</span>
         </div>
+      </div>
 
-        <div className="flex min-h-11 flex-col justify-center rounded-lg bg-tile px-3 py-2 text-sm" aria-live="polite">
-          {activo ? (
-            <span>
-              <span className="font-medium">{activo}</span>{" "}
-              <span className="text-ink-2 tabular-nums">
-                {valores[activo] !== undefined ? formatValue(valores[activo]!) : "sin dato"}
-              </span>
+      <div className="flex min-h-11 flex-col justify-center rounded-lg bg-surface px-3 py-2 text-sm" aria-live="polite">
+        {activo ? (
+          <span>
+            <span className="font-medium">{activo}</span>{" "}
+            <span className="text-ink-2 tabular-nums">
+              {valores[activo] !== undefined ? formatValue(valores[activo]!) : "sin dato"}
             </span>
-          ) : (
-            <span className="text-ink-muted">Pasá el mouse o tocá un departamento.</span>
-          )}
-        </div>
+          </span>
+        ) : (
+          <span className="text-ink-muted">Tocá un departamento para ver su dato.</span>
+        )}
+      </div>
 
-        <div className="flex flex-col gap-1">
-          <span className="text-xs text-ink-muted">{leyenda}</span>
-          <div className="flex h-2.5 overflow-hidden rounded-full">
-            {RAMPA.map((c) => (
-              <span key={c} className="flex-1" style={{ background: c }} />
-            ))}
-          </div>
-          <div className="flex justify-between text-xs text-ink-muted tabular-nums">
-            <span>{formatValue(min)}</span>
-            <span>{formatValue(max)}</span>
-          </div>
+      <div className="flex flex-col gap-1">
+        <span className="text-xs text-ink-muted">{leyenda}</span>
+        <div className="flex h-2.5 overflow-hidden rounded-full">
+          {RAMPA.map((c) => (
+            <span key={c} className="flex-1" style={{ background: c }} />
+          ))}
+        </div>
+        <div className="flex justify-between text-xs text-ink-muted tabular-nums">
+          <span>Menos · {formatValue(min)}</span>
+          <span>{formatValue(max)} · Más</span>
         </div>
       </div>
     </div>

@@ -60,5 +60,11 @@ export function buildFuncionarios(legisladores: CsvRow[], autoridades: CsvRow[],
     ),
   ];
 
-  return { personas: personas.sort((a, b) => a.nombre.localeCompare(b.nombre, "es")) };
+  // El Ejecutivo va por jerarquía (gobernador, vice, ministros, resto); los demás grupos, por apellido.
+  const rango = (p: Funcionario) =>
+    p.grupo !== "ejecutivo" ? 0 : /^gobernador/i.test(p.cargo) ? 1 : /^vicegobernador/i.test(p.cargo) ? 2 : /^ministr/i.test(p.cargo) ? 3 : 4;
+  const apellido = (n: string) => n.split(/\s+/).at(-1) ?? n;
+  return {
+    personas: personas.sort((a, b) => rango(a) - rango(b) || apellido(a.nombre).localeCompare(apellido(b.nombre), "es")),
+  };
 }

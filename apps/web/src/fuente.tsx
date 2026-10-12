@@ -27,12 +27,14 @@ export function FuentesOficiales({ ids }: { ids: string[] }) {
   const fuentes = useFuentes(ids);
   if (fuentes.length === 0) return null;
   return (
-    <div className="flex flex-col gap-2 rounded-xl bg-tile px-4 py-3 text-sm">
+    <div className="flex flex-col gap-3 rounded-xl bg-tile px-4 py-3 text-sm">
       {fuentes.map((s) => (
-        <div key={s.id} className="flex flex-wrap items-center gap-x-3 gap-y-1">
-          <span className="flex items-center gap-1.5 text-ink-2">
-            <Landmark className="size-4 shrink-0 text-ink-muted" aria-hidden />
-            Fuente: <span className="text-ink">{s.organismo || s.nombre}</span>
+        <div key={s.id} className="flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3">
+          <span className="flex items-start gap-1.5 text-ink-2">
+            <Landmark className="mt-0.5 size-4 shrink-0 text-ink-muted" aria-hidden />
+            <span>
+              Fuente: <span className="text-ink">{s.organismo || s.nombre}</span>
+            </span>
           </span>
           {s.url && (
             <a href={s.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-link hover:underline">

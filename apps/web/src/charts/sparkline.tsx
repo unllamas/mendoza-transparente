@@ -10,7 +10,7 @@ export function Sparkline({ values, width = 120, className = "w-28" }: { values:
   const d = values.map((v, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join("");
   const last = values.length - 1;
   return (
-    <svg viewBox={`0 0 ${w} ${h}`} className={`h-auto overflow-visible ${className}`} aria-hidden>
+    <svg viewBox={`0 0 ${w} ${h}`} className={`h-auto max-w-full min-w-0 overflow-visible ${className}`} aria-hidden>
       <path d={d} fill="none" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" className="stroke-accent" />
       <circle cx={x(last)} cy={y(values[last]!)} r={3} className="fill-accent" />
     </svg>
