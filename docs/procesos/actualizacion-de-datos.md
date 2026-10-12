@@ -17,6 +17,7 @@ Cómo funciona:
 1. **plan** decide qué fuentes corren según el calendario (o las elegidas a mano).
 2. **scrape** corre cada fuente en su propio job; si una falla, las demás siguen. Empaqueta los cambios de `data/`.
 3. **commit** junta todos los cambios, comprueba que la web compile con ellos (`bun run data`, tipos, build y SEO) y hace **un único commit**. Si la web no compila, no publica y abre un issue.
+   Antes, si se actualizó el Boletín Oficial, escribe los resúmenes en lenguaje simple de las leyes nuevas (`apps/web/scripts/resumir-leyes.ts`). Necesita el secreto **`ANTHROPIC_API_KEY`**: sin él, las leyes nuevas se publican igual, sin resumen. Si ese paso falla, no frena la publicación. Ver [Metodología](metodologia.md#resumenes-de-leyes).
 4. **frescura** controla que el Boletín Oficial no pase más de 4 días sin actualizarse (solo si hay proxy configurado).
 
 Correrlo a mano: pestaña **Actions → Actualizar datos → Run workflow**, con las fuentes separadas por coma (vacío = todas).
@@ -76,4 +77,5 @@ Qué hace (`scripts/actualizar.ts`):
 
 - **Fotos de funcionarios** (`bun run scrape fotos`): usan `sips`, que solo existe en macOS. Cambian poco.
 - **Mapa** (`bun run scrape geo`): los límites de los departamentos no cambian.
+- **Resúmenes de leyes sin la clave de la API:** `bun run resumir-leyes` con `ANTHROPIC_API_KEY` en el entorno.
 - **Contenido curado** (`data/curado/`): se edita a mano (ver [Datos y archivo](datos-y-archivo.md#contenido-curado)).

@@ -198,6 +198,17 @@ jobs:
           echo "fuentes=$(for f in "${PAQUETES[@]}"; do basename "$f" .tgz; done | paste -sd ', ' -)" >> "$GITHUB_OUTPUT"
           echo "hay=true" >> "$GITHUB_OUTPUT"
 
+      - name: Resumir leyes nuevas en lenguaje simple
+        # Opcional: sin el secreto ANTHROPIC_API_KEY las leyes se muestran sin resumen. Si falla, no frena la publicación.
+        if: steps.aplicar.outputs.hay == 'true' && contains(steps.aplicar.outputs.fuentes, 'boletin-oficial')
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          bun install --frozen-lockfile
+          (cd apps/web && bun run data)
+          bun apps/web/scripts/resumir-leyes.ts
+
       - name: Comprobar que la web compila con los datos nuevos
         if: steps.aplicar.outputs.hay == 'true'
         run: |

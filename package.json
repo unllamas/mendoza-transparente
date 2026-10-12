@@ -12,7 +12,8 @@
     "scrape": "bun packages/scrapers/src/cli.ts",
     "typecheck": "turbo run typecheck",
     "actualizar": "bun scripts/actualizar.ts",
-    "verificar": "bun scripts/verificar-web.ts"
+    "verificar": "bun scripts/verificar-web.ts",
+    "resumir-leyes": "cd apps/web && bun scripts/resumir-leyes.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",

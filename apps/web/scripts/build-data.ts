@@ -6,7 +6,7 @@
  *   <id>/<archivo>.preview.json   las primeras filas, para mostrar en la web
  */
 
-import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, renameSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { parse as parseYaml } from "yaml";
 
@@ -22,11 +22,15 @@ import { deflactor } from "./temas/inflacion.ts";
 import { buildPoblacion } from "./temas/poblacion.ts";
 import { buildSenales } from "./temas/senales.ts";
 import { construirPaginas } from "./paginas.ts";
+import type { ResumenLey } from "./temas/leyes.ts";
 
 const ROOT = join(import.meta.dir, "..", "..", "..");
 const RAW_DIR = join(ROOT, "data", "raw");
 const PROCESSED_DIR = join(ROOT, "data", "processed");
-const OUT = join(import.meta.dir, "..", "public", "data");
+/** Se escribe en una carpeta temporal y al final reemplaza a public/data de un solo paso, para que el
+ * servidor de desarrollo nunca sirva la carpeta a medio generar. */
+const DESTINO = join(import.meta.dir, "..", "public", "data");
+const OUT = `${DESTINO}.tmp-${process.pid}`;
 const PREVIEW_ROWS = 500;
 
 interface ManifestEntry {
@@ -302,11 +306,18 @@ if (procesos && adjudicaciones) {
   writeFileSync(join(OUT, "temas", "organismos.json"), JSON.stringify(organismos));
   writeFileSync(join(OUT, "temas", "proveedores.json"), JSON.stringify(proveedores));
 }
+/** Lee un YAML de data/curado/ (lista vacía si no existe). */
+function leerCurado<T>(archivo: string): T[] {
+  const p = join(ROOT, "data", "curado", archivo);
+  return existsSync(p) ? ((parseYaml(readFileSync(p, "utf8")) as T[] | null) ?? []) : [];
+}
 const normasBoletin = readTable("boletin-oficial", "normas.csv");
 if (normasBoletin) {
   writeFileSync(
     join(OUT, "temas", "leyes.json"),
-    JSON.stringify(buildLeyes(normasBoletin, join(PROCESSED_DIR, "boletin-oficial", "textos"), join(OUT, "temas"))),
+    JSON.stringify(
+      buildLeyes(normasBoletin, join(PROCESSED_DIR, "boletin-oficial", "textos"), join(OUT, "temas"), leerCurado<ResumenLey>("leyes.yaml")),
+    ),
   );
 }
 
@@ -320,4 +331,8 @@ writeFileSync(
   join(OUT, "meta.json"),
   JSON.stringify(Object.fromEntries(paginas.map((p) => [p.path, { t: p.title, d: p.description, o: p.og.slug }]))),
 );
+const viejo = `${DESTINO}.old-${process.pid}`;
+if (existsSync(DESTINO)) renameSync(DESTINO, viejo);
+renameSync(OUT, DESTINO);
+rmSync(viejo, { recursive: true, force: true });
 console.log(`Datos listos: ${sources.length} fuentes, ${datasets.length} datasets, ${paginas.length} páginas.`);

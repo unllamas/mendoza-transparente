@@ -20,6 +20,7 @@ import type {
   DeudaTema,
   EmpleoTema,
   FuncionariosTema,
+  LeyDetalle,
   LeyResumen,
   MunicipioPagina,
   NoPublicado,
@@ -71,13 +72,6 @@ export function recortar(texto: string, max: number): string {
 }
 /** Con la marca si entra en 60 caracteres; si no, prima el contenido (es lo que se busca). */
 const titulo = (t: string) => (t.length + TITLE_SUFFIX.length <= 60 ? t + TITLE_SUFFIX : recortar(t, 60));
-/** "La presente Ley establece el Régimen…" → "Régimen…" */
-const temaLey = (t: string) => {
-  const limpio = t
-    .replace(/^(?:la presente ley|por la presente(?: ley)?|esta ley)\s+(?:tiene por objeto|establece|crea|regula|declara|aprueba|dispone)\s+(?:(?:el|la|los|las)\s+)?/i, "")
-    .replace(/^(?:tiene por objeto|establece|créase|crease|declárase|declarase|apruébase|apruebase)\s+/i, "");
-  return limpio.charAt(0).toUpperCase() + limpio.slice(1);
-};
 const descripcion = (t: string) => recortar(t, 160);
 
 // ------------------------------------------------------------------ piezas de HTML y JSON-LD
@@ -620,12 +614,12 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
   // ---------------------------------------------------------------- leyes
   estatica("/leyes", {
     figura: `${leyes.length} leyes`,
-    bajada: "Leyes provinciales de Mendoza con su texto completo, publicadas en el Boletín Oficial.",
+    bajada: "Qué dice cada ley provincial, explicado en pocas palabras y con el documento oficial.",
     ld: [breadcrumb([["/", "Inicio"], ["/leyes", "Leyes"]])],
     html: cuerpo({
       migas: [["/", "Inicio"], ["/leyes", "Leyes"]],
       h1: "Leyes de la provincia de Mendoza",
-      resumen: "Leyes provinciales de Mendoza publicadas en el Boletín Oficial, con su número, fecha, de qué se tratan y el texto completo.",
+      resumen: "Leyes provinciales de Mendoza publicadas en el Boletín Oficial: qué dice cada una explicado en lenguaje simple, su número, fecha y el enlace al texto oficial.",
       secciones: [{ titulo: "Leyes", items: leyes.map((l) => ({ texto: `Ley ${l.numero}: ${l.titulo}`, href: `/leyes/${l.numero}` })) }],
       fuente: { nombre: "Boletín Oficial de la Provincia de Mendoza", url: fuente("boletin-oficial")?.url },
     }),
@@ -636,38 +630,53 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
   for (const l of leyes) {
     const path = `/leyes/${l.numero}`;
     const numero = `Ley ${nf.format(Number(l.numero))}`;
-    const resumen = `La ${numero} de la provincia de Mendoza${l.fecha ? ` (${fechaLarga(l.fecha)})` : ""}: ${l.titulo.replace(/…$/, "")}${l.publicada ? `. Publicada en el Boletín Oficial el ${fechaLarga(l.publicada)}` : ""}.`;
+    const d = await json<LeyDetalle | null>(`temas/leyes/${l.numero}.json`, null);
+    const sancion = l.fecha ? ` (${fechaLarga(l.fecha)})` : "";
+    const resumen = d?.resumen
+      ? `${numero} de Mendoza${sancion}: ${d.resumen.texto}`
+      : `La ${numero} de la provincia de Mendoza${sancion}: ${l.titulo.replace(/…$/, "")}.`;
     const migas: Miga[] = [["/", "Inicio"], ["/leyes", "Leyes"], [path, numero]];
+    const articulos = (d?.bloques ?? []).flatMap((b) =>
+      b.tipo === "articulo" ? [{ texto: `Artículo ${b.numero}${b.titulo ? ` (${b.titulo})` : ""}: ${recortar(b.parrafos.join(" "), 600)}` }] : [],
+    );
     paginas.push({
       path,
-      title: titulo(`${numero} de Mendoza: ${temaLey(l.titulo)}`),
+      title: titulo(`${numero} de Mendoza: ${l.titulo}`),
       description: descripcion(resumen),
-      og: { slug: `ley-${l.numero}`, eyebrow: "LEY PROVINCIAL", titulo: `${numero} de Mendoza`, figura: numero, bajada: recortar(l.titulo, 120) },
+      og: { slug: `ley-${l.numero}`, eyebrow: `LEY ${nf.format(Number(l.numero))} DE MENDOZA`, titulo: l.titulo, figura: numero, bajada: recortar(d?.resumen?.texto ?? l.titulo, 120) },
       ld: [
         {
           "@type": "Legislation",
-          name: `${numero} de la Provincia de Mendoza`,
+          name: `${numero} de la Provincia de Mendoza: ${l.titulo}`,
+          alternateName: numero,
           legislationIdentifier: numero,
           legislationType: "Ley",
           legislationJurisdiction: "Provincia de Mendoza, Argentina",
           ...(l.fecha ? { legislationDate: l.fecha } : {}),
           ...(l.publicada ? { datePublished: l.publicada } : {}),
-          abstract: l.titulo,
+          abstract: d?.resumen?.texto ?? l.titulo,
+          ...(l.tema ? { keywords: l.tema } : {}),
           inLanguage: "es-AR",
           url: url(path),
           ...(l.urlPdf ? { encoding: { "@type": "MediaObject", contentUrl: l.urlPdf, encodingFormat: "application/pdf" } } : {}),
           legislationPassedBy: { "@type": "GovernmentOrganization", name: "Legislatura de la Provincia de Mendoza" },
         },
         breadcrumb(migas),
+        ...(d?.resumen ? [faq([[`¿Qué dice la ${numero} de Mendoza?`, `${d.resumen.texto} ${d.resumen.puntos.join(" ")}`]])] : []),
       ],
       html: cuerpo({
         migas,
-        h1: `${numero} de Mendoza`,
+        h1: `${numero} de Mendoza: ${l.titulo}`,
         resumen,
         datos: [
           ["Número", numero],
-          ...(l.fecha ? ([["Fecha", fechaLarga(l.fecha)]] as [string, string][]) : []),
+          ...(l.tema ? ([["Tema", l.tema]] as [string, string][]) : []),
+          ...(l.fecha ? ([["Sancionada", fechaLarga(l.fecha)]] as [string, string][]) : []),
           ...(l.publicada ? ([["Publicada en el Boletín Oficial", `${fechaLarga(l.publicada)}${l.boletin ? ` (N.º ${l.boletin})` : ""}`]] as [string, string][]) : []),
+        ],
+        secciones: [
+          ...(d?.resumen?.puntos.length ? [{ titulo: "En pocas palabras", items: d.resumen.puntos.map((texto) => ({ texto })) }] : []),
+          { titulo: "Texto de la ley", items: articulos },
         ],
         fuente: { nombre: "Boletín Oficial de la Provincia de Mendoza", url: l.urlPdf ?? fuente("boletin-oficial")?.url },
       }),

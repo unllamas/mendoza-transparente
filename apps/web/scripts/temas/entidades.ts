@@ -20,6 +20,7 @@ import type {
   ProveedorResumen,
 } from "../../src/types.ts";
 import type { Deflactor } from "./inflacion.ts";
+import { estructurarLey, tituloLey, type ResumenLey } from "./leyes.ts";
 
 type CsvRow = Record<string, string>;
 
@@ -210,8 +211,9 @@ export function buildOrganismosYProveedores(
 
 const numeroLey = (n: string) => n.replace(/\D/g, "");
 
-export function buildLeyes(normas: CsvRow[], textosDir: string, outDir: string): LeyResumen[] {
+export function buildLeyes(normas: CsvRow[], textosDir: string, outDir: string, resumenes: ResumenLey[]): LeyResumen[] {
   mkdirSync(join(outDir, "leyes"), { recursive: true });
+  const curado = new Map(resumenes.map((r) => [String(r.numero), r]));
   const vistas = new Set<string>();
   const leyes: LeyResumen[] = [];
   for (const n of normas.filter((x) => x.tipo === "ley").sort((a, b) => (b.fecha ?? "").localeCompare(a.fecha ?? ""))) {
@@ -220,17 +222,23 @@ export function buildLeyes(normas: CsvRow[], textosDir: string, outDir: string):
     vistas.add(numero);
     const textoPath = join(textosDir, n.fecha ?? "", `${n.norma_id}.txt`);
     const texto = existsSync(textoPath) ? readFileSync(textoPath, "utf8").trim() : "";
-    const titulo = (n.titulo_ley || n.sumario || "").replace(/\s+/g, " ").trim();
+    const estructura = estructurarLey(texto);
+    const r = curado.get(numero);
     const resumen: LeyResumen = {
       numero,
-      titulo: titulo.length > 200 ? `${titulo.slice(0, 197).replace(/\s+\S*$/, "")}…` : titulo,
+      titulo: tituloLey(r, estructura, (n.titulo_ley || n.sumario || "").replace(/\s+/g, " ").trim()),
+      tema: r?.tema ?? null,
       fecha: n.fecha_norma || n.fecha || null,
       publicada: n.fecha || null,
       boletin: n.nro_boletin || null,
       urlPdf: n.url_pdf || null,
     };
     leyes.push(resumen);
-    const detalle: LeyDetalle = { ...resumen, texto };
+    const detalle: LeyDetalle = {
+      ...resumen,
+      ...estructura,
+      resumen: r ? { texto: r.resumen, puntos: r.puntos ?? [] } : null,
+    };
     writeFileSync(join(outDir, "leyes", `${numero}.json`), JSON.stringify(detalle));
   }
   return leyes.sort((a, b) => Number(b.numero) - Number(a.numero));

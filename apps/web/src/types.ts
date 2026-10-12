@@ -358,7 +358,10 @@ export interface ProveedorResumen {
 
 export interface LeyResumen {
   numero: string;
+  /** Título en lenguaje simple (curado) o, si no hay, el nombre de la ley o su primer artículo. */
   titulo: string;
+  /** Tema corto: "Expropiación", "Convenio", "Salud"… (solo si tiene resumen). */
+  tema: string | null;
   /** Fecha de sanción o de la norma, y fecha de publicación en el Boletín. */
   fecha: string | null;
   publicada: string | null;
@@ -366,6 +369,22 @@ export interface LeyResumen {
   urlPdf: string | null;
 }
 
+export type LeyBloque =
+  | { tipo: "seccion"; texto: string }
+  | { tipo: "articulo"; numero: string; titulo?: string; parrafos: string[] }
+  | { tipo: "parrafo"; texto: string };
+
+export interface LeyCierre {
+  /** "Dada en el recinto de sesiones…, a los ocho días del mes de septiembre…" */
+  dada: string;
+  firmantes: string[];
+}
+
 export interface LeyDetalle extends LeyResumen {
-  texto: string;
+  /** Nombre que se da la propia ley, si lo tiene. */
+  encabezado: string | null;
+  /** Resumen en lenguaje simple, hecho con IA a partir del texto oficial (data/curado/leyes.yaml). */
+  resumen: { texto: string; puntos: string[] } | null;
+  bloques: LeyBloque[];
+  cierre: LeyCierre | null;
 }

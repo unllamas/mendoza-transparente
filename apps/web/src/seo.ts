@@ -119,7 +119,7 @@ export const PAGES: Record<string, PageMeta> = {
   "/leyes": {
     title: `Leyes de Mendoza con texto completo${TITLE_SUFFIX}`,
     description:
-      "Leyes de la provincia de Mendoza publicadas en el Boletín Oficial: número, fecha, de qué se trata cada una y su texto completo para leer sin abrir un PDF.",
+      "Leyes de la provincia de Mendoza explicadas en lenguaje simple: qué dice cada una, cuándo se sancionó y el enlace al texto oficial del Boletín Oficial.",
     ogSlug: "leyes",
     ogTitle: "Leyes de Mendoza",
     eyebrow: "LEYES",
