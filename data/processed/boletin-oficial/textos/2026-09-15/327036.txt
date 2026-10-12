@@ -1,0 +1,39 @@
+MENDOZA, 11 DE SEPTIEMBRE DE 2.026.
+
+VISTO:
+
+El EX-2024-04175115- -GDEMZA-INPJYC#MHYF, carat.: “REF: IMPLEMENTACION DE SISTEMA (MISTERY) @WAP /@ VIEWER DE GST. TRAYLON.-", y
+
+CONSIDERANDO:
+
+Que en Orden N° 190 obra Resolución de Directorio N° 475 con fecha 05 de agosto de 2.026 en la que se dispuso: “…ART. 1°.- APRUÉBESE a partir de la fecha de publicación en el Boletín Oficial de la Provincia de Mendoza, la modificación del “REGLAMENTO MYSTERY CASINO DE MENDOZA”, según lo informado en Orden N° 172 que corre adjunto en IF-2026-04596454-GDEMZA-INPJYC#MHYF), y su puesta en funcionamiento en la sala Central de Casino de Mendoza, conforme a los Art. 2, 4 y 21 inc. a) de la Ley N°6362 y a los considerandos precedentes que forman parte de la presente resolución…”.
+
+Que en Orden N° 196 se presenta el Sr. Alejandro Haure, en su calidad de Apoderado de “BINBAIRES S.A. con el objeto de solicitar autorización para modificar el Reglamento de Mystery Casino de Mendoza en inc. 1.1, 2 y 4, del artículo 9 del Capítulo 2. En el mismo Orden adjunta modificaciones propuestas.
+
+Que en Orden N° 198 interviene Gerencia de la Unidad Técnica, Mercado, Gestión y Calidad e informa: “…Es necesario aclarar que la intervención de esta Gerencia con respecto a las acciones comerciales o promociones, independientemente de lo que pueda solicitar la organización, donde hay intervención de Tickets Promocionales está detallada en la resolución 220/23 : “Debe realizar eI análisis estadístico y efectividad de las promociones” Visto el expediente de referencia surge que el operador solicita una modificación de los parámetros correspondientes a los distintos niveles del Sistema Mystery, fundamentando la propuesta en razones de carácter comercial y en la necesidad de hacer más atractiva su implementación en el Casino de Mendoza, Sede Central. En particular, respecto de la propuesta actualmente presentada, se observa una modificación en la frecuencia teórica de salida del Mystery Nivel I, pasando de aproximadamente 858,77 horas (43 días) a 632,71 horas (31 días aproximadamente), conjuntamente con una disminución de su importe mínimo y máximo, que pasan de $4.000.000–$6.000.000 a $2.000.000–$3.000.000. Desde el punto de vista comercial, se considera que la reducción del período teórico de acumulación y salida del Mystery Nivel I podría generar una mayor percepción de frecuencia del premio por parte de los clientes, al producirse potencialmente una cantidad mayor de premios durante un período determinado. Si bien el importe del premio resulta inferior al establecido anteriormente, esta disminución se encuentra acompañada por una reducción significativa del tiempo teórico de acumulación, por lo que ambas variables deberían analizarse conjuntamente al momento de evaluar su impacto comercial. Asimismo, se observa una modificación en los parámetros correspondientes al Mystery Nivel III, cuyo importe pasa de un rango de $10.000–$20.000 a $7.000–$10.000, manteniendo una frecuencia teórica aproximada de una salida por hora. Sobre este punto, y desde una perspectiva comercial y técnica, se considera conveniente realizar un seguimiento específico de la respuesta de los clientes, dado que el importe del premio podría tener una incidencia limitada en la percepción de valor del beneficio, particularmente en relación con los niveles de apuesta registrados en las máquinas participantes. Por otra parte, la nueva parametrización establece factores de acumulación de 0,03 % para el Nivel I, 0,03 % para el Nivel II y 0,11 % para el Nivel III, representando en conjunto un aporte de 0,17 % del Coin In destinado a los tres niveles del progresivo Mystery. Asimismo, el factor correspondiente al Mystery Reserva se establece en 0,13 %. En función de lo expuesto, y considerando exclusivamente los aspectos comerciales, se estima que la modificación propuesta podría generar un efecto favorable sobre la percepción y atractivo comercial del Sistema Mystery, principalmente como consecuencia de la reducción del período teórico de salida del Nivel I y de una mayor frecuencia esperada de eventos de premiación. No obstante, resulta conveniente que la eventual implementación de la nueva parametrización sea acompañada por un seguimiento periódico, a efectos de evaluar su comportamiento y determinar, con información objetiva, el impacto efectivo de la modificación sobre variables tales como frecuencia de premios, evolución del Coin In, participación de los clientes y respuesta comercial de la promoción. Por lo expuesto, este Departamento considera oportuna y favorable, la modificación propuesta, recomendando que su implementación sea acompañada por el seguimiento indicado, a fin de contar con elementos objetivos que permitan evaluar posteriormente la efectividad de la modificación…”.
+
+Que en Orden N° 202 Gerencia de Legales efectúa el análisis jurídico del expediente y dictamina: “…Como Asesora Letrada a cargo del análisis de las presentes actuaciones, no encuentro impedimentos ni objeciones jurídicas para el proseguir con la solicitud obrante en Orden N° 196. Sin perjuicio de ello, y en consonancia con los criterios sostenidos por este Instituto, el acto administrativo que dicte el Directorio deberá especificar con precisión la fecha de entrada en vigencia de los nuevos parámetros, garantizando que el esquema modificado rija para los pozos que se inicien con posterioridad o fijando un corte claro que no frustre las expectativas de los premios en acumulación actualmente en curso. Por lo expuesto,y salvo mejor criterio de la superioridad, concluyo que No existen objeciones legales para que el Directorio, en ejercicio de sus atribuciones apruebe las modificaciones al Reglamento Mystery solicitadas en Orden N° 196. Debiendo dictarse una nueva Resolución de Directorio que actualice los anexos correspondientes a los artículos 9.1, 9.2 y 9.4 del reglamento vigente. El acto administrativo que se emita deberá ser publicado para adquirir ejecutividad (Artículo 105 de la Ley N° 9003), indicando expresamente su fecha de entrada en vigencia…”.
+
+Que en Orden N° 206 Gerencia de la Unidad Técnica, Mercado, Gestión y Calidad adjunta Reglamento en formato de calidad.
+
+Por ello, y lo resuelto en Acta de Directorio N° 66/2.026, Tema:06
+
+EL DIRECTORIO DEL INSTITUTO PROVINCIAL
+
+DE JUEGOS Y CASINOS
+
+RESUELVE:
+
+ART. 1°.- APRUÉBESE a partir de la fecha de publicación en el Boletín Oficial de la Provincia de Mendoza, la modificación del “REGLAMENTO MYSTERY CASINO DE MENDOZA”, según lo informado en Orden N° 198 que corre adjunto en IF-2026-07215440-GDEMZA-INPJYC#MHYF), y su puesta en funcionamiento en la sala Central de Casino de Mendoza, conforme a los Art. 2, 4 y 21 inc. a) de la Ley N°6362 y a los considerandos precedentes que forman parte de la presente resolución.
+
+ART. 2°.- NOTIFÍQUESE la presente resolución a “BINBAIRES S.A.
+
+ART. 3º.- NOTIFÍQUESE, comuníquese, publíquese en el Boletín Oficial de la Provincia de Mendoza y archívese.
+
+DRA. IDA MAGDALENA LÓPEZ
+
+PRESIDENTA IPJC
+
+LIC. E. JOSEFINA CANALE
+
+DIRECTORA IPJC

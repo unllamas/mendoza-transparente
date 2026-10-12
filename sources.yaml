@@ -40,7 +40,7 @@
   formato: api (html en json)
   frecuencia: diaria
   dificultad: facil
-  estado: pendiente
+  estado: activo
 
 - id: etica-publica
   nombre: Declaraciones juradas patrimoniales y registro de sanciones
