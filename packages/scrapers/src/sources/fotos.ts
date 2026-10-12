@@ -18,6 +18,8 @@
  *    wp-json bloquean REST (403), por eso se lee el HTML.
  *  - Intendentes: sitios oficiales de cada municipio; las URL están cargadas a mano (INTENDENTES) porque cada
  *    sitio es distinto.
+ *  - Titulares de organismos (id `etica-<official_id>`): sitio oficial de cada organismo, también cargados a
+ *    mano (AGENCY_HEADS).
  *
  * Uso: bun run scrape fotos
  */
@@ -225,9 +227,8 @@ async function ejecutivo(): Promise<Candidate[]> {
 // ---------------------------------------------------------------- Intendentes (URL cargadas a mano)
 
 interface Manual { foto: string; pagina: string; credito: string; top?: number }
-// Incluye al Fiscal de Estado. No hay foto oficial utilizable de Las Heras (sitio caído), La Paz, Tupungato
-// ni San Carlos. Guaymallén y Malargüe sólo tienen fotos de noticias sin retrato; Rivadavia publica a otro
-// intendente que el de autoridades.csv: se omiten.
+// Incluye al Fiscal de Estado. No hay foto oficial utilizable de La Paz, Tupungato ni San Carlos (sus sitios
+// no publican un retrato del intendente). Rivadavia publica a otro intendente que el de autoridades.csv: se omite.
 const INTENDENTES: Record<string, Manual> = {
   // Rivadavia: el sitio municipal informa a Sergio Miodowsky como intendente (ver data/curado/correcciones.yaml).
   "ricardo-alfredo-mansur": {
@@ -246,7 +247,21 @@ const INTENDENTES: Record<string, Manual> = {
   "jose-emir-andraos": { foto: "https://www.tunuyan.gov.ar/site/wp-content/uploads/2025/06/Intendente_Emir_Andraos.jpg", pagina: "https://www.tunuyan.gov.ar/site/gabinete-municipal/", credito: "Municipalidad de Tunuyán" },
   "alejandro-adrian-molero": { foto: "https://alvearmendoza.gob.ar/wp-content/uploads/2023/12/MOLERO.jpeg", pagina: "https://alvearmendoza.gob.ar/molero-dio-a-conocer-el-estado-en-el-que-recibio-el-municipio/", credito: "Municipalidad de General Alvear" },
   "omar-chafi-felix": { foto: "https://www.sanrafael.gov.ar/wp-content/uploads/2024/01/omar-intendente.jpg", pagina: "https://www.sanrafael.gov.ar/intendente-omar-felix/", credito: "Municipalidad de San Rafael" },
+  // Intendentes agregados a mano. Calvente: foto de prensa de su asunción en la que aparece solo y de frente.
+  "francisco-nicolas-lo-presti": { foto: "https://lasheras.gob.ar/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-07-at-10.24.07-AM.jpeg", pagina: "https://lasheras.gob.ar/autoridades/", credito: "Municipalidad de Las Heras", top: 0.1 },
+  "celso-alejandro-jaque": { foto: "https://www.malargue.gov.ar/wp-content/uploads/2025/07/DSC_3703.jpg", pagina: "https://www.malargue.gov.ar/gobierno/", credito: "Municipalidad de Malargüe", top: 0.1 },
+  "marcos-emanuel-calvente": { foto: "https://www.guaymallen.gob.ar/wp-content/uploads/2023/12/Asuncion-y-Jura-Marcos-Calvente-1.jpg", pagina: "https://www.guaymallen.gob.ar/marcos-calvente-asumio-con-el-compromiso-de-continuar-la-transformacion-y-potenciar-el-desarrollo-de-guaymallen/", credito: "Municipalidad de Guaymallén" },
   "fernando-simon": { foto: "https://fiscaliadeestadomendoza.gob.ar/wp-content/uploads/2024/09/fernando-simon.jpg", pagina: "https://fiscaliadeestadomendoza.gob.ar/autoridades/", credito: "Fiscalía de Estado de Mendoza" },
+};
+
+// ---------------------------------------------------------------- Titulares de organismos (URL cargadas a mano)
+
+// Titulares de organismos de la Oficina de Ética Pública. El id es `etica-<official_id>` (la web los busca así).
+// Sólo se cargan los que el sitio oficial del organismo muestra con su nombre junto a una foto individual.
+const AGENCY_HEADS: Record<string, Manual & { nombre: string }> = {
+  "etica-3107": { nombre: "Diego Coronel", foto: "https://www.irrigacion.gov.ar/web/wp-content/uploads/2020/01/Diego-Coronel.png", pagina: "https://www.irrigacion.gov.ar/web/autoridades/", credito: "Departamento General de Irrigación" },
+  "etica-5030": { nombre: "Cristian Samir Azar", foto: "https://epremendoza.gob.ar/wp-content/uploads/2026/03/Cristian-Azar.jpeg", pagina: "https://epremendoza.gob.ar/directorio/", credito: "Ente Provincial Regulador Eléctrico" },
+  "etica-7030": { nombre: "Osvaldo Federico Romagnoli", foto: "https://media.mendoza.gob.ar/informacion-oficial/uploads/sites/20/2025/08/1DSC_8159-scaled.jpg", pagina: "https://www.mendoza.gob.ar/vialidad/informacionoficial/", credito: "Dirección Provincial de Vialidad", top: 0.1 },
 };
 
 // ---------------------------------------------------------------- Miniaturas
@@ -295,6 +310,8 @@ export async function run(_args: string[]) {
     personas.set(a.id!, { nombre: a.nombre!, grupo });
   }
 
+  for (const [id, m] of Object.entries(AGENCY_HEADS)) personas.set(id, { nombre: m.nombre, grupo: "titulares_organismos" });
+
   const cands: Candidate[] = [];
   const guard = async (nombre: string, fn: () => Promise<Candidate[]>) => {
     try { cands.push(...(await fn())); } catch (e) { console.warn(`${nombre}: ${(e as Error).message}`); }
@@ -306,6 +323,9 @@ export async function run(_args: string[]) {
   await guard("ejecutivo", ejecutivo);
   for (const [id, m] of Object.entries(INTENDENTES)) {
     cands.push({ id, grupo: "intendentes", foto_url: m.foto, pagina: m.pagina, credito: m.credito, top: m.top });
+  }
+  for (const [id, m] of Object.entries(AGENCY_HEADS)) {
+    cands.push({ id, grupo: "titulares_organismos", foto_url: m.foto, pagina: m.pagina, credito: m.credito, top: m.top });
   }
 
   await mkdir(OUT_DIR, { recursive: true });
