@@ -12,6 +12,12 @@ export async function loadPreview(source: string, file: string): Promise<Preview
   return resp.json();
 }
 
+export async function loadTema<T>(tema: string): Promise<T> {
+  const resp = await fetch(`/data/temas/${tema}.json`);
+  if (!resp.ok) throw new Error(`No se pudo cargar el tema ${tema}`);
+  return resp.json();
+}
+
 const number = new Intl.NumberFormat("es-AR");
 export const formatNumber = (n: number) => number.format(n);
 

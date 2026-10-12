@@ -11,6 +11,7 @@ import { join } from "node:path";
 import { parse as parseYaml } from "yaml";
 
 import type { DataIndex, DatasetMeta, Preview, SourceMeta } from "../src/types.ts";
+import { buildDeuda } from "./temas/deuda.ts";
 
 const ROOT = join(import.meta.dir, "..", "..", "..");
 const RAW_DIR = join(ROOT, "data", "raw");
@@ -113,6 +114,24 @@ for (const id of listDirs(PROCESSED_DIR)) {
     writeFileSync(join(outDir, file.replace(/\.csv$/, ".preview.json")), JSON.stringify(preview));
     datasets.push({ source: id, file, columns, rowCount: rows.length, bytes: statSync(path).size });
   }
+}
+
+// Temas: agregados listos para las páginas temáticas.
+function readTable(id: string, file: string): Record<string, string>[] | null {
+  const path = join(PROCESSED_DIR, id, file);
+  if (!existsSync(path)) return null;
+  const [header = [], ...rows] = parseCsv(readFileSync(path, "utf8"));
+  return rows.filter((r) => r.length === header.length).map((r) => Object.fromEntries(header.map((h, i) => [h, r[i]!])));
+}
+
+// Población de Mendoza, Censo 2022 (INDEC). Se reemplaza por data/processed/poblacion cuando esté.
+const POBLACION_MENDOZA = 2_043_540;
+
+mkdirSync(join(OUT, "temas"), { recursive: true });
+const trimestral = readTable("hacienda-deuda-stock", "deuda_total_trimestral.csv");
+const stock = readTable("hacienda-deuda-stock", "deuda_stock.csv");
+if (trimestral && stock) {
+  writeFileSync(join(OUT, "temas", "deuda.json"), JSON.stringify(buildDeuda(trimestral, stock, POBLACION_MENDOZA)));
 }
 
 const index: DataIndex = { generatedAt: new Date().toISOString(), sources, datasets };

@@ -13,6 +13,9 @@ export function Layout() {
           <Link to="/" className="text-ink-2 hover:text-ink [&.active]:text-ink" activeOptions={{ exact: true }}>
             Inicio
           </Link>
+          <Link to="/deuda" className="text-ink-2 hover:text-ink [&.active]:text-ink">
+            Deuda
+          </Link>
           <Link to="/fuentes" className="text-ink-2 hover:text-ink [&.active]:text-ink">
             Fuentes
           </Link>
