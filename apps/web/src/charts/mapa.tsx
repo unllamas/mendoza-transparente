@@ -1,0 +1,117 @@
+import { useMemo, useState } from "react";
+
+import type { MapaMendoza as MapaData } from "../types.ts";
+
+/** Rampa secuencial azul de la guía de visualización: de poco (claro) a mucho (oscuro). */
+const RAMPA = ["#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95"];
+
+// Departamentos chicos del Gran Mendoza: se muestran ampliados en un recuadro.
+const GRAN_MENDOZA = ["Capital", "Godoy Cruz", "Guaymallén", "Maipú", "Las Heras", "Luján de Cuyo"];
+const NUCLEO = ["Capital", "Godoy Cruz", "Guaymallén"];
+
+interface Props {
+  mapa: MapaData;
+  valores: Record<string, number>;
+  formatValue: (v: number) => string;
+  seleccionado: string | null;
+  onSelect: (municipio: string | null) => void;
+  /** Qué representa el color, para la leyenda ("Por habitante, 2025"). */
+  leyenda: string;
+}
+
+/** Mapa coroplético de los 18 departamentos, con recuadro ampliado del Gran Mendoza. */
+export function MapaMendoza({ mapa, valores, formatValue, seleccionado, onSelect, leyenda }: Props) {
+  const [hover, setHover] = useState<string | null>(null);
+  const nums = Object.values(valores);
+  const min = Math.min(...nums);
+  const max = Math.max(...nums);
+  const color = (v: number | undefined) =>
+    v === undefined ? "var(--grid)" : RAMPA[Math.min(Math.floor(((v - min) / (max - min || 1)) * RAMPA.length), RAMPA.length - 1)]!;
+
+  // Encuadre del recuadro: los centroides del núcleo del Gran Mendoza con margen.
+  const inset = useMemo(() => {
+    const pts = mapa.departamentos.filter((d) => NUCLEO.includes(d.municipio)).map((d) => d.centroide);
+    const xs = pts.map((p) => p[0]);
+    const ys = pts.map((p) => p[1]);
+    const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
+    const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+    const size = Math.max(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys)) * 2.4;
+    return `${cx - size / 2} ${cy - size / 2} ${size} ${size}`;
+  }, [mapa]);
+
+  const activo = hover ?? seleccionado;
+
+  const paths = (zoom: boolean) =>
+    mapa.departamentos
+      .filter((d) => !zoom || GRAN_MENDOZA.includes(d.municipio))
+      .map((d) => {
+        const sel = d.municipio === seleccionado;
+        return (
+          <path
+            key={d.municipio}
+            d={d.path}
+            fill={color(valores[d.municipio])}
+            stroke={sel ? "var(--ink)" : "var(--surface)"}
+            strokeWidth={sel ? (zoom ? 0.8 : 3) : zoom ? 0.3 : 1.2}
+            vectorEffect="non-scaling-stroke"
+            role="button"
+            tabIndex={zoom ? -1 : 0}
+            aria-label={`${d.municipio}: ${valores[d.municipio] !== undefined ? formatValue(valores[d.municipio]!) : "sin dato"}`}
+            aria-pressed={sel}
+            className="cursor-pointer outline-none transition-opacity hover:opacity-80 focus-visible:opacity-80"
+            onPointerEnter={() => setHover(d.municipio)}
+            onPointerLeave={() => setHover(null)}
+            onClick={() => onSelect(sel ? null : d.municipio)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                onSelect(sel ? null : d.municipio);
+              }
+            }}
+          />
+        );
+      });
+
+  return (
+    <div className="grid items-start gap-4 sm:grid-cols-[3fr_2fr]">
+      <svg viewBox={mapa.viewBox} className="block h-auto max-h-[36rem] w-full" role="group" aria-label="Mapa de departamentos de Mendoza">
+        {paths(false)}
+      </svg>
+
+      <div className="flex flex-col gap-3">
+        <div className="rounded-lg bg-tile p-2">
+          <svg viewBox={inset} className="block aspect-square w-full" aria-hidden>
+            {paths(true)}
+          </svg>
+          <span className="block px-1 pt-1 text-xs text-ink-muted">Gran Mendoza, ampliado</span>
+        </div>
+
+        <div className="flex min-h-11 flex-col justify-center rounded-lg bg-tile px-3 py-2 text-sm" aria-live="polite">
+          {activo ? (
+            <span>
+              <span className="font-medium">{activo}</span>{" "}
+              <span className="text-ink-2 tabular-nums">
+                {valores[activo] !== undefined ? formatValue(valores[activo]!) : "sin dato"}
+              </span>
+            </span>
+          ) : (
+            <span className="text-ink-muted">Pasá el mouse o tocá un departamento.</span>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <span className="text-xs text-ink-muted">{leyenda}</span>
+          <div className="flex h-2.5 overflow-hidden rounded-full">
+            {RAMPA.map((c) => (
+              <span key={c} className="flex-1" style={{ background: c }} />
+            ))}
+          </div>
+          <div className="flex justify-between text-xs text-ink-muted tabular-nums">
+            <span>{formatValue(min)}</span>
+            <span>{formatValue(max)}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

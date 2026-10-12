@@ -2,30 +2,30 @@ import { Link, Outlet } from "@tanstack/react-router";
 
 const REPO = "https://github.com/unllamas/mendoza-transparente";
 
+const NAV = [
+  { to: "/deuda", label: "Deuda" },
+  { to: "/coparticipacion", label: "Coparticipación" },
+  { to: "/empleo-publico", label: "Empleo público" },
+  { to: "/poblacion", label: "Población" },
+  { to: "/fuentes", label: "Fuentes" },
+] as const;
+
 export function Layout() {
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="border-b border-line">
-        <nav className="mx-auto flex max-w-5xl items-center gap-6 px-5 py-4 text-sm">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-6 gap-y-2 px-5 py-4">
           <Link to="/" className="mr-auto text-base font-semibold tracking-tight">
             Mendoza Transparente
           </Link>
-          <Link to="/" className="text-ink-2 hover:text-ink [&.active]:text-ink" activeOptions={{ exact: true }}>
-            Inicio
-          </Link>
-          <Link to="/deuda" className="text-ink-2 hover:text-ink [&.active]:text-ink">
-            Deuda
-          </Link>
-          <Link to="/empleo-publico" className="text-ink-2 hover:text-ink [&.active]:text-ink">
-            Empleo público
-          </Link>
-          <Link to="/fuentes" className="text-ink-2 hover:text-ink [&.active]:text-ink">
-            Fuentes
-          </Link>
-          <a href={REPO} className="text-ink-2 hover:text-ink">
-            GitHub
-          </a>
-        </nav>
+          <nav className="-mx-5 flex w-full gap-5 overflow-x-auto px-5 text-sm whitespace-nowrap sm:mx-0 sm:w-auto sm:px-0">
+            {NAV.map((item) => (
+              <Link key={item.to} to={item.to} className="text-ink-2 hover:text-ink [&.active]:text-ink [&.active]:font-medium">
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
       </header>
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-5 py-10">

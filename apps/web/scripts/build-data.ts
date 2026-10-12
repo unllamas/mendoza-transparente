@@ -13,7 +13,9 @@ import { parse as parseYaml } from "yaml";
 import type { DataIndex, DatasetMeta, Diccionario, Preview, SourceMeta } from "../src/types.ts";
 import { buildDeuda } from "./temas/deuda.ts";
 import { buildCompras } from "./temas/compras.ts";
+import { buildCoparticipacion } from "./temas/coparticipacion.ts";
 import { buildEmpleo } from "./temas/empleo.ts";
+import { buildPoblacion } from "./temas/poblacion.ts";
 
 const ROOT = join(import.meta.dir, "..", "..", "..");
 const RAW_DIR = join(ROOT, "data", "raw");
@@ -206,6 +208,20 @@ if (ocupacion) writeFileSync(join(OUT, "temas", "empleo.json"), JSON.stringify(b
 const procesos = readTable("compras-ocds", "procesos.csv");
 const adjudicaciones = readTable("compras-ocds", "adjudicaciones.csv");
 if (procesos && adjudicaciones) buildCompras(procesos, adjudicaciones, join(OUT, "temas", "compras"));
+
+const copaAnual = readTable("hacienda-participacion-municipal", "coparticipacion_anual.csv");
+const ipcNacional = readTable("indices", "ipc_nacional_mensual.csv");
+const pobDeptos = readTable("poblacion", "poblacion_departamentos.csv");
+if (copaAnual && ipcNacional && pobDeptos) {
+  writeFileSync(join(OUT, "temas", "coparticipacion.json"), JSON.stringify(buildCoparticipacion(copaAnual, ipcNacional, pobDeptos)));
+}
+if (pobDeptos && poblacionProv.length) {
+  writeFileSync(join(OUT, "temas", "poblacion.json"), JSON.stringify(buildPoblacion(pobDeptos, poblacionProv)));
+}
+
+// Mapa de departamentos (lo genera el scraper "geo").
+const mapa = join(PROCESSED_DIR, "geo", "mendoza_departamentos.json");
+if (existsSync(mapa)) cpSync(mapa, join(OUT, "temas", "mapa.json"));
 
 const index: DataIndex = { generatedAt: new Date().toISOString(), sources, datasets };
 writeFileSync(join(OUT, "index.json"), JSON.stringify(index));

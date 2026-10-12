@@ -8,9 +8,19 @@ const route = getRouteApi("/");
 const TEMAS = [
   { to: "/deuda", titulo: "¿Cuánto debe Mendoza?", bajada: "Deuda pública en dólares, por mandato, acreedor y moneda." },
   {
+    to: "/coparticipacion",
+    titulo: "¿Cuánta plata reciben los municipios?",
+    bajada: "Coparticipación por departamento, por habitante y en pesos de hoy, con mapa.",
+  },
+  {
     to: "/empleo-publico",
     titulo: "¿Cuántos empleados públicos tiene?",
     bajada: "Empleados provinciales cada mil habitantes, comparado con las 24 jurisdicciones.",
+  },
+  {
+    to: "/poblacion",
+    titulo: "¿Cuántos somos?",
+    bajada: "Población de la provincia y de cada departamento, censos y proyecciones.",
   },
 ] as const;
 

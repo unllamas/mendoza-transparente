@@ -3,14 +3,16 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 import { loadIndex, loadTema } from "./lib.ts";
+import { CoparticipacionPage } from "./pages/coparticipacion.tsx";
 import { DatosPage } from "./pages/datos.tsx";
 import { DeudaPage } from "./pages/deuda.tsx";
 import { EmpleoPage } from "./pages/empleo.tsx";
 import { FuentesPage } from "./pages/fuentes.tsx";
 import { HomePage } from "./pages/home.tsx";
 import { Layout } from "./pages/layout.tsx";
+import { PoblacionPage } from "./pages/poblacion.tsx";
 import "./styles.css";
-import type { DeudaTema, EmpleoTema } from "./types.ts";
+import type { CoparticipacionTema, DeudaTema, EmpleoTema, MapaMendoza, PoblacionTema } from "./types.ts";
 
 const rootRoute = createRootRoute({ component: Layout });
 
@@ -49,8 +51,28 @@ const empleoRoute = createRoute({
   component: EmpleoPage,
 });
 
+const coparticipacionRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/coparticipacion",
+  loader: async () => ({
+    tema: await loadTema<CoparticipacionTema>("coparticipacion"),
+    mapa: await loadTema<MapaMendoza>("mapa"),
+  }),
+  component: CoparticipacionPage,
+});
+
+const poblacionRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/poblacion",
+  loader: async () => ({
+    tema: await loadTema<PoblacionTema>("poblacion"),
+    mapa: await loadTema<MapaMendoza>("mapa"),
+  }),
+  component: PoblacionPage,
+});
+
 const router = createRouter({
-  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, empleoRoute, fuentesRoute, datosRoute]),
+  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, coparticipacionRoute, empleoRoute, poblacionRoute, fuentesRoute, datosRoute]),
   defaultPreload: "intent",
   scrollRestoration: true,
 });

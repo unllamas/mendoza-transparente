@@ -129,3 +129,41 @@ export interface ProveedorDetalle {
   porAnio: { anio: number; monto: number }[];
   recientes: { ocid: string; fecha: string; titulo: string; comprador: string; metodo: string; monto: number }[];
 }
+
+export interface CoparticipacionTema {
+  /** Mes al que están expresados los pesos de hoy ("ago 2026"). */
+  referencia: string;
+  anioCompleto: number;
+  totalReal: number;
+  municipios: {
+    municipio: string;
+    poblacion: number;
+    real: number;
+    perCapita: number;
+    serie: { anio: number; nominal: number; real: number; perCapita: number | null; parcial: boolean }[];
+  }[];
+  provincia: { anio: number; real: number; perCapita: number | null; parcial: boolean }[];
+}
+
+export interface PoblacionTema {
+  anioActual: number;
+  actual: number;
+  censo2010: number;
+  censo2022: number;
+  serie: { anio: number; poblacion: number; proyectado: boolean }[];
+  departamentos: {
+    municipio: string;
+    censo2010: number;
+    censo2022: number;
+    /** Variación porcentual entre los censos 2010 y 2022. */
+    variacion: number;
+    actual: number;
+    serie: { anio: number; poblacion: number }[];
+  }[];
+}
+
+export interface MapaMendoza {
+  viewBox: string;
+  fuente: string;
+  departamentos: { municipio: string; path: string; centroide: [number, number] }[];
+}

@@ -131,3 +131,13 @@
   frecuencia: mensual
   dificultad: facil
   estado: activo
+
+- id: geo
+  nombre: Límites de los departamentos de Mendoza
+  organismo: Instituto Geográfico Nacional
+  url: https://www.ign.gob.ar/
+  descripcion: El mapa oficial de los 18 departamentos, que usamos para mostrar los datos de cada municipio.
+  formato: geojson (wfs)
+  frecuencia: eventual
+  dificultad: facil
+  estado: activo
