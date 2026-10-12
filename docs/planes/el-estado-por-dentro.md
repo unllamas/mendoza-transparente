@@ -2,7 +2,10 @@
 
 Objetivo: que cualquier persona pueda ver, para cada ministerio u organismo provincial, **quién lo conduce, cuánta gente trabaja ahí, cuánto cuesta, qué hace, qué compra y a quién designó**, y cruzar esos datos. Lo que no se pueda obtener se registra en "Lo que no se publica".
 
-Fecha: 12/10/2026. Estado: etapas 1 a 3 hechas; etapa 4 (cruces y señales) pendiente.
+Fecha: 12/10/2026. Estado: etapas 1 a 4 hechas. Pendiente:
+- Backfill de decretos del Boletín para completar las designaciones.
+- La señal de "designaciones en masa", que necesita ese histórico.
+- Vacantes 2025 por organismo: la planilla 8.6 de ese año no trae códigos.
 
 ## Qué no se puede saber (y por qué)
 

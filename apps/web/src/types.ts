@@ -453,3 +453,12 @@ export interface AgencyDetail extends AgencySummary {
   /** Occupied positions in each year's budget law (planilla 8.2) and unfilled ones (8.6, since 2022). */
   budget: { year: number; positions: number; vacancies: number | null; project: boolean }[];
 }
+
+export interface GobiernoOverview {
+  /** Total positions (planta) and service contracts per quarter, whole provincial State. */
+  series: { period: string; date: string; staff: number; contracts: number }[];
+  /** Quarter used as the start of the current administration. */
+  baseline: string;
+  changes: { slug: string; name: string; from: number; to: number; pct: number; restructured: boolean }[];
+  contractShare: { slug: string; name: string; contracts: number; staff: number; ratio: number }[];
+}

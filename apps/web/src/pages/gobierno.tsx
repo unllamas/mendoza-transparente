@@ -1,10 +1,12 @@
 import { getRouteApi, Link } from "@tanstack/react-router";
-import { Building2, ChevronRight, Coins, ExternalLink, FileSignature, ScrollText, ShoppingCart, UserRound, UsersRound } from "lucide-react";
+import { Building2, ChevronRight, Search, Coins, ExternalLink, FileSignature, ScrollText, ShoppingCart, UserRound, UsersRound } from "lucide-react";
 
 import { ColumnChart } from "../charts/column-chart.tsx";
+import { LineChart } from "../charts/line-chart.tsx";
+import { GOBIERNOS } from "../gobiernos.ts";
 import { FuentesOficiales } from "../fuente.tsx";
 import { formatDate, formatNumber } from "../lib.ts";
-import type { AgencyDetail, AgencySummary } from "../types.ts";
+import type { AgencyDetail, AgencySummary, GobiernoOverview } from "../types.ts";
 import { Aviso, Migas, PageHeader, Section, StatTile } from "./components.tsx";
 
 const SOURCES = ["lrf-personal", "etica-publica", "compras-ocds", "designaciones"];
@@ -30,7 +32,7 @@ const pesos = (v: number) => `$ ${formatNumber(Math.round(v))}`;
 const periodLabel = (p: string) => p.replace(/^(\d{4})-T(\d)$/, "$2.º trimestre de $1");
 
 export function GobiernoPage() {
-  const agencies = listApi.useLoaderData();
+  const { agencies, overview } = listApi.useLoaderData();
   const totalStaff = agencies.reduce((s, a) => s + (a.staff ?? 0), 0);
   const totalCost = agencies.reduce((s, a) => s + (a.annualCostReal ?? 0), 0);
   const period = agencies.find((a) => a.staffPeriod)?.staffPeriod;
@@ -51,6 +53,8 @@ export function GobiernoPage() {
           Pedila ›
         </Link>
       </Aviso>
+
+      {overview && <Overview overview={overview} />}
 
       {GROUPS.map((k) => {
         const list = agencies.filter((a) => groupOf(a) === k.id);
@@ -423,5 +427,106 @@ function BudgetSection({ agency: a }: { agency: AgencyDetail }) {
         {project && " * Proyecto, todavía no aprobado."}
       </p>
     </Section>
+  );
+}
+
+/** Total staff over time and agencies that stand out: signals that deserve an explanation, not accusations. */
+function Overview({ overview: o }: { overview: GobiernoOverview }) {
+  const first = o.series[0]!;
+  const last = o.series.at(-1)!;
+  const up = o.changes.filter((c) => c.pct >= 1).slice(0, 5);
+  const down = [...o.changes].reverse().filter((c) => c.pct <= -1).slice(0, 5);
+  const yearEnds = o.series.filter((p, i, all) => p.period.endsWith("-T4") || i === all.length - 1);
+  return (
+    <>
+      <Section title="Cómo cambió la planta del Estado">
+        <LineChart
+          data={o.series.map((p) => ({ fecha: p.date, valor: p.staff }))}
+          bands={GOBIERNOS.map((g) => ({ desde: g.desde, hasta: g.hasta, label: g.nombre }))}
+          formatValue={(v) => `${formatNumber(v)} cargos`}
+          formatAxis={(v) => formatNumber(v)}
+          formatDate={(f) => periodLabel(o.series.find((p) => p.date === f)?.period ?? f)}
+          ariaLabel="Cargos de planta del Estado provincial por trimestre"
+        />
+        <p className="text-sm text-ink-2 text-pretty">
+          De {formatNumber(first.staff)} cargos de planta en el {periodLabel(first.period)} a {formatNumber(last.staff)} en el{" "}
+          {periodLabel(last.period)}. Los contratos de locación pasaron de {formatNumber(first.contracts)} a {formatNumber(last.contracts)}.
+        </p>
+        <h3 className="pt-2 text-sm font-semibold">Contratos de locación al cierre de cada año</h3>
+        <ColumnChart
+          columnas={yearEnds.map((p) => ({ etiqueta: p.period.slice(0, 4), valor: p.contracts }))}
+          formatValue={(v) => `${formatNumber(v)} contratados`}
+          ariaLabel="Contratos de locación del Estado provincial por año"
+        />
+      </Section>
+
+      <Section title="Para mirar de cerca">
+        <p className="-mt-2 text-sm text-ink-muted text-pretty">
+          Cambios en la planta desde el inicio de la gestión actual ({periodLabel(o.baseline)}) y organismos con más contratados.
+          No son irregularidades: son preguntas que cada organismo podría explicar.
+        </p>
+        <div className="grid gap-6 lg:grid-cols-2">
+          <ChangeList title="Los que más cargos sumaron" items={up} />
+          <ChangeList title="Los que más cargos redujeron" items={down} />
+        </div>
+        {o.contractShare.length > 0 && (
+          <div className="flex flex-col gap-2">
+            <h3 className="text-sm font-semibold">Contratados cada 100 cargos de planta</h3>
+            <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
+              {o.contractShare.map((c) => (
+                <li key={c.slug}>
+                  <Link to="/gobierno/$slug" params={{ slug: c.slug }} className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50 sm:px-5">
+                    <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                      <span className="truncate group-hover:text-link">{c.name}</span>
+                      <span className="truncate text-sm text-ink-muted">
+                        {formatNumber(c.contracts)} contratados · {formatNumber(c.staff)} cargos de planta
+                      </span>
+                    </span>
+                    <span className="shrink-0 font-medium whitespace-nowrap tabular-nums">{Math.round(c.ratio)}</span>
+                    <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <p className="flex items-start gap-2 text-xs text-ink-muted">
+          <Search className="mt-0.5 size-3.5 shrink-0" aria-hidden />
+          Los marcados con * cambiaron de áreas entre gestiones, así que la comparación no es exacta: parte de la diferencia puede
+          ser un traspaso a otro organismo.
+        </p>
+      </Section>
+    </>
+  );
+}
+
+function ChangeList({ title, items }: { title: string; items: GobiernoOverview["changes"] }) {
+  if (!items.length) return null;
+  return (
+    <div className="flex min-w-0 flex-col gap-2">
+      <h3 className="text-sm font-semibold">{title}</h3>
+      <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
+        {items.map((c) => (
+          <li key={c.slug}>
+            <Link to="/gobierno/$slug" params={{ slug: c.slug }} className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50">
+              <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                <span className="truncate group-hover:text-link">
+                  {c.name}
+                  {c.restructured && " *"}
+                </span>
+                <span className="truncate text-sm text-ink-muted tabular-nums">
+                  {formatNumber(c.from)} → {formatNumber(c.to)} cargos
+                </span>
+              </span>
+              <span className="shrink-0 font-medium whitespace-nowrap tabular-nums">
+                {c.pct > 0 ? "+" : ""}
+                {Math.round(c.pct)} %
+              </span>
+              <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

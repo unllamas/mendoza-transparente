@@ -20,7 +20,7 @@ import { NoPublicadoPage } from "./pages/no-publicado.tsx";
 import { PoblacionPage } from "./pages/poblacion.tsx";
 import { SenalesPage } from "./pages/senales.tsx";
 import "./styles.css";
-import type { AgencyDetail, AgencySummary, CoparticipacionTema, DeudaTema, EmpleoTema, FuncionariosTema, HomeTema, LeyDetalle, LeyResumen, MapaMendoza, MunicipioPagina, NoPublicado, OrganismoDetalle, OrganismoResumen, PoblacionTema, ProveedorDetalle, ProveedorResumen, SenalesTema } from "./types.ts";
+import type { AgencyDetail, AgencySummary, GobiernoOverview, CoparticipacionTema, DeudaTema, EmpleoTema, FuncionariosTema, HomeTema, LeyDetalle, LeyResumen, MapaMendoza, MunicipioPagina, NoPublicado, OrganismoDetalle, OrganismoResumen, PoblacionTema, ProveedorDetalle, ProveedorResumen, SenalesTema } from "./types.ts";
 
 const rootRoute = createRootRoute({ component: Layout });
 
@@ -118,7 +118,13 @@ const funcionarioRoute = createRoute({
 const gobiernoRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/gobierno",
-  loader: () => loadTema<AgencySummary[]>("gobierno"),
+  loader: async () => {
+    const [agencies, overview] = await Promise.all([
+      loadTema<AgencySummary[]>("gobierno"),
+      loadTema<GobiernoOverview>("gobierno-resumen").catch(() => null),
+    ]);
+    return { agencies, overview };
+  },
   component: GobiernoPage,
 });
 

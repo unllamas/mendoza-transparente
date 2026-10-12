@@ -65,5 +65,9 @@ Fuente: anexo 19 del informe trimestral de Responsabilidad Fiscal (`lrf-personal
 - **Cargos en el Presupuesto:** planillas 8.2 (cargos ocupados al mes de corte) y 8.6 (retenidos y vacantes en trámite, desde 2022) de cada Ley de Presupuesto (`presupuesto-planta`). Se asignan al organismo por el código `carácter-jurisdicción-unidad`. En 2025 la 8.6 no trae códigos de unidad, así que ese año no se muestran vacantes por organismo. El año en proyecto se marca con asterisco.
 - **Conducción:** los funcionarios del Ejecutivo de la página de funcionarios, más quienes tienen un cargo vigente en la Oficina de Ética Pública en las reparticiones del organismo. Se ordenan por jerarquía según el nombre del cargo.
 - **Compras:** los procesos cuyo comprador empieza con alguno de los `prefijos_compras` del organismo (código `carácter-jurisdicción-`).
+- **Cruces en `/gobierno`** (`buildOverview`):
+  - Cambio de cargos de planta desde el cuarto trimestre de 2023, el inicio de la gestión actual. Solo organismos con al menos 50 cargos. Se marcan con asterisco los que cambiaron de áreas (`antes`), porque parte de la diferencia puede ser un traspaso.
+  - Contratados cada 100 cargos de planta.
+  - Se presentan como preguntas, no como irregularidades.
 - **Designaciones:** las del Boletín Oficial (`designaciones`), asignadas por organismo emisor o repartición. La cobertura depende de cuántos Boletines tengamos con texto completo.
 

@@ -11,7 +11,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-import type { AgencyDetail, AgencySummary, FuncionariosTema, OrganismoResumen, ProveedorResumen } from "../../src/types.ts";
+import type { AgencyDetail, AgencySummary, FuncionariosTema, GobiernoOverview, OrganismoResumen, ProveedorResumen } from "../../src/types.ts";
 import type { Deflactor } from "./inflacion.ts";
 
 type Row = Record<string, string>;
@@ -289,6 +289,8 @@ export function buildGobierno(
     writeFileSync(join(outDir, "gobierno", `${o.id}.json`), JSON.stringify(detail));
   }
 
+  writeFileSync(join(outDir, "gobierno-resumen.json"), JSON.stringify(buildOverview(lrf, details)));
+
   return details.map(({ slug, name, kind, parent, staff, staffPeriod, annualCostReal, head }) => ({
     slug,
     name,
@@ -301,3 +303,50 @@ export function buildGobierno(
   }));
 }
 
+const QUARTER_END = ["03-31", "06-30", "09-30", "12-31"];
+/** Start of the current administration (Dec 2023) and the previous one (Dec 2019), as quarterly cut-offs. */
+const BASELINES = { current: "2023-T4", previous: "2019-T4" } as const;
+
+/**
+ * Crosses for the /gobierno overview: total staff over time and agencies that stand out.
+ * They are signals that deserve an explanation, not accusations (docs/procesos/metodologia.md).
+ */
+export function buildOverview(lrf: Row[], details: AgencyDetail[]): GobiernoOverview {
+  const quarters = [...new Set(lrf.map(quarterKey))].sort();
+  const series = quarters.map((q) => {
+    const rows = lrf.filter((r) => quarterKey(r) === q);
+    const sum = (pred: (r: Row) => boolean) => rows.filter(pred).reduce((s, r) => s + (Number(r.cantidad) || 0), 0);
+    const [y, t] = q.split("-T");
+    return {
+      period: q,
+      date: `${y}-${QUARTER_END[Number(t) - 1]}`,
+      staff: sum((r) => r.tipo_personal !== "contratos_locacion"),
+      contracts: sum((r) => r.tipo_personal === "contratos_locacion"),
+    };
+  });
+  const at = (a: AgencyDetail, period: string) => {
+    const p = a.staffSeries.find((x) => x.period === period);
+    return p ? p.permanent + p.temporary : null;
+  };
+  const changes = details
+    .map((a) => {
+      const from = at(a, BASELINES.current);
+      const to = a.staff;
+      // Agencies whose structure changed (curated `antes`) are flagged: their change is not like for like.
+      return from && to && from >= 50
+        ? { slug: a.slug, name: a.name, from, to, pct: ((to - from) / from) * 100, restructured: a.before.length > 0 }
+        : null;
+    })
+    .filter((c): c is NonNullable<typeof c> => c !== null)
+    .sort((a, b) => b.pct - a.pct);
+  const contractShare = details
+    .map((a) => {
+      const last = a.staffSeries.at(-1);
+      if (!last || !a.staff || a.staff < 20) return null;
+      return { slug: a.slug, name: a.name, contracts: last.contracts, staff: a.staff, ratio: (last.contracts / a.staff) * 100 };
+    })
+    .filter((c): c is NonNullable<typeof c> => c !== null && c.contracts > 0)
+    .sort((a, b) => b.ratio - a.ratio)
+    .slice(0, 8);
+  return { series, baseline: BASELINES.current, changes, contractShare };
+}
