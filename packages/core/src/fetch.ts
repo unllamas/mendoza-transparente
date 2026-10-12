@@ -19,6 +19,23 @@ export const USER_AGENT =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 " +
   "(KHTML, like Gecko) Chrome/126 Safari/537.36 mendoza-transparente/0.1";
 
+/**
+ * Sitios del Gobierno que rechazan conexiones desde servidores en la nube: el Boletín Oficial no responde
+ * a la red de GitHub (Azure) y el Senado de Mendoza solo responde a IPs de Argentina. Si está definido
+ * PROXY_AR (http://usuario:clave@host:puerto, con salida en Argentina), los pedidos a estos sitios pasan
+ * por ahí; el resto va directo.
+ */
+export const HOSTS_CON_PROXY = [
+  "portalgateway.mendoza.gov.ar",
+  "boe.mendoza.gov.ar",
+  "www.senadomendoza.gob.ar",
+  "senadomendoza.gob.ar",
+  "www.senadomza.gov.ar",
+];
+
+const proxyPara = (url: string) =>
+  process.env.PROXY_AR && HOSTS_CON_PROXY.includes(new URL(url).hostname) ? process.env.PROXY_AR : undefined;
+
 // Por encima de este tamaño el archivo se guarda comprimido con gzip.
 const GZIP_THRESHOLD = 1_000_000;
 
@@ -41,7 +58,7 @@ export async function get(url: string, init: RequestInit = {}, retries = 3): Pro
 
   for (let attempt = 0; ; attempt++) {
     try {
-      const resp = await fetch(url, { ...init, headers, signal: AbortSignal.timeout(120_000) });
+      const resp = await fetch(url, { ...init, headers, signal: AbortSignal.timeout(120_000), proxy: proxyPara(url) });
       if (!resp.ok) throw new Error(`HTTP ${resp.status} en ${url}`);
       await sleep(500);
       return resp;
