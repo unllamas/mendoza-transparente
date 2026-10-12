@@ -75,7 +75,7 @@ Al sumar una entidad, pensar qué la conecta con las otras y enlazarlo, también
 
 **Sumar un tipo de página.** Agregar la sección en `construirPaginas()` con su `title`, `description`, `ld` y `html`, la ruta en `src/main.tsx` y, si es una sección nueva, su entrada en `PAGES` (`src/seo.ts`) y en `NAV` (`scripts/paginas.ts`). `scripts/seo.ts` corta el build si alguna página sale con "undefined", "NaN" o "null".
 
-El dominio sale de `VITE_SITE_URL` (por defecto `https://mendozatransparente.org`).
+El dominio sale de `VITE_SITE_URL` (por defecto `https://mendoza-transparente.com`).
 
 ## Verificar antes de dar algo por terminado
 

@@ -4,7 +4,7 @@ import { loadIndex } from "./lib.ts";
 import type { DataIndex, SourceMeta } from "./types.ts";
 
 /** Dominio público del sitio. Se cambia con VITE_SITE_URL (o acá) sin tocar nada más. */
-export const SITE_URL: string = (import.meta.env?.VITE_SITE_URL ?? "https://mendozatransparente.org").replace(/\/+$/, "");
+export const SITE_URL: string = (import.meta.env?.VITE_SITE_URL ?? "https://mendoza-transparente.com").replace(/\/+$/, "");
 
 export const SITE_NAME = "Mendoza Transparente";
 export const TITLE_SUFFIX = ` · ${SITE_NAME}`;

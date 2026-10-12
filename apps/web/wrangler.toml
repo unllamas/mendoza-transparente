@@ -7,6 +7,6 @@ compatibility_date = "2026-10-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "mendoza-transparente"
-# Se completa al crear la base: wrangler d1 create mendoza-transparente
-database_id = "COMPLETAR"
+# Base creada el 12/10/2026 (no es secreto: identifica la base, no da acceso).
+database_id = "2ad5ebf5-df14-4843-b453-c9e8cb436ed5"
 migrations_dir = "migrations"
