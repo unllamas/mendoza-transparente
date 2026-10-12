@@ -52,3 +52,9 @@ body {
   background: var(--page);
   color: var(--ink);
 }
+
+/* Tailwind 4 quitó la manito por defecto en los botones: la devolvemos para que se note qué se puede tocar. */
+button:not(:disabled),
+[role="button"] {
+  cursor: pointer;
+}

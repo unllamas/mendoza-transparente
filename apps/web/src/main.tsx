@@ -10,9 +10,10 @@ import { EmpleoPage } from "./pages/empleo.tsx";
 import { FuentesPage } from "./pages/fuentes.tsx";
 import { HomePage } from "./pages/home.tsx";
 import { Layout } from "./pages/layout.tsx";
+import { NoPublicadoPage } from "./pages/no-publicado.tsx";
 import { PoblacionPage } from "./pages/poblacion.tsx";
 import "./styles.css";
-import type { CoparticipacionTema, DeudaTema, EmpleoTema, HomeTema, MapaMendoza, PoblacionTema } from "./types.ts";
+import type { CoparticipacionTema, DeudaTema, EmpleoTema, HomeTema, MapaMendoza, NoPublicado, PoblacionTema } from "./types.ts";
 
 const rootRoute = createRootRoute({ component: Layout });
 
@@ -20,12 +21,13 @@ const homeRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
   loader: async () => {
-    const [index, home, mapa] = await Promise.all([
+    const [index, home, mapa, noPublicado] = await Promise.all([
       loadIndex(),
       loadTema<HomeTema>("home"),
       loadTema<MapaMendoza>("mapa").catch(() => null),
+      loadTema<NoPublicado[]>("no-publicado").catch(() => [] as NoPublicado[]),
     ]);
-    return { index, home, mapa };
+    return { index, home, mapa, noPublicado };
   },
   component: HomePage,
 });
@@ -78,8 +80,15 @@ const poblacionRoute = createRoute({
   component: PoblacionPage,
 });
 
+const noPublicadoRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/no-publicado",
+  loader: () => loadTema<NoPublicado[]>("no-publicado"),
+  component: NoPublicadoPage,
+});
+
 const router = createRouter({
-  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, coparticipacionRoute, empleoRoute, poblacionRoute, fuentesRoute, datosRoute]),
+  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, coparticipacionRoute, empleoRoute, poblacionRoute, noPublicadoRoute, fuentesRoute, datosRoute]),
   defaultPreload: "intent",
   scrollRestoration: true,
 });

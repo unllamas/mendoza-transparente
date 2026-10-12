@@ -195,3 +195,17 @@ export interface HomeTema {
   inflacion?: { mensual: number; interanual: number; periodo: string; serie: number[] };
   dolar?: { oficial: number; periodo: string };
 }
+
+export interface NoPublicado {
+  id: string;
+  titulo: string;
+  que_es: string;
+  por_que_importa: string;
+  organismo: string;
+  marco_legal: string;
+  estado: "sin_publicar" | "parcial" | "desactualizado";
+  detalle_estado?: string;
+  donde_buscamos: string[];
+  pedido: string;
+  pedidos: { fecha: string; tramite?: string; estado: "presentado" | "respondido" | "vencido" | "denegado"; respuesta_url?: string }[];
+}

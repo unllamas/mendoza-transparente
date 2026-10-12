@@ -15,6 +15,7 @@ const ROOT = join(import.meta.dirname, "..", "..");
 function liveData(): Plugin {
   const watched = [
     join(ROOT, "data", "processed"),
+    join(ROOT, "data", "curado"),
     join(ROOT, "sources.yaml"),
     join(import.meta.dirname, "scripts"),
   ];

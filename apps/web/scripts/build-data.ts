@@ -218,6 +218,12 @@ if (copaTema) writeFileSync(join(OUT, "temas", "coparticipacion.json"), JSON.str
 const poblacionTema = pobDeptos && poblacionProv.length ? buildPoblacion(pobDeptos, poblacionProv) : undefined;
 if (poblacionTema) writeFileSync(join(OUT, "temas", "poblacion.json"), JSON.stringify(poblacionTema));
 
+// Contenido editorial: lo que el Estado no publica.
+const noPublicado = join(ROOT, "data", "curado", "no-publicado.yaml");
+if (existsSync(noPublicado)) {
+  writeFileSync(join(OUT, "temas", "no-publicado.json"), JSON.stringify(parseYaml(readFileSync(noPublicado, "utf8"))));
+}
+
 // Mapa de departamentos (lo genera el scraper "geo").
 const mapa = join(PROCESSED_DIR, "geo", "mendoza_departamentos.json");
 if (existsSync(mapa)) cpSync(mapa, join(OUT, "temas", "mapa.json"));

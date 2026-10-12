@@ -1,5 +1,5 @@
-import type { LucideIcon } from "lucide-react";
-import type { ReactNode } from "react";
+import { type LucideIcon, X } from "lucide-react";
+import { type ReactNode, useEffect } from "react";
 
 /** Dato informativo: solo fondo, sin borde. El borde queda reservado para lo que se puede tocar. */
 export function StatTile({ label, value, note, icon: Icon }: { label: string; value: string; note?: string; icon?: LucideIcon }) {
@@ -91,5 +91,44 @@ export function PageHeader({ icon: Icon, tema, titulo, children }: { icon: Lucid
       <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">{titulo}</h1>
       <p className="text-ink-2 text-pretty">{children}</p>
     </div>
+  );
+}
+
+/** Hoja modal a la derecha, sobre toda la página. Escape o tocar afuera la cierra. */
+export function Sheet({ titulo, onClose, children }: { titulo: string; onClose: () => void; children: ReactNode }) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = overflow;
+    };
+  }, [onClose]);
+
+  return (
+    <>
+      <div aria-hidden onClick={onClose} className="fixed inset-0 z-30 bg-black/50 backdrop-blur-[1px]" />
+      <aside
+        role="dialog"
+        aria-modal="true"
+        aria-label={titulo}
+        className="fixed inset-y-0 right-0 z-40 flex w-full flex-col overflow-hidden border-l border-line bg-surface shadow-2xl sm:w-[32rem]"
+      >
+        <div className="flex items-center gap-2 border-b border-line px-4 py-3">
+          <span className="mr-auto truncate text-sm font-medium">{titulo}</span>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Cerrar"
+            className="rounded-md px-2 py-1 text-ink-2 hover:bg-grid hover:text-ink"
+          >
+            <X className="size-4" aria-hidden />
+          </button>
+        </div>
+        <div className="flex flex-col gap-6 overflow-y-auto p-4">{children}</div>
+      </aside>
+    </>
   );
 }

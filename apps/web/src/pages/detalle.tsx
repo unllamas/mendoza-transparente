@@ -1,10 +1,10 @@
 /** Panel lateral con el detalle de una fila y, en compras, los datos relacionados. */
 
-import { ArrowLeft, Building2, FileText, X } from "lucide-react";
+import { ArrowLeft, Building2, CalendarDays, ChevronRight, FileText, X } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 
 import { formatMoneda, type ColumnaVista } from "../celdas.ts";
-import { formatDate, formatNumber, loadJson } from "../lib.ts";
+import { formatDate, formatNumber, limpiarOrganismo, loadJson } from "../lib.ts";
 import { procesoShard } from "../shard.ts";
 import type { DatasetMeta, ProcesoDetalle, ProveedorDetalle } from "../types.ts";
 
@@ -167,30 +167,53 @@ function Proveedor({ cuit, onProceso }: { cuit: string; onProceso: (ocid: string
       </Bloque>
 
       <Bloque titulo="Quién le compra">
-        <ul className="flex flex-col gap-2 text-sm">
+        <ul className="flex flex-col gap-3 text-sm">
           {p.organismos.map((o) => (
-            <li key={o.nombre} className="flex justify-between gap-3">
-              <span className="text-ink-2">{o.nombre}</span>
-              <span className="whitespace-nowrap tabular-nums">{formatMoneda(o.monto, "ARS")}</span>
+            <li key={o.nombre} className="flex flex-col gap-1">
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="min-w-0 truncate" title={o.nombre}>
+                  {limpiarOrganismo(o.nombre)}
+                </span>
+                <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(o.monto, "ARS")}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="h-1.5 flex-1 rounded-full bg-grid/60">
+                  <span
+                    className="block h-full rounded-full bg-accent"
+                    style={{ width: `${Math.max((o.monto / p.organismos[0]!.monto) * 100, 1)}%` }}
+                  />
+                </span>
+                <span className="w-20 text-right text-xs text-ink-muted tabular-nums">
+                  {o.procesos} {o.procesos === 1 ? "proceso" : "procesos"}
+                </span>
+              </div>
             </li>
           ))}
         </ul>
       </Bloque>
 
-      <Bloque titulo="Adjudicaciones recientes">
+      <Bloque titulo="Adjudicaciones recientes" ayuda="Tocá una para ver el proceso completo">
         <ul className="flex flex-col divide-y divide-line">
           {p.recientes.map((r, i) => (
             <li key={r.ocid + i}>
               <button
                 type="button"
                 onClick={() => onProceso(r.ocid)}
-                className="flex w-full flex-col gap-0.5 py-2 text-left hover:text-accent"
+                className="group -mx-2 flex w-[calc(100%+1rem)] items-center gap-3 rounded-lg px-2 py-2.5 text-left hover:bg-tile"
               >
-                <span className="text-sm text-pretty">{r.titulo || "Sin título"}</span>
-                <span className="text-xs text-ink-muted tabular-nums">
-                  {r.fecha ? `${formatDate(r.fecha)} · ` : ""}
-                  {r.metodo} · {formatMoneda(r.monto, "ARS")}
+                <span className="flex min-w-0 flex-1 flex-col gap-1.5">
+                  <span className="line-clamp-2 text-sm text-pretty group-hover:text-accent">{r.titulo || "Sin título"}</span>
+                  <span className="flex flex-wrap items-center gap-1.5 text-xs text-ink-muted">
+                    {r.fecha && (
+                      <span className="inline-flex items-center gap-1 rounded-md bg-tile px-1.5 py-0.5 tabular-nums group-hover:bg-grid">
+                        <CalendarDays className="size-3" aria-hidden /> {formatDate(r.fecha)}
+                      </span>
+                    )}
+                    <span>{r.metodo}</span>
+                  </span>
                 </span>
+                <span className="text-sm font-medium whitespace-nowrap tabular-nums">{formatMoneda(r.monto, "ARS")}</span>
+                <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-accent" aria-hidden />
               </button>
             </li>
           ))}
@@ -222,7 +245,9 @@ function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cuit: stri
           <FileText className="size-3.5" aria-hidden /> Proceso de compra · N.º {ocid.replace(/^ocds-ppv9mm-/, "")}
         </span>
         <h3 className="text-lg font-semibold tracking-tight text-pretty">{p.titulo}</h3>
-        <span className="text-sm text-ink-2">{p.comprador}</span>
+        <span className="text-sm text-ink-2" title={p.comprador}>
+          {limpiarOrganismo(p.comprador)}
+        </span>
       </div>
 
       <div className="grid grid-cols-2 gap-2">
@@ -234,17 +259,22 @@ function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cuit: stri
         <Dato label="Monto adjudicado" value={p.adjudicaciones.length ? formatMoneda(total, "ARS") : "—"} />
       </div>
 
-      <Bloque titulo={p.adjudicaciones.length ? "Adjudicado a" : "Sin adjudicaciones"}>
+      <Bloque
+        titulo={p.adjudicaciones.length ? "Adjudicado a" : "Sin adjudicaciones"}
+        ayuda={p.adjudicaciones.length ? "Tocá un proveedor para ver su perfil" : undefined}
+      >
         <ul className="flex flex-col divide-y divide-line">
           {p.adjudicaciones.map((a, i) => (
             <li key={a.cuit + i}>
               <button
                 type="button"
                 onClick={() => onProveedor(a.cuit)}
-                className="flex w-full items-baseline justify-between gap-3 py-2 text-left text-sm hover:text-accent"
+                className="group -mx-2 flex w-[calc(100%+1rem)] items-center gap-3 rounded-lg px-2 py-2.5 text-left text-sm hover:bg-tile"
               >
-                <span>{a.proveedor}</span>
-                <span className="whitespace-nowrap tabular-nums">{formatMoneda(a.monto, "ARS")}</span>
+                <Building2 className="size-4 shrink-0 text-ink-muted" aria-hidden />
+                <span className="min-w-0 flex-1 group-hover:text-accent">{a.proveedor}</span>
+                <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(a.monto, "ARS")}</span>
+                <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-accent" aria-hidden />
               </button>
             </li>
           ))}
@@ -266,10 +296,15 @@ function Dato({ label, value }: { label: string; value: string }) {
   );
 }
 
-function Bloque({ titulo, children }: { titulo?: string; children: ReactNode }) {
+function Bloque({ titulo, ayuda, children }: { titulo?: string; ayuda?: string; children: ReactNode }) {
   return (
     <section className="flex flex-col gap-3">
-      {titulo && <h4 className="text-sm font-semibold">{titulo}</h4>}
+      {titulo && (
+        <div className="flex flex-col gap-0.5">
+          <h4 className="text-sm font-semibold">{titulo}</h4>
+          {ayuda && <span className="text-xs text-ink-muted">{ayuda}</span>}
+        </div>
+      )}
       {children}
     </section>
   );

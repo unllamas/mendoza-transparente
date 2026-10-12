@@ -32,7 +32,7 @@ const pesos = (v: number) => `$ ${entero(v)}`;
 const millones = (v: number) => `$ ${entero(v / 1e6)}`;
 
 export function HomePage() {
-  const { index, home, mapa } = route.useLoaderData();
+  const { index, home, mapa, noPublicado } = route.useLoaderData();
   const navigate = useNavigate();
   const fuentesConDatos = index.sources.filter((s) => index.datasets.some((d) => d.source === s.id)).length;
   const registros = index.datasets.reduce((s, d) => s + d.rowCount, 0);
@@ -73,6 +73,19 @@ export function HomePage() {
           {fuentesConDatos} fuentes oficiales · {formatNumber(registros)} registros · Actualizado al{" "}
           {formatDate(index.generatedAt)}
         </p>
+      </section>
+
+      {/* Principios */}
+      <section className="-mt-8 grid gap-4 rounded-2xl bg-tile p-5 sm:grid-cols-2 lg:grid-cols-4">
+        {PRINCIPIOS.map(({ icon: Icon, titulo, texto }) => (
+          <div key={titulo} className="flex items-start gap-3">
+            <Icon className="mt-0.5 size-5 shrink-0 text-accent" aria-hidden />
+            <span className="flex flex-col gap-0.5">
+              <span className="text-sm font-medium">{titulo}</span>
+              <span className="text-sm text-ink-2 text-pretty">{texto}</span>
+            </span>
+          </div>
+        ))}
       </section>
 
       {/* Las cifras principales */}
@@ -169,6 +182,40 @@ export function HomePage() {
         )}
       </section>
 
+      {/* Lo que no se publica */}
+      {noPublicado.length > 0 && (
+        <section className="flex flex-col gap-6">
+          <Encabezado
+            icon={EyeOff}
+            titulo="Lo que el Estado no publica"
+            bajada={`${noPublicado.length} datos que deberían ser públicos y no encontramos en ningún sitio oficial. Podés pedirlos vos.`}
+          />
+          <ul className="grid gap-2 sm:grid-cols-2">
+            {noPublicado.slice(0, 6).map((item) => (
+              <li key={item.id}>
+                <Link
+                  to="/no-publicado"
+                  hash={item.id}
+                  className="flex h-full items-start gap-3 rounded-xl border border-line px-4 py-3 text-sm hover:border-axis"
+                >
+                  <EyeOff className="mt-0.5 size-4 shrink-0 text-ink-muted" aria-hidden />
+                  <span className="flex flex-col gap-0.5">
+                    <span className="font-medium">{item.titulo}</span>
+                    <span className="text-ink-muted">{item.organismo}</span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link
+            to="/no-publicado"
+            className="inline-flex w-fit items-center gap-2 rounded-lg bg-ink px-4 py-2.5 text-sm font-medium text-page hover:opacity-90"
+          >
+            Ver todos y cómo pedirlos <ArrowRight className="size-4" aria-hidden />
+          </Link>
+        </section>
+      )}
+
       {/* Mapa */}
       {coparticipacion && mapa && (
         <section className="flex flex-col gap-6">
@@ -220,45 +267,10 @@ export function HomePage() {
         </section>
       )}
 
-      {/* Lo que no se publica */}
-      <section className="flex flex-col gap-6">
-        <Encabezado
-          icon={EyeOff}
-          titulo="Lo que el Estado no publica"
-          bajada="Datos que deberían ser públicos y no encontramos en ningún sitio oficial."
-        />
-        <ul className="grid gap-2 sm:grid-cols-2">
-          {NO_PUBLICADO.map((item) => (
-            <li key={item} className="flex items-start gap-3 rounded-xl bg-tile px-4 py-3 text-sm text-ink-2">
-              <EyeOff className="mt-0.5 size-4 shrink-0 text-ink-muted" aria-hidden />
-              {item}
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Principios */}
-      <section className="grid gap-6 border-t border-line pt-10 sm:grid-cols-2 lg:grid-cols-4">
-        {PRINCIPIOS.map(({ icon: Icon, titulo, texto }) => (
-          <div key={titulo} className="flex flex-col gap-2">
-            <Icon className="size-5 text-accent" aria-hidden />
-            <span className="font-medium">{titulo}</span>
-            <span className="text-sm text-ink-2 text-pretty">{texto}</span>
-          </div>
-        ))}
-      </section>
     </div>
   );
 }
 
-const NO_PUBLICADO = [
-  "La Cuenta General del Ejercicio: el balance oficial de cómo se gastó el presupuesto.",
-  "La nómina de funcionarios con sus sueldos actualizados.",
-  "Quién financia las campañas electorales provinciales.",
-  "Cómo vota cada legislador provincial en cada proyecto.",
-  "Tiempos de espera en hospitales y turnos de salud.",
-  "Los balances de Mendoza Fiduciaria y los fideicomisos que administra.",
-];
 
 const PRINCIPIOS: { icon: LucideIcon; titulo: string; texto: string }[] = [
   { icon: ShieldCheck, titulo: "Cada número tiene fuente", texto: "Todo dato enlaza al archivo oficial del que sale." },

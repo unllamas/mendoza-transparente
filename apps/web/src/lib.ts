@@ -50,3 +50,14 @@ export function humanize(file: string): string {
   const s = file.replace(/\.csv$/, "").replaceAll(/[_-]/g, " ");
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
+
+/** "1-06-06 - Dcción. Gral. de Compras" → "Dirección General de Compras": sin el código interno ni abreviaturas. */
+export function limpiarOrganismo(nombre: string): string {
+  return nombre
+    .replace(/^[\d-]+\s*-\s*/, "")
+    .replace(/\bD(?:cci[oó]n|cc|ir)\.\s*/gi, "Dirección ")
+    .replace(/\bGral\.\s*/gi, "General ")
+    .replace(/\bDpto\.\s*/gi, "Departamento ")
+    .replace(/\s+/g, " ")
+    .trim();
+}

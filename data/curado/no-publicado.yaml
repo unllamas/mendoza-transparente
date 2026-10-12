@@ -1,0 +1,148 @@
+# Datos que deberían ser públicos y no encontramos publicados (relevamiento del 11/10/2026).
+# Contenido editorial: cada entrada se revisa a mano antes de publicarse.
+#
+# estado: sin_publicar | parcial | desactualizado
+# pedido: lo que se solicita, en una o dos oraciones; la web arma el resto de la nota.
+# pedidos: historial de pedidos de acceso a la información presentados por el proyecto
+#   (fecha, tramite, estado: presentado | respondido | vencido | denegado, respuesta_url).
+
+- id: cuenta-general
+  titulo: La Cuenta General del Ejercicio
+  que_es: El balance oficial de cada año, en el que el Gobierno rinde cuentas de cuánto recaudó y en qué gastó realmente el presupuesto.
+  por_que_importa: Es el documento que permite comparar lo que se prometió en el presupuesto con lo que efectivamente se hizo.
+  organismo: Contaduría General de la Provincia
+  marco_legal: Ley 8706 de Administración Financiera y Ley 9070 de Acceso a la Información Pública
+  estado: sin_publicar
+  donde_buscamos:
+    - https://sitios.mendoza.gob.ar/haciendayfinanzas/
+    - https://www.tribunaldecuentas.mendoza.gov.ar/
+  pedido: Copia de la Cuenta General del Ejercicio de los años 2015 a 2025, con sus anexos, tal como fue presentada a la Legislatura y al Tribunal de Cuentas.
+  pedidos: []
+
+- id: nomina-sueldos
+  titulo: La nómina de personal con sus sueldos
+  que_es: La lista de cargos de la administración pública provincial con su categoría y las escalas salariales vigentes, incluidas las de funcionarios.
+  por_que_importa: Sin ella no se puede saber cuánto gana un ministro, un director o un empleado, ni cuántos cargos hay en cada repartición.
+  organismo: Ministerio de Hacienda y Finanzas
+  marco_legal: Ley 9070 de Acceso a la Información Pública
+  estado: parcial
+  donde_buscamos:
+    - https://datosabiertos.mendoza.gov.ar/
+    - https://sitios.mendoza.gob.ar/haciendayfinanzas/ley-de-responsabilidad-fiscal/
+  detalle_estado: Hay una planta de personal de noviembre de 2023 en datos abiertos y totales por repartición en los informes trimestrales, pero no las escalas salariales vigentes.
+  pedido: Nómina actualizada de autoridades superiores (gobernador, vicegobernador, ministros, secretarios, subsecretarios y directores) con su remuneración bruta mensual, y las escalas salariales vigentes de la administración pública provincial.
+  pedidos: []
+
+- id: ejecucion-detallada
+  titulo: La ejecución del presupuesto por programa
+  que_es: Cuánto gastó cada ministerio en cada programa y en qué (sueldos, bienes, obras), en formato de datos abiertos.
+  por_que_importa: Permite ver si la plata asignada a un área, por ejemplo salud o seguridad, se gastó o quedó sin usar.
+  organismo: Contaduría General de la Provincia
+  marco_legal: Ley 8706 de Administración Financiera y Ley 9070 de Acceso a la Información Pública
+  estado: desactualizado
+  donde_buscamos:
+    - https://datosabiertos.mendoza.gov.ar/
+    - https://sitios.mendoza.gob.ar/haciendayfinanzas/668-2/ejecucion-presupuestaria/ejecuciones-presupuestarias-provinciales/
+  detalle_estado: El portal de datos abiertos tiene la ejecución detallada hasta 2022-2023. Desde entonces solo se publican resúmenes en PDF.
+  pedido: Ejecución presupuestaria de la administración pública provincial de 2023 a la fecha, por jurisdicción, programa, objeto del gasto y fuente de financiamiento, en formato CSV o XLSX.
+  pedidos: []
+
+- id: financiamiento-campanas
+  titulo: Quién financia las campañas provinciales
+  que_es: Los informes de ingresos y gastos que los partidos deben presentar por cada campaña electoral provincial, con sus aportantes.
+  por_que_importa: Saber quién pone la plata de las campañas es clave para detectar conflictos de interés con quienes después gobiernan.
+  organismo: Junta Electoral de la Provincia de Mendoza
+  marco_legal: Ley 7005 de financiamiento de campañas y Ley 9070 de Acceso a la Información Pública
+  estado: sin_publicar
+  donde_buscamos:
+    - https://jusmendoza.gob.ar/junta-electoral-de-mendoza/
+    - https://elecciones.mendoza.gob.ar/
+  pedido: Informes de financiamiento de campaña (ingresos, gastos y listado de aportantes) presentados por cada partido, alianza o frente en las elecciones provinciales de 2023 y 2025 y en las municipales de 2026.
+  pedidos: []
+
+- id: votaciones-nominales
+  titulo: Cómo vota cada legislador
+  que_es: El registro de cómo votó cada diputado y cada senador provincial en cada proyecto, y su asistencia a las sesiones.
+  por_que_importa: Es la forma más directa de saber qué defiende cada legislador más allá de lo que dice en campaña.
+  organismo: Cámara de Diputados y Cámara de Senadores de Mendoza
+  marco_legal: Ley 9070 de Acceso a la Información Pública
+  estado: sin_publicar
+  donde_buscamos:
+    - https://www.hcdmza.gob.ar/site/
+    - https://www.senadomendoza.gob.ar/sesiones/
+  detalle_estado: Se publican los diarios de sesiones, pero no las votaciones nominales ni la asistencia en formato de datos.
+  pedido: Registro de votaciones nominales y de asistencia de cada legislador en todas las sesiones desde diciembre de 2023, en formato CSV o XLSX.
+  pedidos: []
+
+- id: turnos-salud
+  titulo: Turnos y esperas en la salud pública
+  que_es: Cuánto hay que esperar para conseguir un turno o una cirugía en los hospitales y centros de salud provinciales.
+  por_que_importa: Es uno de los indicadores que más impactan en la vida cotidiana y no hay ningún dato público para medirlo.
+  organismo: Ministerio de Salud y Deportes
+  marco_legal: Ley 9070 de Acceso a la Información Pública
+  estado: sin_publicar
+  donde_buscamos:
+    - https://www.mendoza.gob.ar/saludydeportes/
+  pedido: Tiempos promedio de espera para turnos de consulta por especialidad y para cirugías programadas en cada hospital provincial, por mes, desde enero de 2023.
+  pedidos: []
+
+- id: mendoza-fiduciaria
+  titulo: Los balances de Mendoza Fiduciaria
+  que_es: Los estados contables de la empresa estatal que administra fideicomisos públicos, y la lista de esos fideicomisos con sus saldos.
+  por_que_importa: Por los fideicomisos pasan fondos públicos que no siempre aparecen en el presupuesto.
+  organismo: Mendoza Fiduciaria S.A.
+  marco_legal: Ley 9070 de Acceso a la Información Pública (alcanza a sociedades con participación estatal)
+  estado: sin_publicar
+  donde_buscamos:
+    - https://mendozafiduciaria.com/
+  pedido: Estados contables de Mendoza Fiduciaria S.A. de 2020 a 2025 y listado de fideicomisos administrados con su objeto, fiduciante y saldo al cierre de cada año.
+  pedidos: []
+
+- id: compras-2026
+  titulo: Las compras del Estado de 2026
+  que_es: Los datos abiertos de todas las contrataciones del sistema COMPR.AR Mendoza.
+  por_que_importa: El último archivo publicado llega al 2 de enero de 2026; desde entonces no se puede analizar a quién le compra el Estado.
+  organismo: Dirección General de Contrataciones Públicas y Gestión de Bienes
+  marco_legal: Ley 9070 de Acceso a la Información Pública
+  estado: desactualizado
+  donde_buscamos:
+    - https://datosabiertos-compras.mendoza.gov.ar/datasets/
+  pedido: Actualización del conjunto de datos de contrataciones abiertas (estándar OCDS) de COMPR.AR Mendoza con los procesos desde el 2 de enero de 2026 a la fecha.
+  pedidos: []
+
+- id: recaudacion-atm
+  titulo: La recaudación mes a mes de cada impuesto
+  que_es: Cuánto recauda la provincia cada mes por Ingresos Brutos, Automotor, Inmobiliario y Sellos.
+  por_que_importa: El informe mensual se reemplaza cada mes y no queda una serie para ver la evolución.
+  organismo: Administración Tributaria Mendoza (ATM)
+  marco_legal: Ley 9070 de Acceso a la Información Pública
+  estado: parcial
+  donde_buscamos:
+    - https://sitios.mendoza.gob.ar/haciendayfinanzas/informes-de-recaudacion/
+    - https://atm.mendoza.gov.ar/
+  pedido: Serie mensual de recaudación por impuesto provincial desde enero de 2015, en formato CSV o XLSX.
+  pedidos: []
+
+- id: seguridad
+  titulo: Las estadísticas de delitos de la provincia
+  que_es: Los delitos denunciados por tipo y por departamento, con datos propios del Ministerio de Seguridad.
+  por_que_importa: Hoy solo hay datos nacionales anuales; la provincia no publica los suyos con más detalle.
+  organismo: Ministerio de Seguridad y Justicia
+  marco_legal: Ley 9070 de Acceso a la Información Pública
+  estado: sin_publicar
+  donde_buscamos:
+    - https://www.mendoza.gob.ar/seguridadyjusticia/
+  pedido: Cantidad mensual de delitos denunciados por tipo y por departamento desde enero de 2020, en formato CSV o XLSX.
+  pedidos: []
+
+- id: municipios-sin-datos
+  titulo: Las cuentas de San Martín y Lavalle
+  que_es: Presupuesto, ejecución, sueldos y compras de los dos municipios que no publican información fiscal propia.
+  por_que_importa: Son los únicos 2 de los 18 municipios sin un sitio con sus cuentas, como exige la Ley de Responsabilidad Fiscal.
+  organismo: Municipalidades de San Martín y de Lavalle
+  marco_legal: Ley 7314 de Responsabilidad Fiscal y Ley 9070 de Acceso a la Información Pública
+  estado: sin_publicar
+  donde_buscamos:
+    - https://sanmartinmza.gob.ar
+  pedido: Presupuesto 2026, ejecución presupuestaria de 2024 a la fecha y anexos trimestrales de la Ley de Responsabilidad Fiscal del municipio.
+  pedidos: []

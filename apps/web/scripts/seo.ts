@@ -155,6 +155,8 @@ const [deuda, copa, empleo, poblacion] = await Promise.all([
 const rows = (source: string, file: string) => index.datasets.find((d) => d.source === source && d.file === file)?.rowCount;
 const rowsFuente = (id: string) => index.datasets.filter((d) => d.source === id).reduce((a, d) => a + d.rowCount, 0);
 
+const noPublicadoCount = (await json<unknown[]>("temas/no-publicado.json").catch(() => [])).length;
+
 const figuras: Record<string, { figura: string; bajada: string }> = {
   "/": {
     figura: `${index.sources.length} fuentes`,
@@ -179,6 +181,10 @@ const figuras: Record<string, { figura: string; bajada: string }> = {
   "/fuentes": {
     figura: `${index.sources.length} fuentes`,
     bajada: "Oficiales y abiertas: de dónde sale cada dato, cada cuánto se actualiza y cómo bajarlo.",
+  },
+  "/no-publicado": {
+    figura: `${noPublicadoCount} datos`,
+    bajada: "Que deberían ser públicos y no lo son. Te explicamos cómo pedirlos con la Ley 9070.",
   },
   "/compras": {
     figura: `${nf.format(rows("compras-ocds", "procesos.csv") ?? 0)} procesos`,

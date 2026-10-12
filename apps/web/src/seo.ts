@@ -80,6 +80,15 @@ export const PAGES: Record<string, PageMeta> = {
     eyebrow: "FUENTES",
     activa: true,
   },
+  "/no-publicado": {
+    title: `Lo que el Estado de Mendoza no publica${TITLE_SUFFIX}`,
+    description:
+      "Transparencia en Mendoza: los datos públicos que el Gobierno no publica, quién debería hacerlo y cómo pedirlos vos con la Ley 9070 de acceso a la información.",
+    ogSlug: "no-publicado",
+    ogTitle: "Lo que el Estado no publica",
+    eyebrow: "ACCESO A LA INFORMACIÓN",
+    activa: true,
+  },
   // Rutas por venir: activar cuando existan en la app.
   "/compras": {
     title: `Compras del Estado de Mendoza${TITLE_SUFFIX}`,

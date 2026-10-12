@@ -9,6 +9,7 @@ const NAV = [
   { to: "/coparticipacion", label: "Coparticipación" },
   { to: "/empleo-publico", label: "Empleo público" },
   { to: "/poblacion", label: "Población" },
+  { to: "/no-publicado", label: "Lo que no se publica" },
   { to: "/fuentes", label: "Fuentes" },
 ] as const;
 
