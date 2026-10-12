@@ -153,6 +153,13 @@ for (const p of paginas) {
   }
 }
 
+// 404.html: Cloudflare Pages lo sirve con código 404 para cualquier ruta sin HTML propio. Es la app vacía (React
+// resuelve la ruta: un proveedor sin página propia, por ejemplo, igual se ve) pero los buscadores no la indexan.
+await writeFile(
+  join(DIST, "404.html"),
+  stripBase(base).replace("</head>", `    <title>Página no encontrada · ${SITE_NAME}</title>\n    <meta name="robots" content="noindex" />\n  </head>`),
+);
+
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${paginas.map((p) => `  <url><loc>${canonicalUrl(p.path)}</loc><lastmod>${p.lastmod.slice(0, 10)}</lastmod><priority>${p.prioridad.toFixed(1)}</priority></url>`).join("\n")}
