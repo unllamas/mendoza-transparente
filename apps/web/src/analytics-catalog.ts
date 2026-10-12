@@ -21,6 +21,7 @@ export const EVENT_CATALOG: EventDoc[] = [
   { event: "sheet.open", description: "Abrió una hoja de detalle (un pedido, un proceso de compra, un proveedor, una fila de datos). Propiedad sheet: cuál.", tags: ["interacción"] },
   { event: "sheet.close", description: "Cerró una hoja de detalle. Propiedades sheet y seconds: cuánto tiempo la tuvo abierta.", tags: ["interacción"] },
   { event: "sheet.close_button", description: "Cerró una hoja de detalle con el botón de cerrar (en vez de tocar afuera o usar Escape).", tags: ["interacción"] },
+  { event: "purchase.awards_sort.change", description: "Cambió el orden de las adjudicaciones de un proceso de compra (mayor monto, menor monto, A–Z). Propiedad value.", tags: ["compras"] },
   { event: "purchase.flag.toggle", description: "Tocó una alerta de un proceso de compra (sobre lo estimado, una sola oferta, contratación directa) para leer su explicación. Propiedad flag.", tags: ["compras"] },
   { event: "purchase.winner.open", description: "Abrió el perfil de la empresa que ganó sin competencia un proceso de compra.", tags: ["compras"] },
   { event: "purchase.supplier.agency_open", description: "Desde la hoja de un proveedor, abrió la página de un organismo que le compra.", tags: ["compras"] },

@@ -6,6 +6,7 @@
  *      aparecen en desarrollo), también al abrir hojas de detalle.
  *   3. Que con el menú móvil abierto haya un solo scroll (el del menú, no el de la página).
  *   4. Que los botones de solo ícono midan al menos 44×44 px y el header entre 48 y 60 px.
+ *   5. Que abrir las alertas de un proceso de compra (notas flotantes) no genere scroll horizontal en la hoja.
  *
  * Uso: bun run verificar     (CHROME_PATH para otro navegador; por defecto, Google Chrome de macOS)
  * Documentado en docs/procesos/web.md.
@@ -133,6 +134,28 @@ try {
     if (await mobile.evaluate(() => getComputedStyle(document.scrollingElement!).overflowY === "hidden"))
       problemas.push("Menú móvil: al cerrarlo, la página queda bloqueada");
     await mobile.close();
+  }
+
+  // 5. Floating notes of a purchase process: opening each one must not overflow the sheet.
+  {
+    // A process over the estimate usually carries several notes (percentage, one offer, direct purchase).
+    const senales = (await Bun.file(join(temas, "senales.json")).json()) as { senales: { id: string; casos: { tipo: string; id: string }[] }[] };
+    const ocid = senales.senales.find((s) => s.id === "adjudicado-sobre-estimado")?.casos.find((c) => c.tipo === "proceso")?.id;
+    for (const width of [320, 1280]) {
+      if (!ocid) break;
+      const p = await browser.newPage({ viewport: { width, height: 800 } });
+      await p.goto(`${BASE}/senales?proceso=${ocid}`, { waitUntil: "networkidle" });
+      const sheet = p.locator('aside[role="dialog"]');
+      for (const chip of await sheet.locator("[data-flag] button").all()) {
+        await chip.click();
+        await p.waitForTimeout(150);
+        const overflow = await sheet.evaluate(
+          (el) => el.scrollWidth > el.clientWidth || [...el.querySelectorAll("*")].some((c) => c.scrollWidth > c.clientWidth + 1 && getComputedStyle(c).overflowX !== "visible"),
+        );
+        if (overflow) problemas.push(`Hoja de proceso a ${width} px: abrir «${(await chip.textContent())?.trim()}» genera scroll horizontal`);
+      }
+      await p.close();
+    }
   }
 
   await page.goto(BASE + "/senales", { waitUntil: "networkidle" });

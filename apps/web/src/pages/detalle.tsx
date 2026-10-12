@@ -531,9 +531,10 @@ function Flags({ flags }: { flags: Flag[] }) {
   }, [open]);
   if (!flags.length) return null;
   return (
-    <ul className="flex flex-wrap gap-2" aria-label="Para mirar de cerca">
+    // The note is anchored to the whole row (not to the chip): a chip on the right would push it out of the sheet.
+    <ul className="relative flex flex-wrap gap-2" aria-label="Para mirar de cerca">
       {flags.map((f) => (
-        <li key={f.id} className="relative" data-flag>
+        <li key={f.id} data-flag>
           <button
             type="button"
             aria-expanded={open === f.id}
@@ -553,7 +554,7 @@ function Flags({ flags }: { flags: Flag[] }) {
             <p
               id={`flag-${f.id}`}
               role="tooltip"
-              className="absolute top-full left-0 z-10 mt-1.5 w-64 max-w-[calc(100vw-3rem)] rounded-lg border border-aviso-borde bg-surface px-3 py-2 text-sm text-ink-2 text-pretty shadow-lg"
+              className="absolute inset-x-0 top-full z-10 mt-1.5 rounded-lg border border-aviso-borde bg-surface px-3 py-2 text-sm text-ink-2 text-pretty shadow-lg"
             >
               {f.text}
             </p>
