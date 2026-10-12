@@ -165,17 +165,11 @@ export function Sheet({
         aria-label={titulo}
         className="fixed inset-y-0 right-0 z-40 flex w-full flex-col overflow-hidden border-l border-line bg-surface shadow-2xl sm:w-[32rem]"
       >
-        <div className="flex items-center gap-2 border-b border-line px-4 py-3">
-          <span className="mr-auto truncate text-sm font-medium">{titulo}</span>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Cerrar"
-            data-track="sheet.close_button"
-            className="rounded-md px-2 py-1 text-ink-2 hover:bg-grid hover:text-ink"
-          >
-            <X className="size-4" aria-hidden />
-          </button>
+        <div className="flex h-14 shrink-0 items-center gap-2 border-b border-line pr-1.5 pl-4">
+          <span className="mr-auto truncate font-medium">{titulo}</span>
+          <IconButton label="Cerrar" onClick={onClose} data-track="sheet.close_button">
+            <X className="size-5" aria-hidden />
+          </IconButton>
         </div>
         <div className="flex flex-col gap-6 overflow-y-auto overscroll-contain p-4">{children}</div>
       </aside>
@@ -308,3 +302,36 @@ const initials = (name: string) =>
     .slice(0, 2)
     .map((w) => w[0]!.toUpperCase())
     .join("");
+
+/**
+ * Button that is only an icon: always square, 44×44 px (the minimum comfortable touch target), with an
+ * accessible name. Use it for close, menu, search and any other icon-only action.
+ */
+export function IconButton({
+  label,
+  onClick,
+  children,
+  id,
+  className = "",
+  ...rest
+}: {
+  label: string;
+  onClick: () => void;
+  children: ReactNode;
+  id?: string;
+  className?: string;
+} & Record<`data-${string}`, string>) {
+  return (
+    <button
+      type="button"
+      id={id}
+      onClick={onClick}
+      aria-label={label}
+      title={label}
+      className={`flex size-11 shrink-0 items-center justify-center rounded-lg text-ink-2 hover:bg-tile hover:text-ink ${className}`}
+      {...rest}
+    >
+      {children}
+    </button>
+  );
+}

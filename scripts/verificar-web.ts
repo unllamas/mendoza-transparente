@@ -5,6 +5,7 @@
  *   2. Que no haya errores ni advertencias en la consola (incluye los avisos de React, que solo
  *      aparecen en desarrollo), también al abrir hojas de detalle.
  *   3. Que con el menú móvil abierto haya un solo scroll (el del menú, no el de la página).
+ *   4. Que los botones de solo ícono midan al menos 44×44 px y el header entre 48 y 60 px.
  *
  * Uso: bun run verificar     (CHROME_PATH para otro navegador; por defecto, Google Chrome de macOS)
  * Documentado en docs/procesos/web.md.
@@ -79,6 +80,19 @@ try {
       await page.waitForTimeout(800);
       const { vw, sw } = await page.evaluate(() => ({ vw: document.documentElement.clientWidth, sw: document.documentElement.scrollWidth }));
       if (sw > vw) problemas.push(`Scroll horizontal en ${ruta} a ${ancho} px (${sw} > ${vw})`);
+      // Touch targets: icon-only buttons at least 44×44 px, and the header between 48 and 60 px tall.
+      const touch = await page.evaluate(() => {
+        // Chart columns (role="listitem") are excluded: they are data marks, not icon buttons.
+        const small = [...document.querySelectorAll<HTMLElement>("button[aria-label]:not([role=listitem]), a[aria-label]")]
+          .filter((el) => !el.innerText.trim() && el.offsetParent !== null)
+          .map((el) => ({ label: el.getAttribute("aria-label"), r: el.getBoundingClientRect() }))
+          .filter(({ r }) => r.width > 0 && (r.width < 44 || r.height < 44))
+          .map(({ label, r }) => `${label} (${Math.round(r.width)}×${Math.round(r.height)})`);
+        const header = document.querySelector("header")?.getBoundingClientRect().height ?? 0;
+        return { small, header };
+      });
+      if (touch.small.length) problemas.push(`Botones de ícono chicos en ${ruta} a ${ancho} px: ${[...new Set(touch.small)].join(", ")}`);
+      if (touch.header < 48 || touch.header > 60) problemas.push(`Header de ${Math.round(touch.header)} px en ${ruta} a ${ancho} px (debe medir entre 48 y 60)`);
     }
     await page.close();
   }

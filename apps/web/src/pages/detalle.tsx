@@ -5,11 +5,13 @@ import {
   ArrowLeft,
   Building2,
   CalendarDays,
+  ChevronDown,
   ChevronRight,
   ExternalLink,
   FileText,
   Landmark,
   Search,
+  TriangleAlert,
   UserRound,
   X,
 } from "lucide-react";
@@ -21,7 +23,7 @@ import { archivoUrl, useFuentes } from "../fuente.tsx";
 import { formatDate, formatNumber, limpiarOrganismo, loadJson } from "../lib.ts";
 import { procesoShard } from "../shard.ts";
 import type { DatasetMeta, ProcesoDetalle, ProveedorDetalle } from "../types.ts";
-import { Aviso, Segmented, useScrollLock } from "./components.tsx";
+import { Aviso, IconButton, Segmented, useScrollLock } from "./components.tsx";
 
 type Vista = { tipo: "fila" } | { tipo: "proveedor"; cuit: string } | { tipo: "proceso"; ocid: string };
 
@@ -66,26 +68,21 @@ export function PanelDetalle({
         aria-label="Detalle"
         className="fixed inset-y-0 right-0 z-40 flex w-full flex-col overflow-hidden border-l border-line bg-surface shadow-2xl sm:w-[30rem]"
       >
-      <div className="flex items-center gap-2 border-b border-line px-4 py-3">
+      <div className="flex h-14 shrink-0 items-center gap-2 border-b border-line pr-1.5 pl-2">
         {historial.length > 1 && (
           <button
             type="button"
             onClick={() => setHistorial((h) => h.slice(0, -1))}
-            className="rounded-md px-2 py-1 text-sm text-ink-2 hover:bg-grid hover:text-ink"
+            className="inline-flex min-h-11 items-center gap-1 rounded-lg px-2 text-sm text-ink-2 hover:bg-tile hover:text-ink"
           >
-            <ArrowLeft className="mr-1 inline size-4 align-[-3px]" aria-hidden />
+            <ArrowLeft className="size-4" aria-hidden />
             Volver
           </button>
         )}
-        <span className="mr-auto text-sm font-medium">Detalle</span>
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Cerrar detalle"
-          className="rounded-md px-2 py-1 text-sm text-ink-2 hover:bg-grid hover:text-ink"
-        >
-          <X className="size-4" aria-hidden />
-        </button>
+        <span className={`mr-auto font-medium ${historial.length > 1 ? "" : "pl-2"}`}>Detalle</span>
+        <IconButton label="Cerrar detalle" onClick={onClose}>
+          <X className="size-5" aria-hidden />
+        </IconButton>
       </div>
 
       <div className="flex flex-col gap-6 overflow-y-auto overscroll-contain p-4">
@@ -384,6 +381,8 @@ export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cui
         </span>
       </div>
 
+      <Flags flags={processFlags(p, total)} />
+
       <div className="grid grid-cols-2 gap-2">
         <Dato label="Modalidad" value={p.metodo} />
         <Dato label="Estado" value={ESTADO_PROCESO[p.estado] ?? p.estado} />
@@ -393,6 +392,22 @@ export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cui
 
       <Montos estimado={p.montoEstimado} adjudicado={p.adjudicaciones.length ? total : null} />
 
+      {p.oferentes === 1 && p.adjudicaciones.length === 1 ? (
+        <Bloque titulo="Ganó sin competencia" ayuda="Fue la única oferta: se llevó todo el monto adjudicado.">
+          <button
+            type="button"
+            onClick={() => onProveedor(p.adjudicaciones[0]!.cuit)}
+            className="group flex min-h-11 items-center gap-3 rounded-xl border border-aviso-borde bg-aviso-fondo p-4 text-left hover:border-link"
+          >
+            <Building2 className="size-5 shrink-0 text-aviso" aria-hidden />
+            <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+              <span className="font-medium text-pretty group-hover:text-link">{p.adjudicaciones[0]!.proveedor}</span>
+              <span className="text-xl font-semibold whitespace-nowrap tabular-nums">{formatMoneda(p.adjudicaciones[0]!.monto, "ARS")}</span>
+            </span>
+            <ChevronRight className="size-5 shrink-0 text-link" aria-hidden />
+          </button>
+        </Bloque>
+      ) : (
       <Bloque
         titulo={p.adjudicaciones.length ? "Adjudicado a" : "Sin adjudicaciones"}
         ayuda={p.adjudicaciones.length ? "Tocá un proveedor para ver su perfil" : undefined}
@@ -421,11 +436,72 @@ export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cui
             </li>
           ))}
         </ul>
-        {p.oferentes === 1 && (
-          <Aviso titulo="Una sola oferta">Sin competencia, el Estado no pudo comparar precios en este proceso.</Aviso>
-        )}
       </Bloque>
+      )}
     </>
+  );
+}
+
+interface Flag {
+  id: string;
+  label: string;
+  text: string;
+}
+
+/** What stands out in a purchase process, as short labels; each one expands to a two-line explanation. */
+function processFlags(p: ProcesoDetalle, awarded: number): Flag[] {
+  const flags: Flag[] = [];
+  const estimate = p.montoEstimado ?? 0;
+  if (estimate > 0 && awarded > 0) {
+    const ratio = awarded / estimate;
+    if (estimate < SYMBOLIC_ESTIMATE && awarded >= 100 * estimate)
+      flags.push({
+        id: "estimado-simbolico",
+        label: "Estimado simbólico",
+        text: `Se cargó ${formatMoneda(estimate, "ARS")} como estimado. Sin un estimado real no se puede controlar si el precio fue razonable.`,
+      });
+    else if (ratio >= 2)
+      flags.push({
+        id: "sobre-estimado",
+        label: `${formatNumber(ratio >= 10 ? Math.round(ratio) : Math.round(ratio * 10) / 10)} × lo estimado`,
+        text: "Puede haber una explicación (error de carga, cambio de alcance, precios que subieron), pero un desvío así merece una respuesta del organismo.",
+      });
+  }
+  if (p.oferentes === 1)
+    flags.push({ id: "una-oferta", label: "Una sola oferta", text: "Sin competencia, el Estado no pudo comparar precios." });
+  if (/directa/i.test(p.metodo) && awarded >= 10_000_000)
+    flags.push({ id: "directa", label: "Contratación directa", text: "Sin licitación pública. La ley la permite en casos puntuales; en montos grandes conviene saber por qué." });
+  return flags;
+}
+
+function Flags({ flags }: { flags: Flag[] }) {
+  const [open, setOpen] = useState<string | null>(null);
+  if (!flags.length) return null;
+  const current = flags.find((f) => f.id === open);
+  return (
+    <div className="flex flex-col gap-2">
+      <ul className="flex flex-wrap gap-2" aria-label="Para mirar de cerca">
+        {flags.map((f) => (
+          <li key={f.id}>
+            <button
+              type="button"
+              aria-expanded={open === f.id}
+              onClick={() => setOpen(open === f.id ? null : f.id)}
+              data-track="purchase.flag.toggle"
+              data-track-flag={f.id}
+              className={`inline-flex min-h-9 items-center gap-1.5 rounded-full border px-3 text-sm font-medium whitespace-nowrap ${
+                open === f.id ? "border-aviso bg-aviso-fondo" : "border-aviso-borde bg-aviso-fondo/60 hover:border-aviso"
+              }`}
+            >
+              <TriangleAlert className="size-3.5 text-aviso" aria-hidden />
+              {f.label}
+              <ChevronDown className={`size-3.5 text-ink-muted transition-transform ${open === f.id ? "rotate-180" : ""}`} aria-hidden />
+            </button>
+          </li>
+        ))}
+      </ul>
+      {current && <p className="rounded-lg bg-aviso-fondo px-3 py-2 text-sm text-ink-2 text-pretty">{current.text}</p>}
+    </div>
   );
 }
 
@@ -463,34 +539,20 @@ function Montos({ estimado, adjudicado }: { estimado: number | null; adjudicado:
 /** Below this, an estimate is symbolic ($1, $2…): the agency did not really estimate the price. */
 const SYMBOLIC_ESTIMATE = 1000;
 
-/**
- * Difference between estimate and award, readable at any size ("5.261 veces lo estimado" instead of
- * "526069 %"), with a warning when it is far off: those are the cases worth looking at.
- */
+/** Difference between estimate and award, readable at any size ("5.262 veces lo estimado", not "526069 %"). */
 function Desvio({ estimado, adjudicado }: { estimado: number; adjudicado: number }) {
   const ratio = adjudicado / estimado;
   const pct = Math.abs(ratio - 1) * 100;
   if (pct < 0.5) return <p className="text-sm text-ink-2">Se adjudicó lo mismo que se estimó.</p>;
   if (estimado < SYMBOLIC_ESTIMATE && adjudicado >= 100 * estimado)
-    return (
-      <Aviso titulo="Estimado simbólico">
-        El organismo cargó <span className="whitespace-nowrap">{formatMoneda(estimado, "ARS")}</span> como monto estimado y adjudicó{" "}
-        <span className="whitespace-nowrap">{formatMoneda(adjudicado, "ARS")}</span>. Sin un
-        estimado real no se puede controlar si el precio fue razonable.
-      </Aviso>
-    );
-  const text =
-    ratio >= 2
-      ? `Se adjudicó ${formatNumber(ratio >= 10 ? Math.round(ratio) : Math.round(ratio * 10) / 10)} veces lo estimado.`
-      : `Se adjudicó un ${formatNumber(Math.round(pct))} % ${ratio > 1 ? "más" : "menos"} de lo estimado.`;
-  if (ratio >= 2)
-    return (
-      <Aviso titulo="Muy por encima de lo estimado">
-        {text} Puede haber una explicación (un error de carga, un cambio de alcance o precios que subieron), pero un desvío así
-        merece una respuesta del organismo.
-      </Aviso>
-    );
-  return <p className="text-sm text-ink-2">{text}</p>;
+    return <p className="text-sm text-ink-2">El estimado cargado es simbólico: no permite comparar.</p>;
+  return (
+    <p className="text-sm text-ink-2">
+      {ratio >= 2
+        ? `Se adjudicó ${formatNumber(ratio >= 10 ? Math.round(ratio) : Math.round(ratio * 10) / 10)} veces lo estimado.`
+        : `Se adjudicó un ${formatNumber(Math.round(pct))} % ${ratio > 1 ? "más" : "menos"} de lo estimado.`}
+    </p>
+  );
 }
 
 function Dato({ label, value }: { label: string; value: string }) {

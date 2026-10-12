@@ -25,7 +25,7 @@ import {
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 import { track } from "./analytics.ts";
-import { PersonAvatar, useScrollLock } from "./pages/components.tsx";
+import { IconButton, PersonAvatar, useScrollLock } from "./pages/components.tsx";
 import type { SearchEntry } from "./types.ts";
 
 // ------------------------------------------------------------------ index and matching
@@ -110,15 +110,9 @@ export function SearchTrigger() {
 /** Search button for the header, on every page. */
 export function HeaderSearchButton() {
   return (
-    <button
-      type="button"
-      id="buscador-header"
-      onClick={() => openSearch("header")}
-      aria-label="Buscar"
-      className="flex size-10 items-center justify-center rounded-lg text-ink-2 hover:bg-tile hover:text-link"
-    >
+    <IconButton label="Buscar" onClick={() => openSearch("header")} id="buscador-header" className="hover:text-link">
       <Search className="size-5" aria-hidden />
-    </button>
+    </IconButton>
   );
 }
 
@@ -216,7 +210,7 @@ export function SearchDialog() {
       <div aria-hidden onClick={close} className="absolute inset-0 hidden bg-black/60 backdrop-blur-[2px] sm:block" />
       <div className="relative flex h-full w-full flex-col overflow-hidden bg-page sm:h-auto sm:max-h-[80vh] sm:max-w-2xl sm:rounded-2xl sm:border sm:border-line sm:bg-surface sm:shadow-2xl">
         {/* Search box */}
-        <div className="flex shrink-0 items-center gap-2 border-b border-line px-3 py-2 sm:px-4">
+        <div className="flex min-h-14 shrink-0 items-center gap-2 border-b border-line pr-1.5 pl-3 sm:pl-4">
           <Search className="size-5 shrink-0 text-ink-muted" aria-hidden />
           <input
             ref={input}
@@ -244,16 +238,19 @@ export function SearchDialog() {
             }}
             className="min-w-0 flex-1 bg-transparent py-2 text-base text-ink !outline-none placeholder:text-ink-muted [&::-webkit-search-cancel-button]:hidden"
           />
+          {/* Phones: a "Cancelar" text button; desktop: a square close button. */}
           <button
             type="button"
             onClick={close}
             id="buscador-cerrar"
             data-track="search.close"
-            className="shrink-0 rounded-lg px-2 py-1.5 text-sm text-ink-2 hover:bg-tile hover:text-ink"
+            className="min-h-11 shrink-0 rounded-lg px-2 text-sm text-ink-2 hover:bg-tile hover:text-ink sm:hidden"
           >
-            <span className="sm:hidden">Cancelar</span>
-            <X className="hidden size-5 sm:block" aria-label="Cerrar" />
+            Cancelar
           </button>
+          <IconButton label="Cerrar" onClick={close} data-track="search.close" className="hidden sm:flex">
+            <X className="size-5" aria-hidden />
+          </IconButton>
         </div>
 
         {/* Filters by kind */}

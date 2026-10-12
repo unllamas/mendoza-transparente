@@ -29,7 +29,7 @@ import { trackPageview } from "../analytics.ts";
 import { usePageMeta } from "../seo.ts";
 import { DetailSheet } from "../detail-sheet.tsx";
 import { HeaderSearchButton, SearchDialog } from "../search.tsx";
-import { useScrollLock } from "./components.tsx";
+import { IconButton, useScrollLock } from "./components.tsx";
 
 type Item = { to: string; label: string; descripcion: string; icon: LucideIcon };
 type Grupo = { label: string; items: Item[] };
@@ -118,19 +118,16 @@ export function Layout() {
             ))}
           </nav>
           <HeaderSearchButton />
-          <button
-            type="button"
+          <IconButton
+            label="Abrir menú"
             onClick={() => setAbierto(true)}
-            aria-expanded={abierto}
-            aria-controls="menu-movil"
             id="menu-movil-boton"
             data-track="nav.mobile_menu.toggle"
             data-track-open="true"
-            aria-label="Abrir menú"
-            className="-mr-2 flex size-10 items-center justify-center rounded-lg text-ink hover:bg-tile lg:hidden"
+            className="-mr-1.5 text-ink lg:hidden"
           >
             <Menu className="size-5" aria-hidden />
-          </button>
+          </IconButton>
         </div>
 
       </header>
@@ -149,16 +146,15 @@ export function Layout() {
             <Link to="/" className="mr-auto text-base font-semibold tracking-tight whitespace-nowrap">
               Mendoza Transparente
             </Link>
-            <button
-              type="button"
+            <IconButton
+              label="Cerrar menú"
               onClick={() => setAbierto(false)}
               id="menu-movil-cerrar"
               data-track="nav.mobile_menu.close"
-              aria-label="Cerrar menú"
-              className="-mr-2 flex size-10 items-center justify-center rounded-lg text-ink hover:bg-tile"
+              className="-mr-1.5 text-ink"
             >
               <X className="size-5" aria-hidden />
-            </button>
+            </IconButton>
           </div>
         <nav
           id="menu-movil"
