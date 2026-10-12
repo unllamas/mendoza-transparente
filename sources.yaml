@@ -109,3 +109,12 @@
   frecuencia: anual
   dificultad: facil
   estado: activo
+
+- id: indices
+  nombre: Inflación (IPC nacional y Cuyo, empalmado desde 1997) y tipo de cambio oficial
+  organismo: INDEC y Banco Central
+  url: https://www.indec.gob.ar/indec/web/Nivel4-Tema-3-5-31
+  formato: csv, xls, api
+  frecuencia: mensual
+  dificultad: facil
+  estado: activo
