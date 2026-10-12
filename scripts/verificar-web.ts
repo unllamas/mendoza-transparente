@@ -28,6 +28,7 @@ const RUTAS = [
   "/poblacion",
   "/no-publicado",
   "/participar",
+  "/como-leer",
   "/fuentes",
   "/datos/compras-ocds",
   "/datos/boletin-oficial",

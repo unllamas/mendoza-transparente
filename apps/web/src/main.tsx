@@ -17,12 +17,13 @@ import { FuentesPage } from "./pages/fuentes.tsx";
 import { AgencyPage, GobiernoPage } from "./pages/gobierno.tsx";
 import { HomePage } from "./pages/home.tsx";
 import { Layout } from "./pages/layout.tsx";
+import { ComoLeerPage } from "./pages/como-leer.tsx";
 import { NoPublicadoPage } from "./pages/no-publicado.tsx";
 import { ParticiparPage } from "./pages/participar.tsx";
 import { PoblacionPage } from "./pages/poblacion.tsx";
 import { SenalesPage } from "./pages/senales.tsx";
 import "./styles.css";
-import type { AgencyDetail, AgencySummary, GobiernoOverview, CoparticipacionTema, DeudaTema, EmpleoTema, FuncionariosTema, HomeTema, LeyDetalle, LeyResumen, MapaMendoza, MunicipioPagina, NoPublicado, OrganismoDetalle, OrganismoResumen, PoblacionTema, ProveedorDetalle, ProveedorResumen, SenalesTema } from "./types.ts";
+import type { AgencyDetail, AgencySummary, GobiernoOverview, HomeGuide, CoparticipacionTema, DeudaTema, EmpleoTema, FuncionariosTema, HomeTema, LeyDetalle, LeyResumen, MapaMendoza, MunicipioPagina, NoPublicado, OrganismoDetalle, OrganismoResumen, PoblacionTema, ProveedorDetalle, ProveedorResumen, SenalesTema } from "./types.ts";
 
 const rootRoute = createRootRoute({ component: Layout });
 
@@ -30,13 +31,14 @@ const homeRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
   loader: async () => {
-    const [index, home, mapa, noPublicado] = await Promise.all([
+    const [index, home, mapa, noPublicado, guide] = await Promise.all([
       loadIndex(),
       loadTema<HomeTema>("home"),
       loadTema<MapaMendoza>("mapa").catch(() => null),
       loadTema<NoPublicado[]>("no-publicado").catch(() => [] as NoPublicado[]),
+      loadTema<HomeGuide>("guia").catch(() => null),
     ]);
-    return { index, home, mapa, noPublicado };
+    return { index, home, mapa, noPublicado, guide };
   },
   component: HomePage,
 });
@@ -115,6 +117,12 @@ const funcionarioRoute = createRoute({
   path: "/funcionarios/$role/$slug",
   loader: () => loadTema<FuncionariosTema>("funcionarios"),
   component: FuncionarioPage,
+});
+
+const comoLeerRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/como-leer",
+  component: ComoLeerPage,
 });
 
 const participarRoute = createRoute({
@@ -223,7 +231,7 @@ const senalesRoute = createRoute({
 });
 
 const router = createRouter({
-  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, coparticipacionRoute, empleoRoute, poblacionRoute, funcionariosRoute, roleRoute, funcionarioRoute, gobiernoRoute, agencyRoute, municipiosRoute, municipioRoute, proveedoresRoute, proveedorRoute, organismosRoute, organismoRoute, leyesRoute, leyRoute, senalesRoute, noPublicadoRoute, participarRoute, fuentesRoute, datosRoute]),
+  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, coparticipacionRoute, empleoRoute, poblacionRoute, funcionariosRoute, roleRoute, funcionarioRoute, gobiernoRoute, agencyRoute, municipiosRoute, municipioRoute, proveedoresRoute, proveedorRoute, organismosRoute, organismoRoute, leyesRoute, leyRoute, senalesRoute, noPublicadoRoute, participarRoute, comoLeerRoute, fuentesRoute, datosRoute]),
   defaultPreload: "intent",
   scrollRestoration: true,
 });

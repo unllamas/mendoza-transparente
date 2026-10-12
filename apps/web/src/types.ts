@@ -466,3 +466,36 @@ export interface GobiernoOverview {
   changes: { slug: string; name: string; from: number; to: number; pct: number; restructured: boolean }[];
   contractShare: { slug: string; name: string; contracts: number; staff: number; ratio: number }[];
 }
+
+// ------------------------------------------------------------------ Home guide and search
+
+export interface HomeGuide {
+  counts: {
+    records: number;
+    sources: number;
+    officials: number;
+    agencies: number;
+    laws: number;
+    suppliers: number;
+    buyers: number;
+    municipalities: number;
+    missing: number;
+    appointments: number;
+  };
+  /** One line per starting question, with a real figure. */
+  facts: { debt: string | null; latestLaw: string | null; topSupplier: string | null; staff: string | null };
+  /** What is new, dated by the data itself. */
+  news: { date: string; kind: string; title: string; href: string }[];
+}
+
+/** One page in data/search.json (short keys: the file is downloaded on first search). */
+export interface SearchEntry {
+  /** Path. */
+  p: string;
+  /** Title. */
+  t: string;
+  /** Kind: "Ley", "Funcionario", "Municipio"… */
+  k: string;
+  /** Short description. */
+  d: string;
+}

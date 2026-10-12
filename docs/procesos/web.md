@@ -16,6 +16,23 @@
 
 En desarrollo (`bun run dev`), el plugin de `vite.config.ts` regenera todo y recarga el navegador cuando cambia algo en `data/processed`, `data/curado`, `sources.yaml` o los scripts.
 
+## La portada como guía
+
+La portada está pensada para quien llega sin saber por dónde empezar. Los componentes están en `src/pages/home-guide.tsx` y los datos en `temas/guia.json` y `data/search.json` (`scripts/temas/guide.ts`):
+
+1. **Buscador global:** busca entre todas las páginas y los proveedores sin página propia.
+   - Encuentra "9735" y "9.735", "ecoclean" y "ECO CLEAN", y las palabras se pueden escribir en cualquier orden.
+   - El índice se descarga recién la primera vez que alguien usa el buscador.
+   - Las búsquedas sin resultados se registran (`home.search.no_results`): son la lista de lo que falta.
+   - Al lado está el selector "¿Dónde vivís?", que lleva a la página del departamento.
+2. **Empezá por una pregunta:** seis preguntas frecuentes, cada una con un dato real y un link a la respuesta.
+   - Para la pregunta del personal, el dato se elige entre los organismos que no cambiaron de estructura, para que la comparación sea justa.
+3. **Lo nuevo:** leyes recién publicadas, designaciones del Boletín y las últimas cifras de deuda y personal. Cada ítem va fechado por el dato, no por la descarga.
+4. **Todo lo que hay:** el mapa de secciones en cuatro preguntas (quién gobierna, en qué se gasta, qué se decide y qué falta), con la cantidad de páginas de cada una.
+5. **Cómo leer estos datos:** cuatro reglas en la portada y la guía completa con glosario en `/como-leer`. El glosario vive en `src/glossary.ts` y también se publica como preguntas frecuentes para los buscadores.
+
+Al sumar una sección, conviene ubicarla en el mapa (`EcosystemMap`) y, si responde una pregunta frecuente, en `StartingQuestions`.
+
 ## Sumar una página temática
 
 1. **Cálculo**: un script en `scripts/temas/<tema>.ts` que recibe las tablas y devuelve el JSON del tema; su tipo va en `src/types.ts`. Llamarlo desde `build-data.ts`.

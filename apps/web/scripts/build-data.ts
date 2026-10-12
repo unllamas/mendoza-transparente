@@ -19,6 +19,7 @@ import { buildEmpleo } from "./temas/empleo.ts";
 import { buildFuncionarios, type Correccion } from "./temas/funcionarios.ts";
 import { buildLeyes, buildMunicipios, buildOrganismosYProveedores } from "./temas/entidades.ts";
 import { buildGobierno, type AgencyTable } from "./temas/gobierno.ts";
+import { buildGuide, writeSearchIndex } from "./temas/guide.ts";
 import { buildHome } from "./temas/home.ts";
 import { deflactor } from "./temas/inflacion.ts";
 import { buildPoblacion } from "./temas/poblacion.ts";
@@ -358,7 +359,12 @@ writeFileSync(join(OUT, "index.json"), JSON.stringify(index));
 
 // Título, descripción e imagen de cada página, para actualizar los metadatos al navegar sin recargar
 // (el HTML de cada ruta ya los trae; ver scripts/seo.ts).
+writeFileSync(
+  join(OUT, "temas", "guia.json"),
+  JSON.stringify(buildGuide(OUT, (readTable("designaciones", "designaciones.csv") ?? []).filter((r) => !/martiller/i.test(r.cargo ?? "")))),
+);
 const paginas = await construirPaginas(OUT);
+writeSearchIndex(paginas, OUT);
 writeFileSync(
   join(OUT, "meta.json"),
   JSON.stringify(Object.fromEntries(paginas.map((p) => [p.path, { t: p.title, d: p.description, o: p.og.slug }]))),

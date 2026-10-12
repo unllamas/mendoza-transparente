@@ -48,4 +48,12 @@ export const EVENT_CATALOG: EventDoc[] = [
   { event: "respuesta-enviar.click", description: "Tocó «Enviar respuesta» en «Participá».", tags: ["participación"] },
   { event: "error-enviar.click", description: "Tocó «Enviar» en el formulario de errores.", tags: ["participación"] },
   { event: "dato-enviar.click", description: "Tocó «Enviar» en el formulario de sugerencias de datos.", tags: ["participación"] },
+  { event: "home.search.select", description: "Eligió un resultado del buscador de la portada. Propiedades query, kind (ley, funcionario, municipio…), path y position.", tags: ["portada", "búsqueda"] },
+  { event: "home.search.no_results", description: "Buscó algo en la portada y no encontró nada. Propiedad query: sirve para saber qué contenido falta.", tags: ["portada", "búsqueda"] },
+  { event: "home.department.select", description: "Eligió su departamento en «¿Dónde vivís?». Propiedad municipality.", tags: ["portada"] },
+  { event: "home.question.open", description: "Tocó una de las preguntas de «Empezá por una pregunta». Propiedad question.", tags: ["portada"] },
+  { event: "home.news.open", description: "Abrió una novedad de «Lo nuevo». Propiedad kind (ley, Boletín, deuda, personal).", tags: ["portada"] },
+  { event: "home.map.open", description: "Abrió una sección desde «Todo lo que hay». Propiedad section.", tags: ["portada"] },
+  { event: "home.reading_guide.open", description: "Abrió la guía «Cómo leer estos datos» desde la portada.", tags: ["portada"] },
+  { event: "home.hero.reading_guide", description: "Tocó «¿Primera vez? Empezá por acá» en la portada.", tags: ["portada"] },
 ];

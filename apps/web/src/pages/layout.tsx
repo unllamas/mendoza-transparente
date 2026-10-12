@@ -1,6 +1,7 @@
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import {
   Archive,
+  BookOpen,
   Bug,
   Building2,
   ChevronDown,
@@ -66,6 +67,7 @@ const GRUPOS: Grupo[] = [
       { to: "/no-publicado", label: "Lo que no se publica", descripcion: "Datos que faltan y cómo pedirlos", icon: EyeOff },
       { to: "/participar", label: "Participá", descripcion: "Registrá tu pedido, reportá un error o sugerí un dato", icon: Stamp },
       { to: "/fuentes", label: "Fuentes", descripcion: "De dónde sale cada dato", icon: Archive },
+      { to: "/como-leer", label: "Cómo leer estos datos", descripcion: "Para qué sirve, cómo empezar y glosario", icon: BookOpen },
     ],
   },
 ];

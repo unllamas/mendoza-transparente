@@ -14,6 +14,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 import { datosMeta, PAGES, SITE_NAME, SITE_URL, TITLE_SUFFIX } from "../src/seo.ts";
+import { GLOSSARY } from "../src/glossary.ts";
 import { NO_PUBLICADO_CATEGORIES } from "../src/no-publicado-categories.ts";
 import { ROLES } from "../src/slug.ts";
 import type {
@@ -94,6 +95,7 @@ const NAV = [
   ["/poblacion", "Población"],
   ["/no-publicado", "Lo que no se publica"],
   ["/participar", "Participá"],
+  ["/como-leer", "Cómo leer estos datos"],
   ["/fuentes", "Fuentes"],
 ] as const;
 
@@ -215,7 +217,7 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
       migas: [["/", "Inicio"]],
       h1: "Mendoza Transparente: los datos públicos de Mendoza, ordenados y explicados",
       resumen:
-        "Proyecto ciudadano e independiente que reúne los datos públicos de la provincia de Mendoza (Argentina): quiénes son los funcionarios y cuánto declaran, qué leyes se sancionan, a quién le compra el Estado, cuánto debe la provincia y cuánta plata recibe cada municipio. Cada número enlaza a su fuente oficial.",
+        "Proyecto ciudadano e independiente que reúne los datos públicos de la provincia de Mendoza (Argentina) para mirar en qué se gasta la plata, quién decide y qué falta publicar: quiénes son los funcionarios y cuánto declaran, qué leyes se sancionan, a quién le compra el Estado, cuánto debe la provincia, cuánta gente trabaja en cada organismo y cuánta plata recibe cada municipio. Cada número enlaza a su fuente oficial.",
       datos: [
         ...(deuda ? ([["Deuda pública", `US$ ${nf.format(Math.round(deuda.totalUsd))} millones (${fechaLarga(deuda.corte)})`]] as [string, string][]) : []),
         ...(poblacion ? ([["Habitantes", `${nf.format(poblacion.actual)} (${poblacion.anioActual})`]] as [string, string][]) : []),
@@ -346,6 +348,33 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
           items: noPublicado.filter((n) => n.categoria === c).map((n) => ({ texto: `${n.titulo}: ${n.que_es} Debería publicarlo: ${n.organismo}.` })),
         }))
         .filter((g) => g.items.length),
+    }),
+    lastmod: hoy,
+    prioridad: 0.7,
+  });
+
+  estatica("/como-leer", {
+    figura: "Guía y glosario",
+    bajada: "Para qué sirve, cómo empezar y qué significan los términos que más confunden.",
+    ld: [
+      breadcrumb([["/", "Inicio"], ["/como-leer", "Cómo leer estos datos"]]),
+      faq([
+        ["¿Para qué sirve Mendoza Transparente?", "Reúne los datos públicos de la provincia de Mendoza, dispersos en decenas de sitios oficiales, y los ordena para entender en qué se gasta la plata, quién decide y qué falta publicar. Cada número enlaza a su fuente oficial."],
+        ...GLOSSARY.map((g) => [`¿Qué es ${g.term.replace(/\s*\(.*\)$/, "").toLowerCase()}?`, g.definition] as [string, string]),
+      ]),
+      {
+        "@type": "DefinedTermSet",
+        name: "Glosario de Mendoza Transparente",
+        url: url("/como-leer"),
+        hasDefinedTerm: GLOSSARY.map((g) => ({ "@type": "DefinedTerm", name: g.term, description: g.definition, url: url(`/como-leer#${g.id}`) })),
+      },
+    ],
+    html: cuerpo({
+      migas: [["/", "Inicio"], ["/como-leer", "Cómo leer estos datos"]],
+      h1: "Para qué sirve Mendoza Transparente y cómo usarlo",
+      resumen:
+        "Mendoza Transparente reúne los datos públicos de la provincia de Mendoza y los ordena para que cualquier persona pueda entender en qué se gasta la plata, quién decide y qué falta publicar. Cada número enlaza a su fuente oficial.",
+      secciones: [{ titulo: "Glosario", items: GLOSSARY.map((g) => ({ texto: `${g.term}: ${g.definition}` })) }],
     }),
     lastmod: hoy,
     prioridad: 0.7,

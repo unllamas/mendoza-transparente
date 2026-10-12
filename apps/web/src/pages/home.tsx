@@ -2,6 +2,10 @@ import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import {
   Archive,
   ArrowRight,
+  BookOpen,
+  HelpCircle,
+  LayoutGrid,
+  Sparkles,
   ArrowUpRight,
   Coins,
   ExternalLink,
@@ -20,6 +24,7 @@ import {
 import type { ReactNode } from "react";
 
 import { MapaMendoza } from "../charts/mapa.tsx";
+import { DepartmentPicker, EcosystemMap, GlobalSearch, ReadingRules, StartingQuestions, WhatsNew } from "./home-guide.tsx";
 import { Sparkline } from "../charts/sparkline.tsx";
 import { CountUp } from "../count-up.tsx";
 import { formatDate, formatNumber } from "../lib.ts";
@@ -34,7 +39,7 @@ const pesos = (v: number) => `$ ${entero(v)}`;
 const millones = (v: number) => `$ ${entero(v / 1e6)}`;
 
 export function HomePage() {
-  const { index, home, mapa, noPublicado } = route.useLoaderData();
+  const { index, home, mapa, noPublicado, guide } = route.useLoaderData();
   const navigate = useNavigate();
   const fuentesConDatos = index.sources.filter((s) => index.datasets.some((d) => d.source === s.id)).length;
   const registros = index.datasets.reduce((s, d) => s + d.rowCount, 0);
@@ -54,42 +59,37 @@ export function HomePage() {
             Mendoza, con los números sobre la mesa.
           </h1>
           <p className="max-w-2xl text-lg text-ink-2 text-pretty sm:text-xl">
-            Cuánto debe la provincia, cuánta plata recibe cada municipio, a quién le compra el Estado y qué firma el
-            gobierno cada día. Datos oficiales, ordenados y explicados, con la fuente siempre a mano.
+            Mirá en qué se gasta la plata de Mendoza, quién decide y qué falta publicar. Todos los datos oficiales de la
+            provincia en un solo lugar, explicados en simple y con la fuente de cada número.
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-3">
-          <a
-            href="#numeros"
-            className="inline-flex items-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-medium text-on-brand hover:bg-brand-hover"
-          >
-            Ver los números <ArrowRight className="size-4" aria-hidden />
-          </a>
-          <Link
-            to="/fuentes"
-            className="inline-flex items-center gap-2 rounded-lg border border-line px-4 py-2.5 text-sm hover:border-link/50"
-          >
-            <Archive className="size-4" aria-hidden /> De dónde salen
-          </Link>
+        <div className="flex flex-col gap-4">
+          <GlobalSearch />
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+            <DepartmentPicker />
+            <Link to="/como-leer" data-track="home.hero.reading_guide" className="inline-flex items-center gap-1.5 text-sm text-link hover:underline">
+              <BookOpen className="size-4" aria-hidden /> ¿Primera vez? Empezá por acá
+            </Link>
+          </div>
         </div>
         <p className="text-sm text-ink-muted">
-          {fuentesConDatos} fuentes oficiales · {formatNumber(registros)} registros · Actualizado al{" "}
-          {formatDate(index.generatedAt)}
+          {formatNumber(registros)} registros de {fuentesConDatos} fuentes oficiales · Actualizado al {formatDate(index.generatedAt)}
         </p>
       </section>
 
-      {/* Principios */}
-      <section className="-mt-8 grid gap-4 rounded-2xl bg-tile p-5 sm:grid-cols-2 lg:grid-cols-4">
-        {PRINCIPIOS.map(({ icon: Icon, titulo, texto }) => (
-          <div key={titulo} className="flex items-start gap-3">
-            <Icon className="mt-0.5 size-5 shrink-0 text-ink-2" aria-hidden />
-            <span className="flex flex-col gap-0.5">
-              <span className="text-sm font-medium">{titulo}</span>
-              <span className="text-sm text-ink-2 text-pretty">{texto}</span>
-            </span>
-          </div>
-        ))}
-      </section>
+      {guide && (
+        <section className="flex flex-col gap-6">
+          <Encabezado icon={HelpCircle} titulo="Empezá por una pregunta" bajada="Las preguntas que más nos hacen, con la respuesta a un clic." />
+          <StartingQuestions guide={guide} />
+        </section>
+      )}
+
+      {guide && guide.news.length > 0 && (
+        <section className="flex flex-col gap-6">
+          <Encabezado icon={Sparkles} titulo="Lo nuevo" bajada="Las últimas leyes, nombramientos y datos actualizados." />
+          <WhatsNew guide={guide} />
+        </section>
+      )}
 
       {/* Las cifras principales */}
       <section id="numeros" className="flex scroll-mt-8 flex-col gap-6">
@@ -191,6 +191,22 @@ export function HomePage() {
         )}
       </section>
 
+      {guide && (
+        <section className="flex flex-col gap-6">
+          <Encabezado
+            icon={LayoutGrid}
+            titulo="Todo lo que hay en Mendoza Transparente"
+            bajada={`${formatNumber(guide.counts.records)} registros ordenados en cuatro preguntas. Elegí por dónde seguir.`}
+          />
+          <EcosystemMap guide={guide} />
+        </section>
+      )}
+
+      <section className="flex flex-col gap-6">
+        <Encabezado icon={BookOpen} titulo="Cómo leer estos datos" bajada="Cuatro reglas para entender lo que vas a ver." />
+        <ReadingRules />
+      </section>
+
       {/* Lo que no se publica */}
       {noPublicado.length > 0 && (
         <section className="flex flex-col gap-6">
@@ -287,12 +303,6 @@ export function HomePage() {
 }
 
 
-const PRINCIPIOS: { icon: LucideIcon; titulo: string; texto: string }[] = [
-  { icon: ShieldCheck, titulo: "Cada número tiene fuente", texto: "Todo dato enlaza al archivo oficial del que sale." },
-  { icon: Archive, titulo: "Nada se pierde", texto: "Guardamos cada versión de los archivos, aunque después los borren." },
-  { icon: Scale, titulo: "La misma vara para todos", texto: "Misma metodología para todos los gobiernos y partidos." },
-  { icon: ArrowUpRight, titulo: "Abierto", texto: "El código y los datos se pueden descargar y reutilizar." },
-];
 
 function Encabezado({ titulo, bajada, icon: Icon }: { titulo: string; bajada?: string; icon?: LucideIcon }) {
   return (

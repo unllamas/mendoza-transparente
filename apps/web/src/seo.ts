@@ -116,6 +116,15 @@ export const PAGES: Record<string, PageMeta> = {
     eyebrow: "MUNICIPIOS",
     activa: true,
   },
+  "/como-leer": {
+    title: `Cómo usar Mendoza Transparente: guía y glosario${TITLE_SUFFIX}`,
+    description:
+      "Para qué sirve Mendoza Transparente, cómo empezar a leer los datos públicos de Mendoza y qué significan coparticipación, valor fiscal o contratación directa.",
+    ogSlug: "como-leer",
+    ogTitle: "Cómo leer los datos públicos",
+    eyebrow: "GUÍA",
+    activa: true,
+  },
   "/participar": {
     title: `Participá: registrá tu pedido de información${TITLE_SUFFIX}`,
     description:
