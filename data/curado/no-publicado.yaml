@@ -1,6 +1,8 @@
 # Datos que deberían ser públicos y no encontramos publicados (relevamiento del 11/10/2026).
 # Contenido editorial: cada entrada se revisa a mano antes de publicarse.
 #
+# categoria: personal | estructura | presupuesto | impuestos | compras | empresas | legislatura | elecciones | servicios | municipios
+#   (definidas en apps/web/src/no-publicado-categories.ts)
 # estado: sin_publicar | parcial | desactualizado
 # pedido: lo que se solicita, en una o dos oraciones; la web arma el resto de la nota.
 # pedidos: historial de pedidos de acceso a la información presentados por el proyecto
@@ -8,6 +10,7 @@
 
 - id: cuenta-general
   titulo: La Cuenta General del Ejercicio
+  categoria: presupuesto
   que_es: El balance oficial de cada año, en el que el Gobierno rinde cuentas de cuánto recaudó y en qué gastó realmente el presupuesto.
   por_que_importa: Es el documento que permite comparar lo que se prometió en el presupuesto con lo que efectivamente se hizo.
   organismo: Contaduría General de la Provincia
@@ -21,6 +24,7 @@
 
 - id: nomina-sueldos
   titulo: La nómina de personal con sus sueldos
+  categoria: personal
   que_es: La lista de cargos de la administración pública provincial con su categoría y las escalas salariales vigentes, incluidas las de funcionarios.
   por_que_importa: Sin ella no se puede saber cuánto gana un ministro, un director o un empleado, ni cuántos cargos hay en cada repartición.
   organismo: Ministerio de Hacienda y Finanzas
@@ -35,6 +39,7 @@
 
 - id: ejecucion-detallada
   titulo: La ejecución del presupuesto por programa
+  categoria: presupuesto
   que_es: Cuánto gastó cada ministerio en cada programa y en qué (sueldos, bienes, obras), en formato de datos abiertos.
   por_que_importa: Permite ver si la plata asignada a un área, por ejemplo salud o seguridad, se gastó o quedó sin usar.
   organismo: Contaduría General de la Provincia
@@ -49,6 +54,7 @@
 
 - id: financiamiento-campanas
   titulo: Quién financia las campañas provinciales
+  categoria: elecciones
   que_es: Los informes de ingresos y gastos que los partidos deben presentar por cada campaña electoral provincial, con sus aportantes.
   por_que_importa: Saber quién pone la plata de las campañas es clave para detectar conflictos de interés con quienes después gobiernan.
   organismo: Junta Electoral de la Provincia de Mendoza
@@ -62,6 +68,7 @@
 
 - id: votaciones-nominales
   titulo: Cómo vota cada legislador
+  categoria: legislatura
   que_es: El registro de cómo votó cada diputado y cada senador provincial en cada proyecto, y su asistencia a las sesiones.
   por_que_importa: Es la forma más directa de saber qué defiende cada legislador más allá de lo que dice en campaña.
   organismo: Cámara de Diputados y Cámara de Senadores de Mendoza
@@ -76,6 +83,7 @@
 
 - id: dieta-legisladores
   titulo: Cuánto cobra cada legislador
+  categoria: legislatura
   que_es: La dieta mensual de diputados y senadores provinciales, sus gastos de representación y las escalas salariales de la Legislatura.
   por_que_importa: Las cámaras publican viáticos y pasajes, pero no el sueldo de quienes votan las leyes y el presupuesto.
   organismo: Cámara de Diputados y Cámara de Senadores de Mendoza
@@ -90,6 +98,7 @@
 
 - id: turnos-salud
   titulo: Turnos y esperas en la salud pública
+  categoria: servicios
   que_es: Cuánto hay que esperar para conseguir un turno o una cirugía en los hospitales y centros de salud provinciales.
   por_que_importa: Es uno de los indicadores que más impactan en la vida cotidiana y no hay ningún dato público para medirlo.
   organismo: Ministerio de Salud y Deportes
@@ -102,6 +111,7 @@
 
 - id: mendoza-fiduciaria
   titulo: Los balances de Mendoza Fiduciaria
+  categoria: empresas
   que_es: Los estados contables de la empresa estatal que administra fideicomisos públicos, y la lista de esos fideicomisos con sus saldos.
   por_que_importa: Por los fideicomisos pasan fondos públicos que no siempre aparecen en el presupuesto.
   organismo: Mendoza Fiduciaria S.A.
@@ -114,6 +124,7 @@
 
 - id: compras-2026
   titulo: Las compras del Estado de 2026
+  categoria: compras
   que_es: Los datos abiertos de todas las contrataciones del sistema COMPR.AR Mendoza.
   por_que_importa: El último archivo publicado llega al 2 de enero de 2026; desde entonces no se puede analizar a quién le compra el Estado.
   organismo: Dirección General de Contrataciones Públicas y Gestión de Bienes
@@ -126,6 +137,7 @@
 
 - id: recaudacion-atm
   titulo: La recaudación mes a mes de cada impuesto
+  categoria: impuestos
   que_es: Cuánto recauda la provincia cada mes por Ingresos Brutos, Automotor, Inmobiliario y Sellos.
   por_que_importa: El informe mensual se reemplaza cada mes y no queda una serie para ver la evolución.
   organismo: Administración Tributaria Mendoza (ATM)
@@ -139,6 +151,7 @@
 
 - id: seguridad
   titulo: Las estadísticas de delitos de la provincia
+  categoria: servicios
   que_es: Los delitos denunciados por tipo y por departamento, con datos propios del Ministerio de Seguridad.
   por_que_importa: Hoy solo hay datos nacionales anuales; la provincia no publica los suyos con más detalle.
   organismo: Ministerio de Seguridad y Justicia
@@ -151,6 +164,7 @@
 
 - id: municipios-sin-datos
   titulo: Las cuentas de San Martín y Lavalle
+  categoria: municipios
   que_es: Presupuesto, ejecución, sueldos y compras de los dos municipios que no publican información fiscal propia.
   por_que_importa: Son los únicos 2 de los 18 municipios sin un sitio con sus cuentas, como exige la Ley de Responsabilidad Fiscal.
   organismo: Municipalidades de San Martín y de Lavalle

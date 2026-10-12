@@ -10,7 +10,8 @@ import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, renameSync, r
 import { join } from "node:path";
 import { parse as parseYaml } from "yaml";
 
-import type { DataIndex, DatasetMeta, Diccionario, Preview, SourceMeta } from "../src/types.ts";
+import { NO_PUBLICADO_CATEGORIES } from "../src/no-publicado-categories.ts";
+import type { DataIndex, DatasetMeta, Diccionario, NoPublicado, Preview, SourceMeta } from "../src/types.ts";
 import { buildDeuda } from "./temas/deuda.ts";
 import { buildCompras } from "./temas/compras.ts";
 import { buildCoparticipacion } from "./temas/coparticipacion.ts";
@@ -267,7 +268,10 @@ if (existsSync(fotosDir)) {
 // Contenido editorial: lo que el Estado no publica.
 const noPublicado = join(ROOT, "data", "curado", "no-publicado.yaml");
 if (existsSync(noPublicado)) {
-  writeFileSync(join(OUT, "temas", "no-publicado.json"), JSON.stringify(parseYaml(readFileSync(noPublicado, "utf8"))));
+  const items = parseYaml(readFileSync(noPublicado, "utf8")) as NoPublicado[];
+  const invalid = items.filter((i) => !(i.categoria in NO_PUBLICADO_CATEGORIES));
+  if (invalid.length) throw new Error(`no-publicado.yaml: categoría faltante o desconocida en ${invalid.map((i) => i.id).join(", ")}`);
+  writeFileSync(join(OUT, "temas", "no-publicado.json"), JSON.stringify(items));
 }
 
 // Mapa de departamentos (lo genera el scraper "geo").

@@ -14,6 +14,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 import { datosMeta, PAGES, SITE_NAME, SITE_URL, TITLE_SUFFIX } from "../src/seo.ts";
+import { NO_PUBLICADO_CATEGORIES } from "../src/no-publicado-categories.ts";
 import { ROLES } from "../src/slug.ts";
 import type {
   CoparticipacionTema,
@@ -333,7 +334,12 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
       migas: [["/", "Inicio"], ["/no-publicado", "Lo que no se publica"]],
       h1: "Lo que el Estado de Mendoza no publica",
       resumen: "Datos que deberían ser públicos y no están en ningún sitio oficial de Mendoza. Cualquier persona puede pedirlos con la Ley 9070 de Acceso a la Información Pública.",
-      secciones: [{ titulo: "Datos que faltan", items: noPublicado.map((n) => ({ texto: `${n.titulo}: ${n.que_es} Debería publicarlo: ${n.organismo}.` })) }],
+      secciones: Object.entries(NO_PUBLICADO_CATEGORIES)
+        .map(([c, cat]) => ({
+          titulo: cat.label,
+          items: noPublicado.filter((n) => n.categoria === c).map((n) => ({ texto: `${n.titulo}: ${n.que_es} Debería publicarlo: ${n.organismo}.` })),
+        }))
+        .filter((g) => g.items.length),
     }),
     lastmod: hoy,
     prioridad: 0.7,

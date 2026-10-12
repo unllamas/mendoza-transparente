@@ -211,6 +211,7 @@ export interface HomeTema {
 export interface NoPublicado {
   id: string;
   titulo: string;
+  categoria: import("./no-publicado-categories.ts").NoPublicadoCategory;
   que_es: string;
   por_que_importa: string;
   organismo: string;

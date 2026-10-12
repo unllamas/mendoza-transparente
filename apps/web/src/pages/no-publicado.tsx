@@ -1,9 +1,10 @@
 import { getRouteApi } from "@tanstack/react-router";
 import { Check, ChevronRight, Copy, ExternalLink, EyeOff, Search } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import { NO_PUBLICADO_CATEGORIES, type NoPublicadoCategory } from "../no-publicado-categories.ts";
 import type { NoPublicado } from "../types.ts";
-import { Aviso, PageHeader, Sheet } from "./components.tsx";
+import { Aviso, PageHeader, Segmented, Sheet } from "./components.tsx";
 
 const route = getRouteApi("/no-publicado");
 
@@ -21,6 +22,19 @@ const ESTADOS: Record<NoPublicado["estado"], { label: string; dot: string }> = {
 export function NoPublicadoPage() {
   const items = route.useLoaderData();
   const [abierto, setAbierto] = useState<NoPublicado | null>(null);
+  const [category, setCategory] = useState<NoPublicadoCategory | "todas">("todas");
+
+  // Direct links (/no-publicado#nomina-sueldos) open that request.
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    const item = items.find((i) => i.id === id);
+    if (item) setAbierto(item);
+  }, [items]);
+
+  const present = (Object.keys(NO_PUBLICADO_CATEGORIES) as NoPublicadoCategory[]).filter((c) => items.some((i) => i.categoria === c));
+  const groups = category === "todas" ? present : [category];
+  const counts = { sin_publicar: 0, parcial: 0, desactualizado: 0 };
+  for (const i of items) counts[i.estado]++;
 
   return (
     <div className="flex flex-col gap-10">
@@ -29,29 +43,70 @@ export function NoPublicadoPage() {
         obligado a responder.
       </PageHeader>
 
-      <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
-        {items.map((item) => (
-          <li key={item.id} id={item.id} className="scroll-mt-8">
-            <button
-              type="button"
-              onClick={() => setAbierto(item)}
-              className="group flex w-full items-center gap-4 px-4 py-4 text-left hover:bg-grid/50 sm:px-5"
-            >
-              <span className={`size-2.5 shrink-0 rounded-full ${ESTADOS[item.estado].dot}`} aria-hidden />
-              <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                <span className="font-medium group-hover:text-link">{item.titulo}</span>
-                <span className="truncate text-sm text-ink-muted">
-                  {ESTADOS[item.estado].label} · {item.organismo}
-                </span>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-wrap gap-x-5 gap-y-1 text-sm text-ink-2">
+          {(Object.keys(counts) as NoPublicado["estado"][]).map((e) =>
+            counts[e] ? (
+              <span key={e} className="inline-flex items-center gap-1.5 whitespace-nowrap">
+                <span className={`size-2 rounded-full ${ESTADOS[e].dot}`} aria-hidden />
+                {counts[e]} {ESTADOS[e].label.toLowerCase()}
               </span>
-              <span className="hidden items-center gap-1 text-sm font-medium text-link sm:inline-flex">
-                Pedir <ChevronRight className="size-4" aria-hidden />
-              </span>
-              <ChevronRight className="size-4 shrink-0 text-ink-muted sm:hidden" aria-hidden />
-            </button>
-          </li>
-        ))}
-      </ul>
+            ) : null,
+          )}
+        </div>
+        <Segmented
+          label="Categoría"
+          options={[
+            { value: "todas" as const, label: `Todas (${items.length})` },
+            ...present.map((c) => ({ value: c, label: `${NO_PUBLICADO_CATEGORIES[c].label} (${items.filter((i) => i.categoria === c).length})` })),
+          ]}
+          value={category}
+          onChange={setCategory}
+        />
+      </div>
+
+      {groups.map((c) => {
+        const cat = NO_PUBLICADO_CATEGORIES[c];
+        const Icon = cat.icon;
+        return (
+          <section key={c} className="flex flex-col gap-3" aria-labelledby={`cat-${c}`}>
+            <div className="flex items-start gap-3">
+              <Icon className="mt-1 size-5 shrink-0 text-ink-muted" aria-hidden />
+              <div className="flex min-w-0 flex-col">
+                <h2 id={`cat-${c}`} className="text-lg font-semibold tracking-tight">
+                  {cat.label}
+                </h2>
+                <p className="text-sm text-ink-muted">{cat.description}</p>
+              </div>
+            </div>
+            <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
+              {items
+                .filter((i) => i.categoria === c)
+                .map((item) => (
+                  <li key={item.id} id={item.id} className="scroll-mt-8">
+                    <button
+                      type="button"
+                      onClick={() => setAbierto(item)}
+                      className="group flex w-full items-center gap-4 px-4 py-4 text-left hover:bg-grid/50 sm:px-5"
+                    >
+                      <span className={`size-2.5 shrink-0 rounded-full ${ESTADOS[item.estado].dot}`} aria-hidden />
+                      <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                        <span className="font-medium group-hover:text-link">{item.titulo}</span>
+                        <span className="truncate text-sm text-ink-muted">
+                          {ESTADOS[item.estado].label} · {item.organismo}
+                        </span>
+                      </span>
+                      <span className="hidden items-center gap-1 text-sm font-medium text-link sm:inline-flex">
+                        Pedir <ChevronRight className="size-4" aria-hidden />
+                      </span>
+                      <ChevronRight className="size-4 shrink-0 text-ink-muted sm:hidden" aria-hidden />
+                    </button>
+                  </li>
+                ))}
+            </ul>
+          </section>
+        );
+      })}
 
       <p className="text-sm text-ink-muted text-pretty">
         Cómo funciona: elegí un dato, copiá el pedido que armamos y presentalo gratis en el formulario oficial. El
