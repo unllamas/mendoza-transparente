@@ -262,3 +262,21 @@
   detalle_estado: La versión pública de cada declaración indica que la persona declara cuentas, efectivo, deudas o participaciones, pero deja esas secciones sin montos. De 2.135 declaraciones relevadas, 2.130 declaran cuentas bancarias y 1.181 dinero en efectivo.
   pedido: Los montos declarados en las secciones de productos bancarios, tenencia de dinero en efectivo, créditos y deudas, títulos y acciones, participación en sociedades e ingresos de las declaraciones juradas vigentes de gobernador, vicegobernadora, ministros, secretarios, subsecretarios, legisladores e intendentes, y de las presentadas al asumir el cargo.
   pedidos: []
+
+- id: retratos-autoridades
+  titulo: Quiénes son, con nombre y cara, las autoridades de cada organismo
+  categoria: estructura
+  que_es: La nómina de autoridades de cada organismo y municipio (titular, subsecretarios y directores) con su retrato oficial y su cargo.
+  por_que_importa: Para reconocer a quien decide hay que saber quién es. Hoy muchos organismos no publican quién los conduce, o lo publican sin foto.
+  organismo: Gobernación de Mendoza
+  marco_legal: Ley 9070 de Acceso a la Información Pública
+  estado: parcial
+  donde_buscamos:
+    - https://www.mendoza.gov.ar/
+    - https://www.atm.mendoza.gov.ar/
+    - https://www.aysam.com.ar/
+    - https://www.osep.mendoza.gov.ar/
+    - https://www.jus.mendoza.gov.ar/
+  detalle_estado: Al 12/10/2026 no encontramos retrato oficial de 23 de los 37 titulares de organismos que relevamos (entre ellos ATM, OSEP, AYSAM, EMESA, Tesorería, IPV e ISCAMEN) ni de los intendentes de Tupungato, San Carlos y La Paz.
+  pedido: La nómina vigente de autoridades de cada ministerio, organismo descentralizado y empresa del Estado provincial (titular, subsecretarios y directores), con su cargo, fecha de designación y retrato oficial.
+  pedidos: []
