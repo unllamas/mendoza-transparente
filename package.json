@@ -2,8 +2,13 @@
   "name": "mendoza-transparente",
   "private": true,
   "packageManager": "bun@1.4.2",
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
+    "dev": "turbo run dev --filter=@mt/web",
+    "build": "turbo run build --filter=@mt/web",
     "scrape": "bun packages/scrapers/src/cli.ts",
     "typecheck": "turbo run typecheck"
   },
