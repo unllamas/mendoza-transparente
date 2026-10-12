@@ -1,0 +1,11 @@
+cargo_o_persona,organismo,concepto,periodo,monto_bruto,fuente_url
+Diputado/a nacional,Cámara de Diputados de la Nación,Dieta,2026-08,6125805.18,https://datos.hcdn.gob.ar/dataset/dietas-y-gastos-de-representacion-legisladores-as
+Diputado/a nacional,Cámara de Diputados de la Nación,Gastos de Representación,2026-08,464489.12,https://datos.hcdn.gob.ar/dataset/dietas-y-gastos-de-representacion-legisladores-as
+Diputado/a nacional,Cámara de Diputados de la Nación,Desarraigo (corresponde solo a quienes lo perciben),2025-02,328751.12,https://datos.hcdn.gob.ar/dataset/dietas-y-gastos-de-representacion-legisladores-as
+Diputado/a nacional,Cámara de Diputados de la Nación,Movilidad opción 2 (según la opción elegida),2025-02,100000,https://datos.hcdn.gob.ar/dataset/dietas-y-gastos-de-representacion-legisladores-as
+Diputado/a nacional,Cámara de Diputados de la Nación,Movilidad opción 3 (según la opción elegida),2025-02,250000,https://datos.hcdn.gob.ar/dataset/dietas-y-gastos-de-representacion-legisladores-as
+Diputado/a nacional,Cámara de Diputados de la Nación,Movilidad opción 4 (según la opción elegida),2025-02,350000,https://datos.hcdn.gob.ar/dataset/dietas-y-gastos-de-representacion-legisladores-as
+Diputado/a nacional,Cámara de Diputados de la Nación,Movilidad opción 5 (según la opción elegida),2025-02,455000,https://datos.hcdn.gob.ar/dataset/dietas-y-gastos-de-representacion-legisladores-as
+Senador/a nacional,Senado de la Nación,Dieta (2.500 módulos),2026-03,6961142.26,https://www.senado.gob.ar/dietas
+Senador/a nacional,Senado de la Nación,Gastos de representación (1.000 módulos),2026-03,2784456.9,https://www.senado.gob.ar/dietas
+Senador/a nacional,Senado de la Nación,Desarraigo (500 módulos; corresponde solo a quienes lo perciben),2026-03,1392228.45,https://www.senado.gob.ar/dietas

@@ -1,0 +1,72 @@
+{
+  "titulo": "Autoridades que representan a Mendoza",
+  "descripcion": "Cada fila es una autoridad en funciones: gobernador, vicegobernadora, ministros, Fiscal de Estado y titular de EMETUR; los 18 intendentes; y los diputados y senadores nacionales por Mendoza. El partido solo se completa cuando una fuente oficial lo informa (acta de proclamación de la Junta Electoral 2023 para gobernador, vicegobernadora e intendentes; listado del Senado para senadores). Los ministros son designados, no electos. Los diputados nacionales figuran sin partido: la fuente de la Cámara solo informa el bloque actual. Los intendentes son los proclamados en 2023 (mandato de cuatro años; la fecha exacta de asunción no figura en el acta, por eso solo se indica el mes); no se verificaron licencias ni reemplazos posteriores. En febrero de 2026 hubo elecciones solo de concejales en seis municipios.",
+  "columnas": {
+    "id": {
+      "etiqueta": "Identificador",
+      "tipo": "texto",
+      "oculta": true
+    },
+    "nombre": {
+      "etiqueta": "Nombre",
+      "tipo": "texto"
+    },
+    "cargo": {
+      "etiqueta": "Cargo",
+      "tipo": "texto"
+    },
+    "poder": {
+      "etiqueta": "Nivel",
+      "tipo": "texto",
+      "valores": {
+        "ejecutivo_provincial": "Ejecutivo provincial",
+        "municipal": "Municipal",
+        "legislativo_nacional": "Legislativo nacional"
+      }
+    },
+    "organismo": {
+      "etiqueta": "Organismo",
+      "tipo": "texto",
+      "descripcion": "Ministerio, municipio o cámara."
+    },
+    "partido": {
+      "etiqueta": "Partido o frente",
+      "tipo": "texto",
+      "descripcion": "Lista o frente por el que fue electo, solo si una fuente oficial lo dice. Vacío no significa sin partido."
+    },
+    "bloque": {
+      "etiqueta": "Bloque legislativo",
+      "tipo": "texto",
+      "descripcion": "Bloque actual en la cámara nacional. Solo para legisladores nacionales."
+    },
+    "mandato_desde": {
+      "etiqueta": "Mandato desde",
+      "tipo": "fecha"
+    },
+    "mandato_hasta": {
+      "etiqueta": "Mandato hasta",
+      "tipo": "fecha",
+      "descripcion": "Fin del período para cargos electivos; vacío para designados."
+    },
+    "perfil_url": {
+      "etiqueta": "Perfil oficial",
+      "tipo": "url"
+    },
+    "fuente_url": {
+      "etiqueta": "Fuente",
+      "tipo": "url"
+    }
+  },
+  "orden": [
+    "nombre",
+    "cargo",
+    "organismo",
+    "partido",
+    "bloque",
+    "poder",
+    "mandato_desde",
+    "mandato_hasta",
+    "perfil_url",
+    "fuente_url"
+  ]
+}

@@ -5,6 +5,7 @@ import { usePageMeta } from "../seo.ts";
 const REPO = "https://github.com/unllamas/mendoza-transparente";
 
 const NAV = [
+  { to: "/funcionarios", label: "Funcionarios" },
   { to: "/deuda", label: "Deuda" },
   { to: "/coparticipacion", label: "Coparticipación" },
   { to: "/empleo-publico", label: "Empleo público" },

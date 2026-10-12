@@ -161,3 +161,13 @@
   frecuencia: mensual
   dificultad: media
   estado: activo
+
+- id: autoridades
+  nombre: Gobierno provincial, intendentes y legisladores nacionales por Mendoza
+  organismo: Gobierno de Mendoza, Junta Electoral, Cámara de Diputados y Senado de la Nación
+  url: https://www.mendoza.gob.ar/
+  descripcion: Quiénes integran el gabinete provincial, quién gobierna cada municipio y quiénes representan a Mendoza en el Congreso, con su partido y mandato.
+  formato: html, pdf, csv
+  frecuencia: eventual
+  dificultad: media
+  estado: activo

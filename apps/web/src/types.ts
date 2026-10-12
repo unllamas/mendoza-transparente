@@ -219,3 +219,33 @@ export interface NoPublicado {
   pedido: string;
   pedidos: { fecha: string; tramite?: string; estado: "presentado" | "respondido" | "vencido" | "denegado"; respuesta_url?: string }[];
 }
+
+export type GrupoFuncionario =
+  | "ejecutivo"
+  | "intendentes"
+  | "diputados_provincial"
+  | "senado_provincial"
+  | "diputados_nacional"
+  | "senado_nacional";
+
+export interface Funcionario {
+  id: string;
+  nombre: string;
+  cargo: string;
+  grupo: GrupoFuncionario;
+  organismo: string;
+  partido: string | null;
+  bloque: string | null;
+  seccion: string | null;
+  mandatoDesde: string | null;
+  mandatoHasta: string | null;
+  email: string | null;
+  perfilUrl: string | null;
+  fuenteUrl: string;
+  /** Solo remuneraciones publicadas oficialmente; vacío si no hay fuente. */
+  remuneracion: { concepto: string; monto: number; periodo: string; fuenteUrl: string }[];
+}
+
+export interface FuncionariosTema {
+  personas: Funcionario[];
+}

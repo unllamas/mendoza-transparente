@@ -1,0 +1,41 @@
+{
+  "titulo": "Remuneraciones publicadas de autoridades",
+  "descripcion": "Cada fila es un concepto remunerativo bruto mensual publicado oficialmente. Hoy solo hay dieta de legisladores nacionales (Diputados: datos abiertos de la HCDN, con período tomado de la fecha de actualización del recurso; Senado: módulos de la Res. DR 8/24 por el valor del módulo desde marzo de 2026 de la escala salarial oficial). No se encontró publicación oficial de sueldos del gobernador, ministros ni de intendentes. Montos nominales en pesos.",
+  "columnas": {
+    "cargo_o_persona": {
+      "etiqueta": "Cargo",
+      "tipo": "texto"
+    },
+    "organismo": {
+      "etiqueta": "Organismo",
+      "tipo": "texto"
+    },
+    "concepto": {
+      "etiqueta": "Concepto",
+      "tipo": "texto"
+    },
+    "periodo": {
+      "etiqueta": "Período",
+      "tipo": "mes",
+      "descripcion": "Mes de vigencia o de última actualización de la fuente."
+    },
+    "monto_bruto": {
+      "etiqueta": "Monto bruto mensual",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1
+    },
+    "fuente_url": {
+      "etiqueta": "Fuente",
+      "tipo": "url"
+    }
+  },
+  "orden": [
+    "cargo_o_persona",
+    "concepto",
+    "monto_bruto",
+    "periodo",
+    "organismo",
+    "fuente_url"
+  ]
+}

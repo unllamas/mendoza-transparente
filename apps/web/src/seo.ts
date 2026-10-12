@@ -89,6 +89,15 @@ export const PAGES: Record<string, PageMeta> = {
     eyebrow: "ACCESO A LA INFORMACIÓN",
     activa: true,
   },
+  "/funcionarios": {
+    title: `Funcionarios públicos de Mendoza${TITLE_SUFFIX}`,
+    description:
+      "Funcionarios públicos de Mendoza: gobernador, ministros, legisladores provinciales y nacionales e intendentes, con su partido o bloque, mandato y sueldo.",
+    ogSlug: "funcionarios",
+    ogTitle: "¿Quiénes nos representan?",
+    eyebrow: "FUNCIONARIOS",
+    activa: true,
+  },
   // Rutas por venir: activar cuando existan en la app.
   "/compras": {
     title: `Compras del Estado de Mendoza${TITLE_SUFFIX}`,

@@ -6,6 +6,7 @@ import { loadIndex, loadTema } from "./lib.ts";
 import { CoparticipacionPage } from "./pages/coparticipacion.tsx";
 import { DatosPage } from "./pages/datos.tsx";
 import { DeudaPage } from "./pages/deuda.tsx";
+import { FuncionariosPage } from "./pages/funcionarios.tsx";
 import { EmpleoPage } from "./pages/empleo.tsx";
 import { FuentesPage } from "./pages/fuentes.tsx";
 import { HomePage } from "./pages/home.tsx";
@@ -13,7 +14,7 @@ import { Layout } from "./pages/layout.tsx";
 import { NoPublicadoPage } from "./pages/no-publicado.tsx";
 import { PoblacionPage } from "./pages/poblacion.tsx";
 import "./styles.css";
-import type { CoparticipacionTema, DeudaTema, EmpleoTema, HomeTema, MapaMendoza, NoPublicado, PoblacionTema } from "./types.ts";
+import type { CoparticipacionTema, DeudaTema, EmpleoTema, FuncionariosTema, HomeTema, MapaMendoza, NoPublicado, PoblacionTema } from "./types.ts";
 
 const rootRoute = createRootRoute({ component: Layout });
 
@@ -87,8 +88,15 @@ const noPublicadoRoute = createRoute({
   component: NoPublicadoPage,
 });
 
+const funcionariosRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/funcionarios",
+  loader: () => loadTema<FuncionariosTema>("funcionarios"),
+  component: FuncionariosPage,
+});
+
 const router = createRouter({
-  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, coparticipacionRoute, empleoRoute, poblacionRoute, noPublicadoRoute, fuentesRoute, datosRoute]),
+  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, coparticipacionRoute, empleoRoute, poblacionRoute, funcionariosRoute, noPublicadoRoute, fuentesRoute, datosRoute]),
   defaultPreload: "intent",
   scrollRestoration: true,
 });

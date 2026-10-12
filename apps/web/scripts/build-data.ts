@@ -15,6 +15,7 @@ import { buildDeuda } from "./temas/deuda.ts";
 import { buildCompras } from "./temas/compras.ts";
 import { buildCoparticipacion } from "./temas/coparticipacion.ts";
 import { buildEmpleo } from "./temas/empleo.ts";
+import { buildFuncionarios } from "./temas/funcionarios.ts";
 import { buildHome } from "./temas/home.ts";
 import { buildPoblacion } from "./temas/poblacion.ts";
 
@@ -219,6 +220,15 @@ const copaTema = copaAnual && ipcNacional && pobDeptos ? buildCoparticipacion(co
 if (copaTema) writeFileSync(join(OUT, "temas", "coparticipacion.json"), JSON.stringify(copaTema));
 const poblacionTema = pobDeptos && poblacionProv.length ? buildPoblacion(pobDeptos, poblacionProv) : undefined;
 if (poblacionTema) writeFileSync(join(OUT, "temas", "poblacion.json"), JSON.stringify(poblacionTema));
+
+const legisladores = readTable("legislatura", "legisladores.csv");
+const autoridades = readTable("autoridades", "autoridades.csv");
+if (legisladores && autoridades) {
+  writeFileSync(
+    join(OUT, "temas", "funcionarios.json"),
+    JSON.stringify(buildFuncionarios(legisladores, autoridades, readTable("autoridades", "remuneraciones.csv") ?? [])),
+  );
+}
 
 // Contenido editorial: lo que el Estado no publica.
 const noPublicado = join(ROOT, "data", "curado", "no-publicado.yaml");
