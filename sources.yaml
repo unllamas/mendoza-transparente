@@ -44,13 +44,13 @@
 
 - id: etica-publica
   nombre: Declaraciones juradas patrimoniales y registro de sanciones
-  descripcion: "Los patrimonios que declaran los funcionarios y las sanciones que recibieron."
+  descripcion: "Qué bienes declaran los funcionarios provinciales (inmuebles y vehículos, por su valor fiscal) y quiénes fueron sumariados o sancionados."
   organismo: Oficina de Investigaciones Administrativas y Ética Pública
-  url: https://eticapublica.mendoza.gov.ar/api/v1/public/
+  url: https://eticapublica.mendoza.gov.ar/declaraciones
   formato: api json
   frecuencia: continua
   dificultad: facil
-  estado: pendiente
+  estado: activo
 
 - id: compras-ocds
   nombre: Contrataciones abiertas de COMPR.AR Mendoza (OCDS)
