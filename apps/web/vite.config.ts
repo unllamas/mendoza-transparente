@@ -103,6 +103,8 @@ function devApi(): Plugin {
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), liveData(), devApi()],
+  // Source maps: the repo is public, and they let anyone (and Lighthouse) read the production code.
+  build: { sourcemap: true },
   server: {
     // public/data se regenera entero: que Vite no recargue por cada archivo que escribe el script.
     watch: { ignored: ["**/public/data/**"] },

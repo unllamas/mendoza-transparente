@@ -9,6 +9,7 @@ Para entender cómo se usa el sitio: qué páginas se visitan, qué se busca y q
   - **Requisito en el proyecto:** "Cookieless server hash mode" activado (`cookieless_server_hash_mode = 2`, en Project settings > Web analytics). Sin eso, PostHog descarta los eventos.
   - **No usar `ip: false`:** el hash necesita la IP; los eventos sin IP se descartan.
   - **Sin ubicación:** en este modo PostHog no agrega país ni ciudad, así que el mapa del panel queda vacío.
+  - **Se carga tarde a propósito:** cuando la página terminó de cargar y el navegador está libre. Los eventos de antes quedan en cola. Está apagada la detección de clics sin respuesta (`capture_dead_clicks: false`), que no usamos.
   - **Antes** se usaba `persistence: "memory"`, que contaba cada carga de página como un visitante nuevo. Los datos hasta el 12 oct 2026 están inflados por eso.
 - **Activación:** solo funciona si existe `VITE_POSTHOG_KEY` (y opcionalmente `VITE_POSTHOG_HOST`, por defecto `https://us.i.posthog.com`) en las variables de entorno del build de Cloudflare Pages. Sin clave, por ejemplo en desarrollo, no se carga ni se envía nada.
 - **Cambiar de proveedor:** se edita solo `analytics.ts`. El resto del sitio llama a `track()` y no sabe quién recibe los eventos.

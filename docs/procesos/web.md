@@ -115,6 +115,14 @@ Al sumar una entidad, pensar qué la conecta con las otras y enlazarlo, también
 
 El dominio sale de `VITE_SITE_URL` (por defecto `https://mendoza-transparente.com`).
 
+## Velocidad de carga
+
+- **Cada página es su propio archivo de JavaScript** (`lazyRouteComponent` en `src/main.tsx`): la primera visita baja el layout y la página donde entra. La hoja de detalle de compras se descarga la primera vez que se abre (`React.lazy` en `src/detail-sheet.tsx`).
+- **El CSS va dentro del HTML:** `scripts/seo.ts` lo inserta en cada página después del build. Es un viaje menos antes de la primera pintura.
+- **PostHog se carga cuando la página terminó y el navegador está libre** (`whenIdle` en `src/analytics.ts`). Los eventos de antes quedan en cola y se envían después.
+- **Source maps publicados** (`build.sourcemap`): el repo es público.
+- **Para medir:** `bunx lighthouse <url> --form-factor=mobile`. Lo más pesado que queda es el tiempo de render: la página aparece cuando corre el JavaScript.
+
 ## Verificar antes de dar algo por terminado
 
 ```bash

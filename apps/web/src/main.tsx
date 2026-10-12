@@ -1,29 +1,16 @@
-import { createRootRoute, createRoute, createRouter, RouterProvider } from "@tanstack/react-router";
-import { StrictMode } from "react";
+import { createRootRoute, createRoute, createRouter, lazyRouteComponent, RouterProvider } from "@tanstack/react-router";
+import { type ReactNode, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 import { installClickTracking } from "./analytics.ts";
 import { loadIndex, loadJson, loadTema } from "./lib.ts";
 import { cuitDeSlug } from "./slug.ts";
-import { CoparticipacionPage } from "./pages/coparticipacion.tsx";
-import { DatosPage } from "./pages/datos.tsx";
-import { DeudaPage } from "./pages/deuda.tsx";
-import { OrganismoPage, OrganismosPage, ProveedorPage, ProveedoresPage } from "./pages/compras.tsx";
-import { FuncionarioPage, FuncionariosPage , RolePage } from "./pages/funcionarios.tsx";
-import { LeyesPage, LeyPage } from "./pages/leyes.tsx";
-import { MunicipioPage, MunicipiosPage } from "./pages/municipios.tsx";
-import { EmpleoPage } from "./pages/empleo.tsx";
-import { FuentesPage } from "./pages/fuentes.tsx";
-import { AgencyPage, GobiernoPage } from "./pages/gobierno.tsx";
-import { HomePage } from "./pages/home.tsx";
 import { Layout } from "./pages/layout.tsx";
-import { ComoLeerPage } from "./pages/como-leer.tsx";
-import { NoPublicadoPage } from "./pages/no-publicado.tsx";
-import { ParticiparPage } from "./pages/participar.tsx";
-import { PoblacionPage } from "./pages/poblacion.tsx";
-import { SenalesPage } from "./pages/senales.tsx";
 import "./styles.css";
 import type { AgencyDetail, AgencySummary, GobiernoOverview, HomeGuide, CoparticipacionTema, DeudaTema, EmpleoTema, FuncionariosTema, HomeTema, LeyDetalle, LeyResumen, MapaMendoza, MunicipioPagina, NoPublicado, OrganismoDetalle, OrganismoResumen, PoblacionTema, ProveedorDetalle, ProveedorResumen, SenalesTema } from "./types.ts";
+
+// Each page is its own chunk: the first visit downloads only the layout and the page it lands on.
+const page = <K extends string>(load: () => Promise<Record<K, () => ReactNode>>, name: K) => lazyRouteComponent(load, name);
 
 const rootRoute = createRootRoute({ component: Layout });
 
@@ -40,35 +27,35 @@ const homeRoute = createRoute({
     ]);
     return { index, home, mapa, noPublicado, guide };
   },
-  component: HomePage,
+  component: page(() => import("./pages/home.tsx"), "HomePage"),
 });
 
 const fuentesRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/fuentes",
   loader: loadIndex,
-  component: FuentesPage,
+  component: page(() => import("./pages/fuentes.tsx"), "FuentesPage"),
 });
 
 const datosRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/datos/$fuente",
   loader: loadIndex,
-  component: DatosPage,
+  component: page(() => import("./pages/datos.tsx"), "DatosPage"),
 });
 
 const deudaRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/deuda",
   loader: () => loadTema<DeudaTema>("deuda"),
-  component: DeudaPage,
+  component: page(() => import("./pages/deuda.tsx"), "DeudaPage"),
 });
 
 const empleoRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/empleo-publico",
   loader: () => loadTema<EmpleoTema>("empleo"),
-  component: EmpleoPage,
+  component: page(() => import("./pages/empleo.tsx"), "EmpleoPage"),
 });
 
 const coparticipacionRoute = createRoute({
@@ -78,7 +65,7 @@ const coparticipacionRoute = createRoute({
     tema: await loadTema<CoparticipacionTema>("coparticipacion"),
     mapa: await loadTema<MapaMendoza>("mapa"),
   }),
-  component: CoparticipacionPage,
+  component: page(() => import("./pages/coparticipacion.tsx"), "CoparticipacionPage"),
 });
 
 const poblacionRoute = createRoute({
@@ -88,41 +75,41 @@ const poblacionRoute = createRoute({
     tema: await loadTema<PoblacionTema>("poblacion"),
     mapa: await loadTema<MapaMendoza>("mapa"),
   }),
-  component: PoblacionPage,
+  component: page(() => import("./pages/poblacion.tsx"), "PoblacionPage"),
 });
 
 const noPublicadoRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/no-publicado",
   loader: () => loadTema<NoPublicado[]>("no-publicado"),
-  component: NoPublicadoPage,
+  component: page(() => import("./pages/no-publicado.tsx"), "NoPublicadoPage"),
 });
 
 const funcionariosRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/funcionarios",
   loader: () => loadTema<FuncionariosTema>("funcionarios"),
-  component: FuncionariosPage,
+  component: page(() => import("./pages/funcionarios.tsx"), "FuncionariosPage"),
 });
 
 const roleRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/funcionarios/$role",
   loader: () => loadTema<FuncionariosTema>("funcionarios"),
-  component: RolePage,
+  component: page(() => import("./pages/funcionarios.tsx"), "RolePage"),
 });
 
 const funcionarioRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/funcionarios/$role/$slug",
   loader: () => loadTema<FuncionariosTema>("funcionarios"),
-  component: FuncionarioPage,
+  component: page(() => import("./pages/funcionarios.tsx"), "FuncionarioPage"),
 });
 
 const comoLeerRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/como-leer",
-  component: ComoLeerPage,
+  component: page(() => import("./pages/como-leer.tsx"), "ComoLeerPage"),
 });
 
 const participarRoute = createRoute({
@@ -134,7 +121,7 @@ const participarRoute = createRoute({
     pagina: typeof s.pagina === "string" ? s.pagina : undefined,
   }),
   loader: () => loadTema<NoPublicado[]>("no-publicado").catch(() => [] as NoPublicado[]),
-  component: ParticiparPage,
+  component: page(() => import("./pages/participar.tsx"), "ParticiparPage"),
 });
 
 const gobiernoRoute = createRoute({
@@ -147,14 +134,14 @@ const gobiernoRoute = createRoute({
     ]);
     return { agencies, overview };
   },
-  component: GobiernoPage,
+  component: page(() => import("./pages/gobierno.tsx"), "GobiernoPage"),
 });
 
 const agencyRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/gobierno/$slug",
   loader: ({ params }) => loadTema<AgencyDetail>(`gobierno/${params.slug}`).catch(() => null),
-  component: AgencyPage,
+  component: page(() => import("./pages/gobierno.tsx"), "AgencyPage"),
 });
 
 const municipiosRoute = createRoute({
@@ -164,7 +151,7 @@ const municipiosRoute = createRoute({
     const [municipios, mapa] = await Promise.all([loadTema<MunicipioPagina[]>("municipios"), loadTema<MapaMendoza>("mapa").catch(() => null)]);
     return { municipios, mapa };
   },
-  component: MunicipiosPage,
+  component: page(() => import("./pages/municipios.tsx"), "MunicipiosPage"),
 });
 
 const municipioRoute = createRoute({
@@ -178,14 +165,14 @@ const municipioRoute = createRoute({
     ]);
     return { municipios, mapa, leyes };
   },
-  component: MunicipioPage,
+  component: page(() => import("./pages/municipios.tsx"), "MunicipioPage"),
 });
 
 const proveedoresRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/proveedores",
   loader: async () => (await loadTema<ProveedorResumen[]>("proveedores")).filter((p) => p.indexable),
-  component: ProveedoresPage,
+  component: page(() => import("./pages/compras.tsx"), "ProveedoresPage"),
 });
 
 const proveedorRoute = createRoute({
@@ -196,42 +183,42 @@ const proveedorRoute = createRoute({
     const ficha = cuit ? await loadJson<ProveedorDetalle>(`temas/compras/proveedores/${cuit}.json`).catch(() => null) : null;
     return { cuit, ficha };
   },
-  component: ProveedorPage,
+  component: page(() => import("./pages/compras.tsx"), "ProveedorPage"),
 });
 
 const organismosRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/organismos",
   loader: () => loadTema<OrganismoResumen[]>("organismos"),
-  component: OrganismosPage,
+  component: page(() => import("./pages/compras.tsx"), "OrganismosPage"),
 });
 
 const organismoRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/organismos/$slug",
   loader: ({ params }) => loadJson<OrganismoDetalle>(`temas/compras/organismos/${params.slug}.json`).catch(() => null),
-  component: OrganismoPage,
+  component: page(() => import("./pages/compras.tsx"), "OrganismoPage"),
 });
 
 const leyesRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/leyes",
   loader: () => loadTema<LeyResumen[]>("leyes"),
-  component: LeyesPage,
+  component: page(() => import("./pages/leyes.tsx"), "LeyesPage"),
 });
 
 const leyRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/leyes/$numero",
   loader: ({ params }) => loadJson<LeyDetalle>(`temas/leyes/${params.numero}.json`).catch(() => null),
-  component: LeyPage,
+  component: page(() => import("./pages/leyes.tsx"), "LeyPage"),
 });
 
 const senalesRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/senales",
   loader: () => loadTema<SenalesTema>("senales"),
-  component: SenalesPage,
+  component: page(() => import("./pages/senales.tsx"), "SenalesPage"),
 });
 
 const router = createRouter({

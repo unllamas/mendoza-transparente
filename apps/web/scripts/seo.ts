@@ -139,8 +139,16 @@ const paginas = await construirPaginas(DATA);
 const rotas = paginas.filter((p) => /\b(?:undefined|NaN|null)\b/.test(p.title + p.description + p.html + JSON.stringify(p.og)));
 if (rotas.length) throw new Error(`Páginas con datos faltantes ("undefined", "NaN" o "null"): ${rotas.map((p) => p.path).join(", ")}`);
 // Si el script ya corrió, dist/index.html trae el contenido de la portada: se vacía (va en una sola línea).
-const base = (await readFile(join(DIST, "index.html"), "utf8")).replace(/<div id="root">[^\n]*<\/div>/, '<div id="root"></div>');
+let base = (await readFile(join(DIST, "index.html"), "utf8")).replace(/<div id="root">[^\n]*<\/div>/, '<div id="root"></div>');
 if (!base.includes('<div id="root"></div>')) throw new Error('dist/index.html no tiene <div id="root"></div>');
+
+// The stylesheet goes inside the HTML: one round trip less before the first paint on slow connections
+// (it is small, ~8 KB compressed). SPA navigations do not download HTML again, so it is not repeated.
+const stylesheet = base.match(/<link rel="stylesheet"[^>]*href="(\/assets\/[^"]+\.css)"[^>]*>/);
+if (stylesheet) {
+  const css = await readFile(join(DIST, stylesheet[1]!), "utf8");
+  base = base.replace(stylesheet[0], () => `<style>${css}</style>`);
+}
 
 const slugsOg = new Set<string>();
 for (const p of paginas) {

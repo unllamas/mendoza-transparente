@@ -24,8 +24,15 @@ const HOST = (import.meta.env.VITE_POSTHOG_HOST as string | undefined) ?? "https
 let provider: Provider | null = null;
 const queue: [string, Props | undefined][] = [];
 
+/** PostHog loads after the page has loaded and the browser is idle, so it never competes with the content. */
+function whenIdle(run: () => void) {
+  const idle = () => ("requestIdleCallback" in window ? window.requestIdleCallback(run, { timeout: 4000 }) : setTimeout(run, 1500));
+  if (document.readyState === "complete") idle();
+  else window.addEventListener("load", idle, { once: true });
+}
+
 if (KEY && typeof window !== "undefined") {
-  void import("posthog-js").then(({ default: posthog }) => {
+  whenIdle(() => void import("posthog-js").then(({ default: posthog }) => {
     posthog.init(KEY, {
       api_host: HOST,
       cookieless_mode: "always",
@@ -33,12 +40,13 @@ if (KEY && typeof window !== "undefined") {
       capture_pageview: false, // sent by trackPageview on every route change
       capture_pageleave: true,
       disable_session_recording: true,
+      capture_dead_clicks: false,
       // No `ip: false`: the cookieless hash needs the IP at ingestion (events without it are dropped).
       // PostHog deletes it right after hashing, and the project also anonymizes IPs.
     });
     provider = { capture: (event, props) => posthog.capture(event, props) };
     for (const [event, props] of queue.splice(0)) provider.capture(event, props);
-  });
+  }));
 }
 
 /** Sends an event. Safe to call anywhere; it is a no-op without a provider. */
