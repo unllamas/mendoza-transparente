@@ -119,6 +119,16 @@ export interface ProcesoDetalle {
 
 export interface ProveedorDetalle {
   cuit: string;
+  /** Datos del Registro Nacional de Sociedades. Para personas humanas solo se indica el tipo. */
+  empresa: {
+    tipoPersona: "humana" | "juridica";
+    razonSocial: string | null;
+    tipoSocietario: string | null;
+    fechaConstitucion: string | null;
+    localidad: string | null;
+    actividad: string | null;
+    mesesHastaPrimeraAdjudicacion: number | null;
+  } | null;
   nombre: string;
   total: number;
   adjudicaciones: number;

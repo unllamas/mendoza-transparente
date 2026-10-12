@@ -6,10 +6,12 @@ import {
   Building2,
   CalendarDays,
   ChevronRight,
+  Clock,
   ExternalLink,
   FileText,
   Landmark,
   Search,
+  UserRound,
   X,
 } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
@@ -116,7 +118,7 @@ function OrigenDato({ dataset, fila, ocid }: { dataset: DatasetMeta; fila: strin
       {fuente && <p className="text-ink-2">{fuente.organismo || fuente.nombre}</p>}
       <div className="flex flex-col gap-1.5">
         {urlFila && (
-          <a href={urlFila} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-accent hover:underline">
+          <a href={urlFila} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-link hover:underline">
             <FileText className="size-3.5" aria-hidden /> Documento original <ExternalLink className="size-3" aria-hidden />
           </a>
         )}
@@ -125,14 +127,14 @@ function OrigenDato({ dataset, fila, ocid }: { dataset: DatasetMeta; fila: strin
             href="https://comprar.mendoza.gov.ar/"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1.5 text-accent hover:underline"
+            className="inline-flex items-center gap-1.5 text-link hover:underline"
           >
             <Search className="size-3.5" aria-hidden /> Buscar el proceso {ocid.replace(/^ocds-ppv9mm-/, "")} en COMPR.AR{" "}
             <ExternalLink className="size-3" aria-hidden />
           </a>
         )}
         {fuente?.url && (
-          <a href={fuente.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-accent hover:underline">
+          <a href={fuente.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-link hover:underline">
             <Landmark className="size-3.5" aria-hidden /> Sitio oficial de la fuente <ExternalLink className="size-3" aria-hidden />
           </a>
         )}
@@ -158,7 +160,7 @@ function CamposFila({ columnas, fila, titulo }: { columnas: ColumnaVista[]; fila
             <dt className="text-xs text-ink-muted">{c.etiqueta}</dt>
             <dd className="text-sm break-words">
               {c.url && fila[c.index] ? (
-                <a href={fila[c.index]} target="_blank" rel="noreferrer" className="text-accent hover:underline">
+                <a href={fila[c.index]} target="_blank" rel="noreferrer" className="text-link hover:underline">
                   {c.formato(fila[c.index]!, fila)}
                 </a>
               ) : (
@@ -203,8 +205,10 @@ function Proveedor({ cuit, onProceso }: { cuit: string; onProceso: (ocid: string
         <span className="flex items-center gap-1.5 text-xs text-ink-muted">
           <Building2 className="size-3.5" aria-hidden /> Proveedor · CUIT {cuit}
         </span>
-        <h3 className="text-lg font-semibold tracking-tight text-balance">{p.nombre}</h3>
+        <h3 className="text-lg font-semibold tracking-tight text-balance">{p.empresa?.razonSocial ?? p.nombre}</h3>
       </div>
+
+      <QuienEs proveedor={p} />
 
       <div className="grid grid-cols-2 gap-2">
         <Dato label="Total adjudicado" value={formatMoneda(p.total, "ARS")} />
@@ -264,7 +268,7 @@ function Proveedor({ cuit, onProceso }: { cuit: string; onProceso: (ocid: string
                 className="group -mx-2 flex w-[calc(100%+1rem)] items-center gap-3 rounded-lg px-2 py-2.5 text-left hover:bg-tile"
               >
                 <span className="flex min-w-0 flex-1 flex-col gap-1.5">
-                  <span className="line-clamp-2 text-sm text-pretty group-hover:text-accent">{r.titulo || "Sin título"}</span>
+                  <span className="line-clamp-2 text-sm text-pretty group-hover:text-link">{r.titulo || "Sin título"}</span>
                   <span className="flex flex-wrap items-center gap-1.5 text-xs text-ink-muted">
                     {r.fecha && (
                       <span className="inline-flex items-center gap-1 rounded-md bg-tile px-1.5 py-0.5 tabular-nums group-hover:bg-grid">
@@ -275,13 +279,73 @@ function Proveedor({ cuit, onProceso }: { cuit: string; onProceso: (ocid: string
                   </span>
                 </span>
                 <span className="text-sm font-medium whitespace-nowrap tabular-nums">{formatMoneda(r.monto, "ARS")}</span>
-                <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-accent" aria-hidden />
+                <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
               </button>
             </li>
           ))}
         </ul>
       </Bloque>
     </>
+  );
+}
+
+const ARCA_CONSTANCIA = "https://seti.afip.gob.ar/padron-puc-constancia-internet/ConsultaConstanciaAction.do";
+
+/** Quién es el proveedor según el Registro Nacional de Sociedades. A las personas humanas no se las perfila. */
+function QuienEs({ proveedor: p }: { proveedor: ProveedorDetalle }) {
+  const e = p.empresa;
+  if (e?.tipoPersona === "humana") {
+    return (
+      <p className="flex items-start gap-2 rounded-xl bg-tile p-3 text-sm text-ink-2">
+        <UserRound className="mt-0.5 size-4 shrink-0 text-ink-muted" aria-hidden />
+        Persona humana que vende al Estado a título individual. Por privacidad no mostramos más datos personales.
+      </p>
+    );
+  }
+  const nombre = e?.razonSocial ?? p.nombre;
+  return (
+    <Bloque titulo="Quién es">
+      {e ? (
+        <dl className="grid grid-cols-2 gap-x-3 gap-y-3 text-sm">
+          {e.tipoSocietario && <Campo label="Tipo de sociedad" value={e.tipoSocietario} />}
+          {e.fechaConstitucion && <Campo label="Constituida" value={formatDate(e.fechaConstitucion)} />}
+          {e.localidad && <Campo label="Domicilio" value={e.localidad} />}
+          {e.actividad && <Campo label="Actividad" value={e.actividad} wide />}
+        </dl>
+      ) : (
+        <p className="text-sm text-ink-muted">No figura en el Registro Nacional de Sociedades.</p>
+      )}
+      {e?.mesesHastaPrimeraAdjudicacion !== null && e?.mesesHastaPrimeraAdjudicacion !== undefined && e.mesesHastaPrimeraAdjudicacion < 12 && (
+        <p className="flex items-start gap-2 rounded-xl bg-tile p-3 text-sm text-ink-2">
+          <Clock className="mt-0.5 size-4 shrink-0 text-ink-muted" aria-hidden />
+          Ganó su primera adjudicación a los {e.mesesHastaPrimeraAdjudicacion}{" "}
+          {e.mesesHastaPrimeraAdjudicacion === 1 ? "mes" : "meses"} de constituida.
+        </p>
+      )}
+      <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm">
+        <a href={ARCA_CONSTANCIA} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-link hover:underline">
+          Constancia de CUIT en ARCA <ExternalLink className="size-3" aria-hidden />
+        </a>
+        <a
+          href={`https://duckduckgo.com/?q=${encodeURIComponent(`"${nombre}" Mendoza`)}`}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-1.5 text-link hover:underline"
+        >
+          <Search className="size-3.5" aria-hidden /> Buscar en la web <ExternalLink className="size-3" aria-hidden />
+        </a>
+      </div>
+      <p className="text-xs text-ink-muted">Fuente: Registro Nacional de Sociedades (Ministerio de Justicia, con datos de ARCA).</p>
+    </Bloque>
+  );
+}
+
+function Campo({ label, value, wide }: { label: string; value: string; wide?: boolean }) {
+  return (
+    <div className={`flex flex-col gap-0.5 ${wide ? "col-span-2" : ""}`}>
+      <dt className="text-xs text-ink-muted">{label}</dt>
+      <dd className="text-pretty">{value}</dd>
+    </div>
   );
 }
 
@@ -334,9 +398,9 @@ function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cuit: stri
                 className="group -mx-2 flex w-[calc(100%+1rem)] items-center gap-3 rounded-lg px-2 py-2.5 text-left text-sm hover:bg-tile"
               >
                 <Building2 className="size-4 shrink-0 text-ink-muted" aria-hidden />
-                <span className="min-w-0 flex-1 group-hover:text-accent">{a.proveedor}</span>
+                <span className="min-w-0 flex-1 group-hover:text-link">{a.proveedor}</span>
                 <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(a.monto, "ARS")}</span>
-                <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-accent" aria-hidden />
+                <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
               </button>
             </li>
           ))}

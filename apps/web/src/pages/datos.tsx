@@ -41,7 +41,7 @@ export function DatosPage() {
           {source.url && (
             <>
               {" · "}
-              <a href={source.url} className="inline-flex items-center gap-1 text-accent hover:underline">
+              <a href={source.url} className="inline-flex items-center gap-1 text-link hover:underline">
                 Fuente oficial <ExternalLink className="size-3.5" aria-hidden />
               </a>
             </>
@@ -103,7 +103,7 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
               <select
                 value={groupSlug}
                 onChange={(e) => setGroupSlug(e.target.value)}
-                className="rounded-lg border border-line bg-surface px-2 py-1.5 text-sm text-ink hover:border-axis"
+                className="rounded-lg border border-line bg-surface px-2 py-1.5 text-sm text-ink hover:border-link/50"
               >
                 {groups.map((g) => (
                   <option key={g.slug} value={g.slug}>
@@ -116,7 +116,7 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
           <a
             href={`/data/${dataset.source}/${dataset.file}`}
             download
-            className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-line px-3 py-1.5 text-sm hover:border-axis"
+            className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-line px-3 py-1.5 text-sm hover:border-link/50"
           >
             <Download className="size-4" aria-hidden /> Descargar CSV
           </a>
@@ -168,7 +168,7 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
                               target="_blank"
                               rel="noreferrer"
                               onClick={(e) => e.stopPropagation()}
-                              className="text-accent hover:underline"
+                              className="text-link hover:underline"
                             >
                               {valor}
                             </a>

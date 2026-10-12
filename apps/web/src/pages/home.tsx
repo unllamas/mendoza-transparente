@@ -61,13 +61,13 @@ export function HomePage() {
         <div className="flex flex-wrap items-center gap-3">
           <a
             href="#numeros"
-            className="inline-flex items-center gap-2 rounded-lg bg-ink px-4 py-2.5 text-sm font-medium text-page hover:opacity-90"
+            className="inline-flex items-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-medium text-on-brand hover:bg-brand-hover"
           >
             Ver los números <ArrowRight className="size-4" aria-hidden />
           </a>
           <Link
             to="/fuentes"
-            className="inline-flex items-center gap-2 rounded-lg border border-line px-4 py-2.5 text-sm hover:border-axis"
+            className="inline-flex items-center gap-2 rounded-lg border border-line px-4 py-2.5 text-sm hover:border-link/50"
           >
             <Archive className="size-4" aria-hidden /> De dónde salen
           </Link>
@@ -82,7 +82,7 @@ export function HomePage() {
       <section className="-mt-8 grid gap-4 rounded-2xl bg-tile p-5 sm:grid-cols-2 lg:grid-cols-4">
         {PRINCIPIOS.map(({ icon: Icon, titulo, texto }) => (
           <div key={titulo} className="flex items-start gap-3">
-            <Icon className="mt-0.5 size-5 shrink-0 text-accent" aria-hidden />
+            <Icon className="mt-0.5 size-5 shrink-0 text-ink-2" aria-hidden />
             <span className="flex flex-col gap-0.5">
               <span className="text-sm font-medium">{titulo}</span>
               <span className="text-sm text-ink-2 text-pretty">{texto}</span>
@@ -173,7 +173,7 @@ export function HomePage() {
         {(inflacion || dolar) && (
           <div className="flex flex-wrap gap-x-8 gap-y-3 rounded-xl bg-tile px-4 py-3 text-sm">
             {inflacion && (
-              <Link to="/datos/$fuente" params={{ fuente: "indices" }} className="flex flex-wrap items-center gap-x-2 hover:text-accent">
+              <Link to="/datos/$fuente" params={{ fuente: "indices" }} className="flex flex-wrap items-center gap-x-2 hover:text-link">
                 <TrendingUp className="size-4 text-ink-muted" aria-hidden />
                 <span className="text-ink-2">Inflación en Cuyo ({inflacion.periodo}):</span>
                 <span className="font-medium tabular-nums">{decimal.format(inflacion.mensual)} % mensual</span>
@@ -181,7 +181,7 @@ export function HomePage() {
               </Link>
             )}
             {dolar && (
-              <Link to="/datos/$fuente" params={{ fuente: "indices" }} className="flex items-center gap-2 hover:text-accent">
+              <Link to="/datos/$fuente" params={{ fuente: "indices" }} className="flex items-center gap-2 hover:text-link">
                 <Coins className="size-4 text-ink-muted" aria-hidden />
                 <span className="text-ink-2">Dólar oficial ({dolar.periodo}):</span>
                 <span className="font-medium tabular-nums">{pesos(dolar.oficial)}</span>
@@ -205,7 +205,7 @@ export function HomePage() {
                 <Link
                   to="/no-publicado"
                   hash={item.id}
-                  className="flex h-full items-start gap-3 rounded-xl border border-line px-4 py-3 text-sm hover:border-axis"
+                  className="flex h-full items-start gap-3 rounded-xl border border-line px-4 py-3 text-sm hover:border-link/50"
                 >
                   <EyeOff className="mt-0.5 size-4 shrink-0 text-ink-muted" aria-hidden />
                   <span className="flex flex-col gap-0.5">
@@ -218,7 +218,7 @@ export function HomePage() {
           </ul>
           <Link
             to="/no-publicado"
-            className="inline-flex w-fit items-center gap-2 rounded-lg bg-ink px-4 py-2.5 text-sm font-medium text-page hover:opacity-90"
+            className="inline-flex w-fit items-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-medium text-on-brand hover:bg-brand-hover"
           >
             Ver todos y cómo pedirlos <ArrowRight className="size-4" aria-hidden />
           </Link>
@@ -329,7 +329,7 @@ function Cifra({ icon: Icon, titulo, valor, unidad, detalle, serie, fuente, to, 
       </Link>
     );
   return (
-    <div className="group relative flex flex-col gap-4 rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-axis">
+    <div className="group relative flex flex-col gap-4 rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-link/50">
       <div className="flex items-center justify-between gap-3">
         <span className="flex min-w-0 items-center gap-2 text-sm text-ink-2">
           <Icon className="size-4 shrink-0 text-ink-muted" aria-hidden />
@@ -352,7 +352,7 @@ function Cifra({ icon: Icon, titulo, valor, unidad, detalle, serie, fuente, to, 
             href={fuente.url}
             target="_blank"
             rel="noreferrer"
-            className="relative z-10 inline-flex max-w-full items-center gap-1 text-xs text-ink-muted hover:text-accent"
+            className="relative z-10 inline-flex max-w-full items-center gap-1 text-xs text-ink-muted hover:text-link"
           >
             <Landmark className="size-3.5 shrink-0" aria-hidden />
             <span className="truncate">Fuente: {fuente.organismo || fuente.nombre}</span>

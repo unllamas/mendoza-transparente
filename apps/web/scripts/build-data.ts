@@ -208,7 +208,9 @@ if (empleoTema) writeFileSync(join(OUT, "temas", "empleo.json"), JSON.stringify(
 
 const procesos = readTable("compras-ocds", "procesos.csv");
 const adjudicaciones = readTable("compras-ocds", "adjudicaciones.csv");
-if (procesos && adjudicaciones) buildCompras(procesos, adjudicaciones, join(OUT, "temas", "compras"));
+if (procesos && adjudicaciones) {
+  buildCompras(procesos, adjudicaciones, join(OUT, "temas", "compras"), readTable("proveedores", "proveedores.csv") ?? []);
+}
 
 const copaAnual = readTable("hacienda-participacion-municipal", "coparticipacion_anual.csv");
 const ipcNacional = readTable("indices", "ipc_nacional_mensual.csv");

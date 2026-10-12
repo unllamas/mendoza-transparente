@@ -35,7 +35,7 @@ export function FuentesOficiales({ ids }: { ids: string[] }) {
             Fuente: <span className="text-ink">{s.organismo || s.nombre}</span>
           </span>
           {s.url && (
-            <a href={s.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-accent hover:underline">
+            <a href={s.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-link hover:underline">
               Ver en el sitio oficial <ExternalLink className="size-3.5" aria-hidden />
             </a>
           )}

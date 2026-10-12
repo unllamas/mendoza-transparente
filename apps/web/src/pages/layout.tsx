@@ -25,7 +25,7 @@ export function Layout() {
           </Link>
           <nav className="-mx-5 flex w-full gap-5 overflow-x-auto px-5 text-sm whitespace-nowrap sm:mx-0 sm:w-auto sm:px-0">
             {NAV.map((item) => (
-              <Link key={item.to} to={item.to} className="text-ink-2 hover:text-ink [&.active]:text-ink [&.active]:font-medium">
+              <Link key={item.to} to={item.to} className="text-ink-2 hover:text-link [&.active]:font-medium [&.active]:text-link">
                 {item.label}
               </Link>
             ))}
@@ -44,7 +44,7 @@ export function Layout() {
           </p>
           <p>
             Proyecto ciudadano e independiente. Código abierto en{" "}
-            <a href={REPO} className="underline hover:text-ink">
+            <a href={REPO} className="underline hover:text-link">
               GitHub
             </a>
             .

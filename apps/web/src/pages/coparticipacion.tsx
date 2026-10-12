@@ -137,7 +137,7 @@ function DetalleMunicipio({
         <button
           type="button"
           onClick={onClose}
-          className="rounded-lg border border-line px-3 py-1 text-sm text-ink-2 hover:border-axis hover:text-ink"
+          className="rounded-lg border border-line px-3 py-1 text-sm text-ink-2 hover:border-link/50 hover:text-ink"
         >
           Ver ranking
         </button>

@@ -67,7 +67,7 @@ function FuenteItem({ source: s, tables }: { source: SourceMeta; tables: number 
             <Link
               to="/datos/$fuente"
               params={{ fuente: s.id }}
-              className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-line px-3 py-1.5 text-sm hover:border-axis"
+              className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-line px-3 py-1.5 text-sm hover:border-link/50"
             >
               <Table2 className="size-4" aria-hidden /> Ver datos
             </Link>
@@ -75,7 +75,7 @@ function FuenteItem({ source: s, tables }: { source: SourceMeta; tables: number 
           {s.url && (
             <a
               href={s.url}
-              className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-line px-3 py-1.5 text-sm text-ink-2 hover:border-axis hover:text-ink"
+              className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-line px-3 py-1.5 text-sm text-ink-2 hover:border-link/50 hover:text-ink"
             >
               Fuente oficial <ExternalLink className="size-3.5" aria-hidden />
             </a>

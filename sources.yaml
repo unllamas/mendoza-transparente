@@ -151,3 +151,13 @@
   frecuencia: eventual
   dificultad: media
   estado: activo
+
+- id: proveedores
+  nombre: Datos de las empresas proveedoras del Estado
+  organismo: Ministerio de Justicia de la Nación (Registro Nacional de Sociedades, con datos de ARCA)
+  url: https://datos.jus.gob.ar/dataset/registro-nacional-de-sociedades
+  descripcion: Quién es cada empresa que le vende al Estado provincial, qué tipo de sociedad es, cuándo se constituyó, dónde está y a qué se dedica.
+  formato: csv (zip)
+  frecuencia: mensual
+  dificultad: media
+  estado: activo

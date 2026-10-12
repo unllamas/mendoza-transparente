@@ -1,0 +1,24 @@
+{
+  "dataset": "https://datos.jus.gob.ar/dataset/registro-nacional-de-sociedades",
+  "api": "https://datos.jus.gob.ar/api/3/action/package_show?id=registro-nacional-de-sociedades",
+  "dataset_modificado": "2026-09-18T14:26:52.407982",
+  "archivos_originales": [
+    {
+      "recurso": "Registro Nacional de Sociedades - 2026",
+      "url": "https://datos.jus.gob.ar/dataset/ee83de85-4305-4c53-9a9f-fd3d15e42c36/resource/13a1a66f-9f49-4d2d-9582-7b4540ef1b83/download/registro-nacional-sociedades-2026.zip",
+      "ultima_modificacion": "2026-09-18T11:26:19.631245",
+      "sha256": "04dfeaf073ce1892db5978dcee4be2e8cf28115b1140a56c44c2b1f86dcbbe53",
+      "bytes": 117672254
+    },
+    {
+      "recurso": "Registro Nacional de Sociedades - Asociaciones sin fines de lucro - 20260918",
+      "url": "https://datos.jus.gob.ar/dataset/ee83de85-4305-4c53-9a9f-fd3d15e42c36/resource/61987339-5160-4d95-b49c-d5c2ff4e5fe7/download/registro-nacional-sociedades-asociaciones-sin-fines-lucro-20260918.csv",
+      "ultima_modificacion": "2026-09-18T11:25:01.507254",
+      "sha256": "865b71070a4f8880218386bdda790559c2bc54dc7f80076ad184a09fc563cd54",
+      "bytes": 66079782
+    }
+  ],
+  "nota": "Los archivos originales (~900 MB descomprimidos) no se archivan: data/raw guarda sólo el extracto con las filas de los CUIT jurídicos de las adjudicaciones.",
+  "cuit_buscados": 865,
+  "cuit_encontrados": 849
+}

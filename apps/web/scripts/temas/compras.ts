@@ -11,7 +11,8 @@ import type { ProcesoDetalle, ProveedorDetalle } from "../../src/types.ts";
 
 type CsvRow = Record<string, string>;
 
-export function buildCompras(procesos: CsvRow[], adjudicaciones: CsvRow[], outDir: string) {
+export function buildCompras(procesos: CsvRow[], adjudicaciones: CsvRow[], outDir: string, empresas: CsvRow[] = []) {
+  const porCuitEmpresa = new Map(empresas.map((e) => [e.cuit!, e]));
   const porOcid = new Map(procesos.map((p) => [p.ocid!, p]));
   const activas = adjudicaciones.filter((a) => a.estado_adjudicacion !== "cancelled" && a.proveedor_cuit);
 
@@ -56,7 +57,23 @@ export function buildCompras(procesos: CsvRow[], adjudicaciones: CsvRow[], outDi
       if (anio) porAnio.set(anio, (porAnio.get(anio) ?? 0) + Number(a.monto));
     }
     const fechas = filas.map((a) => a.fecha_adjudicacion!).filter(Boolean).sort();
+    const e = porCuitEmpresa.get(cuit);
+    const meses =
+      e?.fecha_constitucion && fechas[0]
+        ? Math.floor((Date.parse(fechas[0]) - Date.parse(e.fecha_constitucion)) / (30.44 * 24 * 3600 * 1000))
+        : null;
     const detalle: ProveedorDetalle = {
+      empresa: e
+        ? {
+            tipoPersona: e.tipo_persona === "humana" ? "humana" : "juridica",
+            razonSocial: e.razon_social || null,
+            tipoSocietario: e.tipo_societario || null,
+            fechaConstitucion: e.fecha_constitucion || null,
+            localidad: [e.localidad, e.provincia].filter(Boolean).join(", ") || null,
+            actividad: e.actividad || null,
+            mesesHastaPrimeraAdjudicacion: meses !== null && meses >= 0 ? meses : null,
+          }
+        : null,
       cuit,
       nombre: filas.at(-1)!.proveedor_nombre!,
       total: filas.reduce((s, a) => s + Number(a.monto), 0),

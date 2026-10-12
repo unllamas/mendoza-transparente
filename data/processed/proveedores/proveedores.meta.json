@@ -1,0 +1,73 @@
+{
+  "titulo": "Proveedores del Estado: quién es cada uno",
+  "descripcion": "Cada fila es un CUIT que ganó al menos una adjudicación en COMPR.AR Mendoza, cruzado con el Registro Nacional de Sociedades (Ministerio de Justicia de la Nación, datos abiertos, suministrados por ARCA). Para personas humanas solo se muestra el CUIT y el nombre que figura en COMPR.AR. Si un CUIT jurídico no aparece en el registro, se deja el nombre de COMPR.AR y los demás campos vacíos.",
+  "columnas": {
+    "cuit": {
+      "etiqueta": "CUIT",
+      "tipo": "texto"
+    },
+    "razon_social": {
+      "etiqueta": "Razón social",
+      "tipo": "texto",
+      "descripcion": "Del Registro Nacional de Sociedades si se encontró; si no, el nombre que figura en COMPR.AR."
+    },
+    "tipo_persona": {
+      "etiqueta": "Tipo de persona",
+      "tipo": "texto",
+      "valores": {
+        "juridica": "Persona jurídica",
+        "humana": "Persona humana"
+      },
+      "descripcion": "Según el prefijo del CUIT: 30, 33 y 34 jurídica; 20, 23, 24 y 27 humana."
+    },
+    "tipo_societario": {
+      "etiqueta": "Tipo societario",
+      "tipo": "texto",
+      "descripcion": "S.A., S.R.L., S.A.S., cooperativa, etc."
+    },
+    "fecha_constitucion": {
+      "etiqueta": "Fecha de constitución",
+      "tipo": "fecha",
+      "descripcion": "Fecha del contrato social según el registro. Vacía si el registro no la informa."
+    },
+    "provincia": {
+      "etiqueta": "Provincia",
+      "tipo": "texto",
+      "descripcion": "Del domicilio fiscal (o legal si falta)."
+    },
+    "localidad": {
+      "etiqueta": "Localidad",
+      "tipo": "texto"
+    },
+    "actividad": {
+      "etiqueta": "Actividad",
+      "tipo": "texto",
+      "descripcion": "Actividad principal declarada ante ARCA, cuando existe."
+    },
+    "encontrado_en_registro": {
+      "etiqueta": "En el registro",
+      "tipo": "texto",
+      "valores": {
+        "si": "Sí",
+        "no": "No"
+      },
+      "descripcion": "Si el CUIT se encontró en el Registro Nacional de Sociedades. Las personas humanas no se buscan."
+    },
+    "fuente_url": {
+      "etiqueta": "Fuente",
+      "tipo": "url"
+    }
+  },
+  "orden": [
+    "razon_social",
+    "tipo_societario",
+    "fecha_constitucion",
+    "provincia",
+    "localidad",
+    "actividad",
+    "tipo_persona",
+    "cuit",
+    "encontrado_en_registro",
+    "fuente_url"
+  ]
+}

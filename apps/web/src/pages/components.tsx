@@ -85,7 +85,7 @@ export function PageHeader({ icon: Icon, tema, titulo, children }: { icon: Lucid
   return (
     <div className="flex max-w-2xl flex-col gap-3">
       <span className="flex items-center gap-2 text-sm text-ink-muted">
-        <Icon className="size-4 text-accent" aria-hidden />
+        <Icon className="size-4 text-ink-muted" aria-hidden />
         {tema}
       </span>
       <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">{titulo}</h1>
