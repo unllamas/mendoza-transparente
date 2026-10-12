@@ -30,6 +30,17 @@ Para entender cómo se usa el sitio: qué páginas se visitan, qué se busca y q
 
 ## Catálogo
 
+La descripción en español de cada evento vive en `apps/web/src/analytics-catalog.ts`. Al sumar un `data-track` o un `track()`, se agrega ahí su evento.
+
+**`bun run posthog-sync`** (necesita `.env.posthog` en la raíz, que no se versiona):
+- Copia las descripciones del catálogo a PostHog.
+- Crea o actualiza el tablero **"Uso de Mendoza Transparente"** y sus gráficos, con título y descripción en español.
+- Se puede correr cuantas veces haga falta. Los eventos que PostHog todavía no recibió se describen en la corrida siguiente a su primera aparición.
+
+Proyecto de PostHog: "Mendoza Transparente" (cuenta propia, separada de cualquier otra organización), con zona horaria de Mendoza, IP descartadas, sin grabación de sesiones y con el tráfico de `localhost` excluido de los gráficos.
+
+Resumen de los eventos:
+
 | Evento | Dónde | Propiedades |
 |---|---|---|
 | `$pageview` | Toda ruta | `path` |
