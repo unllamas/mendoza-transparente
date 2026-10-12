@@ -34,7 +34,7 @@ export function DeudaPage() {
         <StatTile
           label="Por habitante"
           value={`US$ ${formatNumber(Math.round(deuda.porHabitanteUsd))}`}
-          note={`Sobre ${formatNumber(deuda.poblacion)} habitantes (Censo 2022)`}
+          note={`Sobre ${formatNumber(deuda.poblacion)} habitantes (proyección INDEC)`}
         />
         <StatTile label="Máximo de la serie" value={usdM(pico.usd)} note={trimestre(pico.fecha)} />
       </div>

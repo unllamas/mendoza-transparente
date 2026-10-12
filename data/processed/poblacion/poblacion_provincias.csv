@@ -1,0 +1,793 @@
+anio,provincia,poblacion,tipo,fuente_url
+2010,Buenos Aires,15625084,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,Buenos Aires,15716942,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,Buenos Aires,15909607,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,Buenos Aires,16100618,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,Buenos Aires,16289599,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,Buenos Aires,16476149,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,Buenos Aires,16659931,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,Buenos Aires,16841135,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,Buenos Aires,17020012,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,Buenos Aires,17196396,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,Buenos Aires,17370144,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,Buenos Aires,17541141,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,Buenos Aires,17709598,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,Buenos Aires,17523996,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,Buenos Aires,17409376,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,Buenos Aires,17418577,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,Buenos Aires,17431446,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,Buenos Aires,17443372,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,Buenos Aires,17453039,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,Buenos Aires,17460685,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,Buenos Aires,17466959,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,Buenos Aires,17472843,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,Buenos Aires,17479673,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,Buenos Aires,17488310,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,Buenos Aires,17498749,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,Buenos Aires,17510882,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,Buenos Aires,17524610,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,Buenos Aires,17540026,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,Buenos Aires,17557069,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,Buenos Aires,17575301,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,Buenos Aires,17594223,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,Buenos Aires,17613248,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,Buenos Aires,17631770,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,Catamarca,367828,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,Catamarca,377676,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,Catamarca,381548,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,Catamarca,385408,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,Catamarca,389256,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,Catamarca,393088,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,Catamarca,396895,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,Catamarca,400678,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,Catamarca,404433,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,Catamarca,408152,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,Catamarca,411824,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,Catamarca,415438,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,Catamarca,418991,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,Catamarca,429562,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,Catamarca,434741,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,Catamarca,436077,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,Catamarca,437508,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,Catamarca,439024,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,Catamarca,440503,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,Catamarca,441923,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,Catamarca,443302,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,Catamarca,444639,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,Catamarca,445966,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,Catamarca,447263,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,Catamarca,448557,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,Catamarca,449850,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,Catamarca,451092,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,Catamarca,452321,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,Catamarca,453513,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,Catamarca,454671,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,Catamarca,455774,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,Catamarca,456806,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,Catamarca,457763,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,Chaco,1055259,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,Chaco,1080017,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,Chaco,1092625,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,Chaco,1105280,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,Chaco,1117953,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,Chaco,1130608,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,Chaco,1143201,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,Chaco,1155723,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,Chaco,1168165,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,Chaco,1180477,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,Chaco,1192616,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,Chaco,1204541,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,Chaco,1216247,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,Chaco,1129606,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,Chaco,1190747,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,Chaco,1194631,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,Chaco,1200849,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,Chaco,1207608,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,Chaco,1214280,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,Chaco,1220810,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,Chaco,1227236,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,Chaco,1233474,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,Chaco,1239460,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,Chaco,NaN,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,Chaco,NaN,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,Chaco,NaN,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,Chaco,NaN,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,Chaco,NaN,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,Chaco,1272712,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,Chaco,1277838,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,Chaco,1282816,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,Chaco,1287635,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,Chaco,1292272,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,Chubut,509108,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,Chubut,513433,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,Chubut,524201,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,Chubut,534945,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,Chubut,545656,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,Chubut,556319,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,Chubut,566922,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,Chubut,577466,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,Chubut,587956,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,Chubut,598380,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,Chubut,608729,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,Chubut,618994,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,Chubut,629181,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,Chubut,592621,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,Chubut,597366,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,Chubut,598946,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,Chubut,600674,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,Chubut,602348,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,Chubut,603930,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,Chubut,605453,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,Chubut,606918,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,Chubut,608334,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,Chubut,609723,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,Chubut,611108,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,Chubut,612492,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,Chubut,613878,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,Chubut,615250,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,Chubut,616643,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,Chubut,618023,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,Chubut,619407,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,Chubut,620771,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,Chubut,622103,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,Chubut,623370,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,Ciudad Autónoma de Buenos Aires,2890151,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,Ciudad Autónoma de Buenos Aires,3028481,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,Ciudad Autónoma de Buenos Aires,3033639,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,Ciudad Autónoma de Buenos Aires,3038860,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,Ciudad Autónoma de Buenos Aires,3044076,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,Ciudad Autónoma de Buenos Aires,3049229,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,Ciudad Autónoma de Buenos Aires,3054267,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,Ciudad Autónoma de Buenos Aires,3059122,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,Ciudad Autónoma de Buenos Aires,3063728,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,Ciudad Autónoma de Buenos Aires,3068043,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,Ciudad Autónoma de Buenos Aires,3072029,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,Ciudad Autónoma de Buenos Aires,3075646,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,Ciudad Autónoma de Buenos Aires,3078836,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,Ciudad Autónoma de Buenos Aires,3121707,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,Ciudad Autónoma de Buenos Aires,3121189,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,Ciudad Autónoma de Buenos Aires,3107894,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,Ciudad Autónoma de Buenos Aires,3093735,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,Ciudad Autónoma de Buenos Aires,3079674,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,Ciudad Autónoma de Buenos Aires,3065991,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,Ciudad Autónoma de Buenos Aires,3052432,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,Ciudad Autónoma de Buenos Aires,3038998,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,Ciudad Autónoma de Buenos Aires,3025765,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,Ciudad Autónoma de Buenos Aires,3012826,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,Ciudad Autónoma de Buenos Aires,3000505,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,Ciudad Autónoma de Buenos Aires,2989091,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,Ciudad Autónoma de Buenos Aires,2978880,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,Ciudad Autónoma de Buenos Aires,2970026,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,Ciudad Autónoma de Buenos Aires,2961850,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,Ciudad Autónoma de Buenos Aires,2953747,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,Ciudad Autónoma de Buenos Aires,2945706,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,Ciudad Autónoma de Buenos Aires,2937720,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,Ciudad Autónoma de Buenos Aires,2929830,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,Ciudad Autónoma de Buenos Aires,2921997,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,Córdoba,3308876,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,Córdoba,3373025,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,Córdoba,3411773,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,Córdoba,3450673,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,Córdoba,3489669,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,Córdoba,3528687,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,Córdoba,3567654,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,Córdoba,3606540,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,Córdoba,3645321,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,Córdoba,3683937,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,Córdoba,3722332,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,Córdoba,3760450,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,Córdoba,3798261,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,Córdoba,3840905,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,Córdoba,3923244,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,Córdoba,3934514,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,Córdoba,3946289,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,Córdoba,3957565,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,Córdoba,3968336,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,Córdoba,3978566,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,Córdoba,3988364,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,Córdoba,3997839,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,Córdoba,4007292,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,Córdoba,4016866,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,Córdoba,4026568,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,Córdoba,4036352,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,Córdoba,4046192,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,Córdoba,4056111,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,Córdoba,4066134,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,Córdoba,4076173,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,Córdoba,4086175,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,Córdoba,4096034,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,Córdoba,4105637,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,Corrientes,992595,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,Corrientes,1017731,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,Corrientes,1028248,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,Corrientes,1038786,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,Corrientes,1049325,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,Corrientes,1059836,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,Corrientes,1070283,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,Corrientes,1080655,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,Corrientes,1090938,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,Corrientes,1101084,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,Corrientes,1111052,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,Corrientes,1120801,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,Corrientes,1130320,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,Corrientes,1212696,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,Corrientes,1189015,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,Corrientes,1193970,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,Corrientes,1199120,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,Corrientes,1203905,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,Corrientes,1208334,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,Corrientes,1212387,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,Corrientes,1216312,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,Corrientes,1220239,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,Corrientes,1224094,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,Corrientes,1227937,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,Corrientes,1231780,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,Corrientes,1235592,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,Corrientes,1239335,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,Corrientes,1243054,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,Corrientes,1246716,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,Corrientes,1250294,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,Corrientes,1253758,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,Corrientes,1257074,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,Corrientes,1260197,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,Entre Ríos,1235994,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,Entre Ríos,1255574,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,Entre Ríos,1268744,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,Entre Ríos,1281931,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,Entre Ríos,1295121,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,Entre Ríos,1308290,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,Entre Ríos,1321415,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,Entre Ríos,1334489,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,Entre Ríos,1347508,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,Entre Ríos,1360443,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,Entre Ríos,1373270,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,Entre Ríos,1385961,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,Entre Ríos,1398510,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,Entre Ríos,1425578,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,Entre Ríos,1449787,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,Entre Ríos,1452721,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,Entre Ríos,1456015,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,Entre Ríos,1459182,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,Entre Ríos,1462153,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,Entre Ríos,1464903,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,Entre Ríos,1467496,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,Entre Ríos,1469959,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,Entre Ríos,1472359,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,Entre Ríos,1474819,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,Entre Ríos,1477276,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,Entre Ríos,1479768,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,Entre Ríos,1482249,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,Entre Ríos,1484741,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,Entre Ríos,1487238,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,Entre Ríos,1489714,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,Entre Ríos,1492107,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,Entre Ríos,1494406,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,Entre Ríos,1496562,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,Formosa,530162,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,Formosa,551626,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,Formosa,557223,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,Formosa,562794,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,Formosa,568331,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,Formosa,573823,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,Formosa,579250,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,Formosa,584614,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,Formosa,589916,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,Formosa,595129,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,Formosa,600229,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,Formosa,605193,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,Formosa,610019,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,Formosa,607419,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,Formosa,620502,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,Formosa,622428,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,Formosa,624461,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,Formosa,626649,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,Formosa,628876,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,Formosa,631105,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,Formosa,633312,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,Formosa,635477,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,Formosa,637566,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,Formosa,639601,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,Formosa,641588,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,Formosa,643500,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,Formosa,645342,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,Formosa,647099,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,Formosa,648810,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,Formosa,650415,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,Formosa,651925,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,Formosa,653315,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,Formosa,654581,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,Jujuy,673307,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,Jujuy,683513,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,Jujuy,692379,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,Jujuy,701252,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,Jujuy,710121,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,Jujuy,718971,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,Jujuy,727780,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,Jujuy,736542,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,Jujuy,745252,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,Jujuy,753891,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,Jujuy,762440,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,Jujuy,770881,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,Jujuy,779212,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,Jujuy,811611,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,Jujuy,795372,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,Jujuy,796866,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,Jujuy,798673,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,Jujuy,800744,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,Jujuy,802922,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,Jujuy,805114,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,Jujuy,807293,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,Jujuy,809457,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,Jujuy,811608,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,Jujuy,813792,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,Jujuy,816009,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,Jujuy,818226,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,Jujuy,820427,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,Jujuy,822619,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,Jujuy,824798,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,Jujuy,826921,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,Jujuy,828966,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,Jujuy,830923,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,Jujuy,832736,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,La Pampa,318951,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,La Pampa,327028,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,La Pampa,330268,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,La Pampa,333496,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,La Pampa,336706,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,La Pampa,339895,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,La Pampa,343056,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,La Pampa,346191,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,La Pampa,349299,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,La Pampa,352378,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,La Pampa,355422,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,La Pampa,358428,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,La Pampa,361394,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,La Pampa,361859,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,La Pampa,373976,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,La Pampa,374945,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,La Pampa,375873,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,La Pampa,376794,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,La Pampa,377663,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,La Pampa,378481,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,La Pampa,379260,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,La Pampa,379981,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,La Pampa,380681,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,La Pampa,381357,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,La Pampa,382022,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,La Pampa,382659,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,La Pampa,383272,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,La Pampa,383871,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,La Pampa,384434,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,La Pampa,384974,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,La Pampa,385475,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,La Pampa,385927,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,La Pampa,386324,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,La Rioja,333642,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,La Rioja,342582,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,La Rioja,347494,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,La Rioja,352476,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,La Rioja,357516,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,La Rioja,362605,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,La Rioja,367728,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,La Rioja,372879,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,La Rioja,378047,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,La Rioja,383220,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,La Rioja,388386,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,La Rioja,393531,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,La Rioja,398648,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,La Rioja,383865,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,La Rioja,398518,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,La Rioja,400097,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,La Rioja,401843,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,La Rioja,403577,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,La Rioja,405241,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,La Rioja,406823,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,La Rioja,408351,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,La Rioja,409825,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,La Rioja,411256,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,La Rioja,412664,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,La Rioja,414059,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,La Rioja,415427,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,La Rioja,416752,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,La Rioja,418036,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,La Rioja,419305,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,La Rioja,420517,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,La Rioja,421687,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,La Rioja,422790,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,La Rioja,423835,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,Mendoza,1738929,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,Mendoza,1774737,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,Mendoza,1797235,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,Mendoza,1819608,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,Mendoza,1841813,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,Mendoza,1863809,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,Mendoza,1885551,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,Mendoza,1907045,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,Mendoza,1928304,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,Mendoza,1949293,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,Mendoza,1969982,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,Mendoza,1990338,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,Mendoza,2010363,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,Mendoza,2043540,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,Mendoza,2032783,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,Mendoza,2037228,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,Mendoza,2042241,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,Mendoza,2047181,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,Mendoza,2051912,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,Mendoza,2056323,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,Mendoza,2060449,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,Mendoza,2064401,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,Mendoza,2068328,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,Mendoza,2072340,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,Mendoza,2076433,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,Mendoza,2080625,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,Mendoza,2084894,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,Mendoza,2089254,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,Mendoza,2093738,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,Mendoza,2098296,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,Mendoza,2102874,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,Mendoza,2107439,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,Mendoza,2111931,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,Misiones,1101593,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,Misiones,1113279,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,Misiones,1128798,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,Misiones,1144189,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,Misiones,1159445,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,Misiones,1174542,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,Misiones,1189446,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,Misiones,1204182,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,Misiones,1218771,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,Misiones,1233177,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,Misiones,1247362,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,Misiones,1261294,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,Misiones,1274992,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,Misiones,1278873,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,Misiones,1313583,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,Misiones,1322993,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,Misiones,1333633,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,Misiones,1344368,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,Misiones,1355029,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,Misiones,1365537,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,Misiones,1375915,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,Misiones,1386047,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,Misiones,1395890,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,Misiones,1405546,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,Misiones,1415010,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,Misiones,1424287,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,Misiones,1433364,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,Misiones,1442243,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,Misiones,1450940,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,Misiones,1459438,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,Misiones,1467708,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,Misiones,1475705,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,Misiones,1483409,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,Neuquén,551266,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,Neuquén,571910,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,Neuquén,581720,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,Neuquén,591422,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,Neuquén,601003,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,Neuquén,610449,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,Neuquén,619745,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,Neuquén,628897,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,Neuquén,637913,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,Neuquén,646784,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,Neuquén,655501,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,Neuquén,664057,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,Neuquén,672461,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,Neuquén,710814,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,Neuquén,689222,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,Neuquén,693935,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,Neuquén,698410,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,Neuquén,702816,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,Neuquén,707092,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,Neuquén,711217,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,Neuquén,715222,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,Neuquén,719121,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,Neuquén,722955,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,Neuquén,726756,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,Neuquén,730506,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,Neuquén,734228,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,Neuquén,737899,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,Neuquén,741552,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,Neuquén,745176,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,Neuquén,748765,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,Neuquén,752315,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,Neuquén,755800,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,Neuquén,759196,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,Río Negro,638645,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,Río Negro,648277,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,Río Negro,658486,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,Río Negro,668663,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,Río Negro,678797,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,Río Negro,688873,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,Río Negro,698874,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,Río Negro,708799,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,Río Negro,718646,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,Río Negro,728403,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,Río Negro,738060,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,Río Negro,747610,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,Río Negro,757052,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,Río Negro,750768,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,Río Negro,776389,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,Río Negro,780516,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,Río Negro,784591,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,Río Negro,788658,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,Río Negro,792587,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,Río Negro,796378,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,Río Negro,800042,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,Río Negro,803596,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,Río Negro,807072,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,Río Negro,810509,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,Río Negro,813906,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,Río Negro,817260,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,Río Negro,820579,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,Río Negro,823856,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,Río Negro,827081,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,Río Negro,830266,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,Río Negro,833381,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,Río Negro,836397,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,Río Negro,839304,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,Salta,1214441,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,Salta,1239111,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,Salta,1258111,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,Salta,1277062,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,Salta,1295944,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,Salta,1314726,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,Salta,1333365,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,Salta,1351878,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,Salta,1370283,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,Salta,1388532,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,Salta,1406584,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,Salta,1424397,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,Salta,1441988,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,Salta,1441351,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,Salta,1467237,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,Salta,1473871,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,Salta,1480327,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,Salta,1486517,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,Salta,1492267,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,Salta,1497629,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,Salta,1502892,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,Salta,1508205,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,Salta,1513502,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,Salta,1518888,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,Salta,1524299,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,Salta,1529715,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,Salta,1535143,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,Salta,1540546,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,Salta,1545928,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,Salta,1551242,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,Salta,1556445,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,Salta,1561493,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,Salta,1566347,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,San Juan,681055,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,San Juan,696076,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,San Juan,704652,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,San Juan,713240,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,San Juan,721830,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,San Juan,730408,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,San Juan,738959,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,San Juan,747488,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,San Juan,755994,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,San Juan,764464,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,San Juan,772876,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,San Juan,781217,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,San Juan,789489,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,San Juan,822853,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,San Juan,837233,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,San Juan,841155,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,San Juan,845201,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,San Juan,849117,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,San Juan,852747,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,San Juan,856101,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,San Juan,859378,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,San Juan,862666,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,San Juan,865955,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,San Juan,869273,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,San Juan,872614,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,San Juan,875975,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,San Juan,879323,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,San Juan,882668,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,San Juan,886017,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,San Juan,889342,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,San Juan,892623,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,San Juan,895838,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,San Juan,898946,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,San Luis,432310,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,San Luis,443944,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,San Luis,450434,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,San Luis,456924,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,San Luis,463411,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,San Luis,469889,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,San Luis,476351,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,San Luis,482796,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,San Luis,489225,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,San Luis,495629,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,San Luis,502000,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,San Luis,508328,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,San Luis,514610,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,San Luis,542069,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,San Luis,527530,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,San Luis,530792,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,San Luis,533465,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,San Luis,536173,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,San Luis,538852,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,San Luis,541490,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,San Luis,544082,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,San Luis,546646,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,San Luis,549169,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,San Luis,551693,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,San Luis,554205,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,San Luis,556706,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,San Luis,559198,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,San Luis,561658,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,San Luis,564080,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,San Luis,566474,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,San Luis,568813,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,San Luis,571072,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,San Luis,573246,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,Santa Cruz,273964,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,Santa Cruz,275452,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,Santa Cruz,284414,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,Santa Cruz,293407,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,Santa Cruz,302420,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,Santa Cruz,311444,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,Santa Cruz,320469,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,Santa Cruz,329499,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,Santa Cruz,338542,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,Santa Cruz,347593,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,Santa Cruz,356647,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,Santa Cruz,365698,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,Santa Cruz,374756,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,Santa Cruz,337226,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,Santa Cruz,334397,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,Santa Cruz,334541,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,Santa Cruz,334752,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,Santa Cruz,334953,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,Santa Cruz,335096,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,Santa Cruz,335186,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,Santa Cruz,335260,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,Santa Cruz,335302,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,Santa Cruz,335317,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,Santa Cruz,335351,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,Santa Cruz,335378,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,Santa Cruz,335415,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,Santa Cruz,335449,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,Santa Cruz,335511,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,Santa Cruz,335582,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,Santa Cruz,335694,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,Santa Cruz,335806,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,Santa Cruz,335921,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,Santa Cruz,336026,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,Santa Fe,3194537,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,Santa Fe,3257907,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,Santa Fe,3285408,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,Santa Fe,3313212,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,Santa Fe,3341228,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,Santa Fe,3369365,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,Santa Fe,3397532,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,Santa Fe,3425656,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,Santa Fe,3453674,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,Santa Fe,3481514,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,Santa Fe,3509113,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,Santa Fe,3536418,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,Santa Fe,3563390,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,Santa Fe,3544908,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,Santa Fe,3670163,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,Santa Fe,3674361,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,Santa Fe,3679597,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,Santa Fe,3684529,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,Santa Fe,3688683,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,Santa Fe,3692001,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,Santa Fe,3695020,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,Santa Fe,3697955,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,Santa Fe,3700705,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,Santa Fe,3703416,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,Santa Fe,3706100,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,Santa Fe,3708721,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,Santa Fe,3711266,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,Santa Fe,3713752,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,Santa Fe,3716208,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,Santa Fe,3718567,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,Santa Fe,3720759,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,Santa Fe,3722719,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,Santa Fe,3724386,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,Santiago del Estero,874006,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,Santiago del Estero,879246,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,Santiago del Estero,888809,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,Santiago del Estero,898484,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,Santiago del Estero,908268,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,Santiago del Estero,918147,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,Santiago del Estero,928097,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,Santiago del Estero,938109,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,Santiago del Estero,948172,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,Santiago del Estero,958251,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,Santiago del Estero,968309,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,Santiago del Estero,978313,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,Santiago del Estero,988245,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,Santiago del Estero,1060906,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,Santiago del Estero,1045276,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,Santiago del Estero,1049610,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,Santiago del Estero,1053409,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,Santiago del Estero,1056774,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,Santiago del Estero,1059927,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,Santiago del Estero,1062900,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,Santiago del Estero,1065723,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,Santiago del Estero,1068512,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,Santiago del Estero,1071328,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,Santiago del Estero,1074253,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,Santiago del Estero,1077252,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,Santiago del Estero,1080299,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,Santiago del Estero,1083397,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,Santiago del Estero,1086530,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,Santiago del Estero,1089685,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,Santiago del Estero,1092846,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,Santiago del Estero,1095967,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,Santiago del Estero,1099020,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,Santiago del Estero,1101964,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,Tierra del Fuego,127205,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,Tierra del Fuego,131661,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,Tierra del Fuego,135742,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,Tierra del Fuego,139852,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,Tierra del Fuego,143987,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,Tierra del Fuego,148143,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,Tierra del Fuego,152317,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,Tierra del Fuego,156509,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,Tierra del Fuego,160720,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,Tierra del Fuego,164944,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,Tierra del Fuego,169183,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,Tierra del Fuego,173432,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,Tierra del Fuego,177697,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,Tierra del Fuego,185732,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,Tierra del Fuego,179645,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,Tierra del Fuego,180555,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,Tierra del Fuego,181263,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,Tierra del Fuego,182003,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,Tierra del Fuego,182744,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,Tierra del Fuego,183488,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,Tierra del Fuego,184236,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,Tierra del Fuego,184986,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,Tierra del Fuego,185746,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,Tierra del Fuego,186515,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,Tierra del Fuego,187317,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,Tierra del Fuego,188151,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,Tierra del Fuego,189044,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,Tierra del Fuego,189953,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,Tierra del Fuego,190852,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,Tierra del Fuego,191732,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,Tierra del Fuego,192610,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,Tierra del Fuego,193452,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,Tierra del Fuego,194261,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2010,Tucumán,1448188,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2010,Tucumán,1489225,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2011,Tucumán,1509932,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2012,Tucumán,1530689,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2013,Tucumán,1551460,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2014,Tucumán,1572205,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2015,Tucumán,1592878,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2016,Tucumán,1613476,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2017,Tucumán,1633992,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2018,Tucumán,1654388,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2019,Tucumán,1674622,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2020,Tucumán,1694656,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2021,Tucumán,1714487,proyeccion,https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf
+2022,Tucumán,1731820,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_tp_est_c1.xlsx
+2022,Tucumán,1758288,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2023,Tucumán,1763239,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2024,Tucumán,1768368,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2025,Tucumán,1773567,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2026,Tucumán,1778484,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2027,Tucumán,1783139,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2028,Tucumán,1787513,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2029,Tucumán,1791730,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2030,Tucumán,1795918,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2031,Tucumán,1800167,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2032,Tucumán,1804448,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2033,Tucumán,1808746,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2034,Tucumán,1813045,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2035,Tucumán,1817352,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2036,Tucumán,1821650,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2037,Tucumán,1825911,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2038,Tucumán,1830106,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2039,Tucumán,1834161,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv
+2040,Tucumán,1838056,proyeccion,https://censo.gob.ar/wp-content/uploads/2025/10/proyecciones_jurisdicciones_2022_2040_base.csv

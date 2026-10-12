@@ -100,3 +100,12 @@
   frecuencia: anual
   dificultad: facil
   estado: activo
+
+- id: poblacion
+  nombre: Población por departamento y por provincia (censos y proyecciones)
+  organismo: INDEC
+  url: https://censo.gob.ar/
+  formato: xlsx, pdf
+  frecuencia: anual
+  dificultad: facil
+  estado: activo

@@ -1,0 +1,505 @@
+anio,municipio,poblacion,tipo,fuente_url
+2010,Capital,115041,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2010,Capital,117730,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2011,Capital,117952,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2012,Capital,118172,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2013,Capital,118390,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2014,Capital,118607,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2015,Capital,118821,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2016,Capital,119033,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2017,Capital,119243,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2018,Capital,119450,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2019,Capital,119654,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2020,Capital,119854,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2021,Capital,120051,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2022,Capital,127160,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2022,Capital,126317,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2023,Capital,126422,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2024,Capital,126541,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2025,Capital,126658,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2026,Capital,126771,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2027,Capital,126877,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2028,Capital,126977,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2029,Capital,127073,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2030,Capital,127169,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2031,Capital,127266,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2032,Capital,127366,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2033,Capital,127469,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2034,Capital,127573,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2035,Capital,127679,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2010,General Alvear,46429,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2010,General Alvear,47456,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2011,General Alvear,47793,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2012,General Alvear,48130,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2013,General Alvear,48463,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2014,General Alvear,48793,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2015,General Alvear,49120,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2016,General Alvear,49442,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2017,General Alvear,49761,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2018,General Alvear,50076,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2019,General Alvear,50387,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2020,General Alvear,50693,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2021,General Alvear,50993,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2022,General Alvear,52584,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2022,General Alvear,52248,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2023,General Alvear,52318,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2024,General Alvear,52396,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2025,General Alvear,52474,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2026,General Alvear,52547,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2027,General Alvear,52617,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2028,General Alvear,52681,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2029,General Alvear,52742,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2030,General Alvear,52803,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2031,General Alvear,52866,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2032,General Alvear,52930,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2033,General Alvear,52995,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2034,General Alvear,53062,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2035,General Alvear,53130,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2010,Godoy Cruz,191903,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2010,Godoy Cruz,196209,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2011,Godoy Cruz,197283,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2012,Godoy Cruz,198353,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2013,Godoy Cruz,199413,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2014,Godoy Cruz,200465,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2015,Godoy Cruz,201503,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2016,Godoy Cruz,202530,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2017,Godoy Cruz,203546,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2018,Godoy Cruz,204549,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2019,Godoy Cruz,205537,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2020,Godoy Cruz,206510,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2021,Godoy Cruz,207466,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2022,Godoy Cruz,195159,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2022,Godoy Cruz,196010,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2023,Godoy Cruz,196004,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2024,Godoy Cruz,195996,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2025,Godoy Cruz,195989,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2026,Godoy Cruz,195982,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2027,Godoy Cruz,195975,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2028,Godoy Cruz,195967,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2029,Godoy Cruz,195961,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2030,Godoy Cruz,195953,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2031,Godoy Cruz,195945,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2032,Godoy Cruz,195938,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2033,Godoy Cruz,195930,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2034,Godoy Cruz,195921,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2035,Godoy Cruz,195913,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2010,Guaymallén,283803,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2010,Guaymallén,289412,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2011,Guaymallén,293908,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2012,Guaymallén,298371,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2013,Guaymallén,302808,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2014,Guaymallén,307201,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2015,Guaymallén,311541,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2016,Guaymallén,315833,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2017,Guaymallén,320079,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2018,Guaymallén,324272,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2019,Guaymallén,328402,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2020,Guaymallén,332468,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2021,Guaymallén,336466,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2022,Guaymallén,321966,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2022,Guaymallén,319890,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2023,Guaymallén,320346,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2024,Guaymallén,320858,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2025,Guaymallén,321364,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2026,Guaymallén,321848,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2027,Guaymallén,322300,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2028,Guaymallén,322723,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2029,Guaymallén,323129,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2030,Guaymallén,323532,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2031,Guaymallén,323944,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2032,Guaymallén,324364,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2033,Guaymallén,324795,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2034,Guaymallén,325233,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2035,Guaymallén,325681,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2010,Junín,37859,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2010,Junín,38652,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2011,Junín,39103,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2012,Junín,39553,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2013,Junín,39998,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2014,Junín,40440,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2015,Junín,40876,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2016,Junín,41309,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2017,Junín,41735,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2018,Junín,42156,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2019,Junín,42572,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2020,Junín,42980,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2021,Junín,43382,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2022,Junín,46604,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2022,Junín,46318,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2023,Junín,46455,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2024,Junín,46611,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2025,Junín,46764,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2026,Junín,46911,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2027,Junín,47047,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2028,Junín,47175,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2029,Junín,47297,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2030,Junín,47419,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2031,Junín,47542,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2032,Junín,47669,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2033,Junín,47799,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2034,Junín,47931,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2035,Junín,48066,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2010,La Paz,10012,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2010,La Paz,10238,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2011,La Paz,10299,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2012,La Paz,10362,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2013,La Paz,10423,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2014,La Paz,10483,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2015,La Paz,10543,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2016,La Paz,10602,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2017,La Paz,10660,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2018,La Paz,10718,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2019,La Paz,10775,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2020,La Paz,10831,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2021,La Paz,10886,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2022,La Paz,12086,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2022,La Paz,12014,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2023,La Paz,12045,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2024,La Paz,12080,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2025,La Paz,12114,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2026,La Paz,12147,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2027,La Paz,12178,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2028,La Paz,12208,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2029,La Paz,12234,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2030,La Paz,12262,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2031,La Paz,12290,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2032,La Paz,12319,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2033,La Paz,12348,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2034,La Paz,12378,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2035,La Paz,12409,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2010,Las Heras,203666,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2010,Las Heras,207786,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2011,Las Heras,210699,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2012,Las Heras,213595,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2013,Las Heras,216470,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2014,Las Heras,219317,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2015,Las Heras,222132,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2016,Las Heras,224915,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2017,Las Heras,227667,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2018,Las Heras,230384,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2019,Las Heras,233063,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2020,Las Heras,235699,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2021,Las Heras,238291,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2022,Las Heras,234401,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2022,Las Heras,232872,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2023,Las Heras,233266,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2024,Las Heras,233711,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2025,Las Heras,234148,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2026,Las Heras,234568,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2027,Las Heras,234959,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2028,Las Heras,235324,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2029,Las Heras,235675,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2030,Las Heras,236023,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2031,Las Heras,236378,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2032,Las Heras,236740,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2033,Las Heras,237111,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2034,Las Heras,237490,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2035,Las Heras,237876,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2010,Lavalle,36738,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2010,Lavalle,37445,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2011,Lavalle,38133,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2012,Lavalle,38818,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2013,Lavalle,39497,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2014,Lavalle,40170,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2015,Lavalle,40836,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2016,Lavalle,41493,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2017,Lavalle,42143,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2018,Lavalle,42785,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2019,Lavalle,43418,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2020,Lavalle,44040,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2021,Lavalle,44653,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2022,Lavalle,47167,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2022,Lavalle,46892,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2023,Lavalle,47068,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2024,Lavalle,47268,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2025,Lavalle,47463,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2026,Lavalle,47651,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2027,Lavalle,47826,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2028,Lavalle,47991,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2029,Lavalle,48147,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2030,Lavalle,48303,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2031,Lavalle,48461,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2032,Lavalle,48624,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2033,Lavalle,48790,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2034,Lavalle,48959,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2035,Lavalle,49132,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2010,Luján de Cuyo,119888,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2010,Luján de Cuyo,122187,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2011,Luján de Cuyo,124392,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2012,Luján de Cuyo,126585,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2013,Luján de Cuyo,128762,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2014,Luján de Cuyo,130918,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2015,Luján de Cuyo,133049,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2016,Luján de Cuyo,135156,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2017,Luján de Cuyo,137239,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2018,Luján de Cuyo,139297,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2019,Luján de Cuyo,141325,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2020,Luján de Cuyo,143320,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2021,Luján de Cuyo,145283,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2022,Luján de Cuyo,175056,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2022,Luján de Cuyo,174015,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2023,Luján de Cuyo,175046,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2024,Luján de Cuyo,176208,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2025,Luján de Cuyo,177354,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2026,Luján de Cuyo,178452,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2027,Luján de Cuyo,179477,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2028,Luján de Cuyo,180435,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2029,Luján de Cuyo,181353,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2030,Luján de Cuyo,182266,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2031,Luján de Cuyo,183199,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2032,Luján de Cuyo,184151,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2033,Luján de Cuyo,185125,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2034,Luján de Cuyo,186117,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2035,Luján de Cuyo,187131,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2010,Maipú,172332,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2010,Maipú,175777,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2011,Maipú,178432,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2012,Maipú,181072,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2013,Maipú,183692,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2014,Maipú,186287,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2015,Maipú,188853,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2016,Maipú,191390,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2017,Maipú,193898,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2018,Maipú,196375,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2019,Maipú,198816,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2020,Maipú,201218,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2021,Maipú,203581,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2022,Maipú,219402,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2022,Maipú,218042,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2023,Maipú,218826,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2024,Maipú,219710,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2025,Maipú,220580,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2026,Maipú,221414,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2027,Maipú,222190,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2028,Maipú,222916,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2029,Maipú,223611,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2030,Maipú,224301,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2031,Maipú,225008,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2032,Maipú,225727,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2033,Maipú,226464,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2034,Maipú,227214,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2035,Maipú,227981,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2010,Malargüe,27660,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2010,Malargüe,28151,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2011,Malargüe,28828,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2012,Malargüe,29501,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2013,Malargüe,30170,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2014,Malargüe,30832,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2015,Malargüe,31486,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2016,Malargüe,32134,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2017,Malargüe,32775,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2018,Malargüe,33406,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2019,Malargüe,34029,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2020,Malargüe,34642,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2021,Malargüe,35246,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2022,Malargüe,32717,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2022,Malargüe,32522,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2023,Malargüe,32596,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2024,Malargüe,32679,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2025,Malargüe,32760,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2026,Malargüe,32838,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2027,Malargüe,32910,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2028,Malargüe,32978,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2029,Malargüe,33042,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2030,Malargüe,33107,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2031,Malargüe,33173,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2032,Malargüe,33239,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2033,Malargüe,33307,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2034,Malargüe,33377,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2035,Malargüe,33448,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2010,Rivadavia,56373,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2010,Rivadavia,57567,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2011,Rivadavia,58187,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2012,Rivadavia,58806,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2013,Rivadavia,59419,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2014,Rivadavia,60025,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2015,Rivadavia,60626,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2016,Rivadavia,61219,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2017,Rivadavia,61806,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2018,Rivadavia,62385,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2019,Rivadavia,62956,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2020,Rivadavia,63518,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2021,Rivadavia,64071,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2022,Rivadavia,63724,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2022,Rivadavia,63331,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2023,Rivadavia,63414,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2024,Rivadavia,63508,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2025,Rivadavia,63601,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2026,Rivadavia,63689,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2027,Rivadavia,63772,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2028,Rivadavia,63849,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2029,Rivadavia,63923,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2030,Rivadavia,63997,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2031,Rivadavia,64072,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2032,Rivadavia,64149,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2033,Rivadavia,64227,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2034,Rivadavia,64308,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2035,Rivadavia,64389,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2010,San Carlos,32631,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2010,San Carlos,33250,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2011,San Carlos,33885,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2012,San Carlos,34519,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2013,San Carlos,35146,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2014,San Carlos,35768,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2015,San Carlos,36382,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2016,San Carlos,36989,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2017,San Carlos,37591,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2018,San Carlos,38183,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2019,San Carlos,38768,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2020,San Carlos,39343,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2021,San Carlos,39910,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2022,San Carlos,39869,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2022,San Carlos,39618,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2023,San Carlos,39732,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2024,San Carlos,39859,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2025,San Carlos,39986,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2026,San Carlos,40106,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2027,San Carlos,40219,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2028,San Carlos,40324,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2029,San Carlos,40425,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2030,San Carlos,40525,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2031,San Carlos,40626,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2032,San Carlos,40731,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2033,San Carlos,40838,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2034,San Carlos,40946,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2035,San Carlos,41058,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2010,San Martín,118220,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2010,San Martín,120667,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2011,San Martín,122163,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2012,San Martín,123651,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2013,San Martín,125127,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2014,San Martín,126590,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2015,San Martín,128036,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2016,San Martín,129465,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2017,San Martín,130878,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2018,San Martín,132274,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2019,San Martín,133649,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2020,San Martín,135003,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2021,San Martín,136334,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2022,San Martín,139792,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2022,San Martín,138919,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2023,San Martín,139227,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2024,San Martín,139574,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2025,San Martín,139916,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2026,San Martín,140243,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2027,San Martín,140548,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2028,San Martín,140833,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2029,San Martín,141105,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2030,San Martín,141376,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2031,San Martín,141654,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2032,San Martín,141936,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2033,San Martín,142226,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2034,San Martín,142521,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2035,San Martín,142821,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2010,San Rafael,188018,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2010,San Rafael,191943,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2011,San Rafael,194157,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2012,San Rafael,196359,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2013,San Rafael,198544,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2014,San Rafael,200708,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2015,San Rafael,202848,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2016,San Rafael,204963,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2017,San Rafael,207055,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2018,San Rafael,209121,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2019,San Rafael,211157,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2020,San Rafael,213160,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2021,San Rafael,215131,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2022,San Rafael,215020,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2022,San Rafael,213672,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2023,San Rafael,214006,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2024,San Rafael,214384,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2025,San Rafael,214757,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2026,San Rafael,215114,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2027,San Rafael,215446,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2028,San Rafael,215758,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2029,San Rafael,216058,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2030,San Rafael,216354,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2031,San Rafael,216658,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2032,San Rafael,216968,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2033,San Rafael,217285,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2034,San Rafael,217608,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2035,San Rafael,217939,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2010,Santa Rosa,16374,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2010,Santa Rosa,16744,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2011,Santa Rosa,16850,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2012,Santa Rosa,16955,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2013,Santa Rosa,17059,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2014,Santa Rosa,17163,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2015,Santa Rosa,17266,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2016,Santa Rosa,17367,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2017,Santa Rosa,17466,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2018,Santa Rosa,17565,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2019,Santa Rosa,17663,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2020,Santa Rosa,17758,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2021,Santa Rosa,17852,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2022,Santa Rosa,19382,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2022,Santa Rosa,19273,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2023,Santa Rosa,19314,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2024,Santa Rosa,19363,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2025,Santa Rosa,19411,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2026,Santa Rosa,19456,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2027,Santa Rosa,19499,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2028,Santa Rosa,19538,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2029,Santa Rosa,19576,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2030,Santa Rosa,19614,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2031,Santa Rosa,19653,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2032,Santa Rosa,19692,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2033,Santa Rosa,19732,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2034,Santa Rosa,19774,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2035,Santa Rosa,19815,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2010,Tunuyán,49458,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2010,Tunuyán,50369,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2011,Tunuyán,51418,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2012,Tunuyán,52460,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2013,Tunuyán,53495,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2014,Tunuyán,54520,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2015,Tunuyán,55533,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2016,Tunuyán,56534,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2017,Tunuyán,57525,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2018,Tunuyán,58503,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2019,Tunuyán,59467,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2020,Tunuyán,60416,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2021,Tunuyán,61349,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2022,Tunuyán,60171,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2022,Tunuyán,59791,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2023,Tunuyán,59958,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2024,Tunuyán,60145,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2025,Tunuyán,60330,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2026,Tunuyán,60507,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2027,Tunuyán,60671,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2028,Tunuyán,60824,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2029,Tunuyán,60972,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2030,Tunuyán,61117,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2031,Tunuyán,61267,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2032,Tunuyán,61417,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2033,Tunuyán,61574,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2034,Tunuyán,61732,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2035,Tunuyán,61893,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2010,Tupungato,32524,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2010,Tupungato,33154,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2011,Tupungato,33753,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2012,Tupungato,34346,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2013,Tupungato,34937,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2014,Tupungato,35522,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2015,Tupungato,36100,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2016,Tupungato,36671,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2017,Tupungato,37237,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2018,Tupungato,37794,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2019,Tupungato,38344,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2020,Tupungato,38885,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2021,Tupungato,39418,proyeccion,https://www.indec.gob.ar/ftp/cuadros/poblacion/proyeccion_departamentos_10_25.pdf
+2022,Tupungato,41280,censo,https://censo.gob.ar/wp-content/uploads/2023/11/c2022_mendoza_est_c1_13.xlsx
+2022,Tupungato,41039,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2023,Tupungato,41185,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2024,Tupungato,41350,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2025,Tupungato,41512,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2026,Tupungato,41668,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2027,Tupungato,41812,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2028,Tupungato,41948,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2029,Tupungato,42078,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2030,Tupungato,42207,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2031,Tupungato,42338,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2032,Tupungato,42473,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2033,Tupungato,42610,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2034,Tupungato,42750,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv
+2035,Tupungato,42893,proyeccion,https://censo.gob.ar/wp-content/uploads/2026/02/base_estimaciones_pob_deptos_2022_2035.csv

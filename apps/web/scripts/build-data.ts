@@ -125,8 +125,13 @@ function readTable(id: string, file: string): Record<string, string>[] | null {
   return rows.filter((r) => r.length === header.length).map((r) => Object.fromEntries(header.map((h, i) => [h, r[i]!])));
 }
 
-// Población de Mendoza, Censo 2022 (INDEC). Se reemplaza por data/processed/poblacion cuando esté.
-const POBLACION_MENDOZA = 2_043_540;
+// Población de Mendoza: proyección oficial de INDEC (base Censo 2022) para el año en curso.
+const poblacionProv = readTable("poblacion", "poblacion_provincias.csv") ?? [];
+const proyeccionesMza = poblacionProv.filter((r) => r.provincia === "Mendoza" && r.tipo === "proyeccion");
+const anioActual = String(new Date().getFullYear());
+const POBLACION_MENDOZA = Number(
+  (proyeccionesMza.find((r) => r.anio === anioActual) ?? proyeccionesMza.at(-1))?.poblacion ?? 2_043_540,
+);
 
 mkdirSync(join(OUT, "temas"), { recursive: true });
 const trimestral = readTable("hacienda-deuda-stock", "deuda_total_trimestral.csv");
