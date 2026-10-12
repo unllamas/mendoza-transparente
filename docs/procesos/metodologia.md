@@ -71,3 +71,10 @@ Fuente: anexo 19 del informe trimestral de Responsabilidad Fiscal (`lrf-personal
   - Se presentan como preguntas, no como irregularidades.
 - **Designaciones:** las del Boletín Oficial (`designaciones`), asignadas por organismo emisor o repartición. La cobertura depende de cuántos Boletines tengamos con texto completo.
 
+## Desvío entre lo estimado y lo adjudicado
+
+- **Señal "adjudicado-sobre-estimado":** procesos con un estimado de al menos $ 100.000 y una adjudicación de al menos el doble. Se ordenan por la diferencia en pesos.
+- **Señal "estimado-simbolico":** estimados de menos de $ 1.000 y adjudicaciones de al menos $ 100.000 y de más de 100 veces lo estimado. No se mide un sobreprecio: el organismo no estimó, y eso impide el control.
+- **En la hoja del proceso:** el desvío se expresa en "veces lo estimado" a partir del doble y en porcentaje por debajo. Lleva aviso en los dos casos de arriba.
+- **Explicaciones posibles** (errores de carga, cambios de alcance, inflación entre el llamado y la adjudicación): se mencionan siempre. Son señales, no acusaciones.
+

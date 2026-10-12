@@ -41,6 +41,15 @@ La portada está pensada para quien llega sin saber por dónde empezar. Los comp
 
 Al sumar una sección, conviene ubicarla en el mapa (`EcosystemMap`) y, si responde una pregunta frecuente, en `StartingQuestions`.
 
+## Hojas con el id en la URL
+
+Las hojas de detalle se abren con parámetros en la URL, así cada caso se puede compartir y abrir directo:
+
+- `?proceso=<ocid>` y `?proveedor=<cuit>`: los maneja `DetailSheet` (`src/detail-sheet.tsx`), montado una sola vez en el layout, así que funcionan sobre cualquier página. Desde código: `useDetail().open("proceso", ocid)`.
+- `?senal=<id>`: la señal abierta en `/senales`. Sus casos abren la hoja del proceso o del proveedor encima (`/senales?senal=adjudicado-sobre-estimado&proceso=ocds-…`).
+
+Pasar de un proceso a un proveedor agrega un paso al historial: el botón "atrás" vuelve a la hoja anterior y la X la cierra. En la tabla de datos de compras, cada fila abre la hoja de su proceso o de su proveedor.
+
 ## Sumar una página temática
 
 1. **Cálculo**: un script en `scripts/temas/<tema>.ts` que recibe las tablas y devuelve el JSON del tema; su tipo va en `src/types.ts`. Llamarlo desde `build-data.ts`.

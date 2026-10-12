@@ -8,7 +8,8 @@ import { FuentesOficiales } from "../fuente.tsx";
 import { formatDate, formatNumber, limpiarOrganismo } from "../lib.ts";
 import { slugProveedor } from "../slug.ts";
 import { Aviso, Buscador, Migas, normalizar, PageHeader, Section, Sheet, StatTile } from "./components.tsx";
-import { Proceso, Proveedor } from "./detalle.tsx";
+import { useDetail } from "../detail-sheet.tsx";
+import { Proveedor } from "./detalle.tsx";
 
 const FUENTES = ["compras-ocds", "proveedores"];
 const PAGINA = 40;
@@ -24,19 +25,6 @@ const VerMas = ({ onClick }: { onClick: () => void }) => (
     Ver más
   </button>
 );
-
-/** Hoja con el detalle de un proceso de compra; desde ahí se salta a la página del proveedor. */
-function ProcesoSheet({ ocid, onClose }: { ocid: string; onClose: () => void }) {
-  const navigate = useNavigate();
-  return (
-    <Sheet titulo="Proceso de compra" onClose={onClose}>
-      <Proceso
-        ocid={ocid}
-        onProveedor={(cuit) => navigate({ to: "/proveedores/$slug", params: { slug: slugProveedor("proveedor", cuit) } })}
-      />
-    </Sheet>
-  );
-}
 
 export function ProveedoresPage() {
   const proveedores = proveedoresRoute.useLoaderData();
@@ -83,7 +71,7 @@ export function ProveedorPage() {
   const { ficha, cuit } = proveedorRoute.useLoaderData();
   const { slug } = proveedorRoute.useParams();
   const navigate = useNavigate();
-  const [ocid, setOcid] = useState<string | null>(null);
+  const detail = useDetail();
   // Links que solo conocen el CUIT (p. ej. desde la hoja de un proceso): se pasa a la URL canónica.
   const canonico = cuit && ficha ? slugProveedor(ficha.empresa?.razonSocial ?? ficha.nombre, cuit) : null;
   useEffect(() => {
@@ -111,8 +99,7 @@ export function ProveedorPage() {
         <h1 className="text-2xl font-semibold tracking-tight text-balance break-words sm:text-3xl">{nombre}</h1>
       </div>
       <FuentesOficiales ids={FUENTES} />
-      <Proveedor cuit={cuit} sinTitulo onProceso={setOcid} />
-      {ocid && <ProcesoSheet ocid={ocid} onClose={() => setOcid(null)} />}
+      <Proveedor cuit={cuit} sinTitulo onProceso={(ocid) => detail.open("proceso", ocid)} />
     </div>
   );
 }
@@ -158,7 +145,7 @@ export function OrganismosPage() {
 export function OrganismoPage() {
   const o = organismoRoute.useLoaderData();
   const { slug } = organismoRoute.useParams();
-  const [ocid, setOcid] = useState<string | null>(null);
+  const detail = useDetail();
   if (!o) {
     return (
       <div className="flex flex-col gap-4">
@@ -246,7 +233,7 @@ export function OrganismoPage() {
         <ul className="flex flex-col divide-y divide-line">
           {o.recientes.map((r) => (
             <li key={r.ocid}>
-              <button type="button" onClick={() => setOcid(r.ocid)} className="group flex w-full items-center gap-3 py-2.5 text-left">
+              <button type="button" onClick={() => detail.open("proceso", r.ocid)} className="group flex w-full items-center gap-3 py-2.5 text-left">
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                   <span className="truncate text-sm group-hover:text-link" title={r.titulo}>{r.titulo || "Sin título"}</span>
                   <span className="truncate text-xs text-ink-muted">
@@ -261,7 +248,6 @@ export function OrganismoPage() {
           ))}
         </ul>
       </Section>
-      {ocid && <ProcesoSheet ocid={ocid} onClose={() => setOcid(null)} />}
     </div>
   );
 }

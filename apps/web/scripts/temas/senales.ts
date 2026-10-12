@@ -81,6 +81,65 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
       .map((p) => casoProceso(p.ocid!, p.metodo_contratacion)),
   });
 
+  // 2b. Award far above a real estimate, and symbolic estimates ($1, $2…) that make the comparison impossible.
+  const REAL_ESTIMATE = 100_000;
+  const SYMBOLIC_ESTIMATE = 1_000;
+  const overruns: { ocid: string; estimate: number; awarded: number }[] = [];
+  const symbolic: { ocid: string; awarded: number; buyer: string }[] = [];
+  for (const [ocid, awarded] of montoPorOcid) {
+    const p = porOcid.get(ocid);
+    const estimate = Number(p?.monto_estimado) || 0;
+    if (estimate >= REAL_ESTIMATE && awarded >= 2 * estimate) overruns.push({ ocid, estimate, awarded });
+    if (estimate > 0 && estimate < SYMBOLIC_ESTIMATE && awarded >= 100 * estimate && awarded >= REAL_ESTIMATE)
+      symbolic.push({ ocid, awarded, buyer: limpiar(p?.comprador ?? "") });
+  }
+  const excess = overruns.reduce((sum, o) => sum + (o.awarded - o.estimate), 0);
+  const times = (x: number) => (x >= 10 ? Math.round(x).toLocaleString("es-AR") : x.toLocaleString("es-AR", { maximumFractionDigits: 1 }));
+  const overrunBuyers = new Map<string, number>();
+  for (const o of overruns) {
+    const b = limpiar(porOcid.get(o.ocid)?.comprador ?? "");
+    overrunBuyers.set(b, (overrunBuyers.get(b) ?? 0) + o.awarded - o.estimate);
+  }
+  const topOverrunBuyer = [...overrunBuyers].sort((a, b) => b[1] - a[1])[0];
+  senales.push({
+    id: "adjudicado-sobre-estimado",
+    tema: "Compras",
+    cifra: overruns.length.toLocaleString("es-AR"),
+    titulo: "procesos de compra se adjudicaron por más del doble de lo que el propio organismo había estimado",
+    matiz: `En total, $ ${Math.round(excess / 1e6).toLocaleString("es-AR")} millones por encima de lo estimado.${
+      topOverrunBuyer ? ` El organismo con más diferencia: ${topOverrunBuyer[0]}.` : ""
+    }`,
+    porQueImporta:
+      "El monto estimado es la referencia para controlar el precio. Puede haber explicaciones (errores de carga, cambios de alcance, inflación entre el llamado y la adjudicación), pero un desvío grande merece una respuesta.",
+    metodo: `Procesos con monto estimado de al menos $ ${REAL_ESTIMATE.toLocaleString("es-AR")} cuya suma adjudicada es al menos el doble. Montos nominales de COMPR.AR Mendoza (OCDS); los casos se ordenan por la diferencia en pesos.`,
+    casosTitulo: "Los mayores desvíos sobre lo estimado",
+    casos: overruns
+      .sort((a, b) => b.awarded - b.estimate - (a.awarded - a.estimate))
+      .slice(0, 20)
+      .map((o) => casoProceso(o.ocid, `${times(o.awarded / o.estimate)} veces lo estimado`)),
+  });
+
+  if (symbolic.length) {
+    const byBuyer = new Map<string, number>();
+    for (const x of symbolic) byBuyer.set(x.buyer, (byBuyer.get(x.buyer) ?? 0) + 1);
+    const [topBuyer, topCount] = [...byBuyer].sort((a, b) => b[1] - a[1])[0]!;
+    senales.push({
+      id: "estimado-simbolico",
+      tema: "Compras",
+      cifra: symbolic.length.toLocaleString("es-AR"),
+      titulo: "procesos se cargaron con un monto estimado simbólico ($ 1, $ 2…) y se adjudicaron por cientos de miles o millones",
+      matiz: `${topCount} de ellos son de ${topBuyer}. Sin un estimado real no se puede saber si el precio pagado fue razonable.`,
+      porQueImporta:
+        "El estimado obliga al organismo a calcular cuánto debería costar lo que compra antes de comprarlo. Cargar $ 1 vacía ese control y hace imposible comparar.",
+      metodo: `Procesos con monto estimado menor a $ ${SYMBOLIC_ESTIMATE.toLocaleString("es-AR")} y adjudicados por al menos $ ${REAL_ESTIMATE.toLocaleString("es-AR")} (y más de 100 veces lo estimado). COMPR.AR Mendoza (OCDS).`,
+      casosTitulo: "Los de mayor monto adjudicado",
+      casos: symbolic
+        .sort((a, b) => b.awarded - a.awarded)
+        .slice(0, 20)
+        .map((x) => casoProceso(x.ocid, `estimado: $ ${Number(porOcid.get(x.ocid)?.monto_estimado ?? 0).toLocaleString("es-AR")}`)),
+    });
+  }
+
   // 3. Empresas nuevas
   const empresa = new Map(proveedores.map((e) => [e.cuit!, e]));
   const porCuit = new Map<string, CsvRow[]>();

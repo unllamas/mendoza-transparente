@@ -27,6 +27,7 @@ import { useEffect, useRef, useState } from "react";
 import { REPO } from "../fuente.tsx";
 import { trackPageview } from "../analytics.ts";
 import { usePageMeta } from "../seo.ts";
+import { DetailSheet } from "../detail-sheet.tsx";
 import { HeaderSearchButton, SearchDialog } from "../search.tsx";
 import { useScrollLock } from "./components.tsx";
 
@@ -201,6 +202,7 @@ export function Layout() {
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-5 sm:py-10">
         <Outlet />
         <SearchDialog />
+        <DetailSheet />
       </main>
 
       <footer className="border-t border-line">

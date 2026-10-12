@@ -21,7 +21,7 @@ import { archivoUrl, useFuentes } from "../fuente.tsx";
 import { formatDate, formatNumber, limpiarOrganismo, loadJson } from "../lib.ts";
 import { procesoShard } from "../shard.ts";
 import type { DatasetMeta, ProcesoDetalle, ProveedorDetalle } from "../types.ts";
-import { Aviso, useScrollLock } from "./components.tsx";
+import { Aviso, Segmented, useScrollLock } from "./components.tsx";
 
 type Vista = { tipo: "fila" } | { tipo: "proveedor"; cuit: string } | { tipo: "proceso"; ocid: string };
 
@@ -352,7 +352,15 @@ const ESTADO_PROCESO: Record<string, string> = {
   unsuccessful: "Desierto o fracasado",
 };
 
+type Orden = "mayor" | "menor" | "nombre";
+const ORDENES: { value: Orden; label: string }[] = [
+  { value: "mayor", label: "Mayor monto" },
+  { value: "menor", label: "Menor monto" },
+  { value: "nombre", label: "A–Z" },
+];
+
 export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cuit: string) => void }) {
+  const [orden, setOrden] = useState<Orden>("mayor");
   const { data: p, error } = useCarga<ProcesoDetalle>(
     `temas/compras/procesos/${procesoShard(ocid)}.json`,
     (d) => (d as Record<string, ProcesoDetalle>)[ocid],
@@ -360,6 +368,9 @@ export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cui
   if (error) return <p className="text-sm text-ink-2">No encontramos este proceso.</p>;
   if (!p) return <p className="text-sm text-ink-muted">Cargando proceso…</p>;
   const total = p.adjudicaciones.reduce((s, a) => s + a.monto, 0);
+  const ordenadas = [...p.adjudicaciones].sort((a, b) =>
+    orden === "nombre" ? a.proveedor.localeCompare(b.proveedor, "es") : orden === "menor" ? a.monto - b.monto : b.monto - a.monto,
+  );
 
   return (
     <>
@@ -386,8 +397,16 @@ export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cui
         titulo={p.adjudicaciones.length ? "Adjudicado a" : "Sin adjudicaciones"}
         ayuda={p.adjudicaciones.length ? "Tocá un proveedor para ver su perfil" : undefined}
       >
+        {p.adjudicaciones.length > 3 && (
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <span className="text-sm text-ink-2 tabular-nums">
+              {formatNumber(p.adjudicaciones.length)} adjudicaciones · {formatMoneda(total, "ARS")}
+            </span>
+            <Segmented label="Ordenar" options={ORDENES} value={orden} onChange={setOrden} trackId="purchase.awards_sort" />
+          </div>
+        )}
         <ul className="flex flex-col divide-y divide-line">
-          {p.adjudicaciones.map((a, i) => (
+          {ordenadas.map((a, i) => (
             <li key={a.cuit + i}>
               <button
                 type="button"
@@ -418,7 +437,6 @@ function Montos({ estimado, adjudicado }: { estimado: number | null; adjudicado:
     { label: "Estimado", valor: estimado },
     { label: "Adjudicado", valor: adjudicado },
   ];
-  const diferencia = estimado && adjudicado ? ((adjudicado - estimado) / estimado) * 100 : null;
   return (
     <Bloque titulo="Montos">
       <ul className="flex flex-col gap-2.5">
@@ -436,15 +454,43 @@ function Montos({ estimado, adjudicado }: { estimado: number | null; adjudicado:
           </li>
         ))}
       </ul>
-      {diferencia !== null && Math.abs(diferencia) >= 0.5 && (
-        <p className="text-sm text-ink-2">
-          Se adjudicó un <span className="font-medium tabular-nums">{Math.abs(Math.round(diferencia))} %</span>{" "}
-          {diferencia > 0 ? "más" : "menos"} de lo estimado.
-        </p>
-      )}
+      {estimado && adjudicado && <Desvio estimado={estimado} adjudicado={adjudicado} />}
       {estimado && !adjudicado && <p className="text-sm text-ink-2">No se adjudicó.</p>}
     </Bloque>
   );
+}
+
+/** Below this, an estimate is symbolic ($1, $2…): the agency did not really estimate the price. */
+const SYMBOLIC_ESTIMATE = 1000;
+
+/**
+ * Difference between estimate and award, readable at any size ("5.261 veces lo estimado" instead of
+ * "526069 %"), with a warning when it is far off: those are the cases worth looking at.
+ */
+function Desvio({ estimado, adjudicado }: { estimado: number; adjudicado: number }) {
+  const ratio = adjudicado / estimado;
+  const pct = Math.abs(ratio - 1) * 100;
+  if (pct < 0.5) return <p className="text-sm text-ink-2">Se adjudicó lo mismo que se estimó.</p>;
+  if (estimado < SYMBOLIC_ESTIMATE && adjudicado >= 100 * estimado)
+    return (
+      <Aviso titulo="Estimado simbólico">
+        El organismo cargó <span className="whitespace-nowrap">{formatMoneda(estimado, "ARS")}</span> como monto estimado y adjudicó{" "}
+        <span className="whitespace-nowrap">{formatMoneda(adjudicado, "ARS")}</span>. Sin un
+        estimado real no se puede controlar si el precio fue razonable.
+      </Aviso>
+    );
+  const text =
+    ratio >= 2
+      ? `Se adjudicó ${formatNumber(ratio >= 10 ? Math.round(ratio) : Math.round(ratio * 10) / 10)} veces lo estimado.`
+      : `Se adjudicó un ${formatNumber(Math.round(pct))} % ${ratio > 1 ? "más" : "menos"} de lo estimado.`;
+  if (ratio >= 2)
+    return (
+      <Aviso titulo="Muy por encima de lo estimado">
+        {text} Puede haber una explicación (un error de carga, un cambio de alcance o precios que subieron), pero un desvío así
+        merece una respuesta del organismo.
+      </Aviso>
+    );
+  return <p className="text-sm text-ink-2">{text}</p>;
 }
 
 function Dato({ label, value }: { label: string; value: string }) {

@@ -1,21 +1,31 @@
-import { getRouteApi, Link } from "@tanstack/react-router";
-import { ArrowLeft, Building2, ChevronRight, FileText, Scale } from "lucide-react";
-import { useState } from "react";
+import { getRouteApi, Link, useRouter, useRouterState } from "@tanstack/react-router";
+import { Building2, ChevronRight, FileText, Scale } from "lucide-react";
 
 import { formatMoneda } from "../celdas.ts";
 import { FuentesOficiales } from "../fuente.tsx";
 import { formatDate } from "../lib.ts";
 import type { Senal } from "../types.ts";
 import { Aviso, PageHeader, Sheet } from "./components.tsx";
-import { Proceso, Proveedor } from "./detalle.tsx";
+import { useDetail } from "../detail-sheet.tsx";
 
 const route = getRouteApi("/senales");
 
-type Vista = { tipo: "senal" } | { tipo: "proceso"; id: string } | { tipo: "proveedor"; id: string };
 
 export function SenalesPage() {
   const { senales } = route.useLoaderData();
-  const [abierta, setAbierta] = useState<Senal | null>(null);
+  const router = useRouter();
+  // The open signal lives in the URL (?senal=<id>): shareable, and the back button closes it.
+  const search = useRouterState({ select: (st) => st.location.search as Record<string, unknown> });
+  const abierta = senales.find((x) => x.id === search.senal) ?? null;
+  const withSignal = (id: string | null) => {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("proceso");
+    url.searchParams.delete("proveedor");
+    if (id) url.searchParams.set("senal", id);
+    else url.searchParams.delete("senal");
+    return `${url.pathname}${url.search}`;
+  };
+  const setAbierta = (x: Senal | null) => (x ? router.history.push(withSignal(x.id)) : router.history.replace(withSignal(null)));
 
   return (
     <div className="flex flex-col gap-10">
@@ -52,26 +62,12 @@ export function SenalesPage() {
 }
 
 function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }) {
-  const [historial, setHistorial] = useState<Vista[]>([{ tipo: "senal" }]);
-  const vista = historial.at(-1)!;
-  const ir = (v: Vista) => setHistorial((h) => [...h, v]);
+  // Cases open the URL-driven process/supplier sheet on top (?proceso= / ?proveedor=).
+  const detail = useDetail();
 
   return (
     <Sheet titulo={s.tema} onClose={onClose}>
-      {historial.length > 1 && (
-        <button
-          type="button"
-          onClick={() => setHistorial((h) => h.slice(0, -1))}
-          className="-mt-2 inline-flex w-fit items-center gap-1 rounded-md px-2 py-1 text-sm text-ink-2 hover:bg-grid hover:text-ink"
-        >
-          <ArrowLeft className="size-4" aria-hidden /> Volver
-        </button>
-      )}
-
-      {vista.tipo === "proceso" && <Proceso ocid={vista.id} onProveedor={(cuit) => ir({ tipo: "proveedor", id: cuit })} />}
-      {vista.tipo === "proveedor" && <Proveedor cuit={vista.id} onProceso={(ocid) => ir({ tipo: "proceso", id: ocid })} />}
-
-      {vista.tipo === "senal" && (
+      {(
         <>
           <div className="flex flex-col gap-2">
             <span className="text-4xl font-semibold tracking-tight tabular-nums">{s.cifra}</span>
@@ -92,7 +88,7 @@ function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }
                   <li key={`${c.tipo}-${c.id}-${c.titulo}`}>
                     <button
                       type="button"
-                      onClick={() => ir({ tipo: c.tipo, id: c.id })}
+                      onClick={() => detail.open(c.tipo, c.id)}
                       className="group -mx-2 flex w-[calc(100%+1rem)] items-center gap-3 rounded-lg px-2 py-2.5 text-left hover:bg-tile"
                     >
                       {c.tipo === "proveedor" ? (

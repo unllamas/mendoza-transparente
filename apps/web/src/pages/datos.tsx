@@ -6,6 +6,7 @@ import { columnasVisibles, type ColumnaVista } from "../celdas.ts";
 import { formatBytes, formatDate, formatNumber, humanize, loadPreview } from "../lib.ts";
 import type { DatasetMeta, Preview } from "../types.ts";
 import { StatTile } from "./components.tsx";
+import { useDetail } from "../detail-sheet.tsx";
 import { PanelDetalle } from "./detalle.tsx";
 
 const route = getRouteApi("/datos/$fuente");
@@ -85,6 +86,15 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
 
   const fila = selected !== null ? preview?.rows[selected] : undefined;
   const cerrar = useCallback(() => setSelected(null), []);
+  const detail = useDetail();
+  // Purchase processes and suppliers open in the URL-driven sheet (shareable: ?proceso= / ?proveedor=).
+  const abrirFila = (i: number) => {
+    const row = preview?.rows[i] ?? [];
+    const col = (name: string) => row[dataset.columns.indexOf(name)] ?? "";
+    if (dataset.detalle === "proceso" && col("ocid")) return detail.open("proceso", col("ocid"));
+    if (dataset.detalle === "proveedor" && col("proveedor_cuit")) return detail.open("proveedor", col("proveedor_cuit"));
+    setSelected(i === selected ? null : i);
+  };
 
   return (
     <section className="flex flex-col gap-4">
@@ -151,7 +161,7 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
                 {preview.rows.map((row, i) => (
                   <tr
                     key={i}
-                    onClick={() => setSelected(i === selected ? null : i)}
+                    onClick={() => abrirFila(i)}
                     aria-selected={i === selected}
                     className={`cursor-pointer ${i === selected ? "bg-grid" : "hover:bg-grid/50"}`}
                   >
