@@ -193,7 +193,7 @@ function useCarga<T>(path: string, pick?: (data: unknown) => T | undefined) {
   return { data, error };
 }
 
-function Proveedor({ cuit, onProceso }: { cuit: string; onProceso: (ocid: string) => void }) {
+export function Proveedor({ cuit, onProceso }: { cuit: string; onProceso: (ocid: string) => void }) {
   const { data: p, error } = useCarga<ProveedorDetalle>(`temas/compras/proveedores/${cuit}.json`);
   if (error) return <p className="text-sm text-ink-2">No hay más datos de este proveedor.</p>;
   if (!p) return <p className="text-sm text-ink-muted">Cargando proveedor…</p>;
@@ -355,7 +355,7 @@ const ESTADO_PROCESO: Record<string, string> = {
   unsuccessful: "Desierto o fracasado",
 };
 
-function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cuit: string) => void }) {
+export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cuit: string) => void }) {
   const { data: p, error } = useCarga<ProcesoDetalle>(
     `temas/compras/procesos/${procesoShard(ocid)}.json`,
     (d) => (d as Record<string, ProcesoDetalle>)[ocid],

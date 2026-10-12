@@ -98,6 +98,15 @@ export const PAGES: Record<string, PageMeta> = {
     eyebrow: "FUNCIONARIOS",
     activa: true,
   },
+  "/senales": {
+    title: `Gasto público en Mendoza: señales${TITLE_SUFFIX}`,
+    description:
+      "Gasto público en Mendoza bajo la lupa: contrataciones directas, compras con una sola oferta, empresas nuevas y proveedores dominantes, con cada caso.",
+    ogSlug: "senales",
+    ogTitle: "Para mirar de cerca",
+    eyebrow: "SEÑALES",
+    activa: true,
+  },
   // Rutas por venir: activar cuando existan en la app.
   "/compras": {
     title: `Compras del Estado de Mendoza${TITLE_SUFFIX}`,

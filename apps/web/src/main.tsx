@@ -13,8 +13,9 @@ import { HomePage } from "./pages/home.tsx";
 import { Layout } from "./pages/layout.tsx";
 import { NoPublicadoPage } from "./pages/no-publicado.tsx";
 import { PoblacionPage } from "./pages/poblacion.tsx";
+import { SenalesPage } from "./pages/senales.tsx";
 import "./styles.css";
-import type { CoparticipacionTema, DeudaTema, EmpleoTema, FuncionariosTema, HomeTema, MapaMendoza, NoPublicado, PoblacionTema } from "./types.ts";
+import type { CoparticipacionTema, DeudaTema, EmpleoTema, FuncionariosTema, HomeTema, MapaMendoza, NoPublicado, PoblacionTema, SenalesTema } from "./types.ts";
 
 const rootRoute = createRootRoute({ component: Layout });
 
@@ -95,8 +96,15 @@ const funcionariosRoute = createRoute({
   component: FuncionariosPage,
 });
 
+const senalesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/senales",
+  loader: () => loadTema<SenalesTema>("senales"),
+  component: SenalesPage,
+});
+
 const router = createRouter({
-  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, coparticipacionRoute, empleoRoute, poblacionRoute, funcionariosRoute, noPublicadoRoute, fuentesRoute, datosRoute]),
+  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, coparticipacionRoute, empleoRoute, poblacionRoute, funcionariosRoute, senalesRoute, noPublicadoRoute, fuentesRoute, datosRoute]),
   defaultPreload: "intent",
   scrollRestoration: true,
 });

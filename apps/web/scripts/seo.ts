@@ -155,6 +155,7 @@ const [deuda, copa, empleo, poblacion] = await Promise.all([
 const rows = (source: string, file: string) => index.datasets.find((d) => d.source === source && d.file === file)?.rowCount;
 const rowsFuente = (id: string) => index.datasets.filter((d) => d.source === id).reduce((a, d) => a + d.rowCount, 0);
 
+const senalesCount = (await json<{ senales: unknown[] }>("temas/senales.json").catch(() => ({ senales: [] }))).senales.length;
 const funcionariosCount = (await json<{ personas: unknown[] }>("temas/funcionarios.json").catch(() => ({ personas: [] }))).personas.length;
 const noPublicadoCount = (await json<unknown[]>("temas/no-publicado.json").catch(() => [])).length;
 
@@ -182,6 +183,10 @@ const figuras: Record<string, { figura: string; bajada: string }> = {
   "/fuentes": {
     figura: `${index.sources.length} fuentes`,
     bajada: "Oficiales y abiertas: de dónde sale cada dato, cada cuánto se actualiza y cómo bajarlo.",
+  },
+  "/senales": {
+    figura: `${senalesCount} señales`,
+    bajada: "Contrataciones directas, una sola oferta, empresas nuevas: patrones que merecen explicación.",
   },
   "/funcionarios": {
     figura: `${funcionariosCount} funcionarios`,

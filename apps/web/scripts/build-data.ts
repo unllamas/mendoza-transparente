@@ -18,6 +18,7 @@ import { buildEmpleo } from "./temas/empleo.ts";
 import { buildFuncionarios, type Correccion } from "./temas/funcionarios.ts";
 import { buildHome } from "./temas/home.ts";
 import { buildPoblacion } from "./temas/poblacion.ts";
+import { buildSenales } from "./temas/senales.ts";
 
 const ROOT = join(import.meta.dir, "..", "..", "..");
 const RAW_DIR = join(ROOT, "data", "raw");
@@ -210,6 +211,10 @@ if (empleoTema) writeFileSync(join(OUT, "temas", "empleo.json"), JSON.stringify(
 const procesos = readTable("compras-ocds", "procesos.csv");
 const adjudicaciones = readTable("compras-ocds", "adjudicaciones.csv");
 if (procesos && adjudicaciones) {
+  writeFileSync(
+    join(OUT, "temas", "senales.json"),
+    JSON.stringify(buildSenales(procesos, adjudicaciones, readTable("proveedores", "proveedores.csv") ?? [])),
+  );
   buildCompras(procesos, adjudicaciones, join(OUT, "temas", "compras"), readTable("proveedores", "proveedores.csv") ?? []);
 }
 

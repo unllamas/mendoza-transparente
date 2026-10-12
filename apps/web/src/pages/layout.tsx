@@ -6,6 +6,7 @@ import { REPO } from "../fuente.tsx";
 import { usePageMeta } from "../seo.ts";
 
 const NAV = [
+  { to: "/senales", label: "Para mirar de cerca" },
   { to: "/funcionarios", label: "Funcionarios" },
   { to: "/deuda", label: "Deuda" },
   { to: "/coparticipacion", label: "Coparticipación" },
@@ -38,11 +39,11 @@ export function Layout() {
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="sticky top-0 z-20 border-b border-line bg-page/90 backdrop-blur">
-        <div className="mx-auto flex h-14 max-w-5xl items-center gap-6 px-4 sm:px-5">
-          <Link to="/" className="mr-auto text-base font-semibold tracking-tight">
+        <div className="mx-auto flex h-14 max-w-6xl items-center gap-6 px-4 sm:px-5">
+          <Link to="/" className="mr-auto text-base font-semibold tracking-tight whitespace-nowrap">
             Mendoza Transparente
           </Link>
-          <nav aria-label="Principal" className="hidden gap-5 text-sm whitespace-nowrap lg:flex">
+          <nav aria-label="Principal" className="hidden gap-5 text-sm whitespace-nowrap xl:flex">
             {NAV.map((item) => (
               <Link key={item.to} to={item.to} className="text-ink-2 hover:text-link [&.active]:font-medium [&.active]:text-link">
                 {item.label}
@@ -55,7 +56,7 @@ export function Layout() {
             aria-expanded={abierto}
             aria-controls="menu-movil"
             aria-label={abierto ? "Cerrar menú" : "Abrir menú"}
-            className="-mr-2 flex size-10 items-center justify-center rounded-lg text-ink hover:bg-tile lg:hidden"
+            className="-mr-2 flex size-10 items-center justify-center rounded-lg text-ink hover:bg-tile xl:hidden"
           >
             {abierto ? <X className="size-5" aria-hidden /> : <Menu className="size-5" aria-hidden />}
           </button>
@@ -68,7 +69,7 @@ export function Layout() {
         <nav
           id="menu-movil"
           aria-label="Principal"
-          className="fixed inset-x-0 top-14 bottom-0 z-20 flex flex-col overflow-y-auto border-t border-line bg-page px-4 py-4 lg:hidden"
+          className="fixed inset-x-0 top-14 bottom-0 z-20 flex flex-col overflow-y-auto border-t border-line bg-page px-4 py-4 xl:hidden"
         >
           {NAV.map((item) => (
             <Link

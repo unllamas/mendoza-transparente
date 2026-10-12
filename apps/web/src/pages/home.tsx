@@ -233,7 +233,7 @@ export function HomePage() {
             titulo="Tu departamento"
             bajada={`Cuánto recibió cada municipio por habitante en ${coparticipacion.anio}. Tocá uno para ver su detalle.`}
           />
-          <div className="rounded-2xl bg-tile p-4 sm:p-6">
+          <div>
             <MapaMendoza
               mapa={mapa}
               valores={coparticipacion.porMunicipio}
@@ -273,6 +273,12 @@ export function HomePage() {
               />
             )}
           </div>
+          <Link
+            to="/senales"
+            className="inline-flex w-fit items-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-medium text-on-brand hover:bg-brand-hover"
+          >
+            Ver todas las señales y sus casos <ArrowRight className="size-4" aria-hidden />
+          </Link>
         </section>
       )}
 

@@ -263,3 +263,32 @@ export interface Funcionario {
 export interface FuncionariosTema {
   personas: Funcionario[];
 }
+
+export interface Caso {
+  tipo: "proceso" | "proveedor";
+  /** ocid del proceso o CUIT del proveedor: abre su detalle. */
+  id: string;
+  titulo: string;
+  detalle: string;
+  monto: number | null;
+  fecha: string | null;
+}
+
+export interface Senal {
+  id: string;
+  tema: string;
+  cifra: string;
+  titulo: string;
+  matiz: string;
+  porQueImporta: string;
+  metodo: string;
+  casosTitulo: string;
+  casos: Caso[];
+  /** id de «Lo que el Estado no publica» relacionado, si corresponde. */
+  pedido?: string;
+}
+
+export interface SenalesTema {
+  generado: string;
+  senales: Senal[];
+}
