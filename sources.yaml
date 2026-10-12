@@ -54,7 +54,7 @@
   formato: json ocds
   frecuencia: irregular (último corte 04/01/2026)
   dificultad: facil
-  estado: pendiente
+  estado: activo
 
 - id: energia-regalias
   nombre: Regalías de petróleo y gas por provincia
@@ -63,7 +63,7 @@
   formato: zip, csv
   frecuencia: mensual
   dificultad: facil
-  estado: pendiente
+  estado: activo
 
 - id: deie-ipc
   nombre: IPC Gran Mendoza y canasta básica
@@ -72,4 +72,4 @@
   formato: rss, pdf
   frecuencia: mensual
   dificultad: facil
-  estado: pendiente
+  estado: activo
