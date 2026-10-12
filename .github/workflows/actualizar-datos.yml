@@ -1,0 +1,200 @@
+# Actualización automática de los datos.
+#
+# - Diario: Boletín Oficial (últimos 3 días, por si algún día falló).
+# - Semanal (lunes): compras, transferencias de Nación (DNAP), Ética Pública, índices e IPC.
+# - Mensual (día 3): Hacienda, energía, población, Legislatura, autoridades y proveedores.
+#
+# Cada fuente corre en su propio job. Al final, un único commit con todo lo nuevo, después de
+# comprobar que la web compila. Si una fuente falla se abre un issue «Scraper roto: <fuente>»,
+# que se cierra solo cuando vuelve a funcionar. También se puede correr a mano desde Actions.
+#
+# Las fotos de funcionarios no se actualizan acá: usan `sips` (macOS) y cambian poco.
+
+name: Actualizar datos
+
+on:
+  schedule:
+    - cron: "0 10 * * *" # todos los días, 07:00 en Mendoza
+    - cron: "0 11 * * 1" # lunes, 08:00 en Mendoza
+    - cron: "0 12 3 * *" # día 3 de cada mes, 09:00 en Mendoza
+  workflow_dispatch:
+    inputs:
+      fuentes:
+        description: "Fuentes separadas por coma (por ejemplo: boletin-oficial,compras-ocds). Vacío = todas."
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: actualizar-datos
+  cancel-in-progress: false
+
+env:
+  DIARIO: "boletin-oficial"
+  SEMANAL: "compras-ocds,dnap,etica-publica,indices,deie-ipc"
+  MENSUAL: "hacienda-deuda-stock,hacienda-participacion-municipal,energia-regalias,poblacion,legislatura,autoridades,proveedores"
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      fuentes: ${{ steps.plan.outputs.fuentes }}
+    steps:
+      - id: plan
+        env:
+          ENTRADA: ${{ inputs.fuentes }}
+          CRON: ${{ github.event.schedule }}
+        run: |
+          case "$CRON" in
+            "0 10 * * *") F="$DIARIO" ;;
+            "0 11 * * 1") F="$SEMANAL" ;;
+            "0 12 3 * *") F="$MENSUAL" ;;
+            *) F="${ENTRADA:-$DIARIO,$SEMANAL,$MENSUAL}" ;;
+          esac
+          echo "Fuentes: $F"
+          echo "fuentes=$(echo "$F" | tr -d ' ' | jq -R -c 'split(",") | map(select(length > 0))')" >> "$GITHUB_OUTPUT"
+
+  scrape:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        fuente: ${{ fromJson(needs.plan.outputs.fuentes) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+      - run: bun install --frozen-lockfile
+
+      - name: Correr scraper
+        env:
+          FUENTE: ${{ matrix.fuente }}
+        run: |
+          case "$FUENTE" in
+            boletin-oficial) ARGS="--desde $(date -u -d '3 days ago' +%F) --hasta $(date -u +%F)" ;;
+            dnap) ARGS="--refresh" ;;
+            etica-publica) ARGS="--refresh" ;;
+            *) ARGS="" ;;
+          esac
+          bun run scrape "$FUENTE" $ARGS
+
+      - name: Empaquetar cambios
+        id: cambios
+        env:
+          FUENTE: ${{ matrix.fuente }}
+        run: |
+          git add -A data
+          if git diff --cached --quiet; then
+            echo "Sin cambios en $FUENTE"
+            echo "hay=false" >> "$GITHUB_OUTPUT"
+          else
+            git diff --cached --name-only -z | tar --null -czf "/tmp/$FUENTE.tgz" -T -
+            git diff --cached --stat | tail -1
+            echo "hay=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.cambios.outputs.hay == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: datos-${{ matrix.fuente }}
+          path: /tmp/${{ matrix.fuente }}.tgz
+          retention-days: 3
+
+      - name: Avisar falla
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FUENTE: ${{ matrix.fuente }}
+          RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh label create scraper-roto --color B60205 --description "Una fuente dejó de actualizarse" --force || true
+          TITULO="Scraper roto: $FUENTE"
+          N=$(gh issue list --state open --label scraper-roto --json number,title -q ".[] | select(.title == \"$TITULO\") | .number" | head -1)
+          if [ -n "$N" ]; then
+            gh issue comment "$N" --body "Volvió a fallar el $(date -u +%F): $RUN"
+          else
+            gh issue create --label scraper-roto --title "$TITULO" --body "La actualización automática de **$FUENTE** falló el $(date -u +%F).
+
+          Registro: $RUN
+
+          Causas habituales: el organismo cambió la página o el formato del archivo, el sitio estuvo caído o limitó los pedidos. Si se repite, hay que ajustar \`packages/scrapers/src/sources/$FUENTE.ts\`. Este issue se cierra solo cuando la fuente vuelve a funcionar."
+          fi
+
+      - name: Cerrar aviso si volvió a funcionar
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FUENTE: ${{ matrix.fuente }}
+          RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          TITULO="Scraper roto: $FUENTE"
+          N=$(gh issue list --state open --label scraper-roto --json number,title -q ".[] | select(.title == \"$TITULO\") | .number" 2>/dev/null | head -1)
+          if [ -n "$N" ]; then gh issue close "$N" --comment "Volvió a funcionar el $(date -u +%F): $RUN"; fi
+
+  commit:
+    needs: [plan, scrape]
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: datos-*
+          path: /tmp/datos
+          merge-multiple: true
+
+      - name: Aplicar cambios
+        id: aplicar
+        run: |
+          shopt -s nullglob
+          PAQUETES=(/tmp/datos/*.tgz)
+          if [ ${#PAQUETES[@]} -eq 0 ]; then echo "No hay datos nuevos."; echo "hay=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          for f in "${PAQUETES[@]}"; do echo "Aplicando $(basename "$f")"; tar -xzf "$f"; done
+          echo "fuentes=$(for f in "${PAQUETES[@]}"; do basename "$f" .tgz; done | paste -sd ', ' -)" >> "$GITHUB_OUTPUT"
+          echo "hay=true" >> "$GITHUB_OUTPUT"
+
+      - name: Comprobar que la web compila con los datos nuevos
+        if: steps.aplicar.outputs.hay == 'true'
+        run: |
+          bun install --frozen-lockfile
+          cd apps/web
+          bun run data
+          bunx tsc --noEmit
+          bunx vite build
+          bun scripts/seo.ts
+
+      - name: Commit y push
+        if: steps.aplicar.outputs.hay == 'true'
+        env:
+          FUENTES: ${{ steps.aplicar.outputs.fuentes }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data
+          git commit -m "Datos: actualización automática ($FUENTES)" -m "$(date -u +%F)"
+          for intento in 1 2 3; do
+            git pull --rebase --autostash && git push && exit 0
+            sleep $((intento * 10))
+          done
+          exit 1
+
+      - name: Avisar si la web no compila
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh label create scraper-roto --color B60205 --description "Una fuente dejó de actualizarse" --force || true
+          gh issue create --label scraper-roto --title "Actualización de datos sin publicar ($(date -u +%F))" --body "Los scrapers trajeron datos nuevos pero la web no compiló con ellos, así que no se publicaron. Registro: $RUN"

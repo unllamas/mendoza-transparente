@@ -1,0 +1,26 @@
+# Comprueba en cada push y pull request que el código compila y que la web se genera.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+      - run: bun install --frozen-lockfile
+      - name: Tipos
+        run: bunx turbo run typecheck
+      - name: Web
+        working-directory: apps/web
+        run: |
+          bun run data
+          bunx vite build
+          bun scripts/seo.ts

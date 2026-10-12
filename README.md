@@ -34,6 +34,20 @@ bun run scrape <id> [args...]   # por ejemplo: bun run scrape boletin-oficial
 bun run typecheck
 ```
 
+## Actualización automática
+
+Los datos se actualizan solos con GitHub Actions (`.github/workflows/actualizar-datos.yml`):
+
+| Frecuencia | Fuentes |
+|---|---|
+| Diaria | Boletín Oficial |
+| Semanal (lunes) | Compras, transferencias de Nación, Ética Pública, índices e IPC |
+| Mensual (día 3) | Hacienda, energía, población, Legislatura, autoridades y proveedores |
+
+Cada fuente corre por separado y al final se hace un único commit, después de comprobar que la web compila. Si una fuente falla, se abre un issue con la etiqueta `scraper-roto`, que se cierra solo cuando vuelve a funcionar. Para correrlo a mano: pestaña Actions → «Actualizar datos» → «Run workflow».
+
+Las fotos de funcionarios y el mapa se actualizan a mano (`bun run scrape fotos`, `bun run scrape geo`), porque cambian poco.
+
 ## Licencia
 
 Código: MIT. Datos procesados: CC BY 4.0. Los datos originales pertenecen a sus organismos de origen.

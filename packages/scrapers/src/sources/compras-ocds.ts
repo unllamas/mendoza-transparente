@@ -101,7 +101,26 @@ async function streamFile(path: string): Promise<number> {
 const cuit = (id: unknown) => String(id ?? "").replace(/^AR-CUIT-MZ-/, "");
 const day = (s: unknown) => (s ? String(s).slice(0, 10) : "");
 
+/** Tramos conocidos más los que aparezcan en la página de datasets (el Gobierno publica cortes nuevos cada tanto). */
+async function descubrirTramos() {
+  const tramos = [...TRAMOS];
+  try {
+    const html = await (await get("https://datosabiertos-compras.mendoza.gov.ar/datasets/")).text();
+    for (const m of html.matchAll(/descargar-json\/(\d+)\/([\w.-]+\.json)/g)) {
+      const url = `${BASE}/${m[1]}/${m[2]}`;
+      if (!tramos.some((t) => t.url === url)) {
+        tramos.push({ filename: m[2]!, url });
+        console.log(`Tramo nuevo detectado: ${m[2]}`);
+      }
+    }
+  } catch (err) {
+    console.warn(`No se pudo leer la página de datasets; se usan los tramos conocidos (${err})`);
+  }
+  return tramos;
+}
+
 export async function run(_args: string[]) {
+  const TRAMOS = await descubrirTramos();
   for (const t of TRAMOS) {
     const resp = await get(t.url);
     const bytes = new Uint8Array(await resp.arrayBuffer());
