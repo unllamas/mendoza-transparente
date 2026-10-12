@@ -107,6 +107,15 @@ Errores de consola del tipo «Could not establish connection. Receiving end does
 
 Cada push a `main` publica solo, incluidos los commits automáticos de datos.
 
+**Estado al 12/10/2026 (cuenta personal de Cloudflare, configurado por API con el token de `.env.cloudflare`):**
+- Proyecto `mendoza-transparente` (`mendoza-transparente.pages.dev`), con root directory `apps/web`.
+- Base D1 con las tablas de participación aplicadas.
+- Secretos `TURNSTILE_SECRET` e `IP_SALT` cifrados.
+- Dominio con HTTPS obligatorio y TLS 1.2 como mínimo.
+- Bot Fight Mode activado. La protección contra robots de IA está apagada a propósito: queremos que nos lean y citen.
+- Límite de pedidos: `POST /api/*`, 10 cada 10 segundos por IP; si se supera, bloqueo de 10 segundos (máximo del plan gratis).
+- Analítica: PostHog en un proyecto propio, separado de cualquier otra organización (`.env.production`).
+
 **Antes de abrir al público:**
 1. Dominio propio en Cloudflare, con proxy activado (nube naranja).
 2. Security → Bots: activar Bot Fight Mode.
