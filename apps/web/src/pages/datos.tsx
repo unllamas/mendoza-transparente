@@ -197,7 +197,7 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
         {preview && rowCount > preview.rows.length && (
           <>Mostrando las {formatNumber(preview.rows.length)} filas más recientes. Descargá el CSV para ver todo. </>
         )}
-        {tieneMontos && <>M = millones. Montos nominales, sin ajustar por inflación.</>}
+        {tieneMontos && <>M = millones; mil M = miles de millones. Montos nominales, sin ajustar por inflación.</>}
       </p>
     </section>
   );

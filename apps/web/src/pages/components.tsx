@@ -5,11 +5,13 @@ import type { ReactNode } from "react";
 export function StatTile({ label, value, note, icon: Icon }: { label: string; value: string; note?: string; icon?: LucideIcon }) {
   return (
     <div className="flex flex-col gap-1 rounded-xl bg-tile p-4">
-      <span className="flex items-center gap-2 text-sm text-ink-2">
+      <span className="flex min-w-0 items-center gap-2 text-sm text-ink-2" title={label}>
         {Icon && <Icon className="size-4 shrink-0 text-ink-muted" aria-hidden />}
-        {label}
+        <span className="truncate">{label}</span>
       </span>
-      <span className="text-3xl font-semibold tracking-tight">{value}</span>
+      <span className="truncate text-2xl font-semibold tracking-tight whitespace-nowrap sm:text-3xl" title={value}>
+        {value}
+      </span>
       {note && <span className="text-xs text-ink-muted">{note}</span>}
     </div>
   );

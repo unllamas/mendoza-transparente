@@ -29,7 +29,7 @@ const decimal = new Intl.NumberFormat("es-AR", { maximumFractionDigits: 1 });
 const entero = (v: number) => formatNumber(Math.round(v));
 const pesos = (v: number) => `$ ${entero(v)}`;
 /** Cifras de miles de millones, en millones: "$ 965.709 M". */
-const millones = (v: number) => `$ ${entero(v / 1e6)} M`;
+const millones = (v: number) => `$ ${entero(v / 1e6)}`;
 
 export function HomePage() {
   const { index, home, mapa } = route.useLoaderData();
@@ -84,7 +84,8 @@ export function HomePage() {
               to="/deuda"
               icon={Landmark}
               titulo="Deuda pública"
-              valor={<CountUp value={deuda.totalUsd} format={(v) => `US$ ${entero(v)} M`} />}
+              valor={<CountUp value={deuda.totalUsd} format={(v) => `US$ ${entero(v)}`} />}
+              unidad="millones"
               detalle={`US$ ${entero(deuda.porHabitanteUsd)} por habitante. Máximo: US$ ${entero(deuda.maximo.usd)} M en ${deuda.maximo.fecha.slice(0, 4)}.`}
               serie={deuda.serie}
             />
@@ -93,9 +94,10 @@ export function HomePage() {
             <Cifra
               to="/coparticipacion"
               icon={Coins}
-              titulo={`Repartido a municipios en ${coparticipacion.anio}`}
+              titulo={`Coparticipación ${coparticipacion.anio}`}
               valor={<CountUp value={coparticipacion.totalReal} format={millones} />}
-              detalle={`En pesos de ${coparticipacion.referencia}. ${coparticipacion.top.municipio} es el que más recibe por habitante.`}
+              unidad="millones"
+              detalle={`Repartido a los 18 municipios, en pesos de ${coparticipacion.referencia}. ${coparticipacion.top.municipio} es el que más recibe por habitante.`}
               serie={coparticipacion.serie}
             />
           )}
@@ -103,9 +105,10 @@ export function HomePage() {
             <Cifra
               to="/empleo-publico"
               icon={UsersRound}
-              titulo="Empleados públicos cada mil habitantes"
+              titulo="Empleo público"
               valor={<CountUp value={empleo.cadaMil} format={(v) => decimal.format(v)} />}
-              detalle={`El ${empleo.posicion}.º más bajo de 24 jurisdicciones. Promedio del país: ${decimal.format(empleo.promedioPais)}.`}
+              unidad="cada mil hab."
+              detalle={`Empleados provinciales cada mil habitantes: el ${empleo.posicion}.º más bajo de 24 jurisdicciones. Promedio del país: ${decimal.format(empleo.promedioPais)}.`}
               serie={empleo.serie}
             />
           )}
@@ -114,9 +117,10 @@ export function HomePage() {
               to="/datos/$fuente"
               params={{ fuente: "compras-ocds" }}
               icon={ShoppingCart}
-              titulo="Adjudicado en compras del Estado"
+              titulo="Compras del Estado"
               valor={<CountUp value={compras.totalAdjudicado} format={millones} />}
-              detalle={`${formatNumber(compras.procesos)} procesos y ${formatNumber(compras.proveedores)} proveedores entre ${compras.desde.slice(0, 4)} y ${compras.hasta.slice(0, 4)}. Montos nominales.`}
+              unidad="millones"
+              detalle={`Adjudicado en ${formatNumber(compras.procesos)} procesos a ${formatNumber(compras.proveedores)} proveedores, ${compras.desde.slice(0, 4)}–${compras.hasta.slice(0, 4)}. Montos nominales.`}
               serie={compras.serie}
             />
           )}
@@ -124,8 +128,9 @@ export function HomePage() {
             <Cifra
               to="/poblacion"
               icon={Users}
-              titulo={`Habitantes en ${poblacion.anio}`}
+              titulo={`Población ${poblacion.anio}`}
               valor={<CountUp value={poblacion.actual} format={entero} />}
+              unidad="hab."
               detalle={`La provincia creció ${decimal.format(poblacion.variacionCensos)} % entre los censos 2010 y 2022.`}
               serie={poblacion.serie}
             />
@@ -135,8 +140,9 @@ export function HomePage() {
               to="/datos/$fuente"
               params={{ fuente: "boletin-oficial" }}
               icon={ScrollText}
-              titulo="Normas en el Boletín Oficial"
+              titulo="Boletín Oficial"
               valor={<CountUp value={boletin.normas} format={entero} />}
+              unidad="normas"
               detalle={`Del ${formatDate(boletin.desde)} al ${formatDate(boletin.hasta)}: ${boletin.designaciones} designaciones, ${boletin.contrataciones} contrataciones y ${boletin.presupuesto} cambios de presupuesto.`}
             />
           )}
@@ -277,6 +283,8 @@ type CifraProps = {
   icon: LucideIcon;
   titulo: string;
   valor: ReactNode;
+  /** Unidad chica al lado de la cifra ("millones", "hab."), para que el número no se corte. */
+  unidad?: string;
   detalle: string;
   serie?: number[];
 } & (
@@ -285,25 +293,26 @@ type CifraProps = {
 );
 
 /** Cifra principal clickeable: lleva borde porque abre su página. */
-function Cifra({ icon: Icon, titulo, valor, detalle, serie, to, params }: CifraProps) {
+function Cifra({ icon: Icon, titulo, valor, unidad, detalle, serie, to, params }: CifraProps) {
   const className = "group flex flex-col gap-4 rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-axis";
   const contenido = (
     <>
       <div className="flex items-center justify-between gap-3">
-        <span className="flex items-center gap-2 text-sm text-ink-2">
+        <span className="flex min-w-0 items-center gap-2 text-sm text-ink-2">
           <Icon className="size-4 shrink-0 text-ink-muted" aria-hidden />
-          {titulo}
+          <span className="truncate">{titulo}</span>
         </span>
         <ArrowUpRight
           className="size-4 shrink-0 text-ink-muted transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
           aria-hidden
         />
       </div>
-      <div className="flex items-end justify-between gap-3">
+      <div className="flex items-baseline gap-2 whitespace-nowrap">
         <span className="text-3xl font-semibold tracking-tight sm:text-4xl">{valor}</span>
-        {serie && <Sparkline values={serie} className="mb-1 shrink-0" />}
+        {unidad && <span className="text-sm text-ink-muted">{unidad}</span>}
       </div>
-      <p className="text-sm text-ink-muted text-pretty">{detalle}</p>
+      {serie && <Sparkline values={serie} width={320} className="w-full" />}
+      <p className="mt-auto text-sm text-ink-muted text-pretty">{detalle}</p>
     </>
   );
   return to === "/datos/$fuente" ? (
