@@ -1,0 +1,12 @@
+# Cloudflare Pages: sitio estático (dist) + funciones en functions/ (API de participación).
+# Despliegue y configuración: docs/procesos/web.md#publicar y docs/procesos/participacion.md.
+name = "mendoza-transparente"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-10-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "mendoza-transparente"
+# Se completa al crear la base: wrangler d1 create mendoza-transparente
+database_id = "COMPLETAR"
+migrations_dir = "migrations"

@@ -1,10 +1,11 @@
-import { getRouteApi } from "@tanstack/react-router";
+import { getRouteApi, Link } from "@tanstack/react-router";
 import { Check, ChevronRight, Copy, ExternalLink, EyeOff, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { NO_PUBLICADO_CATEGORIES, NO_PUBLICADO_THEMES, type NoPublicadoTheme } from "../no-publicado-categories.ts";
 import type { NoPublicado } from "../types.ts";
 import { Aviso, PageHeader, Sheet } from "./components.tsx";
+import { type RequestStats, useRequestStats } from "./participar.tsx";
 
 const route = getRouteApi("/no-publicado");
 
@@ -29,6 +30,7 @@ export function NoPublicadoPage() {
   const items = route.useLoaderData();
   const [abierto, setAbierto] = useState<NoPublicado | null>(null);
   const [theme, setTheme] = useState<NoPublicadoTheme | null>(null);
+  const stats = useRequestStats();
 
   // Direct links (/no-publicado#nomina-sueldos) open that request.
   useEffect(() => {
@@ -36,6 +38,12 @@ export function NoPublicadoPage() {
     const item = items.find((i) => i.id === id);
     if (item) setAbierto(item);
   }, [items]);
+
+  // The open request lives in the URL (#id): shareable, and the back button closes it.
+  useEffect(() => {
+    const url = `${window.location.pathname}${window.location.search}${abierto ? `#${abierto.id}` : ""}`;
+    if (url !== `${window.location.pathname}${window.location.search}${window.location.hash}`) window.history.replaceState(window.history.state, "", url);
+  }, [abierto]);
 
   const inTheme = (t: (typeof NO_PUBLICADO_THEMES)[number]) => items.filter((i) => (t.categories as readonly string[]).includes(i.categoria));
   const themes = NO_PUBLICADO_THEMES.filter((t) => inTheme(t).length > 0);
@@ -68,8 +76,12 @@ export function NoPublicadoPage() {
             return (
               <button
                 key={t.id}
+                id={`tema-filtro-${t.id}`}
                 type="button"
                 aria-pressed={active}
+                data-track="missing_data.theme.toggle"
+                data-track-theme={t.id}
+                data-track-active={String(!active)}
                 onClick={() => setTheme(active ? null : t.id)}
                 className={`flex min-w-0 flex-col gap-1.5 rounded-xl border p-3 text-left transition-colors sm:p-4 ${
                   active ? "border-brand bg-brand/10" : "border-line hover:border-link"
@@ -86,7 +98,13 @@ export function NoPublicadoPage() {
           })}
         </div>
         {theme && (
-          <button type="button" onClick={() => setTheme(null)} className="w-fit text-sm text-link hover:underline">
+          <button
+            type="button"
+            id="tema-filtro-todos"
+            onClick={() => setTheme(null)}
+            data-track="missing_data.theme.clear"
+            className="w-fit text-sm text-link hover:underline"
+          >
             Ver todos los temas
           </button>
         )}
@@ -102,7 +120,11 @@ export function NoPublicadoPage() {
               <li key={item.id} id={item.id} className="scroll-mt-8">
                 <button
                   type="button"
+                  id={`pedido-abrir-${item.id}`}
                   onClick={() => setAbierto(item)}
+                  data-track="missing_data.request.open"
+                  data-track-item={item.id}
+                  data-track-theme={t.id}
                   className="group flex w-full items-center gap-4 px-4 py-4 text-left hover:bg-grid/50 sm:px-5"
                 >
                   <span className={`size-2.5 shrink-0 rounded-full ${ESTADOS[item.estado].dot}`} aria-hidden />
@@ -126,13 +148,13 @@ export function NoPublicadoPage() {
       <p className="text-sm text-ink-muted text-pretty">
         Cómo funciona: elegí un dato, copiá el pedido que armamos y presentalo gratis en el formulario oficial. El
         organismo tiene 15 días hábiles para responder (
-        <a href={LEY_9070} target="_blank" rel="noreferrer" className="underline hover:text-link">
+        <a href={LEY_9070} target="_blank" rel="noreferrer" data-track="missing_data.law.open" className="underline hover:text-link">
           Ley 9070
         </a>
         ). Revisamos los sitios oficiales el 11 de octubre de 2026.
       </p>
 
-      {abierto && <DetalleSheet item={abierto} onClose={() => setAbierto(null)} />}
+      {abierto && <DetalleSheet item={abierto} stats={stats?.items[abierto.id] ?? null} onClose={() => setAbierto(null)} />}
     </div>
   );
 }
@@ -152,7 +174,7 @@ Saludos cordiales,
 [Tu correo electrónico]`;
 }
 
-function DetalleSheet({ item, onClose }: { item: NoPublicado; onClose: () => void }) {
+function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: RequestStats["items"][string] | null; onClose: () => void }) {
   const [texto, setTexto] = useState(() => armarPedido(item));
   const [copiado, setCopiado] = useState(false);
 
@@ -163,7 +185,7 @@ function DetalleSheet({ item, onClose }: { item: NoPublicado; onClose: () => voi
   }
 
   return (
-    <Sheet titulo="Pedir este dato" onClose={onClose}>
+    <Sheet titulo="Pedir este dato" onClose={onClose} trackId="missing_data.request">
       <div className="flex flex-col gap-2">
         <span className="inline-flex w-fit items-center gap-1.5 text-xs text-ink-muted">
           <span className={`size-2 rounded-full ${ESTADOS[item.estado].dot}`} aria-hidden />
@@ -194,6 +216,10 @@ function DetalleSheet({ item, onClose }: { item: NoPublicado; onClose: () => voi
           <button
             type="button"
             onClick={copiar}
+            id="pedido-copiar"
+            data-track="missing_data.request.copy"
+            data-track-item={item.id}
+            data-track-edited={String(texto !== armarPedido(item))}
             className="inline-flex items-center gap-1.5 rounded-lg border border-line px-3 py-2 text-sm hover:border-link/50"
           >
             {copiado ? <Check className="size-4 text-good" aria-hidden /> : <Copy className="size-4" aria-hidden />}
@@ -201,6 +227,9 @@ function DetalleSheet({ item, onClose }: { item: NoPublicado; onClose: () => voi
           </button>
           <a
             href={FORMULARIO}
+            id="pedido-formulario-oficial"
+            data-track="missing_data.request.official_form"
+            data-track-item={item.id}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-1.5 rounded-lg bg-brand px-3 py-2 text-sm font-medium text-on-brand hover:bg-brand-hover"
@@ -214,6 +243,25 @@ function DetalleSheet({ item, onClose }: { item: NoPublicado; onClose: () => voi
         </p>
       </div>
 
+      <div className="flex flex-col gap-2 rounded-xl bg-tile p-4 text-sm">
+        <span className="font-medium">¿Ya lo presentaste?</span>
+        <span className="text-ink-2 text-pretty">
+          {stats && stats.requests > 0
+            ? `${stats.requests} ${stats.requests === 1 ? "persona ya lo pidió" : "personas ya lo pidieron"}: ${stats.answered} con respuesta y ${stats.denied + stats.overdue} negados o sin respuesta en plazo.`
+            : "Registrá tu número de trámite: así contamos cuántas personas lo piden y cuánto responde el Estado."}
+        </span>
+        <Link
+          to="/participar"
+          search={{ tipo: "pedido", dato: item.id }}
+          id="pedido-registrar-tramite"
+          data-track="missing_data.request.register_filing"
+          data-track-item={item.id}
+          className="inline-flex w-fit items-center gap-1 font-medium text-link hover:underline"
+        >
+          Registrar mi número de trámite <ChevronRight className="size-4" aria-hidden />
+        </Link>
+      </div>
+
       <div className="flex flex-col gap-2 border-t border-line pt-4 text-sm">
         <span className="text-ink-muted">Qué lo respalda: {item.marco_legal}</span>
         <span className="text-ink-muted">Dónde lo buscamos:</span>
@@ -221,6 +269,8 @@ function DetalleSheet({ item, onClose }: { item: NoPublicado; onClose: () => voi
           {item.donde_buscamos.map((url) => (
             <a
               key={url}
+              data-track="missing_data.request.where_we_looked"
+              data-track-item={item.id}
               href={url}
               target="_blank"
               rel="noreferrer"

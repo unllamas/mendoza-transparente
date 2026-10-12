@@ -93,6 +93,7 @@ const NAV = [
   ["/empleo-publico", "Empleo público"],
   ["/poblacion", "Población"],
   ["/no-publicado", "Lo que no se publica"],
+  ["/participar", "Participá"],
   ["/fuentes", "Fuentes"],
 ] as const;
 
@@ -346,6 +347,20 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
     }),
     lastmod: hoy,
     prioridad: 0.7,
+  });
+
+  estatica("/participar", {
+    figura: "Participá",
+    bajada: "Registrá tu pedido de información y contanos qué te respondió el Estado.",
+    ld: [breadcrumb([["/", "Inicio"], ["/participar", "Participá"]])],
+    html: cuerpo({
+      migas: [["/", "Inicio"], ["/participar", "Participá"]],
+      h1: "Sumate a Mendoza Transparente",
+      resumen:
+        "Registrá los pedidos de acceso a la información pública que presentaste en Mendoza (Ley 9070) con su número de trámite, contanos qué te respondieron, reportá errores o sugerí datos. Publicamos cuántos pedidos hay y cuánto responde el Estado.",
+    }),
+    lastmod: hoy,
+    prioridad: 0.6,
   });
 
   estatica("/fuentes", {

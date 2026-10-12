@@ -116,6 +116,15 @@ export const PAGES: Record<string, PageMeta> = {
     eyebrow: "MUNICIPIOS",
     activa: true,
   },
+  "/participar": {
+    title: `Participá: registrá tu pedido de información${TITLE_SUFFIX}`,
+    description:
+      "Registrá el número de trámite de tu pedido de acceso a la información en Mendoza, contanos qué te respondieron, reportá un error o sugerí un dato.",
+    ogSlug: "participar",
+    ogTitle: "Pedí, registrá y contanos",
+    eyebrow: "PARTICIPÁ",
+    activa: true,
+  },
   "/gobierno": {
     title: `Cómo está organizado el Gobierno de Mendoza${TITLE_SUFFIX}`,
     description:

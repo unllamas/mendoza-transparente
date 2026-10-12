@@ -131,6 +131,9 @@ export function LeyPage() {
           href={ley.urlPdf}
           target="_blank"
           rel="noreferrer"
+          id="ley-texto-oficial"
+          data-track="law.official_pdf.open"
+          data-track-law={ley.numero}
           className="inline-flex w-fit items-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-medium whitespace-nowrap text-on-brand hover:bg-brand-hover"
         >
           <FileText className="size-4" aria-hidden /> Leer el texto oficial (PDF) <ExternalLink className="size-3.5" aria-hidden />
@@ -149,7 +152,11 @@ function TextoCompleto({ ley }: { ley: LeyDetalle }) {
   const articulos = ley.bloques.filter((b) => b.tipo === "articulo").length;
   return (
     <details className="group overflow-hidden rounded-2xl border border-line">
-      <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 hover:bg-grid/50 [&::-webkit-details-marker]:hidden">
+      <summary
+        id="ley-texto-completo"
+        data-track="law.full_text.toggle"
+        data-track-law={ley.numero}
+        className="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 hover:bg-grid/50 [&::-webkit-details-marker]:hidden">
         <span className="flex min-w-0 flex-col">
           <span className="font-medium">Texto completo</span>
           <span className="truncate text-sm whitespace-nowrap text-ink-muted">

@@ -2,6 +2,8 @@ import { Link } from "@tanstack/react-router";
 import { ChevronLeft, ChevronRight, Info, Search, type LucideIcon, TriangleAlert, X } from "lucide-react";
 import { type ReactNode, useEffect } from "react";
 
+import { track } from "../analytics.ts";
+
 /** Dato informativo: solo fondo, sin borde. El borde queda reservado para lo que se puede tocar. */
 export function StatTile({ label, value, note, icon: Icon }: { label: string; value: string; note?: string; icon?: LucideIcon }) {
   return (
@@ -55,11 +57,14 @@ export function Segmented<T extends string>({
   value,
   onChange,
   label,
+  trackId,
 }: {
   options: { value: T; label: string }[];
   value: T;
   onChange: (value: T) => void;
   label: string;
+  /** Analytics id; each change sends `<trackId>.change` (default: `segmented.change`). */
+  trackId?: string;
 }) {
   return (
     <div
@@ -74,7 +79,10 @@ export function Segmented<T extends string>({
           type="button"
           role="radio"
           aria-checked={o.value === value}
-          onClick={() => onChange(o.value)}
+          onClick={() => {
+            if (o.value !== value) track(`${trackId ?? "segmented"}.change`, { value: o.value, label });
+            onChange(o.value);
+          }}
           className={`rounded-md px-3 py-1.5 whitespace-nowrap transition-colors ${
             o.value === value ? "bg-grid font-medium text-ink" : "text-ink-2 hover:text-ink"
           }`}
@@ -124,8 +132,24 @@ export function useScrollLock(activo: boolean) {
 }
 
 /** Hoja modal a la derecha, sobre toda la página. Escape o tocar afuera la cierra. */
-export function Sheet({ titulo, onClose, children }: { titulo: string; onClose: () => void; children: ReactNode }) {
+export function Sheet({
+  titulo,
+  onClose,
+  children,
+  trackId,
+}: {
+  titulo: string;
+  onClose: () => void;
+  children: ReactNode;
+  /** Analytics id of this sheet ("missing_data.request"); every sheet sends `sheet.open` and `sheet.close`. */
+  trackId?: string;
+}) {
   useScrollLock(true);
+  useEffect(() => {
+    const opened = Date.now();
+    track("sheet.open", { sheet: trackId ?? titulo });
+    return () => track("sheet.close", { sheet: trackId ?? titulo, seconds: Math.round((Date.now() - opened) / 1000) });
+  }, [trackId, titulo]);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
@@ -147,6 +171,7 @@ export function Sheet({ titulo, onClose, children }: { titulo: string; onClose: 
             type="button"
             onClick={onClose}
             aria-label="Cerrar"
+            data-track="sheet.close_button"
             className="rounded-md px-2 py-1 text-ink-2 hover:bg-grid hover:text-ink"
           >
             <X className="size-4" aria-hidden />
@@ -228,6 +253,13 @@ export function Migas({ items }: { items: { label: string; to?: string }[] }) {
 
 /** Buscador simple para las listas largas. */
 export function Buscador({ value, onChange, placeholder, label }: { value: string; onChange: (v: string) => void; placeholder: string; label: string }) {
+  // One `search.query` event when the person stops typing, not one per keystroke.
+  useEffect(() => {
+    const q = value.trim();
+    if (q.length < 2) return;
+    const t = setTimeout(() => track("search.query", { search: label, query: q.slice(0, 80) }), 1200);
+    return () => clearTimeout(t);
+  }, [value, label]);
   return (
     <label className="relative flex items-center sm:w-80">
       <Search className="pointer-events-none absolute left-3 size-4 text-ink-muted" aria-hidden />

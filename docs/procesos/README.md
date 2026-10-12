@@ -10,6 +10,8 @@ Cómo se trabaja en Mendoza Transparente, para poder replicarlo, retomarlo o sum
 | [La web](web.md) | Cómo está armada `apps/web`, cómo se suma una página y cómo se verifica |
 | [Diseño](diseno.md) | Reglas de interfaz que no se negocian |
 | [Metodología y criterios](metodologia.md) | Cómo se calculan los números y cómo se presentan los hallazgos |
+| [Analítica](analitica.md) | Qué se mide del uso del sitio, cómo se nombran los eventos y cómo se suma uno |
+| [Participación](participacion.md) | Pedidos de información, respuestas, errores y sugerencias: API, base y moderación |
 | [Trabajo con agentes](trabajo-con-agentes.md) | Cómo se orquesta el trabajo con Claude y subagentes |
 
 Comandos de todos los días (desde la raíz):

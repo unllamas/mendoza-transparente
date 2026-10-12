@@ -2,6 +2,7 @@ import { createRootRoute, createRoute, createRouter, RouterProvider } from "@tan
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
+import { installClickTracking } from "./analytics.ts";
 import { loadIndex, loadJson, loadTema } from "./lib.ts";
 import { cuitDeSlug } from "./slug.ts";
 import { CoparticipacionPage } from "./pages/coparticipacion.tsx";
@@ -17,6 +18,7 @@ import { AgencyPage, GobiernoPage } from "./pages/gobierno.tsx";
 import { HomePage } from "./pages/home.tsx";
 import { Layout } from "./pages/layout.tsx";
 import { NoPublicadoPage } from "./pages/no-publicado.tsx";
+import { ParticiparPage } from "./pages/participar.tsx";
 import { PoblacionPage } from "./pages/poblacion.tsx";
 import { SenalesPage } from "./pages/senales.tsx";
 import "./styles.css";
@@ -115,6 +117,18 @@ const funcionarioRoute = createRoute({
   component: FuncionarioPage,
 });
 
+const participarRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/participar",
+  validateSearch: (s: Record<string, unknown>): { tipo?: string; dato?: string; pagina?: string } => ({
+    tipo: typeof s.tipo === "string" ? s.tipo : undefined,
+    dato: typeof s.dato === "string" ? s.dato : undefined,
+    pagina: typeof s.pagina === "string" ? s.pagina : undefined,
+  }),
+  loader: () => loadTema<NoPublicado[]>("no-publicado").catch(() => [] as NoPublicado[]),
+  component: ParticiparPage,
+});
+
 const gobiernoRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/gobierno",
@@ -209,7 +223,7 @@ const senalesRoute = createRoute({
 });
 
 const router = createRouter({
-  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, coparticipacionRoute, empleoRoute, poblacionRoute, funcionariosRoute, roleRoute, funcionarioRoute, gobiernoRoute, agencyRoute, municipiosRoute, municipioRoute, proveedoresRoute, proveedorRoute, organismosRoute, organismoRoute, leyesRoute, leyRoute, senalesRoute, noPublicadoRoute, fuentesRoute, datosRoute]),
+  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, coparticipacionRoute, empleoRoute, poblacionRoute, funcionariosRoute, roleRoute, funcionarioRoute, gobiernoRoute, agencyRoute, municipiosRoute, municipioRoute, proveedoresRoute, proveedorRoute, organismosRoute, organismoRoute, leyesRoute, leyRoute, senalesRoute, noPublicadoRoute, participarRoute, fuentesRoute, datosRoute]),
   defaultPreload: "intent",
   scrollRestoration: true,
 });
@@ -219,6 +233,8 @@ declare module "@tanstack/react-router" {
     router: typeof router;
   }
 }
+
+installClickTracking();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

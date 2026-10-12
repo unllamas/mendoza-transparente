@@ -27,6 +27,7 @@ const RUTAS = [
   "/empleo-publico",
   "/poblacion",
   "/no-publicado",
+  "/participar",
   "/fuentes",
   "/datos/compras-ocds",
   "/datos/boletin-oficial",

@@ -92,4 +92,23 @@ Errores de consola del tipo «Could not establish connection. Receiving end does
 
 ## Publicar
 
-Cloudflare Pages, conectado al repo: directorio `apps/web`, comando de build `bun run build`, salida `dist`. Cada push a `main` (incluidos los commits automáticos de datos) publica solo.
+**Dónde:** Cloudflare Pages. Se eligió frente a Vercel por estas razones (precios verificados en octubre de 2026):
+
+- **Tráfico sin costo extra:** los archivos estáticos se sirven sin límite de ancho de banda en el plan gratis. En Vercel, el plan gratis corta a los 100 GB por mes y el Pro cobra el excedente sobre 1 TB. Un pico de tráfico, o un ataque, no genera una factura en Cloudflare.
+- **Protección contra DDoS:** incluida y sin límite en todos los planes. Además están el modo "Under Attack", las reglas de WAF y los límites de pedidos por IP, útiles para un sitio político que pueden intentar tumbar.
+- **Backend gratis:** Turnstile (anti-spam), Pages Functions y D1 (base para participación) entran en el plan gratis: 100.000 pedidos por día a funciones y 100.000 filas escritas por día.
+- **Límites a vigilar:** 20.000 archivos por sitio en el plan gratis (hoy usamos unos 3.600) y 25 MiB por archivo. Si se supera, el plan pago (USD 5 por mes) sube a 100.000 archivos.
+
+**Configuración del proyecto:**
+- Directorio `apps/web`, comando de build `bun run build`, salida `dist`.
+- Variables: `VITE_SITE_URL`, `VITE_POSTHOG_KEY` (ver [Analítica](analitica.md)) y `VITE_TURNSTILE_SITE_KEY`.
+- Base D1 vinculada como `DB` y secretos `TURNSTILE_SECRET` e `IP_SALT` (ver [Participación](participacion.md)).
+
+Cada push a `main` publica solo, incluidos los commits automáticos de datos.
+
+**Antes de abrir al público:**
+1. Dominio propio en Cloudflare, con proxy activado (nube naranja).
+2. Security → Bots: activar Bot Fight Mode.
+3. Security → WAF → Rate limiting: una regla para `/api/*`, por ejemplo 20 pedidos por minuto por IP, con bloqueo de 10 minutos.
+4. Si llega un ataque: Security → Settings → "I'm Under Attack" mientras dure.
+5. Caché: los HTML y `/data/*` se sirven desde la CDN, así que un pico de visitas no llega al origen.

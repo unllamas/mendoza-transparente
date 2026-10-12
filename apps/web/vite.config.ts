@@ -6,6 +6,8 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig, type Plugin } from "vite";
 
+import { handle, memoryStore } from "./server/participation.ts";
+
 const ROOT = join(import.meta.dirname, "..", "..");
 
 /**
@@ -74,8 +76,33 @@ function liveData(): Plugin {
   };
 }
 
+/** In development, the participation API (/api/*) runs here with an in-memory store (lost on restart). */
+function devApi(): Plugin {
+  const store = memoryStore();
+  return {
+    name: "mt-dev-api",
+    apply: "serve",
+    configureServer(server) {
+      server.middlewares.use("/api", async (req, res, next) => {
+        const chunks: Buffer[] = [];
+        for await (const c of req) chunks.push(c as Buffer);
+        const request = new Request(`http://localhost/api${req.url ?? ""}`, {
+          method: req.method,
+          headers: { "content-type": req.headers["content-type"] ?? "application/json" },
+          body: req.method === "GET" || req.method === "HEAD" ? undefined : Buffer.concat(chunks),
+        });
+        const response = await handle(request, store, { ipSalt: "dev" }, req.socket.remoteAddress ?? "127.0.0.1");
+        if (!response) return next();
+        res.statusCode = response.status;
+        response.headers.forEach((v, k) => res.setHeader(k, v));
+        res.end(await response.text());
+      });
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react(), tailwindcss(), liveData()],
+  plugins: [react(), tailwindcss(), liveData(), devApi()],
   server: {
     // public/data se regenera entero: que Vite no recargue por cada archivo que escribe el script.
     watch: { ignored: ["**/public/data/**"] },

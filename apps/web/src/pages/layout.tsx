@@ -1,6 +1,7 @@
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import {
   Archive,
+  Bug,
   Building2,
   ChevronDown,
   ChevronRight,
@@ -13,6 +14,7 @@ import {
   MapPin,
   Menu,
   Scale,
+  Stamp,
   Store,
   UserRound,
   Users,
@@ -22,6 +24,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 
 import { REPO } from "../fuente.tsx";
+import { trackPageview } from "../analytics.ts";
 import { usePageMeta } from "../seo.ts";
 import { useScrollLock } from "./components.tsx";
 
@@ -61,6 +64,7 @@ const GRUPOS: Grupo[] = [
     label: "Transparencia",
     items: [
       { to: "/no-publicado", label: "Lo que no se publica", descripcion: "Datos que faltan y cómo pedirlos", icon: EyeOff },
+      { to: "/participar", label: "Participá", descripcion: "Registrá tu pedido, reportá un error o sugerí un dato", icon: Stamp },
       { to: "/fuentes", label: "Fuentes", descripcion: "De dónde sale cada dato", icon: Archive },
     ],
   },
@@ -75,6 +79,7 @@ const AUTOR = {
 export function Layout() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   usePageMeta(pathname);
+  useEffect(() => trackPageview(pathname), [pathname]);
   const [abierto, setAbierto] = useState(false);
 
   // El menú se cierra al navegar y la página no se desplaza detrás mientras está abierto.
@@ -107,6 +112,9 @@ export function Layout() {
             onClick={() => setAbierto((v) => !v)}
             aria-expanded={abierto}
             aria-controls="menu-movil"
+            id="menu-movil-boton"
+            data-track="nav.mobile_menu.toggle"
+            data-track-open={String(!abierto)}
             aria-label={abierto ? "Cerrar menú" : "Abrir menú"}
             className="-mr-2 flex size-10 items-center justify-center rounded-lg text-ink hover:bg-tile lg:hidden"
           >
@@ -171,6 +179,15 @@ export function Layout() {
             <a href={REPO} target="_blank" rel="noreferrer" className="inline-flex w-fit items-center gap-1.5 text-link hover:underline">
               <GitBranch className="size-4" aria-hidden /> Código y datos abiertos en GitHub
             </a>
+            <Link
+              to="/participar"
+              search={{ tipo: "error", pagina: pathname }}
+              id="footer-reportar-error"
+              data-track="footer.report_error"
+              className="inline-flex w-fit items-center gap-1.5 text-link hover:underline"
+            >
+              <Bug className="size-4" aria-hidden /> ¿Encontraste un error? Avisanos
+            </Link>
           </div>
 
           <div className="flex max-w-sm flex-col gap-2 text-sm">
@@ -220,6 +237,9 @@ function Desplegable({ grupo, pathname }: { grupo: Grupo; pathname: string }) {
         type="button"
         onClick={() => setAbierto((v) => !v)}
         aria-expanded={abierto}
+        data-track="nav.group.toggle"
+        data-track-group={grupo.label}
+        data-track-open={String(!abierto)}
         className={`inline-flex items-center gap-1 rounded-lg px-3 py-2 hover:bg-tile hover:text-link ${
           activo ? "font-medium text-link" : "text-ink-2"
         }`}
