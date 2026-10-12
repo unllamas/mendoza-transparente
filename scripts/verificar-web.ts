@@ -4,6 +4,7 @@
  *   1. Que no haya scroll horizontal en 320, 360, 375 y 390 px (celulares) ni en 1024 y 1280 px.
  *   2. Que no haya errores ni advertencias en la consola (incluye los avisos de React, que solo
  *      aparecen en desarrollo), también al abrir hojas de detalle.
+ *   3. Que con el menú móvil abierto haya un solo scroll (el del menú, no el de la página).
  *
  * Uso: bun run verificar     (CHROME_PATH para otro navegador; por defecto, Google Chrome de macOS)
  * Documentado en docs/procesos/web.md.
@@ -80,6 +81,28 @@ try {
     await page.goto(BASE + ruta, { waitUntil: "networkidle" });
     await page.waitForTimeout(600);
   }
+  // 3. Menú móvil: con el menú abierto, la página de atrás queda bloqueada (un solo scroll, el del menú).
+  {
+    const mobile = await browser.newPage({ viewport: { width: 375, height: 700 }, isMobile: true, hasTouch: true });
+    await mobile.goto(BASE + "/leyes", { waitUntil: "networkidle" });
+    await mobile.getByRole("button", { name: "Abrir menú" }).click();
+    await mobile.waitForTimeout(300);
+    const state = await mobile.evaluate(() => {
+      const menu = document.getElementById("menu-movil")!;
+      return {
+        pageLocked: getComputedStyle(document.scrollingElement!).overflowY === "hidden",
+        menuScrolls: ["auto", "scroll"].includes(getComputedStyle(menu).overflowY),
+        contained: getComputedStyle(menu).overscrollBehaviorY === "contain",
+      };
+    });
+    if (!state.pageLocked) problemas.push("Menú móvil: la página de atrás se puede desplazar con el menú abierto");
+    if (!state.menuScrolls || !state.contained) problemas.push("Menú móvil: el menú no tiene su propio scroll contenido");
+    await mobile.getByRole("button", { name: "Cerrar menú" }).click();
+    if (await mobile.evaluate(() => getComputedStyle(document.scrollingElement!).overflowY === "hidden"))
+      problemas.push("Menú móvil: al cerrarlo, la página queda bloqueada");
+    await mobile.close();
+  }
+
   await page.goto(BASE + "/senales", { waitUntil: "networkidle" });
   for (const boton of await page.locator("main ul button").all()) {
     await boton.click();

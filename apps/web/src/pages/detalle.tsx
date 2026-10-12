@@ -21,7 +21,7 @@ import { archivoUrl, useFuentes } from "../fuente.tsx";
 import { formatDate, formatNumber, limpiarOrganismo, loadJson } from "../lib.ts";
 import { procesoShard } from "../shard.ts";
 import type { DatasetMeta, ProcesoDetalle, ProveedorDetalle } from "../types.ts";
-import { Aviso } from "./components.tsx";
+import { Aviso, useScrollLock } from "./components.tsx";
 
 type Vista = { tipo: "fila" } | { tipo: "proveedor"; cuit: string } | { tipo: "proceso"; ocid: string };
 
@@ -50,15 +50,11 @@ export function PanelDetalle({
   useEffect(() => setHistorial([inicial]), [fila]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Hoja modal: Escape cierra y la página de fondo no se desplaza mientras está abierta.
+  useScrollLock(true);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
-    const overflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = overflow;
-    };
+    return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
   return (
@@ -92,7 +88,7 @@ export function PanelDetalle({
         </button>
       </div>
 
-      <div className="flex flex-col gap-6 overflow-y-auto p-4">
+      <div className="flex flex-col gap-6 overflow-y-auto overscroll-contain p-4">
         {vista.tipo === "proveedor" && <Proveedor cuit={vista.cuit} onProceso={(ocid) => ir({ tipo: "proceso", ocid })} />}
         {vista.tipo === "proceso" && <Proceso ocid={vista.ocid} onProveedor={(cuit) => ir({ tipo: "proveedor", cuit })} />}
         {historial.length === 1 && <CamposFila columnas={columnas} fila={fila} titulo={vista.tipo === "fila" ? undefined : "Esta fila"} />}

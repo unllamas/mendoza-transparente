@@ -21,6 +21,7 @@ Proyecto cívico: recopilar los datos públicos de Mendoza, normalizarlos y publ
 
 ## Código
 
+- **Idioma:** variables, funciones, tipos, nombres de archivo y todo el código, en inglés. La documentación (`docs/`, README, este archivo) va en español, igual que el texto visible en la web y las rutas públicas (`/leyes`, `/municipios`). Parte del código viejo todavía está en español: lo que se toque, se pasa al inglés. Las columnas de los CSV publicados son un contrato público: no se renombran sin un plan de migración.
 - Monorepo con Bun workspaces y Turborepo, en TypeScript estricto. Bun ejecuta TS directo, sin build.
 - Un scraper por fuente en `packages/scrapers/src/sources/<id>.ts`, que exporta `async function run(args: string[])`. Se corre con `bun run scrape <id>`.
 - Dependencias ya disponibles en `@mt/scrapers`: `cheerio` (HTML), `xlsx` (SheetJS, para XLS y XLSX), `unpdf` (texto de PDF), `fflate` (ZIP) y `stream-json` (JSON grandes en streaming).
@@ -31,5 +32,5 @@ Proyecto cívico: recopilar los datos públicos de Mendoza, normalizarlos y publ
 ## Verificación
 
 - Tipos: `bun run typecheck`.
-- Web: `bun run verificar` (sin scroll horizontal en ningún ancho y consola limpia). Obligatorio antes de dar por terminado un cambio de interfaz.
+- Web: `bun run verificar` (sin scroll horizontal en ningún ancho, consola limpia y un solo scroll con el menú móvil abierto). Obligatorio antes de dar por terminado un cambio de interfaz.
 - Actualización manual de datos (respaldo de GitHub Actions): `bun run actualizar`.

@@ -101,17 +101,35 @@ export function PageHeader({ icon: Icon, tema, titulo, children }: { icon: Lucid
   );
 }
 
+let bloqueos = 0;
+/**
+ * Mientras `activo`, la página de atrás no se desplaza (menú móvil, hojas modales): así queda un solo
+ * scroll, el del panel. Se bloquea en <html> y <body> porque, con overflow-x: clip en html, el que
+ * desplaza la página es <html>. Lleva la cuenta por si hay más de un panel abierto.
+ */
+export function useScrollLock(activo: boolean) {
+  useEffect(() => {
+    if (!activo) return;
+    if (bloqueos++ === 0) {
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      if (--bloqueos === 0) {
+        document.documentElement.style.overflow = "";
+        document.body.style.overflow = "";
+      }
+    };
+  }, [activo]);
+}
+
 /** Hoja modal a la derecha, sobre toda la página. Escape o tocar afuera la cierra. */
 export function Sheet({ titulo, onClose, children }: { titulo: string; onClose: () => void; children: ReactNode }) {
+  useScrollLock(true);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
-    const overflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = overflow;
-    };
+    return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
   return (
@@ -134,7 +152,7 @@ export function Sheet({ titulo, onClose, children }: { titulo: string; onClose: 
             <X className="size-4" aria-hidden />
           </button>
         </div>
-        <div className="flex flex-col gap-6 overflow-y-auto p-4">{children}</div>
+        <div className="flex flex-col gap-6 overflow-y-auto overscroll-contain p-4">{children}</div>
       </aside>
     </>
   );

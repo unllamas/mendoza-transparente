@@ -21,6 +21,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { REPO } from "../fuente.tsx";
 import { usePageMeta } from "../seo.ts";
+import { useScrollLock } from "./components.tsx";
 
 type Item = { to: string; label: string; descripcion: string; icon: LucideIcon };
 type Grupo = { label: string; items: Item[] };
@@ -72,12 +73,7 @@ export function Layout() {
 
   // El menú se cierra al navegar y la página no se desplaza detrás mientras está abierto.
   useEffect(() => setAbierto(false), [pathname]);
-  useEffect(() => {
-    document.body.style.overflow = abierto ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [abierto]);
+  useScrollLock(abierto);
 
   return (
     <div className="flex min-h-dvh flex-col">
@@ -119,7 +115,7 @@ export function Layout() {
         <nav
           id="menu-movil"
           aria-label="Principal"
-          className="fixed inset-x-0 top-14 bottom-0 z-20 flex flex-col gap-6 overflow-y-auto border-t border-line bg-page px-4 py-5 lg:hidden"
+          className="fixed inset-x-0 top-14 bottom-0 z-20 flex flex-col gap-6 overflow-y-auto overscroll-contain border-t border-line bg-page px-4 py-5 lg:hidden"
         >
           <div className="flex flex-col">
             {PRINCIPALES.map((item) => (

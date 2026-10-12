@@ -148,7 +148,7 @@ export function LeyPage() {
 function TextoCompleto({ ley }: { ley: LeyDetalle }) {
   const articulos = ley.bloques.filter((b) => b.tipo === "articulo").length;
   return (
-    <details className="group rounded-2xl border border-line">
+    <details className="group overflow-hidden rounded-2xl border border-line">
       <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 hover:bg-grid/50 [&::-webkit-details-marker]:hidden">
         <span className="flex min-w-0 flex-col">
           <span className="font-medium">Texto completo</span>
