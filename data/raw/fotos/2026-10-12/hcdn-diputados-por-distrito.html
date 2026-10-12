@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+    <html lang="es">
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+<head>
+		   
+
+
+
+
+
+
+
+
+
+
+	
+
+	<meta charset="UTF-8">	
+	<meta name="description" content="Mapa interactivo con los Diputados por Bloque" />			
+	<meta name="keywords" content="Distrito| Honorable cámara de Diputados" />	
+	<meta http-equiv="expires" content="0"/>
+	<meta name="robots" content="index, follow" />
+	<meta name="revisit-after" content="7 days" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	 
+        
+        
+            <title>Distrito| Honorable cámara de Diputados</title>
+        
+    
+
+	<meta name="version" content="3.0">
+
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1Q0ZDMM4ZH"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	
+	  gtag('config', 'G-1Q0ZDMM4ZH');
+	</script>
+
+	<!-- Google Tag Manager 
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+														  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+				'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+								})(window,document,'script','dataLayer','GTM-NW7PCRN5');</script>
+	End Google Tag Manager -->
+	
+	<link rel="apple-touch-icon" sizes="180x180"  href="/export/system/modules/ar.gob.hcdn.base/resources/img/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/export/system/modules/ar.gob.hcdn.base/resources/img/favicon-32x32.png" >
+	<link rel="icon" type="image/png" sizes="16x16"  href="/export/system/modules/ar.gob.hcdn.base/resources/img/favicon-16x16.png" >
+	<link rel="icon" type="image/png" sizes="16x16"  href="/system/modules/ar.gob.hcdn.base/resources/img/favicon.ico" >
+	
+	
+	<link href='/export/system/modules/ar.gob.hcdn.base/resources/vendor/css/roboto.min.css' rel='stylesheet' type='text/css'>	
+
+	<link href="/export/system/modules/ar.gob.hcdn.base/resources/vendor/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/export/system/modules/ar.gob.hcdn.base/resources/vendor/fontawesome6/css/fontawesome.css" rel="stylesheet">
+	<link href="/export/system/modules/ar.gob.hcdn.base/resources/vendor/fontawesome6/css/brands.css" rel="stylesheet">
+	<link href="/export/system/modules/ar.gob.hcdn.base/resources/vendor/fontawesome6/css/solid.css" rel="stylesheet">
+	<link href="/export/system/modules/ar.gob.hcdn.base/resources/vendor/slick/css/slick.css" rel="stylesheet">
+	<link href="/export/system/modules/ar.gob.hcdn.base/resources/vendor/slick/css/slick-theme.css" rel="stylesheet">
+	<link href="/export/system/modules/ar.gob.hcdn.base/resources/vendor/css/video-js.css" rel="stylesheet" />
+	
+	
+<link rel="stylesheet" href="/export/system/modules/ar.gob.hcdn.grid/resources/css/sgGrid.css" type="text/css" />
+	
+	
+	<link href="/export/system/modules/ar.gob.hcdn.base/resources/css/diputados.css" rel="stylesheet"> 
+	<link href="/export/system/modules/ar.gob.hcdn.base/resources/css/var.css" rel="stylesheet">
+	<link href="/export/system/modules/ar.gob.hcdn.base/resources/css/body.css" rel="stylesheet">
+	<link href="/export/system/modules/ar.gob.hcdn.base/resources/css/header.css" rel="stylesheet">
+    <link href="/export/system/modules/ar.gob.hcdn.base/resources/css/nav-tpl.css" rel="stylesheet">
+	<link href="/export/system/modules/ar.gob.hcdn.base/resources/css/footer.css" rel="stylesheet">
+	<link href="/export/system/modules/ar.gob.hcdn.base/resources/css/nav-left.css" rel="stylesheet">
+	<link href="/export/system/modules/ar.gob.hcdn.base/resources/css/buttons.css" rel="stylesheet">
+	<link href="/export/system/modules/ar.gob.hcdn.base/resources/css/tables.css" rel="stylesheet">
+	<link href="/export/system/modules/ar.gob.hcdn.base/resources/css/paginador.css" rel="stylesheet">
+	<!--<script src="/export/system/modules/ar.gob.hcdn.base/resources/vendor/js/jquery-3.2.1.min.js"></script>-->
+	
+	<script src="/export/system/modules/ar.gob.hcdn.base/resources/vendor/js/jquery-3.7.1.min.js"></script>
+
+	
+	
+	
+	
+	
+	 <!-- Videojs -->
+	<script src="/export/system/modules/ar.gob.hcdn.base/resources/vendor/js/vjs/ie8/videojs-ie8.min.js"></script>
+	<script src="/export/system/modules/ar.gob.hcdn.base/resources/vendor/js/vjs/video.min.js"></script>
+	<script src="/export/system/modules/ar.gob.hcdn.base/resources/vendor/js/vjs/lang/es.js"></script>
+	  <!-- Videojs: Flash fallback -->
+	<script src="/export/system/modules/ar.gob.hcdn.base/resources/vendor/js/vjs/plugins/videojs-flash.min.js"></script>
+	  <!-- Videojs: Hls -->
+	<script src="/export/system/modules/ar.gob.hcdn.base/resources/vendor/js/vjs/plugins/videojs-hls.min.js"></script>
+	  <!-- Videojs: Dash -->
+	<script src="/export/system/modules/ar.gob.hcdn.base/resources/vendor/js/vjs/plugins/dash.all.min.js"></script>
+	<script src="/export/system/modules/ar.gob.hcdn.base/resources/vendor/js/vjs/plugins/videojs-dash.min.js"></script>
+	
+	<script src="/system/modules/ar.gob.hcdn.base/resources/js/hcdn.js"></script>
+	
+	
+</head>
+
+		<body>
+
+				<!-- Google Tag Manager (noscript) 
+				<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW7PCRN5"
+								  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+				 End Google Tag Manager (noscript) -->	
+			
+				<div  class="header-hcdn">
+	<header>
+		<div class="row">
+			 <div class="col text-center">
+				<a href="/index.html">
+					<img class="logoHCDN" src="/export/system/modules/ar.gob.hcdn.base/resources/img/logo-hcdn-vertical.jpg" alt="Honorable Cámara  de Diputados 				de la Nación Argentina">					  
+				</a>
+			</div>
+		</div>					      
+	</header>	
+
+	<nav class="navbar navbar-expand-lg nav-top"  id="navTop">
+		<div class="wrapper-nav-top">
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-			expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0" id="nav1">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" data-bs-auto-close="outside" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Institucional
+						</a>
+						<ul class="dropdown-menu" id="subnav1">
+							<li><a class="dropdown-item" href="/institucional/autoridades/index.html">Autoridades</a></li>
+							<li><a class="dropdown-item" href="/institucional/presentacion.html">La cámara</a></li>
+							<li><a class="dropdown-item" href="https://www.congreso.gob.ar/constitucionNacional.php" target="_blank">Constitución Nacional</a></li>
+							<li><a class="dropdown-item" href="https://www.congreso.gob.ar/constitucionesProvinciales.php"  target="_blank">Constituciones Provinciales</a></li>
+							<li><a class="dropdown-item" href="/diplomacia_parlamentaria/index.html">Diplomacia Parlamentaria</a></li>
+							<li><a class="dropdown-item" href="/institucional/cuidadoPatrimonio/index.html">Cuidado del Patrimonio</a></li>
+							<li><a class="dropdown-item" href="/prensa/index.html">Prensa</a></li>
+
+						</ul>
+					</li>
+					<li class="nav-item"><a class="nav-link" aria-current="page" href="/institucional/transparencia/index.html">Transparencia</a></li>
+					
+
+
+
+
+
+
+
+
+		 <li class="nav-item li-parl col-2">
+          <a class="nav-link" href="/diputados/">Diputados</a>
+        </li>
+		<li class="nav-item li-parl col-2">
+          <a class="nav-link" href="/proyectos/">Proyectos</a>
+        </li>
+		<li class="nav-item li-parl col-2">
+          <a class="nav-link" href="/comisiones/">Comisiones</a>
+        </li>
+		<li class="nav-item li-parl col-2">
+          <a class="nav-link" href="/sesiones/">Sesiones</a>
+        </li>
+
+</ul>
+
+				 <ul class="navbar-nav" id="nav2">
+				<li class="nav-item"><a class="nav-link" aria-current="page" aria-label="facebook.com" href="https://www.facebook.com/Diputados.Argentina" target="_blank"><i class="fa-brands fa-facebook-f"></i></a></li>
+				<li class="nav-item"><a class="nav-link" aria-current="page" aria-label="twiter.com" href="https://twitter.com/DiputadosAR" target="_blank"><i class="fa-brands fa-x-twitter"></i></a></li>
+				<li class="nav-item"><a class="nav-link" aria-current="page" aria-label="youtube.com" href="https://www.youtube.com/channel/UC5KfW9_wv4tqbIPgY8tMG-w/featured" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
+				<li class="nav-item"><a class="nav-link" aria-current="page" aria-label="instagram.com" href="https://www.instagram.com/diputados.argentina" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+				<li class="nav-item"><a class="nav-link" aria-current="page" aria-label="tiktok.com" href="https://www.tiktok.com/@diputadosargentina" target="_blank"><i class="fa-brands fa-tiktok"></i></a></li> 
+				
+				<!--
+				<li class="nav-item dropdown buscador">
+					<a class="nav-link dropdown-toggle" data-bs-auto-close="outside" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Buscador
+				  	</a>
+				  	<ul class="dropdown-menu">
+						<li>
+							<form  method="post" class="d-flex" role="search">
+								<div class="input-group busquedaPortada">
+								  <input class="form-control me-2"  aria-label="Buscar" title="buscador" type="text" placeholder="Buscar..." name="query">
+								  <span>
+								        <button type="submit"  action="/results.html"> <i class="fa-solid fa-magnifying-glass"></i></button>
+								  </span>
+								</div>
+								
+								<input type="hidden" name="index" value="Buscador - Todo el Sitio">
+							</form>
+						</li>
+					</ul>
+				</li>
+				-->
+			</ul>
+
+</div>
+		</div>
+	</nav>
+</div>
+
+<script>
+	window.addEventListener('scroll', function() {
+		let navbar = document.querySelector('.header-hcdn');
+		let scrollPosition = window.scrollY || window.pageYOffset;
+
+		if (scrollPosition > 50) {
+			navbar.classList.add('fixed');
+		} else {
+			navbar.classList.remove('fixed');
+		}
+	});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar d-none d-md-block " id="navParlamentaria">
+      <ul class="nav container-xl justify-content-center">
+       	
+
+
+
+
+
+
+
+
+		 <li class="nav-item li-parl col-2">
+          <a class="nav-link" href="/diputados/">Diputados</a>
+        </li>
+		<li class="nav-item li-parl col-2">
+          <a class="nav-link" href="/proyectos/">Proyectos</a>
+        </li>
+		<li class="nav-item li-parl col-2">
+          <a class="nav-link" href="/comisiones/">Comisiones</a>
+        </li>
+		<li class="nav-item li-parl col-2">
+          <a class="nav-link" href="/sesiones/">Sesiones</a>
+        </li>
+
+
+      </ul>
+</nav>
+
+
+<main class="container-fluid
+				
+				
+				">
+				<section class="container-xl mt-4 breadcrumb">
+						<a href="/index.html" style="margin-right: 5px;">Home » </a>
+						 
+							Diputados
+						</section>
+					<section class="container-xl" id="nav_left">
+						<div class="nav">
+									<div class="nav-item">
+										
+										<ul class="SagaMenu-listado nivel-1 " data-nivel="1" data-bloque-numero="4" style="">
+												<li class='SagaMenu-li nav-side-level-0   list-group-item 
+															  
+															   ' data-nivel="1" data-bloque-numero="1">
+														<a href="/diputados/index.html" class="SagaMenu-enlace" data-nivel="1">Nómina Actual</a>
+													</li>
+												<li class='SagaMenu-li nav-side-level-0   list-group-item 
+															  
+															   active' data-nivel="1" data-bloque-numero="1">
+														<a href="/diputados/diputados-por-distrito.html" class="SagaMenu-enlace" data-nivel="1">Diputados por Distrito</a>
+													</li>
+												<li class='SagaMenu-li nav-side-level-0   list-group-item 
+															  
+															   ' data-nivel="1" data-bloque-numero="1">
+														<a href="/diputados/diputados-por-bloque.html" class="SagaMenu-enlace" data-nivel="1">Diputados por Bloque</a>
+													</li>
+												<li class='SagaMenu-li nav-side-level-0   list-group-item 
+															  
+															   ' data-nivel="1" data-bloque-numero="1">
+														<a href="/diputados/interbloques.html" class="SagaMenu-enlace" data-nivel="1">Interbloques</a>
+													</li>
+												<li class='SagaMenu-li nav-side-level-0   list-group-item 
+															  
+															   ' data-nivel="1" data-bloque-numero="1">
+														<a href="/diputados/recinto.html" class="SagaMenu-enlace" data-nivel="1">Recinto</a>
+													</li>
+												</ul>
+									</div>
+									
+									</div>
+								<a class="nav-link" onclick="window.history.back();" href="#"></a>
+							</section>
+					<section id="main"class="container-xl">
+
+						<div  id="contenedorPpal" class="grid_container" ><div class="sgsection-main_container complex visibilidad-always anchoCompleto" id="sgsection-fce2a5ce-312f-11ee-bbcb-005056894ace" data-cssid="sgsection-fce2a5ce-312f-11ee-bbcb-005056894ace" >
+
+                <div class="sgsection-main_wrapper" id="sgsection-fce2a5ce-312f-11ee-bbcb-005056894ace">
+
+                <div class="sgsection-columna col_xxs-12  visibilidadColumna-always"  data-cssid="sgsection-fce2a5ce-312f-11ee-bbcb-005056894ace-sgsectioncolumn_n1">
+
+                        <div class="cms_container-section" ><div class="sgrow-main_container visibilidadFila-always" id="sgrow_n09f9c8b8-3130-11ee-bbcb-005056894ace" data-cssid="sgrow_n09f9c8b8-3130-11ee-bbcb-005056894ace" >
+
+                <div class="sgrow-wrapper">
+
+                <div class="sgrow-columna col_xxs-12  visibilidadColumnaFila-always"  data-cssid="09f9c8b8-3130-11ee-bbcb-005056894ace-sgrowcolumn_n1" data-recursos-tipo="diputados-listados">
+
+                        <div class="cms_container-row" ><script src="/export/system/modules/ar.gob.hcdn.base/resources/js/jquery.maphilight.min.js"></script>
+
+<section class="row">
+<style>
+#resultadoAJAX{
+	height: unset;
+}
+#resultadoMapa {
+    height: 36em;
+	overflow: auto;
+	padding: 15px;
+    border-radius: 15px;
+}
+#resultadoMapa h3 {    
+	text-align: center;
+    font-size: 1.3rem;
+}
+
+.resultadoDiputado {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+	gap: 10px;
+    margin-bottom: 5px;
+}
+
+.resultadoDiputado img {
+	width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+</style>
+<h1>Diputados por Distritos</h1>
+
+
+<script type="text/javascript">
+
+	function limpiarResultadoDiputadoAjax(){
+		$(".resultadoDiputadoAjax").html("");
+		$(".resultadoDipSlide").css("display" , "none");
+	}
+	
+	function cerrarResultadoDiputadoDato(){
+		$(".resultadoDiputadoAjax").css("display" , "none");
+		$(".resultadoDipSlide").css("display" , "none");
+	}
+	
+	function cerrarScrollDiputados(){
+		$("#listaScrollApellido").css("display" , "none");
+		$("#listaScrollBloque").css("display" , "none");
+		$("#listaScrollComisiones").css("display" , "none");
+		$("#listaScrollMapa").css("display" , "none");
+	}
+</script>
+
+<script type="text/javascript">
+
+	 let listado = {"data":{"diputados":{"MENDOZA":[{"pk":1485,"nombre":"Lourdes Micaela","apellido":"Arrieta","distrito":"MENDOZA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27372984177_20240522103948000_small.png","bloque":"PROVINCIAS UNIDAS","mail":"LARRIETA@HCDN.GOB.AR","sexo":"F"},{"pk":1437,"nombre":"Martín","apellido":"Aveiro","distrito":"MENDOZA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20241811612_20231218133854000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"MAVEIRO@HCDN.GOB.AR","sexo":"M"},{"pk":1502,"nombre":"Facundo","apellido":"Correa Llano","distrito":"MENDOZA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20268386131_20231218135336000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"FCORREAL@HCDN.GOB.AR","sexo":"M"},{"pk":1716,"nombre":"Emir","apellido":"Félix","distrito":"MENDOZA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20168368373_20251204141145000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"EFELIX@HCDN.GOB.AR","sexo":"M"},{"pk":1500,"nombre":"Mercedes","apellido":"Llano","distrito":"MENDOZA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27267928539_20231128104245000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MLLANO@HCDN.GOB.AR","sexo":"F"},{"pk":1734,"nombre":"Álvaro","apellido":"Martínez","distrito":"MENDOZA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20326276287_20251201145432000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"AMARTINEZ@HCDN.GOB.AR","sexo":"M"},{"pk":1761,"nombre":"Julieta","apellido":"Metral Asensio","distrito":"MENDOZA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27347466331_20251126110610000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MMETRALA@HCDN.GOB.AR","sexo":"F"},{"pk":1473,"nombre":"Lisandro","apellido":"Nieri","distrito":"MENDOZA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20227777436_20231130151346000_small.png","bloque":"UCR - UNIÓN CÍVICA RADICAL","mail":"LNIERI@HCDN.GOB.AR","sexo":"M"},{"pk":1732,"nombre":"Luis","apellido":"Petri","distrito":"MENDOZA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20258871112_20251215092917000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"LPETRI@HCDN.GOB.AR","sexo":"M"},{"pk":1707,"nombre":"Pamela Fernanda","apellido":"Verasay","distrito":"MENDOZA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27281591954_20251211094515000_small.png","bloque":"UCR - UNIÓN CÍVICA RADICAL","mail":"PVERASAY@HCDN.GOB.AR","sexo":"F"}],"SANTA CRUZ":[{"pk":1545,"nombre":"José Luis","apellido":"Garrido","distrito":"SANTA CRUZ","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20209210739_20240122145422000_small.png","bloque":"POR SANTA CRUZ","mail":"JGARRIDO@HCDN.GOB.AR","sexo":"M"},{"pk":1762,"nombre":"Jairo","apellido":"Guzmán","distrito":"SANTA CRUZ","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20303559680_20251204144249000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"JGUZMAN@HCDN.GOB.AR","sexo":"M"},{"pk":1465,"nombre":"Ana María","apellido":"Ianni","distrito":"SANTA CRUZ","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27209648909_20231128100843000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"AIANNI@HCDN.GOB.AR","sexo":"F"},{"pk":1708,"nombre":"Moira","apellido":"Lanesan Sancho","distrito":"SANTA CRUZ","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27314401234_20251127085330000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"MLANESAN@HCDN.GOB.AR","sexo":"F"},{"pk":1758,"nombre":"Juan Carlos","apellido":"Molina","distrito":"SANTA CRUZ","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20179418046_20251203102227000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"JUCMOLINA@HCDN.GOB.AR","sexo":"M"}],"CHUBUT":[{"pk":1535,"nombre":"Jorge Antonio","apellido":"Avila","distrito":"CHUBUT","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20174462144_20231205093948000_small.png","bloque":"PROVINCIAS UNIDAS","mail":"JAAVILA@HCDN.GOB.AR","sexo":"M"},{"pk":1719,"nombre":"Maira","apellido":"Frias","distrito":"CHUBUT","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27330723578_20251126102513000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MRFRIAS@HCDN.GOB.AR","sexo":"F"},{"pk":1479,"nombre":"José","apellido":"Glinski","distrito":"CHUBUT","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20280759881_20231128111210000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"JGLINSKI@HCDN.GOB.AR","sexo":"M"},{"pk":1725,"nombre":"Juan Pablo","apellido":"Luque","distrito":"CHUBUT","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20263667000_20251126081336000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"JLUQUE@HCDN.GOB.AR","sexo":"M"},{"pk":1550,"nombre":"César","apellido":"Treffinger","distrito":"CHUBUT","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20242671652_20231206151800000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"CTREFFINGER@HCDN.GOB.AR","sexo":"M"}],"CORDOBA":[{"pk":1484,"nombre":"Belén","apellido":"Avico","distrito":"CORDOBA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27275988877_20260915151232000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"BAVICO@HCDN.GOB.AR","sexo":"F"},{"pk":1713,"nombre":"Carolina","apellido":"Basualdo","distrito":"CORDOBA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27264849638_20251203092410000_small.png","bloque":"PROVINCIAS UNIDAS","mail":"CBASUALDO@HCDN.GOB.AR","sexo":"F"},{"pk":1460,"nombre":"Gabriel","apellido":"Bornoroni","distrito":"CORDOBA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20266723181_20231129150958000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"GBORNORONI@HCDN.GOB.AR","sexo":"M"},{"pk":1516,"nombre":"Juan Fernando","apellido":"Brügge","distrito":"CORDOBA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20161572749_20231128095743000_small.png","bloque":"PROVINCIAS UNIDAS","mail":"JBRUGGE@HCDN.GOB.AR","sexo":"M"},{"pk":1733,"nombre":"Natalia","apellido":"de la Sota","distrito":"CORDOBA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27248854265_20211216102711000_small.png","bloque":"DEFENDAMOS CÓRDOBA","mail":"NDELASOTA@HCDN.GOB.AR","sexo":"F"},{"pk":1458,"nombre":"Gabriela Beatriz","apellido":"Estévez","distrito":"CORDOBA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27261225234_20231129151114000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"GESTEVEZ@HCDN.GOB.AR","sexo":"F"},{"pk":1773,"nombre":"Ignacio","apellido":"García Aresca","distrito":"CORDOBA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20208736338_20251203094634000_small.png","bloque":"PROVINCIAS UNIDAS","mail":"IGARCIAA@HCDN.GOB.AR","sexo":"M"},{"pk":1548,"nombre":"Carlos","apellido":"Gutiérrez","distrito":"CORDOBA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/10821747_20200214145746000_small.png","bloque":"PROVINCIAS UNIDAS","mail":"CGUTIERREZ@HCDN.GOB.AR","sexo":"M"},{"pk":1529,"nombre":"María Cecilia","apellido":"Ibañez","distrito":"CORDOBA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/23171578434_20231129152402000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MIBANEZ@HCDN.GOB.AR","sexo":"F"},{"pk":1660,"nombre":"Enrique","apellido":"Lluch","distrito":"CORDOBA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20296629597_20251204145853000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"ELLUCH@HCDN.GOB.AR","sexo":"M"},{"pk":1765,"nombre":"Marcos","apellido":"Patiño Brizuela","distrito":"CORDOBA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20187947740_20251126134524000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MPATINOB@HCDN.GOB.AR","sexo":"M"},{"pk":1475,"nombre":"Luis Albino","apellido":"Picat","distrito":"CORDOBA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/24240124552_20231129152201000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"LPICAT@HCDN.GOB.AR","sexo":"M"},{"pk":1499,"nombre":"María Celeste","apellido":"Ponce","distrito":"CORDOBA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27329016817_20240220173740000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MPONCE@HCDN.GOB.AR","sexo":"F"},{"pk":1744,"nombre":"Gonzalo","apellido":"Roca","distrito":"CORDOBA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20270799044_20251126141757000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"GROCA@HCDN.GOB.AR","sexo":"M"},{"pk":1702,"nombre":"Laura Elena","apellido":"Rodríguez Machado","distrito":"CORDOBA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27148917987_20251201132523000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"LRODRIGUEZM@HCDN.GOB.AR","sexo":"F"},{"pk":1797,"nombre":"Juan","apellido":"Schiaretti","distrito":"CORDOBA","mandato":"2025-2029","mandatoDesde":"2026-02-12T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20077998412_20260211164128000_small.png","bloque":"PROVINCIAS UNIDAS","mail":"JSCHIARETTI@HCDN.GOB.AR","sexo":"M"},{"pk":1648,"nombre":"Laura","apellido":"Soldano","distrito":"CORDOBA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27282719938_20251126153213000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"LSOLDANO@HCDN.GOB.AR","sexo":"F"},{"pk":1564,"nombre":"Alejandra","apellido":"Torres","distrito":"CORDOBA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27142911502_20231206151657000_small.png","bloque":"PROVINCIAS UNIDAS","mail":"LTORRES@HCDN.GOB.AR","sexo":"F"}],"SAN LUIS":[{"pk":1574,"nombre":"Ernesto \"Pipi\"","apellido":"Alí","distrito":"SAN LUIS","mandato":"2023-2027","mandatoDesde":"2024-01-31T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20223799281_20240129144903000_small.png","bloque":"PRIMERO SAN LUIS","mail":"ENALI@HCDN.GOB.AR","sexo":"M"},{"pk":1659,"nombre":"Carlos Alberto","apellido":"Almena","distrito":"SAN LUIS","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20200592167_20251204134624000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"CALMENA@HCDN.GOB.AR","sexo":"M"},{"pk":1669,"nombre":"Claudio","apellido":"Álvarez","distrito":"SAN LUIS","mandato":"2023-2027","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20254305759_20251127110943000_small.png","bloque":"ARGENTINA FEDERAL","mail":"CAALVAREZ@HCDN.GOB.AR","sexo":"M"},{"pk":1698,"nombre":"Mónica","apellido":"Becerra","distrito":"SAN LUIS","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27239991810_20251127111527000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MBECERRA@HCDN.GOB.AR","sexo":"F"},{"pk":1712,"nombre":"Jorge","apellido":"Fernández","distrito":"SAN LUIS","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20133010298_20251202143951000_small.png","bloque":"PRIMERO SAN LUIS","mail":"JOFERNANDEZ@HCDN.GOB.AR","sexo":"M"}],"CORRIENTES":[{"pk":1438,"nombre":"Lisandro","apellido":"Almirón","distrito":"CORRIENTES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/23233977519_20231128110506000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"CALMIRON@HCDN.GOB.AR","sexo":"M"},{"pk":1721,"nombre":"María Virginia","apellido":"Gallardo","distrito":"CORRIENTES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27318487222_20251215091750000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MGALLARDO@HCDN.GOB.AR","sexo":"F"},{"pk":1679,"nombre":"Diógenes Ignacio","apellido":"González","distrito":"CORRIENTES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20174122777_20251204143840000_small.png","bloque":"UCR - UNIÓN CÍVICA RADICAL","mail":"DIGONZALEZ@HCDN.GOB.AR","sexo":"M"},{"pk":1746,"nombre":"Raúl","apellido":"Hadad","distrito":"CORRIENTES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20323020516_20251126104035000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"RHADAD@HCDN.GOB.AR","sexo":"M"},{"pk":1470,"nombre":"Nancy","apellido":"Sand","distrito":"CORRIENTES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27165495239_20231128104737000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"NSANDG@HCDN.GOB.AR","sexo":"F"},{"pk":1609,"nombre":"José Federico","apellido":"Tournier","distrito":"CORRIENTES","mandato":"2023-2027","mandatoDesde":"2024-08-14T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20244166246_20260827093141000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"JTOURNIER@HCDN.GOB.AR","sexo":"M"},{"pk":1508,"nombre":"Christian Alejandro","apellido":"Zulli","distrito":"CORRIENTES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/23332030159_20231130155355000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"CZULLI@HCDN.GOB.AR","sexo":"M"}],"TUCUMAN":[{"pk":1463,"nombre":"Mariano","apellido":"Campero","distrito":"TUCUMAN","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20301177314_20231128100341000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MCAMPERO@HCDN.GOB.AR","sexo":"M"},{"pk":1537,"nombre":"Carlos","apellido":"Cisneros","distrito":"TUCUMAN","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20162164040_20200206125401_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"CCISNEROS@HCDN.GOB.AR","sexo":"M"},{"pk":1772,"nombre":"Elia Marina","apellido":"Fernández","distrito":"TUCUMAN","mandato":"2023-2027","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27167354918_20251202142545000_small.png","bloque":"INDEPENDENCIA","mail":"EMFERNANDEZ@HCDN.GOB.AR","sexo":"F"},{"pk":1544,"nombre":"Gerardo","apellido":"Huesen","distrito":"TUCUMAN","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20279611412_20231206151210000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MHUESEN@HCDN.GOB.AR","sexo":"M"},{"pk":1757,"nombre":"Gladys","apellido":"Medina","distrito":"TUCUMAN","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27233105193_20251202145510000_small.png","bloque":"INDEPENDENCIA","mail":"GMEDINA@HCDN.GOB.AR","sexo":"F"},{"pk":1647,"nombre":"Soledad","apellido":"Molinuevo","distrito":"TUCUMAN","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27225573641_20251126111910000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MMOLINUEVO@HCDN.GOB.AR","sexo":"F"},{"pk":1692,"nombre":"Javier","apellido":"Noguera","distrito":"TUCUMAN","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20217440743_20251127092235000_small.png","bloque":"INDEPENDENCIA","mail":"MNOGUERA@HCDN.GOB.AR","sexo":"M"},{"pk":1764,"nombre":"Federico Agustín","apellido":"Pelli","distrito":"TUCUMAN","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20318128031_20251126135026000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"FPELLI@HCDN.GOB.AR","sexo":"M"},{"pk":1444,"nombre":"Pablo Raúl","apellido":"Yedlin","distrito":"TUCUMAN","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20176149923_20231128100642000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"PYEDLIN@HCDN.GOB.AR","sexo":"M"}],"CIUDAD DE BUENOS AIRES":[{"pk":1700,"nombre":"Sabrina","apellido":"Ajmechet","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27290423894_20251205090952000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"SAJMECHET@HCDN.GOB.AR","sexo":"F"},{"pk":1735,"nombre":"Javier","apellido":"Andrade","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20205726838_20251202084506000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"JANDRADE@HCDN.GOB.AR","sexo":"M"},{"pk":1441,"nombre":"Damián","apellido":"Arabia","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20357318158_20231128095338000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"DARABIA@HCDN.GOB.AR","sexo":"M"},{"pk":1753,"nombre":"Myriam","apellido":"Bregman","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27226005531_20251127152919000_small.png","bloque":"PTS-FRENTE DE IZQUIERDA Y DE TRABAJADORES UNIDAD","mail":"MBREGMAN@HCDN.GOB.AR","sexo":"F"},{"pk":1662,"nombre":"Lucía","apellido":"Cámpora","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27357276328_20251127112232000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"LCAMPORA@HCDN.GOB.AR","sexo":"F"},{"pk":1443,"nombre":"Mariela","apellido":"Coletta","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27345125391_20231128100429000_small.png","bloque":"PROVINCIAS UNIDAS","mail":"MGCOLETTA@HCDN.GOB.AR","sexo":"F"},{"pk":1768,"nombre":"Fernando","apellido":"de Andreis","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20249775461_20251127113216000_small.png","bloque":"PRO","mail":"FDEANDREIS@HCDN.GOB.AR","sexo":"M"},{"pk":1694,"nombre":"Nicolás","apellido":"Emma","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20291515011_20251128090428000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"NEMMA@HCDN.GOB.AR","sexo":"M"},{"pk":1767,"nombre":"Alejandro","apellido":"Fargosi","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20113717506_20251211145749000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"AFARGOSI@HCDN.GOB.AR","sexo":"M"},{"pk":1483,"nombre":"Daiana","apellido":"Fernández Molero","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27319171148_20231128102546000_small.png","bloque":"PRO","mail":"DFERNANDEZM@HCDN.GOB.AR","sexo":"F"},{"pk":1448,"nombre":"Maximiliano","apellido":"Ferraro","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20250442433_20231128104631000_small.png","bloque":"COALICION CIVICA","mail":"MFERRARO@HCDN.GOB.AR","sexo":"M"},{"pk":1573,"nombre":"Alida","apellido":"Ferreyra","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2024-01-31T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27262351195_20260827093859000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"AFERREYRA@HCDN.GOB.AR","sexo":"F"},{"pk":1657,"nombre":"Antonela","apellido":"Giampieri","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27339516524_20251204143259000_small.png","bloque":"PRO","mail":"AGIAMPIERI@HCDN.GOB.AR","sexo":"F"},{"pk":1462,"nombre":"Silvana","apellido":"Giudici","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27145408909_20231128100754000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"SGIUDICI@HCDN.GOB.AR","sexo":"F"},{"pk":1547,"nombre":"Álvaro","apellido":"González","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20126966505_20231206151116000_small.png","bloque":"PRO","mail":"AGONZALEZ@HCDN.GOB.AR","sexo":"M"},{"pk":1751,"nombre":"Itai","apellido":"Hagman","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20190103200_20251127083856000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"IHAGMAN@HCDN.GOB.AR","sexo":"M"},{"pk":1741,"nombre":"Patricia","apellido":"Holzman","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27176050034_20251204144807000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"PHOLZMAN@HCDN.GOB.AR","sexo":"F"},{"pk":1682,"nombre":"Andrés","apellido":"Leone","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20217318670_20251204145720000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"ALEONE@HCDN.GOB.AR","sexo":"M"},{"pk":1664,"nombre":"Martín","apellido":"Lousteau","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20219540125_20251125150757000_small.png","bloque":"PROVINCIAS UNIDAS","mail":"MLOUSTEAU@HCDN.GOB.AR","sexo":"M"},{"pk":1685,"nombre":"Kelly","apellido":"Olmos","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27104003465_20251211133815000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"KOLMOS@HCDN.GOB.AR","sexo":"F"},{"pk":1457,"nombre":"Paula Andrea","apellido":"Penacca","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27288605993_20231129153817000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"PPENACCA@HCDN.GOB.AR","sexo":"F"},{"pk":1517,"nombre":"Lorena","apellido":"Pokoik","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27232050107_20231128101305000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"LPOKOIKG@HCDN.GOB.AR","sexo":"F"},{"pk":1653,"nombre":"Santiago Luis","apellido":"Roberto","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20228130770_20251126141452000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"SROBERTO@HCDN.GOB.AR","sexo":"M"},{"pk":1558,"nombre":"Eduardo Félix","apellido":"Valdés","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20116408997_20231205095438000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"EVALDES@HCDN.GOB.AR","sexo":"M"},{"pk":1503,"nombre":"Oscar","apellido":"Zago","distrito":"CIUDAD DE BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/23165838009_20231129153517000_small.png","bloque":"MID - MOVIMIENTO DE INTEGRACIÓN Y DESARROLLO","mail":"OZAGO@HCDN.GOB.AR","sexo":"M"}],"LA RIOJA":[{"pk":1459,"nombre":"Hilda","apellido":"Aguirre","distrito":"LA RIOJA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27139186244_20231130154914000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"HAGUIRRE@HCDN.GOB.AR","sexo":"F"},{"pk":1531,"nombre":"Sergio Guillermo","apellido":"Casas","distrito":"LA RIOJA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20172493379_20231129154211000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"SCASAS@HCDN.GOB.AR","sexo":"M"},{"pk":1561,"nombre":"Martín","apellido":"Menem","distrito":"LA RIOJA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20245792906_20231207105307000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MMENEM@HCDN.GOB.AR","sexo":"M"},{"pk":1731,"nombre":"Gabriela","apellido":"Pedrali","distrito":"LA RIOJA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27167558742_20251204153727000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"GPEDRALI@HCDN.GOB.AR","sexo":"F"},{"pk":1718,"nombre":"Gino","apellido":"Visconti","distrito":"LA RIOJA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20379994580_20251127080438000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"GVISCONTI@HCDN.GOB.AR","sexo":"M"}],"BUENOS AIRES":[{"pk":1456,"nombre":"Pablo","apellido":"Ansaloni","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20220776795_20231218133633000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"PANSALONI@HCDN.GOB.AR","sexo":"M"},{"pk":1509,"nombre":"Karina","apellido":"Banfi","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27225074467_20231215100135000_small.png","bloque":"ADELANTE BUENOS AIRES","mail":"KBANFI@HCDN.GOB.AR","sexo":"F"},{"pk":1492,"nombre":"Bertie","apellido":"Benegas Lynch","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20186213476_20231218134617000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"ABENEGASL@HCDN.GOB.AR","sexo":"M"},{"pk":1528,"nombre":"Santiago","apellido":"Cafiero","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20273754041_20231218134818000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"SCAFIERO@HCDN.GOB.AR","sexo":"M"},{"pk":1649,"nombre":"Alejandro","apellido":"Carrancio","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20253856409_20251127112724000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"ACARRANCIO@HCDN.GOB.AR","sexo":"M"},{"pk":1478,"nombre":"Carlos Daniel","apellido":"Castagneto","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20139425163_20231128100920000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"CCASTAGNETO@HCDN.GOB.AR","sexo":"M"},{"pk":1730,"nombre":"Giselle","apellido":"Castelnuovo","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27277670718_20251127091254000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"GCASTELNUOVO@HCDN.GOB.AR","sexo":"F"},{"pk":1754,"nombre":"María Florencia","apellido":"De Sensi","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27332948895_20251128092414000_small.png","bloque":"PRO","mail":"MDESENSI@HCDN.GOB.AR","sexo":"F"},{"pk":1688,"nombre":"Nicolás","apellido":"del Caño","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20279217714_20251204140140000_small.png","bloque":"PTS-FRENTE DE IZQUIERDA Y DE TRABAJADORES UNIDAD","mail":"NDELCANO@HCDN.GOB.AR","sexo":"M"},{"pk":1704,"nombre":"Romina","apellido":"Del Plá","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27226680565_20251127120203000_small.png","bloque":"PARTIDO OBRERO EN EL FRENTE DE IZQUIERDA Y DE TRABAJADORES-UNIDAD","mail":"RDELPLA@HCDN.GOB.AR","sexo":"F"},{"pk":1689,"nombre":"Fernanda","apellido":"Díaz","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27349910298_20251204140349000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"FDIAZ@HCDN.GOB.AR","sexo":"F"},{"pk":1525,"nombre":"Eduardo","apellido":"Falcone","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20148134902_20241128142619000_small.png","bloque":"MID - MOVIMIENTO DE INTEGRACIÓN Y DESARROLLO","mail":"EFALCONE@HCDN.GOB.AR","sexo":"M"},{"pk":1739,"nombre":"Sergio","apellido":"Figliuolo","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20253596814_20251204141955000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"SFIGLIUOLO@HCDN.GOB.AR","sexo":"M"},{"pk":1759,"nombre":"Alejandro","apellido":"Finocchiaro","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20184536758_20211202162523000_small.png","bloque":"PRO","mail":"AFINOCCHIARO@HCDN.GOB.AR","sexo":"M"},{"pk":1518,"nombre":"Mónica","apellido":"Frade","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/23127596824_20231128101433000_small.png","bloque":"COALICION CIVICA","mail":"MFRADE@HCDN.GOB.AR","sexo":"F"},{"pk":1695,"nombre":"Sebastián","apellido":"Galmarini","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20266508329_20251201142222000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"SGALMARINI@HCDN.GOB.AR","sexo":"M"},{"pk":1706,"nombre":"María Teresa","apellido":"García","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27122857714_20251126102902000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"MTGARCIA@HCDN.GOB.AR","sexo":"F"},{"pk":1763,"nombre":"Álvaro","apellido":"García","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20270878181_20251204142930000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"ALGARCIA@HCDN.GOB.AR","sexo":"M"},{"pk":1804,"nombre":"Juan Carlos","apellido":"Giordano","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2026-08-26T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/00149076380_20201210112827000_small.png","bloque":"IZQUIERDA SOCIALISTA - FRENTE DE IZQUIERDA UNIDAD","mail":"JGIORDANO@HCDN.GOB.AR","sexo":"M"},{"pk":1658,"nombre":"María Luisa","apellido":"González Estevarena","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27127995236_20251204143658000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MGESTEVARENA@HCDN.GOB.AR","sexo":"F"},{"pk":1686,"nombre":"Juan","apellido":"Grabois","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20303347659_20251126103754000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"JGRABOIS@HCDN.GOB.AR","sexo":"M"},{"pk":1562,"nombre":"Ramiro","apellido":"Gutiérrez","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20178882873_20200206125402_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"CRGUTIERREZ@HCDN.GOB.AR","sexo":"M"},{"pk":1650,"nombre":"Gladys","apellido":"Humenuk","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27231385776_20251204145032000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"GHUMENUK@HCDN.GOB.AR","sexo":"F"},{"pk":1498,"nombre":"Pablo","apellido":"Juliano","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/23337997589_20231128111433000_small.png","bloque":"PROVINCIAS UNIDAS","mail":"PJULIANO@HCDN.GOB.AR","sexo":"M"},{"pk":1530,"nombre":"Máximo Carlos","apellido":"Kirchner","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20258693109_20231128170631000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"MKIRCHNER@HCDN.GOB.AR","sexo":"M"},{"pk":1520,"nombre":"Lilia","apellido":"Lemoine","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27282985263_20231128101233000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"LBOLUKALOL@HCDN.GOB.AR","sexo":"F"},{"pk":1646,"nombre":"Johanna Sabrina","apellido":"Longo","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27296966075_20251126105244000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"JSLONGO@HCDN.GOB.AR","sexo":"F"},{"pk":1643,"nombre":"Jimena","apellido":"López","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27277083561_20251126105452000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"MJLOPEZ@HCDN.GOB.AR","sexo":"F"},{"pk":1505,"nombre":"Lorena","apellido":"Macyszyn","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27267660633_20231129152015000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MMACYSZYN@HCDN.GOB.AR","sexo":"F"},{"pk":1514,"nombre":"Mario","apellido":"Manrique","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20146757066_20231128100511000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"MRMANRIQUE@HCDN.GOB.AR","sexo":"M"},{"pk":1497,"nombre":"Juan","apellido":"Marino","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20338868244_20231128101152000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"JMARINO@HCDN.GOB.AR","sexo":"M"},{"pk":1445,"nombre":"Nicolás","apellido":"Massot","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20310895955_20231128100601000_small.png","bloque":"ENCUENTRO FEDERAL","mail":"NMASSOT@HCDN.GOB.AR","sexo":"M"},{"pk":1724,"nombre":"Fernanda","apellido":"Miño","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27241001070_20251126111348000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"RMINO@HCDN.GOB.AR","sexo":"F"},{"pk":1482,"nombre":"Matías","apellido":"Molle","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20253485478_20231128101340000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"MMOLLE@HCDN.GOB.AR","sexo":"M"},{"pk":1536,"nombre":"Guillermo","apellido":"Montenegro","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20245846828_20231205094335000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"GMONTENEGRO@HCDN.GOB.AR","sexo":"M"},{"pk":1466,"nombre":"Roxana","apellido":"Monzón","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27239191288_20231128101806000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"RMONZON@HCDN.GOB.AR","sexo":"F"},{"pk":1464,"nombre":"Cecilia","apellido":"Moreau","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27256151524_20200206125351_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"CMOREAU@HCDN.GOB.AR","sexo":"F"},{"pk":1752,"nombre":"Hugo Antonio","apellido":"Moyano","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20305063291_20251127154357000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"HMOYANO@HCDN.GOB.AR","sexo":"M"},{"pk":1668,"nombre":"Miriam","apellido":"Niveyro","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27200012513_20251126125955000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MNIVEYRO@HCDN.GOB.AR","sexo":"F"},{"pk":1703,"nombre":"Joaquín","apellido":"Ojeda","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20358926933_20251126131046000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"JOJEDA@HCDN.GOB.AR","sexo":"M"},{"pk":1487,"nombre":"Marcela Marina","apellido":"Pagano","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27319281628_20231128104503000_small.png","bloque":"COHERENCIA","mail":"MPAGANO@HCDN.GOB.AR","sexo":"F"},{"pk":1770,"nombre":"Sergio Omar","apellido":"Palazzo","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20160116006_20211202190948000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"SPALAZZO@HCDN.GOB.AR","sexo":"M"},{"pk":1673,"nombre":"Sebastián","apellido":"Pareja","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20249630161_20251127082608000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"SPAREJA@HCDN.GOB.AR","sexo":"M"},{"pk":1737,"nombre":"María Lorena","apellido":"Petrovich","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27276017328_20251215093643000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MPETROVICH@HCDN.GOB.AR","sexo":"F"},{"pk":1534,"nombre":"Miguel Ángel","apellido":"Pichetto","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20084824403_20231207101138000_small.png","bloque":"ENCUENTRO FEDERAL","mail":"MPICHETTO@HCDN.GOB.AR","sexo":"M"},{"pk":1670,"nombre":"Horacio","apellido":"Pietragalla Corti","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20260191951_20251126135219000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"HPIETRAGALLAC@HCDN.GOB.AR","sexo":"M"},{"pk":1510,"nombre":"Luciana","apellido":"Potenza","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27383193562_20231205094547000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"LPOTENZA@HCDN.GOB.AR","sexo":"F"},{"pk":1696,"nombre":"Agustina Lucrecia","apellido":"Propato","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27295495540_20251203103219000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"APROPATO@HCDN.GOB.AR","sexo":"F"},{"pk":1666,"nombre":"Karen","apellido":"Reichardt","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27208314128_20251126140748000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"KREICHARDT@HCDN.GOB.AR","sexo":"F"},{"pk":1542,"nombre":"Cristian A.","apellido":"Ritondo","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20178562038_20200206125410_small.png","bloque":"PRO","mail":"CRITONDO@HCDN.GOB.AR","sexo":"M"},{"pk":1747,"nombre":"Marina Dorotea","apellido":"Salzmann","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27352538626_20251126143421000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"MSALZMANN@HCDN.GOB.AR","sexo":"F"},{"pk":1750,"nombre":"Javier","apellido":"Sánchez Wrba","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20304639335_20251204154911000_small.png","bloque":"PRO","mail":"JSANCHEZW@HCDN.GOB.AR","sexo":"M"},{"pk":1452,"nombre":"Juliana","apellido":"Santillán Juárez Brahim","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27273796229_20231128102511000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"CSANTILLANJ@HCDN.GOB.AR","sexo":"F"},{"pk":1493,"nombre":"Santiago","apellido":"Santurio","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20334340660_20231220212146000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"SSANTURIOR@HCDN.GOB.AR","sexo":"M"},{"pk":1480,"nombre":"Sabrina","apellido":"Selva","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27326867476_20250609144435000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"SSELVA@HCDN.GOB.AR","sexo":"F"},{"pk":1654,"nombre":"Vanesa Raquel","apellido":"Siley","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27311140693_20251127081950000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"VSILEY@HCDN.GOB.AR","sexo":"F"},{"pk":1442,"nombre":"Julia","apellido":"Strada","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27344084039_20231128095848000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"JSTRADA@HCDN.GOB.AR","sexo":"F"},{"pk":1655,"nombre":"Jorge","apellido":"Taiana","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/23083626739_20251127155233000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"JTAIANA@HCDN.GOB.AR","sexo":"M"},{"pk":1533,"nombre":"Rodolfo","apellido":"Tailhade","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20213862996_20200206125321_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"LTAILHADE@HCDN.GOB.AR","sexo":"M"},{"pk":1559,"nombre":"Victoria","apellido":"Tolosa Paz","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27234850666_20231212100552000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"VTOLOSAP@HCDN.GOB.AR","sexo":"F"},{"pk":1677,"nombre":"Rubén Darío","apellido":"Torres","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20255454995_20251201151659000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"RDTORRES@HCDN.GOB.AR","sexo":"M"},{"pk":1672,"nombre":"Nicolás Alfredo","apellido":"Trotta","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20249577163_20251126094055000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"NTROTTA@HCDN.GOB.AR","sexo":"M"},{"pk":1748,"nombre":"Hernán","apellido":"Urien","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20341556253_20251126154824000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"HURIEN@HCDN.GOB.AR","sexo":"M"},{"pk":1450,"nombre":"Patricia","apellido":"Vásquez","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27120466483_20231128103226000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"PVASQUEZ@HCDN.GOB.AR","sexo":"F"},{"pk":1661,"nombre":"M. Elena","apellido":"Velázquez","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27204775708_20251127075732000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"MEVELAZQUEZ@HCDN.GOB.AR","sexo":"F"},{"pk":1671,"nombre":"Andrea Fernanda","apellido":"Vera","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27386299175_20251126155353000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"AVERA@HCDN.GOB.AR","sexo":"F"},{"pk":1494,"nombre":"Luana","apellido":"Volnovich","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27188873559_20231205095034000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"LVOLNOVICH@HCDN.GOB.AR","sexo":"F"},{"pk":1729,"nombre":"Hugo","apellido":"Yasky","distrito":"BUENOS AIRES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/23082070699_20200206125341_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"HYASKY@HCDN.GOB.AR","sexo":"M"},{"pk":1522,"nombre":"Martín","apellido":"Yeza","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20319778110_20231128103139000_small.png","bloque":"PRO","mail":"MYEZA@HCDN.GOB.AR","sexo":"M"},{"pk":1538,"nombre":"Natalia","apellido":"Zaracho","distrito":"BUENOS AIRES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27354613285_20251021154732000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"NZARACHO@HCDN.GOB.AR","sexo":"F"}],"LA PAMPA":[{"pk":1471,"nombre":"Martín","apellido":"Ardohain","distrito":"LA PAMPA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/23202055869_20231218135501000_small.png","bloque":"PRO","mail":"MARDOHAIN@HCDN.GOB.AR","sexo":"M"},{"pk":1667,"nombre":"Abelardo","apellido":"Ferrán","distrito":"LA PAMPA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20133677586_20251126102235000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"AFERRAN@HCDN.GOB.AR","sexo":"M"},{"pk":1663,"nombre":"Varinia Lis","apellido":"Marín","distrito":"LA PAMPA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27201070746_20251126110014000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"VMARIN@HCDN.GOB.AR","sexo":"F"},{"pk":1802,"nombre":"Martín","apellido":"Matzkin","distrito":"LA PAMPA","mandato":"2025-2029","mandatoDesde":"2026-06-24T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20237375263_20260811103038000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MMATZKIN@HCDN.GOB.AR","sexo":"M"},{"pk":1552,"nombre":"Ariel","apellido":"Rauschenberger","distrito":"LA PAMPA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20173488956_20231207102606000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"ARAUSCHENBERGER@HCDN.GOB.AR","sexo":"M"}],"SANTIAGO DEL ESTERO":[{"pk":1727,"nombre":"Marcelo","apellido":"Barbur","distrito":"SANTIAGO DEL ESTERO","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20184725976_20251127111243000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"MBARBUR@HCDN.GOB.AR","sexo":"M"},{"pk":1532,"nombre":"Celia","apellido":"Campitelli","distrito":"SANTIAGO DEL ESTERO","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27051354805_20231130154636000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"CCAMPITELLI@HCDN.GOB.AR","sexo":"F"},{"pk":1491,"nombre":"Ricardo","apellido":"Daives","distrito":"SANTIAGO DEL ESTERO","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20080476842_20231207100702000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"RDAIVES@HCDN.GOB.AR","sexo":"M"},{"pk":1488,"nombre":"José","apellido":"Gomez","distrito":"SANTIAGO DEL ESTERO","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20161912078_20231129151752000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"JEGOMEZ@HCDN.GOB.AR","sexo":"M"},{"pk":1656,"nombre":"Cecilia","apellido":"López Pasquali","distrito":"SANTIAGO DEL ESTERO","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27057991025_20251204150040000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"CLOPEZP@HCDN.GOB.AR","sexo":"F"},{"pk":1684,"nombre":"Jorge","apellido":"Mukdise","distrito":"SANTIAGO DEL ESTERO","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20228949907_20251126121705000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"JMUKDISE@HCDN.GOB.AR","sexo":"M"},{"pk":1511,"nombre":"Estela Mary","apellido":"Neder","distrito":"SANTIAGO DEL ESTERO","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/23137026104_20200206125333_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"ENEDER@HCDN.GOB.AR","sexo":"F"}],"SAN JUAN":[{"pk":1678,"nombre":"Cristian","apellido":"Andino","distrito":"SAN JUAN","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20233803252_20251202134006000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"CANDINO@HCDN.GOB.AR","sexo":"M"},{"pk":1521,"nombre":"Jorge","apellido":"Chica","distrito":"SAN JUAN","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20275742253_20231128101110000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"JCHICAM@HCDN.GOB.AR","sexo":"M"},{"pk":1771,"nombre":"Abel","apellido":"Chiconi","distrito":"SAN JUAN","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/23320336813_20251202090052000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"RCHICONI@HCDN.GOB.AR","sexo":"M"},{"pk":1756,"nombre":"Carlos Gustavo","apellido":"Jaime Quiroga","distrito":"SAN JUAN","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20291658971_20251201114641000_small.png","bloque":"PRODUCCION Y TRABAJO","mail":"CJAIMEQ@HCDN.GOB.AR","sexo":"M"},{"pk":1454,"nombre":"José","apellido":"Peluc","distrito":"SAN JUAN","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20229030680_20231128104116000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"JPELUC@HCDN.GOB.AR","sexo":"M"},{"pk":1472,"nombre":"Nancy Viviana","apellido":"Picón Martínez","distrito":"SAN JUAN","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27251183207_20231129153354000_small.png","bloque":"PRODUCCION Y TRABAJO","mail":"NPICONM@HCDN.GOB.AR","sexo":"F"}],"RIO NEGRO":[{"pk":1513,"nombre":"Sergio Eduardo","apellido":"Capozzi","distrito":"RIO NEGRO","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/23111038589_20231129154056000_small.png","bloque":"PROVINCIAS UNIDAS","mail":"SCAPOZZI@HCDN.GOB.AR","sexo":"M"},{"pk":1710,"nombre":"Marcelo","apellido":"Mango","distrito":"RIO NEGRO","mandato":"2023-2027","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20173882174_20251201142709000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"HMANGO@HCDN.GOB.AR","sexo":"M"},{"pk":1720,"nombre":"Adriana Cristina","apellido":"Serquis","distrito":"RIO NEGRO","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27184140115_20251204155243000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"ASERQUIS@HCDN.GOB.AR","sexo":"F"},{"pk":1652,"nombre":"Aníbal","apellido":"Tortoriello","distrito":"RIO NEGRO","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20129790351_20240202135114000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"ATORTORIELLO@HCDN.GOB.AR","sexo":"M"},{"pk":1527,"nombre":"Lorena","apellido":"Villaverde","distrito":"RIO NEGRO","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/23238322464_20231128105805000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"LVILLAVERDE@HCDN.GOB.AR","sexo":"F"}],"MISIONES":[{"pk":1439,"nombre":"Alberto","apellido":"Arrúa","distrito":"MISIONES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20245738723_20231128100717000_small.png","bloque":"ARGENTINA FEDERAL","mail":"AARRUA@HCDN.GOB.AR","sexo":"M"},{"pk":1512,"nombre":"Emmanuel","apellido":"Bianchetti","distrito":"MISIONES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20290353123_20241015130737000_small.png","bloque":"PRO","mail":"RBIANCHETTI@HCDN.GOB.AR","sexo":"M"},{"pk":1711,"nombre":"Maura","apellido":"Gruber","distrito":"MISIONES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/23304576774_20251204144040000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MGRUBER@HCDN.GOB.AR","sexo":"F"},{"pk":1714,"nombre":"Diego","apellido":"Hartfield","distrito":"MISIONES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20284663447_20251211134306000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"DHARTFIELD@HCDN.GOB.AR","sexo":"M"},{"pk":1705,"nombre":"Oscar A.","apellido":"Herrera Ahuad","distrito":"MISIONES","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20223522514_20251126104204000_small.png","bloque":"ARGENTINA FEDERAL","mail":"OHERRERAA@HCDN.GOB.AR","sexo":"M"},{"pk":1449,"nombre":"Yamila","apellido":"Ruíz","distrito":"MISIONES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27364093786_20231206151604000_small.png","bloque":"ARGENTINA FEDERAL","mail":"YRUIZ@HCDN.GOB.AR","sexo":"F"},{"pk":1440,"nombre":"Daniel","apellido":"Vancsik","distrito":"MISIONES","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20245096152_20231128095424000_small.png","bloque":"ARGENTINA FEDERAL","mail":"DVANCSIK@HCDN.GOB.AR","sexo":"M"}],"NEUQUEN":[{"pk":1691,"nombre":"Karina","apellido":"Maureira","distrito":"NEUQUEN","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/23221392094_20251211134029000_small.png","bloque":"LA NEUQUINIDAD","mail":"KMAUREIRA@HCDN.GOB.AR","sexo":"F"},{"pk":1760,"nombre":"Soledad","apellido":"Mondaca","distrito":"NEUQUEN","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27340841366_20251126112238000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MMONDACA@HCDN.GOB.AR","sexo":"F"},{"pk":1766,"nombre":"Gabriela Luciana","apellido":"Muñoz","distrito":"NEUQUEN","mandato":"2023-2027","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27348606684_20251127141340000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"GMUNOZ@HCDN.GOB.AR","sexo":"F"},{"pk":1738,"nombre":"Gastón","apellido":"Riesco","distrito":"NEUQUEN","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20328293162_20251126141016000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"GRIESCO@HCDN.GOB.AR","sexo":"M"},{"pk":1519,"nombre":"Pablo","apellido":"Todero","distrito":"NEUQUEN","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20225253324_20231128101514000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"PTODERO@HCDN.GOB.AR","sexo":"M"}],"ENTRE RIOS":[{"pk":1566,"nombre":"Beltrán","apellido":"Benedit","distrito":"ENTRE RIOS","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20131823666_20231207102136000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"BBENEDIT@HCDN.GOB.AR","sexo":"M"},{"pk":1446,"nombre":"Gustavo","apellido":"Bordet","distrito":"ENTRE RIOS","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20149980548_20231128110939000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"GBORDET@HCDN.GOB.AR","sexo":"M"},{"pk":1709,"nombre":"Alicia","apellido":"Fregonese","distrito":"ENTRE RIOS","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27142715916_20251215115147000_small.png","bloque":"PRO","mail":"AFREGONESE@HCDN.GOB.AR","sexo":"F"},{"pk":1740,"nombre":"Andrés Ariel","apellido":"Laumann","distrito":"ENTRE RIOS","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20225959111_20251204145542000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"ALAUMANN@HCDN.GOB.AR","sexo":"M"},{"pk":1728,"nombre":"Marianela","apellido":"Marclay","distrito":"ENTRE RIOS","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27305499108_20251126085708000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"LMARCLAY@HCDN.GOB.AR","sexo":"F"},{"pk":1722,"nombre":"Guillermo","apellido":"Michel","distrito":"ENTRE RIOS","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20256611210_20251126111108000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"GMICHEL@HCDN.GOB.AR","sexo":"M"},{"pk":1467,"nombre":"Francisco","apellido":"Morchio","distrito":"ENTRE RIOS","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20245607068_20231129150853000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"FMORCHIO@HCDN.GOB.AR","sexo":"M"},{"pk":1543,"nombre":"Blanca Inés","apellido":"Osuna","distrito":"ENTRE RIOS","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27065013253_20200206125406_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"BOSUNA@HCDN.GOB.AR","sexo":"F"},{"pk":1690,"nombre":"Darío","apellido":"Schneider","distrito":"ENTRE RIOS","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20169551139_20251126151156000_small.png","bloque":"UCR - UNIÓN CÍVICA RADICAL","mail":"ASCHNEIDER@HCDN.GOB.AR","sexo":"M"}],"FORMOSA":[{"pk":1453,"nombre":"Luis Eugenio","apellido":"Basterra","distrito":"FORMOSA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/23124773849_20231218134240000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"LBASTERRA@HCDN.GOB.AR","sexo":"M"},{"pk":1776,"nombre":"Atilio","apellido":"Basualdo","distrito":"FORMOSA","mandato":"2025-2029","mandatoDesde":"2025-12-17T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20147385375_20251216131254000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"ABASUALDO@HCDN.GOB.AR","sexo":"M"},{"pk":1769,"nombre":"María Graciela","apellido":"de la Rosa","distrito":"FORMOSA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/23113647604_20251126100940000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"MDELAROSA@HCDN.GOB.AR","sexo":"F"},{"pk":1481,"nombre":"Gerardo Gustavo","apellido":"González","distrito":"FORMOSA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20242876203_20231128101035000_small.png","bloque":"ARGENTINA FEDERAL","mail":"GGGONZALEZ@HCDN.GOB.AR","sexo":"M"},{"pk":1489,"nombre":"María Graciela","apellido":"Parola","distrito":"FORMOSA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27267107721_20200206125405_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"MGPAROLA@HCDN.GOB.AR","sexo":"F"}],"TIERRA DEL FUEGO":[{"pk":1468,"nombre":"Jorge Neri","apellido":"Araujo Hernández","distrito":"TIERRA DEL FUEGO","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20229561481_20260930112845000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"JARAUJOH@HCDN.GOB.AR","sexo":"M"},{"pk":1523,"nombre":"Andrea","apellido":"Freites","distrito":"TIERRA DEL FUEGO","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27256325689_20231128102702000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"AFREITES@HCDN.GOB.AR","sexo":"F"},{"pk":1556,"nombre":"Santiago","apellido":"Pauli","distrito":"TIERRA DEL FUEGO","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20330842025_20250310200035000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"JPAULI@HCDN.GOB.AR","sexo":"M"},{"pk":1742,"nombre":"Miguel","apellido":"Rodríguez","distrito":"TIERRA DEL FUEGO","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20327299264_20251126142417000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"LURODRIGUEZ@HCDN.GOB.AR","sexo":"M"},{"pk":1736,"nombre":"Paulo Agustín","apellido":"Tita","distrito":"TIERRA DEL FUEGO","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20250816031_20251202135647000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"PTITA@HCDN.GOB.AR","sexo":"M"}],"CATAMARCA":[{"pk":1477,"nombre":"Fernanda","apellido":"Avila","distrito":"CATAMARCA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27324151031_20231128100116000_small.png","bloque":"ELIJO CATAMARCA","mail":"MAVILA@HCDN.GOB.AR","sexo":"F"},{"pk":1699,"nombre":"Adrián","apellido":"Brizuela","distrito":"CATAMARCA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20229354036_20251127111925000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"CABRIZUELA@HCDN.GOB.AR","sexo":"M"},{"pk":1745,"nombre":"Fernando","apellido":"Monguillot","distrito":"CATAMARCA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20336951292_20251204152800000_small.png","bloque":"ELIJO CATAMARCA","mail":"FMONGUILLOT@HCDN.GOB.AR","sexo":"M"},{"pk":1507,"nombre":"Sebastián","apellido":"Nóblega","distrito":"CATAMARCA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20303646362_20231130151045000_small.png","bloque":"ELIJO CATAMARCA","mail":"DNOBLEGA@HCDN.GOB.AR","sexo":"M"},{"pk":1642,"nombre":"Claudia María","apellido":"Palladino","distrito":"CATAMARCA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27177269323_20251127141926000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"CPALLADINO@HCDN.GOB.AR","sexo":"F"}],"JUJUY":[{"pk":1641,"nombre":"Barbara","apellido":"Andreussi","distrito":"JUJUY","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27178894590_20251125093245000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"BANDREUSSI@HCDN.GOB.AR","sexo":"F"},{"pk":1697,"nombre":"Alfredo","apellido":"Gonzales","distrito":"JUJUY","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20336276188_20251125112710000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"AGONZALES@HCDN.GOB.AR","sexo":"M"},{"pk":1540,"nombre":"Manuel","apellido":"Quintar","distrito":"JUJUY","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20286470298_20231212100502000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MQUINTAR@HCDN.GOB.AR","sexo":"M"},{"pk":1515,"nombre":"Jorge","apellido":"Rizzotti","distrito":"JUJUY","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20147877596_20231129151608000_small.png","bloque":"PROVINCIAS UNIDAS","mail":"JRIZZOTTI@HCDN.GOB.AR","sexo":"M"},{"pk":1476,"nombre":"Guillermo","apellido":"Snopek","distrito":"JUJUY","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20243992371_20231128095550000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"GSNOPEK@HCDN.GOB.AR","sexo":"M"},{"pk":1675,"nombre":"María Inés","apellido":"Zigarán","distrito":"JUJUY","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27213201617_20251127081237000_small.png","bloque":"PROVINCIAS UNIDAS","mail":"MZIGARAN@HCDN.GOB.AR","sexo":"F"}],"CHACO":[{"pk":1651,"nombre":"Guillermo César","apellido":"Agüero","distrito":"CHACO","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20219307757_20251127110110000_small.png","bloque":"UCR - UNIÓN CÍVICA RADICAL","mail":"GCAGUERO@HCDN.GOB.AR","sexo":"M"},{"pk":1693,"nombre":"Julieta Marisol","apellido":"Campo","distrito":"CHACO","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27360187867_20251127084629000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"JMCAMPO@HCDN.GOB.AR","sexo":"F"},{"pk":1447,"nombre":"Gerardo","apellido":"Cipolini","distrito":"CHACO","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20056678558_20231128100953000_small.png","bloque":"UCR - UNIÓN CÍVICA RADICAL","mail":"GCIPOLINI@HCDN.GOB.AR","sexo":"M"},{"pk":1687,"nombre":"Sergio","apellido":"Dolce","distrito":"CHACO","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20269684438_20251126101424000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"SDOLCE@HCDN.GOB.AR","sexo":"M"},{"pk":1557,"nombre":"Carlos","apellido":"García","distrito":"CHACO","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20221313837_20231205095639000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"CADGARCIA@HCDN.GOB.AR","sexo":"M"},{"pk":1715,"nombre":"Rosario","apellido":"Goitia","distrito":"CHACO","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27264184830_20251126103200000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MGOITIA@HCDN.GOB.AR","sexo":"F"},{"pk":1474,"nombre":"Aldo","apellido":"Leiva","distrito":"CHACO","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20165030398_20240319150734000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"ALEIVA@HCDN.GOB.AR","sexo":"M"}],"SALTA":[{"pk":1749,"nombre":"Bernardo","apellido":"Biella","distrito":"SALTA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20162915119_20251204135134000_small.png","bloque":"ARGENTINA FEDERAL","mail":"BBIELLAC@HCDN.GOB.AR","sexo":"M"},{"pk":1683,"nombre":"Eliana","apellido":"Bruno","distrito":"SALTA","mandato":"2023-2027","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27337541599_20251204135612000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"EBRUNO@HCDN.GOB.AR","sexo":"F"},{"pk":1681,"nombre":"Maria Gabriela","apellido":"Flores","distrito":"SALTA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27241384727_20251204142138000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"MFLORES@HCDN.GOB.AR","sexo":"F"},{"pk":1551,"nombre":"Julio","apellido":"Moreno Ovalle","distrito":"SALTA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20112830325_20231207101650000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"JUMORENO@HCDN.GOB.AR","sexo":"M"},{"pk":1546,"nombre":"Pablo","apellido":"Outes","distrito":"SALTA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20186082134_20231206151257000_small.png","bloque":"ARGENTINA FEDERAL","mail":"POUTES@HCDN.GOB.AR","sexo":"M"},{"pk":1451,"nombre":"Yolanda","apellido":"Vega","distrito":"SALTA","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27182307349_20231128103453000_small.png","bloque":"ARGENTINA FEDERAL","mail":"YVEGA@HCDN.GOB.AR","sexo":"F"},{"pk":1665,"nombre":"Carlos Raúl","apellido":"Zapata","distrito":"SALTA","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20127901628_20251127080650000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"CZAPATA@HCDN.GOB.AR","sexo":"M"}],"SANTA FE":[{"pk":1524,"nombre":"Rocío","apellido":"Bonacci","distrito":"SANTA FE","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27396592881_20231128103306000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"RBONACCI@HCDN.GOB.AR","sexo":"F"},{"pk":1469,"nombre":"Alejandro","apellido":"Bongiovanni","distrito":"SANTA FE","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20301123990_20231128103659000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"ABONGIOVANNI@HCDN.GOB.AR","sexo":"M"},{"pk":1676,"nombre":"Alejandrina","apellido":"Borgatta","distrito":"SANTA FE","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27307017496_20251201094658000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"ABORGATTA@HCDN.GOB.AR","sexo":"F"},{"pk":1526,"nombre":"Florencia","apellido":"Carignano","distrito":"SANTA FE","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27266811425_20231218134938000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"MCARIGNANO@HCDN.GOB.AR","sexo":"F"},{"pk":1455,"nombre":"Romina","apellido":"Diez","distrito":"SANTA FE","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27280582536_20231128105528000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"RDIEZV@HCDN.GOB.AR","sexo":"F"},{"pk":1723,"nombre":"Pablo","apellido":"Farías","distrito":"SANTA FE","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20210031856_20260327084248000_small.png","bloque":"PROVINCIAS UNIDAS","mail":"PFARIAS@HCDN.GOB.AR","sexo":"M"},{"pk":1504,"nombre":"Diego A.","apellido":"Giuliano","distrito":"SANTA FE","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20172884181_20231129150454000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"DGIULIANO@HCDN.GOB.AR","sexo":"M"},{"pk":1560,"nombre":"Germán Pedro","apellido":"Martínez","distrito":"SANTA FE","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20242395752_20200206125405_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"GPMARTINEZ@HCDN.GOB.AR","sexo":"M"},{"pk":1501,"nombre":"Nicolás","apellido":"Mayoraz","distrito":"SANTA FE","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20202980210_20231128104924000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"NMAYORAZ@HCDN.GOB.AR","sexo":"M"},{"pk":1680,"nombre":"Juan Pablo","apellido":"Montenegro","distrito":"SANTA FE","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20266676531_20251204153033000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"JPMONTENEGRO@HCDN.GOB.AR","sexo":"M"},{"pk":1541,"nombre":"José","apellido":"Nuñez","distrito":"SANTA FE","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20242920644_20200206125307_small.png","bloque":"PROVINCIAS UNIDAS","mail":"JNUNEZ@HCDN.GOB.AR","sexo":"M"},{"pk":1563,"nombre":"Esteban","apellido":"Paulón","distrito":"SANTA FE","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20265696725_20231206151402000_small.png","bloque":"PROVINCIAS UNIDAS","mail":"EPAULON@HCDN.GOB.AR","sexo":"M"},{"pk":1645,"nombre":"Agustín","apellido":"Pellegrini","distrito":"SANTA FE","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20423258609_20251211134659000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"APELLEGRINI@HCDN.GOB.AR","sexo":"M"},{"pk":1644,"nombre":"Valentina","apellido":"Ravera","distrito":"SANTA FE","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27421829816_20251126135634000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"VRAVERA@HCDN.GOB.AR","sexo":"F"},{"pk":1565,"nombre":"Verónica","apellido":"Razzini","distrito":"SANTA FE","mandato":"2023-2027","mandatoDesde":"2023-12-10T03:00:00.000+0000","mandatoHasta":"2027-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27280877188_20231206151457000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"VRAZZINI@HCDN.GOB.AR","sexo":"F"},{"pk":1701,"nombre":"Agustín Oscar","apellido":"Rossi","distrito":"SANTA FE","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/20136518772_20251204154656000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"AROSSI@HCDN.GOB.AR","sexo":"M"},{"pk":1674,"nombre":"Gisela","apellido":"Scaglia","distrito":"SANTA FE","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27254532164_20251126150327000_small.png","bloque":"PROVINCIAS UNIDAS","mail":"GSCAGLIA@HCDN.GOB.AR","sexo":"F"},{"pk":1726,"nombre":"Caren","apellido":"Tepp","distrito":"SANTA FE","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27327025533_20251126153919000_small.png","bloque":"UNIÓN POR LA PATRIA","mail":"CTEPP@HCDN.GOB.AR","sexo":"F"},{"pk":1717,"nombre":"Yamile","apellido":"Tomassoni","distrito":"SANTA FE","mandato":"2025-2029","mandatoDesde":"2025-12-10T03:00:00.000+0000","mandatoHasta":"2029-12-09T03:00:00.000+0000","foto":"https://parlamentaria.hcdn.gob.ar/image/27267199049_20251211120125000_small.png","bloque":"LA LIBERTAD AVANZA","mail":"YTOMASSONI@HCDN.GOB.AR","sexo":"F"}]}}}.data.diputados;
+
+    function mostrarAJAX(distrito){
+       limpiarResultadoDiputadoAjax();
+       document.getElementById("listaScrollMapa").innerHTML =
+           '<div id="resultadoMapa" class="scrollDiv cajaSombra"></div>';
+
+       document.getElementById("listaScrollMapa").style.display = "block";
+       document.getElementById("resultadoMapa").innerHTML = armarHtmlListado(distrito);
+    }
+	
+	let leyenda;
+	function armarHtmlListado(distrito){
+		let html = "<h3>" + distrito + "</h3>";
+		listado[distrito].forEach(diputado => {
+			let nombreDiputado = "";
+            let apellidoDiputado = "";
+			let ad = "";
+            if (diputado.nombre != undefined) {
+                nombreDiputado = diputado.nombre;
+            }
+            if (diputado.apellido != undefined) {
+                apellidoDiputado = diputado.apellido + ", ";
+            }
+						
+			
+			leyenda = "";
+		        if (diputado.display_pdf_web != null) {
+		        	leyenda = diputado.display_pdf_web;
+		        }
+			html += 
+			" <div class=\"resultadoDiputado\">"
+			+ "<div class=\"resultadoDiputado\"><a onclick=\"mostrarAJAXSliderDip(\'" + distrito + "\', \'" + diputado.pk + "\')\" href=\"#/\" title=\"Enlace a Diputado X\"><img class=\"img-circle\" title=\"foto X\" alt=\"foto X\" src="+ diputado.foto + "?size=small ></a>"
+			+ "<a onclick=\"mostrarAJAXSliderDip(\'" + distrito + "\', \'" + diputado.pk + "\')\" href=\"#/\" title=\"Enlace a Diputado X\">" + apellidoDiputado + nombreDiputado + "   " + leyenda + "</a></div>"
+			+ "</div>";
+			
+		})
+		return html;
+	}
+	
+	function mostrarAJAXSliderDip(distrito, idAutoridad){
+	  	$( ".resultadoDiputadoAjax" ).html(armarHtmlDetalle(distrito, idAutoridad));
+	  	$( ".resultadoDipSlide" ).css("display", "block");
+	  	$( ".resultadoDiputadoAjax" ).css("display", "block");
+	}
+	
+	function armarHtmlDetalle(distrito, pk){
+	 	let autoridad = listado[distrito].find(diputado => diputado.pk == pk);
+	 	let ad = "";
+        if (autoridad.mail != undefined) {
+             ad = autoridad.mail.split('@')[0];
+            ad = ad == null? ad : ad.toLowerCase();
+        }
+        let mandatoDesde = "";
+         let mandatoHasta = "";
+        if ( autoridad.mandatoDesde != undefined) {
+            let dateMandatoDesde = new Date(Date.parse(autoridad.mandatoDesde));
+            mandatoDesde = dateMandatoDesde.getDate() + "/" + (dateMandatoDesde.getMonth() + 1) + "/" + dateMandatoDesde.getFullYear();
+        }
+        
+        if ( autoridad.mandatoHasta != undefined) {
+            let dateMandatoHasta = new Date(Date.parse(autoridad.mandatoHasta));
+             mandatoHasta = dateMandatoHasta.getDate() + "/" + dateMandatoHasta.getMonth() + "/" + dateMandatoHasta.getFullYear();
+        }
+	 	let leyenda = "";
+		
+		let nombre = "";
+        let apellido = "";
+        let foto = "";
+        let mail = "";
+        let bloque = "";
+        if (autoridad.foto != undefined) {
+            foto = autoridad.foto;
+        }
+        if (autoridad.bloque != undefined) {
+            bloque = autoridad.bloque;
+        }
+        if (autoridad.mail != undefined) {
+            mail = autoridad.mail;
+        }
+        if (autoridad.nombre != undefined) {
+            nombre = autoridad.nombre + " , ";
+        }
+        if (autoridad.apellido != undefined) {
+            apellido = autoridad.apellido;
+        }
+		
+	 	if (autoridad.display_pdf_web != undefined) {
+	 		leyenda = autoridad.display_pdf_web;
+	 	}
+		
+	 	
+	 	    let html = "";
+        
+        if (ad != "") {
+            html = ""
+            + "<meta  http-equiv=\"X-UA-Compatible\" content=\"IE=EmulateIE10\"/>"
+            + "<a onclick=\"cerrarResultadoDiputadoDato()\" class=\"btnCerrar\"  href=\"#/\">X</a>"
+            + "<div class=\"detalleDipPortada\">"
+            + "<a href=\"" + ad + "\" title=\""+ nombre + " " + apellido +"\">"
+            +     "<img class=\"img-circle\" title='titleFoto' alt='titleFoto' src="+ foto + "?size=medium />"
+            + "</a>"
+            + "<div class=\"detalleDipPortada\">"    
+            + "<div> <a href=\""+ ad +"\" title=\"" + nombre + apellido + "\">" + nombre + apellido + "</br>" + leyenda + "</a></div>"
+            + "<div>" + bloque + "</div>"
+            + "<div>" + mandatoDesde + " - " + mandatoHasta + "</div>"
+            + "<div>" + distrito + "</div>"
+            + "<div>" + mail + "</div>"
+            + "</div>";
+         }    else {
+             html = ""
+            + "<meta  http-equiv=\"X-UA-Compatible\" content=\"IE=EmulateIE10\"/>"
+            + "<a onclick=\"cerrarResultadoDiputadoDato()\" class=\"btnCerrar\"  href=\"#/\">X</a>"
+            + "<div class=\"detalleDipPortada\">"
+            + "<a title=\""+ nombre + " " + apellido +"\">"
+            +     "<img class=\"img-circle\" title='titleFoto' alt='titleFoto' src="+ foto + "?size=medium />"
+            + "</a>"
+            + "<div class=\"detalleDipPortada\">"    
+            + "<div> <a  title=\"" + nombre + apellido + "\">" + nombre + apellido + "</br>" + leyenda + "</a></div>"
+            + "<div>" + bloque + "</div>"
+            + "<div>" + mandatoDesde + " - " + mandatoHasta + "</div>"
+            + "<div>" + distrito + "</div>"
+            + "<div>" + mail + "</div>"
+            + "</div>";
+         }
+		return html;
+	}
+
+</script>
+
+	
+	<div class="col-xs-12 col-sm-12 col-md-4">
+		<div class="mapa_imagen">
+			<img class="map" src="/export/system/modules/ar.gob.hcdn.base/resources/img/mapa.png" width="316" height="562" border="0" alt="" usemap="#mapa">
+			<map name="mapa">
+			<area data-maphilight='{"groupBy":".caba"}' class="caba" title="Botón Ciudad Autónoma de Buenos Aires" shape="poly" alt="" coords="202,230, 200,228, 199,227, 198,227, 198,227, 197,228, 196,229, 195,230, 195,230, 195,231, 194,231, 194,231, 194,233, 194,233, 196,235, 196,236, 197,236, 198,235, 200,234, 201,234, 202,233, 202,232, 202,231, 202,230" href="#/" onclick="javascript:mostrarAJAX('CIUDAD de BUENOS AIRES'); return false;" onkeypress="javascript:mostrarAJAX('CIUDAD de BUENOS AIRES'); return false;" alt="caba">
+			<area data-maphilight='{"groupBy":".caba"}' class="caba" title="Botón Ciudad Autónoma de Buenos Aires" shape="poly" alt="" coords="295,182, 278,164, 275,159, 267,159, 267,161, 258,162, 255,165, 250,171, 246,177, 245,182, 243,186, 241,189, 239,190, 239,201, 239,201, 241,203, 246,210, 251,216, 254,220, 263,220, 264,217, 267,213, 274,212, 284,211, 289,211, 291,209, 295,204, 297,201, 297,196, 298,192,
+			296,190, 295,182"
+			href="#/" onclick="javascript:mostrarAJAX('CIUDAD DE BUENOS AIRES'); return false;" onkeypress="javascript:mostrarAJAX('CIUDAD DE BUENOS AIRES'); return false;" alt="caba">
+			<area data-maphilight='{"groupBy":".jujuy"}' class="jujuy" title="Botón Jujuy" shape="poly" alt="" coords="108,37, 108,38, 109,38, 108,41, 108,41, 108,41, 108,42, 108,43, 108,43, 108,43, 108,44, 107,44, 107,45, 108,46, 108,46, 108,46, 108,48, 108,48, 108,50, 108,50, 109,50, 109,50, 109,50, 109,50, 110,50, 110,50, 111,51, 111,51, 111,51, 111,51, 111,51, 111,51, 112,55,
+			112,56, 113,57, 113,57,
+			113,57, 113,58, 113,58, 114,58, 114,58, 116,58, 116,58, 117,58, 117,58, 117,58, 117,58, 119,59, 119,59, 120,60, 121,59, 121,59, 121,58, 122,58, 122,58, 122,57, 124,57, 125,58, 125,71, 122,72, 122,72, 122,72, 122,72, 121,73, 121,73, 121,73, 120,73, 120,73, 120,73, 120,73, 119,73, 119,74, 118,74, 118,74, 118,74, 118,74, 116,74,
+			116,74, 116,74, 115,73, 115,73, 114,73, 114,73, 114,73, 114,74, 113,74, 113,74, 112,74, 111,74, 110,74, 110,73, 109,73, 109,73, 108,73, 105,72, 105,72, 105,72, 104,72, 104,71, 103,71, 103,71, 103,71, 103,70, 102,69, 102,69, 102,69, 102,69, 102,69, 102,68, 102,68, 101,67, 101,67, 101,67, 101,67, 101,67, 101,66, 101,66, 100,66,
+			100,66, 100,66, 100,66, 100,66, 100,66, 97,65, 97,65, 97,65, 97,64, 97,64, 97,63, 97,61, 97,61, 97,61, 97,61, 98,60, 98,60, 98,58, 98,58, 98,58, 98,58, 97,57, 97,57, 97,57, 97,57, 97,57, 97,56, 97,56, 93,56, 93,56, 92,56, 92,56, 92,56, 92,59, 92,67, 91,68, 91,68, 91,68, 91,68, 88,68, 88,68, 88,68, 88,68, 86,67, 86,67, 85,66,
+			84,65, 84,65, 84,65, 83,64, 83,64, 83,64, 82,64, 82,63, 81,63, 81,63, 81,63, 80,62, 80,61, 80,61, 79,61, 79,61, 79,61, 79,61, 79,61, 79,60, 79,60, 79,60, 78,60, 83,50, 83,50, 82,49, 82,49, 82,49, 82,49, 82,49, 81,49, 81,49, 81,49, 81,49, 81,48, 81,48, 81,48, 81,48, 81,48, 81,48, 80,48, 81,47, 82,46, 82,46, 82,45, 82,45,
+			83,44, 84,43, 84,43, 84,43, 84,43, 85,42, 85,42, 86,42, 86,41, 87,41, 87,40, 87,40, 88,39, 88,39, 88,39, 88,39, 89,38, 90,38, 90,38, 91,38, 91,38, 91,38, 92,37, 92,37, 92,37, 92,36, 92,36, 93,35, 94,33, 94,33, 94,33, 96,32, 96,33, 97,34, 97,34, 98,35, 98,35, 99,35, 99,35, 99,36, 99,36, 100,36, 100,36, 100,36, 108,37"
+			href="#/"  onclick="javascript:mostrarAJAX('JUJUY'); return false;" onkeypress="javascript:mostrarAJAX('JUJUY'); return false;" alt="jujuy">
+			<area shape="poly" data-maphilight='{"groupBy":".tierraDelFuegoMalvinas"}' class="tierraDelFuegoMalvinas" alt="" coords="182,489, 182,490, 183,488, 185,488, 185,487, 186,487, 187,486, 184,485, 184,486, 183,486, 183,485, 182,485, 182,485, 182,485, 182,485, 181,485, 181,485, 181,485, 181,484, 180,483, 180,483, 179,483, 179,482, 177,482, 177,483, 176,483, 176,483, 175,484, 175,484, 175,484,
+			175,485, 174,485,
+			174,487, 174,488, 174,488, 174,488, 172,489, 172,489, 171,489, 171,489, 171,490, 170,490, 169,492, 169,492, 169,492, 169,492, 168,493, 168,495, 167,495, 168,497, 169,497, 169,497, 170,497, 171,496, 172,496, 172,496, 175,494, 176,493, 176,493, 176,493, 176,492, 176,492, 176,491, 177,491, 177,491, 181,491, 181,491, 181,491,
+			182,490, 182,490, 183,490, 182,489" onclick="javascript:mostrarAJAX('TIERRA DEL FUEGO'); return false;" onkeypress="javascript:mostrarAJAX('TIERRA DEL FUEGO'); return false;" href="#/">
+			<area shape="poly" data-maphilight='{"groupBy":".tierraDelFuegoMalvinas"}' class="tierraDelFuegoMalvinas"  alt="" coords="162,493, 162,493, 162,493, 162,491, 163,491, 164,491, 164,492, 166,492, 166,491, 167,491, 167,490, 167,490, 167,489, 167,489, 169,488, 169,488, 169,488, 169,488, 169,488, 169,486, 170,486, 170,486, 171,485, 171,485, 171,485, 172,484, 172,483, 171,483, 171,482, 171,482,
+			171,482, 171,482,
+			171,482, 171,482, 170,481, 170,481, 170,481, 169,481, 169,481, 169,482, 167,483, 166,483, 166,482, 165,481, 165,481, 164,481, 164,481, 163,482, 163,482, 163,482, 161,483, 159,482, 159,481, 159,481, 159,482, 159,483, 160,483, 160,483, 160,483, 160,483, 160,484, 161,484, 162,484, 162,485, 162,485, 162,487, 160,487, 160,489,
+			160,489, 160,491, 158,491, 157,491, 157,491, 157,490, 156,490, 156,488, 156,488, 156,488, 155,490, 155,493, 156,494, 156,494, 156,494, 157,495, 157,495, 157,495, 161,495, 162,495, 162,494, 163,494, 163,493, 162,493" onclick="javascript:mostrarAJAX('TIERRA DEL FUEGO'); return false;" onkeypress="javascript:mostrarAJAX('TIERRA DEL FUEGO'); return false;" href="#/">
+			<area shape="poly" data-maphilight='{"groupBy":".tierraDelFuegoMalvinas"}' class="tierraDelFuegoMalvinas" alt="" coords="81,503, 81,537, 81,536, 82,536, 82,536, 82,536, 83,536, 83,536, 83,535, 85,535, 85,535, 88,535, 91,535, 95,535, 95,535, 96,536, 96,536, 96,536, 98,536, 98,537, 101,537, 101,536, 102,536, 102,537, 105,537, 108,537, 108,536, 109,536, 109,536, 110,536, 110,536, 112,536,
+			113,534, 114,533, 114,530,
+			112,531, 112,531, 111,531, 111,531, 107,531, 107,531, 107,531, 106,531, 106,531, 103,530, 103,529, 102,529, 102,529, 102,529, 102,529, 101,529, 101,529, 101,529, 100,528, 100,528, 99,527, 98,527, 98,527, 98,526, 97,526, 97,525, 95,525, 95,525, 95,524, 93,522, 92,522, 92,521, 91,520, 91,520, 90,519, 90,519, 90,518, 90,518,
+			89,518, 89,517, 88,517, 88,516, 88,516, 88,516, 87,516, 87,515, 87,514, 87,514, 86,513, 86,512, 86,512, 85,512, 85,511, 85,511, 85,511, 84,511, 83,510, 83,509, 84,509, 84,508, 84,508, 84,506, 84,506, 83,506, 83,505, 83,505, 83,505, 83,505, 82,504, 82,504, 81,504, 81,503, 81,503"href="#/" onclick="javascript:mostrarAJAX('TIERRA DEL FUEGO'); return false;" onkeypress="javascript:mostrarAJAX('TIERRA DEL FUEGO'); return false;" alt="tf" class="tierradelfuego">
+			<area data-maphilight='{"groupBy":".entre-rios"}' class="entre-rios" shape="poly" alt="" coords="210,170, 210,170, 210,170, 210,170, 209,170, 209,170, 209,170, 208,170, 208,169, 208,169, 207,168, 207,167, 207,166, 206,166, 206,166, 206,166, 206,165, 205,165, 205,164, 205,164, 201,163, 201,163, 198,164, 194,163, 193,164, 193,164, 193,164, 193,165, 193,165, 187,165,
+			187,166, 186,166,
+			186,167, 187,166, 187,168, 186,168, 186,169, 186,171, 186,171, 185,172, 185,172, 184,172, 184,173, 184,173, 184,173, 183,174, 183,174, 183,175, 182,175, 182,176, 182,176, 181,177, 182,177, 180,178, 179,179, 179,179, 179,180, 178,180, 177,182, 177,183, 173,184, 173,184, 172,184, 172,185, 172,185, 172,185, 172,185, 172,189,
+			172,192, 171,194, 171,194, 171,195, 171,195, 171,195, 170,197, 170,199, 170,199, 170,199, 171,199, 171,200, 171,200, 171,202, 171,202, 171,203, 171,203, 172,203, 172,203, 172,203, 172,203, 172,204, 172,204, 172,204, 172,204, 172,204, 173,204, 173,204, 173,206, 174,206, 174,206, 174,207, 175,207, 175,208, 176,208, 177,208,
+			177,209, 177,209, 178,209, 178,210, 178,210, 178,210, 179,210, 179,211, 179,211, 180,211, 180,211, 180,212, 180,212, 180,212, 180,212, 181,212, 181,213, 181,213, 181,213, 182,213, 182,213, 182,213, 182,213, 183,213, 183,214, 184,214, 184,214, 185,215, 187,215, 188,215, 188,215, 188,216, 189,216, 189,216, 189,216, 190,216,
+			190,217, 192,217, 193,218, 194,218, 194,218, 194,218, 194,218, 195,218, 196,219, 196,219, 199,220, 200,220, 201,220, 201,220, 201,220, 201,219, 201,219, 201,218, 201,217, 200,217, 200,212, 200,214, 201,212, 201,210, 201,208, 202,208, 201,208, 202,207, 202,207, 203,207, 203,207, 204,207, 204,206, 205,206, 205,206, 205,206,
+			205,206, 206,203, 206,203, 205,200, 205,200, 205,199, 205,199, 205,198, 204,198, 205,195, 205,195, 205,195, 205,195, 206,195, 206,193, 206,191, 206,191, 206,189, 206,189, 206,188, 207,187, 207,187, 207,187, 207,187, 207,187, 207,186, 207,186, 207,186, 207,186, 208,186, 208,185, 208,185, 208,181, 208,181, 208,181, 209,181,
+			209,180, 209,180, 209,180, 209,180, 209,180, 209,179, 210,179, 209,179, 210,179, 210,179, 210,178, 210,177, 211,174, 211,174, 211,173, 211,170, 211,170, 211,169, 210,169, 210,169, 210,170"  title="Botón Entre Ríos" href="#/" onclick="javascript:mostrarAJAX('ENTRE RIOS');return false;" onkeypress="javascript:mostrarAJAX('ENTRE RIOS');return false;" alt="entre rios" >
+			<area data-maphilight='{"groupBy":".cordoba"}' class="cordoba" shape="poly" alt="" coords="142,224, 156,202, 156,201, 156,201, 156,201, 156,201, 156,200, 155,200, 155,199, 155,199, 155,199, 155,199, 154,196, 154,195, 153,195, 153,195, 153,195, 153,195, 153,194, 153,194, 153,194, 153,194, 153,194, 152,194, 152,194, 152,193, 152,193, 151,192, 151,191, 151,191,
+			151,190, 150,190,
+			150,187, 150,184, 152,182, 152,181, 152,181, 152,179, 153,179, 153,179, 153,179, 153,178, 154,177, 154,175, 154,175, 154,175, 154,174, 154,174, 154,173, 155,173, 155,173, 155,171, 155,171, 155,169, 155,169, 154,169, 154,168, 154,168, 154,168, 154,168, 154,168, 154,168, 154,168, 153,167, 153,166, 152,165, 152,162, 152,162,
+			152,162, 151,162, 151,163, 146,163, 146,162, 146,162, 146,162, 145,162, 145,162, 145,162, 145,158, 145,157, 145,157, 145,157, 143,157, 143,157, 143,157, 143,156, 142,154, 140,154, 140,153, 140,153, 139,153, 139,153, 138,153, 138,153, 137,153, 134,153, 133,152, 133,152, 133,151, 131,152, 131,151, 130,151, 130,151, 127,151,
+			125,150, 124,150, 124,149, 123,149, 122,148, 122,148, 122,148, 121,148, 121,148, 121,148, 121,148, 121,148, 121,149, 121,149, 121,149, 121,149, 119,149, 119,149, 118,149, 118,149, 116,149, 116,149, 114,149, 114,151, 114,151, 113,151, 113,151, 112,157, 112,155, 112,157, 111,158, 111,158, 110,158, 110,158, 108,159, 107,159,
+			107,160, 107,160, 106,161, 106,162, 105,163, 105,163, 105,165, 105,165, 104,166, 104,166, 104,166, 104,166, 103,167, 103,168, 103,168, 103,170, 103,170, 103,170, 102,170, 102,171, 102,171, 102,172, 102,184, 102,185, 103,186, 103,186, 103,186, 104,186, 104,186, 104,186, 104,186, 104,186, 104,186, 104,187, 104,187, 105,187,
+			105,187, 106,187, 106,187, 108,188, 108,188, 108,188, 109,189, 109,189, 109,189, 109,189, 109,191, 109,192, 114,192, 114,196, 114,196, 114,196, 115,196, 115,196, 115,196, 114,198, 114,199, 114,199, 114,199, 114,200, 114,200, 113,201, 113,202, 113,202, 112,203, 112,203, 112,203, 112,204, 112,205, 111,207, 111,207, 111,207,
+			111,207, 112,231, 133,231, 133,223, 142,224" title="Botón Córdoba" href="#/" onclick="javascript:mostrarAJAX('CORDOBA');return false;" onkeypress="javascript:mostrarAJAX('CORDOBA');return false;" alt="cordoba">
+			<area data-maphilight='{"groupBy":".santa-cruz"}' class="santa-cruz" shape="poly" alt="" coords="85,402, 85,404, 86,404, 86,404, 86,404, 86,405, 86,405, 86,406, 86,406, 86,406, 87,406, 87,407, 87,407, 87,407, 87,407, 87,408, 88,408, 88,408, 88,408, 88,409, 89,409, 89,409, 90,409, 89,409, 91,410, 91,410, 91,410, 92,410, 92,411, 92,411, 92,411, 92,411, 92,411,
+			93,412, 93,412, 93,413,
+			93,413, 93,413, 93,413, 93,413, 93,414, 94,414, 94,414, 94,414, 96,415, 96,415, 99,415, 103,415, 103,415, 104,415, 104,416, 104,416, 104,416, 105,416, 105,416, 105,416, 106,417, 106,420, 106,422, 106,422, 105,424, 105,424, 105,424, 105,424, 105,426, 105,428, 104,429, 104,429, 104,430, 103,430, 103,431, 103,431, 102,431,
+			102,432, 101,432, 101,433, 101,433, 100,434, 100,434, 100,434, 100,434, 99,434, 99,434, 99,435, 99,435, 98,435, 98,436, 97,437, 95,438, 95,438, 95,438, 95,438, 95,438, 94,438, 94,439, 94,439, 94,439, 94,439, 94,439, 94,439, 94,440, 93,440, 93,440, 93,441, 91,441, 89,442, 89,442, 89,442, 89,443, 89,443, 88,445, 88,445, 87,446,
+			87,446, 87,452, 87,457, 87,457, 87,457, 86,457, 86,459, 86,459, 85,459, 85,460, 85,460, 85,460, 84,461, 84,461, 84,461, 84,461, 84,461, 83,461, 83,461, 82,462, 81,463, 81,463, 81,463, 80,463, 80,463, 78,464, 78,464, 77,464, 77,465, 76,465, 76,465, 75,466, 75,466, 75,466, 75,467, 74,468, 73,470, 73,470, 73,473, 73,476, 73,476,
+			74,477, 74,478, 75,478, 76,484, 76,484, 76,486, 76,486, 76,487, 77,489, 77,489, 78,490, 79,491, 79,491, 79,491, 79,491, 80,491, 80,492, 80,492, 81,493, 81,493, 81,493, 82,494, 82,496, 82,496, 81,496, 80,496, 80,496, 77,495, 76,495, 75,495, 75,494, 74,494, 70,494, 67,493, 63,492, 59,493, 59,493, 55,493, 55,493, 52,493, 49,493,
+			49,493, 46,493, 46,491, 45,491, 44,490, 44,490, 43,490, 43,490, 43,489, 42,487, 42,485, 42,485, 41,481, 41,481, 42,481, 41,480, 42,479, 42,479, 42,479, 42,478, 42,478, 42,476, 40,475, 40,475, 40,475, 40,474, 40,474, 40,474, 40,474, 38,473, 37,474, 36,474, 36,475, 36,475, 35,475, 35,475, 35,476, 35,476, 35,476, 35,476, 34,476,
+			34,476, 32,477, 32,477, 32,477, 31,476, 31,474, 30,474, 30,474, 30,474, 30,474, 30,474, 30,473, 29,473, 29,473, 29,473, 28,472, 28,471, 28,471, 28,466, 28,460, 28,460, 28,460, 27,460, 26,460, 26,459, 26,459, 26,458, 26,455, 27,455, 27,454, 28,453, 29,453, 29,452, 29,452, 33,448, 34,444, 34,442, 35,442, 35,441, 35,441, 35,440,
+			35,440, 35,440, 35,440, 35,439, 36,439, 36,439, 36,439, 36,439, 36,438, 37,438, 37,436, 36,436, 36,435, 36,435, 36,435, 36,435, 35,434, 35,434, 35,434, 35,433, 34,433, 34,432, 34,432, 34,431, 34,431, 34,431, 33,431, 34,430, 34,430, 34,429, 34,428, 35,428, 35,428, 35,427, 35,427, 35,427, 35,427, 35,426, 36,426, 36,425, 36,424,
+			37,424, 37,424, 37,423, 37,423, 37,423, 38,423, 38,422, 38,422, 38,421, 39,420, 39,419, 38,418, 39,414, 40,413, 41,411, 40,411, 40,410, 40,409, 40,409, 40,407, 39,406, 39,406, 39,406, 39,406, 39,406, 39,405, 38,405, 38,405, 38,404, 38,404, 38,404, 38,403, 38,403, 39,403, 39,403, 40,403, 40,403, 40,402, 85,402" title="Botón Santa Cruz" onclick="javascript:mostrarAJAX('SANTA CRUZ');return false;" onkeypress="javascript:mostrarAJAX('SANTA CRUZ');return false;" alt="santa cruz">
+			<area data-maphilight='{"groupBy":".san-luis"}' class="san-luis" shape="poly" alt="" coords="112,231, 111,207, 111,207, 111,207, 111,207, 112,205, 112,204, 112,204, 112,203, 113,203, 113,202, 113,202, 113,201, 114,200, 114,200, 114,199, 114,199, 114,199, 114,198, 115,196, 115,196, 115,196, 114,196, 114,196, 114,196, 114,192, 109,192, 109,191, 109,189, 109,189,
+			109,189, 109,189,
+			108,189, 108,189, 108,188, 106,188, 106,187, 105,187, 105,187, 104,187, 104,187, 104,187, 104,187, 104,186, 104,186, 104,186, 104,186, 103,186, 103,186, 103,186, 102,185, 102,185, 95,185, 95,186, 95,186, 94,186, 94,186, 93,186, 93,186, 91,186, 91,185, 91,185, 91,185, 91,185, 91,185, 88,185, 81,186, 81,191, 81,191, 80,193,
+			80,193, 80,193, 80,193, 80,193, 81,193, 81,195, 81,195, 81,195, 81,196, 81,196, 82,196, 82,196, 82,196, 82,197, 82,197, 82,197, 82,197, 82,198, 83,198, 83,200, 83,200, 82,200, 82,201, 82,201, 82,203, 83,203, 83,205, 83,205, 84,206, 84,209, 84,209, 84,209, 84,209, 84,210, 85,210, 85,210, 85,211, 85,211, 86,211, 86,212, 87,212,
+			87,213, 87,215, 88,216, 88,216, 88,217, 89,217, 89,218, 89,218, 89,222, 89,227, 89,227, 90,227, 90,227, 90,228, 91,229, 91,229, 92,230, 92,230, 92,231, 92,231, 92,232, 93,249, 112,249, 112,231" title="Botón San Luis" href="#/" onclick="javascript:mostrarAJAX('SAN LUIS');return false;" onkeypress="javascript:mostrarAJAX('SAN LUIS');return false;" alt="san luis">
+			<area data-maphilight='{"groupBy":".formosa"}' class="formosa" shape="poly" alt="" coords="206,113, 207,114, 209,112, 208,112, 209,110, 211,106, 213,102, 216,97, 216,98, 217,96, 218,96, 219,94, 219,91, 219,91, 218,90, 218,91, 217,89, 217,89, 212,85, 213,85, 207,83, 202,81, 199,79, 196,78, 190,74, 186,71, 184,70, 182,69, 182,69, 180,68, 178,66, 178,66,
+			175,67, 172,65, 171,64,
+			169,63, 169,62, 167,61, 167,61, 166,60, 166,60, 166,59, 165,59, 165,60, 163,59, 163,58, 162,57, 162,57, 162,56, 162,56, 160,57, 160,57, 160,57, 159,55, 158,54, 157,53, 156,53, 156,53, 156,52, 156,52, 155,51, 155,51, 155,50, 155,49, 154,49, 154,49, 154,48, 154,48, 154,48, 153,48, 153,47, 153,47, 153,47, 153,46, 153,46, 153,45,
+			152,45, 152,45, 152,45, 152,44, 152,44, 151,44, 151,44, 151,48, 151,57, 151,65, 151,69, 151,69, 151,69, 152,69, 152,70, 153,69, 154,70, 154,70, 154,71, 155,71, 155,71, 156,71, 156,71, 156,71, 156,72, 156,72, 157,72, 157,73, 158,73, 158,73, 160,74, 160,75, 161,75, 161,75, 162,75, 162,75, 162,76, 163,77, 166,78, 166,78, 166,78,
+			166,78, 167,78, 167,79, 167,79, 168,79, 168,80, 168,80, 168,80, 168,81, 169,81, 169,81, 169,81, 170,81, 170,82, 170,82, 170,82, 170,82, 171,83, 171,83, 172,83, 172,84, 172,84, 172,84, 173,85, 173,85, 174,86, 176,86, 176,86, 176,86, 176,86, 177,87, 177,87, 179,88, 179,88, 179,88, 179,89, 180,90, 180,90, 180,91, 180,91, 181,93,
+			181,93, 181,93, 181,93, 181,94, 183,94, 183,94, 183,94, 183,94, 183,94, 184,95, 185,96, 185,96, 185,96, 186,96, 186,97, 187,97, 187,97, 187,98, 187,98, 188,98, 188,99, 188,99, 188,100, 188,100, 188,101, 188,101, 188,101, 190,101, 190,102, 191,102, 191,102, 192,102, 192,103, 192,103, 192,105, 192,105, 192,105, 194,105, 194,105,
+			196,105, 198,106, 198,106, 198,106, 199,106, 199,106, 199,107, 199,107, 200,108, 201,108, 201,109, 201,109, 201,109, 202,109, 202,109, 202,110, 202,110, 203,110, 203,111, 203,111, 203,111, 203,111, 203,111, 203,111, 206,113"  title="Botón Formosa" href="#/" onclick="javascript:mostrarAJAX('FORMOSA');return false;" onkeypress="javascript:mostrarAJAX('FORMOSA');return false;" alt="formosa">
+			<area data-maphilight='{"groupBy":".misiones"}' class="misiones" shape="poly" alt="" coords="243,133, 243,133, 243,133, 243,133, 243,133, 242,132, 242,129, 242,127, 241,127, 241,126, 241,127, 241,126, 241,126, 241,126, 241,123, 241,122, 242,123, 242,123, 242,123, 242,123, 242,123, 244,123, 244,124, 246,122, 247,120, 250,117, 253,116, 256,114, 259,110, 260,107,
+			262,102, 262,102,
+			262,102, 262,102, 262,100, 262,97, 262,98, 264,98, 264,97, 265,98, 268,96, 270,97, 272,97, 273,99, 273,101, 274,104, 275,109, 274,114, 273,118, 272,121, 271,121, 271,121, 269,122, 267,123, 264,125, 260,125, 260,125, 259,126, 258,126, 255,129, 254,129, 249,131, 247,134, 243,134, 243,134, 243,134, 243,134, 243,134, 243,133"
+			title="Botón Misiones" onclick="javascript:mostrarAJAX('MISIONES');return false;" onkeypress="javascript:mostrarAJAX('MISIONES');return false;" alt="misiones">
+			<area data-maphilight='{"groupBy":".corrientes"}' class="corrientes" shape="poly" alt="" coords="200,128, 200,123, 200,123, 200,122, 200,122, 200,122, 200,122, 200,122, 200,122, 200,121, 201,121, 201,121, 201,121, 201,120, 201,120, 202,120, 202,119, 202,119, 202,118, 204,118, 207,119, 209,119, 210,120, 212,119, 215,119, 216,119, 217,120, 217,120, 217,120, 219,120,
+			219,120, 221,122,
+			221,122, 222,122, 222,122, 222,123, 223,123, 224,123, 225,123, 225,124, 226,124, 226,124, 229,125, 229,125, 229,125, 233,124, 233,125, 234,125, 234,125, 235,125, 235,125, 235,125, 235,124, 235,124, 236,124, 236,124, 236,124, 236,124, 236,123, 237,123, 237,123, 237,122, 238,122, 238,122, 240,122, 240,122, 241,122, 241,125,
+			241,125, 241,126, 241,126, 241,126, 241,126, 241,126, 242,129, 242,132, 242,132, 242,133, 243,133, 243,133, 243,133, 243,133, 243,133, 243,133, 243,133, 243,133, 243,134, 244,134, 244,134, 244,134, 244,134, 244,134, 244,134, 244,135, 244,135, 244,136, 244,136, 244,136, 242,137, 241,138, 240,139, 240,139, 240,139, 240,139,
+			240,139, 239,140, 239,140, 239,141, 239,141, 239,141, 239,141, 238,141, 238,141, 238,142, 238,142, 238,142, 238,142, 238,142, 237,142, 237,142, 237,142, 237,142, 236,143, 236,143, 234,143, 234,144, 234,145, 233,145, 233,145, 233,146, 233,146, 233,146, 232,146, 232,147, 232,147, 232,147, 231,148, 231,148, 230,148, 230,148,
+			229,149, 229,149, 228,150, 228,150, 228,151, 227,151, 227,152, 227,152, 227,153, 226,153, 226,153, 226,153, 226,154, 225,154, 225,154, 225,155, 225,155, 224,156, 224,156, 224,156, 224,156, 223,156, 223,157, 222,157, 222,157, 222,157, 222,157, 219,158, 219,160, 218,160, 218,161, 218,161, 218,161, 218,161, 218,161, 218,162,
+			217,162, 217,162, 217,162, 217,162, 216,163, 216,163, 215,163, 214,164, 214,164, 214,164, 214,165, 214,165, 214,165, 214,165, 213,166, 213,166, 213,166, 212,167, 212,167, 212,167, 212,167, 211,167, 211,167, 211,168, 211,168, 211,169, 211,169, 211,170, 210,170, 210,170, 210,170, 210,170, 209,170, 209,171, 209,170, 208,170,
+			208,169, 208,169, 207,168, 207,168, 207,166, 206,166, 206,166, 206,166, 206,165, 205,165, 205,164, 205,164, 201,163, 201,164, 198,164, 194,164, 193,164, 193,164, 193,164, 193,165, 193,165, 187,165, 187,161, 188,161, 188,158, 187,155, 187,155, 187,153, 187,153, 187,149, 188,149, 188,149, 188,149, 188,148, 188,148, 189,148,
+			189,147, 189,147, 189,147, 190,146, 191,146, 191,146, 191,145, 192,145, 192,145, 192,145, 192,145, 193,145, 193,144, 193,144, 194,144, 194,144, 194,144, 194,144, 194,141, 195,140, 195,140, 195,140, 195,140, 195,140, 195,140, 195,140, 195,139, 196,139, 196,139, 196,139, 196,139, 196,138, 196,138, 196,135, 196,135, 196,131,
+			196,131, 197,131, 197,131, 197,131, 197,131, 197,130, 198,130, 198,130, 199,130, 199,130, 199,129, 200,129, 200,129, 200,128"  onclick="javascript:mostrarAJAX('CORRIENTES');return false;" onkeypress="javascript:mostrarAJAX('CORRIENTES');return false;" alt="corrientes"  title="Botón Corrientes">
+			<area data-maphilight='{"groupBy":".santa-fe"}' class="santa-fe" shape="poly" alt="" coords="200,128, 160,128, 160,129, 160,130, 160,130, 160,131, 160,131, 160,131, 160,131, 160,132, 160,132, 160,132, 159,132, 160,133, 159,133, 159,133, 159,133, 159,134, 159,134, 159,135, 159,135, 158,136, 158,136, 158,136, 158,136, 158,137, 158,138, 157,138, 157,138, 157,138,
+			157,143, 156,143,
+			156,144, 156,144, 156,145, 156,145, 156,147, 156,147, 155,148, 155,148, 155,151, 155,151, 154,154, 154,154, 154,155, 154,155, 153,159, 153,159, 153,160, 153,160, 153,160, 152,160, 152,161, 152,161, 152,162, 152,162, 152,162, 152,162, 152,165, 153,166, 153,166, 154,168, 154,168, 154,168, 154,168, 154,168, 154,168, 154,168,
+			154,169, 155,169, 156,169, 156,171, 155,171, 155,173, 155,173, 154,173, 154,174, 154,174, 154,175, 154,174, 154,175, 154,177, 153,178, 153,179, 153,179, 153,179, 152,179, 152,181, 152,181, 152,182, 151,184, 150,187, 151,190, 151,190, 151,191, 151,191, 151,192, 152,192, 152,193, 152,194, 152,194, 153,194, 153,194, 153,194,
+			153,194, 153,194, 153,194, 153,195, 153,195, 153,195, 154,195, 154,196, 155,199, 155,199, 155,199, 155,199, 155,200, 156,200, 156,201, 156,201, 156,201, 156,201, 156,202, 142,224, 158,224, 168,213, 168,212, 168,212, 169,212, 169,212, 169,212, 169,212, 170,212, 170,212, 171,212, 171,213, 172,213, 173,213, 173,214, 173,214,
+			177,208, 176,208, 175,208, 175,207, 175,207, 174,206, 174,206, 174,206, 173,204, 173,204, 172,204, 172,204, 172,204, 172,204, 172,204, 172,204, 172,203, 172,203, 172,203, 171,203, 171,203, 171,202, 171,202, 171,200, 171,200, 171,199, 170,199, 170,199, 170,199, 170,197, 171,195, 171,195, 171,195, 171,195, 171,195, 172,192,
+			172,189, 172,186, 172,186, 172,185, 173,185, 173,184, 173,184, 173,184, 177,183, 177,182, 178,180, 179,180, 179,179, 180,179, 180,178, 182,177, 181,177, 182,176, 182,176, 182,175, 183,175, 183,175, 183,174, 184,173, 184,173, 185,173, 185,172, 185,172, 185,172, 186,171, 186,171, 186,169, 186,168, 187,168, 187,166, 186,167,
+			186,166, 187,166, 187,161, 188,161, 188,158, 187,155, 187,155, 187,153, 187,153, 187,149, 188,149, 188,149, 188,149, 188,148, 188,148, 189,148, 189,147, 189,147, 189,147, 190,146, 191,146, 191,146, 191,145, 192,145, 192,145, 192,145, 192,145, 193,145, 193,144, 193,144, 194,144, 194,144, 194,144, 194,144, 194,141, 195,140,
+			195,140, 195,140, 195,140, 195,140, 195,140, 195,140, 195,139, 196,139, 196,139, 196,139, 196,139, 196,138, 196,138, 196,135, 196,135, 196,131, 196,131, 197,131, 197,131, 197,131, 197,131, 197,130, 198,130, 198,130, 199,130, 199,130, 199,129, 200,129, 200,129, 200,128" title="Botón Santa Fe" onclick="javascript:mostrarAJAX('SANTA FE');return false;" onkeypress="javascript:mostrarAJAX('SANTA FE');return false;" alt="santa fe" >
+			<area data-maphilight='{"groupBy":".santiago-del-estero"}' class="santiago-del-estero" shape="poly" alt="" coords="120,99, 120,99, 121,98, 121,98, 121,97, 121,97, 121,97, 121,97, 121,96, 121,93, 122,93, 122,93, 122,93, 122,92, 122,92, 122,92, 122,92, 123,91, 123,91, 125,91, 126,91, 126,91, 126,91, 135,90, 160,92, 160,128, 160,129, 160,130, 160,130, 160,131, 160,131, 160,131,
+			160,131, 160,132, 160,132,
+			160,132, 159,132, 159,133, 159,133, 159,133, 159,133, 159,134, 159,134, 159,135, 159,135, 158,136, 158,136, 158,136, 158,136, 158,137, 158,138, 157,138, 157,138, 157,138, 156,143, 156,143, 156,144, 156,144, 156,145, 156,145, 156,147, 156,147, 155,148, 155,148, 155,151, 155,151, 154,154, 154,154, 154,155, 154,155, 153,159,
+			153,159, 153,160, 153,160, 153,161, 152,161, 152,161, 152,161, 152,162, 152,162, 152,162, 152,162, 151,162, 151,163, 146,163, 146,162, 146,162, 146,162, 145,162, 145,162, 145,162, 145,158, 145,157, 145,157, 145,157, 143,157, 143,157, 143,157, 143,156, 142,154, 141,154, 140,153, 140,153, 139,153, 139,153, 138,153, 138,153,
+			137,153, 134,153, 133,152, 133,152, 133,151, 131,152, 131,151, 130,151, 130,151, 127,151, 125,150, 124,150, 124,149, 123,149, 122,148, 122,148, 122,148, 122,148, 121,148, 121,148, 121,148, 121,148, 121,149, 121,149, 121,149, 121,149, 119,149, 119,149, 119,149, 119,149, 116,149, 116,149, 114,149, 114,146, 114,146, 114,145,
+			114,145, 114,142, 114,139, 114,139, 113,138, 113,138, 113,138, 113,138, 113,138, 113,138, 113,138, 112,138, 112,137, 111,137, 111,137, 110,137, 110,136, 110,136, 110,136, 109,135, 109,135, 109,135, 110,134, 110,134, 110,132, 110,132, 109,127, 109,127, 109,125, 109,125, 109,124, 109,124, 110,124, 110,124, 110,123, 111,123,
+			111,123, 111,123, 111,123, 111,122, 112,122, 112,119, 111,116, 113,115, 113,115, 113,115, 114,115, 114,114, 115,113, 115,113, 115,112, 115,112, 115,112, 115,112, 115,112, 116,112, 116,110, 116,108, 116,108, 116,107, 116,107, 116,107, 116,107, 117,107, 117,107, 117,107, 117,107, 118,106, 118,106, 119,106, 119,106, 119,103,
+			119,101, 119,101, 120,100, 120,100, 120,99" title="Botón Santiago del Estero" href="#/" onclick="javascript:mostrarAJAX('SANTIAGO DEL ESTERO');return false;" onkeypress="javascript:mostrarAJAX('SANTIAGO DEL ESTERO');return false;" alt="santiago del estero">
+			<area data-maphilight='{"groupBy":".tucuman"}' class="tucuman" shape="poly" alt="" coords="109,125, 109,125, 109,124, 109,124, 110,124, 110,124, 110,123, 111,123, 111,123, 111,123, 111,123, 111,122, 112,122, 112,119, 111,116, 113,115, 113,115, 114,115, 114,115, 114,115, 115,113, 115,113, 115,112, 115,112, 115,112, 115,112, 115,112, 116,112, 116,110, 116,108,
+			116,108, 116,107,
+			116,107, 116,107, 116,107, 117,107, 117,107, 117,107, 117,107, 118,106, 118,106, 119,106, 119,106, 119,103, 119,102, 119,102, 120,100, 120,100, 120,100, 115,99, 114,100, 113,100, 112,99, 112,99, 111,99, 110,99, 109,100, 109,99, 108,97, 103,97, 102,97, 102,98, 102,98, 102,98, 102,100, 101,101, 101,101, 100,100, 98,100, 98,100,
+			98,99, 97,99, 97,99, 97,99, 96,99, 96,98, 96,99, 96,98, 95,98, 95,98, 95,98, 95,99, 95,99, 95,99, 95,99, 96,99, 96,99, 96,99, 96,100, 96,100, 96,101, 96,101, 96,101, 95,101, 95,102, 95,102, 95,102, 95,102, 95,102, 95,102, 95,104, 95,104, 95,104, 95,104, 95,104, 95,104, 96,104, 96,105, 96,105, 96,105, 96,105, 96,105, 99,106,
+			99,106, 99,106, 99,106, 99,107, 100,107, 100,107, 100,110, 99,110, 99,110, 99,111, 99,111, 99,111, 99,111, 98,111, 98,111, 98,112, 98,112, 98,112, 97,113, 97,113, 97,113, 97,113, 97,113, 97,113, 96,114, 96,114, 96,114, 96,114, 96,114, 96,114, 96,114, 96,115, 96,115, 97,115, 97,115, 97,115, 97,116, 97,116, 97,116, 98,116,
+			98,116, 98,116, 98,116, 98,120, 98,120, 98,120, 99,120, 99,121, 99,121, 99,121, 99,122, 99,122, 99,122, 99,122, 99,122, 99,122, 99,122, 100,122, 100,123, 100,123, 100,123, 100,123, 101,123, 101,123, 101,123, 101,123, 101,123, 101,124, 102,124, 102,124, 102,124, 102,124, 102,124, 102,124, 102,125, 103,125, 103,125, 103,125,
+			103,126, 103,126, 103,126, 104,126, 105,126, 105,126, 105,126, 105,126, 105,126, 105,126, 105,125, 105,125, 106,125, 106,125, 106,125, 107,124, 107,124, 107,124, 107,124, 108,124, 108,124, 108,124, 108,124, 108,124, 108,125, 109,125, 109,125, 109,125, 109,125, 109,125"  title="Botón Tucumán" href="#/" onclick="javascript:mostrarAJAX('TUCUMAN');return false;" onkeypress="javascript:mostrarAJAX('TUCUMAN');return false;" alt="tucuman" >
+			<area data-maphilight='{"groupBy":".san-juan"}' class="san-juan" shape="poly" alt="" coords="88,186, 87,180, 87,180, 86,180, 86,179, 85,179, 84,178, 84,179, 84,176, 84,177, 84,174, 84,172, 84,172, 84,169, 84,169, 84,168, 84,168, 83,167, 83,167, 82,167, 82,166, 81,165, 81,165, 81,165, 81,165, 81,165, 80,164, 80,164, 79,164, 79,163, 79,163, 79,163, 78,162,
+			78,162, 78,162, 77,161,
+			77,161, 77,160, 76,160, 76,160, 76,160, 76,160, 75,159, 75,159, 75,159, 75,159, 74,158, 74,158, 73,158, 73,157, 72,157, 72,156, 72,156, 71,156, 71,156, 70,156, 70,155, 68,154, 68,154, 68,154, 67,153, 67,153, 67,152, 66,152, 66,152, 66,152, 66,152, 65,152, 65,151, 56,150, 56,147, 57,144, 57,143, 57,143, 57,143, 57,143, 58,143,
+			58,141, 57,141, 57,140, 57,140, 57,139, 56,139, 56,139, 56,139, 56,139, 56,139, 55,138, 55,138, 55,138, 55,138, 55,137, 54,136, 54,135, 54,135, 53,135, 53,134, 52,134, 52,134, 52,134, 51,134, 51,134, 50,133, 48,133, 48,132, 48,132, 48,132, 48,134, 48,132, 48,133, 48,133, 48,133, 47,133, 47,134, 47,134, 46,139, 46,139, 46,141,
+			46,141, 46,142, 46,142, 45,143, 45,143, 45,144, 45,145, 45,145, 44,145, 44,145, 44,145, 44,146, 43,146, 43,147, 42,149, 43,151, 43,153, 43,152, 44,153, 44,153, 44,153, 44,153, 44,153, 44,157, 44,157, 44,157, 43,157, 43,158, 43,158, 43,159, 44,159, 45,159, 45,160, 44,161, 44,161, 44,162, 44,162, 44,162, 44,163, 42,166, 40,170,
+			39,174, 39,174, 39,174, 39,174, 38,174, 38,174, 37,174, 37,175, 36,182, 37,182, 37,183, 37,183, 37,184, 38,185, 38,185, 38,186, 39,186, 40,186, 40,186, 41,186, 41,187, 40,188, 40,190, 41,191, 41,194, 42,194, 42,195, 42,195, 42,195, 43,195, 43,196, 43,197, 43,197, 43,197, 44,197, 44,197, 44,196, 44,196, 45,196, 45,196, 45,196,
+			45,196, 46,196, 46,195, 47,195, 47,195, 48,195, 48,196, 49,196, 49,195, 49,194, 49,194, 49,192, 49,189, 50,189, 50,189, 53,189, 53,189, 54,189, 54,188, 55,188, 55,188, 57,188, 57,188, 58,188, 58,188, 58,188, 58,188, 59,189, 59,189, 59,189, 60,190, 60,191, 60,191, 60,192, 61,192, 62,192, 62,192, 64,192, 64,192, 65,192, 65,192,
+			65,191, 65,189, 66,189, 66,188, 71,189, 71,189, 72,189, 72,189, 72,189, 72,189, 73,189, 73,190, 73,190, 73,190, 76,191, 81,191, 81,186, 88,186"  title="Botón San Juan" href="#/" onclick="javascript:mostrarAJAX('SAN JUAN');return false;" alt="san juan">
+			<area data-maphilight='{"groupBy":".neuquen"}' class="neuquen" shape="poly" alt="" coords="72,270, 70,270, 69,269, 68,268, 65,269, 65,268, 62,268, 62,268, 62,268, 61,267, 61,267, 61,267, 61,267, 60,266, 60,265, 54,264, 54,264, 53,263, 52,260, 52,260, 52,260, 52,260, 50,259, 50,259, 50,259, 50,259, 49,258, 49,258, 49,258, 49,257, 47,257, 46,257, 46,257,
+			46,257, 46,255, 46,254,
+			45,254, 45,253, 45,253, 45,253, 45,253, 44,252, 44,253, 43,253, 43,251, 42,251, 41,252, 40,254, 40,254, 39,254, 39,255, 39,255, 37,256, 36,258, 36,260, 35,260, 35,260, 35,260, 35,261, 35,261, 35,262, 35,262, 35,263, 35,263, 35,266, 35,266, 35,266, 35,266, 35,267, 35,269, 36,271, 36,274, 36,276, 37,278, 37,278, 37,280, 37,282,
+			38,282, 38,284, 38,284, 38,285, 38,285, 38,285, 38,285, 38,286, 39,286, 39,286, 39,286, 39,286, 40,287, 40,290, 39,290, 39,291, 36,292, 34,295, 34,300, 34,300, 34,301, 34,301, 34,301, 34,301, 34,301, 34,301, 33,302, 33,302, 33,302, 33,302, 33,302, 32,303, 32,303, 32,303, 32,303, 32,303, 32,303, 31,303, 31,303, 31,303, 31,304,
+			30,306, 31,305, 31,306, 31,306, 32,306, 32,308, 32,308, 31,310, 31,310, 31,310, 31,310, 30,311, 30,312, 30,312, 30,314, 30,314, 31,314, 31,314, 31,314, 31,314, 31,316, 31,316, 31,316, 31,316, 31,316, 31,316, 31,317, 31,317, 30,318, 30,318, 30,319, 30,319, 30,320, 29,320, 29,320, 29,320, 29,322, 29,322, 30,323, 30,324, 30,324,
+			31,325, 31,325, 31,325, 33,325, 33,325, 35,325, 35,325, 36,325, 36,325, 36,325, 36,326, 37,326, 37,326, 38,326, 39,326, 39,325, 39,325, 39,325, 40,325, 40,325, 40,325, 40,325, 40,325, 40,323, 40,323, 40,322, 40,322, 40,321, 39,321, 39,320, 40,320, 40,319, 41,319, 41,319, 41,319, 41,319, 42,318, 42,318, 42,318, 42,318, 43,318,
+			44,317, 44,317, 45,317, 46,316, 50,316, 50,315, 51,315, 51,315, 51,315, 51,315, 52,314, 52,314, 52,311, 52,309, 53,308, 53,308, 54,308, 54,307, 54,307, 55,307, 55,306, 55,306, 55,306, 55,306, 56,306, 57,306, 57,305, 57,305, 57,305, 57,305, 57,305, 58,305, 59,304, 59,304, 59,304, 59,304, 60,304, 60,304, 60,304, 61,302, 61,302,
+			62,302, 62,302, 62,302, 62,302, 62,302, 62,302, 63,301, 63,301, 63,301, 63,301, 63,301, 63,300, 64,300, 64,300, 64,300, 64,300, 64,300, 64,299, 65,299, 65,299, 65,299, 65,299, 65,298, 65,297, 65,297, 66,296, 66,296, 67,295, 67,295, 67,295, 67,295, 68,295, 68,295, 68,294, 68,294, 69,293, 69,293, 69,293, 71,293, 71,293, 71,293,
+			71,293, 71,293, 71,293, 74,293, 74,293, 74,293, 74,293, 75,293, 75,292, 75,292, 75,292, 75,292, 75,292, 76,292, 76,292, 76,292, 76,290, 76,290, 76,289, 75,289, 75,289, 75,289, 75,288, 75,288, 74,288, 74,287, 73,287, 73,287, 73,286, 73,286, 72,286, 72,285, 72,270"title="Botón Neuquén" href="#/" onclick="javascript:mostrarAJAX('NEUQUEN'); return false;" onkeypress="javascript:mostrarAJAX('NEUQUEN'); return false;" alt="neuquen">
+			<area data-maphilight='{"groupBy":".mendoza"}' class="mendoza" shape="poly" alt="" coords="93,249, 92,232, 92,231, 92,231, 92,230, 92,230, 91,229, 91,229, 90,228, 90,227, 90,227, 89,227, 89,227, 89,223, 89,218, 89,218, 88,217, 88,217, 88,216, 88,216, 87,215, 87,213, 87,212, 86,212, 86,211, 85,211, 85,211, 85,211, 85,210, 84,210, 84,209, 84,209, 84,209,
+			84,209, 84,206, 83,205,
+			83,205, 82,203, 82,203, 82,201, 82,201, 82,201, 82,201, 82,200, 83,198, 82,198, 82,197, 82,197, 82,197, 82,197, 82,197, 82,197, 82,196, 81,196, 81,196, 81,195, 81,195, 81,195, 80,193, 80,193, 80,193, 80,193, 80,193, 80,193, 80,191, 80,191, 76,191, 73,190, 73,190, 73,190, 73,190, 72,190, 72,189, 72,189, 72,189, 71,189, 71,189,
+			66,189, 66,189, 65,189, 65,191, 65,192, 65,192, 64,192, 64,192, 62,192, 62,192, 61,192, 60,192, 60,191, 60,191, 60,190, 59,189, 59,189, 59,189, 58,188, 58,188, 58,188, 58,188, 57,188, 57,188, 55,188, 54,188, 54,188, 54,189, 53,189, 53,189, 50,189, 50,189, 49,189, 49,192, 49,194, 49,194, 49,195, 49,196, 48,196, 48,195, 47,195,
+			47,195, 46,195, 46,196, 45,196, 45,196, 45,196, 45,196, 44,196, 44,196, 44,197, 44,197, 43,197, 43,197, 43,197, 43,198, 43,198, 43,199, 43,199, 43,200, 43,200, 44,200, 44,201, 44,201, 45,202, 45,206, 45,206, 46,206, 46,208, 46,207, 46,207, 46,207, 46,207, 46,207, 47,207, 47,207, 47,207, 47,207, 48,207, 48,208, 48,208, 48,210,
+			48,210, 48,210, 48,210, 48,211, 48,211, 48,211, 47,211, 47,211, 47,212, 47,212, 48,215, 48,217, 48,220, 47,222, 47,222, 47,222, 47,222, 47,223, 46,223, 46,223, 46,223, 46,224, 46,224, 46,224, 46,224, 45,225, 45,225, 45,226, 45,226, 44,226, 44,226, 44,226, 44,226, 44,228, 44,228, 44,228, 43,228, 43,231, 43,231, 43,231, 43,231,
+			43,231, 43,231, 43,231, 43,231, 43,231, 43,231, 43,232, 42,233, 42,233, 42,235, 42,235, 42,235, 41,235, 41,235, 41,236, 41,236, 41,236, 41,238, 41,238, 41,238, 41,238, 41,239, 42,240, 42,240, 42,240, 42,240, 42,240, 42,240, 42,240, 42,240, 42,241, 43,242, 43,243, 43,243, 44,243, 44,248, 43,248, 43,250, 43,253, 44,253, 44,252,
+			44,252, 44,253, 45,253, 45,253, 45,254, 46,254, 46,255, 46,257, 46,257, 46,256, 47,257, 48,257, 49,257, 49,258, 49,258, 50,259, 50,259, 50,259, 50,259, 52,259, 52,260, 52,260, 52,260, 52,263, 54,264, 54,264, 60,265, 60,266, 60,266, 61,267, 61,267, 61,267, 62,268, 62,268, 62,268, 65,268, 65,268, 68,268, 69,269, 69,270, 72,270,
+			72,270, 72,256, 71,253, 71,253, 71,252, 71,252, 71,252, 71,252, 70,249, 93,249" title="Botón Mendoza" href="#/" onclick="javascript:mostrarAJAX('MENDOZA');return false; " onkeypress="javascript:mostrarAJAX('MENDOZA');return false; " alt="mendoza" >
+			<area data-maphilight='{"groupBy":".buenos-aires"}' class="buenos-aires" shape="poly" alt="" coords="200,220, 200,220, 199,220, 196,219, 196,219, 195,218, 194,218, 194,218, 194,218, 194,218, 192,218, 192,217, 190,217, 190,216, 189,216, 189,216, 189,216, 188,216, 188,215, 188,215, 187,215, 185,215, 184,214, 184,214, 183,214, 183,213, 182,213, 182,213, 182,213, 182,213,
+			181,213, 181,213,
+			181,213, 181,212, 180,212, 180,212, 180,212, 180,212, 180,211, 180,211, 179,211, 179,211, 179,210, 178,210, 178,210, 178,210, 178,209, 177,209, 177,209, 177,208, 173,214, 173,214, 173,213, 172,213, 171,213, 171,212, 170,212, 170,212, 169,212, 169,212, 169,212, 169,212, 168,212, 168,212, 168,213, 158,224, 142,224, 133,223,
+			133,231, 133,297, 132,319, 134,319, 134,320, 135,320, 135,320, 135,320, 135,320, 136,320, 136,320, 136,320, 137,321, 137,321, 137,321, 137,321, 137,322, 138,322, 138,322, 138,322, 138,322, 139,324, 139,324, 139,325, 139,325, 140,325, 141,325, 141,324, 142,324, 143,323, 143,323, 144,323, 144,322, 144,322, 144,322, 144,322,
+			144,322, 145,321, 145,321, 145,321, 145,320, 146,320, 146,318, 146,318, 146,318, 146,318, 146,318, 145,318, 145,317, 145,317, 145,317, 145,316, 145,316, 145,316, 144,316, 143,315, 143,313, 143,313, 144,313, 144,313, 144,312, 144,312, 144,312, 145,312, 145,311, 145,311, 145,306, 148,306, 149,300, 148,299, 148,299, 148,299,
+			148,299, 147,298, 147,298, 146,298, 146,298, 146,297, 146,296, 146,296, 145,293, 146,290, 146,290, 147,290, 147,290, 148,291, 148,291, 148,291, 148,291, 148,291, 148,291, 149,292, 149,292, 149,293, 150,293, 150,293, 152,294, 155,294, 155,294, 159,295, 162,294, 162,294, 164,294, 164,294, 164,294, 168,294, 168,294, 169,294,
+			169,293, 175,293, 176,293, 176,292, 177,292, 177,292, 177,292, 177,292, 177,292, 177,292, 179,292, 188,290, 189,289, 190,289, 191,289, 191,289, 196,287, 196,287, 197,287, 199,286, 199,286, 199,286, 202,285, 202,285, 202,285, 202,285, 205,284, 205,284, 206,284, 206,284, 206,284, 207,283, 208,283, 208,281, 208,281, 208,280,
+			208,279, 208,279, 209,279, 209,278, 209,278, 209,278, 210,277, 210,277, 210,277, 210,277, 211,276, 211,276, 211,276, 211,276, 211,276, 211,275, 211,275, 212,275, 212,275, 212,275, 212,275, 212,274, 212,274, 212,274, 213,274, 213,273, 213,273, 213,273, 213,273, 213,273, 214,273, 214,272, 214,272, 215,272, 215,272, 215,272,
+			215,272, 215,272, 215,271, 216,271, 217,270, 217,269, 216,270, 217,269, 217,269, 218,268, 218,267, 218,267, 219,266, 219,266, 220,265, 220,265, 220,265, 221,264, 221,262, 221,262, 221,259, 221,257, 221,257, 221,257, 221,256, 220,256, 216,256, 216,256, 216,256, 216,256, 216,255, 216,255, 216,255, 215,255, 215,255, 215,254,
+			214,254, 214,254, 214,253, 214,253, 214,253, 214,253, 213,252, 213,252, 213,252, 213,251, 213,251, 213,251, 212,251, 213,247, 213,247, 213,246, 213,246, 213,246, 213,246, 214,246, 214,246, 214,245, 215,245, 215,245, 215,244, 216,244, 216,243, 216,243, 216,241, 216,241, 216,240, 216,240, 216,240, 215,240, 215,239, 215,239,
+			215,239, 215,239, 215,239, 214,239, 214,239, 214,239, 214,238, 214,238, 214,238, 213,238, 213,238, 213,238, 213,238, 213,237, 212,237, 211,237, 211,236, 211,237, 210,236, 210,235, 210,235, 210,235, 209,234, 209,234, 208,234, 208,234, 208,234, 207,233, 207,233, 206,232, 205,232, 204,232, 203,231, 203,231, 202,230, 202,230,
+			201,229, 200,229, 200,228, 200,228, 200,228, 199,226, 199,224, 200,224, 200,224, 200,224, 201,224, 201,224, 201,223, 201,223, 201,222, 201,222, 201,220, 201,220, 201,220, 200,220, 200,220"title="Botón Buenos Aires" href="#/" onclick="javascript:mostrarAJAX('BUENOS AIRES'); return false;" onkeypress="javascript:mostrarAJAX('BUENOS AIRES'); return false;" alt="buenos aires">
+			<area data-maphilight='{"groupBy":".chubut"}' class="chubut" shape="poly" alt="" coords="113,339, 32,339, 33,343, 29,343, 28,345, 29,348, 29,350, 29,353, 32,358, 34,361, 35,365, 36,367, 35,369, 36,371, 35,374, 36,377, 35,376, 36,378, 38,377, 42,377, 42,378, 43,378, 43,380, 43,381, 43,380, 43,382, 43,380, 42,382, 43,380, 42,382, 42,382, 42,382, 42,383,
+			42,383, 39,383, 39,383,
+			38,383, 38,383, 34,383, 34,383, 33,384, 34,384, 34,385, 34,385, 34,386, 36,386, 36,386, 36,385, 38,386, 38,386, 39,386, 39,386, 39,386, 40,386, 40,386, 40,386, 40,387, 40,387, 40,387, 40,387, 40,388, 41,388, 41,388, 41,388, 42,389, 42,389, 42,392, 40,395, 39,395, 39,395, 38,396, 38,396, 38,399, 38,399, 38,399, 38,399, 39,399,
+			39,399, 39,400, 39,400, 39,400, 39,400, 39,400, 39,401, 40,401, 40,401, 40,401, 40,402, 85,402, 86,397, 86,397, 86,397, 87,397, 87,396, 87,396, 87,396, 87,396, 87,396, 87,396, 87,396, 88,396, 88,395, 88,395, 88,393, 89,393, 89,391, 89,391, 89,391, 89,390, 90,390, 90,390, 90,390, 90,389, 90,389, 90,389, 90,389, 90,389, 90,389,
+			91,389, 91,388, 92,387, 92,387, 93,387, 93,387, 93,387, 97,386, 97,386, 98,386, 98,385, 98,385, 98,384, 99,384, 99,383, 100,383, 100,383, 106,383, 106,384, 106,384, 107,383, 107,382, 106,380, 106,380, 106,380, 106,380, 106,379, 106,378, 106,378, 107,378, 107,378, 107,378, 107,378, 108,378, 108,377, 108,377, 109,377, 109,377,
+			109,376, 109,376, 110,376, 110,376, 110,375, 111,375, 112,374, 112,374, 112,374, 112,372, 111,372, 111,372, 111,371, 110,370, 110,368, 110,363, 114,358, 116,356, 118,355, 119,355, 119,354, 120,354, 120,354, 120,353, 119,352, 118,352, 118,352, 118,352, 117,351, 117,351, 117,351, 117,351, 116,351, 115,350, 115,350, 114,350,
+			114,350, 114,350, 114,349, 114,349, 114,347, 115,347, 115,347, 115,347, 116,347, 116,347, 116,347, 116,346, 117,346, 117,346, 117,346, 117,346, 118,346, 118,345, 119,345, 121,346, 121,346, 122,347, 122,347, 123,347, 123,349, 123,349, 123,350, 123,350, 126,351, 126,351, 129,351, 129,350, 129,350, 129,350, 130,349, 130,349,
+			130,347, 130,347, 130,344, 130,341, 130,341, 130,341, 129,340, 129,340, 127,339, 126,340, 125,340, 125,341, 125,341, 125,341, 125,342, 125,342, 125,342, 124,342, 124,343, 124,343, 124,344, 124,344, 123,344, 123,344, 123,344, 123,344, 122,344, 122,344, 120,344, 120,344, 119,344, 119,342, 119,341, 118,341, 118,341, 118,341,
+			116,341, 116,341, 114,341, 114,341, 113,341, 113,340, 113,340, 113,339"  title="Botón Chubut" href="#/" onclick="javascript:mostrarAJAX('CHUBUT'); return false;" onkeypress="javascript:mostrarAJAX('CHUBUT'); return false;" alt="chubut">
+			<area data-maphilight='{"groupBy":".rio-negro"}' class="rio-negro" shape="poly" alt="" coords="139,325, 139,325, 139,324, 139,324, 138,322, 138,322, 138,322, 138,321, 137,321, 137,321, 137,321, 137,321, 137,321, 136,320, 136,320, 136,320, 135,320, 135,320, 135,320, 135,319, 134,319, 134,319, 132,319, 133,297, 131,297, 131,297, 131,296, 131,296, 131,296, 131,296,
+			131,296, 130,296,
+			130,296, 130,296, 130,295, 129,295, 128,294, 128,294, 127,294, 127,294, 126,294, 124,292, 123,292, 123,292, 123,291, 122,291, 122,291, 122,291, 122,290, 120,290, 120,290, 118,290, 118,290, 116,289, 118,290, 116,289, 114,289, 114,289, 114,289, 114,289, 114,289, 113,288, 111,289, 111,289, 111,289, 110,289, 110,290, 109,290,
+			109,290, 109,290, 108,290, 108,289, 107,289, 107,289, 107,289, 107,289, 107,289, 107,288, 107,288, 107,288, 106,287, 94,288, 94,287, 94,287, 94,286, 94,286, 93,286, 93,286, 93,286, 93,285, 92,285, 91,284, 89,284, 89,284, 89,284, 89,284, 89,284, 88,283, 88,283, 87,283, 86,283, 86,282, 86,282, 86,282, 86,281, 85,281, 80,281,
+			80,281, 80,281, 79,280, 79,280, 79,280, 79,280, 79,280, 79,279, 78,279, 78,279, 77,279, 77,278, 77,276, 77,275, 77,275, 77,275, 78,275, 78,274, 79,274, 79,274, 79,272, 79,272, 79,271, 78,271, 78,271, 76,270, 76,270, 74,271, 72,270, 72,270, 72,285, 72,286, 73,286, 73,286, 73,287, 73,287, 74,287, 74,288, 75,288, 75,288, 75,289,
+			75,289, 76,289, 76,289, 76,289, 76,289, 76,292, 76,292, 76,292, 76,292, 75,292, 75,292, 75,292, 75,292, 75,292, 74,292, 74,293, 74,293, 74,293, 71,292, 71,293, 71,293, 71,293, 71,293, 71,293, 69,293, 69,293, 69,293, 68,294, 68,294, 68,294, 68,295, 67,295, 67,295, 67,295, 67,295, 66,296, 66,296, 65,297, 65,297, 65,298, 65,299,
+			65,299, 65,299, 65,299, 65,299, 64,299, 64,299, 64,300, 64,300, 64,300, 64,300, 64,300, 63,301, 63,301, 63,301, 63,301, 63,301, 62,301, 62,302, 62,302, 62,302, 62,302, 62,302, 61,302, 61,302, 60,303, 60,303, 60,304, 59,304, 59,304, 59,304, 59,304, 58,305, 57,305, 57,305, 57,305, 57,305, 57,305, 57,305, 56,306, 56,306, 56,306,
+			55,306, 55,306, 55,307, 54,307, 54,307, 54,308, 53,308, 53,308, 52,309, 52,311, 52,314, 52,314, 51,315, 51,315, 51,315, 51,315, 50,315, 50,315, 46,316, 45,317, 44,317, 44,317, 43,317, 42,318, 42,318, 42,318, 42,318, 41,319, 41,319, 41,319, 41,319, 40,319, 40,320, 39,320, 39,321, 40,321, 40,322, 40,322, 40,322, 41,322, 40,324,
+			40,324, 40,325, 40,325, 40,325, 39,325, 39,325, 39,325, 39,325, 38,326, 37,326, 37,326, 36,326, 36,325, 36,325, 36,325, 35,325, 35,325, 33,325, 33,325, 31,325, 31,325, 31,325, 31,331, 31,331, 31,335, 32,336, 32,336, 32,336, 32,336, 32,337, 33,339, 114,339, 113,338, 113,338, 113,335, 113,335, 113,335, 113,335, 114,331, 114,328,
+			113,328, 113,327, 113,327, 113,326, 112,323, 112,323, 112,319, 112,319, 113,318, 113,318, 114,318, 114,318, 115,318, 116,318, 116,319, 116,319, 116,319, 119,320, 119,320, 120,320, 120,320, 121,321, 121,321, 121,321, 121,321, 122,322, 122,322, 122,322, 122,322, 122,322, 122,322, 123,322, 123,323, 124,323, 125,324, 125,324,
+			127,324, 127,325, 129,325, 131,325, 133,325, 135,325, 135,325, 138,325, 138,325, 139,325" title="Botón Río Negro" href="#/" onclick="javascript:mostrarAJAX('RIO NEGRO');return false; " onkeypress="javascript:mostrarAJAX('RIO NEGRO');return false; " alt="rio negro">
+			<area data-maphilight='{"groupBy":".la-pampa"}' class="la-pampa" shape="poly" alt="" coords="133,231, 112,231, 112,249, 93,249, 70,249, 71,252, 71,252, 71,252, 71,252, 71,253, 71,253, 72,256, 72,270, 72,270, 74,271, 76,270, 76,271, 78,271, 78,271, 79,271, 79,272, 79,272, 79,274, 78,275, 78,275, 78,275, 77,275, 77,275, 77,276, 77,276, 77,278, 77,279, 78,279,
+			78,279, 79,279, 79,280,
+			79,280, 79,280, 79,280, 79,280, 80,281, 80,281, 80,281, 85,281, 86,281, 86,282, 86,282, 86,282, 86,283, 87,283, 88,283, 88,283, 89,284, 89,284, 89,284, 89,284, 89,284, 91,284, 92,285, 93,285, 93,286, 93,286, 93,286, 93,286, 94,286, 94,287, 94,287, 94,288, 106,287, 107,288, 107,289, 107,289, 107,289, 107,289, 107,289, 107,289,
+			107,289, 108,289, 108,290, 109,290, 109,290, 109,290, 110,290, 110,289, 111,289, 111,289, 111,289, 113,289, 113,289, 113,289, 114,289, 114,289, 114,289, 116,289, 118,290, 116,289, 118,290, 118,290, 120,290, 120,290, 122,291, 122,291, 122,291, 122,291, 123,292, 123,292, 123,292, 124,292, 126,294, 127,294, 127,294, 128,294,
+			128,295, 129,295, 130,295, 130,296, 130,296, 130,296, 131,296, 131,296, 131,296, 131,296, 131,297, 131,297, 131,297, 133,297, 133,231" title="Botón La Pampa" href="#/" onclick="javascript:mostrarAJAX('LA PAMPA'); return false;" onkeypress="javascript:mostrarAJAX('LA PAMPA'); return false;" alt="la pampa">
+			<area data-maphilight='{"groupBy":".la-rioja"}' class="la-rioja" shape="poly" alt="" coords="102,184, 102,172, 102,171, 103,170, 103,170, 103,170, 103,169, 103,169, 103,168, 103,168, 104,167, 104,166, 104,166, 104,166, 104,165, 105,165, 105,164, 105,163, 105,163, 106,162, 106,161, 107,160, 107,160, 107,159, 108,159, 107,158, 106,157, 106,156, 106,156, 105,156,
+			105,155, 105,155,
+			105,155, 105,155, 105,155, 104,153, 103,152, 103,150, 103,150, 103,150, 103,150, 102,150, 103,149, 102,149, 102,147, 102,147, 102,146, 101,146, 101,145, 101,145, 101,145, 101,144, 100,144, 100,144, 100,143, 99,143, 99,143, 99,143, 99,143, 97,142, 98,142, 97,142, 96,141, 95,140, 95,140, 95,140, 93,139, 93,139, 93,139, 92,136,
+			92,136, 92,136, 91,135, 91,135, 91,134, 90,134, 90,133, 90,133, 90,132, 90,132, 90,132, 90,132, 90,132, 90,132, 90,131, 89,131, 89,130, 89,130, 89,130, 87,130, 87,130, 83,129, 83,130, 82,131, 82,131, 82,131, 82,132, 81,132, 79,132, 77,131, 76,131, 75,131, 74,130, 73,131, 73,131, 73,131, 73,132, 72,132, 72,132, 72,132, 72,132,
+			72,131, 71,131, 71,131, 71,130, 71,130, 71,130, 70,128, 68,128, 66,128, 66,128, 66,127, 65,127, 64,127, 64,127, 63,127, 63,125, 63,125, 63,124, 63,124, 63,123, 62,123, 62,123, 62,123, 62,122, 62,122, 62,122, 62,121, 61,121, 61,122, 61,122, 61,122, 60,122, 60,122, 57,122, 55,122, 54,125, 53,125, 53,125, 53,126, 53,126, 52,126,
+			52,127, 52,127, 52,128, 51,128, 51,129, 51,129, 51,129, 48,132, 48,132, 48,132, 48,132, 48,133, 48,133, 49,133, 51,134, 51,134, 52,134, 52,134, 52,134, 53,135, 53,135, 54,135, 54,135, 54,136, 55,137, 55,138, 55,138, 55,138, 55,138, 56,139, 56,139, 56,139, 56,139, 56,140, 57,140, 57,140, 57,140, 57,141, 58,141, 58,143, 57,143,
+			57,143, 57,143, 57,144, 57,144, 56,147, 56,150, 65,152, 65,152, 66,152, 66,152, 66,152, 66,153, 67,153, 67,153, 67,153, 68,154, 68,154, 68,154, 70,155, 70,156, 71,156, 71,156, 72,156, 72,157, 72,157, 73,158, 73,158, 74,158, 74,159, 75,159, 75,159, 75,159, 75,159, 76,160, 76,160, 76,160, 76,160, 77,160, 77,161, 77,161, 78,162,
+			78,162, 78,162, 79,163, 79,163, 79,164, 79,164, 80,164, 80,165, 81,165, 81,165, 81,165, 81,165, 81,166, 82,166, 82,167, 83,167, 83,167, 83,168, 84,169, 84,169, 84,169, 84,172, 84,172, 84,175, 84,177, 84,177, 84,179, 84,178, 85,179, 86,180, 86,180, 87,180, 87,181, 88,184, 88,184, 89,184, 89,185, 91,185, 91,185, 91,185, 91,185,
+			91,185, 91,186, 93,186, 93,186, 94,186, 94,186, 95,186, 95,185, 95,185, 102,185, 102,184" title="Botón La Rioja" href="#/" onclick="javascript:mostrarAJAX('LA RIOJA');return false;" onkeypress="javascript:mostrarAJAX('LA RIOJA');return false;" alt="la rioja" >
+			<area data-maphilight='{"groupBy":".catamarca"}' class="catamarca" shape="poly" alt="" coords="61,81, 62,82, 62,82, 63,83, 63,83, 63,83, 63,83, 63,83, 64,83, 64,84, 64,84, 64,84, 64,84, 65,84, 65,84, 65,84, 65,84, 65,84, 66,84, 69,85, 69,85, 69,85, 69,85, 70,85, 70,86, 90,85, 90,90, 89,91, 87,91, 87,91, 86,91, 86,91, 86,92, 86,92, 86,92, 86,94, 86,94, 86,94,
+			86,95, 86,95, 86,95,
+			86,95, 87,96, 87,96, 87,96, 88,97, 88,97, 88,98, 89,98, 89,98, 90,99, 90,99, 90,99, 90,100, 90,100, 90,100, 90,100, 91,100, 91,100, 91,101, 91,101, 91,101, 92,101, 92,101, 92,101, 92,101, 92,101, 92,101, 93,101, 93,101, 93,100, 93,100, 94,100, 94,99, 94,99, 95,99, 96,98, 96,98, 96,98, 95,98, 95,98, 95,98, 95,98, 95,98,
+			95,99,
+			95,99, 96,99, 96,99, 96,99, 96,100, 96,100, 96,101, 96,101, 96,101, 95,101, 95,102, 95,102, 95,102, 95,102, 95,102, 95,102, 95,104, 95,104, 95,104, 95,104, 95,104, 95,104, 96,104, 96,105, 96,105, 96,105, 96,105, 96,105, 98,105, 99,106, 99,106, 99,106, 99,106, 99,106, 100,106, 100,107, 100,110, 99,110, 99,110, 99,110, 99,111,
+			99,111, 99,111, 98,111, 98,111, 98,112, 98,112, 98,112, 97,113, 97,113, 97,113, 97,113, 97,113, 97,113, 96,113, 96,114, 96,114, 96,114, 96,114, 96,114, 96,114, 96,115, 96,115, 97,115, 97,115, 97,115, 97,115, 97,115, 97,116, 98,116, 98,116, 98,116, 98,116, 98,120, 98,120, 98,120, 99,120, 99,120, 99,120, 99,121, 99,122, 99,122,
+			99,122, 99,122, 99,122, 99,122, 99,122, 100,122, 100,122, 100,123, 100,123, 100,123, 101,123, 101,123, 101,123, 101,123, 101,123, 101,124, 102,124, 102,124, 102,124, 102,124, 102,124, 102,124, 102,125, 103,125, 103,125, 103,125, 103,126, 103,126, 103,126, 104,126, 105,126, 105,126, 105,126, 105,126, 105,125, 105,125, 105,125,
+			105,125, 106,125, 106,125, 106,124, 107,124, 107,124, 107,124, 107,124, 108,124, 109,127, 109,127, 110,131, 110,131, 110,134, 110,134, 110,135, 109,135, 109,135, 109,136, 110,136, 110,136, 110,137, 111,137, 111,137, 112,137, 112,138, 113,138, 113,138, 113,138, 113,138, 113,138, 113,138, 113,138, 114,139, 114,139, 114,142,
+			114,145, 114,145, 114,146, 114,146, 114,149, 114,151, 114,151, 113,151, 113,151, 112,157, 112,155, 112,157, 111,157, 111,158, 110,158, 110,158, 108,159, 107,158, 106,158, 106,156, 106,156, 105,156, 105,156, 105,155, 105,155, 105,155, 105,155, 104,153, 103,152, 103,151, 103,151, 103,150, 103,150, 102,150, 102,149, 102,149,
+			102,147, 102,147, 102,146, 101,146, 101,145, 101,145, 101,145, 101,144, 100,144, 100,144, 100,144, 99,144, 99,143, 99,143, 99,143, 97,142, 97,142, 97,142, 96,141, 95,140, 95,140, 95,140, 93,140, 93,139, 93,139, 92,137, 92,136, 92,136, 91,135, 91,135, 91,134, 90,134, 90,133, 90,133, 90,133, 90,133, 90,132, 90,132, 90,132,
+			90,132, 90,131, 89,131, 89,131, 88,131, 88,130, 87,130, 87,130, 83,130, 82,130, 82,131, 82,131, 82,131, 82,132, 81,132, 79,132, 77,131, 76,131, 75,131, 74,131, 73,131, 73,131, 73,131, 73,132, 72,132, 72,132, 72,132, 72,132, 72,131, 71,131, 71,131, 71,130, 71,130, 70,130, 70,129, 68,128, 66,128, 66,128, 66,127, 65,127, 64,127,
+			64,127, 63,127, 63,125, 63,125, 63,124, 63,124, 63,123, 62,123, 62,123, 62,123, 62,122, 62,122, 62,122, 62,122, 61,122, 61,122, 61,122, 61,122, 60,122, 60,122, 57,123, 55,122, 55,119, 55,119, 56,116, 57,116, 57,114, 57,114, 57,114, 57,114, 58,113, 60,113, 60,112, 64,112, 64,111, 65,111, 65,111, 64,111, 64,110, 64,110, 64,108,
+			64,109, 64,108, 63,107, 62,106, 61,105, 61,101, 61,101, 61,101, 61,100, 61,100, 62,100, 62,100, 63,99, 63,98, 63,98, 63,96, 63,94, 62,93, 62,93, 61,92, 61,91, 61,91, 61,90, 60,90, 60,89, 60,89, 60,87, 60,87, 61,82, 61,82, 61,81" title="Botón Catamarca" href="#/" onclick="javascript:mostrarAJAX('CATAMARCA'); return false;" onkeypress="javascript:mostrarAJAX('CATAMARCA'); return false;" alt="catamarca">
+			<area data-maphilight='{"groupBy":".salta"}' class="salta" shape="poly" alt="" coords="135,90, 151,72, 151,68, 151,43, 144,36, 128,36, 123,46, 123,46, 122,46, 122,46, 122,46, 122,46, 122,46, 121,46, 121,46, 121,46, 121,45, 121,45, 121,45, 121,44, 121,44, 121,44, 120,44, 120,42, 120,41, 119,41, 119,40, 119,40, 118,40, 118,39, 118,39, 117,39, 117,38,
+			117,38, 115,37, 116,38,
+			115,37, 115,37, 114,37, 114,37, 114,37, 114,37, 113,37, 113,37, 111,36, 111,36, 110,36, 110,36, 109,36, 109,36, 108,36, 108,36, 108,37, 108,38, 109,38, 108,41, 108,41, 108,42, 108,43, 108,43, 108,43, 107,44, 107,45, 108,46, 108,46, 108,46, 108,48, 108,48, 108,50, 108,50, 109,50, 109,50, 109,50, 110,50, 111,51, 111,51, 111,51,
+			111,51, 111,51, 112,55, 112,56, 112,57, 113,57, 113,57, 113,58, 113,58, 114,58, 114,58, 116,58, 117,58, 117,58, 117,58, 117,58, 119,59, 119,59, 120,60, 121,59, 121,59, 121,58, 122,58, 122,57, 124,57, 125,58, 125,71, 122,72, 122,72, 122,72, 122,72, 121,73, 121,73, 120,73, 120,73, 120,73, 120,73, 119,73, 119,74, 118,74, 118,74,
+			118,74, 116,74, 116,74, 116,74, 115,73, 114,73, 114,73, 114,73, 114,74, 113,74, 113,74, 112,74, 111,74, 110,74, 110,73, 109,73, 109,73, 108,73, 105,72, 105,72, 105,72, 104,72, 104,71, 103,71, 103,71, 103,71, 103,70, 102,69, 102,69, 102,69, 102,69, 102,68, 102,68, 101,67, 101,67, 101,67, 101,67, 101,67, 101,66, 100,66, 100,66,
+			100,66, 100,66, 100,66, 100,66, 100,66, 97,65, 97,65, 97,65, 97,64, 97,64, 97,61, 97,61, 97,61, 97,61, 98,60, 98,60, 98,58, 98,58, 98,58, 97,57, 97,57, 97,57, 97,57, 97,57, 97,56, 97,56, 93,56, 92,56, 92,56, 92,59, 92,67, 91,68, 91,68, 91,68, 91,68, 88,68, 88,68, 88,68, 86,67, 86,67, 84,66, 85,66, 84,66, 84,66, 84,65, 84,65,
+			84,65, 83,64, 83,64, 83,64, 82,64, 82,63, 81,63, 81,63, 81,63, 80,62, 80,61, 80,61, 79,61, 79,61, 79,61, 79,61, 79,60, 79,60, 78,60, 78,63, 78,63, 78,65, 78,66, 78,66, 75,68, 71,69, 68,70, 68,70, 67,70, 67,70, 67,70, 67,71, 66,71, 65,72, 63,72, 63,73, 62,73, 62,73, 62,73, 62,74, 62,74, 62,74, 61,75, 61,75, 61,75, 59,77,
+			59,77, 59,78, 59,78, 59,78, 59,78, 60,79, 60,79, 60,79, 61,79, 61,79, 61,80, 61,80, 61,80, 61,80, 61,81, 62,81, 62,81, 63,82, 63,83, 63,83, 63,83, 63,83, 64,83, 64,83, 64,83, 64,84, 64,84, 65,84, 65,84, 65,84, 65,84, 65,84, 66,84, 69,84, 69,85, 69,85, 69,85, 70,85, 70,85, 90,85, 90,90, 89,90, 87,91, 87,91, 86,91, 86,91,
+			86,91, 86,91, 86,92, 86,93, 86,93, 86,94, 86,94, 86,94, 86,95, 86,95, 87,95, 87,96, 87,96, 88,96, 88,97, 88,98, 89,98, 89,98, 90,98, 90,99, 90,99, 90,99, 90,99, 90,99, 90,100, 91,100, 91,100, 91,101, 91,101, 91,101, 92,101, 92,101, 92,101, 92,101, 92,101, 92,101, 93,101, 93,101, 93,100, 93,100, 94,99, 94,99, 94,99, 94,99,
+			94,99, 94,98, 95,98, 96,98, 96,98, 96,98, 96,98, 97,99, 97,99, 97,99, 98,99, 98,99, 98,99, 100,100, 101,101, 101,101, 101,99, 102,98, 102,97, 102,97, 102,97, 103,97, 108,97, 109,99, 109,99, 110,99, 111,99, 112,99, 112,99, 113,100, 114,100, 115,99, 119,99, 120,100, 120,99, 120,99, 120,99, 121,98, 121,98, 121,97, 121,97,
+			121,97,
+			121,97, 121,95, 121,93, 122,93, 122,93, 122,92, 122,92, 122,92, 122,92, 122,91, 123,91, 123,91, 125,91, 126,91, 126,91, 126,91, 135,90" title="Botón Salta" href="#/" onclick="javascript:mostrarAJAX('SALTA'); return false;" onkeypress="javascript:mostrarAJAX('SALTA'); return false;" alt="salta">
+			<area data-maphilight='{"groupBy":".chaco"}' class="chaco" shape="poly" alt="" coords="207,113, 207,114, 206,114, 206,113, 206,113, 206,113, 206,113, 206,113, 206,113, 205,112, 205,112, 205,112, 204,111, 203,111, 203,111, 203,111, 203,111, 203,111, 203,111, 203,110, 202,110, 202,110, 202,109, 202,109, 201,109, 201,109, 201,109, 201,109, 200,108, 199,107,
+			199,107, 199,106,
+			198,106, 198,106, 198,106, 198,106, 196,105, 194,105, 194,105, 192,105, 192,105, 192,105, 192,103, 191,103, 191,102, 191,102, 191,102, 190,102, 190,102, 188,102, 188,101, 188,101, 188,100, 188,100, 188,99, 188,99, 188,98, 187,98, 187,98, 187,97, 187,97, 186,97, 186,96, 185,96, 185,96, 185,96, 184,95, 183,94, 183,94, 183,94,
+			182,94, 182,94, 181,94, 181,94, 181,93, 181,93, 181,93, 180,91, 180,91, 180,90, 180,90, 179,89, 179,89, 179,88, 178,88, 177,87, 177,87, 176,86, 176,86, 176,86, 176,86, 174,86, 173,85, 173,85, 172,84, 172,84, 172,84, 172,84, 171,83, 171,83, 170,82, 170,82, 170,82, 169,82, 169,82, 169,81, 169,81, 169,81, 168,81, 168,80, 168,80,
+			168,80, 168,80, 167,79, 167,79, 167,78, 166,78, 166,78, 166,78, 166,78, 163,77, 162,77, 162,76, 162,75, 161,75, 160,75, 160,75, 160,74, 158,73, 158,73, 157,73, 157,73, 156,72, 156,72, 156,72, 156,72, 156,71, 155,71, 155,71, 154,71, 154,70, 153,70, 153,70, 152,70, 152,70, 151,70, 151,69, 151,69, 151,69, 151,68, 151,72, 135,91,
+			160,92, 160,128, 200,128, 199,123, 199,123, 200,122, 200,122, 200,122, 200,122, 200,122, 200,122, 200,121, 200,121, 200,121, 201,121, 201,120, 201,120, 201,120, 201,120, 202,119, 202,119, 202,119, 203,118, 203,118, 203,118, 204,116, 204,115, 204,115, 204,115, 207,114, 207,114, 207,114, 207,114, 207,114, 207,114, 207,114,
+			207,114, 207,113" title="Botón Chaco" href="#/" onclick="javascript:mostrarAJAX('CHACO');return false;" onkeypress="javascript:mostrarAJAX('CHACO');return false;" alt="chaco">
+			</map>
+		</div>
+	</div>
+
+	<div id="listaScrollMapa" class="col-xs-12 col-sm-12 col-md-4"> 
+		<div id="resultadoMapa" class="scrollDiv"> </div>
+	</div>
+
+	<div style="display:none;margin-top:3em;" class="col-xs-12 col-sm-12 col-md-3 resultadoDipSlide"> 								
+		<span class="caret-right"> </span>
+		<div  class="cajaSombraDer resultadoDiputadoAjax" id="resultadoAJAX"></div>
+	</div>
+
+
+
+
+<script>
+
+$( document ).ready(function() {
+    console.log( "ready!" );
+	$.fn.maphilight.defaults = {
+	fill: true,
+	fillColor: '81a9e1',
+	fillOpacity: 1,
+	stroke: true,
+	strokeColor: '81a9e1',
+	strokeOpacity: 1,
+	strokeWidth: 1,
+	fade: false,
+	alwaysOn: false,
+	neverOn: false,
+	groupBy: ("tf",true),
+	wrapClass: true,
+	shadow: false,
+	shadowX: 0,
+	shadowY: 0,
+	shadowRadius: 6,
+	shadowColor: '81a9e1',
+	shadowOpacity: 0.8,
+	shadowPosition: 'outside',
+	shadowFrom: false
+}
+$('img[usemap]').maphilight();
+});
+ 
+
+</script>
+</section></div><input type="hidden" 
+                               data-cssid="09f9c8b8-3130-11ee-bbcb-005056894ace-sgrowcolumn_n1" />
+
+                        </div>
+                    <input type="hidden"  data-cssid="sgrow_n09f9c8b8-3130-11ee-bbcb-005056894ace" />
+                </div>
+
+                
+
+
+
+
+
+
+
+    
+    
+    
+
+    <div class="cms_container-ambito">
+        
+        
+    </div>
+</div>
+
+                </div><input type="hidden" 
+                               data-cssid="sgsection-fce2a5ce-312f-11ee-bbcb-005056894ace-sgsectioncolumn_n1" />
+
+                        
+
+
+
+
+
+
+
+    
+    
+    
+
+    <div class="cms_container-ambito">
+        
+        
+    </div>
+</div>
+                    <input type="hidden" 
+                       data-cssid="sgsection-fce2a5ce-312f-11ee-bbcb-005056894ace"  />
+
+                </div>
+
+                
+
+
+
+
+
+
+
+    
+    
+    
+
+    <div class="cms_container-ambito">
+        
+        
+    </div>
+</div>
+            </div>
+<script src="/export/system/modules/ar.gob.hcdn.base/resources/js/frontend.js"></script>
+<script src="/export/system/modules/ar.gob.hcdn.grid/resources/js/grid.js"></script><script>
+							$(document).ready(function () {
+								$('#pagina').formacionSAGA();
+							});
+						</script>
+					</section>
+				</main>
+				
+				
+			
+
+
+
+
+
+<footer>
+	
+	
+
+	<div class="wrapper-footer container-xl">
+		<div class="row">
+			<div class="col-12 col-lg-3 col-redes">
+				<div class="titfooter"><a>SEGUINOS EN</a></div>
+				<nav class="navbar navbar-expand-lg">
+					<ul class="navbar-nav" id="nav2">
+				<li class="nav-item"><a class="nav-link" aria-current="page" aria-label="facebook.com" href="https://www.facebook.com/Diputados.Argentina" target="_blank"><i class="fa-brands fa-facebook-f"></i></a></li>
+				<li class="nav-item"><a class="nav-link" aria-current="page" aria-label="twiter.com" href="https://twitter.com/DiputadosAR" target="_blank"><i class="fa-brands fa-x-twitter"></i></a></li>
+				<li class="nav-item"><a class="nav-link" aria-current="page" aria-label="youtube.com" href="https://www.youtube.com/channel/UC5KfW9_wv4tqbIPgY8tMG-w/featured" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
+				<li class="nav-item"><a class="nav-link" aria-current="page" aria-label="instagram.com" href="https://www.instagram.com/diputados.argentina" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+				<li class="nav-item"><a class="nav-link" aria-current="page" aria-label="tiktok.com" href="https://www.tiktok.com/@diputadosargentina" target="_blank"><i class="fa-brands fa-tiktok"></i></a></li> 
+				
+				<!--
+				<li class="nav-item dropdown buscador">
+					<a class="nav-link dropdown-toggle" data-bs-auto-close="outside" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Buscador
+				  	</a>
+				  	<ul class="dropdown-menu">
+						<li>
+							<form  method="post" class="d-flex" role="search">
+								<div class="input-group busquedaPortada">
+								  <input class="form-control me-2"  aria-label="Buscar" title="buscador" type="text" placeholder="Buscar..." name="query">
+								  <span>
+								        <button type="submit"  action="/results.html"> <i class="fa-solid fa-magnifying-glass"></i></button>
+								  </span>
+								</div>
+								
+								<input type="hidden" name="index" value="Buscador - Todo el Sitio">
+							</form>
+						</li>
+					</ul>
+				</li>
+				-->
+			</ul>
+
+	
+				</nav>
+			</div>
+			
+			<div class="d-none d-md-block col-md-12 col-lg-9">
+				<div class="row">
+						<div class="col-4">
+							<ul>
+							<ul>
+							<li class="nav-item dropdown"><a id="navbarDropdown" class="nav-link dropdown-toggle" title="Institucional" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Institucional </a>
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<li><a class="dropdown-item" title="La Cámara" href="/institucional/autoridades/index.html">Autoridades</a></li>
+							<li><a class="dropdown-item" title="La Cámara" href="/institucional/reglamento/presentacion.html">La Cámara</a></li>
+							<li><a class="dropdown-item" title="congreso" href="https://www.congreso.gob.ar/constitucionNacional.php" target="_blank" rel="noopener">Constitución Nacional</a></li>
+							<li><a class="dropdown-item" title="congreso" href="https://www.congreso.gob.ar/constitucionesProvinciales.php" target="_blank" rel="noopener">Constituciones Provinciales</a></li>
+							<li><a class="dropdown-item" title="diplomacia parlamentaria" href="/diplomacia_parlamentaria/index.html">Diplomacia Parlamentaria</a></li>
+							<li><a class="dropdown-item" href="/institucional/cuidadoPatrimonio/index.html">Cuidado del Patrimonio</a></li>
+							<li><a class="dropdown-item" title="prensa" href="/prensa/index.html">Prensa</a></li>
+							</ul>
+							</li>
+							<li class="nav-item dropdown"><a id="navbarDropdown" class="nav-link " href="/institucional/transparencia/"> Transparencia</a></li>
+							
+							
+							<li class="nav-item dropdown"><a id="navbarDropdown" class="nav-link link-interno" href="https://www2.hcdn.gob.ar/secparl/dmuseo/archivo-Parlamentario/principal.html">Archivo Parlamentario</a></li>
+							
+							</ul>
+							</ul>
+							</div>
+							<div class="col-4" style="display: grid; justify-content: center;">
+							<ul>
+							<li class="nav-item dropdown"><a id="navbarDropdown" class="nav-link " href="/diputados/"> Diputados </a></li>
+							<li class="nav-item dropdown"><a id="navbarDropdown" class="nav-link" href="/proyectos/"> Proyectos </a></li>
+							<li class="nav-item dropdown"><a id="navbarDropdown" class="nav-link" href="/comisiones/"> Comisiones </a></li>
+							<li class="nav-item dropdown"><a id="navbarDropdown" class="nav-link" href="/sesiones/"> Sesiones </a></li>
+							</ul>
+							</div>
+							<div class="col-4" style="display: grid; justify-content: end;">
+							<ul>
+							<li class="nav-item dropdown"><a class="nav-link" href="/prensa/">Últimas Noticias</a></li>
+							<li class="nav-item dropdown"><a class="nav-link" href="/comisiones/agenda/">Agenda Parlamentaria</a></li>
+							<li class="nav-item dropdown"><a id="navbarDropdown" class="nav-link dropdown-toggle" role="button" href="#" data-bs-toggle="dropdown" aria-expanded="false"> Sitios de Interés </a>
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<li><a class="dropdown-item" href="https://dtv.hcdn.gob.ar/">Diputados TV</a></li>
+							<li><a class="dropdown-item" href="https://www.congreso.gob.ar/">Congreso de la Nación</a></li>
+							<li><a class="dropdown-item" href="http://icn.gob.ar/">Imprenta del Congreso</a></li>
+							<li><a class="dropdown-item" href="http://www.bcnbib.gov.ar/">Biblioteca del Congreso</a></li>
+							<li><a class="dropdown-item" href="http://www.senado.gov.ar/">Senado</a></li>
+							<li><a class="dropdown-item" href="http://delmolino.gob.ar/">Edificio del Molino</a></li>
+							<li><a class="dropdown-item" href="https://www.opc.gob.ar">Oficina de Presupuesto del Congreso</a></li>
+							</ul>
+							</li>
+							<li class="nav-item dropdown"><a class="nav-link " href="/contacto.html">Contacto</a></li>
+							</ul>
+							</div>
+
+					</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12  mt-4">
+				
+                	
+					
+						
+					
+            	
+            	
+				<img class=" logoPie d-block mx-auto " src="/export/system/modules/ar.gob.hcdn.base/resources/img/logo-hcdn-blanco.svg" alt="Logo de la Honorable Cámara de Diputados de la Nacion Argentina"/>
+			</div>
+			<div class="col-12 mt-4">
+				<p class="text-center"><strong>Honorable Cámara de Diputados de la Nación Argentina</strong> | Congreso de la Nación Argentina <br/> 
+				Av. Rivadavia 1864 - Ciudad Autónoma de Bs. As. (C.P.C1033AAV) | + 54 11 6075-0000 <br/>
+				Nota: La información contenida en este sitio es de dominio público y puede ser utilizada libremente. Se solicita citar la fuente.</p> 
+			</div>
+		</div>
+	</div>
+</footer>
+
+
+<script src="/export/system/modules/ar.gob.hcdn.base/resources/vendor/js/bootstrap.bundle.min.js"  ></script>
+			<script src="/export/system/modules/ar.gob.hcdn.base/resources/vendor/js/video.min.js"></script>
+			<script src="/export/system/modules/ar.gob.hcdn.base/resources/vendor/slick/js/slick.min.js"></script>
+		</body>
+    </html>

@@ -233,6 +233,9 @@ export interface Funcionario {
   nombre: string;
   /** Aclaración publicada junto al nombre (suspensión, licencia). */
   nota: string | null;
+  /** Miniatura de la foto oficial y organismo que la publica. */
+  foto: string | null;
+  fotoCredito: string | null;
   cargo: string;
   grupo: GrupoFuncionario;
   organismo: string;

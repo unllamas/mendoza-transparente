@@ -132,9 +132,7 @@ function Lista({ titulo, personas, onOpen }: { titulo: string; personas: Funcion
               onClick={() => onOpen(p)}
               className="group flex w-full items-center gap-4 px-4 py-3 text-left hover:bg-grid/50 sm:px-5"
             >
-              <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-grid text-xs font-medium text-ink-2" aria-hidden>
-                {iniciales(p.nombre)}
-              </span>
+              <Avatar persona={p} className="size-10 text-xs" />
               <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                 <span className="truncate font-medium group-hover:text-link">{p.nombre}</span>
                 <span className="truncate text-sm text-ink-muted">{subtitulo(p)}</span>
@@ -151,6 +149,27 @@ function Lista({ titulo, personas, onOpen }: { titulo: string; personas: Funcion
   );
 }
 
+/** Foto oficial si existe; si no, las iniciales. */
+function Avatar({ persona: p, className }: { persona: Funcionario; className: string }) {
+  const [error, setError] = useState(false);
+  if (p.foto && !error) {
+    return (
+      <img
+        src={p.foto}
+        alt=""
+        loading="lazy"
+        onError={() => setError(true)}
+        className={`shrink-0 rounded-full bg-grid object-cover ${className}`}
+      />
+    );
+  }
+  return (
+    <span className={`flex shrink-0 items-center justify-center rounded-full bg-grid font-medium text-ink-2 ${className}`} aria-hidden>
+      {iniciales(p.nombre)}
+    </span>
+  );
+}
+
 const iniciales = (nombre: string) =>
   nombre
     .split(/\s+/)
@@ -164,9 +183,7 @@ function FichaSheet({ persona: p, onClose }: { persona: Funcionario; onClose: ()
   return (
     <Sheet titulo="Ficha" onClose={onClose}>
       <div className="flex items-center gap-3">
-        <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-grid font-medium text-ink-2" aria-hidden>
-          {iniciales(p.nombre)}
-        </span>
+        <Avatar persona={p} className="size-16 text-base" />
         <div className="flex min-w-0 flex-col gap-0.5">
           <h3 className="text-xl font-semibold tracking-tight text-balance">{p.nombre}</h3>
           <span className="text-sm text-ink-2">{p.cargo}</span>
@@ -217,9 +234,11 @@ function FichaSheet({ persona: p, onClose }: { persona: Funcionario; onClose: ()
 
       <Declaracion persona={p} />
 
-      <p className="flex items-center gap-2 text-sm text-ink-muted">
-        <Vote className="size-4 shrink-0" aria-hidden /> Próximamente: los proyectos que presentó y cómo votó.
-      </p>
+      {/diputados|senado/.test(p.grupo) && (
+        <p className="flex items-center gap-2 text-sm text-ink-muted">
+          <Vote className="size-4 shrink-0" aria-hidden /> Próximamente: los proyectos que presentó y cómo votó.
+        </p>
+      )}
 
       <div className="flex flex-col gap-2 border-t border-line pt-4 text-sm">
         {p.email && (
@@ -232,6 +251,7 @@ function FichaSheet({ persona: p, onClose }: { persona: Funcionario; onClose: ()
             Perfil oficial <ExternalLink className="size-3.5" aria-hidden />
           </a>
         )}
+        {p.fotoCredito && <span className="text-xs text-ink-muted">Foto: {p.fotoCredito}</span>}
         <a href={p.fuenteUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-ink-muted hover:text-link hover:underline">
           <Landmark className="size-4" aria-hidden /> De dónde sale este dato <ExternalLink className="size-3.5" aria-hidden />
         </a>

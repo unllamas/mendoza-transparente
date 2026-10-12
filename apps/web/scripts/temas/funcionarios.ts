@@ -67,7 +67,9 @@ export function buildFuncionarios(
   eticaFuncionarios: CsvRow[] = [],
   declaraciones: CsvRow[] = [],
   correcciones: Correccion[] = [],
+  fotos: CsvRow[] = [],
 ): FuncionariosTema {
+  const fotoPorId = new Map(fotos.map((f) => [f.id!, f]));
   const ddjj = cruzarDeclaraciones(eticaFuncionarios, declaraciones);
   // Correcciones curadas (data/curado/correcciones.yaml): cuando dos fuentes oficiales no coinciden.
   const porId = new Map(correcciones.map((c) => [c.id, c]));
@@ -117,6 +119,8 @@ export function buildFuncionarios(
           grupo === "diputados_nacional" ? sueldo("Diputado") : grupo === "senado_nacional" ? sueldo("Senador") : [],
         // Los legisladores nacionales declaran ante la Oficina Anticorrupción, no ante Ética Pública de Mendoza.
         ddjj: grupo === "diputados_nacional" || grupo === "senado_nacional" ? null : ddjj(a.nombre!),
+        foto: null,
+        fotoCredito: null,
       };
     }),
     ...legisladores.map(
@@ -136,9 +140,17 @@ export function buildFuncionarios(
         fuenteUrl: l.fuente_url!,
         remuneracion: [],
         ddjj: ddjj(separarNota(l.nombre!).nombre),
+        foto: null,
+        fotoCredito: null,
       }),
     ),
   ];
+
+  for (const p of personas) {
+    const f = fotoPorId.get(p.id);
+    p.foto = f ? `/data/fotos/${f.foto}` : null;
+    p.fotoCredito = f?.credito ?? null;
+  }
 
   // El Ejecutivo va por jerarquía (gobernador, vice, ministros, resto); los demás grupos, por apellido.
   const rango = (p: Funcionario) =>

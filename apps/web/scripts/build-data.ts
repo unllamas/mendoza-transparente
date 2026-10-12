@@ -241,9 +241,17 @@ if (legisladores && autoridades) {
         existsSync(join(ROOT, "data", "curado", "correcciones.yaml"))
           ? (parseYaml(readFileSync(join(ROOT, "data", "curado", "correcciones.yaml"), "utf8")) as Correccion[])
           : [],
+        readTable("fotos", "fotos.csv") ?? [],
       ),
     ),
   );
+}
+
+// Fotos oficiales de funcionarios (miniaturas).
+const fotosDir = join(PROCESSED_DIR, "fotos");
+if (existsSync(fotosDir)) {
+  mkdirSync(join(OUT, "fotos"), { recursive: true });
+  for (const f of readdirSync(fotosDir).filter((f) => f.endsWith(".jpg"))) cpSync(join(fotosDir, f), join(OUT, "fotos", f));
 }
 
 // Contenido editorial: lo que el Estado no publica.

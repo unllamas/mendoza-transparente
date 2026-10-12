@@ -171,3 +171,13 @@
   frecuencia: eventual
   dificultad: media
   estado: activo
+
+- id: fotos
+  nombre: Fotos oficiales de funcionarios
+  organismo: Legislatura, Congreso de la Nación, Gobierno de Mendoza y municipios
+  url: https://www.hcdmza.gob.ar/site/
+  descripcion: Retratos publicados por cada organismo, para reconocer a quienes nos representan.
+  formato: jpg
+  frecuencia: eventual
+  dificultad: media
+  estado: activo
