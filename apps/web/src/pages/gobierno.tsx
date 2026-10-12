@@ -7,7 +7,7 @@ import { GOBIERNOS } from "../gobiernos.ts";
 import { FuentesOficiales } from "../fuente.tsx";
 import { formatDate, formatNumber } from "../lib.ts";
 import type { AgencyDetail, AgencySummary, GobiernoOverview } from "../types.ts";
-import { Aviso, Migas, PageHeader, Section, StatTile } from "./components.tsx";
+import { Aviso, Migas, PageHeader, PersonAvatar, Section, StatTile } from "./components.tsx";
 
 const SOURCES = ["lrf-personal", "etica-publica", "compras-ocds", "designaciones"];
 const listApi = getRouteApi("/gobierno");
@@ -81,6 +81,13 @@ export function GobiernoPage() {
 function AgencyRow({ agency: a }: { agency: AgencySummary }) {
   return (
     <Link to="/gobierno/$slug" params={{ slug: a.slug }} className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50 sm:px-5">
+      {a.head ? (
+        <PersonAvatar name={a.head.name} photo={a.head.photo} className="size-10 text-xs" />
+      ) : (
+        <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-grid" aria-hidden>
+          <Building2 className="size-4 text-ink-muted" />
+        </span>
+      )}
       <span className="flex min-w-0 flex-1 flex-col gap-0.5">
         <span className="truncate font-medium group-hover:text-link">{a.name}</span>
         <span className="truncate text-sm text-ink-muted">{a.head ? `${a.head.name} · ${a.head.role}` : "Conducción no informada"}</span>
@@ -225,6 +232,7 @@ export function AgencyPage() {
             {a.team.map((t) => {
               const content = (
                 <>
+                  <PersonAvatar name={t.name} photo={t.photo} className="size-10 text-xs" />
                   <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                     <span className={`truncate font-medium ${t.path ? "group-hover:text-link" : ""}`}>{t.name}</span>
                     <span className="truncate text-sm text-ink-muted">{t.role}</span>
@@ -260,6 +268,7 @@ export function AgencyPage() {
             {a.appointments.map((d) => (
               <li key={`${d.url}-${d.person}`}>
                 <a href={d.url} target="_blank" rel="noreferrer" className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50 sm:px-5">
+                  <PersonAvatar name={d.person} photo={d.photo} className="size-10 text-xs" />
                   <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                     <span className="truncate font-medium group-hover:text-link">{d.person}</span>
                     <span className="truncate text-sm text-ink-muted">{[ACTIONS[d.action] ?? d.action, d.role, d.unit].filter(Boolean).join(" · ")}</span>
@@ -325,6 +334,7 @@ const ACTIONS: Record<string, string> = {
 function HeadCard({ head }: { head: NonNullable<AgencyDetail["head"]> }) {
   const content = (
     <>
+      <PersonAvatar name={head.name} photo={head.photo} className="size-14 text-base" />
       <span className="flex min-w-0 flex-1 flex-col gap-0.5">
         <span className="text-sm text-ink-muted">Lo conduce</span>
         <span className={`truncate text-lg font-medium ${head.path ? "group-hover:text-link" : ""}`}>{head.name}</span>

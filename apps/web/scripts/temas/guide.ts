@@ -120,6 +120,10 @@ export function writeSearchIndex(paginas: Pagina[], outDir: string) {
     k: KIND_BY_PREFIX.find(([re]) => re.test(p.path))?.[1] ?? "Sección",
     d: short(p.description),
   }));
+  // People carry their photo, so results can show their face.
+  const officials = (JSON.parse(readFileSync(join(outDir, "temas", "funcionarios.json"), "utf8")) as FuncionariosTema).personas;
+  const photoByPath = new Map(officials.filter((o) => o.foto).map((o) => [`/funcionarios/${o.role}/${o.slug}`, o.foto!]));
+  for (const e of entries) if (photoByPath.has(e.p)) e.i = photoByPath.get(e.p);
   const paths = new Set(entries.map((e) => e.p));
   const suppliers = JSON.parse(readFileSync(join(outDir, "temas", "proveedores.json"), "utf8")) as ProveedorResumen[];
   for (const s of suppliers) {

@@ -8,8 +8,7 @@ import { FuentesOficiales } from "../fuente.tsx";
 import { formatNumber } from "../lib.ts";
 import { slug } from "../slug.ts";
 import type { MunicipioPagina } from "../types.ts";
-import { Aviso, Migas, PageHeader, Section, Segmented, StatTile } from "./components.tsx";
-import { Avatar } from "./funcionarios.tsx";
+import { Aviso, Migas, PageHeader, PersonAvatar, Section, Segmented, StatTile } from "./components.tsx";
 
 const SOURCES = ["hacienda-participacion-municipal", "poblacion", "autoridades", "legislatura"];
 const pesos = (v: number) => `$ ${formatNumber(Math.round(v))}`;
@@ -59,6 +58,7 @@ export function MunicipiosPage() {
             <li key={m.slug}>
               <Link to="/municipios/$slug" params={{ slug: m.slug }} className="group flex items-center gap-3 px-4 py-3 hover:bg-grid/50 sm:gap-4 sm:px-5">
                 <span className="w-5 shrink-0 text-right text-sm text-ink-muted tabular-nums">{i + 1}</span>
+                <PersonAvatar name={m.intendente?.nombre ?? m.nombre} photo={m.intendente?.foto} className="size-10 text-xs" />
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                   <span className="truncate font-medium group-hover:text-link">{m.nombre}</span>
                   <span className="truncate text-sm text-ink-muted">
@@ -124,7 +124,7 @@ export function MunicipioPage() {
               params={{ role: i.role, slug: i.slug }}
               className="group flex items-center gap-4 rounded-xl border border-line bg-surface p-4 hover:border-link"
             >
-              <Avatar persona={{ nombre: i.nombre, foto: i.foto } as never} className="size-14 text-base" />
+              <PersonAvatar name={i.nombre} photo={i.foto} className="size-14 text-base" />
               <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                 <span className="text-sm text-ink-muted">Intendente</span>
                 <span className="truncate text-lg font-medium group-hover:text-link">{i.nombre}</span>
@@ -167,7 +167,7 @@ export function MunicipioPage() {
             {m.legisladores.map((l) => (
               <li key={l.id}>
                 <Link to="/funcionarios/$role/$slug" params={{ role: l.role, slug: l.slug }} className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50">
-                  <Avatar persona={{ nombre: l.nombre, foto: l.foto } as never} className="size-10 text-xs" />
+                  <PersonAvatar name={l.nombre} photo={l.foto} className="size-10 text-xs" />
                   <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                     <span className="truncate font-medium group-hover:text-link">{l.nombre}</span>
                     <span className="truncate text-sm text-ink-muted">{[l.cargo, l.bloque].filter(Boolean).join(" · ")}</span>

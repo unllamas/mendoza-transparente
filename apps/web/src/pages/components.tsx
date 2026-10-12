@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft, ChevronRight, Info, Search, type LucideIcon, TriangleAlert, X } from "lucide-react";
-import { type ReactNode, useEffect } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 
 import { track } from "../analytics.ts";
 
@@ -276,3 +276,35 @@ export function Buscador({ value, onChange, placeholder, label }: { value: strin
 }
 
 export const normalizar = (s: string) => s.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
+
+/**
+ * Face of a person: their official photo, or their initials until we have one. Every mention of a person in
+ * the site uses it, so people can be recognized at a glance.
+ */
+export function PersonAvatar({ name, photo, className }: { name: string; photo: string | null | undefined; className: string }) {
+  const [error, setError] = useState(false);
+  if (photo && !error) {
+    return (
+      <img
+        src={photo}
+        alt=""
+        loading="lazy"
+        onError={() => setError(true)}
+        className={`shrink-0 rounded-full bg-grid object-cover ${className}`}
+      />
+    );
+  }
+  return (
+    <span className={`flex shrink-0 items-center justify-center rounded-full bg-grid font-medium text-ink-2 ${className}`} aria-hidden>
+      {initials(name)}
+    </span>
+  );
+}
+
+const initials = (name: string) =>
+  name
+    .split(/\s+/)
+    .filter((w) => /^\p{L}/u.test(w) && !/^(de|del|la|las|los|y)$/i.test(w))
+    .slice(0, 2)
+    .map((w) => w[0]!.toUpperCase())
+    .join("");

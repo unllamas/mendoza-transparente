@@ -401,6 +401,8 @@ export interface LeyDetalle extends LeyResumen {
   resumen: { texto: string; puntos: string[] } | null;
   bloques: LeyBloque[];
   cierre: LeyCierre | null;
+  /** Who signed it, with photo and page when they are officials. */
+  signers: { name: string; photo: string | null; path: string | null }[];
 }
 
 // ------------------------------------------------------------------ Gobierno por dentro (/gobierno)
@@ -417,7 +419,7 @@ export interface AgencySummary {
   staffPeriod: string | null;
   /** Personnel cost of the last complete year, in pesos of `realReference`. */
   annualCostReal: number | null;
-  head: { name: string; role: string; path: string | null } | null;
+  head: { name: string; role: string; path: string | null; photo: string | null } | null;
 }
 
 export interface AgencyDetail extends AgencySummary {
@@ -443,7 +445,7 @@ export interface AgencyDetail extends AgencySummary {
   /** Sub-units reported separately in the annex (hospitals, DGE…). */
   units: { name: string; staff: number; contracts: number }[];
   /** People with a declaration obligation at Ética Pública, active, ranked by hierarchy. */
-  team: { name: string; role: string; since: string | null; path: string | null }[];
+  team: { name: string; role: string; since: string | null; path: string | null; photo: string | null }[];
   teamTotal: number;
   purchases: {
     processes: number;
@@ -453,7 +455,7 @@ export interface AgencyDetail extends AgencySummary {
     topSuppliers: { name: string; amount: number; slug: string | null }[];
     buyers: { slug: string; name: string; processes: number }[];
   } | null;
-  appointments: { date: string; action: string; person: string; role: string; unit: string; url: string }[];
+  appointments: { date: string; action: string; person: string; role: string; unit: string; url: string; photo: string | null }[];
   /** Occupied positions in each year's budget law (planilla 8.2) and unfilled ones (8.6, since 2022). */
   budget: { year: number; positions: number; vacancies: number | null; project: boolean }[];
 }
@@ -498,4 +500,6 @@ export interface SearchEntry {
   k: string;
   /** Short description. */
   d: string;
+  /** Photo, for people. */
+  i?: string;
 }

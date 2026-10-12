@@ -214,7 +214,20 @@ export function buildOrganismosYProveedores(
 
 const numeroLey = (n: string) => n.replace(/\D/g, "");
 
-export function buildLeyes(normas: CsvRow[], textosDir: string, outDir: string, resumenes: ResumenLey[]): LeyResumen[] {
+/** "Hebe Casado" and "Hebe Silvina Casado" are the same person: every word of the shorter name is in the longer one. */
+function samePerson(a: string, b: string): boolean {
+  const words = (s: string) => s.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase().split(/[^a-z]+/).filter(Boolean);
+  const [x, y] = [words(a), words(b)].sort((p, q) => p.length - q.length);
+  return x!.length >= 2 && x!.every((w) => y!.includes(w));
+}
+
+export function buildLeyes(
+  normas: CsvRow[],
+  textosDir: string,
+  outDir: string,
+  resumenes: ResumenLey[],
+  officials: FuncionariosTema["personas"] = [],
+): LeyResumen[] {
   mkdirSync(join(outDir, "leyes"), { recursive: true });
   const curado = new Map(resumenes.map((r) => [String(r.numero), r]));
   const vistas = new Set<string>();
@@ -237,9 +250,15 @@ export function buildLeyes(normas: CsvRow[], textosDir: string, outDir: string, 
       urlPdf: n.url_pdf || null,
     };
     leyes.push(resumen);
+    // Signers with their face and page when they are officials (vice governor, chamber presidents…).
+    const signers = (estructura.cierre?.firmantes ?? []).map((name) => {
+      const o = officials.find((p) => samePerson(name, p.nombre));
+      return { name, photo: o?.foto ?? null, path: o ? `/funcionarios/${o.role}/${o.slug}` : null };
+    });
     const detalle: LeyDetalle = {
       ...resumen,
       ...estructura,
+      signers,
       resumen: r ? { texto: r.resumen, puntos: r.puntos ?? [] } : null,
     };
     writeFileSync(join(outDir, "leyes", `${numero}.json`), JSON.stringify(detalle));

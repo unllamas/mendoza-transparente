@@ -8,7 +8,7 @@ import { formatDate, formatNumber } from "../lib.ts";
 import { FuentesOficiales } from "../fuente.tsx";
 import { ROLES, roleBySlug } from "../slug.ts";
 import type { Funcionario, FuncionariosTema, GrupoFuncionario } from "../types.ts";
-import { Aviso, Migas, PageHeader, Segmented } from "./components.tsx";
+import { Aviso, Migas, PageHeader, PersonAvatar, Segmented } from "./components.tsx";
 
 const route = getRouteApi("/funcionarios");
 const routeFicha = getRouteApi("/funcionarios/$role/$slug");
@@ -157,33 +157,9 @@ function Lista({ titulo, personas, role }: { titulo: string; personas: Funcionar
 }
 
 /** Foto oficial si existe; si no, las iniciales. */
-export function Avatar({ persona: p, className }: { persona: Funcionario; className: string }) {
-  const [error, setError] = useState(false);
-  if (p.foto && !error) {
-    return (
-      <img
-        src={p.foto}
-        alt=""
-        loading="lazy"
-        onError={() => setError(true)}
-        className={`shrink-0 rounded-full bg-grid object-cover ${className}`}
-      />
-    );
-  }
-  return (
-    <span className={`flex shrink-0 items-center justify-center rounded-full bg-grid font-medium text-ink-2 ${className}`} aria-hidden>
-      {iniciales(p.nombre)}
-    </span>
-  );
+export function Avatar({ persona: p, className }: { persona: Pick<Funcionario, "nombre" | "foto">; className: string }) {
+  return <PersonAvatar name={p.nombre} photo={p.foto} className={className} />;
 }
-
-const iniciales = (nombre: string) =>
-  nombre
-    .split(/\s+/)
-    .filter((w) => /^\p{Lu}/u.test(w))
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join("");
 
 /** Página de un cargo: `/funcionarios/diputados-provinciales`. */
 export function RolePage() {

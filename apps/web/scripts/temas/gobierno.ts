@@ -79,6 +79,12 @@ function rank(role: string): number {
 
 const quarterKey = (r: Row) => `${r.anio}-T${r.trimestre}`;
 
+/** "María Mercedes Rus" and "Mercedes Rus" are the same person: every word of the shorter name is in the longer one. */
+function samePerson(a: string, b: string): boolean {
+  const [x, y] = [normalize(a).split(" "), normalize(b).split(" ")].sort((p, q) => p.length - q.length);
+  return x!.length >= 2 && x!.every((w) => y!.includes(w));
+}
+
 /** Budget/purchase code prefixes of an agency: purchase prefixes ("1-08-") plus full unit codes ("2-05-02"). */
 function prefixesFor(o: CuratedAgency): Set<string> {
   const out = new Set(o.alias?.prefijos_compras ?? []);
@@ -98,11 +104,15 @@ export function buildGobierno(
   appointments: Row[],
   budgetPositions: Row[],
   budgetVacancies: Row[],
+  photoRows: Row[],
   inflation: Deflactor | null,
   outDir: string,
 ): AgencySummary[] {
   mkdirSync(join(outDir, "gobierno"), { recursive: true });
   const byId = new Map(table.organismos.map((o) => [o.id, o]));
+  const allExecutives = funcionarios.personas.filter((p) => p.grupo === "ejecutivo");
+  // Official photos of people outside the officials page (heads of agencies), keyed "etica-<official_id>".
+  const photos = new Map(photoRows.filter((r) => r.id?.startsWith("etica-")).map((r) => [r.id!, `/data/fotos/${r.foto}`]));
   const supplierSlug = new Map(suppliers.filter((p) => p.indexable).map((p) => [p.cuit, p.slug]));
   const adjByOcid = new Map<string, Row[]>();
   for (const a of adjudicaciones) adjByOcid.set(a.ocid!, [...(adjByOcid.get(a.ocid!) ?? []), a]);
@@ -188,25 +198,34 @@ export function buildGobierno(
     // Leadership: Executive officials from the officials page, plus Ética Pública declarants.
     const executives = funcionarios.personas.filter((p) => p.grupo === "ejecutivo" && nameKeys.includes(normalize(p.organismo)));
     const reparticiones = new Set(o.alias?.etica_publica_reparticion ?? []);
-    const declarants = etica
-      .filter((r) => reparticiones.has(r.reparticion!) && !r.fecha_fin_cargo)
-      .map((r) => ({ name: properName(r.nombre!), role: sentence(r.cargo!), since: r.fecha_inicio_cargo || null, path: null as string | null }));
-    // Same person in both sources ("Rodolfo Marcial Montero" / "Rodolfo Montero"): first and last name match.
-    const nameKey = (n: string) => {
-      const w = normalize(n).split(" ");
-      return `${w[0]} ${w.at(-1)}`;
-    };
-    const execNames = new Set(executives.map((p) => nameKey(p.nombre)));
     const isoDate = (d: string | null) => (d && /^\d{4}-\d{2}-\d{2}/.test(d) ? d : null);
-    const team = [
-      ...executives.map((p) => {
-        const declared = declarants.find((d) => nameKey(d.name) === nameKey(p.nombre));
-        return { name: p.nombre, role: p.cargo, since: isoDate(declared?.since ?? p.mandatoDesde), path: `/funcionarios/${p.role}/${p.slug}` };
-      }),
-      ...declarants.filter((d) => !execNames.has(nameKey(d.name))),
-    ].sort((a, b) => rank(a.role) - rank(b.role) || a.name.localeCompare(b.name, "es"));
+    const team: AgencyDetail["team"] = executives.map((p) => {
+      const declared = etica.find((r) => reparticiones.has(r.reparticion!) && !r.fecha_fin_cargo && samePerson(r.nombre!, p.nombre));
+      return {
+        name: p.nombre,
+        role: p.cargo,
+        since: isoDate(declared?.fecha_inicio_cargo || p.mandatoDesde),
+        path: `/funcionarios/${p.role}/${p.slug}`,
+        photo: p.foto,
+      };
+    });
+    for (const r of etica) {
+      if (!reparticiones.has(r.reparticion!) || r.fecha_fin_cargo) continue;
+      // Someone who heads another agency (the governor declares under a ministry) is listed there, not here.
+      const exec = allExecutives.find((p) => samePerson(r.nombre!, p.nombre));
+      if (exec) continue;
+      team.push({
+        name: properName(r.nombre!),
+        role: sentence(r.cargo!),
+        since: r.fecha_inicio_cargo || null,
+        path: null,
+        photo: photos.get(`etica-${r.official_id}`) ?? null,
+      });
+    }
+    // Hierarchy first; on a tie, people with their own page (and photo) go first.
+    team.sort((x, y) => rank(x.role) - rank(y.role) || Number(!x.path) - Number(!y.path) || x.name.localeCompare(y.name, "es"));
     // The head is the top-ranked person only if their role is a leadership one (not an adviser or clerk).
-    const head = team[0] && rank(team[0].role) <= 4 ? { name: team[0].name, role: team[0].role, path: team[0].path } : null;
+    const head = team[0] && rank(team[0].role) <= 4 ? { name: team[0].name, role: team[0].role, path: team[0].path, photo: team[0].photo } : null;
 
     // Purchases by budget code prefix ("1-08-")
     const prefixes = o.alias?.prefijos_compras ?? [];
@@ -250,6 +269,7 @@ export function buildGobierno(
         date: a.fecha_boletin!,
         action: a.modalidad || a.accion!,
         person: properName(a.persona!),
+        photo: funcionarios.personas.find((p) => samePerson(a.persona!, p.nombre))?.foto ?? null,
         role: a.cargo ? sentence(a.cargo) : "",
         unit: a.reparticion ? sentence(a.reparticion) : "",
         url: a.url_pdf!,

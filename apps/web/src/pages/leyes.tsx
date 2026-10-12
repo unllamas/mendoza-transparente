@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { FuentesOficiales } from "../fuente.tsx";
 import { formatDate } from "../lib.ts";
 import type { LeyDetalle } from "../types.ts";
-import { Buscador, Migas, normalizar, PageHeader } from "./components.tsx";
+import { Buscador, Migas, normalizar, PageHeader, PersonAvatar } from "./components.tsx";
 
 const listaRoute = getRouteApi("/leyes");
 const detalleRoute = getRouteApi("/leyes/$numero");
@@ -193,7 +193,32 @@ function TextoCompleto({ ley }: { ley: LeyDetalle }) {
         {ley.cierre && (
           <div className="flex flex-col gap-1 border-t border-line pt-4 text-sm text-ink-muted">
             <p>{ley.cierre.dada}</p>
-            {ley.cierre.firmantes.length > 0 && <p>Firman: {ley.cierre.firmantes.join(", ")}.</p>}
+            {ley.signers.length > 0 && (
+              <div className="flex flex-col gap-2 pt-1">
+                <span>Firman:</span>
+                <ul className="flex flex-wrap gap-2">
+                  {ley.signers.map((f) => {
+                    const chip = (
+                      <>
+                        <PersonAvatar name={f.name} photo={f.photo} className="size-7 text-[10px]" />
+                        <span className="whitespace-nowrap">{f.name}</span>
+                      </>
+                    );
+                    return (
+                      <li key={f.name}>
+                        {f.path ? (
+                          <Link to={f.path} className="inline-flex items-center gap-2 rounded-full border border-line py-1 pr-3 pl-1 text-ink hover:border-link hover:text-link">
+                            {chip}
+                          </Link>
+                        ) : (
+                          <span className="inline-flex items-center gap-2 rounded-full bg-grid/60 py-1 pr-3 pl-1 text-ink-2">{chip}</span>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
           </div>
         )}
       </div>

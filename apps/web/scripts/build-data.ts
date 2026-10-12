@@ -331,6 +331,7 @@ if (procesos && adjudicaciones) {
       readTable("designaciones", "designaciones.csv") ?? [],
       readTable("presupuesto-planta", "cargos.csv") ?? [],
       readTable("presupuesto-planta", "cargos_vacantes.csv") ?? [],
+      readTable("fotos", "fotos.csv") ?? [],
       deflactor(ipcNacional ?? []),
       join(OUT, "temas"),
     );
@@ -349,7 +350,13 @@ if (normasBoletin) {
   writeFileSync(
     join(OUT, "temas", "leyes.json"),
     JSON.stringify(
-      buildLeyes(normasBoletin, join(PROCESSED_DIR, "boletin-oficial", "textos"), join(OUT, "temas"), leerCurado<ResumenLey>("leyes.yaml")),
+      buildLeyes(
+        normasBoletin,
+        join(PROCESSED_DIR, "boletin-oficial", "textos"),
+        join(OUT, "temas"),
+        leerCurado<ResumenLey>("leyes.yaml"),
+        funcionariosTema?.personas ?? [],
+      ),
     ),
   );
 }
