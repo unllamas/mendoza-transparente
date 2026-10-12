@@ -16,6 +16,9 @@ export function Layout() {
           <Link to="/deuda" className="text-ink-2 hover:text-ink [&.active]:text-ink">
             Deuda
           </Link>
+          <Link to="/empleo-publico" className="text-ink-2 hover:text-ink [&.active]:text-ink">
+            Empleo público
+          </Link>
           <Link to="/fuentes" className="text-ink-2 hover:text-ink [&.active]:text-ink">
             Fuentes
           </Link>

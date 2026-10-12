@@ -12,6 +12,7 @@ import { parse as parseYaml } from "yaml";
 
 import type { DataIndex, DatasetMeta, Preview, SourceMeta } from "../src/types.ts";
 import { buildDeuda } from "./temas/deuda.ts";
+import { buildEmpleo } from "./temas/empleo.ts";
 
 const ROOT = join(import.meta.dir, "..", "..", "..");
 const RAW_DIR = join(ROOT, "data", "raw");
@@ -133,6 +134,9 @@ const stock = readTable("hacienda-deuda-stock", "deuda_stock.csv");
 if (trimestral && stock) {
   writeFileSync(join(OUT, "temas", "deuda.json"), JSON.stringify(buildDeuda(trimestral, stock, POBLACION_MENDOZA)));
 }
+
+const ocupacion = readTable("dnap-ocupacion", "ocupacion_salarios.csv");
+if (ocupacion) writeFileSync(join(OUT, "temas", "empleo.json"), JSON.stringify(buildEmpleo(ocupacion)));
 
 const index: DataIndex = { generatedAt: new Date().toISOString(), sources, datasets };
 writeFileSync(join(OUT, "index.json"), JSON.stringify(index));

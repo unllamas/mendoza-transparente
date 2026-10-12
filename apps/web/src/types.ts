@@ -59,3 +59,14 @@ export interface DeudaTema {
     vencimiento: string;
   }[];
 }
+
+export interface EmpleoTema {
+  anio: number;
+  plantaMendoza: number;
+  cadaMilMendoza: number;
+  /** Puesto de Mendoza ordenando de menos a más empleados cada mil habitantes. */
+  posicion: number;
+  promedioPais: number;
+  ranking: { provincia: string; cadaMil: number }[];
+  serie: { anio: number; cadaMil: number }[];
+}

@@ -5,6 +5,15 @@ import { Section, StatTile } from "./components.tsx";
 
 const route = getRouteApi("/");
 
+const TEMAS = [
+  { to: "/deuda", titulo: "¿Cuánto debe Mendoza?", bajada: "Deuda pública en dólares, por mandato, acreedor y moneda." },
+  {
+    to: "/empleo-publico",
+    titulo: "¿Cuántos empleados públicos tiene?",
+    bajada: "Empleados provinciales cada mil habitantes, comparado con las 24 jurisdicciones.",
+  },
+] as const;
+
 export function HomePage() {
   const { sources, datasets } = route.useLoaderData();
   const withData = sources.filter((s) => datasets.some((d) => d.source === s.id));
@@ -36,6 +45,21 @@ export function HomePage() {
           note={lastFetch ? `Última descarga: ${formatDate(lastFetch)}` : undefined}
         />
       </div>
+
+      <Section title="Temas">
+        <div className="grid gap-3 md:grid-cols-2">
+          {TEMAS.map((tema) => (
+            <Link
+              key={tema.to}
+              to={tema.to}
+              className="flex flex-col gap-1 rounded-xl border border-line bg-surface p-4 transition-colors hover:border-axis"
+            >
+              <span className="font-medium">{tema.titulo}</span>
+              <span className="text-sm text-ink-2">{tema.bajada}</span>
+            </Link>
+          ))}
+        </div>
+      </Section>
 
       <Section title="Datos disponibles">
         {withData.length === 0 ? (

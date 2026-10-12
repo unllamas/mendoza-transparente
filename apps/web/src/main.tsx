@@ -5,11 +5,12 @@ import { createRoot } from "react-dom/client";
 import { loadIndex, loadTema } from "./lib.ts";
 import { DatosPage } from "./pages/datos.tsx";
 import { DeudaPage } from "./pages/deuda.tsx";
+import { EmpleoPage } from "./pages/empleo.tsx";
 import { FuentesPage } from "./pages/fuentes.tsx";
 import { HomePage } from "./pages/home.tsx";
 import { Layout } from "./pages/layout.tsx";
 import "./styles.css";
-import type { DeudaTema } from "./types.ts";
+import type { DeudaTema, EmpleoTema } from "./types.ts";
 
 const rootRoute = createRootRoute({ component: Layout });
 
@@ -41,8 +42,15 @@ const deudaRoute = createRoute({
   component: DeudaPage,
 });
 
+const empleoRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/empleo-publico",
+  loader: () => loadTema<EmpleoTema>("empleo"),
+  component: EmpleoPage,
+});
+
 const router = createRouter({
-  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, fuentesRoute, datosRoute]),
+  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, empleoRoute, fuentesRoute, datosRoute]),
   defaultPreload: "intent",
   scrollRestoration: true,
 });

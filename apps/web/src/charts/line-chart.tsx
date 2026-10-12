@@ -84,9 +84,11 @@ export function LineChart({ data, bands = [], formatValue, formatDate, height = 
               {i % 2 === 0 && (
                 <rect x={bx0} y={MARGIN.top} width={bx1 - bx0} height={innerH} className="fill-grid" opacity={0.5} />
               )}
-              <text x={(bx0 + bx1) / 2} y={MARGIN.top - 10} textAnchor="middle" className="fill-ink-muted text-[11px]">
-                {b.label}
-              </text>
+              {bx1 - bx0 > b.label.length * 6.5 + 8 && (
+                <text x={(bx0 + bx1) / 2} y={MARGIN.top - 10} textAnchor="middle" className="fill-ink-muted text-[11px]">
+                  {b.label}
+                </text>
+              )}
             </g>
           );
         })}
