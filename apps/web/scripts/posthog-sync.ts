@@ -161,6 +161,21 @@ const INSIGHTS: { name: string; description: string; query: unknown }[] = [
     query: ranking("law.official_pdf.open", "law"),
   },
   {
+    name: "Portada: preguntas más elegidas",
+    description: "Cuál de las seis preguntas de «Empezá por una pregunta» toca más la gente. Sirve para ordenarlas.",
+    query: ranking("home.question.open", "question"),
+  },
+  {
+    name: "Búsquedas sin resultados",
+    description: "Lo que la gente buscó en la portada y no encontró: la lista de contenido que falta.",
+    query: ranking("home.search.no_results", "query"),
+  },
+  {
+    name: "Portada: qué abre la gente desde el buscador",
+    description: "Tipo de página que la gente elige en el buscador de la portada (ley, funcionario, municipio, proveedor…).",
+    query: ranking("home.search.select", "kind"),
+  },
+  {
     name: "Hojas de detalle más abiertas",
     description: "Qué detalles abre la gente: pedidos, procesos de compra, proveedores, filas de datos.",
     query: ranking("sheet.open", "sheet"),
