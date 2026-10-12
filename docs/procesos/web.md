@@ -116,7 +116,7 @@ Cada push a `main` publica solo, incluidos los commits automáticos de datos.
 - Límite de pedidos: `POST /api/*`, 10 cada 10 segundos por IP; si se supera, bloqueo de 10 segundos (máximo del plan gratis).
 - Analítica: PostHog en un proyecto propio, separado de cualquier otra organización (`.env.production`).
 
-**Buscadores:** Google Search Console verifica el dominio con `apps/web/public/google9fb9587f2a5c020a.html`. No hay que borrar ese archivo: Google lo vuelve a revisar. Después de verificar, enviar `https://mendoza-transparente.com/sitemap.xml`.
+**Buscadores:** Google Search Console verifica el dominio con `apps/web/public/google9fb9587f2a5c020a.html`, servido por la función `functions/google9fb9587f2a5c020a.html.ts`: Pages redirige `/x.html` a `/x`, y la verificación necesita la URL exacta. No hay que borrarlos, porque Google vuelve a revisar el archivo. Después de verificar, enviar `https://mendoza-transparente.com/sitemap.xml`.
 
 **Antes de abrir al público:**
 1. Dominio propio en Cloudflare, con proxy activado (nube naranja).

@@ -34,11 +34,13 @@ async function api<T = any>(path: string, init: RequestInit = {}): Promise<T> {
 const defs = (await api<{ results: { id: string; name: string; description: string | null }[] }>("/event_definitions/?limit=500")).results;
 const byName = new Map(defs.map((d) => [d.name, d]));
 let described = 0;
-const pending: string[] = [];
+let createdDefs = 0;
 for (const e of EVENT_CATALOG) {
   const d = byName.get(e.event);
+  // Definitions can be created before the first event arrives, so the catalog is complete from day one.
   if (!d) {
-    pending.push(e.event);
+    await api("/event_definitions/", { method: "POST", body: JSON.stringify({ name: e.event, description: e.description, tags: e.tags }) });
+    createdDefs++;
     continue;
   }
   if (d.description === e.description) continue;
@@ -46,7 +48,7 @@ for (const e of EVENT_CATALOG) {
   described++;
 }
 const unknown = defs.map((d) => d.name).filter((n) => !EVENT_CATALOG.some((e) => e.event === n));
-console.log(`Eventos: ${described} descripciones actualizadas. Todavía sin datos en PostHog: ${pending.length}.`);
+console.log(`Eventos: ${createdDefs} definiciones creadas, ${described} descripciones actualizadas.`);
 if (unknown.length) console.log(`  Sin descripción en el catálogo (sumarlos a src/analytics-catalog.ts): ${unknown.join(", ")}`);
 
 // ------------------------------------------------------------------ dashboard
