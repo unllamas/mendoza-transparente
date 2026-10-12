@@ -1,23 +1,18 @@
 /**
- * Post-build de SEO (se corre con `bun scripts/seo.ts` después de `vite build`):
- * HTML por ruta con meta tags y JSON-LD, imágenes OG, sitemap.xml y robots.txt.
+ * Post-build de SEO y GEO (se corre con `bun scripts/seo.ts` después de `vite build`), a partir del
+ * registro de páginas de scripts/paginas.ts:
+ * - un HTML por ruta con meta tags, JSON-LD y el contenido escrito dentro de #root (lo leen buscadores,
+ *   redes y motores de IA sin ejecutar JavaScript; React lo reemplaza al cargar);
+ * - una imagen para compartir por página;
+ * - sitemap.xml con la fecha real de cada página, robots.txt y llms.txt.
  */
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
 import { Resvg } from "@resvg/resvg-js";
 
-import {
-  canonicalUrl,
-  datosMeta,
-  OG_SIZE,
-  ogImageUrl,
-  PAGES,
-  SITE_NAME,
-  SITE_URL,
-  type PageMeta,
-} from "../src/seo.ts";
-import type { CoparticipacionTema, DataIndex, DeudaTema, EmpleoTema, PoblacionTema } from "../src/types.ts";
+import { canonicalUrl, OG_SIZE, ogImageUrl, SITE_NAME, SITE_URL } from "../src/seo.ts";
+import { construirPaginas, type Pagina } from "./paginas.ts";
 
 const WEB = join(import.meta.dirname, "..");
 const DIST = join(WEB, "dist");
@@ -25,39 +20,36 @@ const DATA = join(WEB, "public", "data");
 const FONTS = join(import.meta.dirname, "fonts");
 
 const ACCENT = "#c0395f";
-const nf = new Intl.NumberFormat("es-AR");
-const nf1 = new Intl.NumberFormat("es-AR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-const fechaLarga = (iso: string) =>
-  new Intl.DateTimeFormat("es-AR", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(iso));
-
-const json = async <T>(path: string): Promise<T> => JSON.parse(await readFile(join(DATA, path), "utf8")) as T;
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const jsonLd = (o: unknown) => JSON.stringify(o).replace(/</g, "\\u003c");
 
 // ---------------------------------------------------------------- HTML
 
-function headTags(path: string, m: PageMeta, ld: unknown[]): string {
+function headTags(p: Pagina): string {
+  const { path, title, description } = p;
   const url = canonicalUrl(path);
-  const image = ogImageUrl(m.ogSlug);
+  const image = ogImageUrl(p.og.slug);
   const lines = [
-    `<title>${esc(m.title)}</title>`,
-    `<meta name="description" content="${esc(m.description)}" />`,
+    `<title>${esc(title)}</title>`,
+    `<meta name="description" content="${esc(description)}" />`,
     `<link rel="canonical" href="${url}" />`,
-    `<meta property="og:type" content="website" />`,
+    `<link rel="alternate" hreflang="es-AR" href="${url}" />`,
+    `<meta property="og:type" content="${path.split("/").length > 2 ? "article" : "website"}" />`,
     `<meta property="og:site_name" content="${SITE_NAME}" />`,
     `<meta property="og:locale" content="es_AR" />`,
-    `<meta property="og:title" content="${esc(m.title)}" />`,
-    `<meta property="og:description" content="${esc(m.description)}" />`,
+    `<meta property="og:title" content="${esc(title)}" />`,
+    `<meta property="og:description" content="${esc(description)}" />`,
     `<meta property="og:url" content="${url}" />`,
     `<meta property="og:image" content="${image}" />`,
     `<meta property="og:image:width" content="${OG_SIZE.width}" />`,
     `<meta property="og:image:height" content="${OG_SIZE.height}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
-    `<meta name="twitter:title" content="${esc(m.title)}" />`,
-    `<meta name="twitter:description" content="${esc(m.description)}" />`,
+    `<meta name="twitter:title" content="${esc(title)}" />`,
+    `<meta name="twitter:description" content="${esc(description)}" />`,
     `<meta name="twitter:image" content="${image}" />`,
-    ...ld.map((o) => `<script type="application/ld+json">${jsonLd(o)}</script>`),
+    `<meta property="og:image:alt" content="${esc(`${p.og.titulo}: ${p.og.figura}`)}" />`,
+    ...p.ld.map((o) => `<script type="application/ld+json">${jsonLd({ "@context": "https://schema.org", ...o })}</script>`),
   ];
   return lines.map((l) => `    ${l}`).join("\n");
 }
@@ -71,8 +63,10 @@ function stripBase(html: string): string {
     .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>\s*/g, "");
 }
 
-function render(base: string, path: string, m: PageMeta, ld: unknown[]): string {
-  return stripBase(base).replace("</head>", `${headTags(path, m, ld)}\n  </head>`);
+function render(base: string, p: Pagina): string {
+  return stripBase(base)
+    .replace("</head>", `${headTags(p)}\n  </head>`)
+    .replace(/<div id="root">\s*<\/div>/, `<div id="root">${p.html}</div>`);
 }
 
 // ---------------------------------------------------------------- OG
@@ -96,16 +90,11 @@ function wrap(text: string, maxChars: number, maxLines: number): string[] {
   return lines.slice(0, maxLines);
 }
 
-interface OgData {
-  eyebrow: string;
-  title: string;
-  figura: string;
-  bajada: string;
-}
+type OgData = Pagina["og"];
 
 function ogSvg(d: OgData): string {
   const { width: W, height: H } = OG_SIZE;
-  const titleLines = wrap(d.title, 30, 2);
+  const titleLines = wrap(d.titulo, 30, 2);
   const titleSize = 64;
   const title = titleLines
     .map((l, i) => `<text x="80" y="${210 + i * 76}" font-size="${titleSize}" font-weight="700" fill="#ffffff">${esc(l)}</text>`)
@@ -145,150 +134,57 @@ async function writeOg(slug: string, d: OgData) {
 
 // ---------------------------------------------------------------- main
 
-const index = await json<DataIndex>("index.json");
-const [deuda, copa, empleo, poblacion] = await Promise.all([
-  json<DeudaTema>("temas/deuda.json"),
-  json<CoparticipacionTema>("temas/coparticipacion.json"),
-  json<EmpleoTema>("temas/empleo.json"),
-  json<PoblacionTema>("temas/poblacion.json"),
-]);
-const rows = (source: string, file: string) => index.datasets.find((d) => d.source === source && d.file === file)?.rowCount;
-const rowsFuente = (id: string) => index.datasets.filter((d) => d.source === id).reduce((a, d) => a + d.rowCount, 0);
+const paginas = await construirPaginas(DATA);
+const rotas = paginas.filter((p) => /\b(?:undefined|NaN|null)\b/.test(p.title + p.description + p.html + JSON.stringify(p.og)));
+if (rotas.length) throw new Error(`Páginas con datos faltantes ("undefined", "NaN" o "null"): ${rotas.map((p) => p.path).join(", ")}`);
+// Si el script ya corrió, dist/index.html trae el contenido de la portada: se vacía (va en una sola línea).
+const base = (await readFile(join(DIST, "index.html"), "utf8")).replace(/<div id="root">[^\n]*<\/div>/, '<div id="root"></div>');
+if (!base.includes('<div id="root"></div>')) throw new Error('dist/index.html no tiene <div id="root"></div>');
 
-const senalesCount = (await json<{ senales: unknown[] }>("temas/senales.json").catch(() => ({ senales: [] }))).senales.length;
-const funcionariosCount = (await json<{ personas: unknown[] }>("temas/funcionarios.json").catch(() => ({ personas: [] }))).personas.length;
-const noPublicadoCount = (await json<unknown[]>("temas/no-publicado.json").catch(() => [])).length;
-
-const figuras: Record<string, { figura: string; bajada: string }> = {
-  "/": {
-    figura: `${index.sources.length} fuentes`,
-    bajada: "Deuda, coparticipación, empleo, población y compras del Estado, ordenados y para descargar.",
-  },
-  "/deuda": {
-    figura: `US$ ${nf.format(Math.round(deuda.totalUsd))} M`,
-    bajada: `Deuda total de la provincia al ${fechaLarga(deuda.corte)}: unos US$\u00a0${nf.format(Math.round(deuda.porHabitanteUsd))} por habitante.`,
-  },
-  "/coparticipacion": {
-    figura: `$ ${nf.format(Math.round(copa.totalReal / 1e9))} mil M`,
-    bajada: `Repartido entre los municipios en ${copa.anioCompleto}, en pesos de ${copa.referencia}.`,
-  },
-  "/empleo-publico": {
-    figura: `${nf1.format(empleo.cadaMilMendoza)} cada mil`,
-    bajada: `Empleados públicos cada mil habitantes en ${empleo.anio}. Promedio del país: ${nf1.format(empleo.promedioPais)}.`,
-  },
-  "/poblacion": {
-    figura: nf.format(poblacion.actual),
-    bajada: `Habitantes estimados en ${poblacion.anioActual}, repartidos en ${poblacion.departamentos.length} departamentos.`,
-  },
-  "/fuentes": {
-    figura: `${index.sources.length} fuentes`,
-    bajada: "Oficiales y abiertas: de dónde sale cada dato, cada cuánto se actualiza y cómo bajarlo.",
-  },
-  "/senales": {
-    figura: `${senalesCount} señales`,
-    bajada: "Contrataciones directas, una sola oferta, empresas nuevas: patrones que merecen explicación.",
-  },
-  "/funcionarios": {
-    figura: `${funcionariosCount} funcionarios`,
-    bajada: "Gobierno, Legislatura, intendentes y Congreso: partido, mandato y cuánto cobran.",
-  },
-  "/no-publicado": {
-    figura: `${noPublicadoCount} datos`,
-    bajada: "Que deberían ser públicos y no lo son. Te explicamos cómo pedirlos con la Ley 9070.",
-  },
-  "/compras": {
-    figura: `${nf.format(rows("compras-ocds", "procesos.csv") ?? 0)} procesos`,
-    bajada: "Contrataciones del Estado provincial: qué compra, a quién y por cuánta plata.",
-  },
-  "/boletin": {
-    figura: `${nf.format(rows("boletin-oficial", "normas.csv") ?? 0)} normas`,
-    bajada: "Leyes, decretos y resoluciones del Boletín Oficial, con su texto completo.",
-  },
-};
-
-const base = await readFile(join(DIST, "index.html"), "utf8");
-const lastmod = index.generatedAt.slice(0, 10);
-const urls: string[] = [];
-
-const organization = {
-  "@type": "Organization",
-  "@id": `${SITE_URL}/#organization`,
-  name: SITE_NAME,
-  url: `${SITE_URL}/`,
-  logo: `${SITE_URL}/favicon.svg`,
-};
-
-async function emit(path: string, m: PageMeta, ld: unknown[]) {
+const slugsOg = new Set<string>();
+for (const p of paginas) {
   // "/deuda" → dist/deuda.html: Cloudflare Pages lo sirve en /deuda sin redirigir a /deuda/.
-  const file = path === "/" ? join(DIST, "index.html") : join(DIST, `${path}.html`);
+  const file = p.path === "/" ? join(DIST, "index.html") : join(DIST, `${p.path}.html`);
   await mkdir(dirname(file), { recursive: true });
-  await writeFile(file, render(base, path, m, ld));
-  urls.push(canonicalUrl(path));
-}
-
-for (const [path, m] of Object.entries(PAGES)) {
-  if (!m.activa) continue;
-  const f = figuras[path]!;
-  await writeOg(m.ogSlug, { eyebrow: m.eyebrow, title: m.ogTitle, ...f });
-  const ld =
-    path === "/"
-      ? [
-          {
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "@id": `${SITE_URL}/#website`,
-            name: SITE_NAME,
-            url: `${SITE_URL}/`,
-            description: m.description,
-            inLanguage: "es-AR",
-            publisher: { "@id": `${SITE_URL}/#organization` },
-          },
-          { "@context": "https://schema.org", ...organization },
-        ]
-      : [];
-  await emit(path, m, ld);
-}
-
-for (const s of index.sources) {
-  const m = datosMeta(s);
-  const path = `/datos/${s.id}`;
-  await writeOg(m.ogSlug, {
-    eyebrow: m.eyebrow,
-    title: m.ogTitle,
-    figura: `${nf.format(rowsFuente(s.id))} filas`,
-    bajada: s.descripcion,
-  });
-  const dataset = {
-    "@context": "https://schema.org",
-    "@type": "Dataset",
-    name: s.nombre,
-    description: s.descripcion,
-    url: canonicalUrl(path),
-    creator: { "@type": "Organization", name: s.organismo },
-    license: "https://creativecommons.org/licenses/by/4.0/",
-    isAccessibleForFree: true,
-    inLanguage: "es-AR",
-    spatialCoverage: "Mendoza, Argentina",
-    isBasedOn: s.url,
-    dateModified: s.raw.lastFetch ?? index.generatedAt,
-    publisher: { "@id": `${SITE_URL}/#organization` },
-    distribution: index.datasets
-      .filter((d) => d.source === s.id)
-      .map((d) => ({
-        "@type": "DataDownload",
-        encodingFormat: "text/csv",
-        contentUrl: `${SITE_URL}/data/${d.source}/${d.file}`,
-      })),
-  };
-  await emit(path, m, [dataset]);
+  await writeFile(file, render(base, p));
+  if (!slugsOg.has(p.og.slug)) {
+    slugsOg.add(p.og.slug);
+    await writeOg(p.og.slug, p.og);
+  }
 }
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map((u) => `  <url><loc>${u}</loc><lastmod>${lastmod}</lastmod></url>`).join("\n")}
+${paginas.map((p) => `  <url><loc>${canonicalUrl(p.path)}</loc><lastmod>${p.lastmod.slice(0, 10)}</lastmod><priority>${p.prioridad.toFixed(1)}</priority></url>`).join("\n")}
 </urlset>
 `;
 await writeFile(join(DIST, "sitemap.xml"), sitemap);
-await writeFile(join(DIST, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
 
-console.log(`SEO listo: ${urls.length} páginas, sitemap.xml, robots.txt, imágenes OG en dist/og.`);
+// Datos públicos: bienvenidos los buscadores y los motores de IA (citan la fuente y traen gente).
+const BOTS_IA = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-SearchBot", "Claude-User", "PerplexityBot", "Perplexity-User", "Google-Extended", "Applebot-Extended", "CCBot", "meta-externalagent"];
+await writeFile(
+  join(DIST, "robots.txt"),
+  `User-agent: *\nAllow: /\n\n${BOTS_IA.map((b) => `User-agent: ${b}\nAllow: /\n`).join("\n")}\nSitemap: ${SITE_URL}/sitemap.xml\n`,
+);
+
+// llms.txt (llmstxt.org): mapa del sitio para modelos de lenguaje.
+const seccion = (titulo: string, prefijo: string) => {
+  const items = paginas.filter((p) => p.path.startsWith(prefijo) && p.path !== prefijo);
+  return items.length ? `\n## ${titulo}\n\n${items.map((p) => `- [${p.title.replace(/ · Mendoza Transparente$/, "")}](${canonicalUrl(p.path)}): ${p.description}`).join("\n")}\n` : "";
+};
+const principales = paginas.filter((p) => p.path.split("/").length === 2 && p.path !== "/");
+await writeFile(
+  join(DIST, "llms.txt"),
+  `# ${SITE_NAME}
+
+> Proyecto ciudadano e independiente que reúne los datos públicos de la provincia de Mendoza (Argentina): funcionarios, leyes, compras del Estado, deuda, coparticipación, empleo público y población. Cada dato enlaza a su fuente oficial. Las "señales" son patrones que merecen explicación, no acusaciones.
+
+Los datos se actualizan automáticamente desde fuentes oficiales y se pueden descargar en CSV desde cada página de /datos.
+
+## Secciones
+
+${principales.map((p) => `- [${p.title.replace(/ · Mendoza Transparente$/, "")}](${canonicalUrl(p.path)}): ${p.description}`).join("\n")}
+${seccion("Leyes", "/leyes")}${seccion("Municipios", "/municipios")}${seccion("Funcionarios", "/funcionarios")}${seccion("Organismos que compran", "/organismos")}${seccion("Proveedores del Estado", "/proveedores")}${seccion("Datos abiertos", "/datos")}`,
+);
+
+console.log(`SEO listo: ${paginas.length} páginas, ${slugsOg.size} imágenes, sitemap.xml, robots.txt y llms.txt.`);

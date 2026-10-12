@@ -297,3 +297,75 @@ export interface SenalesTema {
   generado: string;
   senales: Senal[];
 }
+
+export interface MunicipioPagina {
+  slug: string;
+  nombre: string;
+  intendente: { id: string; nombre: string; partido: string | null; foto: string | null; mandatoHasta: string | null } | null;
+  poblacion: {
+    actual: number;
+    censo2010: number;
+    censo2022: number;
+    variacion: number;
+    /** Puesto entre los 18 por cantidad de habitantes. */
+    puesto: number;
+    serie: { anio: number; poblacion: number }[];
+  };
+  coparticipacion: {
+    anio: number;
+    referencia: string;
+    perCapita: number;
+    real: number;
+    /** Puesto entre los 18 por coparticipación por habitante. */
+    puesto: number;
+    serie: { anio: number; perCapita: number }[];
+  } | null;
+  seccion: string | null;
+  legisladores: { id: string; nombre: string; cargo: string; bloque: string | null; foto: string | null }[];
+}
+
+export interface OrganismoResumen {
+  slug: string;
+  nombre: string;
+  procesos: number;
+  total: number;
+  pctDirecta: number;
+  pctUnaOferta: number;
+  proveedorPrincipal: { nombre: string; pct: number } | null;
+}
+
+export interface OrganismoDetalle extends OrganismoResumen {
+  referenciaReal: string | null;
+  porAnio: { anio: number; monto: number; real: number }[];
+  proveedores: { cuit: string; nombre: string; monto: number; procesos: number; slug: string | null }[];
+  recientes: { ocid: string; titulo: string; fecha: string | null; metodo: string; estado: string; monto: number | null }[];
+}
+
+export interface ProveedorResumen {
+  slug: string;
+  cuit: string;
+  nombre: string;
+  total: number;
+  procesos: number;
+  primera: string | null;
+  ultima: string | null;
+  tipoSocietario: string | null;
+  localidad: string | null;
+  actividad: string | null;
+  /** Supera el umbral de contenido: tiene página propia indexable. */
+  indexable: boolean;
+}
+
+export interface LeyResumen {
+  numero: string;
+  titulo: string;
+  /** Fecha de sanción o de la norma, y fecha de publicación en el Boletín. */
+  fecha: string | null;
+  publicada: string | null;
+  boletin: string | null;
+  urlPdf: string | null;
+}
+
+export interface LeyDetalle extends LeyResumen {
+  texto: string;
+}

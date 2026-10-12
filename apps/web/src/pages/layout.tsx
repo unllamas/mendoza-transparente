@@ -1,6 +1,7 @@
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import {
   Archive,
+  Building2,
   ChevronDown,
   ChevronRight,
   Coins,
@@ -9,7 +10,9 @@ import {
   Globe,
   Landmark,
   type LucideIcon,
+  MapPin,
   Menu,
+  Scale,
   Users,
   UsersRound,
   X,
@@ -36,11 +39,20 @@ const GRUPOS: Grupo[] = [
       { to: "/coparticipacion", label: "Coparticipación", descripcion: "Cuánto recibe cada municipio", icon: Coins },
       { to: "/empleo-publico", label: "Empleo público", descripcion: "Empleados por habitante y por provincia", icon: UsersRound },
       { to: "/poblacion", label: "Población", descripcion: "Cuántos somos en cada departamento", icon: Users },
+      { to: "/municipios", label: "Municipios", descripcion: "Una página por cada uno de los 18", icon: MapPin },
+    ],
+  },
+  {
+    label: "Compras del Estado",
+    items: [
+      { to: "/proveedores", label: "Proveedores", descripcion: "A quiénes les compra el Gobierno", icon: Building2 },
+      { to: "/organismos", label: "Organismos", descripcion: "Quién compra, cuánto y cómo", icon: Landmark },
     ],
   },
   {
     label: "Transparencia",
     items: [
+      { to: "/leyes", label: "Leyes", descripcion: "Texto completo de las leyes provinciales", icon: Scale },
       { to: "/no-publicado", label: "Lo que no se publica", descripcion: "Datos que faltan y cómo pedirlos", icon: EyeOff },
       { to: "/fuentes", label: "Fuentes", descripcion: "De dónde sale cada dato", icon: Archive },
     ],

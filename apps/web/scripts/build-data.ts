@@ -16,9 +16,12 @@ import { buildCompras } from "./temas/compras.ts";
 import { buildCoparticipacion } from "./temas/coparticipacion.ts";
 import { buildEmpleo } from "./temas/empleo.ts";
 import { buildFuncionarios, type Correccion } from "./temas/funcionarios.ts";
+import { buildLeyes, buildMunicipios, buildOrganismosYProveedores } from "./temas/entidades.ts";
 import { buildHome } from "./temas/home.ts";
+import { deflactor } from "./temas/inflacion.ts";
 import { buildPoblacion } from "./temas/poblacion.ts";
 import { buildSenales } from "./temas/senales.ts";
+import { construirPaginas } from "./paginas.ts";
 
 const ROOT = join(import.meta.dir, "..", "..", "..");
 const RAW_DIR = join(ROOT, "data", "raw");
@@ -234,11 +237,9 @@ if (poblacionTema) writeFileSync(join(OUT, "temas", "poblacion.json"), JSON.stri
 
 const legisladores = readTable("legislatura", "legisladores.csv");
 const autoridades = readTable("autoridades", "autoridades.csv");
-if (legisladores && autoridades) {
-  writeFileSync(
-    join(OUT, "temas", "funcionarios.json"),
-    JSON.stringify(
-      buildFuncionarios(
+const funcionariosTema =
+  legisladores && autoridades
+    ? buildFuncionarios(
         legisladores,
         autoridades,
         readTable("autoridades", "remuneraciones.csv") ?? [],
@@ -248,10 +249,9 @@ if (legisladores && autoridades) {
           ? (parseYaml(readFileSync(join(ROOT, "data", "curado", "correcciones.yaml"), "utf8")) as Correccion[])
           : [],
         readTable("fotos", "fotos.csv") ?? [],
-      ),
-    ),
-  );
-}
+      )
+    : undefined;
+if (funcionariosTema) writeFileSync(join(OUT, "temas", "funcionarios.json"), JSON.stringify(funcionariosTema));
 
 // Fotos oficiales de funcionarios (miniaturas).
 const fotosDir = join(PROCESSED_DIR, "fotos");
@@ -287,6 +287,37 @@ writeFileSync(
   ),
 );
 
+// Entidades con página propia
+if (copaTema && poblacionTema && funcionariosTema) {
+  writeFileSync(join(OUT, "temas", "municipios.json"), JSON.stringify(buildMunicipios(copaTema, poblacionTema, funcionariosTema)));
+}
+if (procesos && adjudicaciones) {
+  const { organismos, proveedores } = buildOrganismosYProveedores(
+    procesos,
+    adjudicaciones,
+    readTable("proveedores", "proveedores.csv") ?? [],
+    deflactor(ipcNacional ?? []),
+    join(OUT, "temas", "compras"),
+  );
+  writeFileSync(join(OUT, "temas", "organismos.json"), JSON.stringify(organismos));
+  writeFileSync(join(OUT, "temas", "proveedores.json"), JSON.stringify(proveedores));
+}
+const normasBoletin = readTable("boletin-oficial", "normas.csv");
+if (normasBoletin) {
+  writeFileSync(
+    join(OUT, "temas", "leyes.json"),
+    JSON.stringify(buildLeyes(normasBoletin, join(PROCESSED_DIR, "boletin-oficial", "textos"), join(OUT, "temas"))),
+  );
+}
+
 const index: DataIndex = { generatedAt: new Date().toISOString(), sources, datasets };
 writeFileSync(join(OUT, "index.json"), JSON.stringify(index));
-console.log(`Datos listos: ${sources.length} fuentes, ${datasets.length} datasets.`);
+
+// Título, descripción e imagen de cada página, para actualizar los metadatos al navegar sin recargar
+// (el HTML de cada ruta ya los trae; ver scripts/seo.ts).
+const paginas = await construirPaginas(OUT);
+writeFileSync(
+  join(OUT, "meta.json"),
+  JSON.stringify(Object.fromEntries(paginas.map((p) => [p.path, { t: p.title, d: p.description, o: p.og.slug }]))),
+);
+console.log(`Datos listos: ${sources.length} fuentes, ${datasets.length} datasets, ${paginas.length} páginas.`);

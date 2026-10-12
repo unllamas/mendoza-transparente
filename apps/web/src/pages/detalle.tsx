@@ -194,19 +194,21 @@ function useCarga<T>(path: string, pick?: (data: unknown) => T | undefined) {
   return { data, error };
 }
 
-export function Proveedor({ cuit, onProceso }: { cuit: string; onProceso: (ocid: string) => void }) {
+export function Proveedor({ cuit, onProceso, sinTitulo }: { cuit: string; onProceso: (ocid: string) => void; sinTitulo?: boolean }) {
   const { data: p, error } = useCarga<ProveedorDetalle>(`temas/compras/proveedores/${cuit}.json`);
   if (error) return <p className="text-sm text-ink-2">No hay más datos de este proveedor.</p>;
   if (!p) return <p className="text-sm text-ink-muted">Cargando proveedor…</p>;
 
   return (
     <>
-      <div className="flex flex-col gap-1">
-        <span className="flex items-center gap-1.5 text-xs text-ink-muted">
-          <Building2 className="size-3.5" aria-hidden /> Proveedor · CUIT {cuit}
-        </span>
-        <h3 className="text-lg font-semibold tracking-tight text-balance">{p.empresa?.razonSocial ?? p.nombre}</h3>
-      </div>
+      {!sinTitulo && (
+        <div className="flex flex-col gap-1">
+          <span className="flex items-center gap-1.5 text-xs text-ink-muted">
+            <Building2 className="size-3.5" aria-hidden /> Proveedor · CUIT {cuit}
+          </span>
+          <h3 className="text-lg font-semibold tracking-tight text-balance">{p.empresa?.razonSocial ?? p.nombre}</h3>
+        </div>
+      )}
 
       <QuienEs proveedor={p} />
 

@@ -2,11 +2,15 @@ import { createRootRoute, createRoute, createRouter, RouterProvider } from "@tan
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
-import { loadIndex, loadTema } from "./lib.ts";
+import { loadIndex, loadJson, loadTema } from "./lib.ts";
+import { cuitDeSlug } from "./slug.ts";
 import { CoparticipacionPage } from "./pages/coparticipacion.tsx";
 import { DatosPage } from "./pages/datos.tsx";
 import { DeudaPage } from "./pages/deuda.tsx";
-import { FuncionariosPage } from "./pages/funcionarios.tsx";
+import { OrganismoPage, OrganismosPage, ProveedorPage, ProveedoresPage } from "./pages/compras.tsx";
+import { FuncionarioPage, FuncionariosPage } from "./pages/funcionarios.tsx";
+import { LeyesPage, LeyPage } from "./pages/leyes.tsx";
+import { MunicipioPage, MunicipiosPage } from "./pages/municipios.tsx";
 import { EmpleoPage } from "./pages/empleo.tsx";
 import { FuentesPage } from "./pages/fuentes.tsx";
 import { HomePage } from "./pages/home.tsx";
@@ -15,7 +19,7 @@ import { NoPublicadoPage } from "./pages/no-publicado.tsx";
 import { PoblacionPage } from "./pages/poblacion.tsx";
 import { SenalesPage } from "./pages/senales.tsx";
 import "./styles.css";
-import type { CoparticipacionTema, DeudaTema, EmpleoTema, FuncionariosTema, HomeTema, MapaMendoza, NoPublicado, PoblacionTema, SenalesTema } from "./types.ts";
+import type { CoparticipacionTema, DeudaTema, EmpleoTema, FuncionariosTema, HomeTema, LeyDetalle, LeyResumen, MapaMendoza, MunicipioPagina, NoPublicado, OrganismoDetalle, OrganismoResumen, PoblacionTema, ProveedorDetalle, ProveedorResumen, SenalesTema } from "./types.ts";
 
 const rootRoute = createRootRoute({ component: Layout });
 
@@ -96,6 +100,73 @@ const funcionariosRoute = createRoute({
   component: FuncionariosPage,
 });
 
+const funcionarioRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/funcionarios/$id",
+  loader: () => loadTema<FuncionariosTema>("funcionarios"),
+  component: FuncionarioPage,
+});
+
+const municipiosRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/municipios",
+  loader: () => loadTema<MunicipioPagina[]>("municipios"),
+  component: MunicipiosPage,
+});
+
+const municipioRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/municipios/$slug",
+  loader: () => loadTema<MunicipioPagina[]>("municipios"),
+  component: MunicipioPage,
+});
+
+const proveedoresRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/proveedores",
+  loader: async () => (await loadTema<ProveedorResumen[]>("proveedores")).filter((p) => p.indexable),
+  component: ProveedoresPage,
+});
+
+const proveedorRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/proveedores/$slug",
+  loader: async ({ params }) => {
+    const cuit = cuitDeSlug(params.slug);
+    const ficha = cuit ? await loadJson<ProveedorDetalle>(`temas/compras/proveedores/${cuit}.json`).catch(() => null) : null;
+    return { cuit, ficha };
+  },
+  component: ProveedorPage,
+});
+
+const organismosRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/organismos",
+  loader: () => loadTema<OrganismoResumen[]>("organismos"),
+  component: OrganismosPage,
+});
+
+const organismoRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/organismos/$slug",
+  loader: ({ params }) => loadJson<OrganismoDetalle>(`temas/compras/organismos/${params.slug}.json`).catch(() => null),
+  component: OrganismoPage,
+});
+
+const leyesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/leyes",
+  loader: () => loadTema<LeyResumen[]>("leyes"),
+  component: LeyesPage,
+});
+
+const leyRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/leyes/$numero",
+  loader: ({ params }) => loadJson<LeyDetalle>(`temas/leyes/${params.numero}.json`).catch(() => null),
+  component: LeyPage,
+});
+
 const senalesRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/senales",
@@ -104,7 +175,7 @@ const senalesRoute = createRoute({
 });
 
 const router = createRouter({
-  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, coparticipacionRoute, empleoRoute, poblacionRoute, funcionariosRoute, senalesRoute, noPublicadoRoute, fuentesRoute, datosRoute]),
+  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, coparticipacionRoute, empleoRoute, poblacionRoute, funcionariosRoute, funcionarioRoute, municipiosRoute, municipioRoute, proveedoresRoute, proveedorRoute, organismosRoute, organismoRoute, leyesRoute, leyRoute, senalesRoute, noPublicadoRoute, fuentesRoute, datosRoute]),
   defaultPreload: "intent",
   scrollRestoration: true,
 });

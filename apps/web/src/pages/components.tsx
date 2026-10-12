@@ -1,4 +1,5 @@
-import { Info, type LucideIcon, TriangleAlert, X } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { ChevronRight, Info, Search, type LucideIcon, TriangleAlert, X } from "lucide-react";
 import { type ReactNode, useEffect } from "react";
 
 /** Dato informativo: solo fondo, sin borde. El borde queda reservado para lo que se puede tocar. */
@@ -171,3 +172,47 @@ export function Aviso({
     </div>
   );
 }
+
+/** Miga de pan: Inicio › Sección › Página. El último elemento (sin `to`) es la página actual. */
+export function Migas({ items }: { items: { label: string; to?: string }[] }) {
+  return (
+    <nav aria-label="Ruta" className="flex min-w-0 items-center gap-1.5 text-sm text-ink-muted">
+      <Link to="/" className="shrink-0 hover:text-link hover:underline">
+        Inicio
+      </Link>
+      {items.map((it) => (
+        <span key={it.label} className="flex min-w-0 items-center gap-1.5">
+          <ChevronRight className="size-3.5 shrink-0" aria-hidden />
+          {it.to ? (
+            <Link to={it.to} className="whitespace-nowrap hover:text-link hover:underline">
+              {it.label}
+            </Link>
+          ) : (
+            <span className="truncate text-ink-2" aria-current="page" title={it.label}>
+              {it.label}
+            </span>
+          )}
+        </span>
+      ))}
+    </nav>
+  );
+}
+
+/** Buscador simple para las listas largas. */
+export function Buscador({ value, onChange, placeholder, label }: { value: string; onChange: (v: string) => void; placeholder: string; label: string }) {
+  return (
+    <label className="relative flex items-center sm:w-80">
+      <Search className="pointer-events-none absolute left-3 size-4 text-ink-muted" aria-hidden />
+      <input
+        type="search"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        aria-label={label}
+        className="w-full rounded-lg border border-line bg-surface py-2 pr-3 pl-9 text-sm outline-none placeholder:text-ink-muted focus:border-link"
+      />
+    </label>
+  );
+}
+
+export const normalizar = (s: string) => s.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();

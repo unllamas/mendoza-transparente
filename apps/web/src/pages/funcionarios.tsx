@@ -7,9 +7,10 @@ import { formatMoneda } from "../celdas.ts";
 import { formatDate } from "../lib.ts";
 import { FuentesOficiales } from "../fuente.tsx";
 import type { Funcionario, GrupoFuncionario } from "../types.ts";
-import { Aviso, PageHeader, Segmented, Sheet } from "./components.tsx";
+import { Aviso, Migas, PageHeader, Segmented } from "./components.tsx";
 
 const route = getRouteApi("/funcionarios");
+const routeFicha = getRouteApi("/funcionarios/$id");
 
 type Pestana = "ejecutivo" | "legislatura" | "intendentes" | "nacion";
 
@@ -43,7 +44,6 @@ export function FuncionariosPage() {
   const { personas } = route.useLoaderData();
   const [pestana, setPestana] = useState<Pestana>("ejecutivo");
   const [busqueda, setBusqueda] = useState("");
-  const [abierto, setAbierto] = useState<Funcionario | null>(null);
 
   const grupos = PESTANAS.find((p) => p.value === pestana)!.grupos;
   const visibles = useMemo(() => {
@@ -77,20 +77,18 @@ export function FuncionariosPage() {
       </div>
 
       {busqueda ? (
-        <Lista titulo={`${visibles.length} resultados`} personas={visibles} onOpen={setAbierto} />
+        <Lista titulo={`${visibles.length} resultados`} personas={visibles} />
       ) : (
         grupos.map((g) => {
           const delGrupo = visibles.filter((p) => p.grupo === g);
           return (
             <div key={g} className="flex flex-col gap-4">
               {(g === "diputados_provincial" || g === "senado_provincial") && <Bloques personas={delGrupo} />}
-              <Lista titulo={`${NOMBRE_GRUPO[g]} (${delGrupo.length})`} personas={delGrupo} onOpen={setAbierto} />
+              <Lista titulo={`${NOMBRE_GRUPO[g]} (${delGrupo.length})`} personas={delGrupo} />
             </div>
           );
         })
       )}
-
-      {abierto && <FichaSheet persona={abierto} onClose={() => setAbierto(null)} />}
     </div>
   );
 }
@@ -120,16 +118,16 @@ function subtitulo(p: Funcionario) {
   return [p.bloque ?? p.partido, p.seccion].filter(Boolean).join(" · ");
 }
 
-function Lista({ titulo, personas, onOpen }: { titulo: string; personas: Funcionario[]; onOpen: (p: Funcionario) => void }) {
+function Lista({ titulo, personas }: { titulo: string; personas: Funcionario[] }) {
   return (
     <section className="flex flex-col gap-3">
       <h2 className="text-lg font-semibold tracking-tight">{titulo}</h2>
       <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
         {personas.map((p) => (
           <li key={p.id}>
-            <button
-              type="button"
-              onClick={() => onOpen(p)}
+            <Link
+              to="/funcionarios/$id"
+              params={{ id: p.id }}
               className="group flex w-full items-center gap-4 px-4 py-3 text-left hover:bg-grid/50 sm:px-5"
             >
               <Avatar persona={p} className="size-10 text-xs" />
@@ -141,7 +139,7 @@ function Lista({ titulo, personas, onOpen }: { titulo: string; personas: Funcion
                 <span className="hidden text-sm whitespace-nowrap text-ink-muted tabular-nums sm:block">hasta {p.mandatoHasta}</span>
               )}
               <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
-            </button>
+            </Link>
           </li>
         ))}
       </ul>
@@ -150,7 +148,7 @@ function Lista({ titulo, personas, onOpen }: { titulo: string; personas: Funcion
 }
 
 /** Foto oficial si existe; si no, las iniciales. */
-function Avatar({ persona: p, className }: { persona: Funcionario; className: string }) {
+export function Avatar({ persona: p, className }: { persona: Funcionario; className: string }) {
   const [error, setError] = useState(false);
   if (p.foto && !error) {
     return (
@@ -178,14 +176,38 @@ const iniciales = (nombre: string) =>
     .map((w) => w[0])
     .join("");
 
-function FichaSheet({ persona: p, onClose }: { persona: Funcionario; onClose: () => void }) {
+/** Página de la ficha de una persona (`/funcionarios/$id`). */
+export function FuncionarioPage() {
+  const { personas } = routeFicha.useLoaderData();
+  const { id } = routeFicha.useParams();
+  const p = personas.find((x) => x.id === id);
+  return (
+    <div className="flex max-w-2xl flex-col gap-6">
+      <Migas items={[{ label: "Funcionarios", to: "/funcionarios" }, { label: p?.nombre ?? "No encontrada" }]} />
+      {p ? (
+        <FichaFuncionario persona={p} />
+      ) : (
+        <div className="flex flex-col gap-3">
+          <h1 className="text-2xl font-semibold tracking-tight">No encontramos a esa persona</h1>
+          <p className="text-ink-2">Puede que haya dejado el cargo o que el enlace esté mal escrito.</p>
+          <Link to="/funcionarios" className="w-fit text-link hover:underline">
+            Ver todos los funcionarios ›
+          </Link>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Contenido de la ficha: foto, cargo, mandato, sueldo publicado y declaración jurada. */
+export function FichaFuncionario({ persona: p }: { persona: Funcionario }) {
   const pedido = PEDIDO_SUELDO[p.grupo];
   return (
-    <Sheet titulo="Ficha" onClose={onClose}>
+    <div className="flex flex-col gap-6">
       <div className="flex items-center gap-3">
         <Avatar persona={p} className="size-16 text-base" />
         <div className="flex min-w-0 flex-col gap-0.5">
-          <h3 className="text-xl font-semibold tracking-tight text-balance">{p.nombre}</h3>
+          <h1 className="text-xl font-semibold tracking-tight text-balance sm:text-2xl">{p.nombre}</h1>
           <span className="text-sm text-ink-2">{p.cargo}</span>
 
         </div>
@@ -258,7 +280,7 @@ function FichaSheet({ persona: p, onClose }: { persona: Funcionario; onClose: ()
           <Landmark className="size-4" aria-hidden /> De dónde sale este dato <ExternalLink className="size-3.5" aria-hidden />
         </a>
       </div>
-    </Sheet>
+    </div>
   );
 }
 

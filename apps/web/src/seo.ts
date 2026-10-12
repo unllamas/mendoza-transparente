@@ -107,6 +107,42 @@ export const PAGES: Record<string, PageMeta> = {
     eyebrow: "SEÑALES",
     activa: true,
   },
+  "/municipios": {
+    title: `Municipios de Mendoza: datos de los 18${TITLE_SUFFIX}`,
+    description:
+      "Los 18 municipios de Mendoza: quién es el intendente, cuántos habitantes tiene cada departamento, cuánta coparticipación recibe y quiénes son sus legisladores.",
+    ogSlug: "municipios",
+    ogTitle: "Los 18 municipios de Mendoza",
+    eyebrow: "MUNICIPIOS",
+    activa: true,
+  },
+  "/leyes": {
+    title: `Leyes de Mendoza con texto completo${TITLE_SUFFIX}`,
+    description:
+      "Leyes de la provincia de Mendoza publicadas en el Boletín Oficial: número, fecha, de qué se trata cada una y su texto completo para leer sin abrir un PDF.",
+    ogSlug: "leyes",
+    ogTitle: "Leyes de Mendoza",
+    eyebrow: "LEYES",
+    activa: true,
+  },
+  "/proveedores": {
+    title: `Proveedores del Estado de Mendoza${TITLE_SUFFIX}`,
+    description:
+      "Proveedores del Estado de Mendoza: las empresas que más contratos ganaron con la provincia, cuánto facturaron, en cuántos procesos y qué organismos les compran.",
+    ogSlug: "proveedores",
+    ogTitle: "Proveedores del Estado",
+    eyebrow: "PROVEEDORES",
+    activa: true,
+  },
+  "/organismos": {
+    title: `Qué compra cada organismo de Mendoza${TITLE_SUFFIX}`,
+    description:
+      "Compras de cada organismo del Estado de Mendoza: hospitales, ministerios y reparticiones, cuánto gastan, a qué proveedores y qué parte por contratación directa.",
+    ogSlug: "organismos",
+    ogTitle: "Organismos que compran",
+    eyebrow: "ORGANISMOS",
+    activa: true,
+  },
   // Rutas por venir: activar cuando existan en la app.
   "/compras": {
     title: `Compras del Estado de Mendoza${TITLE_SUFFIX}`,
@@ -225,6 +261,11 @@ function applyMeta(pathname: string, m: PageMeta) {
   meta("name", "twitter:image", image);
 }
 
+type MetaJson = Record<string, { t: string; d: string; o: string }>;
+let metaJson: Promise<MetaJson> | null = null;
+/** public/data/meta.json: metadatos de todas las páginas (los genera scripts/build-data.ts). */
+const loadMetaJson = () => (metaJson ??= fetch("/data/meta.json").then((r) => (r.ok ? (r.json() as Promise<MetaJson>) : ({} as MetaJson))));
+
 /** Actualiza título, description, canonical, Open Graph y Twitter al navegar. */
 export function usePageMeta(pathname: string): void {
   useEffect(() => {
@@ -234,14 +275,17 @@ export function usePageMeta(pathname: string): void {
       applyMeta(pathname, estatica);
       return;
     }
-    if (normalizePath(pathname).startsWith("/datos/")) {
-      loadIndex()
-        .then((index) => {
-          const m = metaFor(pathname, index);
-          if (m && !cancelado) applyMeta(pathname, m);
-        })
-        .catch(() => {});
-    }
+    const p = normalizePath(pathname);
+    loadMetaJson()
+      .then(async (todas) => {
+        const m = todas[p];
+        if (m) return { title: m.t, description: m.d, ogSlug: m.o, ogTitle: m.t, eyebrow: "", activa: true } satisfies PageMeta;
+        return p.startsWith("/datos/") ? metaFor(p, await loadIndex()) : null;
+      })
+      .then((m) => {
+        if (m && !cancelado) applyMeta(pathname, m);
+      })
+      .catch(() => {});
     return () => {
       cancelado = true;
     };

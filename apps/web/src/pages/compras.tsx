@@ -1,0 +1,267 @@
+import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
+import { Building2, ChevronRight, FileText, Landmark, Percent, Receipt, Users2 } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+
+import { formatMoneda } from "../celdas.ts";
+import { ColumnChart } from "../charts/column-chart.tsx";
+import { FuentesOficiales } from "../fuente.tsx";
+import { formatDate, formatNumber, limpiarOrganismo } from "../lib.ts";
+import { slugProveedor } from "../slug.ts";
+import { Aviso, Buscador, Migas, normalizar, PageHeader, Section, Sheet, StatTile } from "./components.tsx";
+import { Proceso, Proveedor } from "./detalle.tsx";
+
+const FUENTES = ["compras-ocds", "proveedores"];
+const PAGINA = 40;
+const pct = (v: number) => `${Math.round(v)} %`;
+
+const proveedoresRoute = getRouteApi("/proveedores");
+const proveedorRoute = getRouteApi("/proveedores/$slug");
+const organismosRoute = getRouteApi("/organismos");
+const organismoRoute = getRouteApi("/organismos/$slug");
+
+const VerMas = ({ onClick }: { onClick: () => void }) => (
+  <button type="button" onClick={onClick} className="w-fit rounded-lg bg-brand px-4 py-2 text-sm font-medium text-on-brand hover:bg-brand-hover">
+    Ver más
+  </button>
+);
+
+/** Hoja con el detalle de un proceso de compra; desde ahí se salta a la página del proveedor. */
+function ProcesoSheet({ ocid, onClose }: { ocid: string; onClose: () => void }) {
+  const navigate = useNavigate();
+  return (
+    <Sheet titulo="Proceso de compra" onClose={onClose}>
+      <Proceso
+        ocid={ocid}
+        onProveedor={(cuit) => navigate({ to: "/proveedores/$slug", params: { slug: slugProveedor("proveedor", cuit) } })}
+      />
+    </Sheet>
+  );
+}
+
+export function ProveedoresPage() {
+  const proveedores = proveedoresRoute.useLoaderData();
+  const [q, setQ] = useState("");
+  const [mostrar, setMostrar] = useState(PAGINA);
+  const visibles = useMemo(() => {
+    const n = normalizar(q.trim());
+    return n ? proveedores.filter((p) => normalizar(`${p.nombre} ${p.cuit}`).includes(n)) : proveedores;
+  }, [proveedores, q]);
+
+  return (
+    <div className="flex flex-col gap-10">
+      <PageHeader icon={Building2} tema="Proveedores" titulo="¿A quiénes les compra el Estado?">
+        Las empresas que más le vendieron al Gobierno de Mendoza, ordenadas por lo que se les adjudicó.
+      </PageHeader>
+      <FuentesOficiales ids={FUENTES} />
+      <div className="flex flex-col gap-4">
+        <Buscador value={q} onChange={(v) => { setQ(v); setMostrar(PAGINA); }} placeholder="Buscar por nombre o CUIT" label="Buscar proveedor" />
+        <p className="text-sm text-ink-muted">{formatNumber(visibles.length)} proveedores</p>
+        <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
+          {visibles.slice(0, mostrar).map((p) => (
+            <li key={p.slug}>
+              <Link to="/proveedores/$slug" params={{ slug: p.slug }} className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50 sm:px-5">
+                <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                  <span className="truncate font-medium group-hover:text-link" title={p.nombre}>{p.nombre}</span>
+                  <span className="truncate text-sm text-ink-muted">
+                    {formatNumber(p.procesos)} {p.procesos === 1 ? "proceso" : "procesos"}
+                    {p.localidad ? ` · ${p.localidad}` : ""}
+                  </span>
+                </span>
+                <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(p.total, "ARS")}</span>
+                <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+              </Link>
+            </li>
+          ))}
+        </ul>
+        {mostrar < visibles.length && <VerMas onClick={() => setMostrar((n) => n + PAGINA)} />}
+      </div>
+    </div>
+  );
+}
+
+export function ProveedorPage() {
+  const { ficha, cuit } = proveedorRoute.useLoaderData();
+  const { slug } = proveedorRoute.useParams();
+  const navigate = useNavigate();
+  const [ocid, setOcid] = useState<string | null>(null);
+  // Links que solo conocen el CUIT (p. ej. desde la hoja de un proceso): se pasa a la URL canónica.
+  const canonico = cuit && ficha ? slugProveedor(ficha.empresa?.razonSocial ?? ficha.nombre, cuit) : null;
+  useEffect(() => {
+    if (canonico && canonico !== slug) void navigate({ to: "/proveedores/$slug", params: { slug: canonico }, replace: true });
+  }, [canonico, slug, navigate]);
+  if (!cuit || !ficha) {
+    return (
+      <div className="flex flex-col gap-4">
+        <Migas items={[{ label: "Proveedores", to: "/proveedores" }, { label: "No encontrado" }]} />
+        <h1 className="text-2xl font-semibold tracking-tight">No encontramos a ese proveedor</h1>
+        <Link to="/proveedores" className="w-fit text-link hover:underline">
+          Ver todos los proveedores ›
+        </Link>
+      </div>
+    );
+  }
+  const nombre = ficha.empresa?.razonSocial ?? ficha.nombre;
+  return (
+    <div className="flex max-w-2xl flex-col gap-8">
+      <Migas items={[{ label: "Proveedores", to: "/proveedores" }, { label: nombre }]} />
+      <div className="flex flex-col gap-2">
+        <span className="flex items-center gap-2 text-sm text-ink-muted">
+          <Building2 className="size-4" aria-hidden /> Proveedor · CUIT {cuit}
+        </span>
+        <h1 className="text-2xl font-semibold tracking-tight text-balance break-words sm:text-3xl">{nombre}</h1>
+      </div>
+      <FuentesOficiales ids={FUENTES} />
+      <Proveedor cuit={cuit} sinTitulo onProceso={setOcid} />
+      {ocid && <ProcesoSheet ocid={ocid} onClose={() => setOcid(null)} />}
+    </div>
+  );
+}
+
+export function OrganismosPage() {
+  const organismos = organismosRoute.useLoaderData();
+  const [q, setQ] = useState("");
+  const [mostrar, setMostrar] = useState(PAGINA);
+  const visibles = useMemo(() => {
+    const n = normalizar(q.trim());
+    return n ? organismos.filter((o) => normalizar(o.nombre).includes(n)) : organismos;
+  }, [organismos, q]);
+  return (
+    <div className="flex flex-col gap-10">
+      <PageHeader icon={Landmark} tema="Organismos" titulo="¿Quién compra y cómo?">
+        Los organismos del Estado provincial que más compran, cuánto gastan y qué parte lo hace por contratación directa.
+      </PageHeader>
+      <FuentesOficiales ids={FUENTES} />
+      <div className="flex flex-col gap-4">
+        <Buscador value={q} onChange={(v) => { setQ(v); setMostrar(PAGINA); }} placeholder="Buscar organismo" label="Buscar organismo" />
+        <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
+          {visibles.slice(0, mostrar).map((o) => (
+            <li key={o.slug}>
+              <Link to="/organismos/$slug" params={{ slug: o.slug }} className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50 sm:px-5">
+                <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                  <span className="truncate font-medium group-hover:text-link" title={limpiarOrganismo(o.nombre)}>{limpiarOrganismo(o.nombre)}</span>
+                  <span className="truncate text-sm text-ink-muted">
+                    {formatNumber(o.procesos)} procesos · {pct(o.pctDirecta)} directa
+                  </span>
+                </span>
+                <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(o.total, "ARS")}</span>
+                <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+              </Link>
+            </li>
+          ))}
+        </ul>
+        {mostrar < visibles.length && <VerMas onClick={() => setMostrar((n) => n + PAGINA)} />}
+      </div>
+    </div>
+  );
+}
+
+export function OrganismoPage() {
+  const o = organismoRoute.useLoaderData();
+  const { slug } = organismoRoute.useParams();
+  const [ocid, setOcid] = useState<string | null>(null);
+  if (!o) {
+    return (
+      <div className="flex flex-col gap-4">
+        <Migas items={[{ label: "Organismos", to: "/organismos" }, { label: "No encontrado" }]} />
+        <h1 className="text-2xl font-semibold tracking-tight">No encontramos a ese organismo</h1>
+        <p className="text-sm text-ink-muted">{slug}</p>
+        <Link to="/organismos" className="w-fit text-link hover:underline">
+          Ver todos los organismos ›
+        </Link>
+      </div>
+    );
+  }
+  const nombre = limpiarOrganismo(o.nombre);
+  const maxProv = o.proveedores[0]?.monto ?? 1;
+  return (
+    <div className="flex flex-col gap-10">
+      <Migas items={[{ label: "Organismos", to: "/organismos" }, { label: nombre }]} />
+      <PageHeader icon={Landmark} tema="Organismo" titulo={nombre}>
+        Cuánto compró, a quiénes y con qué modalidad.
+      </PageHeader>
+      <FuentesOficiales ids={FUENTES} />
+
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <StatTile icon={Receipt} label="Total adjudicado" value={formatMoneda(o.total, "ARS")} />
+        <StatTile icon={FileText} label="Procesos" value={formatNumber(o.procesos)} />
+        <StatTile icon={Percent} label="Contratación directa" value={pct(o.pctDirecta)} note="De los procesos" />
+        <StatTile icon={Users2} label="Una sola oferta" value={pct(o.pctUnaOferta)} note="De los procesos" />
+      </div>
+      {o.pctUnaOferta >= 20 && (
+        <Aviso titulo="Poca competencia">
+          En {pct(o.pctUnaOferta)} de los procesos se presentó una sola oferta: sin competencia, el Estado no puede comparar precios.
+        </Aviso>
+      )}
+
+      {o.porAnio.length > 1 && (
+        <Section title={o.referenciaReal ? `Adjudicado por año, en pesos de ${o.referenciaReal}` : "Adjudicado por año"}>
+          <ColumnChart
+            columnas={o.porAnio.map((a) => ({
+              etiqueta: String(a.anio),
+              valor: a.real,
+              detalle: o.referenciaReal ? `${formatMoneda(a.monto, "ARS")} nominales` : undefined,
+            }))}
+            formatValue={(v) => formatMoneda(v, "ARS")}
+            ariaLabel={`Monto adjudicado por año por ${nombre}`}
+          />
+        </Section>
+      )}
+
+      <Section title="Principales proveedores">
+        <ul className="flex flex-col gap-3 text-sm">
+          {o.proveedores.map((p) => {
+            const fila = (
+              <>
+                <span className="flex items-baseline justify-between gap-3">
+                  <span className="min-w-0 truncate group-hover:text-link" title={p.nombre}>{p.nombre}</span>
+                  <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(p.monto, "ARS")}</span>
+                </span>
+                <span className="flex items-center gap-2">
+                  <span className="h-1.5 flex-1 rounded-full bg-grid/60">
+                    <span className="block h-full rounded-full bg-accent" style={{ width: `${Math.max((p.monto / maxProv) * 100, 1)}%` }} />
+                  </span>
+                  <span className="w-20 text-right text-xs whitespace-nowrap text-ink-muted tabular-nums">
+                    {p.procesos} {p.procesos === 1 ? "proceso" : "procesos"}
+                  </span>
+                </span>
+              </>
+            );
+            return (
+              <li key={p.cuit}>
+                {p.slug ? (
+                  <Link to="/proveedores/$slug" params={{ slug: p.slug }} className="group flex flex-col gap-1 rounded-lg hover:bg-tile">
+                    {fila}
+                  </Link>
+                ) : (
+                  <div className="flex flex-col gap-1">{fila}</div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </Section>
+
+      <Section title="Procesos recientes">
+        <p className="-mt-2 text-sm text-ink-muted">Tocá uno para ver el proceso completo.</p>
+        <ul className="flex flex-col divide-y divide-line">
+          {o.recientes.map((r) => (
+            <li key={r.ocid}>
+              <button type="button" onClick={() => setOcid(r.ocid)} className="group flex w-full items-center gap-3 py-2.5 text-left">
+                <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                  <span className="truncate text-sm group-hover:text-link" title={r.titulo}>{r.titulo || "Sin título"}</span>
+                  <span className="truncate text-xs text-ink-muted">
+                    {r.fecha ? `${formatDate(r.fecha)} · ` : ""}
+                    {r.metodo}
+                  </span>
+                </span>
+                <span className="text-sm font-medium whitespace-nowrap tabular-nums">{r.monto ? formatMoneda(r.monto, "ARS") : "—"}</span>
+                <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </Section>
+      {ocid && <ProcesoSheet ocid={ocid} onClose={() => setOcid(null)} />}
+    </div>
+  );
+}

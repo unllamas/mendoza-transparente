@@ -31,10 +31,24 @@ const RUTAS = [
   "/datos/boletin-oficial",
   "/datos/indices",
   "/datos/dnap-ron",
+  "/funcionarios/alfredo-cornejo",
+  "/municipios",
+  "/municipios/capital",
+  "/municipios/general-alvear",
+  "/proveedores",
+  "/organismos",
+  "/leyes",
+  "/leyes/9735",
 ];
 const ANCHOS = [320, 360, 375, 390, 1024, 1280];
 
 await Bun.spawn(["bun", "run", "data"], { cwd: WEB, stdout: "ignore" }).exited;
+// Un proveedor y un organismo reales (los slugs cambian con los datos).
+const temas = join(WEB, "public", "data", "temas");
+const proveedor = ((await Bun.file(join(temas, "proveedores.json")).json()) as { slug: string; indexable: boolean }[]).find((p) => p.indexable);
+const organismo = ((await Bun.file(join(temas, "organismos.json")).json()) as { slug: string }[])[0];
+if (proveedor) RUTAS.push(`/proveedores/${proveedor.slug}`);
+if (organismo) RUTAS.push(`/organismos/${organismo.slug}`);
 const servidor = Bun.spawn(["bunx", "vite", "--port", String(PUERTO), "--strictPort"], { cwd: WEB, stdout: "ignore", stderr: "ignore" });
 for (let i = 0; i < 60; i++) {
   if (await fetch(BASE).then((r) => r.ok, () => false)) break;
