@@ -63,6 +63,18 @@ Cada ley tiene un resumen en lenguaje simple para un vecino que no sigue la pol�
 - El texto plano del Boletín se separa en capítulos, artículos (con su rótulo si lo tienen, como "Objeto") y el cierre ("Dada en…" y quiénes firman).
 - Se descartan el preámbulo ("El Senado y Cámara de Diputados… sancionan con fuerza de ley") y el artículo de forma "Comuníquese al Poder Ejecutivo".
 
+## Personal de cada municipio
+
+Fuente: el anexo 19 de la Ley de Responsabilidad Fiscal que cada municipio publica en su propio sitio (`municipios-personal`, scraper en `packages/scrapers/src/sources/municipios-personal.ts`). Cálculo en `buildMunicipalStaff` (`apps/web/scripts/temas/entidades.ts`).
+
+- **Qué se muestra:** cargos de planta permanente y temporaria, y contratos de locación, del último trimestre publicado. Las horas cátedra quedan afuera: son horas, no cargos.
+- **Son cargos, no personas,** igual que en la provincia. En la web siempre se aclara.
+- **Cada 1.000 habitantes:** (cargos de planta + contratos) ÷ población estimada del departamento × 1.000. El puesto se calcula solo entre los municipios con datos.
+- **Evolución:** una columna por año, con el último trimestre publicado de ese año.
+- **Validación:** permanente más temporaria debe dar el total de planta. Si no cuadra por mucho, el documento se descarta; si no cuadra por poco, entra con una aclaración. Las aclaraciones sobre importes no se muestran, porque la web no publica importes.
+- **Huecos:** cada municipio publica en su formato (PDF, ZIP, planillas, Drive) y varios solo los últimos trimestres. San Martín y Lavalle no lo publican; Godoy Cruz y Las Heras lo cargan en aplicaciones sin archivo descargable. Los cuatro figuran en «Lo que no se publica».
+- **Ciudad de Mendoza:** además publica una serie mensual (`personal_capital_mensual.csv`), con otra definición. Va aparte y no se mezcla con la trimestral.
+
 ## Personal y costo de cada organismo
 
 Fuente: anexo 19 del informe trimestral de Responsabilidad Fiscal (`lrf-personal`). Cálculo en `apps/web/scripts/temas/gobierno.ts`.

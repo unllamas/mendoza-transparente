@@ -3,7 +3,7 @@ import { PersonAvatar } from "@mt/ui/components/avatar";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
-import { ChevronRight, Coins, MapPin, Users, Vote } from "lucide-react";
+import { Briefcase, ChevronRight, Coins, MapPin, Users, Vote } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { ColumnChart } from "../charts/column-chart.tsx";
@@ -14,32 +14,37 @@ import { slug } from "../slug.ts";
 import type { MunicipioPagina } from "../types.ts";
 import { Migas, Segmented } from "./components.tsx";
 
-const SOURCES = ["hacienda-participacion-municipal", "poblacion", "autoridades", "legislatura"];
+const SOURCES = ["hacienda-participacion-municipal", "poblacion", "autoridades", "legislatura", "municipios-personal"];
 const pesos = (v: number) => `$ ${formatNumber(Math.round(v))}`;
 const listApi = getRouteApi("/municipios");
 const detailApi = getRouteApi("/municipios/$slug");
 
-type Metric = "poblacion" | "coparticipacion";
+type Metric = "poblacion" | "coparticipacion" | "personal";
 const METRICS: { value: Metric; label: string }[] = [
   { value: "poblacion", label: "Habitantes" },
   { value: "coparticipacion", label: "Coparticipación por habitante" },
+  { value: "personal", label: "Personal cada 1.000 habitantes" },
 ];
-const metricValue = (m: MunicipioPagina, metric: Metric) =>
-  metric === "poblacion" ? m.poblacion.actual : (m.coparticipacion?.perCapita ?? 0);
-const metricFormat = (metric: Metric) => (metric === "poblacion" ? (v: number) => `${formatNumber(v)} hab.` : pesos);
+/** Value of each metric; undefined when the municipality has no data (grey on the map, last in the list). */
+const metricValue = (m: MunicipioPagina, metric: Metric): number | undefined =>
+  metric === "poblacion" ? m.poblacion.actual : metric === "coparticipacion" ? m.coparticipacion?.perCapita : m.staff?.perThousand;
+const perThousand = (v: number) => formatNumber(Math.round(v * 10) / 10);
+const metricFormat = (metric: Metric) =>
+  metric === "poblacion" ? (v: number) => `${formatNumber(v)} hab.` : metric === "coparticipacion" ? pesos : (v: number) => `${perThousand(v)} cada 1.000 hab.`;
+const METRIC_UNIT: Record<Metric, string> = { poblacion: "habitantes", coparticipacion: "por habitante", personal: "cada 1.000 hab." };
 
 export function MunicipiosPage() {
   const { municipios, mapa } = listApi.useLoaderData();
   const navigate = useNavigate();
   const [metric, setMetric] = useState<Metric>("poblacion");
-  const sorted = useMemo(() => [...municipios].sort((a, b) => metricValue(b, metric) - metricValue(a, metric)), [municipios, metric]);
-  const values = Object.fromEntries(municipios.map((m) => [m.nombre, metricValue(m, metric)]));
+  const sorted = useMemo(() => [...municipios].sort((a, b) => (metricValue(b, metric) ?? -1) - (metricValue(a, metric) ?? -1)), [municipios, metric]);
+  const values = Object.fromEntries(municipios.flatMap((m) => (metricValue(m, metric) === undefined ? [] : [[m.nombre, metricValue(m, metric)!]])));
   const anio = municipios.find((m) => m.coparticipacion)?.coparticipacion;
 
   return (
     <div className="flex flex-col gap-10">
       <PageHeader icon={MapPin} topic="Municipios" title="Los 18 municipios de Mendoza">
-        Quién gobierna cada uno, cuántos habitantes tiene y cuánta coparticipación recibe por habitante.
+        Quién gobierna cada uno, cuántos habitantes tiene, cuánta coparticipación recibe y cuánto personal tiene.
       </PageHeader>
       <Segmented label="Ver en el mapa" options={METRICS} value={metric} onChange={setMetric} />
 
@@ -52,7 +57,13 @@ export function MunicipiosPage() {
               formatValue={metricFormat(metric)}
               seleccionado={null}
               onSelect={(m) => m && navigate({ to: "/municipios/$slug", params: { slug: slug(m) } })}
-              leyenda={metric === "poblacion" ? "Habitantes estimados" : `Por habitante, ${anio?.anio ?? ""} (pesos de ${anio?.referencia ?? ""})`}
+              leyenda={
+                metric === "poblacion"
+                  ? "Habitantes estimados"
+                  : metric === "coparticipacion"
+                    ? `Por habitante, ${anio?.anio ?? ""} (pesos de ${anio?.referencia ?? ""})`
+                    : "Cargos de planta y contratos cada 1.000 habitantes (gris: no lo publica)"
+              }
             />
           </div>
         )}
@@ -72,9 +83,13 @@ export function MunicipiosPage() {
                 </span>
                 <span className="flex shrink-0 flex-col items-end gap-0.5">
                   <span className="font-medium whitespace-nowrap tabular-nums">
-                    {metric === "poblacion" ? formatNumber(m.poblacion.actual) : m.coparticipacion ? pesos(m.coparticipacion.perCapita) : "—"}
+                    {(() => {
+                      const v = metricValue(m, metric);
+                      if (v === undefined) return metric === "personal" ? "No lo publica" : "—";
+                      return metric === "poblacion" ? formatNumber(v) : metric === "coparticipacion" ? pesos(v) : perThousand(v);
+                    })()}
                   </span>
-                  <span className="text-xs whitespace-nowrap text-ink-muted">{metric === "poblacion" ? "habitantes" : "por habitante"}</span>
+                  <span className="text-xs whitespace-nowrap text-ink-muted">{metricValue(m, metric) === undefined ? "\u00a0" : METRIC_UNIT[metric]}</span>
                 </span>
                 <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
               </Link>
@@ -107,6 +122,9 @@ export function MunicipioPage() {
   const c = m.coparticipacion;
   const i = m.intendente;
   const localLaws = leyes.filter((l) => l.municipios.includes(m.slug));
+  const st = m.staff;
+  // One column per year (its last published quarter): 30 quarters do not fit on a phone.
+  const yearly = st ? [...new Map(st.series.map((s) => [s.cutoff.slice(0, 4), s])).values()] : [];
   return (
     <div className="flex flex-col gap-10">
       <Migas items={[{ label: "Municipios", to: "/municipios" }, { label: m.nombre }]} />
@@ -145,6 +163,12 @@ export function MunicipioPage() {
             value={c ? pesos(c.perCapita) : "—"}
             note={c ? `Puesto ${c.puesto} de 18 · ${c.anio}, en pesos de ${c.referencia}` : "Sin datos"}
           />
+          <StatTile
+            icon={Briefcase}
+            label="Cargos y contratos"
+            value={st ? formatNumber(st.positions + st.contracts) : "No lo publica"}
+            note={st ? `${perThousand(st.perThousand)} cada 1.000 habitantes · puesto ${st.rank} de ${st.withData}` : "No publica su planta de personal"}
+          />
           <StatTile icon={Vote} label="Sección electoral" value={m.seccion ?? "—"} note="Define a quiénes eligen sus vecinos en la Legislatura" />
         </div>
       </div>
@@ -164,6 +188,45 @@ export function MunicipioPage() {
           </Link>
         </Section>
       )}
+
+      <Section title="Personal del municipio">
+        {st ? (
+          <>
+            <p className="-mt-2 text-sm text-ink-muted">
+              Cargos de planta y contratos según el anexo de personal que el municipio publica por la Ley de Responsabilidad Fiscal, {st.quarter}. Son cargos, no personas: alguien puede tener más de uno.
+            </p>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <StatTile label="Planta permanente" value={formatNumber(st.permanent)} />
+              <StatTile label="Planta temporaria" value={formatNumber(st.temporary)} />
+              <StatTile label="Contratos" value={formatNumber(st.contracts)} note="De locación, sin cargo" />
+              <StatTile label="Cada 1.000 hab." value={perThousand(st.perThousand)} note={`Puesto ${st.rank} de ${st.withData}`} />
+            </div>
+            {yearly.length > 2 && (
+              <ColumnChart
+                columnas={yearly.map((s) => ({
+                  etiqueta: s.cutoff.slice(0, 4),
+                  valor: s.positions + s.contracts,
+                  detalle: `${s.label.replace("T", ".º trim.")}: ${formatNumber(s.positions)} de planta y ${formatNumber(s.contracts)} contratos`,
+                }))}
+                formatValue={formatNumber}
+                ariaLabel={`Cargos y contratos de ${m.nombre}, por año`}
+              />
+            )}
+            {st.note && <Alert variant="note">{st.note}</Alert>}
+            <a href={st.sourceUrl} target="_blank" rel="noreferrer" className="w-fit text-sm text-link hover:underline" data-track="municipality.staff_source.open">
+              Ver el anexo publicado por el municipio ↗
+            </a>
+          </>
+        ) : (
+          <Alert variant="warning" title="No publica su planta de personal">
+            No encontramos el anexo de personal que exige la Ley de Responsabilidad Fiscal en un formato que se pueda leer.{" "}
+            <Link to="/no-publicado" className="text-link hover:underline">
+              Ver qué falta y cómo pedirlo
+            </Link>
+            .
+          </Alert>
+        )}
+      </Section>
 
       {localLaws.length > 0 && (
         <Section title={`Leyes que tocan a ${m.nombre}`}>

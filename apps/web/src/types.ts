@@ -334,6 +334,28 @@ export interface MunicipioPagina {
   } | null;
   seccion: string | null;
   legisladores: { id: string; role: string; slug: string; nombre: string; cargo: string; bloque: string | null; foto: string | null }[];
+  /** Municipal staff from the Fiscal Responsibility Law, Annex 19 (null when the municipality does not publish it). */
+  staff: MunicipalStaff | null;
+}
+
+export interface MunicipalStaff {
+  /** Latest quarter published ("2.º trimestre de 2026") and its cut-off date. */
+  quarter: string;
+  cutoff: string;
+  permanent: number;
+  temporary: number;
+  /** Permanent + temporary positions, as the annex totals them. */
+  positions: number;
+  /** Service contracts (locación): people who work for the municipality without a position. */
+  contracts: number;
+  /** Positions + contracts per 1,000 inhabitants, and its place among the municipalities with data (1 = most). */
+  perThousand: number;
+  rank: number;
+  withData: number;
+  series: { label: string; cutoff: string; positions: number; contracts: number }[];
+  sourceUrl: string;
+  /** Caveat written by the scraper for the latest quarter (a file repeated by the municipality, totals that do not add up). */
+  note: string | null;
 }
 
 export interface OrganismoResumen {

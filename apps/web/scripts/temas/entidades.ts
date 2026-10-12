@@ -9,6 +9,7 @@ import { join } from "node:path";
 
 import { SECCION_ELECTORAL, slug, slugProveedor } from "../../src/slug.ts";
 import type {
+  MunicipalStaff,
   CoparticipacionTema,
   FuncionariosTema,
   LeyDetalle,
@@ -37,11 +38,57 @@ export const UMBRAL = { proveedorMonto: 100e6, proveedorProcesos: 3, organismoPr
 
 // ------------------------------------------------------------------ municipios
 
+/**
+ * Staff per municipality from the Annex 19 rows (data/processed/municipios-personal/personal.csv): the latest
+ * quarter, the quarterly series and staff per 1,000 inhabitants. Hours of teaching (horas cátedra) are hours,
+ * not people, so they are left out of the totals.
+ */
+export function buildMunicipalStaff(rows: CsvRow[], population: Map<string, number>): Map<string, MunicipalStaff> {
+  const byMunicipality = new Map<string, Map<string, CsvRow[]>>();
+  for (const r of rows) {
+    const key = r.fecha_corte!;
+    const m = byMunicipality.get(r.municipio!) ?? new Map<string, CsvRow[]>();
+    m.set(key, [...(m.get(key) ?? []), r]);
+    byMunicipality.set(r.municipio!, m);
+  }
+  const count = (q: CsvRow[], type: string) => Number(q.find((r) => r.tipo_personal === type)?.cantidad ?? 0);
+  const result = new Map<string, Omit<MunicipalStaff, "rank" | "withData">>();
+  for (const [municipality, quarters] of byMunicipality) {
+    const cutoffs = [...quarters.keys()].sort();
+    const series = cutoffs.map((cutoff) => {
+      const q = quarters.get(cutoff)!;
+      const positions = count(q, "total_planta") || count(q, "permanente") + count(q, "temporaria");
+      return { label: `${q[0]!.trimestre}T ${q[0]!.anio}`, cutoff, positions, contracts: count(q, "contratos_locacion") };
+    });
+    const latest = quarters.get(cutoffs.at(-1)!)!;
+    const last = series.at(-1)!;
+    const people = population.get(municipality);
+    if (!people) continue;
+    result.set(municipality, {
+      quarter: `${latest[0]!.trimestre}.º trimestre de ${latest[0]!.anio}`,
+      cutoff: cutoffs.at(-1)!,
+      permanent: count(latest, "permanente"),
+      temporary: count(latest, "temporaria"),
+      positions: last.positions,
+      contracts: last.contracts,
+      perThousand: ((last.positions + last.contracts) / people) * 1000,
+      series,
+      sourceUrl: latest[0]!.fuente_url ?? "",
+      // Notes about amounts are left out: the site shows people, not the amounts paid.
+      note: latest.map((r) => r.observacion).find((o) => o && !/importe/i.test(o)) ?? null,
+    });
+  }
+  const ranked = [...result].sort((a, b) => b[1].perThousand - a[1].perThousand);
+  return new Map(ranked.map(([m, s], i) => [m, { ...s, rank: i + 1, withData: ranked.length }]));
+}
+
 export function buildMunicipios(
   copa: CoparticipacionTema,
   poblacion: PoblacionTema,
   funcionarios: FuncionariosTema,
+  staffRows: CsvRow[] = [],
 ): MunicipioPagina[] {
+  const staff = buildMunicipalStaff(staffRows, new Map(poblacion.departamentos.map((d) => [d.municipio, d.actual])));
   const ranking = [...copa.municipios].sort((a, b) => b.perCapita - a.perCapita);
   const porPoblacion = [...poblacion.departamentos].sort((a, b) => b.actual - a.actual);
   return poblacion.departamentos.map((d) => {
@@ -83,6 +130,7 @@ export function buildMunicipios(
         : null,
       seccion,
       legisladores,
+      staff: staff.get(d.municipio) ?? null,
     };
   });
 }

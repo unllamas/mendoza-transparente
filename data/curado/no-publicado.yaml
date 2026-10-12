@@ -172,7 +172,25 @@
   estado: sin_publicar
   donde_buscamos:
     - https://sanmartinmza.gob.ar
-  pedido: Presupuesto 2026, ejecución presupuestaria de 2024 a la fecha y anexos trimestrales de la Ley de Responsabilidad Fiscal del municipio.
+    - https://lavallemendoza.gob.ar/public/
+  detalle_estado: Tampoco publican el anexo de personal (cargos de planta y contratos), que los otros 14 municipios con datos sí suben a su sitio.
+  pedido: Presupuesto 2026, ejecución presupuestaria de 2024 a la fecha y anexos trimestrales de la Ley de Responsabilidad Fiscal del municipio, incluido el Anexo 19 de personal.
+  pedidos: []
+
+- id: personal-godoy-cruz-las-heras
+  titulo: El personal de Godoy Cruz y Las Heras, en un formato que se pueda leer
+  categoria: municipios
+  que_es: El anexo trimestral con la cantidad de cargos de planta permanente, temporaria y contratos de locación de cada municipio (Anexo 19 de la Ley de Responsabilidad Fiscal).
+  por_que_importa: Sin él no se puede saber cuánta gente trabaja en estos dos municipios ni compararlos con los otros 14 que sí lo publican.
+  organismo: Municipalidades de Godoy Cruz y de Las Heras
+  marco_legal: Ley 7314 de Responsabilidad Fiscal y Ley 9070 de Acceso a la Información Pública
+  estado: parcial
+  donde_buscamos:
+    - https://webapps.godoycruz.gob.ar/responsabilidadfiscal
+    - https://datos.godoycruz.gob.ar/
+    - https://web6.lasheras.gob.ar/apex
+  detalle_estado: Los dos los cargan en aplicaciones con formularios que no ofrecen un archivo para descargar, así que no se pueden leer ni archivar automáticamente.
+  pedido: Los anexos 19 de personal de 2018 a la fecha en un archivo descargable (PDF o planilla), publicado en el sitio del municipio.
   pedidos: []
 
 - id: organigrama-completo

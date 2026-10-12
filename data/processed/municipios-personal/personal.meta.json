@@ -1,0 +1,75 @@
+{
+  "titulo": "Personal de cada municipio, por trimestre",
+  "descripcion": "Cada fila es un tipo de personal (planta permanente, planta temporaria, total de planta, horas cátedra o contratos de locación) de un municipio al cierre de un trimestre, con su cantidad y el importe liquidado. Sale del Anexo 19 de la Ley de Responsabilidad Fiscal (Acuerdo 3949 del Tribunal de Cuentas), que cada municipio publica en su sitio; se toma la fila de totales del documento. Los importes son pesos nominales ACUMULADOS desde enero hasta el fin del trimestre: para el gasto de un trimestre hay que restar el acumulado del anterior. La cantidad son cargos, no personas. Faltan Godoy Cruz, Las Heras, Lavalle y San Martín, que no publican el anexo en un formato al que se pueda acceder. No todos los municipios tienen la serie completa. Capital tiene además una serie mensual (personal_capital_mensual).",
+  "agruparPor": "municipio",
+  "columnas": {
+    "municipio": {
+      "etiqueta": "Municipio",
+      "tipo": "texto"
+    },
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio"
+    },
+    "trimestre": {
+      "etiqueta": "Trimestre",
+      "tipo": "numero",
+      "descripcion": "1 a 4. El importe acumulado llega hasta el fin de este trimestre."
+    },
+    "fecha_corte": {
+      "etiqueta": "Fecha de corte",
+      "tipo": "fecha",
+      "descripcion": "Último día del trimestre."
+    },
+    "tipo_personal": {
+      "etiqueta": "Tipo de personal",
+      "tipo": "texto",
+      "valores": {
+        "permanente": "Planta permanente",
+        "temporaria": "Planta temporaria",
+        "total_planta": "Total de planta (permanente + temporaria)",
+        "horas_catedra": "Horas cátedra",
+        "contratos_locacion": "Contratos de locación (servicios u obras)"
+      }
+    },
+    "cantidad": {
+      "etiqueta": "Cantidad",
+      "tipo": "numero",
+      "unidad": "cargos",
+      "descripcion": "Cargos liquidados (una persona con dos cargos cuenta dos). En contratos de locación, cantidad de contratos; en horas cátedra, horas."
+    },
+    "importe_acumulado": {
+      "etiqueta": "Importe liquidado acumulado",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Pesos nominales liquidados desde enero hasta el fin del trimestre (no del trimestre ni del mes)."
+    },
+    "fuente": {
+      "etiqueta": "Fuente",
+      "tipo": "texto",
+      "oculta": true
+    },
+    "fuente_url": {
+      "etiqueta": "Documento",
+      "tipo": "url",
+      "descripcion": "Enlace al documento oficial en el sitio del municipio (a veces un ZIP con todos los anexos)."
+    },
+    "observacion": {
+      "etiqueta": "Observación",
+      "tipo": "texto",
+      "descripcion": "Aclaración cuando el documento no cuadra (por ejemplo, permanente + temporaria no suma el total de planta), cuando no trae la fila de totales y se sumaron las filas, o cuando repite las cifras del trimestre anterior."
+    }
+  },
+  "orden": [
+    "municipio",
+    "anio",
+    "trimestre",
+    "tipo_personal",
+    "cantidad",
+    "importe_acumulado",
+    "fuente_url",
+    "observacion",
+    "fecha_corte"
+  ]
+}

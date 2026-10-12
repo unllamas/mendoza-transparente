@@ -41,6 +41,7 @@ export const EVENT_CATALOG: EventDoc[] = [
   { event: "law.full_text.toggle", description: "Desplegó o plegó el texto completo de una ley. Propiedad law.", tags: ["leyes"] },
   { event: "law.place.open", description: "Abrió la página de un departamento desde el resumen de una ley. Propiedad law.", tags: ["leyes"] },
   { event: "municipality.law.open", description: "Abrió una ley desde la página de un departamento. Propiedad law.", tags: ["municipios", "leyes"] },
+  { event: "municipality.staff_source.open", description: "Abrió el anexo de personal publicado por un municipio (Ley de Responsabilidad Fiscal).", tags: ["municipios"] },
   { event: "participation.form.change", description: "En «Participá», cambió de formulario (pedido, respuesta, error, dato). Propiedad value.", tags: ["participación"] },
   { event: "participation.request.success", description: "Registró un pedido de acceso a la información con su número de trámite.", tags: ["participación", "embudo de pedidos"] },
   { event: "participation.request.error", description: "Falló el registro de un pedido (dato inválido, trámite repetido o sin conexión). Propiedad status: código de respuesta.", tags: ["participación"] },

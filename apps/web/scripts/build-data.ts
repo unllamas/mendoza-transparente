@@ -303,7 +303,7 @@ writeFileSync(
 
 // Entidades con página propia
 if (copaTema && poblacionTema && funcionariosTema) {
-  writeFileSync(join(OUT, "temas", "municipios.json"), JSON.stringify(buildMunicipios(copaTema, poblacionTema, funcionariosTema)));
+  writeFileSync(join(OUT, "temas", "municipios.json"), JSON.stringify(buildMunicipios(copaTema, poblacionTema, funcionariosTema, readTable("municipios-personal", "personal.csv") ?? [])));
 }
 if (procesos && adjudicaciones) {
   const { organismos, proveedores } = buildOrganismosYProveedores(

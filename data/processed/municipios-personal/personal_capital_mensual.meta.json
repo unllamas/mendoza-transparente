@@ -1,0 +1,17 @@
+{
+  "titulo": "Personal de la Ciudad de Mendoza, mes a mes",
+  "descripcion": "Cada fila es un mes. La Municipalidad de la Ciudad de Mendoza publica en su portal de datos abiertos la evolución de su planta (permanente y temporaria juntas) y de las locaciones de servicios, con el costo del mes, incluido el Concejo Deliberante. No es el Anexo 19: acá la planta suma permanente y temporaria y el importe es del mes, no acumulado.",
+  "columnas": {
+    "municipio": { "etiqueta": "Municipio", "tipo": "texto", "oculta": true },
+    "anio": { "etiqueta": "Año", "tipo": "anio" },
+    "mes": { "etiqueta": "Mes", "tipo": "mes" },
+    "fecha_corte": { "etiqueta": "Fecha de corte", "tipo": "fecha", "descripcion": "Último día del mes." },
+    "planta": { "etiqueta": "Planta", "tipo": "numero", "unidad": "cargos", "descripcion": "Planta permanente y temporaria." },
+    "locaciones": { "etiqueta": "Locaciones", "tipo": "numero", "unidad": "contratos" },
+    "total": { "etiqueta": "Total", "tipo": "numero", "unidad": "personas", "descripcion": "Planta más locaciones." },
+    "gasto_mensual": { "etiqueta": "Costo del mes", "tipo": "moneda", "moneda": "ARS", "escala": 1, "descripcion": "Pesos nominales del mes, según el informe de la Dirección de Finanzas." },
+    "fuente": { "etiqueta": "Fuente", "tipo": "texto", "oculta": true },
+    "fuente_url": { "etiqueta": "Documento", "tipo": "url" }
+  },
+  "orden": ["anio", "mes", "planta", "locaciones", "total", "gasto_mensual", "fuente_url", "fecha_corte"]
+}
