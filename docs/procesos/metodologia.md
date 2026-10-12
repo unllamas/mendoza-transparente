@@ -52,3 +52,17 @@ Cada ley tiene un resumen en lenguaje simple para quien no maneja el vocabulario
 - El texto plano del Boletín se separa en capítulos, artículos (con su rótulo si lo tienen, como "Objeto") y el cierre ("Dada en…" y quiénes firman).
 - Se descartan el preámbulo ("El Senado y Cámara de Diputados… sancionan con fuerza de ley") y el artículo de forma "Comuníquese al Poder Ejecutivo".
 
+## Personal y costo de cada organismo
+
+Fuente: anexo 19 del informe trimestral de Responsabilidad Fiscal (`lrf-personal`). Cálculo en `apps/web/scripts/temas/gobierno.ts`.
+
+- **Son cargos, no personas.** Una persona puede tener más de un cargo; los docentes suman además horas cátedra. En la web siempre se aclara.
+- **Unir organismos entre años:** el anexo no trae códigos, y los organismos cambian de nombre entre gestiones. Cada nombre se asigna a su organismo actual en `equivalencias_lrf` de `data/curado/jurisdicciones.yaml`.
+  - Lo que se dividió sin un sucesor claro (por ejemplo, Economía y Energía) queda en `null` y no se suma a ningún organismo.
+  - La serie de un ministerio que absorbió áreas no es comparable antes y después del cambio. Se avisa en la nota de la página.
+- **Costo anual:** los importes del anexo son acumulados desde enero, así que el costo del año es el del último trimestre informado. Se pasa a pesos de hoy con el IPC promedio del año.
+- **Costo mensual por cargo:** costo del último año completo ÷ promedio de cargos de los cuatro trimestres (planta y contratos) ÷ 12. Incluye aguinaldo y lo que se liquide; es un promedio aproximado, no un sueldo.
+- **Conducción:** los funcionarios del Ejecutivo de la página de funcionarios, más quienes tienen un cargo vigente en la Oficina de Ética Pública en las reparticiones del organismo. Se ordenan por jerarquía según el nombre del cargo.
+- **Compras:** los procesos cuyo comprador empieza con alguno de los `prefijos_compras` del organismo (código `carácter-jurisdicción-`).
+- **Designaciones:** las del Boletín Oficial (`designaciones`), asignadas por organismo emisor o repartición. La cobertura depende de cuántos Boletines tengamos con texto completo.
+

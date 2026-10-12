@@ -238,6 +238,8 @@ export interface Funcionario {
   slug: string;
   /** Municipalities this person governs or represents (intendente: one; provincial legislators: their section). */
   municipalities: { slug: string; name: string }[];
+  /** Agency this person leads or belongs to (/gobierno/<slug>), for Executive officials. */
+  agency?: { slug: string; name: string };
   nombre: string;
   /** Aclaración publicada junto al nombre (suspensión, licencia). */
   nota: string | null;
@@ -333,6 +335,8 @@ export interface MunicipioPagina {
 export interface OrganismoResumen {
   slug: string;
   nombre: string;
+  /** Buyer name as it comes from COMPR.AR, with its budget code ("1-08-75 - …"). */
+  buyer: string;
   procesos: number;
   total: number;
   pctDirecta: number;
@@ -393,4 +397,57 @@ export interface LeyDetalle extends LeyResumen {
   resumen: { texto: string; puntos: string[] } | null;
   bloques: LeyBloque[];
   cierre: LeyCierre | null;
+}
+
+// ------------------------------------------------------------------ Gobierno por dentro (/gobierno)
+
+export type AgencyKind = "ministerio" | "secretaria" | "organismo_control" | "ente_descentralizado" | "empresa" | "poder" | "otro";
+
+export interface AgencySummary {
+  slug: string;
+  name: string;
+  kind: string;
+  parent: { slug: string; name: string } | null;
+  /** Latest staff count (cargos de planta permanente + temporaria) and quarter it refers to. */
+  staff: number | null;
+  staffPeriod: string | null;
+  /** Personnel cost of the last complete year, in pesos of `realReference`. */
+  annualCostReal: number | null;
+  head: { name: string; role: string; path: string | null } | null;
+}
+
+export interface AgencyDetail extends AgencySummary {
+  whatItDoes: string | null;
+  points: string[];
+  law: string | null;
+  lawUrl: string | null;
+  site: string | null;
+  note: string | null;
+  before: string[];
+  children: { slug: string; name: string }[];
+  realReference: string | null;
+  staffSeries: {
+    period: string; // "2026-T2"
+    permanent: number;
+    temporary: number;
+    contracts: number;
+    teachingHours: number;
+  }[];
+  costByYear: { year: number; nominal: number; real: number; complete: boolean }[];
+  /** Monthly cost per position in the last complete year, in real pesos. */
+  monthlyCostPerPosition: number | null;
+  /** Sub-units reported separately in the annex (hospitals, DGE…). */
+  units: { name: string; staff: number; contracts: number }[];
+  /** People with a declaration obligation at Ética Pública, active, ranked by hierarchy. */
+  team: { name: string; role: string; since: string | null; path: string | null }[];
+  teamTotal: number;
+  purchases: {
+    processes: number;
+    total: number;
+    direct: number;
+    singleBid: number;
+    topSuppliers: { name: string; amount: number; slug: string | null }[];
+    buyers: { slug: string; name: string; processes: number }[];
+  } | null;
+  appointments: { date: string; action: string; person: string; role: string; unit: string; url: string }[];
 }

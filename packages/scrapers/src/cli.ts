@@ -9,7 +9,7 @@ import { join } from "node:path";
 const [id, ...args] = process.argv.slice(2);
 const sourcesDir = join(import.meta.dir, "sources");
 const available = readdirSync(sourcesDir)
-  .filter((f) => f.endsWith(".ts"))
+  .filter((f) => f.endsWith(".ts") && !f.endsWith(".test.ts"))
   .map((f) => f.slice(0, -3));
 
 if (!id || !available.includes(id)) {

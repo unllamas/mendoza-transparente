@@ -10,14 +10,14 @@ Workflow: `.github/workflows/actualizar-datos.yml`.
 |---|---|
 | Todos los días, 07:00 | Boletín Oficial (últimos 3 días) |
 | Lunes, 08:00 | Compras (OCDS), transferencias de Nación (DNAP), Ética Pública, índices, IPC de la DEIE |
-| Día 3 de cada mes, 09:00 | Hacienda (deuda y coparticipación), energía, población, Legislatura, autoridades, proveedores |
+| Día 3 de cada mes, 09:00 | Hacienda (deuda y coparticipación), energía, población, Legislatura, autoridades, proveedores, personal por organismo (anexo 19 de Responsabilidad Fiscal) |
 
 Cómo funciona:
 
 1. **plan** decide qué fuentes corren según el calendario (o las elegidas a mano).
 2. **scrape** corre cada fuente en su propio job; si una falla, las demás siguen. Empaqueta los cambios de `data/`.
 3. **commit** junta todos los cambios, comprueba que la web compile con ellos (`bun run data`, tipos, build y SEO) y hace **un único commit**. Si la web no compila, no publica y abre un issue.
-   Antes, si se actualizó el Boletín Oficial, escribe los resúmenes en lenguaje simple de las leyes nuevas (`apps/web/scripts/resumir-leyes.ts`). Necesita el secreto **`ANTHROPIC_API_KEY`**: sin él, las leyes nuevas se publican igual, sin resumen. Si ese paso falla, no frena la publicación. Ver [Metodología](metodologia.md#resumenes-de-leyes).
+   Antes, si se actualizó el Boletín Oficial, extrae las designaciones de las normas nuevas (`designaciones`, fuente derivada que no descarga nada) y escribe los resúmenes en lenguaje simple de las leyes nuevas (`apps/web/scripts/resumir-leyes.ts`). Necesita el secreto **`ANTHROPIC_API_KEY`**: sin él, las leyes nuevas se publican igual, sin resumen. Si ese paso falla, no frena la publicación. Ver [Metodología](metodologia.md#resumenes-de-leyes).
 4. **frescura** controla que el Boletín Oficial no pase más de 4 días sin actualizarse (solo si hay proxy configurado).
 
 Correrlo a mano: pestaña **Actions → Actualizar datos → Run workflow**, con las fuentes separadas por coma (vacío = todas).

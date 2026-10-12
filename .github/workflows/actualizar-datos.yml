@@ -40,7 +40,7 @@ concurrency:
 env:
   DIARIO: "boletin-oficial"
   SEMANAL: "compras-ocds,dnap,etica-publica,indices,deie-ipc"
-  MENSUAL: "hacienda-deuda-stock,hacienda-participacion-municipal,energia-regalias,poblacion,legislatura,autoridades,proveedores"
+  MENSUAL: "hacienda-deuda-stock,hacienda-participacion-municipal,energia-regalias,poblacion,legislatura,autoridades,proveedores,lrf-personal"
 
 jobs:
   plan:
@@ -197,6 +197,13 @@ jobs:
           for f in "${PAQUETES[@]}"; do echo "Aplicando $(basename "$f")"; tar -xzf "$f"; done
           echo "fuentes=$(for f in "${PAQUETES[@]}"; do basename "$f" .tgz; done | paste -sd ', ' -)" >> "$GITHUB_OUTPUT"
           echo "hay=true" >> "$GITHUB_OUTPUT"
+
+      - name: Extraer designaciones de las normas nuevas del Boletín
+        # Fuente derivada: lee data/processed/boletin-oficial (no descarga nada), por eso corre después de aplicar los cambios.
+        if: steps.aplicar.outputs.hay == 'true' && contains(steps.aplicar.outputs.fuentes, 'boletin-oficial')
+        run: |
+          bun install --frozen-lockfile
+          bun run scrape designaciones
 
       - name: Resumir leyes nuevas en lenguaje simple
         # Opcional: sin el secreto ANTHROPIC_API_KEY las leyes se muestran sin resumen. Si falla, no frena la publicación.

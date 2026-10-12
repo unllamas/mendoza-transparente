@@ -174,3 +174,77 @@
     - https://sanmartinmza.gob.ar
   pedido: Presupuesto 2026, ejecución presupuestaria de 2024 a la fecha y anexos trimestrales de la Ley de Responsabilidad Fiscal del municipio.
   pedidos: []
+
+- id: organigrama-completo
+  titulo: El organigrama del Gobierno con quién conduce cada área
+  categoria: estructura
+  que_es: La estructura completa de cada ministerio (subsecretarías, direcciones y departamentos) con el nombre de quien está a cargo de cada una.
+  por_que_importa: Sin el organigrama no se sabe quién es responsable de cada área ni cuántos cargos políticos hay en cada ministerio.
+  organismo: Gobernación de Mendoza
+  marco_legal: Ley 9501 de Ministerios (art. 37) y Ley 9070 de Acceso a la Información Pública
+  estado: sin_publicar
+  donde_buscamos:
+    - https://www.mendoza.gov.ar/
+    - https://sitios.mendoza.gob.ar/haciendayfinanzas/
+    - https://eticapublica.mendoza.gov.ar/
+  detalle_estado: Solo se publica la lista de ministros. La Oficina de Ética Pública lista a quienes presentan declaración jurada, pero no la estructura.
+  pedido: El organigrama vigente de cada ministerio y organismo del Poder Ejecutivo, con las subsecretarías, direcciones y departamentos, y el nombre y cargo de quien conduce cada una.
+  pedidos: []
+
+- id: misiones-funciones
+  titulo: Qué hace cada dirección y subsecretaría
+  categoria: estructura
+  que_es: Los decretos de estructura orgánica que fijan las misiones y funciones de cada subsecretaría y dirección del Gobierno.
+  por_que_importa: La Ley de Ministerios solo describe a los siete ministerios. Sin estos decretos no se sabe qué tiene que hacer cada área ni si hay áreas que se superponen.
+  organismo: Gobernación de Mendoza
+  marco_legal: Ley 9501 de Ministerios (art. 37) y Ley 9070 de Acceso a la Información Pública
+  estado: sin_publicar
+  donde_buscamos:
+    - https://www.mendoza.gov.ar/
+    - https://boe.mendoza.gov.ar/
+  detalle_estado: En el Boletín Oficial aparecen decretos sueltos, pero no hay un listado de las estructuras vigentes.
+  pedido: Copia de los decretos vigentes que aprueban la estructura orgánica, las misiones y las funciones de cada ministerio y organismo del Poder Ejecutivo desde diciembre de 2023.
+  pedidos: []
+
+- id: contratados
+  titulo: Quiénes son los contratados del Estado
+  categoria: personal
+  que_es: La lista de contratos de locación de servicios del Estado provincial, con el nombre del contratado, el organismo, el objeto, el monto y la duración de cada contrato.
+  por_que_importa: Los contratos no pasan por concurso. Sin la lista no se puede saber a quién se contrata, para qué ni por cuánto.
+  organismo: Ministerio de Hacienda y Finanzas
+  marco_legal: Ley 7314 de Responsabilidad Fiscal y Ley 9070 de Acceso a la Información Pública
+  estado: parcial
+  donde_buscamos:
+    - https://sitios.mendoza.gob.ar/haciendayfinanzas/ley-de-responsabilidad-fiscal/
+  detalle_estado: El anexo 20 del informe trimestral de Responsabilidad Fiscal publica cuántos contratos hay en cada organismo, las altas, las bajas y el importe total, pero no quiénes son ni qué hacen.
+  pedido: La nómina de contratos de locación de servicios vigentes en el Poder Ejecutivo provincial, con el organismo, el nombre del contratado, el objeto del contrato, el monto mensual y las fechas de inicio y fin.
+  pedidos: []
+
+- id: gasto-personal-detallado
+  titulo: El gasto en personal mes a mes y por concepto
+  categoria: personal
+  que_es: Cuánto se paga en sueldos cada mes en cada organismo y unidad (escuela, hospital, dirección), separado por sueldo básico, adicionales, horas extra y guardias.
+  por_que_importa: Solo con este detalle se pueden ver las horas extra, los adicionales y las diferencias entre áreas, que es donde suelen aparecer los gastos difíciles de explicar.
+  organismo: Ministerio de Hacienda y Finanzas
+  marco_legal: Ley 7314 de Responsabilidad Fiscal y Ley 9070 de Acceso a la Información Pública
+  estado: parcial
+  donde_buscamos:
+    - https://sitios.mendoza.gob.ar/haciendayfinanzas/ley-de-responsabilidad-fiscal/
+    - https://datosabiertos.mendoza.gov.ar/
+  detalle_estado: El anexo 19 publica, por trimestre, los cargos y el importe acumulado de cada organismo, sin desglose por concepto ni por unidad. El link del anexo 19 del segundo trimestre de 2024 está roto en el sitio oficial.
+  pedido: El gasto mensual en personal de cada organismo y unidad organizativa del Poder Ejecutivo, desde enero de 2023, separado por concepto (básico, adicionales, horas extra, guardias y aportes patronales), en formato CSV o XLSX.
+  pedidos: []
+
+- id: designaciones-de-personal
+  titulo: Todas las designaciones y bajas de personal
+  categoria: personal
+  que_es: El registro de todos los nombramientos, ascensos, pases y bajas de personal del Estado provincial, con nombre, cargo, organismo y fecha.
+  por_que_importa: Solo una parte de los nombramientos se publica en el Boletín Oficial, y a veces con meses de atraso. Sin el registro completo no se pueden ver, por ejemplo, los nombramientos en masa antes de un cambio de gobierno.
+  organismo: Ministerio de Hacienda y Finanzas
+  marco_legal: Ley 9070 de Acceso a la Información Pública
+  estado: parcial
+  donde_buscamos:
+    - https://boe.mendoza.gov.ar/
+  detalle_estado: El Boletín publica los decretos y algunas resoluciones de designación. Muchas designaciones internas y las de planta transitoria no aparecen.
+  pedido: El registro de altas, bajas, designaciones y cambios de situación del personal del Poder Ejecutivo provincial desde diciembre de 2023, con organismo, cargo, categoría y fecha, en formato CSV o XLSX.
+  pedidos: []

@@ -18,6 +18,7 @@ import { buildCoparticipacion } from "./temas/coparticipacion.ts";
 import { buildEmpleo } from "./temas/empleo.ts";
 import { buildFuncionarios, type Correccion } from "./temas/funcionarios.ts";
 import { buildLeyes, buildMunicipios, buildOrganismosYProveedores } from "./temas/entidades.ts";
+import { buildGobierno, type AgencyTable } from "./temas/gobierno.ts";
 import { buildHome } from "./temas/home.ts";
 import { deflactor } from "./temas/inflacion.ts";
 import { buildPoblacion } from "./temas/poblacion.ts";
@@ -309,6 +310,27 @@ if (procesos && adjudicaciones) {
   );
   writeFileSync(join(OUT, "temas", "organismos.json"), JSON.stringify(organismos));
   writeFileSync(join(OUT, "temas", "proveedores.json"), JSON.stringify(proveedores));
+
+  // Gobierno por dentro: one page per agency (docs/planes/el-estado-por-dentro.md).
+  const agencyTable = join(ROOT, "data", "curado", "jurisdicciones.yaml");
+  if (funcionariosTema && existsSync(agencyTable)) {
+    const agencies = buildGobierno(
+      parseYaml(readFileSync(agencyTable, "utf8")) as AgencyTable,
+      readTable("lrf-personal", "personal.csv") ?? [],
+      readTable("etica-publica", "funcionarios.csv") ?? [],
+      funcionariosTema,
+      procesos,
+      adjudicaciones,
+      organismos,
+      proveedores,
+      readTable("designaciones", "designaciones.csv") ?? [],
+      deflactor(ipcNacional ?? []),
+      join(OUT, "temas"),
+    );
+    writeFileSync(join(OUT, "temas", "gobierno.json"), JSON.stringify(agencies));
+    // buildGobierno links each Executive official to their agency: rewrite the officials file with it.
+    writeFileSync(join(OUT, "temas", "funcionarios.json"), JSON.stringify(funcionariosTema));
+  }
 }
 /** Lee un YAML de data/curado/ (lista vacía si no existe). */
 function leerCurado<T>(archivo: string): T[] {

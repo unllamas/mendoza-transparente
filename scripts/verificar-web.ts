@@ -35,6 +35,9 @@ const RUTAS = [
   "/funcionarios/gobierno/alfredo-victor-cornejo",
   "/funcionarios/diputados-provinciales",
   "/funcionarios/diputados-provinciales/edgardo-civit-evans",
+  "/gobierno",
+  "/gobierno/ministerio-de-salud-y-deportes",
+  "/gobierno/gobernacion",
   "/municipios",
   "/municipios/capital",
   "/municipios/general-alvear",
@@ -52,7 +55,12 @@ const proveedor = ((await Bun.file(join(temas, "proveedores.json")).json()) as {
 const organismo = ((await Bun.file(join(temas, "organismos.json")).json()) as { slug: string }[])[0];
 if (proveedor) RUTAS.push(`/proveedores/${proveedor.slug}`);
 if (organismo) RUTAS.push(`/organismos/${organismo.slug}`);
-const servidor = Bun.spawn(["bunx", "vite", "--port", String(PUERTO), "--strictPort"], { cwd: WEB, stdout: "ignore", stderr: "ignore" });
+const servidor = Bun.spawn(["bunx", "vite", "--port", String(PUERTO), "--strictPort"], {
+  cwd: WEB,
+  stdout: "ignore",
+  stderr: "ignore",
+  env: { ...process.env, MT_NO_DATA_WATCH: "1" },
+});
 for (let i = 0; i < 60; i++) {
   if (await fetch(BASE).then((r) => r.ok, () => false)) break;
   await Bun.sleep(500);

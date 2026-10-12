@@ -1,0 +1,25 @@
+{
+  "titulo": "Contratos de locación de servicios: altas y bajas por organismo",
+  "descripcion": "Cada fila es un organismo en un trimestre, con cuántos contratados de locación había al inicio, cuántos entraron, cuántos salieron y cuántos quedaron, y lo liquidado en el trimestre. Sale del Anexo 20 de la Ley de Responsabilidad Fiscal. A diferencia del Anexo 19, el importe es solo del trimestre (no acumulado). Los nombres de los organismos de 2018 a 2020 vienen cortados en el original.",
+  "columnas": {
+    "anio": { "etiqueta": "Año", "tipo": "anio" },
+    "trimestre": { "etiqueta": "Trimestre", "tipo": "numero" },
+    "fecha_corte": { "etiqueta": "Fecha de corte", "tipo": "fecha" },
+    "grupo": { "etiqueta": "Grupo", "tipo": "texto" },
+    "codigo_jurisdiccion": { "etiqueta": "Código de jurisdicción", "tipo": "texto", "descripcion": "Código presupuestario de la jurisdicción (por ejemplo 06 es Hacienda y Finanzas)." },
+    "codigo_unidad": { "etiqueta": "Código de unidad", "tipo": "texto", "descripcion": "Unidad dentro de la jurisdicción. Vacío en la administración central." },
+    "organismo": { "etiqueta": "Organismo", "tipo": "texto" },
+    "contratados_inicio": { "etiqueta": "Contratados al inicio", "tipo": "numero", "unidad": "contratos" },
+    "altas": { "etiqueta": "Altas", "tipo": "numero", "unidad": "contratos", "descripcion": "Contratos nuevos durante el trimestre." },
+    "bajas": { "etiqueta": "Bajas", "tipo": "numero", "unidad": "contratos", "descripcion": "Contratos terminados durante el trimestre." },
+    "contratados_fin": { "etiqueta": "Contratados al fin", "tipo": "numero", "unidad": "contratos" },
+    "importe_trimestre": {
+      "etiqueta": "Importe liquidado en el trimestre",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Pesos nominales liquidados en contratos de locación durante el trimestre (no acumulado)."
+    }
+  },
+  "orden": ["anio", "trimestre", "organismo", "contratados_inicio", "altas", "bajas", "contratados_fin", "importe_trimestre", "grupo", "codigo_jurisdiccion", "codigo_unidad", "fecha_corte"]
+}

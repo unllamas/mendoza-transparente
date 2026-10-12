@@ -61,6 +61,8 @@ function liveData(): Plugin {
         }
       });
 
+      // `bun run verificar` turns this off: scrapers writing data mid-run would reload the pages under test.
+      if (process.env.MT_NO_DATA_WATCH) return;
       server.watcher.add(watched);
       server.watcher.on("all", (_event, path) => {
         if (!watched.some((w) => path.startsWith(w))) return;

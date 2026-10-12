@@ -42,6 +42,16 @@
   dificultad: facil
   estado: activo
 
+- id: designaciones
+  nombre: Designaciones, renuncias y otros actos de personal
+  descripcion: "A quién designó, aceptó la renuncia o dio de baja el Gobierno de Mendoza, y en qué cargo, según los decretos y resoluciones del Boletín Oficial. Solo nombre y cargo: nunca DNI ni CUIL."
+  organismo: Gobierno de Mendoza (Boletín Oficial)
+  url: https://portalgateway.mendoza.gov.ar/api/boe/
+  formato: derivada de boletin-oficial (texto de las normas)
+  frecuencia: diaria
+  dificultad: media
+  estado: activo
+
 - id: etica-publica
   nombre: Declaraciones juradas patrimoniales y registro de sanciones
   descripcion: "Qué bienes declaran los funcionarios provinciales (inmuebles y vehículos, por su valor fiscal) y quiénes fueron sumariados o sancionados."
@@ -179,5 +189,15 @@
   descripcion: Retratos publicados por cada organismo, para reconocer a quienes nos representan.
   formato: jpg
   frecuencia: eventual
+  dificultad: media
+  estado: activo
+
+- id: lrf-personal
+  nombre: Personal y costo por organismo (Ley de Responsabilidad Fiscal)
+  organismo: Ministerio de Hacienda y Finanzas de Mendoza
+  url: https://sitios.mendoza.gob.ar/haciendayfinanzas/ley-de-responsabilidad-fiscal/
+  descripcion: "Cuántos cargos de planta permanente, planta temporaria y contratos de locación tiene cada organismo de la Provincia y cuánto se liquidó, trimestre a trimestre desde 2018."
+  formato: pdf (zip)
+  frecuencia: trimestral
   dificultad: media
   estado: activo

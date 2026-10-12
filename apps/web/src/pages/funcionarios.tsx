@@ -1,5 +1,5 @@
 import { getRouteApi, Link } from "@tanstack/react-router";
-import { ChevronRight, ExternalLink, FileText, Landmark, Mail, MapPin, Search, Vote } from "lucide-react";
+import { Building2, ChevronRight, ExternalLink, FileText, Landmark, Mail, MapPin, Search, Vote } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { BarList } from "../charts/bar-list.tsx";
@@ -338,6 +338,22 @@ export function FichaFuncionario({ persona: p }: { persona: Funcionario }) {
 
 /** Where this person governs or who they represent, linked to the municipality pages. */
 function Territorio({ persona: p }: { persona: Funcionario }) {
+  if (p.agency) {
+    return (
+      <Link
+        to="/gobierno/$slug"
+        params={{ slug: p.agency.slug }}
+        className="group flex items-center gap-3 rounded-xl border border-line p-3 text-sm hover:border-link"
+      >
+        <Building2 className="size-4 shrink-0 text-ink-muted" aria-hidden />
+        <span className="flex min-w-0 flex-1 flex-col">
+          <span className="text-ink-muted">Organismo que conduce o integra</span>
+          <span className="truncate font-medium group-hover:text-link">{p.agency.name}</span>
+        </span>
+        <ChevronRight className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+      </Link>
+    );
+  }
   if (!p.municipalities.length) {
     const nacional = p.grupo === "diputados_nacional" || p.grupo === "senado_nacional";
     return (

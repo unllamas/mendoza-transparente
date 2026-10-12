@@ -53,7 +53,8 @@ Objetivo: que la gente encuentre el sitio cuando busca "intendente de Maipú", "
 **URLs y enlaces internos.** Las URLs son legibles y jerárquicas:
 
 - `/funcionarios/<cargo>/<nombre>`, por ejemplo `/funcionarios/diputados-provinciales/edgardo-civit-evans`. Cada cargo tiene su página (`/funcionarios/intendentes`). Los cargos están en `ROLES` (`src/slug.ts`).
-- `/municipios/<nombre>`, `/proveedores/<nombre>-<cuit>`, `/organismos/<nombre>` y `/leyes/<número>`.
+- `/municipios/<nombre>`, `/proveedores/<nombre>-<cuit>`, `/organismos/<nombre>` (áreas que compran) y `/leyes/<número>`.
+- `/gobierno/<organismo>`: un organismo del Estado provincial, con su conducción, cargos, costo del personal, qué hace, compras y designaciones. Los ids salen de `data/curado/jurisdicciones.yaml`; el cálculo está en `scripts/temas/gobierno.ts` y los criterios en [Metodología](metodologia.md#personal-y-costo-de-cada-organismo).
 
 Toda entidad enlaza a las relacionadas, en los dos sentidos:
 
@@ -61,6 +62,7 @@ Toda entidad enlaza a las relacionadas, en los dos sentidos:
 - **Legislador provincial ↔ municipios de su sección electoral.**
 - **Organismo ↔ proveedores.**
 - **Coparticipación y población → página del municipio.**
+- **Funcionario del Ejecutivo ↔ organismo que conduce** (`/gobierno`); **organismo ↔ áreas que compran y proveedores**.
 - **Mapa:** en la página de un municipio, el mapa resalta ese departamento y lleva a los demás.
 
 Al sumar una entidad, pensar qué la conecta con las otras y enlazarlo, también en el `html` de `scripts/paginas.ts`.
@@ -82,7 +84,7 @@ bun run typecheck   # tipos
 bun run verificar   # scroll horizontal y consola
 ```
 
-`bun run verificar` (`scripts/verificar-web.ts`) levanta el servidor de desarrollo y, con un Chrome sin extensiones, recorre todas las páginas en 320, 360, 375, 390, 1024 y 1280 px: falla si alguna tiene scroll horizontal o si aparece cualquier error o advertencia en la consola, incluso al abrir hojas de detalle. También controla que, con el menú móvil abierto, la página de atrás quede bloqueada y solo se desplace el menú.
+`bun run verificar` (`scripts/verificar-web.ts`) levanta el servidor de desarrollo y, con un Chrome sin extensiones, recorre todas las páginas en 320, 360, 375, 390, 1024 y 1280 px: falla si alguna tiene scroll horizontal o si aparece cualquier error o advertencia en la consola, incluso al abrir hojas de detalle. Mientras corre, el servidor no recarga por cambios en los datos (`MT_NO_DATA_WATCH`), para que un scraper que escribe en paralelo no corte la prueba. También controla que, con el menú móvil abierto, la página de atrás quede bloqueada y solo se desplace el menú.
 
 Paneles sobre la página (menú móvil, hojas modales): usar `useScrollLock(abierto)` de `components.tsx`. Bloquea el scroll en `<html>` y `<body>`: con `overflow-x: clip` en `html`, el que desplaza la página es `<html>`, y bloquear solo `<body>` deja dos scrolls en el celular. El panel lleva `overflow-y-auto overscroll-contain`. Para revisar cómo se ve, sacar capturas con `playwright-core` (ver el mismo script como ejemplo).
 

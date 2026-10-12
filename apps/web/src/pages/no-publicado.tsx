@@ -2,9 +2,9 @@ import { getRouteApi } from "@tanstack/react-router";
 import { Check, ChevronRight, Copy, ExternalLink, EyeOff, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { NO_PUBLICADO_CATEGORIES, type NoPublicadoCategory } from "../no-publicado-categories.ts";
+import { NO_PUBLICADO_CATEGORIES, NO_PUBLICADO_THEMES, type NoPublicadoTheme } from "../no-publicado-categories.ts";
 import type { NoPublicado } from "../types.ts";
-import { Aviso, PageHeader, Segmented, Sheet } from "./components.tsx";
+import { Aviso, PageHeader, Sheet } from "./components.tsx";
 
 const route = getRouteApi("/no-publicado");
 
@@ -19,10 +19,16 @@ const ESTADOS: Record<NoPublicado["estado"], { label: string; dot: string }> = {
   desactualizado: { label: "Desactualizado", dot: "bg-warning" },
 };
 
+const PLURAL: Record<NoPublicado["estado"], string> = {
+  sin_publicar: "sin publicar",
+  parcial: "publicados en parte",
+  desactualizado: "desactualizados",
+};
+
 export function NoPublicadoPage() {
   const items = route.useLoaderData();
   const [abierto, setAbierto] = useState<NoPublicado | null>(null);
-  const [category, setCategory] = useState<NoPublicadoCategory | "todas">("todas");
+  const [theme, setTheme] = useState<NoPublicadoTheme | null>(null);
 
   // Direct links (/no-publicado#nomina-sueldos) open that request.
   useEffect(() => {
@@ -31,8 +37,9 @@ export function NoPublicadoPage() {
     if (item) setAbierto(item);
   }, [items]);
 
-  const present = (Object.keys(NO_PUBLICADO_CATEGORIES) as NoPublicadoCategory[]).filter((c) => items.some((i) => i.categoria === c));
-  const groups = category === "todas" ? present : [category];
+  const inTheme = (t: (typeof NO_PUBLICADO_THEMES)[number]) => items.filter((i) => (t.categories as readonly string[]).includes(i.categoria));
+  const themes = NO_PUBLICADO_THEMES.filter((t) => inTheme(t).length > 0);
+  const shown = theme ? themes.filter((t) => t.id === theme) : themes;
   const counts = { sin_publicar: 0, parcial: 0, desactualizado: 0 };
   for (const i of items) counts[i.estado]++;
 
@@ -49,64 +56,72 @@ export function NoPublicadoPage() {
             counts[e] ? (
               <span key={e} className="inline-flex items-center gap-1.5 whitespace-nowrap">
                 <span className={`size-2 rounded-full ${ESTADOS[e].dot}`} aria-hidden />
-                {counts[e]} {ESTADOS[e].label.toLowerCase()}
+                {counts[e]} {counts[e] === 1 ? ESTADOS[e].label.toLowerCase() : PLURAL[e]}
               </span>
             ) : null,
           )}
         </div>
-        <Segmented
-          label="Categoría"
-          options={[
-            { value: "todas" as const, label: `Todas (${items.length})` },
-            ...present.map((c) => ({ value: c, label: `${NO_PUBLICADO_CATEGORIES[c].label} (${items.filter((i) => i.categoria === c).length})` })),
-          ]}
-          value={category}
-          onChange={setCategory}
-        />
+        <div className="grid grid-cols-2 gap-2 lg:grid-cols-4" role="group" aria-label="Filtrar por tema">
+          {themes.map((t) => {
+            const Icon = t.icon;
+            const active = theme === t.id;
+            return (
+              <button
+                key={t.id}
+                type="button"
+                aria-pressed={active}
+                onClick={() => setTheme(active ? null : t.id)}
+                className={`flex min-w-0 flex-col gap-1.5 rounded-xl border p-3 text-left transition-colors sm:p-4 ${
+                  active ? "border-brand bg-brand/10" : "border-line hover:border-link"
+                }`}
+              >
+                <span className="flex items-center justify-between gap-2">
+                  <Icon className={`size-5 shrink-0 ${active ? "text-link" : "text-ink-muted"}`} aria-hidden />
+                  <span className="text-lg font-semibold tabular-nums">{inTheme(t).length}</span>
+                </span>
+                <span className="text-sm font-medium text-balance">{t.label}</span>
+                <span className="hidden text-xs text-ink-muted sm:block">{t.description}</span>
+              </button>
+            );
+          })}
+        </div>
+        {theme && (
+          <button type="button" onClick={() => setTheme(null)} className="w-fit text-sm text-link hover:underline">
+            Ver todos los temas
+          </button>
+        )}
       </div>
 
-      {groups.map((c) => {
-        const cat = NO_PUBLICADO_CATEGORIES[c];
-        const Icon = cat.icon;
-        return (
-          <section key={c} className="flex flex-col gap-3" aria-labelledby={`cat-${c}`}>
-            <div className="flex items-start gap-3">
-              <Icon className="mt-1 size-5 shrink-0 text-ink-muted" aria-hidden />
-              <div className="flex min-w-0 flex-col">
-                <h2 id={`cat-${c}`} className="text-lg font-semibold tracking-tight">
-                  {cat.label}
-                </h2>
-                <p className="text-sm text-ink-muted">{cat.description}</p>
-              </div>
-            </div>
-            <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
-              {items
-                .filter((i) => i.categoria === c)
-                .map((item) => (
-                  <li key={item.id} id={item.id} className="scroll-mt-8">
-                    <button
-                      type="button"
-                      onClick={() => setAbierto(item)}
-                      className="group flex w-full items-center gap-4 px-4 py-4 text-left hover:bg-grid/50 sm:px-5"
-                    >
-                      <span className={`size-2.5 shrink-0 rounded-full ${ESTADOS[item.estado].dot}`} aria-hidden />
-                      <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                        <span className="font-medium group-hover:text-link">{item.titulo}</span>
-                        <span className="truncate text-sm text-ink-muted">
-                          {ESTADOS[item.estado].label} · {item.organismo}
-                        </span>
-                      </span>
-                      <span className="hidden items-center gap-1 text-sm font-medium text-link sm:inline-flex">
-                        Pedir <ChevronRight className="size-4" aria-hidden />
-                      </span>
-                      <ChevronRight className="size-4 shrink-0 text-ink-muted sm:hidden" aria-hidden />
-                    </button>
-                  </li>
-                ))}
-            </ul>
-          </section>
-        );
-      })}
+      {shown.map((t) => (
+        <section key={t.id} className="flex flex-col gap-3" aria-labelledby={`tema-${t.id}`}>
+          <h2 id={`tema-${t.id}`} className="text-lg font-semibold tracking-tight">
+            {t.label}
+          </h2>
+          <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
+            {inTheme(t).map((item) => (
+              <li key={item.id} id={item.id} className="scroll-mt-8">
+                <button
+                  type="button"
+                  onClick={() => setAbierto(item)}
+                  className="group flex w-full items-center gap-4 px-4 py-4 text-left hover:bg-grid/50 sm:px-5"
+                >
+                  <span className={`size-2.5 shrink-0 rounded-full ${ESTADOS[item.estado].dot}`} aria-hidden />
+                  <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                    <span className="font-medium group-hover:text-link">{item.titulo}</span>
+                    <span className="truncate text-sm text-ink-muted">
+                      {NO_PUBLICADO_CATEGORIES[item.categoria].label} · {ESTADOS[item.estado].label}
+                    </span>
+                  </span>
+                  <span className="hidden items-center gap-1 text-sm font-medium text-link sm:inline-flex">
+                    Pedir <ChevronRight className="size-4" aria-hidden />
+                  </span>
+                  <ChevronRight className="size-4 shrink-0 text-ink-muted sm:hidden" aria-hidden />
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
 
       <p className="text-sm text-ink-muted text-pretty">
         Cómo funciona: elegí un dato, copiá el pedido que armamos y presentalo gratis en el formulario oficial. El

@@ -17,6 +17,8 @@ import { datosMeta, PAGES, SITE_NAME, SITE_URL, TITLE_SUFFIX } from "../src/seo.
 import { NO_PUBLICADO_CATEGORIES } from "../src/no-publicado-categories.ts";
 import { ROLES } from "../src/slug.ts";
 import type {
+  AgencyDetail,
+  AgencySummary,
   CoparticipacionTema,
   DataIndex,
   DeudaTema,
@@ -81,6 +83,7 @@ const descripcion = (t: string) => recortar(t, 160);
 const NAV = [
   ["/senales", "Para mirar de cerca"],
   ["/funcionarios", "Funcionarios"],
+  ["/gobierno", "Gobierno por dentro"],
   ["/municipios", "Municipios"],
   ["/leyes", "Leyes"],
   ["/proveedores", "Proveedores del Estado"],
@@ -466,6 +469,84 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
         fuente: { nombre: "Fuentes oficiales: Legislatura, Gobierno de Mendoza, Junta Electoral, Congreso y Oficina de Ética Pública", url: p.fuenteUrl },
       }),
       lastmod: p.ddjj?.fecha ?? hoy,
+      prioridad: 0.7,
+    });
+  }
+
+  // ---------------------------------------------------------------- gobierno por dentro
+  const agencies = await json<AgencySummary[]>("temas/gobierno.json", []);
+  if (agencies.length) {
+    const totalStaff = agencies.reduce((s, a) => s + (a.staff ?? 0), 0);
+    estatica("/gobierno", {
+      figura: `${nf.format(totalStaff)} cargos`,
+      bajada: "Cada ministerio y organismo: quién lo conduce, cuántos cargos tiene y cuánto cuesta.",
+      ld: [breadcrumb([["/", "Inicio"], ["/gobierno", "Gobierno por dentro"]])],
+      html: cuerpo({
+        migas: [["/", "Inicio"], ["/gobierno", "Gobierno por dentro"]],
+        h1: "Cómo está organizado el Estado de Mendoza",
+        resumen: `El Estado provincial de Mendoza tiene ${nf.format(totalStaff)} cargos de planta, repartidos en ministerios, organismos de control y entes. Para cada uno: quién lo conduce, cuántos cargos tiene, cuánto cuesta su personal, qué hace y qué compra.`,
+        secciones: [{ titulo: "Organismos", items: agencies.map((a) => ({ texto: `${a.name}${a.head ? `: ${a.head.name}, ${a.head.role}` : ""}${a.staff ? ` (${nf.format(a.staff)} cargos)` : ""}`, href: `/gobierno/${a.slug}` })) }],
+        fuente: { nombre: "Ley de Responsabilidad Fiscal (anexo 19), Oficina de Ética Pública y COMPR.AR" },
+      }),
+      lastmod: hoy,
+      prioridad: 0.8,
+    });
+  }
+  for (const s of agencies) {
+    const a = await json<AgencyDetail | null>(`temas/gobierno/${s.slug}.json`, null);
+    if (!a) continue;
+    const path = `/gobierno/${a.slug}`;
+    const migas: Miga[] = [["/", "Inicio"], ["/gobierno", "Gobierno por dentro"], ...(a.parent ? ([[`/gobierno/${a.parent.slug}`, a.parent.name]] as Miga[]) : []), [path, a.name]];
+    const resumen = [
+      `${a.name}${a.parent ? `, que depende de ${a.parent.name},` : ""} es un organismo del Estado de Mendoza.`,
+      a.head ? `Lo conduce ${a.head.name} (${a.head.role}).` : "",
+      a.staff ? `Tiene ${nf.format(a.staff)} cargos de planta${a.staffPeriod ? ` (${a.staffPeriod.replace("-T", ", trimestre ")})` : ""}.` : "",
+      a.annualCostReal ? `Su personal cuesta ${pesos(a.annualCostReal)} por año, en pesos de ${a.realReference}.` : "",
+      a.purchases ? `Hizo ${nf.format(a.purchases.processes)} procesos de compra.` : "",
+    ].filter(Boolean).join(" ");
+    paginas.push({
+      path,
+      title: titulo(a.name.length > 36 ? a.name : `${a.name}: personal, costo y compras`),
+      description: descripcion(a.whatItDoes ? `${resumen} ${a.whatItDoes}` : resumen),
+      og: { slug: `gobierno-${a.slug}`, eyebrow: "GOBIERNO DE MENDOZA", titulo: a.name, figura: a.staff ? `${nf.format(a.staff)} cargos` : (a.head?.name ?? "Organismo"), bajada: a.annualCostReal ? `Costo anual del personal: ${pesosCorto(a.annualCostReal)} (pesos de hoy).` : (a.whatItDoes ? recortar(a.whatItDoes, 110) : "Quién lo conduce y qué compra.") },
+      ld: [
+        {
+          "@type": "GovernmentOrganization",
+          name: a.name,
+          url: url(path),
+          areaServed: MENDOZA,
+          ...(a.whatItDoes ? { description: a.whatItDoes } : {}),
+          ...(a.parent ? { parentOrganization: { "@type": "GovernmentOrganization", name: a.parent.name, url: url(`/gobierno/${a.parent.slug}`) } } : {}),
+          ...(a.head ? { employee: { "@type": "Person", name: a.head.name, jobTitle: a.head.role, ...(a.head.path ? { url: url(a.head.path) } : {}) } } : {}),
+          ...(a.staff ? { numberOfEmployees: { "@type": "QuantitativeValue", value: a.staff } } : {}),
+          ...(a.site ? { sameAs: a.site } : {}),
+        },
+        breadcrumb(migas),
+        faq([
+          ...(a.head ? ([[`¿Quién conduce ${a.name}?`, `${a.head.name}, ${a.head.role}.`]] as [string, string][]) : []),
+          ...(a.staff ? ([[`¿Cuántos empleados tiene ${a.name}?`, `${nf.format(a.staff)} cargos de planta según el último informe de Responsabilidad Fiscal. Son cargos, no personas.`]] as [string, string][]) : []),
+          ...(a.whatItDoes ? ([[`¿Qué hace ${a.name}?`, a.whatItDoes]] as [string, string][]) : []),
+        ]),
+      ],
+      html: cuerpo({
+        migas,
+        h1: a.name,
+        resumen,
+        datos: [
+          ...(a.head ? ([["Conducción", `${a.head.name}, ${a.head.role}`]] as [string, string][]) : []),
+          ...(a.staff ? ([["Cargos de planta", nf.format(a.staff)]] as [string, string][]) : []),
+          ...(a.annualCostReal ? ([["Costo anual del personal", pesos(a.annualCostReal)]] as [string, string][]) : []),
+          ...(a.law ? ([["Norma", a.law]] as [string, string][]) : []),
+        ],
+        secciones: [
+          { titulo: "Qué hace", items: a.points.map((texto) => ({ texto })) },
+          { titulo: "Equipo de conducción", items: a.team.map((t) => ({ texto: `${t.name}, ${t.role}`, ...(t.path ? { href: t.path } : {}) })) },
+          { titulo: "Principales proveedores", items: (a.purchases?.topSuppliers ?? []).map((p) => ({ texto: `${p.name}: ${pesos(p.amount)}`, ...(p.slug ? { href: `/proveedores/${p.slug}` } : {}) })) },
+          { titulo: "Organismos que dependen de este", items: a.children.map((c) => ({ texto: c.name, href: `/gobierno/${c.slug}` })) },
+        ],
+        fuente: { nombre: "Ley de Responsabilidad Fiscal (anexo 19), Oficina de Ética Pública, COMPR.AR y Boletín Oficial" },
+      }),
+      lastmod: hoy,
       prioridad: 0.7,
     });
   }

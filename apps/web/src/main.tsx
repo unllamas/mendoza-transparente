@@ -13,13 +13,14 @@ import { LeyesPage, LeyPage } from "./pages/leyes.tsx";
 import { MunicipioPage, MunicipiosPage } from "./pages/municipios.tsx";
 import { EmpleoPage } from "./pages/empleo.tsx";
 import { FuentesPage } from "./pages/fuentes.tsx";
+import { AgencyPage, GobiernoPage } from "./pages/gobierno.tsx";
 import { HomePage } from "./pages/home.tsx";
 import { Layout } from "./pages/layout.tsx";
 import { NoPublicadoPage } from "./pages/no-publicado.tsx";
 import { PoblacionPage } from "./pages/poblacion.tsx";
 import { SenalesPage } from "./pages/senales.tsx";
 import "./styles.css";
-import type { CoparticipacionTema, DeudaTema, EmpleoTema, FuncionariosTema, HomeTema, LeyDetalle, LeyResumen, MapaMendoza, MunicipioPagina, NoPublicado, OrganismoDetalle, OrganismoResumen, PoblacionTema, ProveedorDetalle, ProveedorResumen, SenalesTema } from "./types.ts";
+import type { AgencyDetail, AgencySummary, CoparticipacionTema, DeudaTema, EmpleoTema, FuncionariosTema, HomeTema, LeyDetalle, LeyResumen, MapaMendoza, MunicipioPagina, NoPublicado, OrganismoDetalle, OrganismoResumen, PoblacionTema, ProveedorDetalle, ProveedorResumen, SenalesTema } from "./types.ts";
 
 const rootRoute = createRootRoute({ component: Layout });
 
@@ -114,6 +115,20 @@ const funcionarioRoute = createRoute({
   component: FuncionarioPage,
 });
 
+const gobiernoRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/gobierno",
+  loader: () => loadTema<AgencySummary[]>("gobierno"),
+  component: GobiernoPage,
+});
+
+const agencyRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/gobierno/$slug",
+  loader: ({ params }) => loadTema<AgencyDetail>(`gobierno/${params.slug}`).catch(() => null),
+  component: AgencyPage,
+});
+
 const municipiosRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/municipios",
@@ -188,7 +203,7 @@ const senalesRoute = createRoute({
 });
 
 const router = createRouter({
-  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, coparticipacionRoute, empleoRoute, poblacionRoute, funcionariosRoute, roleRoute, funcionarioRoute, municipiosRoute, municipioRoute, proveedoresRoute, proveedorRoute, organismosRoute, organismoRoute, leyesRoute, leyRoute, senalesRoute, noPublicadoRoute, fuentesRoute, datosRoute]),
+  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, coparticipacionRoute, empleoRoute, poblacionRoute, funcionariosRoute, roleRoute, funcionarioRoute, gobiernoRoute, agencyRoute, municipiosRoute, municipioRoute, proveedoresRoute, proveedorRoute, organismosRoute, organismoRoute, leyesRoute, leyRoute, senalesRoute, noPublicadoRoute, fuentesRoute, datosRoute]),
   defaultPreload: "intent",
   scrollRestoration: true,
 });

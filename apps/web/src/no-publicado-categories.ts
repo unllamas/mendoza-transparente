@@ -15,3 +15,37 @@ export const NO_PUBLICADO_CATEGORIES = {
 } as const satisfies Record<string, { label: string; description: string; icon: LucideIcon }>;
 
 export type NoPublicadoCategory = keyof typeof NO_PUBLICADO_CATEGORIES;
+
+/** Four big themes for browsing; each groups a few categories. */
+export const NO_PUBLICADO_THEMES = [
+  {
+    id: "plata",
+    label: "La plata pública",
+    description: "Presupuesto, impuestos, compras y empresas",
+    icon: Banknote,
+    categories: ["presupuesto", "impuestos", "compras", "empresas"],
+  },
+  {
+    id: "estado",
+    label: "Quiénes trabajan en el Estado",
+    description: "Personal, sueldos y organigrama",
+    icon: UsersRound,
+    categories: ["personal", "estructura"],
+  },
+  {
+    id: "politica",
+    label: "Política y Legislatura",
+    description: "Votaciones, dietas y campañas",
+    icon: Landmark,
+    categories: ["legislatura", "elecciones"],
+  },
+  {
+    id: "servicios",
+    label: "Servicios y municipios",
+    description: "Salud, seguridad y lo que no publican los municipios",
+    icon: HeartPulse,
+    categories: ["servicios", "municipios"],
+  },
+] as const satisfies readonly { id: string; label: string; description: string; icon: LucideIcon; categories: readonly NoPublicadoCategory[] }[];
+
+export type NoPublicadoTheme = (typeof NO_PUBLICADO_THEMES)[number]["id"];

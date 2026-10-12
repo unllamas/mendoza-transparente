@@ -176,6 +176,7 @@ export function buildOrganismosYProveedores(
     const resumen: OrganismoResumen = {
       slug: s,
       nombre,
+      buyer: comprador,
       procesos: procs.length,
       total,
       pctDirecta: (directas.length / procs.length) * 100,

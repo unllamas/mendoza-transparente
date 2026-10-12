@@ -13,6 +13,8 @@ import {
   MapPin,
   Menu,
   Scale,
+  Store,
+  UserRound,
   Users,
   UsersRound,
   X,
@@ -26,13 +28,18 @@ import { useScrollLock } from "./components.tsx";
 type Item = { to: string; label: string; descripcion: string; icon: LucideIcon };
 type Grupo = { label: string; items: Item[] };
 
-/** Navegación: dos destinos principales y dos grupos desplegables. */
-const PRINCIPALES: { to: string; label: string }[] = [
-  { to: "/senales", label: "Para mirar de cerca" },
-  { to: "/funcionarios", label: "Funcionarios" },
-];
+/** Navegación: un destino principal y grupos desplegables. */
+const PRINCIPALES: { to: string; label: string }[] = [{ to: "/senales", label: "Para mirar de cerca" }];
 
 const GRUPOS: Grupo[] = [
+  {
+    label: "Gobierno",
+    items: [
+      { to: "/funcionarios", label: "Funcionarios", descripcion: "Quiénes nos representan y qué declaran", icon: UserRound },
+      { to: "/gobierno", label: "Gobierno por dentro", descripcion: "Cada organismo: quién lo conduce, cuántos cargos y cuánto cuesta", icon: Building2 },
+      { to: "/leyes", label: "Leyes", descripcion: "Qué dice cada ley, en pocas palabras", icon: Scale },
+    ],
+  },
   {
     label: "Datos",
     items: [
@@ -46,14 +53,13 @@ const GRUPOS: Grupo[] = [
   {
     label: "Compras del Estado",
     items: [
-      { to: "/proveedores", label: "Proveedores", descripcion: "A quiénes les compra el Gobierno", icon: Building2 },
+      { to: "/proveedores", label: "Proveedores", descripcion: "A quiénes les compra el Gobierno", icon: Store },
       { to: "/organismos", label: "Organismos", descripcion: "Quién compra, cuánto y cómo", icon: Landmark },
     ],
   },
   {
     label: "Transparencia",
     items: [
-      { to: "/leyes", label: "Leyes", descripcion: "Texto completo de las leyes provinciales", icon: Scale },
       { to: "/no-publicado", label: "Lo que no se publica", descripcion: "Datos que faltan y cómo pedirlos", icon: EyeOff },
       { to: "/fuentes", label: "Fuentes", descripcion: "De dónde sale cada dato", icon: Archive },
     ],

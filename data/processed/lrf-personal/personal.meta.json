@@ -1,0 +1,48 @@
+{
+  "titulo": "Personal y costo de cada organismo, por trimestre",
+  "descripcion": "Cada fila es un tipo de personal (planta permanente, planta temporaria o contratos de locación) de un organismo de la Provincia al cierre de un trimestre, con su cantidad y el importe liquidado. Sale del Anexo 19 de la Ley de Responsabilidad Fiscal. Los importes son pesos nominales ACUMULADOS desde enero hasta el fin del trimestre (no del trimestre ni del mes): para el gasto de un trimestre hay que restar el acumulado del anterior. La cantidad son cargos, no personas. No hay nombres ni datos personales. Falta el segundo trimestre de 2024: el link del sitio oficial está roto.",
+  "columnas": {
+    "anio": { "etiqueta": "Año", "tipo": "anio" },
+    "trimestre": { "etiqueta": "Trimestre", "tipo": "numero", "descripcion": "1 a 4. El importe acumulado llega hasta el fin de este trimestre." },
+    "fecha_corte": { "etiqueta": "Fecha de corte", "tipo": "fecha", "descripcion": "Último día del trimestre." },
+    "grupo": {
+      "etiqueta": "Grupo",
+      "tipo": "texto",
+      "descripcion": "Administración central, Organismos descentralizados, Cuentas especiales u Otras entidades. Un mismo nombre puede aparecer en dos grupos (por ejemplo, el Ministerio de Salud y Deportes y su planta de otras entidades)."
+    },
+    "organismo": {
+      "etiqueta": "Organismo",
+      "tipo": "texto",
+      "descripcion": "Nombre tal como lo imprime el informe oficial; cambia entre gestiones (por ejemplo, la Dirección General de Escuelas figura como Min. Educación, Cultura, Infancias y DGE)."
+    },
+    "tipo_personal": {
+      "etiqueta": "Tipo de personal",
+      "tipo": "texto",
+      "valores": {
+        "permanente": "Planta permanente",
+        "temporaria": "Planta temporaria",
+        "contratos_locacion": "Contratos de locación"
+      }
+    },
+    "cantidad": {
+      "etiqueta": "Cantidad",
+      "tipo": "numero",
+      "unidad": "cargos",
+      "descripcion": "Cargos liquidados (una persona con dos cargos cuenta dos). En contratos de locación, cantidad de contratados."
+    },
+    "horas_catedra": {
+      "etiqueta": "Horas cátedra",
+      "tipo": "numero",
+      "unidad": "horas",
+      "descripcion": "Horas cátedra de docentes, por separado de los cargos. Casi todo está en Educación."
+    },
+    "importe": {
+      "etiqueta": "Importe liquidado acumulado",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Pesos nominales liquidados desde enero hasta el fin del trimestre. Vacío si el organismo no lo informa (por ejemplo, OSEP, que informa aparte)."
+    }
+  },
+  "orden": ["anio", "trimestre", "grupo", "organismo", "tipo_personal", "cantidad", "importe", "horas_catedra", "fecha_corte"]
+}

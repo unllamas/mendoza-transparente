@@ -116,6 +116,15 @@ export const PAGES: Record<string, PageMeta> = {
     eyebrow: "MUNICIPIOS",
     activa: true,
   },
+  "/gobierno": {
+    title: `Cómo está organizado el Gobierno de Mendoza${TITLE_SUFFIX}`,
+    description:
+      "Gobierno de Mendoza por dentro: cada ministerio y organismo, quién lo conduce, cuántos cargos tiene, cuánto cuesta su personal, qué hace y qué compra.",
+    ogSlug: "gobierno",
+    ogTitle: "Gobierno de Mendoza por dentro",
+    eyebrow: "GOBIERNO",
+    activa: true,
+  },
   "/leyes": {
     title: `Leyes de Mendoza con texto completo${TITLE_SUFFIX}`,
     description:

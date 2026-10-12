@@ -1,0 +1,1586 @@
+# Organismos del Poder Ejecutivo de Mendoza (gestión Cornejo 2023-2027) y equivalencias de nombres y códigos entre fuentes.
+# Relevamiento del 12/10/2026. Contenido editorial: se revisa a mano.
+#
+# Para qué sirve: cada fuente nombra distinto a un mismo organismo ("Ministerio de Salud y Deportes" en Ética Pública,
+# "1-08-75 - Subsecretaría de Salud" en compras, jurisdicción 08 en el presupuesto). Esta tabla une todos esos nombres y
+# códigos, incluidos los de gestiones anteriores (campo `antes`), para cruzar fuentes en la página de cada organismo.
+#
+# Fuentes (todas oficiales):
+#   - Ley de Ministerios 9501 (sancionada 06/12/2023, Boletín Oficial 09/12/2023, Nº 32004), promulgada por Decreto 3047/2023.
+#     Copia archivada en data/raw/jurisdicciones/2026-10-12/. Vigente; no se encontró ninguna ley que la modifique (ver `no_publicado`
+#     en el informe del relevamiento). Los ministerios actuales (art. 1) son los siete listados abajo; los organismos que "se
+#     relacionan con el Ejecutivo" a través de cada ministerio están en los arts. 11, 14, 16, 19 y 21.
+#   - Ley de Ministerios 9206 (2019-2023) y 8830 (2015-2019), para los nombres anteriores. 9206 archivada en data/raw/jurisdicciones/.
+#   - Ley de Presupuesto 2026 Nº 9681 y sus planillas (https://sitios.mendoza.gob.ar/haciendayfinanzas/2026/01/presupuesto-2026/),
+#     planilla 8.2 (cargos por carácter, jurisdicción y unidad organizativa) para los códigos.
+#   - data/processed/etica-publica/funcionarios.csv (columna reparticion), compras-ocds/procesos.csv (columna comprador) y
+#     autoridades/autoridades.csv (columna organismo).
+#
+# Cómo se leen los códigos. El presupuesto y COMPR.AR usan CARÁCTER-JURISDICCIÓN-UNIDAD (por ejemplo "1-08-75"):
+#   - Carácter: 1 administración central, 2 organismos descentralizados, 3 cuentas especiales, 5 otras entidades (entes autárquicos
+#     y obra social), 9 sociedades/otros (en compras).
+#   - Jurisdicción 2026: 01 Legislativo, 02 Judicial, 03 Tribunal de Cuentas, 05 Gobierno, Infraestructura y Desarrollo Territorial,
+#     06 Hacienda y Finanzas, 07 Producción, 08 Salud y Deportes, 14 Educación, Cultura, Infancias y DGE, 15 Fiscalía de Estado,
+#     16 Seguridad y Justicia, 23 Energía y Ambiente.
+#   - Códigos históricos que todavía aparecen en compras (2019-2023): 09 Planificación e Infraestructura Pública (hoy en 05),
+#     22 Secretaría/Ministerio de Cultura y Turismo (hoy en 14 y EMETUR), 26 Secretaría de Servicios Públicos (hoy en 05),
+#     07 Economía (Infraestructura) y Energía (la energía hoy está en 23).
+#   - `prefijos_compras`: el comprador de COMPR.AR empieza con ese prefijo ("1-08-" cubre todo el 08 de administración central).
+#     Si dos prefijos coinciden gana el más largo (el más específico).
+#   - `codigos_presupuesto`: jurisdicción ("08") o unidad completa ("2-05-02").
+#   - `etica_publica_reparticion`: los valores exactos de la columna `reparticion` ya asignados a este organismo.
+#   - `antes`: predecesores claros (leyes 8830 y 9206).
+#
+# Campos por organismo: id, nombre, sigla, tipo (ministerio | secretaria | organismo_control | ente_descentralizado | empresa | otro),
+# depende_de (id o null), que_hace y puntos (lenguaje simple, solo lo que dicen la ley o el decreto), norma, fuente_url, sitio_url,
+# antes, nota (dudas o conflictos entre fuentes) y alias.
+#
+# Límites: la Ley 9501 describe las competencias de los ministerios; de los entes solo dice de qué ministerio dependen. Para las
+# direcciones y subsecretarías hay unidades del presupuesto 2026 (`unidades_presupuesto_2026`) pero no hay organigrama ni decretos
+# de estructura publicados con sus funciones.
+
+organismos:
+  - id: gobernacion
+    nombre: "Gobernación de Mendoza"
+    tipo: otro
+    depende_de: null
+    que_hace: "Es la cabeza del Poder Ejecutivo provincial: el Gobernador conduce la administración con siete ministerios. La Ley de Ministerios 9501 fija cuáles son los ministerios y cómo se reparten los asuntos de gobierno, y prevé que los decretos puedan salir de un acuerdo de ministros."
+    puntos:
+      - "Ministerios del Poder Ejecutivo: Gobierno, Infraestructura y Desarrollo Territorial; Seguridad y Justicia; Hacienda y Finanzas; Producción; Salud y Deportes; Energía y Ambiente; Educación, Cultura, Infancias y DGE (art. 1)."
+      - "Convoca al acuerdo de ministros en los casos que la Constitución o las leyes prevén (art. 3)."
+      - "Decide en caso de duda sobre qué ministerio es competente en un asunto (art. 4)."
+      - "Tiene vinculada en forma directa a la Unidad ProMendoza (art. 17)."
+    norma: "Ley 9501 (arts. 1, 3, 4 y 17); Constitución de Mendoza, art. 131 (citado por el art. 1 de la ley)"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: "https://www.mendoza.gob.ar/"
+    antes:
+      - "Gobernación (gestión 2019-2023), Ley 9206"
+    alias:
+      nombres:
+        - "Gobernación de Mendoza"
+        - "Gobernador"
+        - "Gobierno de Mendoza"
+        - "Poder Ejecutivo Provincial"
+      etica_publica_reparticion: []
+      codigos_presupuesto: []
+      prefijos_compras: []
+  - id: vicegobernacion
+    nombre: "Vicegobernación de Mendoza"
+    tipo: otro
+    depende_de: null
+    que_hace: "La Vicegobernación es la oficina de la Vicegobernadora, que preside el Senado provincial. La Ley de Ministerios no la menciona; se lista porque Ética Pública y la lista de autoridades la incluyen dentro del Ejecutivo."
+    puntos: []
+    norma: "Sin norma de estructura publicada; figura en data/processed/autoridades/autoridades.csv (poder ejecutivo_provincial)"
+    fuente_url: "https://media.mendoza.gob.ar/informacion-oficial/uploads/sites/11/2026/01/LEY-PRESUPUESTO-2026-No-9681-CON-ANEXOS-1-y-2.pdf"
+    sitio_url: null
+    antes: []
+    nota: "Institucionalmente el cargo preside el Poder Legislativo (Senado). Dudoso si corresponde contarla como Ejecutivo; se la deja por consistencia con autoridades.csv."
+    alias:
+      nombres:
+        - "Vicegobernación de Mendoza"
+        - "Vicegobernadora"
+        - "Vicegobernador"
+      etica_publica_reparticion: []
+      codigos_presupuesto: []
+      prefijos_compras: []
+  - id: unidad-promendoza
+    nombre: "Unidad ProMendoza"
+    tipo: otro
+    depende_de: gobernacion
+    que_hace: "La Ley 9501 crea la Unidad ProMendoza, que se vincula en forma directa con la Gobernación. Representa a la Provincia en el Consejo de Administración de la Fundación ProMendoza y en organismos regionales, nacionales e internacionales sobre temas agropecuarios, industriales, de comercio exterior e inversiones."
+    puntos:
+      - "Representa a la Provincia en el Consejo de Administración de la Fundación ProMendoza, según sus estatutos."
+      - "Representa a la Provincia en organismos regionales, nacionales e internacionales de agro, industria, comercio exterior e inversiones."
+      - "Participa en negociaciones con otros países para que los productos mendocinos lleguen a sus mercados en condiciones favorables y de reciprocidad."
+    norma: "Ley 9501, art. 17"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: "https://www.promendoza.com/es/"
+    antes:
+      - "ProMendoza (organismo vinculado a Economía y Energía), Ley 9206 art. 16 inc. 8"
+    nota: "La Fundación ProMendoza (valor 'FUNDACION PROMENDOZA' en Ética Pública) es una entidad con estatutos propios; se la asigna a la Unidad que la representa."
+    alias:
+      nombres:
+        - "Unidad ProMendoza"
+        - "ProMendoza"
+        - "Fundación ProMendoza"
+        - "FUNDACION PROMENDOZA"
+      etica_publica_reparticion:
+        - "FUNDACION PROMENDOZA"
+      codigos_presupuesto: []
+      prefijos_compras: []
+  - id: ministerio-de-gobierno-infraestructura-y-desarrollo-territorial
+    nombre: "Ministerio de Gobierno, Infraestructura y Desarrollo Territorial"
+    sigla: "MGIyDT"
+    tipo: ministerio
+    depende_de: gobernacion
+    que_hace: "Coordina las relaciones del Ejecutivo con otros poderes, municipios y Nación, y las políticas de trabajo, derechos humanos, género y diversidad. También planifica y ejecuta la obra pública y la infraestructura social, y fiscaliza el transporte, el agua potable y el saneamiento. Despacha todos los asuntos del Gobernador (Ley 9501, art. 10)."
+    puntos:
+      - "Aplica las leyes laborales, ejerce la policía del trabajo y concilia conflictos individuales y colectivos (art. 10 incs. 1-3)."
+      - "Organiza las elecciones nacionales, provinciales y municipales y administra el Registro del Estado Civil y la registración de personas jurídicas (incs. 9, 10 y 12)."
+      - "Administra el Boletín Oficial y coordina informática, gobierno electrónico y modernización del Estado (incs. 15, 18 y 19)."
+      - "Planifica, programa y ejecuta la obra pública, la vivienda y la política hídrica provincial (incs. 23, 35, 37 y 38)."
+      - "Elabora la política de transporte público de pasajeros y fiscaliza agua potable y saneamiento (incs. 30 y 31)."
+    norma: "Ley 9501, arts. 10 y 11"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: "https://www.mendoza.gob.ar/gobiernoinfraestructura/"
+    antes:
+      - "Ministerio de Gobierno, Trabajo y Justicia (2015-2023; Leyes 8830 y 9206): competencias de gobierno y trabajo"
+      - "Ministerio de Planificación e Infraestructura Pública (2019-2023, Ley 9206, art. 17): obra pública"
+      - "Secretaría de Servicios Públicos (2015-2023, Ley 9206, art. 27): transporte, agua y saneamiento"
+    nota: "Hereda tres jurisdicciones previas. En el presupuesto las dos últimas aparecen con los códigos 09 (Infraestructura) y 26 (Servicios Públicos)."
+    alias:
+      nombres:
+        - "Ministerio de Gobierno, Infraestructura y Desarrollo Territorial"
+        - "MINISTERIO DE GOBIERNO, INFRAESTRUCTURA Y DESARROLLO TERRITORIAL"
+        - "Ministerio Gob, Infraestruc y Desarr. Terr"
+        - "Ministerio de Gobierno, Infraestructura y Desarrollo Territorial (MGIyDT)"
+        - "Ministerio de Infraestructura"
+        - "MINISTERIO DE GOBIERNO, TRABAJO Y JUSTICIA"
+        - "MINISTERIO DE PLANIFICACION E INFRAESTRUCTURA"
+        - "Ministerio de Planificación e Infraestructura Pública"
+        - "ASESORIA DE GOBIERNO"
+        - "Asesoría de Gobierno"
+        - "Dcción. del Reg. Estado Civil y Capac. Pers"
+        - "Subsecretaría de Trabajo y Empleo"
+        - "Dirección Informática y Comunicaciones"
+      etica_publica_reparticion:
+        - "ASESORIA DE GOBIERNO"
+        - "MINISTERIO DE GOBIERNO, INFRAESTRUCTURA Y DESARROLLO TERRITORIAL"
+        - "MINISTERIO DE GOBIERNO, TRABAJO Y JUSTICIA"
+        - "MINISTERIO DE PLANIFICACION E INFRAESTRUCTURA"
+      codigos_presupuesto:
+        - "05"
+      prefijos_compras:
+        - "1-05-"
+        - "1-09-"
+        - "1-26-"
+    unidades_presupuesto_2026:
+      - { codigo: "1-05-01", nombre: "Ministerio Gob, Infraestruc y Desarr. Terr" }
+      - { codigo: "1-05-02", nombre: "Dcción.del Reg. Estado Civil y Capac. Pers" }
+      - { codigo: "1-05-09", nombre: "Subsecretaría de Trabajo y Empleo" }
+      - { codigo: "1-05-12", nombre: "Dcción. de Personas Jurídicas" }
+      - { codigo: "1-05-19", nombre: "Dirección de Defensa al Consumidor" }
+      - { codigo: "1-05-23", nombre: "Dirección Informática y Comunicaciones" }
+      - { codigo: "1-05-24", nombre: "Asesoría de Gobierno" }
+      - { codigo: "1-05-25", nombre: "Escribanía General de Gobierno" }
+      - { codigo: "1-05-26", nombre: "Casa de Mendoza" }
+      - { codigo: "1-05-27", nombre: "Oficina Técnica Previsional" }
+      - { codigo: "1-05-28", nombre: "Subs. de Infraestructura y Desarrollo Terr" }
+      - { codigo: "1-05-29", nombre: "Dir. de Estadísticas e Invest. Económicas" }
+      - { codigo: "1-05-33", nombre: "Dirección Gral. de Desarrollo Comunitario" }
+      - { codigo: "1-05-35", nombre: "Dirección de Género y Diversidad" }
+      - { codigo: "1-05-36", nombre: "Dirección de Derechos Humanos" }
+      - { codigo: "1-05-38", nombre: "Dirección de Contingencia" }
+      - { codigo: "1-05-39", nombre: "Dirección de Economía Social" }
+      - { codigo: "1-05-40", nombre: "Dirección de Gestión de Bienes Registrable" }
+  - id: ministerio-de-seguridad-y-justicia
+    nombre: "Ministerio de Seguridad y Justicia"
+    sigla: "MSyJ"
+    tipo: ministerio
+    depende_de: gobernacion
+    que_hace: "Planifica, coordina y controla la política de seguridad pública para proteger la vida, la libertad y los bienes de los habitantes. También maneja la relación institucional del Poder Ejecutivo con el Poder Judicial (Ley 9501, art. 12)."
+    puntos:
+      - "Organiza y conduce la Policía de la Provincia y el sistema de Defensa Civil (art. 12 inc. 8)."
+      - "Administra el Sistema Penitenciario Provincial, los establecimientos de encausados y penados y la Dirección de Promoción de Liberados (inc. 17)."
+      - "Habilita y controla a las empresas privadas de vigilancia (inc. 11)."
+      - "Propone al Ejecutivo indultos, conmutaciones y rebajas de penas (inc. 15)."
+      - "Se vincula con el Poder Judicial, el Ministerio Público Fiscal y el Ministerio Público de la Defensa (inc. 23)."
+    norma: "Ley 9501, art. 12"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: "https://www.mendoza.gob.ar/seguridadyjusticia/"
+    antes:
+      - "Ministerio de Seguridad (2015-2023, Leyes 8830 y 9206, art. 12)"
+    nota: "La parte de 'Justicia' (relación con el Poder Judicial) era del Ministerio de Gobierno, Trabajo y Justicia hasta 2023."
+    alias:
+      nombres:
+        - "Ministerio de Seguridad y Justicia"
+        - "MINISTERIO DE SEGURIDAD Y JUSTICIA"
+        - "Ministerio de Seguridad"
+        - "Dirección General de Administración (Seguridad)"
+      etica_publica_reparticion:
+        - "MINISTERIO DE SEGURIDAD Y JUSTICIA"
+      codigos_presupuesto:
+        - "16"
+      prefijos_compras:
+        - "1-16-"
+    unidades_presupuesto_2026:
+      - { codigo: "1-16-01", nombre: "Ministerio de Seguridad" }
+      - { codigo: "1-16-02", nombre: "Dcción. de Inteligencia Criminal" }
+      - { codigo: "1-16-05", nombre: "Dcción. de Defensa Civil" }
+      - { codigo: "1-16-07", nombre: "Dcción. de Participación Comunitaria" }
+      - { codigo: "1-16-09", nombre: "Dcción. General de Administración" }
+      - { codigo: "1-16-10", nombre: "Dcción. de Seguridad Vial" }
+  - id: ministerio-de-hacienda-y-finanzas
+    nombre: "Ministerio de Hacienda y Finanzas"
+    sigla: "MHyF"
+    tipo: ministerio
+    depende_de: gobernacion
+    que_hace: "Se ocupa de la administración financiera y tributaria del Estado provincial. Formula la política fiscal, prepara y controla la ejecución del presupuesto, gestiona la deuda pública y supervisa el régimen de compras de la Administración (Ley 9501, art. 13)."
+    puntos:
+      - "Dirige la formulación del Presupuesto Anual de Recursos y Erogaciones y controla su ejecución (art. 13 incs. 12, 13 y 27)."
+      - "Gestiona empréstitos y todo lo relacionado con la deuda pública (incs. 17 y 18)."
+      - "Propone el régimen de compras y ventas común y obligatorio para la Administración (inc. 8)."
+      - "Aplica la Ley de Administración Financiera 8706 y coordina los Servicios Administrativos Financieros (incs. 9 y 30)."
+      - "Interviene en el régimen de participación municipal de impuestos y representa a la Provincia en organismos federales de impuestos (incs. 4 y 6)."
+    norma: "Ley 9501, arts. 13 y 14"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: "https://www.mendoza.gob.ar/haciendayfinanzas/"
+    antes:
+      - "Ministerio de Hacienda y Finanzas (2015-2023; Leyes 8830 y 9206, art. 13): mismo nombre"
+    alias:
+      nombres:
+        - "Ministerio de Hacienda y Finanzas"
+        - "MINISTERIO DE HACIENDA Y FINANZAS"
+        - "Dcción. Gral. de Presupuesto"
+        - "Dirección General de Presupuesto"
+        - "Dcción. Gral. de Compras y Suministros"
+        - "Dirección General de Compras y Suministros"
+        - "Dirección General de la Deuda Pública"
+        - "Dirección de Seguimiento y Evaluación del Gasto"
+      etica_publica_reparticion:
+        - "MINISTERIO DE HACIENDA Y FINANZAS"
+      codigos_presupuesto:
+        - "06"
+      prefijos_compras:
+        - "1-06-"
+    unidades_presupuesto_2026:
+      - { codigo: "1-06-01", nombre: "Ministerio de Hacienda y Finanzas" }
+      - { codigo: "1-06-02", nombre: "Dcción. Gral. de Presupuesto" }
+      - { codigo: "1-06-06", nombre: "Dcción. Gral. de Compras y Suministros" }
+      - { codigo: "1-06-10", nombre: "Dcción. Admin.de Activos ex Bcos.Oficiales" }
+      - { codigo: "1-06-11", nombre: "Dirección de Asuntos Legales" }
+      - { codigo: "1-06-16", nombre: "Dirección Gral de Crédito al Sector Públic" }
+      - { codigo: "1-06-26", nombre: "Dcción. de Pol. Salarial y Análisis RRHH" }
+  - id: ministerio-de-produccion
+    nombre: "Ministerio de Producción"
+    sigla: "MP"
+    tipo: ministerio
+    depende_de: gobernacion
+    que_hace: "Formula las políticas y ejecuta las acciones de gobierno para industrializar y diversificar la producción de la Provincia, y para promover y controlar las actividades productivas. También busca mercados y financiamiento para los distintos sectores y regiones (Ley 9501, art. 15)."
+    puntos:
+      - "Fija la política de defensa, promoción, desarrollo y control de las actividades agrícolas, ganaderas, industriales, comerciales y de servicios (art. 15 inc. 1)."
+      - "Controla la calidad, sanidad y genuinidad de la producción (inc. 6)."
+      - "Desarrolla un programa de prevención y reparación de daños por factores climáticos o fitosanitarios (inc. 9)."
+      - "Es autoridad de aplicación de las leyes 5846 (innovación tecnológica) y 7728 (industria del software) (inc. 13)."
+      - "Facilita la radicación de inversiones y el acceso a mercados locales e internacionales (inc. 4)."
+    norma: "Ley 9501, arts. 15 y 16"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: "https://www.mendoza.gob.ar/produccion/"
+    antes:
+      - "Ministerio de Economía y Energía (2019-2023, Ley 9206, art. 15)"
+      - "Ministerio de Economía, Infraestructura y Energía (2015-2019, Ley 8830); en compras figura como '1-07-01 - Ministerio de Economía, Infraest.y Energía'"
+    nota: "El código de jurisdicción 07 fue Economía/Energía hasta 2023; las unidades 1-07-20 a 1-07-23 (Energía y Minería, Hidrocarburos, Energía Renovable) se asignan hoy a Energía y Ambiente."
+    alias:
+      nombres:
+        - "Ministerio de Producción"
+        - "MINISTERIO DE PRODUCCION"
+        - "Ministerio de Producción (MP)"
+        - "Dir de Fiscaliz, Control y Tecn. Agroind."
+        - "Dirección de Contingencias Climáticas"
+        - "Dcción. Pcial.de Ganadería"
+      etica_publica_reparticion:
+        - "MINISTERIO DE PRODUCCION"
+      codigos_presupuesto:
+        - "07"
+      prefijos_compras:
+        - "1-07-"
+    unidades_presupuesto_2026:
+      - { codigo: "1-07-01", nombre: "Ministerio de Producción" }
+      - { codigo: "1-07-03", nombre: "Dir de Fiscaliz, Control y Tecn. Agroind." }
+      - { codigo: "1-07-06", nombre: "Dirección de Contingencias Climáticas" }
+      - { codigo: "1-07-07", nombre: "Dcción. Pcial.de Ganadería" }
+      - { codigo: "1-07-15", nombre: "Dcción.de Emprendedores y Cooperativas" }
+      - { codigo: "1-07-18", nombre: "Dir. de Agricultura" }
+  - id: ministerio-de-salud-y-deportes
+    nombre: "Ministerio de Salud y Deportes"
+    sigla: "MSyD"
+    tipo: ministerio
+    depende_de: gobernacion
+    que_hace: "Crea las condiciones para promover, proteger y recuperar la salud de los habitantes de la Provincia, y fomenta, apoya y controla la práctica deportiva con criterios de inclusión y equidad (Ley 9501, art. 18)."
+    puntos:
+      - "Propone y aplica la política sanitaria provincial y ejerce la policía sanitaria en todo el territorio (art. 18 incs. 1 y 7)."
+      - "Administra los establecimientos de salud del Gobierno provincial y organiza los niveles de atención (incs. 8 y 14)."
+      - "Regula y fiscaliza las profesiones de la salud, los medicamentos, los alimentos y la cadena de venta de productos farmacéuticos (incs. 6 y 13)."
+      - "Desarrolla políticas de salud mental, consumos problemáticos, personas adultas mayores y personas con discapacidad (incs. 19, 20 y 22)."
+      - "Fomenta y organiza la actividad deportiva, los eventos masivos y el alto rendimiento (incs. 28, 31 y 40)."
+    norma: "Ley 9501, arts. 18 y 19"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: "https://www.mendoza.gob.ar/saludydeportes/"
+    antes:
+      - "Ministerio de Salud, Desarrollo Social y Deportes (2015-2023, Leyes 8830 y 9206, art. 19): incluía Desarrollo Social, hoy repartido entre Gobierno, Educación y Salud"
+    nota: "Las unidades de Desarrollo Social del código 1-08 (80, 83, 85-89) hoy dependen de otros ministerios: Economía Social, Género y Diversidad y Contingencia figuran en Gobierno (5-33, 5-35, 5-38, 5-39 del presupuesto 2026); FIDES en Educación según la ley (art. 36). Los compradores históricos con código 1-08 se asignan a Salud y Deportes por su prefijo; el cruce por organigrama actual requiere revisar esas unidades."
+    alias:
+      nombres:
+        - "Ministerio de Salud y Deportes"
+        - "MINISTERIO DE SALUD Y DEPORTES"
+        - "Ministerio de Salud y Deportes (MSyD)"
+        - "MINISTERIO DE SALUD, DESARROLLO SOCIAL Y DEPORTES"
+        - "Ministerio de Salud, Desarrollo Social y Deportes"
+        - "Subsecretaría de Salud"
+        - "Subsecretaría de Deportes"
+        - "Subsecretaría de Desarrollo Social"
+        - "Dirección de Emergencias"
+      etica_publica_reparticion:
+        - "MINISTERIO DE SALUD Y DEPORTES"
+        - "MINISTERIO DE SALUD, DESARROLLO SOCIAL Y DEPORTES"
+      codigos_presupuesto:
+        - "08"
+      prefijos_compras:
+        - "1-08-"
+        - "3-08-"
+        - "9-08-"
+    unidades_presupuesto_2026:
+      - { codigo: "1-08-01", nombre: "Ministerio de Salud y Deportes" }
+      - { codigo: "1-08-29", nombre: "Dirección de Emergencias" }
+      - { codigo: "1-08-41", nombre: "Area Departamental de Salud Capital" }
+      - { codigo: "1-08-42", nombre: "Area Departamental de Salud Gral. Alvear" }
+      - { codigo: "1-08-43", nombre: "Area Departamental de Salud Godoy Cruz" }
+      - { codigo: "1-08-44", nombre: "Area Departamental de Salud Guaymallén" }
+      - { codigo: "1-08-45", nombre: "Area Departamental de Salud Junín" }
+      - { codigo: "1-08-46", nombre: "Area Departamental de Salud La Paz" }
+      - { codigo: "1-08-47", nombre: "Area Departamental de Salud Las Heras" }
+      - { codigo: "1-08-48", nombre: "Area Departamental de Salud Lavalle" }
+      - { codigo: "1-08-49", nombre: "Area Departamental de Salud Luján" }
+      - { codigo: "1-08-50", nombre: "Area Departamental de Salud Maipú" }
+      - { codigo: "1-08-51", nombre: "Area Departamental de Salud Malargue" }
+      - { codigo: "1-08-52", nombre: "Area Departamental de Salud Rivadavia" }
+      - { codigo: "1-08-53", nombre: "Area Departamental de Salud San Carlos" }
+      - { codigo: "1-08-54", nombre: "Area Departamental de Salud San Martín" }
+      - { codigo: "1-08-55", nombre: "Area Departamental de Salud San Rafael" }
+      - { codigo: "1-08-56", nombre: "Area Sanitaria Santa Rosa" }
+      - { codigo: "1-08-57", nombre: "Area Departamental de Salud Tunuyán" }
+      - { codigo: "1-08-58", nombre: "Area Departamental de Salud Tupungato" }
+      - { codigo: "1-08-75", nombre: "Subsecretaría de Salud" }
+      - { codigo: "1-08-87", nombre: "Dirección de Atención Adultos Mayores" }
+      - { codigo: "1-08-88", nombre: "Dirección de Atención a las Pers.c/Discap." }
+      - { codigo: "1-08-90", nombre: "Subsecretaría de Deportes" }
+      - { codigo: "1-08-91", nombre: "Dirección de Administración de Deportes" }
+  - id: ministerio-de-energia-y-ambiente
+    nombre: "Ministerio de Energía y Ambiente"
+    sigla: "MEyA"
+    tipo: ministerio
+    depende_de: gobernacion
+    que_hace: "Diseña y ejecuta la política hidrocarburífera, minera y energética de la Provincia, con un plan de transición energética. También planifica y ejecuta las políticas ambientales, como regulador y fiscalizador del uso de la tierra y los recursos naturales (Ley 9501, art. 20)."
+    puntos:
+      - "Es autoridad de aplicación para permisos y concesiones de exploración, explotación y transporte de hidrocarburos (art. 20 inc. 1 e)."
+      - "Ejerce el control técnico, operativo y económico de la producción de petróleo y gas en las áreas concesionadas (inc. 1 h)."
+      - "Planifica la política minera y las políticas electro-energéticas, y otorga concesiones de infraestructura hidroeléctrica provincial (inc. 1 k, l y m)."
+      - "Ejecuta y controla las normas de impacto ambiental y es autoridad de aplicación del Sistema Provincial de Áreas Naturales Protegidas (inc. 2 a y e)."
+      - "Administra los Parques y Paseos Públicos provinciales y la gestión de residuos patogénicos y peligrosos (inc. 2 l y n)."
+    norma: "Ley 9501, arts. 20, 21 y 31"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: "https://www.mendoza.gob.ar/energiayambiente/"
+    antes:
+      - "Secretaría de Ambiente y Ordenamiento Territorial (2015-2023, Ley 9206, art. 26; rango de ministerio)"
+      - "Subsecretaría de Energía y Minería (dentro de Economía y Energía, 2015-2023)"
+    nota: "La Ley 9206 tenía una Secretaría de Ambiente y un Ministerio de Economía y Energía; Energía y Ambiente como ministerio es nuevo en la Ley 9501. Ojo: la Dirección de Hidráulica figura en el presupuesto 2026 dentro de Energía y Ambiente (23-05) aunque la ley asigna la política hídrica a Gobierno e Infraestructura."
+    alias:
+      nombres:
+        - "Ministerio de Energía y Ambiente"
+        - "MINISTERIO DE ENERGIA Y AMBIENTE"
+        - "Ministerio de Energía y Ambiente (MEyA)"
+        - "Secretaría de Ambiente y Ordenamiento Territorial"
+        - "Secretaría Ambiente y Ord Territorial"
+        - "Subsecretaría de Energía y Minería"
+        - "Dirección de Servicios Eléctricos"
+        - "Dirección de Areas Protegidas"
+        - "Dirección de Biodiversidad y Ecoparque"
+      etica_publica_reparticion:
+        - "MINISTERIO DE ENERGIA Y AMBIENTE"
+      codigos_presupuesto:
+        - "23"
+      prefijos_compras:
+        - "1-23-"
+        - "1-07-20"
+        - "1-07-21"
+        - "1-07-22"
+        - "1-07-23"
+    unidades_presupuesto_2026:
+      - { codigo: "1-23-01", nombre: "Ministerio de Energía y Ambiente" }
+      - { codigo: "1-23-03", nombre: "Dir. de Gestión y Fiscalización Ambiental" }
+      - { codigo: "1-23-04", nombre: "Dirección de Areas Protegidas" }
+      - { codigo: "1-23-05", nombre: "Dirección de Hidráulica" }
+      - { codigo: "1-23-06", nombre: "Dirección de Biodiversidad y Ecoparque" }
+      - { codigo: "1-23-09", nombre: "Dirección de Minería" }
+      - { codigo: "1-23-10", nombre: "Dirección de Hidrocarburos" }
+      - { codigo: "1-23-11", nombre: "Dirección de Servicios Eléctricos" }
+      - { codigo: "1-23-12", nombre: "Subsecretaria de Energía y Minería" }
+  - id: ministerio-de-educacion-cultura-infancias-y-dge
+    nombre: "Ministerio de Educación, Cultura, Infancias y Dirección General de Escuelas"
+    sigla: "MECIDGE"
+    tipo: ministerio
+    depende_de: gobernacion
+    que_hace: "Planifica, ejecuta y evalúa la política educativa y cultural de la Provincia y se ocupa de la protección integral de niños, niñas y adolescentes. También prevé la infraestructura de los servicios educativos, de cultura e infancias (Ley 9501, art. 22)."
+    puntos:
+      - "Diseña políticas y programas para preservar el acervo cultural, el patrimonio y las industrias culturales (art. 22 inc. 1)."
+      - "Propone y ejecuta políticas de protección de derechos de niñez, adolescencia y juventudes y de Responsabilidad Penal Juvenil (inc. 2)."
+      - "Programa y ejecuta el mantenimiento y renovación de los inmuebles educativos, culturales y de infancias (inc. 3)."
+      - "El Director General de Escuelas ejerce las atribuciones que le fija el art. 132 de la Ley 6970 sobre la educación pública (art. 22)."
+      - "Es autoridad de aplicación de la Ley 9139 de protección de personas menores de edad (art. 32)."
+    norma: "Ley 9501, arts. 22, 32 a 36"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: "https://www.mendoza.gob.ar/educacion-cultura-infancias-dge/"
+    antes:
+      - "Ministerio de Cultura y Turismo (2019-2023, Ley 9206, art. 21): la parte de cultura"
+      - "Secretaría de Cultura (2015-2019, Ley 8830)"
+      - "Dirección General de Escuelas con rango de ministerio (hasta 2023)"
+      - "Dirección General de Protección de Derechos de Niños, Niñas y Adolescentes (antes bajo Salud, Desarrollo Social y Deportes, Ley 9206 art. 20)"
+    nota: "El Ministerio de Cultura y Turismo (2019-2023) se reparte hoy: cultura va a este ministerio y turismo a EMETUR (bajo Producción). Los valores 'MINISTERIO DE CULTURA Y TURISMO' de Ética Pública se asignan a este ministerio; revisar los de turismo."
+    alias:
+      nombres:
+        - "Ministerio de Educación, Cultura, Infancias y Dirección General de Escuelas"
+        - "MINISTERIO DE EDUCACION, CULTURA, INFANCIAS Y DGE"
+        - "Min. Educación, Cultura, Infancias y DGE"
+        - "Ministerio de Educación, Cultura, Infancias y DGE"
+        - "Subsecretaría de Cultura"
+        - "Secretaría de Cultura"
+        - "Dirección General de Protección de Derechos de Niños, Niñas y Adolescentes"
+        - "Dirección de Responsabilidad Penal Juvenil"
+        - "Dirección de Niñez, Adolescencia y Familia"
+        - "MINISTERIO DE CULTURA Y TURISMO"
+        - "Ministerio de Cultura y Turismo"
+      etica_publica_reparticion:
+        - "MINISTERIO DE CULTURA Y TURISMO"
+        - "MINISTERIO DE EDUCACION, CULTURA, INFANCIAS Y DGE"
+      codigos_presupuesto:
+        - "14"
+      prefijos_compras:
+        - "1-14-"
+        - "1-22-"
+        - "3-14-"
+        - "2-14-25"
+        - "2-14-26"
+        - "2-08-25"
+        - "2-08-26"
+    unidades_presupuesto_2026:
+      - { codigo: "1-14-02", nombre: "Min. de Educación, Cultura, Infancias" }
+      - { codigo: "1-14-03", nombre: "Subs. de Infancias, Adolescencias y Juvent" }
+      - { codigo: "1-14-04", nombre: "Sub. de Infraes E, Cultural y de Infancias" }
+      - { codigo: "1-14-05", nombre: "Subsecretaría de Cultura" }
+      - { codigo: "2-14-25", nombre: "D.G.de Protección de Der.Niños/as y Adoles" }
+      - { codigo: "2-14-26", nombre: "Dir. de Responsabilidad Penal Juvenil" }
+  - id: fiscalia-de-estado
+    nombre: "Fiscalía de Estado"
+    tipo: organismo_control
+    depende_de: null
+    que_hace: "Es el organismo que representa y defiende los intereses legales de la Provincia en juicio. La Ley 9501 le asigna interponer la acción de repetición contra el funcionario responsable cuando un acto ministerial daña a terceros o al patrimonio del Estado."
+    puntos:
+      - "Interpone la acción de repetición contra el funcionario responsable de actos que generen derechos de terceros a resarcimiento o menoscaben el patrimonio del fisco (art. 2 inc. j)."
+      - "Funciona como jurisdicción propia en el presupuesto provincial (jurisdicción 15)."
+    norma: "Ley 9501, art. 2 inc. j y art. 23; presupuesto 2026 (Ley 9681), planilla 8.2"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: "https://www.mendoza.gob.ar/"
+    antes: []
+    nota: "Sus misiones y funciones surgen de la Constitución y su ley orgánica, que no se relevaron en esta tabla."
+    alias:
+      nombres:
+        - "Fiscalía de Estado"
+        - "FISCALIA DE ESTADO"
+        - "Fiscal de Estado"
+      etica_publica_reparticion:
+        - "FISCALIA DE ESTADO"
+      codigos_presupuesto:
+        - "15"
+      prefijos_compras:
+        - "1-15-"
+    unidades_presupuesto_2026:
+      - { codigo: "1-15-01", nombre: "Fiscalía de Estado" }
+  - id: tribunal-de-cuentas
+    nombre: "Tribunal de Cuentas"
+    tipo: organismo_control
+    depende_de: null
+    que_hace: "Es el órgano de control externo de las cuentas públicas provinciales y tiene jurisdicción propia en el presupuesto (jurisdicción 03). La Ley de Ministerios no lo regula."
+    puntos: []
+    norma: "Presupuesto 2026 (Ley 9681), planilla 8.2 (jurisdicción 03); Constitución de Mendoza (sin artículo verificado)"
+    fuente_url: "https://media.mendoza.gob.ar/informacion-oficial/uploads/sites/11/2025/09/8-2.pdf"
+    sitio_url: "https://www.tribunaldecuentas.mendoza.gov.ar/"
+    antes: []
+    nota: "No es parte del Poder Ejecutivo (órgano extra-poder), pero se lista porque controla al Ejecutivo y compra."
+    alias:
+      nombres:
+        - "Tribunal de Cuentas"
+        - "TRIBUNAL DE CUENTAS"
+      etica_publica_reparticion:
+        - "TRIBUNAL DE CUENTAS"
+      codigos_presupuesto:
+        - "03"
+      prefijos_compras:
+        - "1-03-"
+    unidades_presupuesto_2026:
+      - { codigo: "1-03-01", nombre: "Tribunal de Cuentas" }
+  - id: contaduria-general-de-la-provincia
+    nombre: "Contaduría General de la Provincia"
+    tipo: organismo_control
+    depende_de: ministerio-de-hacienda-y-finanzas
+    que_hace: "Es una unidad del Ministerio de Hacienda y Finanzas. La Ley 9501 asigna al Ministerio controlar y registrar la ejecución presupuestaria y determinar los resultados financieros y variaciones patrimoniales de cada ejercicio."
+    puntos:
+      - "Registra y controla la ejecución presupuestaria (función del Ministerio, art. 13 inc. 13)."
+      - "Es la unidad organizativa 06-03 del presupuesto 2026."
+    norma: "Ley 9501, art. 13 inc. 13; Ley 8706 de Administración Financiera (funciones propias, no verificadas aquí)"
+    fuente_url: "https://media.mendoza.gob.ar/informacion-oficial/uploads/sites/11/2025/09/8-2.pdf"
+    sitio_url: null
+    antes: []
+    nota: "Su ley específica de funciones no se relevó."
+    alias:
+      nombres:
+        - "Contaduría General de la Provincia"
+        - "CONTADURIA GENERAL DE LA PROVINCIA"
+        - "Contaduría Gral. de la Provincia"
+      etica_publica_reparticion:
+        - "CONTADURIA GENERAL DE LA PROVINCIA"
+      codigos_presupuesto:
+        - "1-06-03"
+      prefijos_compras:
+        - "1-06-03"
+    unidades_presupuesto_2026:
+      - { codigo: "1-06-03", nombre: "Contaduría Gral. de la Provincia" }
+  - id: tesoreria-general-de-la-provincia
+    nombre: "Tesorería General de la Provincia"
+    tipo: organismo_control
+    depende_de: ministerio-de-hacienda-y-finanzas
+    que_hace: "Es una unidad del Ministerio de Hacienda y Finanzas. La Ley 9501 asigna al Ministerio supervisar la 'Cuenta Única' o Fondo Unificado para el uso eficiente de los fondos de toda la Administración Provincial."
+    puntos:
+      - "Participa de la gestión de caja y de la Cuenta Única (función del Ministerio, art. 13 inc. 10)."
+      - "Es la unidad organizativa 06-05 del presupuesto 2026."
+    norma: "Ley 9501, art. 13 inc. 10; Ley 8706 de Administración Financiera (funciones propias, no verificadas aquí)"
+    fuente_url: "https://media.mendoza.gob.ar/informacion-oficial/uploads/sites/11/2025/09/8-2.pdf"
+    sitio_url: null
+    antes: []
+    nota: "Su ley específica de funciones no se relevó."
+    alias:
+      nombres:
+        - "Tesorería General de la Provincia"
+        - "TESORERIA GENERAL DE LA PROVINCIA"
+        - "Tesorería Gral. de la Provincia"
+      etica_publica_reparticion:
+        - "TESORERIA GENERAL DE LA PROVINCIA"
+      codigos_presupuesto:
+        - "1-06-05"
+      prefijos_compras:
+        - "1-06-05"
+    unidades_presupuesto_2026:
+      - { codigo: "1-06-05", nombre: "Tesorería Gral. de la Provincia" }
+  - id: oficina-de-etica-publica
+    nombre: "Oficina de Investigaciones Administrativas y Ética Pública"
+    tipo: organismo_control
+    depende_de: poder-legislativo
+    que_hace: "Es la oficina que recibe las declaraciones juradas de los funcionarios. En el presupuesto 2026 figura como una unidad del Poder Legislativo (unidad organizativa 01-04) con un cargo."
+    puntos: []
+    norma: "Presupuesto 2026 (Ley 9681), planilla 8.2 (1-1-4)"
+    fuente_url: "https://media.mendoza.gob.ar/informacion-oficial/uploads/sites/11/2025/09/8-2.pdf"
+    sitio_url: null
+    antes: []
+    nota: "Se lista en esta tabla porque es la fuente de funcionarios.csv; no depende del Ejecutivo."
+    alias:
+      nombres:
+        - "Oficina de Investigaciones Administrativas y Ética Pública"
+        - "OFICINA DE ETICA PUBLICA"
+        - "Of. Inv. Administ. y Ética Pública"
+        - "Oficina de Ética Pública"
+      etica_publica_reparticion:
+        - "OFICINA DE ETICA PUBLICA"
+      codigos_presupuesto:
+        - "1-01-04"
+      prefijos_compras: []
+    unidades_presupuesto_2026:
+      - { codigo: "1-01-04", nombre: "Of. Inv. Administ. y Ética Pública" }
+  - id: administracion-tributaria-mendoza
+    nombre: "Administración Tributaria Mendoza"
+    sigla: "ATM"
+    tipo: ente_descentralizado
+    depende_de: ministerio-de-hacienda-y-finanzas
+    que_hace: "La Ley 9501 solo lo menciona como organismo que se relaciona con el Poder Ejecutivo a través de el Ministerio de Hacienda y Finanzas (art. 14 inc. 3); no describe sus funciones, que las fija su norma de creación. Además, el art. 13 inc. 26 dispone que las funciones tributarias del Ministerio se ejerzan en coordinación con la ATM."
+    puntos: []
+    norma: "Ley 9501, arts. 13 inc. 26 y 14 inc. 3"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: "https://www.atm.mendoza.gov.ar/"
+    antes: []
+    alias:
+      nombres:
+        - "Administración Tributaria Mendoza"
+        - "ADMINISTRACION TRIBUTARIA MENDOZA (ATM)"
+        - "ATM"
+      etica_publica_reparticion:
+        - "ADMINISTRACION TRIBUTARIA MENDOZA (ATM)"
+      codigos_presupuesto:
+        - "5-06-04"
+      prefijos_compras:
+        - "5-06-04"
+    unidades_presupuesto_2026:
+      - { codigo: "5-06-04", nombre: "Administración Tributaria Mendoza" }
+  - id: instituto-provincial-de-juegos-y-casinos
+    nombre: "Instituto Provincial de Juegos y Casinos"
+    sigla: "IPJC"
+    tipo: ente_descentralizado
+    depende_de: ministerio-de-hacienda-y-finanzas
+    que_hace: "La Ley 9501 solo lo menciona como organismo que se relaciona con el Poder Ejecutivo a través de el Ministerio de Hacienda y Finanzas (art. 14 inc. 1); no describe sus funciones, que las fija su norma de creación."
+    puntos: []
+    norma: "Ley 9501, art. 14 inc. 1"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: null
+    antes: []
+    alias:
+      nombres:
+        - "Instituto Provincial de Juegos y Casinos"
+        - "INSTITUTO PROVINCIAL DE JUEGOS Y CASINOS"
+        - "IPJC"
+        - "Lotería de Mendoza"
+        - "Instituto Pcial. de Juegos y Casinos"
+      etica_publica_reparticion:
+        - "INSTITUTO PROVINCIAL DE JUEGOS Y CASINOS"
+      codigos_presupuesto:
+        - "5-06-03"
+      prefijos_compras:
+        - "5-06-03"
+    unidades_presupuesto_2026:
+      - { codigo: "5-06-03", nombre: "Instituto Pcial. de Juegos y Casinos" }
+  - id: caja-de-seguro-mutual
+    nombre: "Caja de Seguro Mutual"
+    tipo: ente_descentralizado
+    depende_de: ministerio-de-hacienda-y-finanzas
+    que_hace: "La Ley 9501 solo lo menciona como organismo que se relaciona con el Poder Ejecutivo a través de el Ministerio de Hacienda y Finanzas (art. 14 inc. 2); no describe sus funciones, que las fija su norma de creación."
+    puntos: []
+    norma: "Ley 9501, art. 14 inc. 2"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: null
+    antes: []
+    alias:
+      nombres:
+        - "Caja de Seguro Mutual"
+        - "CAJA DE SEGURO MUTUAL"
+      etica_publica_reparticion:
+        - "CAJA DE SEGURO MUTUAL"
+      codigos_presupuesto:
+        - "5-06-02"
+      prefijos_compras:
+        - "5-06-02"
+    unidades_presupuesto_2026:
+      - { codigo: "5-06-02", nombre: "Caja de Seguro Mutual" }
+  - id: unidad-de-financiamiento-internacional
+    nombre: "Unidad de Financiamiento Internacional"
+    sigla: "UFI"
+    tipo: otro
+    depende_de: ministerio-de-hacienda-y-finanzas
+    que_hace: "La Ley 9501 solo lo menciona como organismo que se relaciona con el Poder Ejecutivo a través de el Ministerio de Hacienda y Finanzas (art. 14 inc. 4); no describe sus funciones, que las fija su norma de creación."
+    puntos: []
+    norma: "Ley 9501, art. 14 inc. 4"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: null
+    antes: []
+    alias:
+      nombres:
+        - "Unidad de Financiamiento Internacional"
+      etica_publica_reparticion: []
+      codigos_presupuesto:
+        - "3-06-01"
+      prefijos_compras:
+        - "3-06-01"
+  - id: departamento-general-de-irrigacion
+    nombre: "Departamento General de Irrigación"
+    sigla: "DGI"
+    tipo: ente_descentralizado
+    depende_de: ministerio-de-gobierno-infraestructura-y-desarrollo-territorial
+    que_hace: "Es el organismo que administra el agua superficial y subterránea de Mendoza. La Ley 9501 lo nombra entre los organismos que se relacionan con el Ejecutivo a través del Ministerio de Gobierno, Infraestructura y Desarrollo Territorial, y pide al Ministerio coordinar con él la legislación sobre agua."
+    puntos:
+      - "Se relaciona con el Ejecutivo vía el Ministerio de Gobierno, Infraestructura y Desarrollo Territorial (art. 11 inc. 2)."
+      - "El Ministerio promueve y adapta la legislación sobre agua superficial y subterránea 'en coordinación con el Departamento General de Irrigación' (art. 10 inc. 29)."
+    norma: "Ley 9501, arts. 10 inc. 29 y 11 inc. 2"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: "https://www.irrigacion.gov.ar/web/"
+    antes: []
+    nota: "Tiene autonomía constitucional propia y presupuesto propio; no aparece con jurisdicción en las planillas de planta 8.2 ni como comprador en COMPR.AR (compra por otro sistema)."
+    alias:
+      nombres:
+        - "Departamento General de Irrigación"
+        - "DEPARTAMENTO GENERAL DE IRRIGACION"
+        - "Irrigación"
+        - "DGI"
+      etica_publica_reparticion:
+        - "DEPARTAMENTO GENERAL DE IRRIGACION"
+      codigos_presupuesto: []
+      prefijos_compras: []
+  - id: direccion-provincial-de-vialidad
+    nombre: "Dirección Provincial de Vialidad"
+    sigla: "DPV"
+    tipo: ente_descentralizado
+    depende_de: ministerio-de-gobierno-infraestructura-y-desarrollo-territorial
+    que_hace: "La Ley 9501 solo lo menciona como organismo que se relaciona con el Poder Ejecutivo a través de el Ministerio de Gobierno, Infraestructura y Desarrollo Territorial (art. 11 inc. 1); no describe sus funciones, que las fija su norma de creación. El Ministerio puede programar, proyectar y construir obras viales (art. 10 inc. 35)."
+    puntos: []
+    norma: "Ley 9501, arts. 10 inc. 35 y 11 inc. 1"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: "https://www.mendoza.gob.ar/vialidad/"
+    antes:
+      - "Ministerio de Planificación e Infraestructura Pública (2019-2023, Ley 9206 art. 18): jurisdicción 09"
+      - "Ministerio de Economía, Infraestructura y Energía (jurisdicción 07)"
+    alias:
+      nombres:
+        - "Dirección Provincial de Vialidad"
+        - "DIRECCION PROVINCIAL DE VIALIDAD"
+        - "Dcción.Pcial.de Vialidad"
+        - "Dirección Provincial de Vialidad (DPV)"
+      etica_publica_reparticion:
+        - "DIRECCION PROVINCIAL DE VIALIDAD"
+      codigos_presupuesto:
+        - "2-05-02"
+      prefijos_compras:
+        - "2-05-02"
+        - "2-07-02"
+        - "2-09-02"
+    unidades_presupuesto_2026:
+      - { codigo: "2-05-02", nombre: "Dcción.Pcial.de Vialidad" }
+  - id: instituto-provincial-de-la-vivienda
+    nombre: "Instituto Provincial de la Vivienda"
+    sigla: "IPV"
+    tipo: ente_descentralizado
+    depende_de: ministerio-de-gobierno-infraestructura-y-desarrollo-territorial
+    que_hace: "La Ley 9501 solo lo menciona como organismo que se relaciona con el Poder Ejecutivo a través de el Ministerio de Gobierno, Infraestructura y Desarrollo Territorial (art. 11 inc. 3); no describe sus funciones, que las fija su norma de creación. El Ministerio entiende en la política de planeamiento urbano y de construcción y mejoramiento de viviendas (art. 10 inc. 37)."
+    puntos: []
+    norma: "Ley 9501, arts. 10 inc. 37 y 11 inc. 3"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: "https://www.ipvmendoza.gov.ar/"
+    antes: []
+    alias:
+      nombres:
+        - "Instituto Provincial de la Vivienda"
+        - "IPV"
+        - "Instituto Pcial. de la Vivienda"
+      etica_publica_reparticion:
+        - "IPV"
+      codigos_presupuesto:
+        - "5-05-01"
+      prefijos_compras:
+        - "5-05-01"
+        - "5-07-01"
+        - "5-09-03"
+    unidades_presupuesto_2026:
+      - { codigo: "5-05-01", nombre: "Instituto Provincial de la Vivienda" }
+  - id: ente-provincial-de-agua-y-saneamiento
+    nombre: "Ente Provincial de Agua y Saneamiento"
+    sigla: "EPAS"
+    tipo: ente_descentralizado
+    depende_de: ministerio-de-gobierno-infraestructura-y-desarrollo-territorial
+    que_hace: "La Ley 9501 solo lo menciona como organismo que se relaciona con el Poder Ejecutivo a través de el Ministerio de Gobierno, Infraestructura y Desarrollo Territorial (art. 11 inc. 5); no describe sus funciones, que las fija su norma de creación."
+    puntos: []
+    norma: "Ley 9501, art. 11 inc. 5"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: null
+    antes:
+      - "Ente Provincial del Agua y de Saneamiento (Secretaría de Servicios Públicos, Ley 9206 art. 28)"
+    alias:
+      nombres:
+        - "Ente Provincial de Agua y Saneamiento"
+        - "EPAS"
+        - "Ente Provincial del Agua y de Saneamiento"
+      etica_publica_reparticion: []
+      codigos_presupuesto: []
+      prefijos_compras: []
+  - id: agua-y-saneamiento-mendoza
+    nombre: "Agua y Saneamiento Mendoza SAPEM"
+    sigla: "AYSAM"
+    tipo: empresa
+    depende_de: ministerio-de-gobierno-infraestructura-y-desarrollo-territorial
+    que_hace: "La Ley 9501 solo lo menciona como organismo que se relaciona con el Poder Ejecutivo a través de el Ministerio de Gobierno, Infraestructura y Desarrollo Territorial (art. 11 inc. 7); no describe sus funciones, que las fija su norma de creación."
+    puntos: []
+    norma: "Ley 9501, art. 11 inc. 7"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: "https://www.aysam.com.ar/"
+    antes:
+      - "AYSAM S.A.P.E.M. (Secretaría de Servicios Públicos, Ley 9206 art. 28)"
+    alias:
+      nombres:
+        - "Agua y Saneamiento Mendoza SAPEM"
+        - "AYSAM"
+        - "AGUA Y SANEAMIENTO MENDOZA"
+        - "Agua y Saneamiento Mendoza S.A.P.E.M."
+      etica_publica_reparticion:
+        - "AYSAM"
+      codigos_presupuesto: []
+      prefijos_compras: []
+  - id: ente-de-la-movilidad-provincial
+    nombre: "Ente de la Movilidad Provincial"
+    sigla: "EMoP"
+    tipo: ente_descentralizado
+    depende_de: ministerio-de-gobierno-infraestructura-y-desarrollo-territorial
+    que_hace: "La Ley 9501 solo lo menciona como organismo que se relaciona con el Poder Ejecutivo a través de el Ministerio de Gobierno, Infraestructura y Desarrollo Territorial (art. 11 inc. 6); no describe sus funciones, que las fija su norma de creación."
+    puntos: []
+    norma: "Ley 9501, art. 11 inc. 6"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: null
+    antes:
+      - "Ente de la Movilidad Provincial (Secretaría de Servicios Públicos, Ley 9206 art. 28)"
+    alias:
+      nombres:
+        - "Ente de la Movilidad Provincial"
+        - "ENTE DE MOVILIDAD DE LA PROVINCIA"
+        - "Ente de la Movilidad Provincial (EMoP)"
+        - "EMOP"
+      etica_publica_reparticion:
+        - "ENTE DE MOVILIDAD DE LA PROVINCIA"
+      codigos_presupuesto:
+        - "9-26-03"
+      prefijos_compras:
+        - "9-26-03"
+  - id: sociedad-de-transporte-mendoza
+    nombre: "Sociedad de Transporte Mendoza SAUPE"
+    sigla: "STM"
+    tipo: empresa
+    depende_de: ministerio-de-gobierno-infraestructura-y-desarrollo-territorial
+    que_hace: "La Ley 9501 solo lo menciona como organismo que se relaciona con el Poder Ejecutivo a través de el Ministerio de Gobierno, Infraestructura y Desarrollo Territorial (art. 11 inc. 8); no describe sus funciones, que las fija su norma de creación."
+    puntos: []
+    norma: "Ley 9501, art. 11 inc. 8"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: null
+    antes:
+      - "Sociedad de Transporte de Mendoza (Secretaría de Servicios Públicos, Ley 9206 art. 28)"
+    alias:
+      nombres:
+        - "Sociedad de Transporte Mendoza SAUPE"
+        - "SOCIEDAD DE TRANSPORTE DE MENDOZA"
+        - "Sociedad de Transporte de Mendoza (STM)"
+      etica_publica_reparticion:
+        - "SOCIEDAD DE TRANSPORTE DE MENDOZA"
+      codigos_presupuesto: []
+      prefijos_compras: []
+  - id: subsecretaria-de-transporte
+    nombre: "Subsecretaría de Transporte"
+    tipo: secretaria
+    depende_de: ministerio-de-gobierno-infraestructura-y-desarrollo-territorial
+    que_hace: "Es la unidad del Ministerio de Gobierno, Infraestructura y Desarrollo Territorial que figura en el presupuesto 2026 (unidad 05-31, con la Dirección de Transporte 05-32). La ley asigna al Ministerio la política de transporte público de pasajeros (art. 10 inc. 30)."
+    puntos: []
+    norma: "Ley 9501, art. 10 incs. 30 y 31; presupuesto 2026, planilla 8.2"
+    fuente_url: "https://media.mendoza.gob.ar/informacion-oficial/uploads/sites/11/2025/09/8-2.pdf"
+    sitio_url: null
+    antes: []
+    alias:
+      nombres:
+        - "Subsecretaría de Transporte"
+        - "SUBSECRETARIA DE TRANSPORTE"
+        - "Dirección de Transporte"
+        - "Dirección de Vías y Medios de Transporte"
+      etica_publica_reparticion:
+        - "SUBSECRETARIA DE TRANSPORTE"
+      codigos_presupuesto:
+        - "1-05-31"
+        - "1-05-32"
+      prefijos_compras:
+        - "1-05-31"
+        - "1-05-32"
+        - "1-26-02"
+    unidades_presupuesto_2026:
+      - { codigo: "1-05-31", nombre: "Subsecretaría de Transporte" }
+      - { codigo: "1-05-32", nombre: "Dirección de Transporte" }
+  - id: instituto-de-sanidad-y-calidad-agropecuaria-mendoza
+    nombre: "Instituto de Sanidad y Calidad Agropecuaria Mendoza"
+    sigla: "ISCAMEN"
+    tipo: ente_descentralizado
+    depende_de: ministerio-de-produccion
+    que_hace: "La Ley 9501 solo lo menciona como organismo que se relaciona con el Poder Ejecutivo a través de el Ministerio de Producción (art. 16 inc. 1); no describe sus funciones, que las fija su norma de creación. El Ministerio debe controlar la calidad y sanidad de la producción (art. 15 inc. 6)."
+    puntos: []
+    norma: "Ley 9501, arts. 15 inc. 6 y 16 inc. 1"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: null
+    antes: []
+    alias:
+      nombres:
+        - "Instituto de Sanidad y Calidad Agropecuaria Mendoza"
+        - "INSTITUTO DE SANIDAD Y CALIDAD AGROPECUARIA MENDOZA"
+        - "ISCAMEN"
+        - "ISCAMen"
+        - "Instituto de Sanid.y Calid.Agropec.Mendoza"
+      etica_publica_reparticion:
+        - "INSTITUTO DE SANIDAD Y CALIDAD AGROPECUARIA MENDOZA"
+      codigos_presupuesto:
+        - "2-07-01"
+      prefijos_compras:
+        - "2-07-01"
+    unidades_presupuesto_2026:
+      - { codigo: "2-07-01", nombre: "Instituto de Sanid.y Calid.Agropec.Mendoza" }
+  - id: aeronautica-de-mendoza
+    nombre: "Aeronáutica de Mendoza Sociedad Anónima"
+    sigla: "AEMSA"
+    tipo: empresa
+    depende_de: ministerio-de-produccion
+    que_hace: "La Ley 9501 solo lo menciona como organismo que se relaciona con el Poder Ejecutivo a través de el Ministerio de Producción (art. 16 inc. 2); no describe sus funciones, que las fija su norma de creación."
+    puntos: []
+    norma: "Ley 9501, art. 16 inc. 2"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: null
+    antes: []
+    alias:
+      nombres:
+        - "Aeronáutica de Mendoza Sociedad Anónima"
+        - "AERONAUTICA MENDOZA AEMSA"
+        - "AEMSA"
+      etica_publica_reparticion:
+        - "AERONAUTICA MENDOZA AEMSA"
+      codigos_presupuesto: []
+      prefijos_compras: []
+  - id: ente-mendoza-turismo
+    nombre: "Ente Mendoza Turismo"
+    sigla: "EMETUR"
+    tipo: ente_descentralizado
+    depende_de: ministerio-de-produccion
+    que_hace: "Es el ente con personalidad jurídica de derecho público creado por la Ley 8845 como organismo de aplicación en materia de turismo (la Ley 9501, art. 28, redactó su artículo 2). Se relaciona con el Ejecutivo a través del Ministerio de Producción."
+    puntos:
+      - "Tiene personalidad jurídica de derecho público (Ley 8845 art. 2, texto según Ley 9501 art. 28)."
+      - "Se relaciona con el Ejecutivo vía el Ministerio de Producción (Ley 9501 art. 16 inc. 5)."
+    norma: "Ley 8845, art. 2 (modificado por Ley 9501, art. 28); Ley 9501, art. 16 inc. 5"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: "https://www.mendoza.tur.ar/"
+    antes:
+      - "EMETUR bajo el Ministerio de Cultura y Turismo (2019-2023, jurisdicción 22 del presupuesto)"
+    alias:
+      nombres:
+        - "Ente Mendoza Turismo"
+        - "ENTE MENDOZA TURISMO"
+        - "Ente Mendoza Turismo (EMETUR)"
+        - "EMETUR"
+        - "Ente Mendoza Turismo Ley 8845"
+      etica_publica_reparticion:
+        - "ENTE MENDOZA TURISMO"
+      codigos_presupuesto:
+        - "5-07-03"
+        - "5-22-01"
+      prefijos_compras:
+        - "5-07-03"
+        - "5-22-01"
+    unidades_presupuesto_2026:
+      - { codigo: "5-07-03", nombre: "Ente Mendoza Turismo" }
+  - id: instituto-de-desarrollo-rural
+    nombre: "Instituto de Desarrollo Rural"
+    sigla: "IDR"
+    tipo: ente_descentralizado
+    depende_de: ministerio-de-produccion
+    que_hace: "La Ley 9501 solo lo menciona como organismo que se relaciona con el Poder Ejecutivo a través de el Ministerio de Producción (art. 16 inc. 3); no describe sus funciones, que las fija su norma de creación."
+    puntos: []
+    norma: "Ley 9501, art. 16 inc. 3"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: null
+    antes: []
+    alias:
+      nombres:
+        - "Instituto de Desarrollo Rural"
+      etica_publica_reparticion: []
+      codigos_presupuesto: []
+      prefijos_compras: []
+  - id: instituto-de-desarrollo-comercial
+    nombre: "Instituto de Desarrollo Comercial"
+    sigla: "IDC"
+    tipo: ente_descentralizado
+    depende_de: ministerio-de-produccion
+    que_hace: "La Ley 9501 solo lo menciona como organismo que se relaciona con el Poder Ejecutivo a través de el Ministerio de Producción (art. 16 inc. 4); no describe sus funciones, que las fija su norma de creación."
+    puntos: []
+    norma: "Ley 9501, art. 16 inc. 4"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: null
+    antes: []
+    alias:
+      nombres:
+        - "Instituto de Desarrollo Comercial"
+      etica_publica_reparticion: []
+      codigos_presupuesto: []
+      prefijos_compras: []
+  - id: instituto-de-desarrollo-industrial-tecnologico-y-de-servicios
+    nombre: "Instituto de Desarrollo Industrial Tecnológico y de Servicios"
+    sigla: "IDITS"
+    tipo: ente_descentralizado
+    depende_de: ministerio-de-produccion
+    que_hace: "La Ley 9501 solo lo menciona como organismo que se relaciona con el Poder Ejecutivo a través de el Ministerio de Producción (art. 16 inc. 6); no describe sus funciones, que las fija su norma de creación."
+    puntos: []
+    norma: "Ley 9501, art. 16 inc. 6"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: null
+    antes: []
+    alias:
+      nombres:
+        - "Instituto de Desarrollo Industrial Tecnológico y de Servicios"
+      etica_publica_reparticion: []
+      codigos_presupuesto: []
+      prefijos_compras: []
+  - id: obra-social-de-empleados-publicos
+    nombre: "Obra Social de Empleados Públicos"
+    sigla: "OSEP"
+    tipo: ente_descentralizado
+    depende_de: ministerio-de-salud-y-deportes
+    que_hace: "La Ley 9501 solo lo menciona como organismo que se relaciona con el Poder Ejecutivo a través de el Ministerio de Salud y Deportes (art. 19 inc. 1); no describe sus funciones, que las fija su norma de creación. En el presupuesto 2026 aparece con su Dirección General, el Hospital El Carmen y el Sanatorio Fleming (carácter 5)."
+    puntos: []
+    norma: "Ley 9501, art. 19 inc. 1; presupuesto 2026, planilla 8.2"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: "https://osepmendoza.com.ar/web/"
+    antes: []
+    alias:
+      nombres:
+        - "Obra Social de Empleados Públicos"
+        - "OSEP"
+        - "Dcción. Gral. Obra Social de Emp. Pcos."
+        - "Hospital El Carmen"
+        - "Sanatorio Fleming -O.S.E.P.-"
+      etica_publica_reparticion:
+        - "OSEP"
+      codigos_presupuesto:
+        - "5-08-01"
+        - "5-08-02"
+        - "5-08-03"
+      prefijos_compras:
+        - "5-08-"
+    unidades_presupuesto_2026:
+      - { codigo: "5-08-01", nombre: "Dcción. Gral. Obra Social de Emp. Pcos." }
+      - { codigo: "5-08-02", nombre: "Hospital El Carmen" }
+      - { codigo: "5-08-03", nombre: "Sanatorio Fleming -O.S.E.P.-" }
+  - id: hospitales-publicos-descentralizados
+    nombre: "Hospitales públicos"
+    tipo: ente_descentralizado
+    depende_de: ministerio-de-salud-y-deportes
+    que_hace: "Son los hospitales de la red pública provincial, que la Ley 9501 incluye entre los organismos que se relacionan con el Ejecutivo a través del Ministerio de Salud y Deportes. En el presupuesto 2026 figuran unos 14 con carácter descentralizado (código 2-08) y otros con carácter de administración central (1-08)."
+    puntos:
+      - "Se relacionan con el Ejecutivo vía el Ministerio de Salud y Deportes (art. 19 inc. 2)."
+      - "El Ministerio administra los establecimientos de salud del Gobierno provincial y organiza los niveles de atención (art. 18 incs. 8 y 14)."
+    norma: "Ley 9501, arts. 18 incs. 8 y 14 y 19 inc. 2; presupuesto 2026, planilla 8.2"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: null
+    antes: []
+    nota: "Cada hospital es un comprador distinto en COMPR.AR; se agrupan acá. Dos códigos 2-08 (25 y 26: Niñez y Responsabilidad Penal Juvenil) no son hospitales y se asignan al Ministerio de Educación. Los hospitales 1-08-xx figuran en 'Ministerio de Salud' dentro de la planilla 8.2."
+    alias:
+      nombres:
+        - "Hospitales públicos"
+        - "HOSPITAL EL SAUCE"
+        - "Hospital El Sauce"
+        - "Hospital Central"
+        - "Hospital Materno Infantil Humberto Notti"
+        - "Hospital Lagomaggiore"
+        - "Hospital Carlos Pereyra"
+      etica_publica_reparticion:
+        - "HOSPITAL EL SAUCE"
+      codigos_presupuesto:
+        - "2-08"
+      prefijos_compras:
+        - "2-08-"
+        - "1-08-07"
+        - "1-08-13"
+        - "1-08-14"
+        - "1-08-18"
+        - "1-08-20"
+        - "1-08-21"
+        - "1-08-25"
+        - "1-08-26"
+        - "1-08-28"
+    unidades_presupuesto_2026:
+      - { codigo: "1-08-07", nombre: "Hospital José Nestor Lencinas" }
+      - { codigo: "1-08-13", nombre: "Hospital A. Metraux" }
+      - { codigo: "1-08-14", nombre: "Hospital H. Gailhac" }
+      - { codigo: "1-08-18", nombre: "Hospital Arturo Illia" }
+      - { codigo: "1-08-20", nombre: "Hospital D. Sícoli" }
+      - { codigo: "1-08-21", nombre: "Hospital Fernando Arenas Raffo" }
+      - { codigo: "1-08-25", nombre: "Hospital Ministro Dr. Ramón Carrillo" }
+      - { codigo: "1-08-26", nombre: "Hospital Luis Chrabalowski" }
+      - { codigo: "1-08-28", nombre: "Hospital Eva Perón" }
+      - { codigo: "2-08-01", nombre: "Hospital Central" }
+      - { codigo: "2-08-02", nombre: "Hospital Materno Infantil Humberto Notti" }
+      - { codigo: "2-08-03", nombre: "Hospital Teodoro Schestakow" }
+      - { codigo: "2-08-04", nombre: "Hospital Luis Lagomaggiore" }
+      - { codigo: "2-08-08", nombre: "Hospital Carlos Pereyra" }
+      - { codigo: "2-08-09", nombre: "Hospital El Sauce" }
+      - { codigo: "2-08-10", nombre: "Hospital Diego Paroissien" }
+      - { codigo: "2-08-11", nombre: "Hospital A. Perrupato" }
+      - { codigo: "2-08-12", nombre: "Hospital Enfermeros Argentinos" }
+      - { codigo: "2-08-15", nombre: "Hospital Victorino Tagarelli" }
+      - { codigo: "2-08-16", nombre: "Hospital Antonio J. Scaravelli" }
+      - { codigo: "2-08-17", nombre: "Hospital Saporitti" }
+      - { codigo: "2-08-19", nombre: "Hospital Malargue" }
+      - { codigo: "2-08-24", nombre: "Hospital Gral. Las Heras" }
+  - id: fondo-de-inversion-y-desarrollo-social
+    nombre: "Fondo de Inversión y Desarrollo Social"
+    sigla: "FIDES"
+    tipo: ente_descentralizado
+    depende_de: ministerio-de-educacion-cultura-infancias-y-dge
+    que_hace: "Es el Fondo creado por la Ley 6462 que, según la Ley 9501, queda en el ámbito del Ministerio de Educación, Cultura, Infancias y DGE."
+    puntos: []
+    norma: "Ley 9501, art. 36 (Ley 6462 de creación)"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: null
+    antes: []
+    nota: "Conflicto entre fuentes: el presupuesto 2026 (planilla 8.2) lo lista como unidad 05-37 dentro de Gobierno, mientras la ley lo pone bajo Educación. En compras figura como 1-08-83 (era Salud, Desarrollo Social y Deportes). Se sigue la ley."
+    alias:
+      nombres:
+        - "Fondo de Inversión y Desarrollo Social"
+        - "FIDES"
+      etica_publica_reparticion: []
+      codigos_presupuesto:
+        - "1-05-37"
+      prefijos_compras:
+        - "1-08-83"
+    unidades_presupuesto_2026:
+      - { codigo: "1-05-37", nombre: "Fondo de Inversión y Desarrollo Social" }
+  - id: policia-de-mendoza
+    nombre: "Dirección General de Policía"
+    tipo: otro
+    depende_de: ministerio-de-seguridad-y-justicia
+    que_hace: "Es la fuerza policial provincial. La Ley 9501 asigna al Ministerio de Seguridad y Justicia organizar y conducir el sistema de Policía de la Provincia; el presupuesto la lista como unidad 16-06."
+    puntos: []
+    norma: "Ley 9501, art. 12 inc. 8 (y art. 26, que incluye a las Policías de la provincia en el sistema de seguridad pública); presupuesto 2026, planilla 8.2"
+    fuente_url: "https://media.mendoza.gob.ar/informacion-oficial/uploads/sites/11/2025/09/8-2.pdf"
+    sitio_url: null
+    antes: []
+    alias:
+      nombres:
+        - "Dirección General de Policía"
+        - "PERSONAL POLICIAL"
+        - "Dcción. General de Policia"
+        - "Policía de Mendoza"
+      etica_publica_reparticion:
+        - "PERSONAL POLICIAL"
+      codigos_presupuesto:
+        - "1-16-06"
+      prefijos_compras:
+        - "1-16-06"
+    unidades_presupuesto_2026:
+      - { codigo: "1-16-06", nombre: "Dcción. General de Policia" }
+  - id: servicio-penitenciario-provincial
+    nombre: "Dirección General del Servicio Penitenciario"
+    tipo: otro
+    depende_de: ministerio-de-seguridad-y-justicia
+    que_hace: "Administra los establecimientos de encausados y penados. La Ley 9501 asigna al Ministerio de Seguridad y Justicia administrar el Sistema Penitenciario Provincial; el presupuesto lo lista como unidad 16-13."
+    puntos: []
+    norma: "Ley 9501, art. 12 inc. 17 (y art. 26); presupuesto 2026, planilla 8.2"
+    fuente_url: "https://media.mendoza.gob.ar/informacion-oficial/uploads/sites/11/2025/09/8-2.pdf"
+    sitio_url: null
+    antes: []
+    alias:
+      nombres:
+        - "Dirección General del Servicio Penitenciario"
+        - "PENITENCIARIA"
+        - "Dirección Gral Servicio Penitenciario"
+        - "Servicio Penitenciario Provincial"
+      etica_publica_reparticion:
+        - "PENITENCIARIA"
+      codigos_presupuesto:
+        - "1-16-13"
+      prefijos_compras:
+        - "1-16-13"
+    unidades_presupuesto_2026:
+      - { codigo: "1-16-13", nombre: "Dirección Gral Servicio Penitenciario" }
+  - id: inspeccion-general-de-seguridad
+    nombre: "Inspección General de Seguridad"
+    tipo: organismo_control
+    depende_de: ministerio-de-seguridad-y-justicia
+    que_hace: "Es una de las instituciones que componen el sistema provincial de seguridad pública, según el nuevo texto del art. 4 de la Ley 6721 que fija la Ley 9501. En el presupuesto aparece como organismo descentralizado del Ministerio de Seguridad y Justicia."
+    puntos: []
+    norma: "Ley 6721, art. 4 inc. 5 (texto según Ley 9501, art. 26); presupuesto 2026, planilla 8.2 (2-16-01)"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: null
+    antes: []
+    alias:
+      nombres:
+        - "Inspección General de Seguridad"
+        - "INSPECCION GENERAL DE SEGURIDAD"
+      etica_publica_reparticion:
+        - "INSPECCION GENERAL DE SEGURIDAD"
+      codigos_presupuesto:
+        - "2-16-01"
+      prefijos_compras:
+        - "2-16-01"
+    unidades_presupuesto_2026:
+      - { codigo: "2-16-01", nombre: "Inspección General de Seguridad" }
+  - id: instituto-universitario-de-seguridad-publica
+    nombre: "Instituto Universitario de Seguridad Pública"
+    sigla: "IUSP"
+    tipo: ente_descentralizado
+    depende_de: ministerio-de-seguridad-y-justicia
+    que_hace: "Aparece en Ética Pública como repartición. La Ley 9501 no lo menciona."
+    puntos: []
+    norma: "Sin norma relevada"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: null
+    antes: []
+    nota: "Dependencia asignada por afinidad temática (seguridad); no verificada en una norma."
+    alias:
+      nombres:
+        - "Instituto Universitario de Seguridad Pública"
+        - "INSTITUTO UNIVERSITARIO DE SEGURIDAD PUBLICA"
+      etica_publica_reparticion:
+        - "INSTITUTO UNIVERSITARIO DE SEGURIDAD PUBLICA"
+      codigos_presupuesto: []
+      prefijos_compras: []
+  - id: ente-provincial-regulador-electrico
+    nombre: "Ente Provincial Regulador Eléctrico"
+    sigla: "EPRE"
+    tipo: ente_descentralizado
+    depende_de: ministerio-de-energia-y-ambiente
+    que_hace: "La Ley 9501 solo lo menciona como organismo que se relaciona con el Poder Ejecutivo a través de el Ministerio de Energía y Ambiente (art. 21 inc. 1); no describe sus funciones, que las fija su norma de creación."
+    puntos: []
+    norma: "Ley 9501, art. 21 inc. 1 (y art. 31, que cita la Ley 6497 entre las que aplica el Ministerio)"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: null
+    antes:
+      - "EPRE bajo la Secretaría de Servicios Públicos (Ley 9206 art. 28)"
+    alias:
+      nombres:
+        - "Ente Provincial Regulador Eléctrico"
+        - "EPRE"
+      etica_publica_reparticion:
+        - "EPRE"
+      codigos_presupuesto: []
+      prefijos_compras: []
+  - id: empresa-mendocina-de-energia
+    nombre: "Empresa Mendocina de Energía SA"
+    sigla: "EMESA"
+    tipo: empresa
+    depende_de: ministerio-de-energia-y-ambiente
+    que_hace: "La Ley 9501 solo lo menciona como organismo que se relaciona con el Poder Ejecutivo a través de el Ministerio de Energía y Ambiente (art. 21 inc. 2); no describe sus funciones, que las fija su norma de creación."
+    puntos: []
+    norma: "Ley 9501, art. 21 inc. 2"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: "https://emesa.com.ar/"
+    antes:
+      - "EMESA bajo el Ministerio de Economía y Energía (Ley 9206 art. 16)"
+    alias:
+      nombres:
+        - "Empresa Mendocina de Energía SA"
+        - "EMPRESA MENDOCINA DE ENERGIA"
+        - "EMESA"
+      etica_publica_reparticion:
+        - "EMPRESA MENDOCINA DE ENERGIA"
+      codigos_presupuesto: []
+      prefijos_compras: []
+  - id: impulsa-mendoza-sostenible
+    nombre: "Impulsa Mendoza Sostenible S.A."
+    tipo: empresa
+    depende_de: ministerio-de-energia-y-ambiente
+    que_hace: "La Ley 9501 solo lo menciona como organismo que se relaciona con el Poder Ejecutivo a través de el Ministerio de Energía y Ambiente (art. 21 inc. 4); no describe sus funciones, que las fija su norma de creación."
+    puntos: []
+    norma: "Ley 9501, art. 21 inc. 4"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: null
+    antes: []
+    alias:
+      nombres:
+        - "Impulsa Mendoza Sostenible S.A."
+        - "IMPULSA MENDOZA SOSTENIBLE"
+      etica_publica_reparticion:
+        - "IMPULSA MENDOZA SOSTENIBLE"
+      codigos_presupuesto: []
+      prefijos_compras: []
+  - id: dioxitek
+    nombre: "Dioxitek SA"
+    tipo: empresa
+    depende_de: ministerio-de-energia-y-ambiente
+    que_hace: "La Ley 9501 solo lo menciona como organismo que se relaciona con el Poder Ejecutivo a través de el Ministerio de Energía y Ambiente (art. 21 inc. 3); no describe sus funciones, que las fija su norma de creación."
+    puntos: []
+    norma: "Ley 9501, art. 21 inc. 3"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: null
+    antes: []
+    alias:
+      nombres:
+        - "Dioxitek SA"
+      etica_publica_reparticion: []
+      codigos_presupuesto: []
+      prefijos_compras: []
+  - id: direccion-general-de-escuelas
+    nombre: "Dirección General de Escuelas"
+    sigla: "DGE"
+    tipo: ente_descentralizado
+    depende_de: ministerio-de-educacion-cultura-infancias-y-dge
+    que_hace: "Conduce la educación pública de Mendoza. La Ley 9501 la integra al ministerio y dice que el Director General de Escuelas ejerce los deberes y atribuciones que fija el art. 132 de la Ley 6970 para la educación pública y las disposiciones constitucionales de la Sección VIII de la Constitución."
+    puntos:
+      - "Aplica la Ley de Educación 6970 en la educación pública provincial (art. 22)."
+      - "Funciona como organismo descentralizado en el presupuesto (código 2-14, unidades 01 a 11: inicial, básica, polimodal, privada, jóvenes y adultos, especial, superior y técnica)."
+    norma: "Ley 9501, art. 22; Ley 6970, art. 132 (citado por la Ley 9501); presupuesto 2026, planilla 8.2 (2-14)"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: null
+    antes:
+      - "Dirección General de Escuelas, con rango de ministerio (hasta 2023)"
+    nota: "Los valores de Ética Pública ('MINISTERIO DE EDUCACION, CULTURA, INFANCIAS Y DGE') no separan Ministerio y DGE; se asignan al Ministerio. En compras, 2-14-25 y 2-14-26 (Protección de derechos y Responsabilidad Penal Juvenil) van al Ministerio, no a la DGE."
+    alias:
+      nombres:
+        - "Dirección General de Escuelas"
+        - "DGE"
+        - "Dcción. Gral. de Escuelas"
+        - "Dirección General de Escuelas (D.G.E.)"
+      etica_publica_reparticion: []
+      codigos_presupuesto:
+        - "2-14-01"
+        - "2-14-02"
+        - "2-14-03"
+        - "2-14-07"
+        - "2-14-08"
+        - "2-14-09"
+        - "2-14-10"
+        - "2-14-11"
+      prefijos_compras:
+        - "2-14-"
+    unidades_presupuesto_2026:
+      - { codigo: "2-14-01", nombre: "Dcción. Gral. de Escuelas" }
+      - { codigo: "2-14-02", nombre: "Dcción. de Educ.Inicial y Básica(1er.y 2do" }
+      - { codigo: "2-14-03", nombre: "Dcción. Educ.Básica(3er.cic.) y Polimodal" }
+      - { codigo: "2-14-07", nombre: "Dcción. de Educación Privada" }
+      - { codigo: "2-14-08", nombre: "Dcción. de Jóvenes y Adultos" }
+      - { codigo: "2-14-09", nombre: "Dcción. de Educación Especial" }
+      - { codigo: "2-14-10", nombre: "Dcción. de Educación Superior" }
+      - { codigo: "2-14-11", nombre: "Dirección de Educación Técnica y Trabajo" }
+  - id: unidad-coordinadora-de-programas-y-proyectos
+    nombre: "Unidad Coordinadora de Programas y Proyectos"
+    sigla: "UCPP"
+    tipo: otro
+    depende_de: ministerio-de-educacion-cultura-infancias-y-dge
+    que_hace: "Unidad con financiamiento por programas, ligada a la jurisdicción de Educación (código 3-14-03 en compras)."
+    puntos: []
+    norma: "Código de compras 3-14-03; sin norma relevada"
+    fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
+    sitio_url: null
+    antes: []
+    nota: "Asignación por código; no hay norma relevada."
+    alias:
+      nombres:
+        - "Unidad Coordinadora de Programas y Proyectos"
+      etica_publica_reparticion: []
+      codigos_presupuesto: []
+      prefijos_compras:
+        - "3-14-03"
+  - id: poder-legislativo
+    nombre: "Poder Legislativo"
+    tipo: otro
+    depende_de: null
+    que_hace: "Es el Poder del Estado que sanciona las leyes (Senado y Diputados). No es parte del Poder Ejecutivo; se lista para cruzar códigos de presupuesto y Ética Pública."
+    puntos: []
+    norma: "Presupuesto 2026 (Ley 9681), planilla 8.2 (jurisdicción 01)"
+    fuente_url: "https://media.mendoza.gob.ar/informacion-oficial/uploads/sites/11/2025/09/8-2.pdf"
+    sitio_url: null
+    antes: []
+    alias:
+      nombres:
+        - "Poder Legislativo"
+        - "HONORABLE CAMARA DE DIPUTADOS"
+        - "HONORABLE CAMARA DE SENADORES"
+        - "Cámara de Senadores"
+        - "Cámara de Diputados"
+        - "Legislatura"
+      etica_publica_reparticion:
+        - "HONORABLE CAMARA DE DIPUTADOS"
+        - "HONORABLE CAMARA DE SENADORES"
+      codigos_presupuesto:
+        - "01"
+      prefijos_compras:
+        - "1-01-"
+    unidades_presupuesto_2026:
+      - { codigo: "1-01-01", nombre: "Cámara de Senadores" }
+      - { codigo: "1-01-02", nombre: "Cámara de Diputados" }
+      - { codigo: "1-01-03", nombre: "Legislatura" }
+  - id: poder-judicial
+    nombre: "Poder Judicial"
+    tipo: otro
+    depende_de: null
+    que_hace: "Es el Poder del Estado que administra justicia. No es parte del Poder Ejecutivo; se lista para cruzar códigos de presupuesto, compras y Ética Pública. En el presupuesto incluye la Suprema Corte, el Ministerio Público, el Jury, la Junta Electoral y el Consejo de la Magistratura."
+    puntos: []
+    norma: "Presupuesto 2026 (Ley 9681), planilla 8.2 (jurisdicción 02)"
+    fuente_url: "https://media.mendoza.gob.ar/informacion-oficial/uploads/sites/11/2025/09/8-2.pdf"
+    sitio_url: null
+    antes: []
+    alias:
+      nombres:
+        - "Poder Judicial"
+        - "PODER JUDICIAL"
+        - "Suprema Corte"
+        - "Junta Electoral"
+        - "Consejo de la Magistratura"
+        - "Jury de enjuiciamiento"
+      etica_publica_reparticion:
+        - "PODER JUDICIAL"
+      codigos_presupuesto:
+        - "02"
+      prefijos_compras:
+        - "1-02-"
+    unidades_presupuesto_2026:
+      - { codigo: "1-02-01", nombre: "Suprema Corte" }
+      - { codigo: "1-02-03", nombre: "Jury de enjuiciamiento" }
+      - { codigo: "1-02-04", nombre: "Junta Electoral" }
+      - { codigo: "1-02-05", nombre: "Consejo de la Magistratura" }
+  - id: ministerio-publico-fiscal
+    nombre: "Ministerio Público Fiscal"
+    tipo: otro
+    depende_de: poder-judicial
+    que_hace: "Es el ministerio público que acusa en los procesos penales. En el presupuesto 2026 es la unidad 02-02 del Poder Judicial."
+    puntos: []
+    norma: "Presupuesto 2026, planilla 8.2 (1-2-2)"
+    fuente_url: "https://media.mendoza.gob.ar/informacion-oficial/uploads/sites/11/2025/09/8-2.pdf"
+    sitio_url: null
+    antes: []
+    alias:
+      nombres:
+        - "Ministerio Público Fiscal"
+        - "MINISTERIO PUBLICO FISCAL"
+        - "Ministerio Público"
+      etica_publica_reparticion:
+        - "MINISTERIO PUBLICO FISCAL"
+      codigos_presupuesto:
+        - "1-02-02"
+      prefijos_compras:
+        - "1-02-02"
+    unidades_presupuesto_2026:
+      - { codigo: "1-02-02", nombre: "Ministerio Público" }
+  - id: ministerio-publico-de-la-defensa
+    nombre: "Ministerio Público de la Defensa"
+    tipo: otro
+    depende_de: poder-judicial
+    que_hace: "Es el ministerio público que ejerce la defensa y la pupilar. En el presupuesto 2026 es la unidad 02-06 del Poder Judicial."
+    puntos: []
+    norma: "Presupuesto 2026, planilla 8.2 (1-2-6)"
+    fuente_url: "https://media.mendoza.gob.ar/informacion-oficial/uploads/sites/11/2025/09/8-2.pdf"
+    sitio_url: null
+    antes: []
+    alias:
+      nombres:
+        - "Ministerio Público de la Defensa"
+        - "MINISTERIO PUBLICO DE DEFENSA Y PUPILAR"
+      etica_publica_reparticion:
+        - "MINISTERIO PUBLICO DE DEFENSA Y PUPILAR"
+      codigos_presupuesto:
+        - "1-02-06"
+      prefijos_compras:
+        - "1-02-06"
+    unidades_presupuesto_2026:
+      - { codigo: "1-02-06", nombre: "Ministerio Público de la Defensa" }
+
+reparticiones_ajenas_al_ejecutivo_provincial:
+  # Valores de Ética Pública que no son organismos del Ejecutivo provincial.
+  categorias_administrativas:
+    - { valor: "MANDATO CUMPLIDO", funcionarios: 2564, motivo: "Funcionarios con mandato terminado; no indica repartición" }
+    - { valor: "GREMIOS Y SINDICATOS", funcionarios: 150, motivo: "Licencias gremiales; categoría administrativa" }
+    - { valor: "EXFUNCIONARIOS", funcionarios: 1, motivo: "Categoría administrativa" }
+    - { valor: "NO CORRESPONDEN ", funcionarios: 2, motivo: "Categoría administrativa (carga errónea)" }
+    - { valor: "PROVEEDORES Y CONCESIONARIOS DEL ESTADO", funcionarios: 101, motivo: "Responsables de carga de proveedores; no es un organismo" }
+  municipios_y_concejos:
+    - { valor: "CONCEJO DELIBERANTE DE CAPITAL", funcionarios: 14 }
+    - { valor: "CONCEJO DELIBERANTE DE GENERAL ALVEAR", funcionarios: 10 }
+    - { valor: "CONCEJO DELIBERANTE DE GODOY CRUZ", funcionarios: 14 }
+    - { valor: "CONCEJO DELIBERANTE DE GUAYMALLEN", funcionarios: 15 }
+    - { valor: "CONCEJO DELIBERANTE DE JUNIN", funcionarios: 22 }
+    - { valor: "CONCEJO DELIBERANTE DE LA PAZ", funcionarios: 11 }
+    - { valor: "CONCEJO DELIBERANTE DE LAS HERAS", funcionarios: 15 }
+    - { valor: "CONCEJO DELIBERANTE DE LAVALLE", funcionarios: 14 }
+    - { valor: "CONCEJO DELIBERANTE DE LUJAN", funcionarios: 13 }
+    - { valor: "CONCEJO DELIBERANTE DE MAIPU", funcionarios: 14 }
+    - { valor: "CONCEJO DELIBERANTE DE MALARGÜE", funcionarios: 11 }
+    - { valor: "CONCEJO DELIBERANTE DE RIVADAVIA", funcionarios: 20 }
+    - { valor: "CONCEJO DELIBERANTE DE SAN CARLOS", funcionarios: 10 }
+    - { valor: "CONCEJO DELIBERANTE DE SAN MARTIN", funcionarios: 14 }
+    - { valor: "CONCEJO DELIBERANTE DE SAN RAFAEL", funcionarios: 13 }
+    - { valor: "CONCEJO DELIBERANTE DE SANTA ROSA", funcionarios: 14 }
+    - { valor: "CONCEJO DELIBERANTE DE TUNUYAN", funcionarios: 10 }
+    - { valor: "CONCEJO DELIBERANTE DE TUPUNGATO", funcionarios: 16 }
+    - { valor: "MUNICIPALIDAD DE CAPITAL", funcionarios: 89 }
+    - { valor: "MUNICIPALIDAD DE GENERAL ALVEAR", funcionarios: 35 }
+    - { valor: "MUNICIPALIDAD DE GODOY CRUZ", funcionarios: 55 }
+    - { valor: "MUNICIPALIDAD DE GUAYMALLEN", funcionarios: 36 }
+    - { valor: "MUNICIPALIDAD DE JUNIN", funcionarios: 21 }
+    - { valor: "MUNICIPALIDAD DE LA PAZ", funcionarios: 20 }
+    - { valor: "MUNICIPALIDAD DE LAS HERAS", funcionarios: 57 }
+    - { valor: "MUNICIPALIDAD DE LAVALLE", funcionarios: 24 }
+    - { valor: "MUNICIPALIDAD DE LUJAN", funcionarios: 48 }
+    - { valor: "MUNICIPALIDAD DE MAIPU", funcionarios: 83 }
+    - { valor: "MUNICIPALIDAD DE MALARGÜE", funcionarios: 27 }
+    - { valor: "MUNICIPALIDAD DE RIVADAVIA", funcionarios: 20 }
+    - { valor: "MUNICIPALIDAD DE SAN CARLOS", funcionarios: 36 }
+    - { valor: "MUNICIPALIDAD DE SAN MARTIN", funcionarios: 58 }
+    - { valor: "MUNICIPALIDAD DE SAN RAFAEL", funcionarios: 49 }
+    - { valor: "MUNICIPALIDAD DE SANTA ROSA", funcionarios: 28 }
+    - { valor: "MUNICIPALIDAD DE TUNUYAN", funcionarios: 44 }
+    - { valor: "MUNICIPALIDAD DE TUPUNGATO", funcionarios: 22 }
+
+sin_asignar:
+  etica_publica: []
+  compras_comprador: []
+
+# Equivalencias del anexo 19 de la Ley de Responsabilidad Fiscal (data/processed/lrf-personal/personal.csv), que no trae
+# códigos: "grupo|organismo" tal como lo imprime el PDF → id del organismo actual (sucesor). null = sin sucesor claro
+# (el organismo se dividió o desapareció); esas filas no se suman a ningún organismo actual.
+# Relevamiento del 12/10/2026.
+equivalencias_lrf:
+  "Administración central|Fiscalía de Estado": fiscalia-de-estado
+  "Administración central|Min. Educación, Cultura, Infancias y DGE": ministerio-de-educacion-cultura-infancias-y-dge
+  "Administración central|Min.Planific e Infraestructura Pública": ministerio-de-gobierno-infraestructura-y-desarrollo-territorial
+  "Administración central|Min.de Planific. e Infraestructura Pública": ministerio-de-gobierno-infraestructura-y-desarrollo-territorial
+  "Administración central|Ministerio Economía y Energía": null
+  "Administración central|Ministerio de Economía y Energía": null
+  "Administración central|Ministerio de Economía, Infraest.y Energía": null
+  "Administración central|Ministerio Gob, Infraestruc y Desarr. Terr": ministerio-de-gobierno-infraestructura-y-desarrollo-territorial
+  "Administración central|Ministerio de Gobierno,Trabajo y Justicia": ministerio-de-gobierno-infraestructura-y-desarrollo-territorial
+  "Administración central|Ministerio de Trabajo, Justicia y Gobierno": ministerio-de-gobierno-infraestructura-y-desarrollo-territorial
+  "Administración central|Secretaría de Servicios Públicos": ministerio-de-gobierno-infraestructura-y-desarrollo-territorial
+  "Administración central|Ministerio Salud, Desar. Social y Deportes": ministerio-de-salud-y-deportes
+  "Administración central|Ministerio de Salud y Deportes": ministerio-de-salud-y-deportes
+  "Administración central|Ministerio de Cultura y Turismo": ministerio-de-educacion-cultura-infancias-y-dge
+  "Administración central|Secretaría de Cultura": ministerio-de-educacion-cultura-infancias-y-dge
+  "Administración central|Ministerio de Energia y Ambiente": ministerio-de-energia-y-ambiente
+  "Administración central|Ministerio de Energía y Ambiente": ministerio-de-energia-y-ambiente
+  "Administración central|Secretaría de Amb. y Ordenamiento Terr.": ministerio-de-energia-y-ambiente
+  "Administración central|Secretaría de Amb. y Ordenamiento Territorial": ministerio-de-energia-y-ambiente
+  "Administración central|Secretaría de Deporte Secretaría de Amb. y Ordenamiento Terr": null
+  "Administración central|Ministerio de Hacienda y Finanzas": ministerio-de-hacienda-y-finanzas
+  "Administración central|Ministerio de Producción": ministerio-de-produccion
+  "Administración central|Ministerio de Seguridad": ministerio-de-seguridad-y-justicia
+  "Administración central|Ministerios de Seguridad": ministerio-de-seguridad-y-justicia
+  "Administración central|Ministerio de Seguridad y Justicia": ministerio-de-seguridad-y-justicia
+  "Administración central|Poder Judicial": poder-judicial
+  "Administración central|Poder Legislativo": poder-legislativo
+  "Administración central|Tribunal de Cuentas": tribunal-de-cuentas
+  "Administración central|Tribunal de cuentas": tribunal-de-cuentas
+  "Cuentas especiales|Fondo de Infraestructura Pcial.": null
+  "Cuentas especiales|Fondo de Infraestructura Pcial. (1)": null
+  "Cuentas especiales|Fondo de Infraestructura Provincial": null
+  "Cuentas especiales|Fondo de Infraestructura Provincial (1)": null
+  "Cuentas especiales|Sistema de Seguridad Social de la Salud": ministerio-de-salud-y-deportes
+  "Cuentas especiales|Sistema de Seguridad Social y Salud": ministerio-de-salud-y-deportes
+  "Cuentas especiales|Unidad Coord de Programas y Proy (UCPP)": unidad-coordinadora-de-programas-y-proyectos
+  "Cuentas especiales|Unidad Coord.de Programas y Proy.(UCPP)": unidad-coordinadora-de-programas-y-proyectos
+  "Cuentas especiales|Unidad de Financiamiento Internacional": unidad-de-financiamiento-internacional
+  "Cuentas especiales|Unidad de Financiamiento Internacional UFI": unidad-de-financiamiento-internacional
+  "Organismos descentralizados|D.G.de Protección de Der.Niños": ministerio-de-educacion-cultura-infancias-y-dge
+  "Organismos descentralizados|D.G.de Protección de Der.Niños/as y Adoles": ministerio-de-educacion-cultura-infancias-y-dge
+  "Organismos descentralizados|Dirección de Niñez, Adolescencia y Familia": ministerio-de-educacion-cultura-infancias-y-dge
+  "Organismos descentralizados|Dir. de Responsabilidad Penal Juvenil": ministerio-de-educacion-cultura-infancias-y-dge
+  "Organismos descentralizados|Direcc de Responsabilidad Penal Juvenil": ministerio-de-educacion-cultura-infancias-y-dge
+  "Organismos descentralizados|Direcc de Responsabilidad Penal y Juvenil": ministerio-de-educacion-cultura-infancias-y-dge
+  "Organismos descentralizados|Dcción. Gral. de Escuelas": direccion-general-de-escuelas
+  "Organismos descentralizados|Min. Educación, Cultura, Infancias y DGE": direccion-general-de-escuelas
+  "Organismos descentralizados|Dcción.Pcial.de Vialidad": direccion-provincial-de-vialidad
+  "Organismos descentralizados|Dcción.Pcial.de Vialidad (1)": direccion-provincial-de-vialidad
+  "Organismos descentralizados|Dirección Provincial de Vialidad": direccion-provincial-de-vialidad
+  "Organismos descentralizados|Dirección Provincial de Vialidad (1)": direccion-provincial-de-vialidad
+  "Organismos descentralizados|Hospital A. Perrupato": hospitales-publicos-descentralizados
+  "Organismos descentralizados|Hospital Antonio J. Scaravelli": hospitales-publicos-descentralizados
+  "Organismos descentralizados|Hospital C. Saporiti": hospitales-publicos-descentralizados
+  "Organismos descentralizados|Hospital Saporitti": hospitales-publicos-descentralizados
+  "Organismos descentralizados|Hospital Carlos Pereyra": hospitales-publicos-descentralizados
+  "Organismos descentralizados|Hospital Central": hospitales-publicos-descentralizados
+  "Organismos descentralizados|Hospital Diego Paroissien": hospitales-publicos-descentralizados
+  "Organismos descentralizados|Hospital Diego Paroissiens": hospitales-publicos-descentralizados
+  "Organismos descentralizados|Hospital El Sauce": hospitales-publicos-descentralizados
+  "Organismos descentralizados|Hospital Enfermeros Argentinos": hospitales-publicos-descentralizados
+  "Organismos descentralizados|Hospital General Alvear": hospitales-publicos-descentralizados
+  "Organismos descentralizados|Hospital Gral. Alvear": hospitales-publicos-descentralizados
+  "Organismos descentralizados|Hospital Gral. Las Heras": hospitales-publicos-descentralizados
+  "Organismos descentralizados|Hospital Lagomaggiore": hospitales-publicos-descentralizados
+  "Organismos descentralizados|Hospital Luis Lagomaggiore": hospitales-publicos-descentralizados
+  "Organismos descentralizados|Hospital Malargue": hospitales-publicos-descentralizados
+  "Organismos descentralizados|Hospital Materno Infantil Humberto Notti": hospitales-publicos-descentralizados
+  "Organismos descentralizados|Hospital Teodoro Schestakow": hospitales-publicos-descentralizados
+  "Organismos descentralizados|Hospital Victorino Tagarelli": hospitales-publicos-descentralizados
+  "Organismos descentralizados|INSPECCION GENERAL DE SEGURIDAD": inspeccion-general-de-seguridad
+  "Organismos descentralizados|Instituto de Sanid.y Calid.Agropec.Mendoza": instituto-de-sanidad-y-calidad-agropecuaria-mendoza
+  "Organismos descentralizados|Instituto de Sanidad y Calidad Agropecuaria de Mendoza": instituto-de-sanidad-y-calidad-agropecuaria-mendoza
+  "Otras entidades|Administración Tributaria Mendoza": administracion-tributaria-mendoza
+  "Otras entidades|Caja Seguro Mutual": caja-de-seguro-mutual
+  "Otras entidades|Caja de Seguro Mutual": caja-de-seguro-mutual
+  "Otras entidades|Ente Mendoza Turismo": ente-mendoza-turismo
+  "Otras entidades|Ente Mendoza Turismo Ley 8845": ente-mendoza-turismo
+  "Otras entidades|Instituto Pcial. de Juegos y Casinos": instituto-provincial-de-juegos-y-casinos
+  "Otras entidades|Intituto Pcial de Juegos y Casinos": instituto-provincial-de-juegos-y-casinos
+  "Otras entidades|Instituto Provincia de la Vivienda": instituto-provincial-de-la-vivienda
+  "Otras entidades|Instituto Provincia de la Vivienda (1)": instituto-provincial-de-la-vivienda
+  "Otras entidades|Instituto Provincial de la Vivienda": instituto-provincial-de-la-vivienda
+  "Otras entidades|Instituto Provincial de la Vivienda (1)": instituto-provincial-de-la-vivienda
+  # El informe no lo aclara, pero en 2018-2020 esta fila se llamaba "OSEP" y no trae importe: es la Obra Social de Empleados Públicos.
+  "Otras entidades|Ministerio Salud, Desar. Social y Deportes": obra-social-de-empleados-publicos
+  "Otras entidades|Ministerio de Salud y Deportes": obra-social-de-empleados-publicos
+  "Otras entidades|OSEP": obra-social-de-empleados-publicos

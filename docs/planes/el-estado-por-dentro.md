@@ -2,7 +2,7 @@
 
 Objetivo: que cualquier persona pueda ver, para cada ministerio u organismo provincial, **quién lo conduce, cuánta gente trabaja ahí, cuánto cuesta, qué hace, qué compra y a quién designó**, y cruzar esos datos. Lo que no se pueda obtener se registra en "Lo que no se publica".
 
-Fecha: 12/10/2026. Estado: en curso.
+Fecha: 12/10/2026. Estado: etapas 1 a 3 en marcha (falta la planta del Presupuesto); etapa 4 pendiente.
 
 ## Qué no se puede saber (y por qué)
 

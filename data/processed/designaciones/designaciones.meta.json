@@ -1,0 +1,109 @@
+{
+  "titulo": "Designaciones, renuncias y otros actos de personal",
+  "descripcion": "Cada fila es una persona en un acto de personal (designación, renuncia aceptada, cese u otro) publicado en un decreto o resolución del Boletín Oficial de Mendoza. Se extrae leyendo el texto de la norma con reglas automáticas: puede tener errores y solo cubre las normas con texto completo bajado (no todas las del Boletín). Se publican nombre y cargo; nunca DNI, CUIL, domicilio ni fecha de nacimiento.",
+  "columnas": {
+    "fecha_boletin": {
+      "etiqueta": "Publicada",
+      "tipo": "fecha",
+      "descripcion": "Fecha de la edición del Boletín Oficial en que salió la norma."
+    },
+    "norma_id": {
+      "oculta": true
+    },
+    "tipo_norma": {
+      "etiqueta": "Tipo",
+      "tipo": "texto",
+      "valores": {
+        "decreto": "Decreto",
+        "resolucion": "Resolución",
+        "decretos municipales": "Decreto municipal",
+        "resoluciones municipales": "Resolución municipal"
+      }
+    },
+    "numero_norma": {
+      "etiqueta": "N.º",
+      "tipo": "texto"
+    },
+    "organismo_emisor": {
+      "etiqueta": "Organismo",
+      "tipo": "texto",
+      "descripcion": "Organismo que dictó la norma."
+    },
+    "accion": {
+      "etiqueta": "Acto",
+      "tipo": "texto",
+      "valores": {
+        "designa": "Designación",
+        "renuncia": "Renuncia aceptada",
+        "cese": "Cese o sanción",
+        "otro": "Otro (subrogancia, encargo)"
+      },
+      "descripcion": "Qué dispone la norma sobre esta persona."
+    },
+    "modalidad": {
+      "etiqueta": "Modalidad",
+      "tipo": "texto",
+      "valores": {
+        "interina": "Interina",
+        "concurso": "Por concurso",
+        "efectiva": "Efectiva o de planta",
+        "ad_honorem": "Ad honorem",
+        "transitoria": "Transitoria",
+        "jubilacion": "Por jubilación o retiro",
+        "razones_particulares": "Por razones particulares",
+        "cesantia": "Cesantía",
+        "exoneracion": "Exoneración",
+        "subrogancia": "Subrogancia (funciones de un cargo superior)",
+        "encargo_cartera": "Encargo interino de una cartera",
+        "continuidad": "Continuidad de una designación",
+        "fin_de_funciones": "Se deja sin efecto una asignación de funciones",
+        "afectacion": "Afectación a cumplir funciones",
+        "convocatoria_retirado": "Convocatoria de personal retirado"
+      }
+    },
+    "persona": {
+      "etiqueta": "Persona",
+      "tipo": "texto",
+      "descripcion": "Nombre tal como figura en la norma. No se publican documento ni CUIL."
+    },
+    "cargo": {
+      "etiqueta": "Cargo",
+      "tipo": "texto",
+      "descripcion": "Cargo o función según la norma, sin códigos presupuestarios."
+    },
+    "reparticion": {
+      "etiqueta": "Repartición",
+      "tipo": "texto",
+      "descripcion": "Dependencia donde se desempeña, cuando el texto la dice."
+    },
+    "desde": {
+      "etiqueta": "Desde",
+      "tipo": "fecha",
+      "descripcion": "Fecha desde la que rige el acto, si la norma la indica."
+    },
+    "articulo": {
+      "etiqueta": "Artículo",
+      "tipo": "texto",
+      "descripcion": "Artículo de la norma donde está el acto."
+    },
+    "url_pdf": {
+      "etiqueta": "Texto original",
+      "tipo": "url",
+      "descripcion": "PDF publicado en el Boletín Oficial."
+    }
+  },
+  "orden": [
+    "fecha_boletin",
+    "accion",
+    "persona",
+    "cargo",
+    "reparticion",
+    "organismo_emisor",
+    "desde",
+    "modalidad",
+    "tipo_norma",
+    "numero_norma",
+    "articulo",
+    "url_pdf"
+  ]
+}
