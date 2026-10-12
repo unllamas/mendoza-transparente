@@ -5,6 +5,9 @@
  * downloaded the first time it opens.
  */
 
+import { PersonAvatar } from "@mt/ui/components/avatar";
+import { IconButton } from "@mt/ui/components/icon-button";
+import { useScrollLock } from "@mt/ui/hooks/use-scroll-lock";
 import { Link, useNavigate } from "@tanstack/react-router";
 import {
   ArrowRight,
@@ -25,7 +28,6 @@ import {
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 import { track } from "./analytics.ts";
-import { IconButton, PersonAvatar, useScrollLock } from "./pages/components.tsx";
 import type { SearchEntry } from "./types.ts";
 
 // ------------------------------------------------------------------ index and matching

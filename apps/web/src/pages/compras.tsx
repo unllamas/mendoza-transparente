@@ -1,3 +1,6 @@
+import { Alert } from "@mt/ui/components/alert";
+import { PageHeader, Section } from "@mt/ui/components/section";
+import { StatTile } from "@mt/ui/components/stat-tile";
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { Building2, ChevronRight, FileText, Landmark, Percent, Receipt, Users2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -7,7 +10,7 @@ import { ColumnChart } from "../charts/column-chart.tsx";
 import { FuentesOficiales } from "../fuente.tsx";
 import { formatDate, formatNumber, limpiarOrganismo } from "../lib.ts";
 import { slugProveedor } from "../slug.ts";
-import { Aviso, Buscador, Migas, normalizar, PageHeader, Section, Sheet, StatTile } from "./components.tsx";
+import { Buscador, Migas, normalizar, Sheet } from "./components.tsx";
 import { useDetail } from "../detail-sheet.tsx";
 import { Proveedor } from "./detalle.tsx";
 
@@ -37,7 +40,7 @@ export function ProveedoresPage() {
 
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={Building2} tema="Proveedores" titulo="¿A quiénes les compra el Estado?">
+      <PageHeader icon={Building2} topic="Proveedores" title="¿A quiénes les compra el Estado?">
         Las empresas que más le vendieron al Gobierno de Mendoza, ordenadas por lo que se les adjudicó.
       </PageHeader>
       <FuentesOficiales ids={FUENTES} />
@@ -114,7 +117,7 @@ export function OrganismosPage() {
   }, [organismos, q]);
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={Landmark} tema="Organismos" titulo="¿Quién compra y cómo?">
+      <PageHeader icon={Landmark} topic="Organismos" title="¿Quién compra y cómo?">
         Los organismos del Estado provincial que más compran, cuánto gastan y qué parte lo hace por contratación directa.
       </PageHeader>
       <FuentesOficiales ids={FUENTES} />
@@ -163,7 +166,7 @@ export function OrganismoPage() {
   return (
     <div className="flex flex-col gap-10">
       <Migas items={[{ label: "Organismos", to: "/organismos" }, { label: nombre }]} />
-      <PageHeader icon={Landmark} tema="Organismo" titulo={nombre}>
+      <PageHeader icon={Landmark} topic="Organismo" title={nombre}>
         Cuánto compró, a quiénes y con qué modalidad.
       </PageHeader>
       <FuentesOficiales ids={FUENTES} />
@@ -175,9 +178,9 @@ export function OrganismoPage() {
         <StatTile icon={Users2} label="Una sola oferta" value={pct(o.pctUnaOferta)} note="De los procesos" />
       </div>
       {o.pctUnaOferta >= 20 && (
-        <Aviso titulo="Poca competencia">
+        <Alert title="Poca competencia">
           En {pct(o.pctUnaOferta)} de los procesos se presentó una sola oferta: sin competencia, el Estado no puede comparar precios.
-        </Aviso>
+        </Alert>
       )}
 
       {o.porAnio.length > 1 && (

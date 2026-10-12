@@ -1,9 +1,10 @@
+import { Section } from "@mt/ui/components/section";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { ExternalLink, Table2 } from "lucide-react";
 
 import { formatBytes, formatDate } from "../lib.ts";
 import type { SourceMeta } from "../types.ts";
-import { EstadoBadge, Section } from "./components.tsx";
+import { EstadoBadge } from "./components.tsx";
 
 const route = getRouteApi("/fuentes");
 

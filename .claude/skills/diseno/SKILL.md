@@ -7,18 +7,25 @@ description: Principios de diseño, UI y UX de Mendoza Transparente. Cubre color
 
 Fuente completa: `docs/procesos/diseno.md`. Público: cualquier persona de Mendoza, sobre todo desde el celular, que **no lee**: escanea.
 
+## Sistema de diseño
+
+Los componentes base y los tokens están en `packages/ui` (`@mt/ui`, configuración de shadcn): `Button`, `IconButton`, `Badge`, `Tile`, `CardLink`, `Sheet`, `Popover`, `Alert`, `Segmented`, `SearchInput`, `StatTile`, `Section`, `PageHeader` y `PersonAvatar`.
+
+- **Solo Tailwind:** no se escribe CSS propio. Los tokens viven en `packages/ui/src/styles/globals.css`.
+- **Antes de armar un botón, una etiqueta o una tarjeta a mano,** usar el componente del paquete. Si falta uno, se agrega al paquete, no a la página.
+
 ## Reglas que no se negocian
 
-1. **Color:** el borravino (`--brand`, `--link`, `--accent`) es la identidad en todo, incluidos gráficos y mapa. Nada de azules. Los avisos van en ámbar (`Aviso`). Los íconos decorativos van en gris.
+1. **Color:** el borravino (`--brand`, `--link`, `--accent`) es la identidad en todo, incluidos gráficos y mapa. Nada de azules. Los avisos van en ámbar (`Alert`). Los íconos decorativos van en gris.
 2. **Borde = clickeable.** Lo informativo lleva solo fondo (`bg-tile`).
 3. **La acción se ve antes del hover:** en el celular no hay hover.
    - Toda fila que lleva a otra página tiene la flecha en `text-link` siempre.
    - En listas de navegación, el nombre del destino también va en `text-link`.
    - Los CTA principales van en botón relleno `bg-brand`.
-4. **44 px mínimos** (`min-h-11`) para tocar filas y botones; **botones de solo ícono, cuadrados de 44 × 44** (`IconButton`); **encabezados de 48 a 60 px** (`h-14`).
+4. **44 px mínimos** (`min-h-11`) para tocar filas y botones; **botones de solo ícono, cuadrados de 44 × 44** (`IconButton` de `@mt/ui`); **encabezados de 48 a 60 px** (`h-14`).
 5. **Una sola línea** para cifras, títulos de tarjetas, fechas y montos (`truncate`, `whitespace-nowrap`, `min-w-0`). La unidad va aparte y en chico ("$ 965.709" + "millones").
 6. **Nunca scroll horizontal**, en ningún ancho. Lo controla `bun run verificar`.
-7. **Toda persona lleva su cara:** `PersonAvatar` con la foto oficial, o con iniciales mientras falte. Una foto faltante es un pendiente: se busca en sitios oficiales (`bun run scrape fotos`).
+7. **Toda persona lleva su cara:** `PersonAvatar` (`@mt/ui`) con la foto oficial, o con iniciales mientras falte. Una foto faltante es un pendiente: se busca en sitios oficiales (`bun run scrape fotos`).
 8. **Mobile first:**
    - Menú a pantalla completa con su propia X.
    - Hojas modales (`Sheet`) en vez de paneles laterales.

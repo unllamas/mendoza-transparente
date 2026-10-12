@@ -1,3 +1,6 @@
+import { Alert } from "@mt/ui/components/alert";
+import { PageHeader, Section } from "@mt/ui/components/section";
+import { StatTile } from "@mt/ui/components/stat-tile";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { MapPin, TrendingUp, Users } from "lucide-react";
 import { useState } from "react";
@@ -8,7 +11,7 @@ import { formatNumber } from "../lib.ts";
 import { slug } from "../slug.ts";
 import type { PoblacionTema } from "../types.ts";
 import { FuentesOficiales } from "../fuente.tsx";
-import { Aviso, PageHeader, Section, Segmented, StatTile } from "./components.tsx";
+import { Segmented } from "./components.tsx";
 
 const route = getRouteApi("/poblacion");
 
@@ -27,7 +30,7 @@ export function PoblacionPage() {
 
   return (
     <div className="flex flex-col gap-12">
-      <PageHeader icon={Users} tema="Población" titulo="¿Cuántos somos en Mendoza?">
+      <PageHeader icon={Users} topic="Población" title="¿Cuántos somos en Mendoza?">
         Población de la provincia y de cada departamento según los censos 2010 y 2022, y las proyecciones oficiales de
           INDEC para los años sin censo.
       </PageHeader>
@@ -58,10 +61,10 @@ export function PoblacionPage() {
             ariaLabel="Población de Mendoza por año"
           />
         </div>
-        <Aviso tipo="nota">
+        <Alert variant="note">
           Hasta 2021 la proyección parte del Censo 2010 y desde 2022 del Censo 2022, por eso hay un pequeño salto entre
           esos años.
-        </Aviso>
+        </Alert>
       </Section>
 
       <Section title="Por departamento">

@@ -1,3 +1,5 @@
+import { Alert } from "@mt/ui/components/alert";
+import { PageHeader } from "@mt/ui/components/section";
 import { getRouteApi, Link, useRouter, useRouterState } from "@tanstack/react-router";
 import { Building2, ChevronRight, FileText, Scale } from "lucide-react";
 
@@ -5,7 +7,7 @@ import { formatMoneda } from "../celdas.ts";
 import { FuentesOficiales } from "../fuente.tsx";
 import { formatDate } from "../lib.ts";
 import type { Senal } from "../types.ts";
-import { Aviso, PageHeader, Sheet } from "./components.tsx";
+import { Sheet } from "./components.tsx";
 import { useDetail } from "../detail-sheet.tsx";
 
 const route = getRouteApi("/senales");
@@ -31,7 +33,7 @@ export function SenalesPage() {
 
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={Scale} tema="Para mirar de cerca" titulo="Lo que los datos muestran y nadie explica">
+      <PageHeader icon={Scale} topic="Para mirar de cerca" title="Lo que los datos muestran y nadie explica">
         Patrones en los datos oficiales que merecen una explicación. No son acusaciones: son preguntas que cualquier
         ciudadano puede hacerle al Estado, con los casos concretos para revisar.
       </PageHeader>
@@ -77,7 +79,7 @@ function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }
             <p className="text-sm text-ink-2 text-pretty">{s.matiz}</p>
           </div>
 
-          <Aviso titulo="Por qué importa">{s.porQueImporta}</Aviso>
+          <Alert title="Por qué importa">{s.porQueImporta}</Alert>
 
           {s.casos.length > 0 && (
             <section className="flex flex-col gap-2">

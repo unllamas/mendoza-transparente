@@ -1,3 +1,5 @@
+import { PersonAvatar } from "@mt/ui/components/avatar";
+import { PageHeader } from "@mt/ui/components/section";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { BadgeCheck, ChevronDown, ChevronRight, CircleHelp, ExternalLink, FileText, MapPin, Scale, Sparkles, Users } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -5,7 +7,7 @@ import { useMemo, useState } from "react";
 import { FuentesOficiales } from "../fuente.tsx";
 import { formatDate } from "../lib.ts";
 import type { LeyDetalle } from "../types.ts";
-import { Buscador, Migas, normalizar, PageHeader, PersonAvatar } from "./components.tsx";
+import { Buscador, Migas, normalizar } from "./components.tsx";
 
 const listaRoute = getRouteApi("/leyes");
 const detalleRoute = getRouteApi("/leyes/$numero");
@@ -22,7 +24,7 @@ export function LeyesPage() {
 
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={Scale} tema="Leyes" titulo="Las leyes que sanciona Mendoza">
+      <PageHeader icon={Scale} topic="Leyes" title="Las leyes que sanciona Mendoza">
         Qué dice cada ley provincial, explicado en pocas palabras, con el enlace al documento oficial.
       </PageHeader>
       <FuentesOficiales ids={["boletin-oficial"]} />

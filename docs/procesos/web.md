@@ -62,7 +62,7 @@ Pasar de un proceso a un proveedor agrega un paso al historial: el botón "atrá
 5. **SEO**: entrada en `PAGES` de `src/seo.ts` (título de hasta 60 caracteres con la palabra clave, descripción de 140 a 160) y su página en `scripts/paginas.ts` (cifra para la imagen, JSON-LD y contenido escrito). Ver [SEO y GEO](#seo-y-geo).
 6. Verificar (ver abajo).
 
-Componentes disponibles: `StatTile`, `Section`, `Segmented`, `PageHeader`, `Sheet` (hoja modal), `EstadoBadge` (`src/pages/components.tsx`); `LineChart`, `ColumnChart` (montos por año), `BarList` (rankings), `Sparkline`, `MapaMendoza` (`src/charts/`); `PanelDetalle`, `Proveedor`, `Proceso` (`src/pages/detalle.tsx`).
+Componentes disponibles: los del design system (`@mt/ui`, ver `docs/procesos/diseno.md`) y los propios de la web (`Sheet` y `Segmented` con analítica, `Buscador`, `Migas`, `EstadoBadge`, en `src/pages/components.tsx`); `LineChart`, `ColumnChart` (montos por año), `BarList` (rankings), `Sparkline`, `MapaMendoza` (`src/charts/`); `PanelDetalle`, `Proveedor`, `Proceso` (`src/pages/detalle.tsx`).
 
 ## SEO y GEO
 
@@ -124,7 +124,7 @@ bun run verificar   # scroll horizontal y consola
 
 `bun run verificar` (`scripts/verificar-web.ts`) levanta el servidor de desarrollo y, con un Chrome sin extensiones, recorre todas las páginas en 320, 360, 375, 390, 1024 y 1280 px: falla si alguna tiene scroll horizontal o si aparece cualquier error o advertencia en la consola, incluso al abrir hojas de detalle. Mientras corre, el servidor no recarga por cambios en los datos (`MT_NO_DATA_WATCH`), para que un scraper que escribe en paralelo no corte la prueba. También controla que, con el menú móvil abierto, la página de atrás quede bloqueada y solo se desplace el menú.
 
-El menú móvil ocupa toda la pantalla y tiene su propia barra con el botón de cerrar: no depende del header, que en el celular puede quedar fuera de la pantalla mientras la página está bloqueada (con `overflow: hidden` en `<html>`, `position: sticky` deja de funcionar). Paneles sobre la página (menú móvil, hojas modales): usar `useScrollLock(abierto)` de `components.tsx`. Bloquea el scroll en `<html>` y `<body>`: con `overflow-x: clip` en `html`, el que desplaza la página es `<html>`, y bloquear solo `<body>` deja dos scrolls en el celular. El panel lleva `overflow-y-auto overscroll-contain`. Para revisar cómo se ve, sacar capturas con `playwright-core` (ver el mismo script como ejemplo).
+El menú móvil ocupa toda la pantalla y tiene su propia barra con el botón de cerrar: no depende del header, que en el celular puede quedar fuera de la pantalla mientras la página está bloqueada (con `overflow: hidden` en `<html>`, `position: sticky` deja de funcionar). Paneles sobre la página (menú móvil, hojas modales): usar `useScrollLock(abierto)` de `@mt/ui/hooks/use-scroll-lock` (la `Sheet` ya lo hace). Bloquea el scroll en `<html>` y `<body>`: con `overflow-x: clip` en `html`, el que desplaza la página es `<html>`, y bloquear solo `<body>` deja dos scrolls en el celular. El panel lleva `overflow-y-auto overscroll-contain`. Para revisar cómo se ve, sacar capturas con `playwright-core` (ver el mismo script como ejemplo).
 
 Errores de consola del tipo «Could not establish connection. Receiving end does not exist» vienen de extensiones del navegador, no del sitio: verificar siempre con `bun run verificar`, que usa un Chrome limpio.
 

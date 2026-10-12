@@ -1,11 +1,13 @@
 /** Panel lateral con el detalle de una fila y, en compras, los datos relacionados. */
 
+import { Alert } from "@mt/ui/components/alert";
+import { Button } from "@mt/ui/components/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@mt/ui/components/popover";
 import {
   Archive,
   ArrowLeft,
   Building2,
   CalendarDays,
-  ChevronDown,
   ChevronRight,
   ExternalLink,
   Info,
@@ -14,7 +16,6 @@ import {
   Search,
   TriangleAlert,
   UserRound,
-  X,
 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
@@ -25,7 +26,7 @@ import { archivoUrl, useFuentes } from "../fuente.tsx";
 import { formatDate, formatNumber, limpiarOrganismo, loadJson } from "../lib.ts";
 import { procesoShard } from "../shard.ts";
 import type { DatasetMeta, OrganismoResumen, ProcesoDetalle, ProveedorDetalle } from "../types.ts";
-import { Aviso, IconButton, Segmented, useScrollLock } from "./components.tsx";
+import { Segmented, Sheet } from "./components.tsx";
 
 type Vista = { tipo: "fila" } | { tipo: "proveedor"; cuit: string } | { tipo: "proceso"; ocid: string };
 
@@ -53,48 +54,25 @@ export function PanelDetalle({
 
   useEffect(() => setHistorial([inicial]), [fila]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Hoja modal: Escape cierra y la página de fondo no se desplaza mientras está abierta.
-  useScrollLock(true);
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
-
   return (
-    <>
-      <div aria-hidden onClick={onClose} className="fixed inset-0 z-30 bg-black/50 backdrop-blur-[1px]" />
-      <aside
-        role="dialog"
-        aria-modal="true"
-        aria-label="Detalle"
-        className="fixed inset-y-0 right-0 z-40 flex w-full flex-col overflow-hidden border-l border-line bg-surface shadow-2xl sm:w-[30rem]"
-      >
-      <div className="flex h-14 shrink-0 items-center gap-2 border-b border-line pr-1.5 pl-2">
-        {historial.length > 1 && (
-          <button
-            type="button"
-            onClick={() => setHistorial((h) => h.slice(0, -1))}
-            className="inline-flex min-h-11 items-center gap-1 rounded-lg px-2 text-sm text-ink-2 hover:bg-tile hover:text-ink"
-          >
+    <Sheet
+      titulo="Detalle"
+      onClose={onClose}
+      trackId="data.row"
+      header={
+        historial.length > 1 && (
+          <Button variant="ghost" size="sm" className="-ml-2" onClick={() => setHistorial((h) => h.slice(0, -1))}>
             <ArrowLeft className="size-4" aria-hidden />
             Volver
-          </button>
-        )}
-        <span className={`mr-auto font-medium ${historial.length > 1 ? "" : "pl-2"}`}>Detalle</span>
-        <IconButton label="Cerrar detalle" onClick={onClose}>
-          <X className="size-5" aria-hidden />
-        </IconButton>
-      </div>
-
-      <div className="flex flex-col gap-6 overflow-y-auto overscroll-contain p-4">
-        {vista.tipo === "proveedor" && <Proveedor cuit={vista.cuit} onProceso={(ocid) => ir({ tipo: "proceso", ocid })} />}
-        {vista.tipo === "proceso" && <Proceso ocid={vista.ocid} onProveedor={(cuit) => ir({ tipo: "proveedor", cuit })} />}
-        {historial.length === 1 && <CamposFila columnas={columnas} fila={fila} titulo={vista.tipo === "fila" ? undefined : "Esta fila"} />}
-        <OrigenDato dataset={dataset} fila={fila} ocid={vista.tipo === "proceso" ? vista.ocid : undefined} />
-      </div>
-      </aside>
-    </>
+          </Button>
+        )
+      }
+    >
+      {vista.tipo === "proveedor" && <Proveedor cuit={vista.cuit} onProceso={(ocid) => ir({ tipo: "proceso", ocid })} />}
+      {vista.tipo === "proceso" && <Proceso ocid={vista.ocid} onProveedor={(cuit) => ir({ tipo: "proveedor", cuit })} />}
+      {historial.length === 1 && <CamposFila columnas={columnas} fila={fila} titulo={vista.tipo === "fila" ? undefined : "Esta fila"} />}
+      <OrigenDato dataset={dataset} fila={fila} ocid={vista.tipo === "proceso" ? vista.ocid : undefined} />
+    </Sheet>
   );
 }
 
@@ -336,11 +314,11 @@ function QuienEs({ proveedor: p }: { proveedor: ProveedorDetalle }) {
         <p className="text-sm text-ink-muted">No figura en el Registro Nacional de Sociedades.</p>
       )}
       {e?.mesesHastaPrimeraAdjudicacion !== null && e?.mesesHastaPrimeraAdjudicacion !== undefined && e.mesesHastaPrimeraAdjudicacion < 12 && (
-        <Aviso titulo="Empresa recién creada">
+        <Alert title="Empresa recién creada">
           Ganó su primera adjudicación a los {e.mesesHastaPrimeraAdjudicacion}{" "}
           {e.mesesHastaPrimeraAdjudicacion === 1 ? "mes" : "meses"} de constituida. No es una irregularidad en sí, pero
           es un patrón que los organismos de control miran de cerca.
-        </Aviso>
+        </Alert>
       )}
       <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm">
         <a href={ARCA_CONSTANCIA} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-link hover:underline">
@@ -516,49 +494,26 @@ function processFlags(p: ProcesoDetalle, awarded: number): Flag[] {
 }
 
 function Flags({ flags }: { flags: Flag[] }) {
-  const [open, setOpen] = useState<string | null>(null);
-  useEffect(() => {
-    if (!open) return;
-    const close = (e: Event) => {
-      if (e instanceof KeyboardEvent ? e.key === "Escape" : !(e.target as Element).closest("[data-flag]")) setOpen(null);
-    };
-    document.addEventListener("pointerdown", close);
-    document.addEventListener("keydown", close);
-    return () => {
-      document.removeEventListener("pointerdown", close);
-      document.removeEventListener("keydown", close);
-    };
-  }, [open]);
   if (!flags.length) return null;
   return (
-    // The note is anchored to the whole row (not to the chip): a chip on the right would push it out of the sheet.
-    <ul className="relative flex flex-wrap gap-2" aria-label="Para mirar de cerca">
+    <ul className="flex flex-wrap gap-2" aria-label="Para mirar de cerca">
       {flags.map((f) => (
-        <li key={f.id} data-flag>
-          <button
-            type="button"
-            aria-expanded={open === f.id}
-            aria-describedby={open === f.id ? `flag-${f.id}` : undefined}
-            onClick={() => setOpen(open === f.id ? null : f.id)}
-            data-track="purchase.flag.toggle"
-            data-track-flag={f.id}
-            className={`inline-flex min-h-11 items-center gap-1.5 rounded-full border px-3.5 text-sm font-medium whitespace-nowrap ${
-              open === f.id ? "border-aviso bg-aviso-fondo" : "border-aviso-borde bg-aviso-fondo/60 hover:border-aviso"
-            }`}
-          >
-            <TriangleAlert className="size-4 text-aviso" aria-hidden />
-            {f.label}
-            <Info className="size-3.5 text-ink-muted" aria-hidden />
-          </button>
-          {open === f.id && (
-            <p
-              id={`flag-${f.id}`}
-              role="tooltip"
-              className="absolute inset-x-0 top-full z-10 mt-1.5 rounded-lg border border-aviso-borde bg-surface px-3 py-2 text-sm text-ink-2 text-pretty shadow-lg"
-            >
-              {f.text}
-            </p>
-          )}
+        <li key={f.id}>
+          <Popover>
+            <PopoverTrigger asChild>
+              <button
+                type="button"
+                data-track="purchase.flag.toggle"
+                data-track-flag={f.id}
+                className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-aviso-borde bg-aviso-fondo/60 px-3.5 text-sm font-medium whitespace-nowrap hover:border-aviso data-[state=open]:border-aviso data-[state=open]:bg-aviso-fondo"
+              >
+                <TriangleAlert className="size-4 text-aviso" aria-hidden />
+                {f.label}
+                <Info className="size-3.5 text-ink-muted" aria-hidden />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="border-aviso-borde">{f.text}</PopoverContent>
+          </Popover>
         </li>
       ))}
     </ul>

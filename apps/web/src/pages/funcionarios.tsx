@@ -1,3 +1,6 @@
+import { Alert } from "@mt/ui/components/alert";
+import { PersonAvatar } from "@mt/ui/components/avatar";
+import { PageHeader } from "@mt/ui/components/section";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Building2, ChevronRight, ExternalLink, FileText, Landmark, Mail, MapPin, Search, Vote } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -8,7 +11,7 @@ import { formatDate, formatNumber } from "../lib.ts";
 import { FuentesOficiales } from "../fuente.tsx";
 import { ROLES, roleBySlug } from "../slug.ts";
 import type { Funcionario, FuncionariosTema, GrupoFuncionario } from "../types.ts";
-import { Aviso, Migas, PageHeader, PersonAvatar, Segmented } from "./components.tsx";
+import { Migas, Segmented } from "./components.tsx";
 
 const route = getRouteApi("/funcionarios");
 const routeFicha = getRouteApi("/funcionarios/$role/$slug");
@@ -57,7 +60,7 @@ export function FuncionariosPage() {
 
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={Landmark} tema="Funcionarios" titulo="¿Quiénes nos representan?">
+      <PageHeader icon={Landmark} topic="Funcionarios" title="¿Quiénes nos representan?">
         Gobernador, ministros, legisladores, intendentes y quienes representan a Mendoza en el Congreso: su cargo, su
         partido o bloque, hasta cuándo dura su mandato y cuánto cobran cuando el dato es público.
       </PageHeader>
@@ -175,7 +178,7 @@ export function RolePage() {
   return (
     <div className="flex flex-col gap-10">
       <Migas items={[{ label: "Funcionarios", to: "/funcionarios" }, { label: r.title }]} />
-      <PageHeader icon={Landmark} tema="Funcionarios" titulo={r.title}>
+      <PageHeader icon={Landmark} topic="Funcionarios" title={r.title}>
         {r.description}
       </PageHeader>
       <FuentesOficiales ids={["autoridades", "legislatura"]} />
@@ -239,7 +242,7 @@ export function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; us
         </div>
       </div>
 
-      {p.nota && <Aviso titulo="Atención">{p.nota}</Aviso>}
+      {p.nota && <Alert title="Atención">{p.nota}</Alert>}
 
       <Territorio persona={p} />
 
@@ -273,14 +276,14 @@ export function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; us
             </p>
           </>
         ) : (
-          <Aviso titulo="No está publicado">
+          <Alert title="No está publicado">
             El sueldo de este cargo no figura en ningún sitio oficial.{" "}
             {pedido && (
               <Link to="/no-publicado" hash={pedido} className="font-medium text-link hover:underline">
                 Pedilo con la Ley 9070 ›
               </Link>
             )}
-          </Aviso>
+          </Alert>
         )}
       </section>
 
@@ -409,14 +412,14 @@ function Declaracion({ persona: p, usd }: { persona: Funcionario; usd?: Funciona
             Última declaración publicada{d.fecha ? ` el ${formatDate(d.fecha)}` : ""} ({d.declaracionesPublicadas}{" "}
             {d.declaracionesPublicadas === 1 ? "declaración" : "declaraciones"} en total).
           </p>
-          <Aviso tipo="nota" titulo="Por qué el número parece bajo">
+          <Alert variant="note" title="Por qué el número parece bajo">
             El valor fiscal es el que usa el Estado para cobrar impuestos y suele estar muy por debajo del precio de mercado. Además,
             el total no incluye cuentas bancarias, efectivo, inversiones ni participaciones en empresas: la Oficina de Ética Pública
             muestra que se declaran, pero no cuánto.{" "}
             <Link to="/no-publicado" hash="ddjj-montos" className="font-medium text-link hover:underline">
               Pedí los montos ›
             </Link>
-          </Aviso>
+          </Alert>
         </>
       ) : (
         <p className="text-sm text-ink-2">

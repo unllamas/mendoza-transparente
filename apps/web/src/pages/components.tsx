@@ -1,24 +1,19 @@
+/**
+ * App-level pieces built on the design system (@mt/ui): the ones that need analytics or the router.
+ * Generic components (Button, IconButton, Badge, Tile, CardLink, Alert, StatTile, Section, PageHeader,
+ * PersonAvatar, Popover) are imported straight from @mt/ui/components/*. Documented in docs/procesos/diseno.md.
+ */
+
+import { Badge } from "@mt/ui/components/badge";
+import { SearchInput } from "@mt/ui/components/search-input";
+import { Segmented as BaseSegmented } from "@mt/ui/components/segmented";
+import { Sheet as BaseSheet } from "@mt/ui/components/sheet";
+import { cn } from "@mt/ui/lib/utils";
 import { Link } from "@tanstack/react-router";
-import { ChevronLeft, ChevronRight, Info, Search, type LucideIcon, TriangleAlert, X } from "lucide-react";
-import { type ReactNode, useEffect, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { type ReactNode, useEffect } from "react";
 
 import { track } from "../analytics.ts";
-
-/** Dato informativo: solo fondo, sin borde. El borde queda reservado para lo que se puede tocar. */
-export function StatTile({ label, value, note, icon: Icon }: { label: string; value: string; note?: string; icon?: LucideIcon }) {
-  return (
-    <div className="flex flex-col gap-1 rounded-xl bg-tile p-4">
-      <span className="flex min-w-0 items-center gap-2 text-sm text-ink-2" title={label}>
-        {Icon && <Icon className="size-4 shrink-0 text-ink-muted" aria-hidden />}
-        <span className="truncate">{label}</span>
-      </span>
-      <span className="truncate text-2xl font-semibold tracking-tight whitespace-nowrap sm:text-3xl" title={value}>
-        {value}
-      </span>
-      {note && <span className="text-xs text-ink-muted">{note}</span>}
-    </div>
-  );
-}
 
 const ESTADOS: Record<string, { label: string; color: string; icon: string }> = {
   activo: { label: "Activa", color: "bg-good", icon: "✓" },
@@ -30,183 +25,62 @@ const ESTADOS: Record<string, { label: string; color: string; icon: string }> = 
 export function EstadoBadge({ estado }: { estado: string }) {
   const e = ESTADOS[estado] ?? { label: estado, color: "bg-axis", icon: "·" };
   return (
-    <span className="inline-flex items-center gap-1.5 text-sm text-ink-2">
-      <span
-        aria-hidden
-        className={`inline-flex size-4 items-center justify-center rounded-full text-[10px] font-bold text-white ${e.color}`}
-      >
+    <Badge size="lg" className="bg-transparent px-0 font-normal">
+      <span aria-hidden className={cn("inline-flex size-4 items-center justify-center rounded-full text-[10px] font-bold text-white", e.color)}>
         {e.icon}
       </span>
       {e.label}
-    </span>
+    </Badge>
   );
 }
 
-export function Section({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <section className="flex flex-col gap-4">
-      <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
-      {children}
-    </section>
-  );
-}
-
-/** Selector de opciones excluyentes (por ejemplo, el período de un gráfico). */
+/** Opciones excluyentes con analítica: cada cambio envía `<trackId>.change` (por defecto `segmented.change`). */
 export function Segmented<T extends string>({
-  options,
-  value,
-  onChange,
-  label,
   trackId,
+  onChange,
+  ...props
 }: {
   options: { value: T; label: string }[];
   value: T;
   onChange: (value: T) => void;
   label: string;
-  /** Analytics id; each change sends `<trackId>.change` (default: `segmented.change`). */
   trackId?: string;
 }) {
   return (
-    <div
-      role="radiogroup"
-      aria-label={label}
-      className="-mx-4 flex max-w-[100vw] overflow-x-auto px-4 sm:mx-0 sm:max-w-full sm:px-0 [scrollbar-width:none]"
-    >
-      <div className="inline-flex shrink-0 rounded-lg border border-line bg-surface p-0.5 text-sm">
-      {options.map((o) => (
-        <button
-          key={o.value}
-          type="button"
-          role="radio"
-          aria-checked={o.value === value}
-          onClick={() => {
-            if (o.value !== value) track(`${trackId ?? "segmented"}.change`, { value: o.value, label });
-            onChange(o.value);
-          }}
-          className={`rounded-md px-3 py-1.5 whitespace-nowrap transition-colors ${
-            o.value === value ? "bg-grid font-medium text-ink" : "text-ink-2 hover:text-ink"
-          }`}
-        >
-          {o.label}
-        </button>
-      ))}
-      </div>
-    </div>
+    <BaseSegmented
+      {...props}
+      onChange={(v) => {
+        if (v !== props.value) track(`${trackId ?? "segmented"}.change`, { value: v, label: props.label });
+        onChange(v);
+      }}
+    />
   );
 }
 
-/** Encabezado de las páginas temáticas: ícono y nombre del tema arriba del título. */
-export function PageHeader({ icon: Icon, tema, titulo, children }: { icon: LucideIcon; tema: string; titulo: string; children: ReactNode }) {
-  return (
-    <div className="flex max-w-2xl flex-col gap-3">
-      <span className="flex items-center gap-2 text-sm text-ink-muted">
-        <Icon className="size-4 text-ink-muted" aria-hidden />
-        {tema}
-      </span>
-      <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">{titulo}</h1>
-      <p className="text-ink-2 text-pretty">{children}</p>
-    </div>
-  );
-}
-
-let bloqueos = 0;
-/**
- * Mientras `activo`, la página de atrás no se desplaza (menú móvil, hojas modales): así queda un solo
- * scroll, el del panel. Se bloquea en <html> y <body> porque, con overflow-x: clip en html, el que
- * desplaza la página es <html>. Lleva la cuenta por si hay más de un panel abierto.
- */
-export function useScrollLock(activo: boolean) {
-  useEffect(() => {
-    if (!activo) return;
-    if (bloqueos++ === 0) {
-      document.documentElement.style.overflow = "hidden";
-      document.body.style.overflow = "hidden";
-    }
-    return () => {
-      if (--bloqueos === 0) {
-        document.documentElement.style.overflow = "";
-        document.body.style.overflow = "";
-      }
-    };
-  }, [activo]);
-}
-
-/** Hoja modal a la derecha, sobre toda la página. Escape o tocar afuera la cierra. */
+/** Hoja modal con analítica: toda hoja envía `sheet.open` y `sheet.close` (con los segundos que estuvo abierta). */
 export function Sheet({
   titulo,
   onClose,
   children,
   trackId,
+  header,
 }: {
   titulo: string;
   onClose: () => void;
   children: ReactNode;
-  /** Analytics id of this sheet ("missing_data.request"); every sheet sends `sheet.open` and `sheet.close`. */
+  /** Analytics id of this sheet ("missing_data.request"). */
   trackId?: string;
+  header?: ReactNode;
 }) {
-  useScrollLock(true);
   useEffect(() => {
     const opened = Date.now();
     track("sheet.open", { sheet: trackId ?? titulo });
     return () => track("sheet.close", { sheet: trackId ?? titulo, seconds: Math.round((Date.now() - opened) / 1000) });
   }, [trackId, titulo]);
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
-
   return (
-    <>
-      <div aria-hidden onClick={onClose} className="fixed inset-0 z-30 bg-black/50 backdrop-blur-[1px]" />
-      <aside
-        role="dialog"
-        aria-modal="true"
-        aria-label={titulo}
-        className="fixed inset-y-0 right-0 z-40 flex w-full flex-col overflow-hidden border-l border-line bg-surface shadow-2xl sm:w-[32rem]"
-      >
-        <div className="flex h-14 shrink-0 items-center gap-2 border-b border-line pr-1.5 pl-4">
-          <span className="mr-auto truncate font-medium">{titulo}</span>
-          <IconButton label="Cerrar" onClick={onClose} data-track="sheet.close_button">
-            <X className="size-5" aria-hidden />
-          </IconButton>
-        </div>
-        <div className="flex flex-col gap-6 overflow-y-auto overscroll-contain p-4">{children}</div>
-      </aside>
-    </>
-  );
-}
-
-/**
- * Recuadro para lo que hay que leer sí o sí.
- * - advertencia (ámbar): un problema o una señal: por qué importa un dato faltante, un sueldo no
- *   publicado, fuentes que no coinciden, una sola oferta, una empresa recién creada.
- * - nota (neutra): una aclaración de método para leer bien un número (inflación, devaluación, límites).
- */
-export function Aviso({
-  tipo = "advertencia",
-  titulo,
-  children,
-}: {
-  tipo?: "advertencia" | "nota";
-  titulo?: string;
-  children: ReactNode;
-}) {
-  const advertencia = tipo === "advertencia";
-  const Icon = advertencia ? TriangleAlert : Info;
-  return (
-    <div
-      role={advertencia ? "note" : undefined}
-      className={`flex items-start gap-3 rounded-xl p-4 text-sm ${
-        advertencia ? "border border-aviso-borde bg-aviso-fondo" : "bg-tile"
-      }`}
-    >
-      <Icon className={`mt-0.5 size-4 shrink-0 ${advertencia ? "text-aviso" : "text-ink-muted"}`} aria-hidden />
-      <div className="flex min-w-0 flex-col gap-1">
-        {titulo && <span className="font-medium text-ink">{titulo}</span>}
-        <div className="text-ink-2 text-pretty">{children}</div>
-      </div>
-    </div>
+    <BaseSheet title={titulo} onClose={onClose} header={header} closeProps={{ "data-track": "sheet.close_button" }}>
+      {children}
+    </BaseSheet>
   );
 }
 
@@ -218,7 +92,7 @@ export function Migas({ items }: { items: { label: string; to?: string }[] }) {
   const parent = [...items].reverse().find((it) => it.to) ?? { label: "Inicio", to: "/" };
   return (
     <nav aria-label="Ruta" className="text-sm text-ink-muted">
-      <Link to={parent.to!} className="flex min-w-0 items-center gap-1 hover:text-link sm:hidden">
+      <Link to={parent.to!} className="flex min-h-11 min-w-0 items-center gap-1 hover:text-link sm:hidden">
         <ChevronLeft className="size-4 shrink-0" aria-hidden />
         <span className="truncate">{parent.label}</span>
       </Link>
@@ -245,93 +119,15 @@ export function Migas({ items }: { items: { label: string; to?: string }[] }) {
   );
 }
 
-/** Buscador simple para las listas largas. */
+/** Buscador de las listas largas, con analítica: un `search.query` cuando la persona deja de escribir. */
 export function Buscador({ value, onChange, placeholder, label }: { value: string; onChange: (v: string) => void; placeholder: string; label: string }) {
-  // One `search.query` event when the person stops typing, not one per keystroke.
   useEffect(() => {
     const q = value.trim();
     if (q.length < 2) return;
     const t = setTimeout(() => track("search.query", { search: label, query: q.slice(0, 80) }), 1200);
     return () => clearTimeout(t);
   }, [value, label]);
-  return (
-    <label className="relative flex items-center sm:w-80">
-      <Search className="pointer-events-none absolute left-3 size-4 text-ink-muted" aria-hidden />
-      <input
-        type="search"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        aria-label={label}
-        className="w-full rounded-lg border border-line bg-surface py-2 pr-3 pl-9 text-sm outline-none placeholder:text-ink-muted focus:border-link"
-      />
-    </label>
-  );
+  return <SearchInput value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} label={label} />;
 }
 
 export const normalizar = (s: string) => s.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
-
-/**
- * Face of a person: their official photo, or their initials until we have one. Every mention of a person in
- * the site uses it, so people can be recognized at a glance.
- */
-export function PersonAvatar({ name, photo, className }: { name: string; photo: string | null | undefined; className: string }) {
-  const [error, setError] = useState(false);
-  if (photo && !error) {
-    return (
-      <img
-        src={photo}
-        alt=""
-        loading="lazy"
-        onError={() => setError(true)}
-        className={`shrink-0 rounded-full bg-grid object-cover ${className}`}
-      />
-    );
-  }
-  return (
-    <span className={`flex shrink-0 items-center justify-center rounded-full bg-grid font-medium text-ink-2 ${className}`} aria-hidden>
-      {initials(name)}
-    </span>
-  );
-}
-
-const initials = (name: string) =>
-  name
-    .split(/\s+/)
-    .filter((w) => /^\p{L}/u.test(w) && !/^(de|del|la|las|los|y)$/i.test(w))
-    .slice(0, 2)
-    .map((w) => w[0]!.toUpperCase())
-    .join("");
-
-/**
- * Button that is only an icon: always square, 44×44 px (the minimum comfortable touch target), with an
- * accessible name. Use it for close, menu, search and any other icon-only action.
- */
-export function IconButton({
-  label,
-  onClick,
-  children,
-  id,
-  className = "",
-  ...rest
-}: {
-  label: string;
-  onClick: () => void;
-  children: ReactNode;
-  id?: string;
-  className?: string;
-} & Record<`data-${string}`, string>) {
-  return (
-    <button
-      type="button"
-      id={id}
-      onClick={onClick}
-      aria-label={label}
-      title={label}
-      className={`flex size-11 shrink-0 items-center justify-center rounded-lg border border-line bg-tile text-ink hover:border-link hover:text-link ${className}`}
-      {...rest}
-    >
-      {children}
-    </button>
-  );
-}

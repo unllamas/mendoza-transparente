@@ -1,3 +1,7 @@
+import { Alert } from "@mt/ui/components/alert";
+import { PersonAvatar } from "@mt/ui/components/avatar";
+import { PageHeader, Section } from "@mt/ui/components/section";
+import { StatTile } from "@mt/ui/components/stat-tile";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Building2, ChevronRight, Search, Coins, ExternalLink, FileSignature, ScrollText, ShoppingCart, UserRound, UsersRound } from "lucide-react";
 
@@ -7,7 +11,7 @@ import { GOBIERNOS } from "../gobiernos.ts";
 import { FuentesOficiales } from "../fuente.tsx";
 import { formatDate, formatNumber } from "../lib.ts";
 import type { AgencyDetail, AgencySummary, GobiernoOverview } from "../types.ts";
-import { Aviso, Migas, PageHeader, PersonAvatar, Section, StatTile } from "./components.tsx";
+import { Migas } from "./components.tsx";
 
 const SOURCES = ["lrf-personal", "etica-publica", "compras-ocds", "designaciones"];
 const listApi = getRouteApi("/gobierno");
@@ -38,7 +42,7 @@ export function GobiernoPage() {
   const period = agencies.find((a) => a.staffPeriod)?.staffPeriod;
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={Building2} tema="Gobierno por dentro" titulo="Cómo está organizado el Estado de Mendoza">
+      <PageHeader icon={Building2} topic="Gobierno por dentro" title="Cómo está organizado el Estado de Mendoza">
         Cada ministerio y organismo: quién lo conduce, cuántos cargos tiene, cuánto cuesta su personal, qué hace y qué compra.
       </PageHeader>
 
@@ -46,13 +50,13 @@ export function GobiernoPage() {
         <StatTile icon={UsersRound} label="Cargos de planta en el Estado provincial" value={formatNumber(totalStaff)} note={period ? `${periodLabel(period)}, sin contar la Legislatura` : undefined} />
         <StatTile icon={Coins} label="Costo anual del personal" value={billions(totalCost)} note="Último año completo, en pesos de hoy" />
       </div>
-      <Aviso tipo="nota">
+      <Alert variant="note">
         Son cargos, no personas: una persona puede ocupar más de un cargo y los docentes suman además horas cátedra. Mendoza no
         publica la nómina con nombres.{" "}
         <Link to="/no-publicado" hash="nomina-sueldos" className="font-medium text-link hover:underline">
           Pedila ›
         </Link>
-      </Aviso>
+      </Alert>
 
       {overview && <Overview overview={overview} />}
 
@@ -128,7 +132,7 @@ export function AgencyPage() {
           { label: a.name },
         ]}
       />
-      <PageHeader icon={Building2} tema={a.parent ? `Depende de ${a.parent.name}` : "Gobierno de Mendoza"} titulo={a.name}>
+      <PageHeader icon={Building2} topic={a.parent ? `Depende de ${a.parent.name}` : "Gobierno de Mendoza"} title={a.name}>
         {a.whatItDoes ?? "Quién lo conduce, cuántos cargos tiene, cuánto cuesta su personal y qué compra."}
       </PageHeader>
 
@@ -156,10 +160,10 @@ export function AgencyPage() {
         />
       </div>
       {(a.staff || a.annualCostReal) && (
-        <Aviso tipo="nota">
+        <Alert variant="note">
           Son cargos liquidados según el informe trimestral de Responsabilidad Fiscal, no personas. El costo es lo liquidado en el
           año e incluye el aguinaldo, por eso el promedio mensual es aproximado.
-        </Aviso>
+        </Alert>
       )}
 
       {a.points.length > 0 && (
@@ -307,10 +311,10 @@ export function AgencyPage() {
       )}
 
       {(a.note || a.before.length > 0) && (
-        <Aviso tipo="nota" titulo="Para tener en cuenta">
+        <Alert variant="note" title="Para tener en cuenta">
           {a.before.length > 0 && <p>Antes: {a.before.join(" · ")}.</p>}
           {a.note && <p className="mt-1">{a.note}</p>}
-        </Aviso>
+        </Alert>
       )}
 
       <Link to="/no-publicado" className="inline-flex w-fit items-center gap-2 text-sm text-link hover:underline">

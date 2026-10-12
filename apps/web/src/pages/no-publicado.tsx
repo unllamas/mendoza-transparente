@@ -1,10 +1,12 @@
+import { Alert } from "@mt/ui/components/alert";
+import { PageHeader } from "@mt/ui/components/section";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Check, ChevronRight, Copy, ExternalLink, EyeOff, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { NO_PUBLICADO_CATEGORIES, NO_PUBLICADO_THEMES, type NoPublicadoTheme } from "../no-publicado-categories.ts";
 import type { NoPublicado } from "../types.ts";
-import { Aviso, PageHeader, Sheet } from "./components.tsx";
+import { Sheet } from "./components.tsx";
 import { type RequestStats, useRequestStats } from "./participar.tsx";
 
 const route = getRouteApi("/no-publicado");
@@ -53,7 +55,7 @@ export function NoPublicadoPage() {
 
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={EyeOff} tema="Acceso a la información" titulo="Lo que el Estado no publica">
+      <PageHeader icon={EyeOff} topic="Acceso a la información" title="Lo que el Estado no publica">
         {items.length} datos que deberían ser públicos y no lo son. Cualquier persona puede pedirlos y el Estado está
         obligado a responder.
       </PageHeader>
@@ -195,10 +197,10 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
         <p className="text-ink-2 text-pretty">{item.que_es}</p>
       </div>
 
-      <Aviso titulo="Por qué importa">
+      <Alert title="Por qué importa">
         {item.por_que_importa}
         {item.detalle_estado && <p className="mt-1 text-ink-muted">{item.detalle_estado}</p>}
-      </Aviso>
+      </Alert>
 
       <div className="flex flex-col gap-3">
         <div className="flex items-baseline justify-between gap-3">

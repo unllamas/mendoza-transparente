@@ -1,3 +1,4 @@
+import { StatTile } from "@mt/ui/components/stat-tile";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { ArrowLeft, Download, ExternalLink, MousePointerClick } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -5,7 +6,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { columnasVisibles, type ColumnaVista } from "../celdas.ts";
 import { formatBytes, formatDate, formatNumber, humanize, loadPreview } from "../lib.ts";
 import type { DatasetMeta, Preview } from "../types.ts";
-import { StatTile } from "./components.tsx";
 import { useDetail } from "../detail-sheet.tsx";
 import { PanelDetalle } from "./detalle.tsx";
 

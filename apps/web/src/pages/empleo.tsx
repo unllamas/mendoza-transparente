@@ -1,3 +1,5 @@
+import { PageHeader, Section } from "@mt/ui/components/section";
+import { StatTile } from "@mt/ui/components/stat-tile";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { BriefcaseBusiness, Trophy, UsersRound } from "lucide-react";
 import { useState } from "react";
@@ -7,7 +9,7 @@ import { LineChart } from "../charts/line-chart.tsx";
 import { GOBIERNOS } from "../gobiernos.ts";
 import { formatNumber } from "../lib.ts";
 import { FuentesOficiales } from "../fuente.tsx";
-import { PageHeader, Section, Segmented, StatTile } from "./components.tsx";
+import { Segmented } from "./components.tsx";
 
 const route = getRouteApi("/empleo-publico");
 
@@ -32,7 +34,7 @@ export function EmpleoPage() {
 
   return (
     <div className="flex flex-col gap-12">
-      <PageHeader icon={UsersRound} tema="Empleo público" titulo="¿Cuántos empleados públicos tiene Mendoza?">
+      <PageHeader icon={UsersRound} topic="Empleo público" title="¿Cuántos empleados públicos tiene Mendoza?">
         Personal ocupado en la administración pública provincial, comparado con la población. Medirlo cada mil
           habitantes permite comparar provincias de distinto tamaño.
       </PageHeader>

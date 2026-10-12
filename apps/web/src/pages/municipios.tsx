@@ -1,3 +1,7 @@
+import { Alert } from "@mt/ui/components/alert";
+import { PersonAvatar } from "@mt/ui/components/avatar";
+import { PageHeader, Section } from "@mt/ui/components/section";
+import { StatTile } from "@mt/ui/components/stat-tile";
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { ChevronRight, Coins, MapPin, Users, Vote } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -8,7 +12,7 @@ import { FuentesOficiales } from "../fuente.tsx";
 import { formatDate, formatNumber } from "../lib.ts";
 import { slug } from "../slug.ts";
 import type { MunicipioPagina } from "../types.ts";
-import { Aviso, Migas, PageHeader, PersonAvatar, Section, Segmented, StatTile } from "./components.tsx";
+import { Migas, Segmented } from "./components.tsx";
 
 const SOURCES = ["hacienda-participacion-municipal", "poblacion", "autoridades", "legislatura"];
 const pesos = (v: number) => `$ ${formatNumber(Math.round(v))}`;
@@ -34,7 +38,7 @@ export function MunicipiosPage() {
 
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={MapPin} tema="Municipios" titulo="Los 18 municipios de Mendoza">
+      <PageHeader icon={MapPin} topic="Municipios" title="Los 18 municipios de Mendoza">
         Quién gobierna cada uno, cuántos habitantes tiene y cuánta coparticipación recibe por habitante.
       </PageHeader>
       <Segmented label="Ver en el mapa" options={METRICS} value={metric} onChange={setMetric} />
@@ -106,7 +110,7 @@ export function MunicipioPage() {
   return (
     <div className="flex flex-col gap-10">
       <Migas items={[{ label: "Municipios", to: "/municipios" }, { label: m.nombre }]} />
-      <PageHeader icon={MapPin} tema="Municipio" titulo={m.nombre}>
+      <PageHeader icon={MapPin} topic="Municipio" title={m.nombre}>
         Quién lo gobierna, cuántos habitantes tiene, cuánta coparticipación recibe y quiénes lo representan en la Legislatura.
       </PageHeader>
 
@@ -153,7 +157,7 @@ export function MunicipioPage() {
             ariaLabel={`Coparticipación por habitante de ${m.nombre} por año`}
           />
           {m.poblacion.actual < 20000 && (
-            <Aviso tipo="nota">Los municipios chicos reciben más por habitante porque parte del reparto es un piso fijo.</Aviso>
+            <Alert variant="note">Los municipios chicos reciben más por habitante porque parte del reparto es un piso fijo.</Alert>
           )}
           <Link to="/coparticipacion" className="w-fit text-sm text-link hover:underline">
             Comparar con los demás municipios ›

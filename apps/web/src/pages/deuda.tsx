@@ -1,3 +1,6 @@
+import { Alert } from "@mt/ui/components/alert";
+import { PageHeader, Section } from "@mt/ui/components/section";
+import { StatTile } from "@mt/ui/components/stat-tile";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Landmark, TrendingUp, UserRound } from "lucide-react";
 
@@ -6,7 +9,6 @@ import { LineChart } from "../charts/line-chart.tsx";
 import { GOBIERNOS } from "../gobiernos.ts";
 import { formatDate, formatNumber } from "../lib.ts";
 import { FuentesOficiales } from "../fuente.tsx";
-import { Aviso, PageHeader, Section, StatTile } from "./components.tsx";
 
 const route = getRouteApi("/deuda");
 
@@ -25,7 +27,7 @@ export function DeudaPage() {
 
   return (
     <div className="flex flex-col gap-12">
-      <PageHeader icon={Landmark} tema="Deuda pública" titulo="¿Cuánto debe Mendoza?">
+      <PageHeader icon={Landmark} topic="Deuda pública" title="¿Cuánto debe Mendoza?">
         La deuda pública consolidada de la provincia: bonos, préstamos de organismos internacionales y de bancos. Los
           montos están en dólares para poder comparar años con distinta inflación.
       </PageHeader>
@@ -56,10 +58,10 @@ export function DeudaPage() {
         <p className="text-sm text-ink-muted text-pretty">
           Deuda consolidada en millones de dólares al cierre de cada trimestre. Las franjas marcan cada gobernación.
         </p>
-        <Aviso tipo="nota" titulo="Cómo leer este gráfico">
+        <Alert variant="note" title="Cómo leer este gráfico">
           La deuda tomada en pesos baja medida en dólares cuando el peso se devalúa, aunque no se haya pagado. Una
           caída en el gráfico no siempre significa que se pagó deuda.
-        </Aviso>
+        </Alert>
       </Section>
 
       <Section title="Por mandato">

@@ -1,0 +1,116 @@
+/*
+ * Design system de Mendoza Transparente (@mt/ui): tokens y base mínima.
+ * Todo lo demás se escribe con clases de Tailwind en los componentes; acá no van estilos de componentes.
+ * Documentado en docs/procesos/diseno.md.
+ */
+@import "tailwindcss";
+
+/* Los componentes de este paquete usan clases de Tailwind: que la app que importa este CSS también los escanee. */
+@source "../";
+
+/* Tokens de diseño. Toda la identidad gira en torno al borravino Malbec: acciones y datos usan la misma familia.
+   Lo accionable se distingue por la forma (botón relleno, subrayado, borde, flecha), no por otro color. */
+:root {
+  color-scheme: light;
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --tile: #f0efec;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --ink-muted: #898781;
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --border: rgba(11, 11, 11, 0.1);
+  --accent: #9b2348;
+  /* Marca: borravino Malbec, para botones, links y foco. */
+  --brand: #8a1538;
+  --brand-hover: #6f102c;
+  --on-brand: #ffffff;
+  --link: #8a1538;
+  /* Ámbar de advertencia: color de estado, siempre con ícono y texto. */
+  --aviso: #b45309;
+  --aviso-fondo: rgba(250, 178, 25, 0.12);
+  --aviso-borde: rgba(217, 119, 6, 0.35);
+  /* Rampa del mapa: de poco (rosa claro) a mucho (borravino profundo). Validada por modo. */
+  --map-0: #e3a2b5;
+  --map-1: #cf7792;
+  --map-2: #b5506f;
+  --map-3: #8d2d4f;
+  --map-4: #5f1834;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --tile: #242422;
+    --ink: #f0efec;
+    --ink-2: #c3c2b7;
+    --ink-muted: #898781;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --border: rgba(255, 255, 255, 0.1);
+    --accent: #e06a8a;
+    --brand: #b0284f;
+    --brand-hover: #c4375f;
+    --on-brand: #ffffff;
+    --link: #f2809b;
+    --aviso: #fab219;
+    --aviso-fondo: rgba(250, 178, 25, 0.1);
+    --aviso-borde: rgba(250, 178, 25, 0.3);
+    --map-0: #ffb3cc;
+    --map-1: #f47ea4;
+    --map-2: #dc5785;
+    --map-3: #b93e68;
+    --map-4: #952d4f;
+  }
+}
+
+@theme inline {
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-tile: var(--tile);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-muted: var(--ink-muted);
+  --color-grid: var(--grid);
+  --color-axis: var(--axis);
+  --color-line: var(--border);
+  --color-accent: var(--accent);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-on-brand: var(--on-brand);
+  --color-link: var(--link);
+  --color-aviso: var(--aviso);
+  --color-aviso-fondo: var(--aviso-fondo);
+  --color-aviso-borde: var(--aviso-borde);
+  --color-good: #0ca30c;
+  --color-warning: #fab219;
+  --color-critical: #d03b3b;
+  --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+@layer base {
+  /* Nunca scroll horizontal: si algo se pasa del ancho, se recorta. `clip` (y no `hidden`) para no convertir
+     la página en contenedor de scroll y no romper el header fijo. */
+  html,
+  body {
+    @apply overflow-x-clip;
+  }
+
+  body {
+    @apply bg-page text-ink;
+  }
+
+  /* Tailwind 4 quitó la manito por defecto en los botones: la devolvemos para que se note qué se puede tocar. */
+  button:not(:disabled),
+  [role="button"] {
+    @apply cursor-pointer;
+  }
+
+  /* Foco de teclado visible y con el color de marca. */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-link;
+  }
+}

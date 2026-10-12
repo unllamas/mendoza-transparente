@@ -1,10 +1,12 @@
+import { Alert } from "@mt/ui/components/alert";
+import { PageHeader } from "@mt/ui/components/section";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Bug, CheckCircle2, FilePlus2, MessageSquareReply, Send, Stamp } from "lucide-react";
 import { type FormEvent, type ReactNode, useEffect, useRef, useState } from "react";
 
 import { track } from "../analytics.ts";
 import type { NoPublicado } from "../types.ts";
-import { Aviso, PageHeader, Segmented } from "./components.tsx";
+import { Segmented } from "./components.tsx";
 
 const route = getRouteApi("/participar");
 
@@ -48,7 +50,7 @@ export function ParticiparPage() {
 
   return (
     <div className="flex max-w-2xl flex-col gap-10">
-      <PageHeader icon={Stamp} tema="Participá" titulo="Sumate a Mendoza Transparente">
+      <PageHeader icon={Stamp} topic="Participá" title="Sumate a Mendoza Transparente">
         Registrá los pedidos de información que presentaste y lo que te respondieron, avisanos si encontrás un error o
         sugerinos datos que falten. Así medimos cuánto se pide y cuánto responde el Estado.
       </PageHeader>
@@ -68,10 +70,10 @@ export function ParticiparPage() {
       {form === "error" && <FeedbackForm kind="error" defaultPage={search.pagina ?? null} />}
       {form === "dato" && <FeedbackForm kind="dato" defaultPage={null} />}
 
-      <Aviso tipo="nota" titulo="Qué hacemos con lo que nos mandás">
+      <Alert variant="note" title="Qué hacemos con lo que nos mandás">
         Publicamos solo números agregados: cuántos pedidos hay por dato y cuántos tuvieron respuesta. Tu correo es opcional, no
         se publica y solo lo usamos para escribirte sobre tu envío. No pedimos tu DNI.
-      </Aviso>
+      </Alert>
     </div>
   );
 }
@@ -305,7 +307,7 @@ function Honeypot() {
 function SubmitRow({ state, label, id }: { state: SubmitState; label: string; id: string }) {
   return (
     <div className="flex flex-col gap-3">
-      {state.status === "error" && <Aviso titulo="No se pudo enviar">{state.message}</Aviso>}
+      {state.status === "error" && <Alert title="No se pudo enviar">{state.message}</Alert>}
       <button
         type="submit"
         id={id}

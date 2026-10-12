@@ -1,3 +1,5 @@
+import { IconButton } from "@mt/ui/components/icon-button";
+import { useScrollLock } from "@mt/ui/hooks/use-scroll-lock";
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import {
   Archive,
@@ -29,7 +31,6 @@ import { trackPageview } from "../analytics.ts";
 import { usePageMeta } from "../seo.ts";
 import { DetailSheet } from "../detail-sheet.tsx";
 import { HeaderSearchButton, SearchDialog } from "../search.tsx";
-import { IconButton, useScrollLock } from "./components.tsx";
 
 type Item = { to: string; label: string; descripcion: string; icon: LucideIcon };
 type Grupo = { label: string; items: Item[] };

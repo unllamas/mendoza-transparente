@@ -1,3 +1,6 @@
+import { Alert } from "@mt/ui/components/alert";
+import { PageHeader, Section } from "@mt/ui/components/section";
+import { StatTile } from "@mt/ui/components/stat-tile";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Coins, MapPin, UserRound } from "lucide-react";
 import { useState } from "react";
@@ -10,7 +13,6 @@ import { formatNumber } from "../lib.ts";
 import { slug } from "../slug.ts";
 import type { CoparticipacionTema } from "../types.ts";
 import { FuentesOficiales } from "../fuente.tsx";
-import { Aviso, PageHeader, Section, StatTile } from "./components.tsx";
 
 const route = getRouteApi("/coparticipacion");
 
@@ -26,7 +28,7 @@ export function CoparticipacionPage() {
 
   return (
     <div className="flex flex-col gap-12">
-      <PageHeader icon={Coins} tema="Coparticipación" titulo="¿Cuánta plata reciben los municipios?">
+      <PageHeader icon={Coins} topic="Coparticipación" title="¿Cuánta plata reciben los municipios?">
         La provincia reparte entre los 18 municipios una parte de lo que recauda y de lo que le manda Nación
           (coparticipación). Todo está en pesos de {tema.referencia}, para que se pueda comparar entre años.
       </PageHeader>
@@ -83,9 +85,9 @@ export function CoparticipacionPage() {
             </ol>
           )}
         </div>
-        <Aviso tipo="nota" titulo="Por qué los municipios chicos reciben más por habitante">
+        <Alert variant="note" title="Por qué los municipios chicos reciben más por habitante">
           Una parte del reparto es fija o se distribuye en partes iguales, sin importar cuánta gente vive en cada uno.
-        </Aviso>
+        </Alert>
       </Section>
 
       <Section title={`Total repartido por año, en millones de pesos de ${tema.referencia}`}>

@@ -4,6 +4,7 @@
  * Data: temas/guia.json and data/search.json (scripts/temas/guide.ts).
  */
 
+import { PersonAvatar } from "@mt/ui/components/avatar";
 import { Link, useNavigate } from "@tanstack/react-router";
 import {
   ArrowRight,
@@ -30,7 +31,6 @@ import { track } from "../analytics.ts";
 import { formatNumber } from "../lib.ts";
 import { SECCION_ELECTORAL, slug } from "../slug.ts";
 import type { HomeGuide, SearchEntry } from "../types.ts";
-import { PersonAvatar } from "./components.tsx";
 
 /** "¿Dónde vivís?" → the municipality page. */
 export function DepartmentPicker() {
