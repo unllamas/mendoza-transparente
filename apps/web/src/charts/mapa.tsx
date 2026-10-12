@@ -84,8 +84,8 @@ export function MapaMendoza({ mapa, valores, formatValue, seleccionado, onSelect
         <svg viewBox={mapa.viewBox} className="block h-auto max-h-[22rem] w-full sm:max-h-[36rem]" role="group" aria-label="Mapa de departamentos de Mendoza">
           {paths(false)}
         </svg>
-        <div className="flex flex-col gap-1.5 rounded-lg bg-surface p-1.5 sm:p-2">
-          <svg viewBox={inset} className="block aspect-square w-full" aria-hidden>
+        <div className="flex min-w-0 flex-col gap-1.5 overflow-hidden rounded-lg bg-surface p-1.5 sm:p-2">
+          <svg viewBox={inset} className="block aspect-square w-full overflow-hidden" aria-hidden>
             {paths(true)}
           </svg>
           <span className="px-1 text-xs text-ink-muted">Gran Mendoza, ampliado</span>

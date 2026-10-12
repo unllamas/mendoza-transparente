@@ -92,7 +92,7 @@ function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }
               </div>
               <ul className="flex flex-col divide-y divide-line">
                 {s.casos.map((c) => (
-                  <li key={c.tipo + c.id}>
+                  <li key={`${c.tipo}-${c.id}-${c.titulo}`}>
                     <button
                       type="button"
                       onClick={() => ir({ tipo: c.tipo, id: c.id })}

@@ -51,9 +51,9 @@ function FuenteItem({ source: s, tables }: { source: SourceMeta; tables: number 
         {s.descripcion && <span className="text-sm text-ink-2 text-pretty">{s.descripcion}</span>}
         <span className="flex flex-wrap gap-x-3 gap-y-1 text-sm text-ink-muted">
           {s.organismo && <span>{s.organismo}</span>}
-          {s.frecuencia && <span className="whitespace-nowrap">Se publica: {s.frecuencia}</span>}
+          {s.frecuencia && <span className="sm:whitespace-nowrap">Se publica: {s.frecuencia}</span>}
           {s.raw.lastFetch && (
-            <span className="whitespace-nowrap">
+            <span className="sm:whitespace-nowrap">
               Última descarga: {formatDate(s.raw.lastFetch)} ({formatBytes(s.raw.bytes)})
             </span>
           )}

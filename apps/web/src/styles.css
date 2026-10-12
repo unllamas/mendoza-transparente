@@ -73,6 +73,14 @@
   --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
+html,
+body {
+  /* Nunca scroll horizontal: si algo se pasa del ancho, se recorta. `clip` (y no `hidden`)
+     para no convertir la página en contenedor de scroll y no romper el header fijo. */
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
 body {
   background: var(--page);
   color: var(--ink);

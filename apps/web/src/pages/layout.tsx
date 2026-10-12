@@ -1,20 +1,51 @@
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
-import { ChevronRight, GitBranch, Globe, Menu, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import {
+  Archive,
+  ChevronDown,
+  ChevronRight,
+  Coins,
+  EyeOff,
+  GitBranch,
+  Globe,
+  Landmark,
+  type LucideIcon,
+  Menu,
+  Users,
+  UsersRound,
+  X,
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 import { REPO } from "../fuente.tsx";
 import { usePageMeta } from "../seo.ts";
 
-const NAV = [
+type Item = { to: string; label: string; descripcion: string; icon: LucideIcon };
+type Grupo = { label: string; items: Item[] };
+
+/** Navegación: dos destinos principales y dos grupos desplegables. */
+const PRINCIPALES: { to: string; label: string }[] = [
   { to: "/senales", label: "Para mirar de cerca" },
   { to: "/funcionarios", label: "Funcionarios" },
-  { to: "/deuda", label: "Deuda" },
-  { to: "/coparticipacion", label: "Coparticipación" },
-  { to: "/empleo-publico", label: "Empleo público" },
-  { to: "/poblacion", label: "Población" },
-  { to: "/no-publicado", label: "Lo que no se publica" },
-  { to: "/fuentes", label: "Fuentes" },
-] as const;
+];
+
+const GRUPOS: Grupo[] = [
+  {
+    label: "Datos",
+    items: [
+      { to: "/deuda", label: "Deuda", descripcion: "Cuánto debe la provincia y a quién", icon: Landmark },
+      { to: "/coparticipacion", label: "Coparticipación", descripcion: "Cuánto recibe cada municipio", icon: Coins },
+      { to: "/empleo-publico", label: "Empleo público", descripcion: "Empleados por habitante y por provincia", icon: UsersRound },
+      { to: "/poblacion", label: "Población", descripcion: "Cuántos somos en cada departamento", icon: Users },
+    ],
+  },
+  {
+    label: "Transparencia",
+    items: [
+      { to: "/no-publicado", label: "Lo que no se publica", descripcion: "Datos que faltan y cómo pedirlos", icon: EyeOff },
+      { to: "/fuentes", label: "Fuentes", descripcion: "De dónde sale cada dato", icon: Archive },
+    ],
+  },
+];
 
 const AUTOR = {
   nombre: "Jona Llamas",
@@ -43,11 +74,18 @@ export function Layout() {
           <Link to="/" className="mr-auto text-base font-semibold tracking-tight whitespace-nowrap">
             Mendoza Transparente
           </Link>
-          <nav aria-label="Principal" className="hidden gap-5 text-sm whitespace-nowrap xl:flex">
-            {NAV.map((item) => (
-              <Link key={item.to} to={item.to} className="text-ink-2 hover:text-link [&.active]:font-medium [&.active]:text-link">
+          <nav aria-label="Principal" className="hidden items-center gap-1 text-sm whitespace-nowrap lg:flex">
+            {PRINCIPALES.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="rounded-lg px-3 py-2 text-ink-2 hover:bg-tile hover:text-link [&.active]:font-medium [&.active]:text-link"
+              >
                 {item.label}
               </Link>
+            ))}
+            {GRUPOS.map((g) => (
+              <Desplegable key={g.label} grupo={g} pathname={pathname} />
             ))}
           </nav>
           <button
@@ -56,7 +94,7 @@ export function Layout() {
             aria-expanded={abierto}
             aria-controls="menu-movil"
             aria-label={abierto ? "Cerrar menú" : "Abrir menú"}
-            className="-mr-2 flex size-10 items-center justify-center rounded-lg text-ink hover:bg-tile xl:hidden"
+            className="-mr-2 flex size-10 items-center justify-center rounded-lg text-ink hover:bg-tile lg:hidden"
           >
             {abierto ? <X className="size-5" aria-hidden /> : <Menu className="size-5" aria-hidden />}
           </button>
@@ -69,17 +107,37 @@ export function Layout() {
         <nav
           id="menu-movil"
           aria-label="Principal"
-          className="fixed inset-x-0 top-14 bottom-0 z-20 flex flex-col overflow-y-auto border-t border-line bg-page px-4 py-4 xl:hidden"
+          className="fixed inset-x-0 top-14 bottom-0 z-20 flex flex-col gap-6 overflow-y-auto border-t border-line bg-page px-4 py-5 lg:hidden"
         >
-          {NAV.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className="flex items-center justify-between border-b border-line py-4 text-lg text-ink [&.active]:font-medium [&.active]:text-link"
-            >
-              {item.label}
-              <ChevronRight className="size-4 text-ink-muted" aria-hidden />
-            </Link>
+          <div className="flex flex-col">
+            {PRINCIPALES.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="flex items-center justify-between border-b border-line py-4 text-lg text-ink [&.active]:font-medium [&.active]:text-link"
+              >
+                {item.label}
+                <ChevronRight className="size-4 text-ink-muted" aria-hidden />
+              </Link>
+            ))}
+          </div>
+          {GRUPOS.map((g) => (
+            <div key={g.label} className="flex flex-col gap-1">
+              <span className="text-xs font-medium tracking-wide text-ink-muted uppercase">{g.label}</span>
+              {g.items.map((item) => (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className="flex items-center gap-3 rounded-lg py-3 text-ink [&.active]:text-link"
+                >
+                  <item.icon className="size-5 shrink-0 text-ink-muted" aria-hidden />
+                  <span className="flex flex-col">
+                    <span className="text-base">{item.label}</span>
+                    <span className="text-sm text-ink-muted">{item.descripcion}</span>
+                  </span>
+                </Link>
+              ))}
+            </div>
           ))}
         </nav>
       )}
@@ -119,6 +177,59 @@ export function Layout() {
           </div>
         </div>
       </footer>
+    </div>
+  );
+}
+
+/** Menú desplegable de escritorio: se abre con click, se cierra al elegir, al tocar afuera o con Escape. */
+function Desplegable({ grupo, pathname }: { grupo: Grupo; pathname: string }) {
+  const [abierto, setAbierto] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const activo = grupo.items.some((i) => pathname.startsWith(i.to));
+
+  useEffect(() => setAbierto(false), [pathname]);
+  useEffect(() => {
+    if (!abierto) return;
+    const fuera = (e: PointerEvent) => ref.current && !ref.current.contains(e.target as Node) && setAbierto(false);
+    const esc = (e: KeyboardEvent) => e.key === "Escape" && setAbierto(false);
+    document.addEventListener("pointerdown", fuera);
+    document.addEventListener("keydown", esc);
+    return () => {
+      document.removeEventListener("pointerdown", fuera);
+      document.removeEventListener("keydown", esc);
+    };
+  }, [abierto]);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => setAbierto((v) => !v)}
+        aria-expanded={abierto}
+        className={`inline-flex items-center gap-1 rounded-lg px-3 py-2 hover:bg-tile hover:text-link ${
+          activo ? "font-medium text-link" : "text-ink-2"
+        }`}
+      >
+        {grupo.label}
+        <ChevronDown className={`size-4 transition-transform ${abierto ? "rotate-180" : ""}`} aria-hidden />
+      </button>
+      {abierto && (
+        <div className="absolute top-full right-0 z-30 mt-2 flex w-80 flex-col gap-1 rounded-xl border border-line bg-surface p-2 shadow-xl">
+          {grupo.items.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              className="group flex items-start gap-3 rounded-lg p-3 whitespace-normal hover:bg-tile [&.active]:bg-tile"
+            >
+              <item.icon className="mt-0.5 size-5 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+              <span className="flex flex-col gap-0.5">
+                <span className="font-medium text-ink group-hover:text-link">{item.label}</span>
+                <span className="text-ink-muted">{item.descripcion}</span>
+              </span>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
