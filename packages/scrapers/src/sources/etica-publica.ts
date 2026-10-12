@@ -229,6 +229,17 @@ const num = (v: unknown): number => {
 };
 const round = (n: number) => Math.round(n * 100) / 100;
 
+/** Sections the public site lists as declared but without amounts → short label (column `declara_sin_monto`). */
+const DECLARED_WITHOUT_AMOUNT: [RegExp, string][] = [
+  [/^productos bancarios/i, "cuentas bancarias"],
+  [/^tenencia de dinero/i, "dinero en efectivo"],
+  [/^cr[eé]ditos y deudas/i, "créditos y deudas"],
+  [/^t[ií]tulos, acciones/i, "títulos y acciones"],
+  [/^participaci[oó]n en (sociedades|explotaciones)/i, "participación en sociedades"],
+  [/^ingresos netos anuales percibidos.*previsional/i, "jubilación o pensión"],
+  [/^bienes muebles no registrables$/i, "otros bienes muebles"],
+];
+
 function summarize(d: Declaration, count: number | undefined): Row {
   const row: Row = {
     official_id: d.official_id,
@@ -268,6 +279,12 @@ function summarize(d: Declaration, count: number | undefined): Row {
     else if (s.assets_type === 12) nIngInd += s.rows.length;
     else if (s.kind === "declares") nOtros += s.rows.length;
   }
+  const declared = new Set<string>();
+  for (const s of d.sections) {
+    const label = DECLARED_WITHOUT_AMOUNT.find(([re]) => re.test(s.title))?.[1];
+    if (s.kind === "declares" && label) declared.add(label);
+  }
+  row.declara_sin_monto = [...declared].join("|");
   row.total_bienes = round(total);
   row.total_bienes_propios = round(propios);
   row.n_fuentes_ingreso_dependencia = nIngDep;
@@ -443,6 +460,7 @@ export async function run(args: string[]) {
     "valor_rodados",
     "n_fuentes_ingreso_dependencia",
     "n_fuentes_ingreso_independiente",
+    "declara_sin_monto",
   ];
   const extra = [...new Set(declRows.flatMap((r) => Object.keys(r)))].filter((c) => !base.includes(c)).sort();
   await writeProcessed(SOURCE, "declaraciones.csv", declRows, [...base, ...extra]);

@@ -430,7 +430,7 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
     const path = `/funcionarios/${p.role}/${p.slug}`;
     const lugar = p.grupo === "intendentes" ? `intendente de ${p.organismo}` : p.cargo.replace(/\s*\(.*\)$/, "");
     const filiacion = p.partido ?? p.bloque;
-    const bienes = p.ddjj ? `Declaró bienes por ${pesos(p.ddjj.totalBienes)} a valor fiscal (${p.ddjj.inmuebles} inmuebles y ${p.ddjj.rodados} vehículos).` : "";
+    const bienes = p.ddjj ? `Declaró inmuebles y vehículos a su nombre por ${pesos(p.ddjj.totalBienes)} (pesos a valor fiscal, menor al de mercado; ${p.ddjj.inmuebles} inmuebles y ${p.ddjj.rodados} vehículos). Los montos de cuentas y otros bienes no se publican.` : "";
     const sueldo = p.remuneracion.length ? `Cobra una dieta de ${pesos(p.remuneracion[0]!.monto)} brutos.` : "Su sueldo no está publicado.";
     const resumen = `${p.nombre} es ${lugar}${p.grupo.endsWith("nacional") ? "" : " de Mendoza"}${filiacion ? ` (${filiacion})` : ""}${p.mandatoHasta ? `, con mandato hasta ${p.mandatoHasta}` : ""}. ${bienes} ${sueldo}`.replace(/\s+/g, " ").trim();
     const migas: Miga[] = [["/", "Inicio"], ["/funcionarios", "Funcionarios"], [`/funcionarios/${p.role}`, ROLES[p.grupo].title], [path, p.nombre]];
@@ -453,7 +453,7 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
         eyebrow: GRUPO[p.grupo]!.toUpperCase(),
         titulo: p.nombre,
         figura: p.ddjj ? pesosCorto(p.ddjj.totalBienes) : (filiacion ?? lugar),
-        bajada: p.ddjj ? `Bienes declarados a valor fiscal. ${lugar}.` : `${lugar}${p.mandatoHasta ? `, mandato hasta ${p.mandatoHasta}` : ""}.`,
+        bajada: p.ddjj ? `Inmuebles y vehículos declarados, en pesos a valor fiscal. ${lugar}.` : `${lugar}${p.mandatoHasta ? `, mandato hasta ${p.mandatoHasta}` : ""}.`,
       },
       ld: [
         {

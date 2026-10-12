@@ -1,6 +1,6 @@
 {
   "titulo": "Declaraciones juradas patrimoniales",
-  "descripcion": "Última declaración jurada publicada por cada funcionario provincial. Los bienes están a valor fiscal (suele ser menor al de mercado). El sitio oficial no informa montos de cuentas, deudas ni ingresos.",
+  "descripcion": "Última declaración jurada publicada por cada funcionario provincial. Los bienes registrables (inmuebles y vehículos) están en pesos a valor fiscal, que suele ser bastante menor al de mercado. El sitio oficial muestra que la persona declara cuentas, efectivo, deudas o participaciones, pero no sus montos.",
   "columnas": {
     "official_id": {
       "etiqueta": "Funcionario (ID)",
@@ -26,7 +26,8 @@
       "etiqueta": "Bienes declarados (valor fiscal)",
       "tipo": "moneda",
       "moneda": "ARS",
-      "escala": 1
+      "escala": 1,
+      "descripcion": "Suma, en pesos y a valor fiscal (avalúo), de inmuebles y vehículos según el porcentaje de titularidad. No incluye cuentas, efectivo ni participaciones, porque el sitio oficial no publica sus montos."
     },
     "total_bienes_propios": {
       "etiqueta": "Bienes propios (valor fiscal)",
@@ -156,6 +157,11 @@
     },
     "valor_rodados_tractor": {
       "oculta": true
+    },
+    "declara_sin_monto": {
+      "etiqueta": "Declara, sin monto publicado",
+      "tipo": "texto",
+      "descripcion": "Rubros que la declaración incluye pero cuyo monto el sitio oficial no publica (cuentas bancarias, dinero en efectivo, créditos y deudas, títulos, sociedades, jubilación), separados por |."
     }
   },
   "orden": [

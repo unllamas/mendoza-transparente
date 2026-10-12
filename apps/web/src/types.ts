@@ -270,11 +270,15 @@ export interface Funcionario {
     cargoDeclarado: string | null;
     reparticion: string | null;
     declaracionesPublicadas: number;
+    /** Items the declaration includes but whose amounts the official site does not publish ("cuentas bancarias"…). */
+    declaredWithoutAmount: string[];
   } | null;
 }
 
 export interface FuncionariosTema {
   personas: Funcionario[];
+  /** Latest official exchange rate (monthly average), to show declared assets in dollars as a reference. */
+  usd?: { rate: number; month: string };
 }
 
 export interface Caso {

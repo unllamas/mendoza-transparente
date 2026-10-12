@@ -49,6 +49,7 @@ function cruzarDeclaraciones(eticaFuncionarios: CsvRow[], declaraciones: CsvRow[
       cargoDeclarado: f.cargo || null,
       reparticion: f.reparticion || null,
       declaracionesPublicadas: Number(d.declaraciones_publicadas || f.declaraciones_publicadas || 0),
+      declaredWithoutAmount: (d.declara_sin_monto ?? "").split("|").filter(Boolean),
     };
   };
 }

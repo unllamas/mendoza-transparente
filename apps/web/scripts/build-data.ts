@@ -257,6 +257,10 @@ const funcionariosTema =
         readTable("fotos", "fotos.csv") ?? [],
       )
     : undefined;
+const usdRates = (readTable("indices", "tipo_cambio_mensual.csv") ?? []).filter((r) => Number(r.tipo_cambio_oficial_promedio) > 0);
+const lastUsd = usdRates.at(-1);
+if (funcionariosTema && lastUsd)
+  funcionariosTema.usd = { rate: Number(lastUsd.tipo_cambio_oficial_promedio), month: `${lastUsd.anio}-${lastUsd.mes!.padStart(2, "0")}` };
 if (funcionariosTema) writeFileSync(join(OUT, "temas", "funcionarios.json"), JSON.stringify(funcionariosTema));
 
 // Fotos oficiales de funcionarios (miniaturas).

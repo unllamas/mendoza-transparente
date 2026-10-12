@@ -248,3 +248,17 @@
   detalle_estado: El Boletín publica los decretos y algunas resoluciones de designación. Muchas designaciones internas y las de planta transitoria no aparecen.
   pedido: El registro de altas, bajas, designaciones y cambios de situación del personal del Poder Ejecutivo provincial desde diciembre de 2023, con organismo, cargo, categoría y fecha, en formato CSV o XLSX.
   pedidos: []
+
+- id: ddjj-montos
+  titulo: Cuánta plata tienen los funcionarios en cuentas, efectivo e inversiones
+  categoria: personal
+  que_es: Los montos de las declaraciones juradas patrimoniales de los funcionarios provinciales que no se publican, como cuentas bancarias, dinero en efectivo, créditos y deudas, acciones, participaciones en sociedades e ingresos.
+  por_que_importa: El sitio oficial solo muestra con monto los inmuebles y vehículos, y a valor fiscal. Sin el resto no se puede ver cómo cambia el patrimonio de un funcionario mientras ocupa el cargo.
+  organismo: Oficina de Investigaciones Administrativas y Ética Pública
+  marco_legal: Ley 8993 de Ética Pública y Ley 9070 de Acceso a la Información Pública
+  estado: parcial
+  donde_buscamos:
+    - https://eticapublica.mendoza.gov.ar/declaraciones
+  detalle_estado: La versión pública de cada declaración indica que la persona declara cuentas, efectivo, deudas o participaciones, pero deja esas secciones sin montos. De 2.135 declaraciones relevadas, 2.130 declaran cuentas bancarias y 1.181 dinero en efectivo.
+  pedido: Los montos declarados en las secciones de productos bancarios, tenencia de dinero en efectivo, créditos y deudas, títulos y acciones, participación en sociedades e ingresos de las declaraciones juradas vigentes de gobernador, vicegobernadora, ministros, secretarios, subsecretarios, legisladores e intendentes, y de las presentadas al asumir el cargo.
+  pedidos: []

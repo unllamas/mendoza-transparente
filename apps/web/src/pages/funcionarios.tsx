@@ -4,10 +4,10 @@ import { useMemo, useState } from "react";
 
 import { BarList } from "../charts/bar-list.tsx";
 import { formatMoneda } from "../celdas.ts";
-import { formatDate } from "../lib.ts";
+import { formatDate, formatNumber } from "../lib.ts";
 import { FuentesOficiales } from "../fuente.tsx";
 import { ROLES, roleBySlug } from "../slug.ts";
-import type { Funcionario, GrupoFuncionario } from "../types.ts";
+import type { Funcionario, FuncionariosTema, GrupoFuncionario } from "../types.ts";
 import { Aviso, Migas, PageHeader, Segmented } from "./components.tsx";
 
 const route = getRouteApi("/funcionarios");
@@ -231,7 +231,7 @@ function NotFound() {
 
 /** Página de la ficha de una persona: `/funcionarios/<cargo>/<nombre>`. */
 export function FuncionarioPage() {
-  const { personas } = routeFicha.useLoaderData();
+  const { personas, usd } = routeFicha.useLoaderData();
   const { role, slug } = routeFicha.useParams();
   const p = personas.find((x) => x.role === role && x.slug === slug);
   if (!p) return <NotFound />;
@@ -244,13 +244,13 @@ export function FuncionarioPage() {
           { label: p.nombre },
         ]}
       />
-      <FichaFuncionario persona={p} />
+      <FichaFuncionario persona={p} usd={usd} />
     </div>
   );
 }
 
 /** Contenido de la ficha: foto, cargo, mandato, sueldo publicado y declaración jurada. */
-export function FichaFuncionario({ persona: p }: { persona: Funcionario }) {
+export function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: FuncionariosTema["usd"] }) {
   const pedido = PEDIDO_SUELDO[p.grupo];
   return (
     <div className="flex flex-col gap-6">
@@ -308,7 +308,7 @@ export function FichaFuncionario({ persona: p }: { persona: Funcionario }) {
         )}
       </section>
 
-      <Declaracion persona={p} />
+      <Declaracion persona={p} usd={usd} />
 
       {/diputados|senado/.test(p.grupo) && (
         <p className="flex items-center gap-2 text-sm text-ink-muted">
@@ -392,7 +392,10 @@ function Territorio({ persona: p }: { persona: Funcionario }) {
 
 const ETICA = "https://eticapublica.mendoza.gov.ar/declaraciones";
 
-function Declaracion({ persona: p }: { persona: Funcionario }) {
+const millonesDePesos = (v: number) =>
+  v >= 1e6 ? `$ ${new Intl.NumberFormat("es-AR", { maximumFractionDigits: 1 }).format(v / 1e6)} millones` : formatMoneda(v, "ARS");
+
+function Declaracion({ persona: p, usd }: { persona: Funcionario; usd?: FuncionariosTema["usd"] }) {
   const nacional = p.grupo === "diputados_nacional" || p.grupo === "senado_nacional";
   const d = p.ddjj;
   return (
@@ -404,8 +407,13 @@ function Declaracion({ persona: p }: { persona: Funcionario }) {
         <>
           <div className="grid grid-cols-2 gap-2">
             <div className="col-span-2 flex flex-col gap-0.5 rounded-lg bg-tile p-3">
-              <span className="text-xs text-ink-muted">Bienes declarados, a valor fiscal</span>
-              <span className="text-lg font-semibold tabular-nums">{formatMoneda(d.totalBienes, "ARS")}</span>
+              <span className="text-xs text-ink-muted">Inmuebles y vehículos a su nombre, en pesos a valor fiscal</span>
+              <span className="text-lg font-semibold whitespace-nowrap tabular-nums">{millonesDePesos(d.totalBienes)}</span>
+              {usd && d.totalBienes > 0 && (
+                <span className="text-xs text-ink-muted">
+                  Unos US$ {formatNumber(Math.round(d.totalBienes / usd.rate))} al dólar oficial de {formatMonth(usd.month)}
+                </span>
+              )}
             </div>
             <div className="flex flex-col gap-0.5 rounded-lg bg-tile p-3">
               <span className="text-xs text-ink-muted">Inmuebles</span>
@@ -416,13 +424,22 @@ function Declaracion({ persona: p }: { persona: Funcionario }) {
               <span className="font-medium tabular-nums">{d.rodados}</span>
             </div>
           </div>
+          {d.declaredWithoutAmount.length > 0 && (
+            <p className="text-sm text-ink-2 text-pretty">
+              También declara {listaHumana(d.declaredWithoutAmount)}, pero el sitio oficial no publica esos montos.
+            </p>
+          )}
           <p className="text-xs text-ink-muted">
             Última declaración publicada{d.fecha ? ` el ${formatDate(d.fecha)}` : ""} ({d.declaracionesPublicadas}{" "}
             {d.declaracionesPublicadas === 1 ? "declaración" : "declaraciones"} en total).
           </p>
-          <Aviso tipo="nota" titulo="Cómo leer este dato">
-            El valor fiscal suele ser bastante menor que el de mercado. El sitio oficial solo permite ver la última
-            declaración y no informa montos de cuentas, deudas ni ingresos.
+          <Aviso tipo="nota" titulo="Por qué el número parece bajo">
+            El valor fiscal es el que usa el Estado para cobrar impuestos y suele estar muy por debajo del precio de mercado. Además,
+            el total no incluye cuentas bancarias, efectivo, inversiones ni participaciones en empresas: la Oficina de Ética Pública
+            muestra que se declaran, pero no cuánto.{" "}
+            <Link to="/no-publicado" hash="ddjj-montos" className="font-medium text-link hover:underline">
+              Pedí los montos ›
+            </Link>
           </Aviso>
         </>
       ) : (
@@ -443,6 +460,10 @@ function Declaracion({ persona: p }: { persona: Funcionario }) {
     </section>
   );
 }
+
+const listaHumana = (xs: string[]) => (xs.length < 2 ? xs.join("") : `${xs.slice(0, -1).join(", ")} y ${xs.at(-1)}`);
+const MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+const formatMonth = (ym: string) => `${MONTHS[Number(ym.slice(5, 7)) - 1]} de ${ym.slice(0, 4)}`;
 
 function Campo({ label, value, wide, muted }: { label: string; value: string; wide?: boolean; muted?: boolean }) {
   return (
