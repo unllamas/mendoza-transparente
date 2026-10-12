@@ -1,7 +1,7 @@
-__pycache__/
-*.pyc
-.venv/
+node_modules/
+.turbo/
+.next/
+dist/
 .env
 .DS_Store
 /tmp/
-*.egg-info/

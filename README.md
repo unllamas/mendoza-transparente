@@ -14,22 +14,24 @@ El Estado provincial publica mucha información: presupuesto, deuda, compras, Bo
 
 ## Estructura
 
+Monorepo con Bun workspaces y Turborepo, en TypeScript.
+
 ```
-docs/                 relevamiento de fuentes y documentación
-sources.yaml          catálogo de fuentes (id, organismo, url, formato, estado)
-mt/                   librería común (descarga, archivado, utilidades)
-scrapers/<id>.py      un recolector por fuente
-data/raw/<id>/        archivos originales, por fecha de descarga, más un manifest.jsonl
-data/processed/<id>/  datos normalizados (CSV) listos para analizar
-analysis/             análisis y cruces entre fuentes
+apps/                   aplicaciones (por ejemplo, el sitio web)
+packages/core/          @mt/core: descarga, archivado, CSV, municipios
+packages/scrapers/      @mt/scrapers: un recolector por fuente en src/sources/<id>.ts
+docs/                   relevamiento de fuentes y documentación
+sources.yaml            catálogo de fuentes (id, organismo, url, formato, estado)
+data/raw/<id>/          archivos originales, por fecha de descarga, más un manifest.jsonl
+data/processed/<id>/    datos normalizados (CSV) listos para analizar
 ```
 
 ## Uso
 
 ```bash
-python3 -m venv .venv && source .venv/bin/activate
-pip install -e .
-python -m scrapers.<id>
+bun install
+bun run scrape <id> [args...]   # por ejemplo: bun run scrape boletin-oficial
+bun run typecheck
 ```
 
 ## Licencia

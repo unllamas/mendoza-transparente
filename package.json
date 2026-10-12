@@ -1,0 +1,15 @@
+{
+  "name": "mendoza-transparente",
+  "private": true,
+  "packageManager": "bun@1.4.2",
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "scrape": "bun packages/scrapers/src/cli.ts",
+    "typecheck": "turbo run typecheck"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "turbo": "^2",
+    "typescript": "^5"
+  }
+}
