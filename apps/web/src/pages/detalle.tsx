@@ -16,6 +16,7 @@ import {
 import { useEffect, useState, type ReactNode } from "react";
 
 import { formatMoneda, type ColumnaVista } from "../celdas.ts";
+import { ColumnChart } from "../charts/column-chart.tsx";
 import { archivoUrl, useFuentes } from "../fuente.tsx";
 import { formatDate, formatNumber, limpiarOrganismo, loadJson } from "../lib.ts";
 import { procesoShard } from "../shard.ts";
@@ -197,7 +198,6 @@ export function Proveedor({ cuit, onProceso }: { cuit: string; onProceso: (ocid:
   const { data: p, error } = useCarga<ProveedorDetalle>(`temas/compras/proveedores/${cuit}.json`);
   if (error) return <p className="text-sm text-ink-2">No hay más datos de este proveedor.</p>;
   if (!p) return <p className="text-sm text-ink-muted">Cargando proveedor…</p>;
-  const maxAnio = Math.max(...p.porAnio.map((a) => a.monto));
 
   return (
     <>
@@ -217,20 +217,19 @@ export function Proveedor({ cuit, onProceso }: { cuit: string; onProceso: (ocid:
         <Dato label="Última adjudicación" value={p.ultima ? formatDate(p.ultima) : "—"} />
       </div>
 
-      <Bloque titulo="Por año">
-        <ul className="flex flex-col gap-2">
-          {p.porAnio.map((a) => (
-            <li key={a.anio} className="grid grid-cols-[3rem_1fr_auto] items-center gap-2 text-sm tabular-nums">
-              <span className="text-ink-2">{a.anio}</span>
-              <span className="h-2 rounded-full bg-grid/60">
-                <span className="block h-full rounded-full bg-accent" style={{ width: `${Math.max((a.monto / maxAnio) * 100, 1)}%` }} />
-              </span>
-              <span>{formatMoneda(a.monto, "ARS")}</span>
-            </li>
-          ))}
-        </ul>
-        <Aviso tipo="nota">Montos nominales, sin ajustar por inflación: los años no son comparables directamente.</Aviso>
-      </Bloque>
+      {p.porAnio.length > 1 && (
+        <Bloque titulo={p.referenciaReal ? `Adjudicado por año, en pesos de ${p.referenciaReal}` : "Adjudicado por año"}>
+          <ColumnChart
+            columnas={p.porAnio.map((a) => ({
+              etiqueta: String(a.anio),
+              valor: a.real,
+              detalle: p.referenciaReal ? `${formatMoneda(a.monto, "ARS")} nominales` : undefined,
+            }))}
+            formatValue={(v) => formatMoneda(v, "ARS")}
+            ariaLabel={`Monto adjudicado por año a ${p.nombre}`}
+          />
+        </Bloque>
+      )}
 
       <Bloque titulo="Quién le compra">
         <ul className="flex flex-col gap-3 text-sm">
@@ -381,9 +380,9 @@ export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cui
         <Dato label="Estado" value={ESTADO_PROCESO[p.estado] ?? p.estado} />
         <Dato label="Fecha" value={formatDate(p.fecha)} />
         <Dato label="Ofertas recibidas" value={p.oferentes === null ? "—" : formatNumber(p.oferentes)} />
-        <Dato label="Monto estimado" value={p.montoEstimado ? formatMoneda(p.montoEstimado, "ARS") : "—"} />
-        <Dato label="Monto adjudicado" value={p.adjudicaciones.length ? formatMoneda(total, "ARS") : "—"} />
       </div>
+
+      <Montos estimado={p.montoEstimado} adjudicado={p.adjudicaciones.length ? total : null} />
 
       <Bloque
         titulo={p.adjudicaciones.length ? "Adjudicado a" : "Sin adjudicaciones"}
@@ -410,6 +409,43 @@ export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cui
         )}
       </Bloque>
     </>
+  );
+}
+
+/** Estimado contra adjudicado: dos barras en la misma escala y la diferencia en porcentaje. */
+function Montos({ estimado, adjudicado }: { estimado: number | null; adjudicado: number | null }) {
+  if (!estimado && !adjudicado) return null;
+  const max = Math.max(estimado ?? 0, adjudicado ?? 0);
+  const filas = [
+    { label: "Estimado", valor: estimado },
+    { label: "Adjudicado", valor: adjudicado },
+  ];
+  const diferencia = estimado && adjudicado ? ((adjudicado - estimado) / estimado) * 100 : null;
+  return (
+    <Bloque titulo="Montos">
+      <ul className="flex flex-col gap-2.5">
+        {filas.map((f) => (
+          <li key={f.label} className="flex flex-col gap-1">
+            <div className="flex items-baseline justify-between gap-3 text-sm">
+              <span className="text-ink-2">{f.label}</span>
+              <span className="font-medium tabular-nums">{f.valor ? formatMoneda(f.valor, "ARS") : "—"}</span>
+            </div>
+            <div className="h-2.5 rounded-full bg-grid/60">
+              {f.valor ? (
+                <div className="h-full rounded-full bg-accent" style={{ width: `${Math.max((f.valor / max) * 100, 1)}%` }} />
+              ) : null}
+            </div>
+          </li>
+        ))}
+      </ul>
+      {diferencia !== null && Math.abs(diferencia) >= 0.5 && (
+        <p className="text-sm text-ink-2">
+          Se adjudicó un <span className="font-medium tabular-nums">{Math.abs(Math.round(diferencia))} %</span>{" "}
+          {diferencia > 0 ? "más" : "menos"} de lo estimado.
+        </p>
+      )}
+      {estimado && !adjudicado && <p className="text-sm text-ink-2">No se adjudicó.</p>}
+    </Bloque>
   );
 }
 

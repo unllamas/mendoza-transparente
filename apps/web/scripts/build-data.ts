@@ -215,7 +215,13 @@ if (procesos && adjudicaciones) {
     join(OUT, "temas", "senales.json"),
     JSON.stringify(buildSenales(procesos, adjudicaciones, readTable("proveedores", "proveedores.csv") ?? [])),
   );
-  buildCompras(procesos, adjudicaciones, join(OUT, "temas", "compras"), readTable("proveedores", "proveedores.csv") ?? []);
+  buildCompras(
+    procesos,
+    adjudicaciones,
+    join(OUT, "temas", "compras"),
+    readTable("proveedores", "proveedores.csv") ?? [],
+    readTable("indices", "ipc_nacional_mensual.csv") ?? [],
+  );
 }
 
 const copaAnual = readTable("hacienda-participacion-municipal", "coparticipacion_anual.csv");

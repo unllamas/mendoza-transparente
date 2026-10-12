@@ -25,7 +25,7 @@ En desarrollo (`bun run dev`), el plugin de `vite.config.ts` regenera todo y rec
 5. **SEO**: entrada en `PAGES` de `src/seo.ts` (título de hasta 60 caracteres con la palabra clave, descripción de 140 a 160) y su cifra para la imagen de redes en `scripts/seo.ts`.
 6. Verificar (ver abajo).
 
-Componentes disponibles: `StatTile`, `Section`, `Segmented`, `PageHeader`, `Sheet` (hoja modal), `EstadoBadge` (`src/pages/components.tsx`); `LineChart`, `BarList`, `Sparkline`, `MapaMendoza` (`src/charts/`); `PanelDetalle`, `Proveedor`, `Proceso` (`src/pages/detalle.tsx`).
+Componentes disponibles: `StatTile`, `Section`, `Segmented`, `PageHeader`, `Sheet` (hoja modal), `EstadoBadge` (`src/pages/components.tsx`); `LineChart`, `ColumnChart` (montos por año), `BarList` (rankings), `Sparkline`, `MapaMendoza` (`src/charts/`); `PanelDetalle`, `Proveedor`, `Proceso` (`src/pages/detalle.tsx`).
 
 ## SEO y redes
 

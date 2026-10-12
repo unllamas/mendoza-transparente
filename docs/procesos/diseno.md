@@ -38,6 +38,7 @@ El ámbar es un color de estado, como el verde y el rojo: va siempre con ícono 
 
 ## Gráficos
 
+- **Elegir la forma por lo que se quiere leer**: evolución en el tiempo → línea (series largas) o columnas (montos por año, `ColumnChart`, con los años vacíos visibles); ranking o composición → barras horizontales (`BarList`); comparar dos montos (estimado contra adjudicado) → dos barras en la misma escala con la diferencia en porcentaje.
 - Una sola serie por gráfico de línea; el eje Y sin unidad (va en el título) y el eje X con etiquetas espaciadas según el ancho.
 - Franjas por gobernador, neutras, en las series temporales; comparación por mandato con el dato inicial y final.
 - Mapas con escala por cuantiles (cada tono agrupa una cantidad parecida de departamentos) y más = más intenso en ambos modos.

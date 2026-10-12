@@ -136,7 +136,9 @@ export interface ProveedorDetalle {
   primera: string;
   ultima: string;
   organismos: { nombre: string; monto: number; procesos: number }[];
-  porAnio: { anio: number; monto: number }[];
+  /** Monto nominal y en pesos de hoy (referenciaReal) por año, incluidos los años sin adjudicaciones. */
+  porAnio: { anio: number; monto: number; real: number }[];
+  referenciaReal: string | null;
   recientes: { ocid: string; fecha: string; titulo: string; comprador: string; metodo: string; monto: number }[];
 }
 

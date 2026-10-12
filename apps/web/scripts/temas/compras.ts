@@ -8,10 +8,18 @@ import { join } from "node:path";
 
 import { procesoShard, PROCESO_SHARDS } from "../../src/shard.ts";
 import type { ProcesoDetalle, ProveedorDetalle } from "../../src/types.ts";
+import { deflactor } from "./inflacion.ts";
 
 type CsvRow = Record<string, string>;
 
-export function buildCompras(procesos: CsvRow[], adjudicaciones: CsvRow[], outDir: string, empresas: CsvRow[] = []) {
+export function buildCompras(
+  procesos: CsvRow[],
+  adjudicaciones: CsvRow[],
+  outDir: string,
+  empresas: CsvRow[] = [],
+  ipc: CsvRow[] = [],
+) {
+  const inflacion = deflactor(ipc);
   const porCuitEmpresa = new Map(empresas.map((e) => [e.cuit!, e]));
   const porOcid = new Map(procesos.map((p) => [p.ocid!, p]));
   const activas = adjudicaciones.filter((a) => a.estado_adjudicacion !== "cancelled" && a.proveedor_cuit);
@@ -85,7 +93,18 @@ export function buildCompras(procesos: CsvRow[], adjudicaciones: CsvRow[], outDi
         .map(([nombre, o]) => ({ nombre, monto: o.monto, procesos: o.procesos.size }))
         .sort((a, b) => b.monto - a.monto)
         .slice(0, 8),
-      porAnio: [...porAnio].map(([anio, monto]) => ({ anio: Number(anio), monto })).sort((a, b) => a.anio - b.anio),
+      // Todos los años entre el primero y el último, también los que no tuvo adjudicaciones.
+      porAnio: (() => {
+        const anios = [...porAnio.keys()].map(Number);
+        if (!anios.length) return [];
+        const serie = [];
+        for (let anio = Math.min(...anios); anio <= Math.max(...anios); anio++) {
+          const monto = porAnio.get(String(anio)) ?? 0;
+          serie.push({ anio, monto, real: inflacion ? inflacion.aReal(monto, anio) : monto });
+        }
+        return serie;
+      })(),
+      referenciaReal: inflacion?.referencia ?? null,
       recientes: filas
         .sort((a, b) => b.fecha_adjudicacion!.localeCompare(a.fecha_adjudicacion!))
         .slice(0, 25)
