@@ -121,6 +121,8 @@ El ámbar es un color de estado, como el verde y el rojo: va siempre con ícono 
 
 ## Gráficos
 
+- **Con Recharts, como los gráficos de BoardUI** (`apps/web/src/charts/`): `LineChart` es un área con línea y `ColumnChart` son barras, con ejes sin línea, grilla horizontal suave, cursor punteado y la lectura del punto activo en una tarjeta (`tileVariants`) que se abre al tocar. `BarList` (ranking) y `Sparkline` quedan en HTML y SVG, porque Recharts no les suma nada y pesa: el código de Recharts (~96 KB comprimidos) solo lo bajan las páginas con gráficos. El mapa es propio.
+- **Colores solo con tokens:** la serie en `highlight`, lo secundario en un paso más claro de `accent`, la grilla en `chart-grid` y los ejes en `chart-axis`. El relleno bajo la línea es plano y tenue, sin degradé. Sin animación si la persona pidió menos movimiento (`use-reduced-motion.ts`).
 - **Elegir la forma por lo que se quiere leer**: evolución en el tiempo → línea (series largas) o columnas (montos por año, `ColumnChart`, con los años vacíos visibles); ranking o composición → barras horizontales (`BarList`); comparar dos montos (estimado contra adjudicado) → dos barras en la misma escala con la diferencia en porcentaje.
 - Una sola serie por gráfico de línea; el eje Y sin unidad (va en el título) y el eje X con etiquetas espaciadas según el ancho.
 - Franjas por gobernador, neutras, en las series temporales; comparación por mandato con el dato inicial y final.

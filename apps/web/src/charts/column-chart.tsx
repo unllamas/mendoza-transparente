@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { useReducedMotion } from "./use-reduced-motion.ts";
 
 export interface Columna {
   etiqueta: string;
@@ -7,10 +9,30 @@ export interface Columna {
   detalle?: string;
 }
 
+interface BarShapeProps {
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
+  fill?: string;
+  fillOpacity?: number;
+  value?: number | [number, number];
+}
+
+/** Bar with rounded top corners; an empty year is a thin line on the baseline so it still shows. */
+function ColumnShape({ x = 0, y = 0, width = 0, height = 0, fill, fillOpacity, value }: BarShapeProps) {
+  if (!value) {
+    return <rect x={x} y={y - 2} width={width} height={2} rx={1} fill="var(--color-chart-axis)" />;
+  }
+  const r = Math.min(4, width / 2, height);
+  const d = `M${x},${y + height}V${y + r}Q${x},${y} ${x + r},${y}H${x + width - r}Q${x + width},${y} ${x + width},${y + r}V${y + height}Z`;
+  return <path d={d} fill={fill} fillOpacity={fillOpacity} />;
+}
+
 /**
- * Columnas verticales de una sola serie, para montos por año. La lectura de arriba muestra el valor
- * de la columna activa (la última por defecto; la que se toca o se señala con el mouse). Las columnas
- * en cero quedan marcadas sobre la línea base para que se note el año vacío.
+ * Vertical columns of a single series, for amounts per year. The reading on top shows the value of the
+ * active column (the last one by default; the one that is tapped, focused or pointed at). Columns at
+ * zero stay marked on the baseline so the empty year is noticeable.
  */
 export function ColumnChart({
   columnas,
@@ -23,11 +45,17 @@ export function ColumnChart({
   alto?: number;
   ariaLabel: string;
 }) {
-  const ultima = columnas.length - 1;
-  const [activa, setActiva] = useState(ultima);
+  const last = columnas.length - 1;
+  const [active, setActive] = useState(last);
+  const reducedMotion = useReducedMotion();
   const max = Math.max(...columnas.map((c) => c.valor), 1);
-  const c = columnas[activa] ?? columnas[ultima];
+  const c = columnas[active] ?? columnas[last];
   if (!c) return null;
+
+  function select(state: { activeTooltipIndex?: number | string | null }) {
+    const index = Number(state.activeTooltipIndex);
+    if (Number.isInteger(index) && index >= 0 && index <= last) setActive(index);
+  }
 
   return (
     <div className="flex flex-col gap-3">
@@ -39,40 +67,50 @@ export function ColumnChart({
         </span>
       </div>
 
-      <div role="list" aria-label={ariaLabel} className="flex items-end gap-1" style={{ height: alto }}>
-        {columnas.map((col, i) => (
-          // biome-ignore lint/a11y/noInteractiveElementToNoninteractiveRole: each column is an item of the chart list and also focusable to read its value.
-          <button
-            key={col.etiqueta}
-            type="button"
-            role="listitem"
-            aria-label={`${col.etiqueta}: ${col.valor ? formatValue(col.valor) : "sin adjudicaciones"}`}
-            onPointerEnter={() => setActiva(i)}
-            onFocus={() => setActiva(i)}
-            onClick={() => setActiva(i)}
-            onPointerLeave={() => setActiva(ultima)}
-            className="group flex h-full min-w-0 flex-1 flex-col justify-end"
+      <div className="w-full min-w-0" role="img" aria-label={ariaLabel}>
+        <ResponsiveContainer width="100%" height={alto + 24}>
+          <BarChart
+            data={columnas}
+            margin={{ top: 4, right: 0, bottom: 0, left: 0 }}
+            barCategoryGap={columnas.length > 8 ? "18%" : "28%"}
+            onMouseMove={select}
+            onClick={select}
+            onMouseLeave={() => setActive(last)}
           >
-            <span
-              className={`block w-full rounded-t-[4px] transition-opacity ${
-                col.valor ? "bg-highlight" : "bg-chart-axis"
-              } ${i === activa ? "opacity-100" : "opacity-55 group-hover:opacity-80"}`}
-              style={{ height: col.valor ? `${Math.max((col.valor / max) * 100, 2)}%` : 2 }}
+            <YAxis hide domain={[0, max]} />
+            <XAxis
+              dataKey="etiqueta"
+              tickLine={false}
+              axisLine={{ stroke: "var(--color-chart-axis)" }}
+              tickMargin={8}
+              interval="preserveStartEnd"
+              minTickGap={4}
+              tickFormatter={(label: string) => (columnas.length > 8 ? label.replace(/^\d{2}(\d{2})/, "'$1") : label)}
+              tick={{ fontSize: 11, fill: "var(--color-text-tertiary)" }}
             />
-          </button>
-        ))}
+            <Tooltip content={() => null} isAnimationActive={false} cursor={{ fill: "var(--color-chart-track)", opacity: 0.5 }} />
+            <Bar
+              dataKey="valor"
+              fill="var(--color-highlight)"
+              shape={<ColumnShape />}
+              isAnimationActive={!reducedMotion}
+              animationDuration={450}
+            >
+              {columnas.map((col, i) => (
+                <Cell key={col.etiqueta} fillOpacity={i === active ? 1 : 0.55} />
+              ))}
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
       </div>
 
-      <div className="flex gap-1 border-t border-chart-axis pt-1.5">
-        {columnas.map((col, i) => (
-          <span
-            key={col.etiqueta}
-            className={`min-w-0 flex-1 text-center text-caption-2-regular tabular-nums ${i === activa ? "font-medium text-text-primary" : "text-text-tertiary"}`}
-          >
-            {columnas.length > 8 ? `'${col.etiqueta.slice(-2)}` : col.etiqueta}
-          </span>
+      <ul className="sr-only">
+        {columnas.map((col) => (
+          <li key={col.etiqueta}>
+            {col.etiqueta}: {col.valor ? formatValue(col.valor) : "sin adjudicaciones"}
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }

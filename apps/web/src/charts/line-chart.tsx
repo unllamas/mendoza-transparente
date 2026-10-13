@@ -1,6 +1,8 @@
 import { tileVariants } from "@mt/ui/components/card";
 import { cx } from "@mt/ui/lib/cx";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useId } from "react";
+import { Area, ComposedChart, ReferenceArea, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { useReducedMotion } from "./use-reduced-motion.ts";
 
 export interface Band {
   desde: string;
@@ -20,159 +22,139 @@ interface Props {
   ariaLabel: string;
 }
 
-const MARGIN_BASE = { top: 28, right: 16, bottom: 28 };
-// Ancho aproximado de un carácter de 11px, para reservar lugar a las etiquetas del eje Y.
+const TICK = { fontSize: 11, fill: "var(--color-text-tertiary)" };
+// Approximate width of one 11px character, to reserve room for the Y axis labels.
 const CHAR_W = 6.6;
 
-/** Escala "linda" para el eje Y: 4-5 marcas redondas que cubren [0, max]. */
+/** Round scale for the Y axis: 4-5 round marks that cover [0, max]. */
 function niceTicks(max: number): number[] {
-  const raw = max / 4;
+  const raw = max / 4 || 1;
   const pow = 10 ** Math.floor(Math.log10(raw));
-  const step = [1, 2, 2.5, 5, 10].map((m) => m * pow).find((s) => s >= raw)!;
+  const step = [1, 2, 2.5, 5, 10].map((m) => m * pow).find((s) => s >= raw) ?? pow * 10;
   const ticks: number[] = [];
   for (let v = 0; v <= max + step * 0.001; v += step) ticks.push(v);
-  if (ticks.at(-1)! < max) ticks.push(ticks.at(-1)! + step);
+  if ((ticks.at(-1) ?? 0) < max) ticks.push((ticks.at(-1) ?? 0) + step);
   return ticks;
 }
 
-/** Línea de una sola serie, con franjas temporales opcionales y tooltip con línea guía. */
+interface Point {
+  t: number;
+  fecha: string;
+  valor: number;
+}
+
+/** Single-series area line over time, with optional alternating period bands and an active-point card. */
 export function LineChart({ data, bands = [], formatValue, formatAxis = formatValue, formatDate, height = 280, ariaLabel }: Props) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState(640);
-  const [hover, setHover] = useState<number | null>(null);
-
-  useLayoutEffect(() => {
-    if (!ref.current) return;
-    const observer = new ResizeObserver(([entry]) => setWidth(entry!.contentRect.width));
-    observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
+  const gradientId = useId();
+  const reducedMotion = useReducedMotion();
   if (data.length === 0) return null;
 
-  const t0 = Date.parse(data[0]!.fecha);
-  const t1 = Date.parse(data.at(-1)!.fecha);
-  const ticks = niceTicks(Math.max(...data.map((d) => d.valor)));
-  const yMax = ticks.at(-1)!;
-  const MARGIN = { ...MARGIN_BASE, left: Math.max(...ticks.map((v) => formatAxis(v).length)) * CHAR_W + 14 };
-  const innerW = width - MARGIN.left - MARGIN.right;
-  const innerH = height - MARGIN.top - MARGIN.bottom;
-  const x = (fecha: string) => MARGIN.left + ((Date.parse(fecha) - t0) / (t1 - t0)) * innerW;
-  const y = (v: number) => MARGIN.top + innerH - (v / yMax) * innerH;
-  const clampX = (fecha: string) => Math.min(Math.max(x(fecha), MARGIN.left), MARGIN.left + innerW);
+  const points: Point[] = data.map((d) => ({ t: Date.parse(d.fecha), fecha: d.fecha, valor: d.valor }));
+  const t0 = points[0]!.t;
+  const t1 = points.at(-1)!.t;
+  const yTicks = niceTicks(Math.max(...points.map((p) => p.valor)));
+  const yMax = yTicks.at(-1)!;
+  const yWidth = Math.max(...yTicks.map((v) => formatAxis(v).length)) * CHAR_W + 14;
 
-  const path = data.map((d, i) => `${i ? "L" : "M"}${x(d.fecha).toFixed(1)},${y(d.valor).toFixed(1)}`).join("");
-  const years: number[] = [];
   const startYear = new Date(t0).getUTCFullYear();
   const firstYear = Date.parse(`${startYear}-01-01`) >= t0 ? startYear : startYear + 1;
   const lastYear = new Date(t1).getUTCFullYear();
-  // Un año cada ~48px como mínimo, en pasos redondos, para que las etiquetas no se pisen.
+  // One year label every ~48px at least, in round steps, so labels never overlap (width approximated at 320px).
   const span = Math.max(lastYear - firstYear, 1);
-  const yearStep = [1, 2, 5, 10, 20].find((s) => (innerW / span) * s >= 48) ?? 20;
-  for (let yr = firstYear; yr <= lastYear; yr++) if ((yr - firstYear) % yearStep === 0) years.push(yr);
+  const yearStep = [1, 2, 5, 10, 20].find((s) => (280 / span) * s >= 48) ?? 20;
+  const xTicks: number[] = [];
+  for (let yr = firstYear; yr <= lastYear; yr++) if ((yr - firstYear) % yearStep === 0) xTicks.push(Date.parse(`${yr}-01-01`));
 
-  function onMove(e: React.PointerEvent<SVGRectElement>) {
-    const box = e.currentTarget.getBoundingClientRect();
-    const px = e.clientX - box.left + MARGIN.left;
-    let best = 0;
-    data.forEach((d, i) => {
-      if (Math.abs(x(d.fecha) - px) < Math.abs(x(data[best]!.fecha) - px)) best = i;
-    });
-    setHover(best);
-  }
-
-  const active = hover !== null ? data[hover]! : null;
+  const clamp = (t: number) => Math.min(Math.max(t, t0), t1);
+  const visibleBands = bands
+    .map((b) => ({ ...b, x1: clamp(Date.parse(b.desde)), x2: b.hasta ? clamp(Date.parse(b.hasta)) : t1 }))
+    .filter((b) => b.x2 > b.x1);
 
   return (
-    <div ref={ref} className="relative w-full">
-      <svg width={width} height={height} role="img" aria-label={ariaLabel} className="block overflow-visible">
-        {bands.map((b, i) => {
-          const bx0 = clampX(b.desde);
-          const bx1 = b.hasta ? clampX(b.hasta) : MARGIN.left + innerW;
-          if (bx1 - bx0 < 1) return null;
-          return (
-            <g key={i}>
-              {i % 2 === 0 && <rect x={bx0} y={MARGIN.top} width={bx1 - bx0} height={innerH} className="fill-chart-grid" opacity={0.5} />}
-              {bx1 - bx0 > b.label.length * 6.5 + 8 && (
-                <text x={(bx0 + bx1) / 2} y={MARGIN.top - 10} textAnchor="middle" className="fill-text-tertiary text-caption-2-regular">
-                  {b.label}
-                </text>
-              )}
-            </g>
-          );
-        })}
+    <div className="w-full min-w-0" role="img" aria-label={ariaLabel}>
+      <ResponsiveContainer width="100%" height={height}>
+        <ComposedChart data={points} margin={{ top: 28, right: 16, bottom: 0, left: 0 }} accessibilityLayer={false}>
+          <defs>
+            {/* Flat, faint fill (no fade: diseno.md avoids gradients). */}
+            <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="var(--color-highlight)" stopOpacity={0.12} />
+              <stop offset="100%" stopColor="var(--color-highlight)" stopOpacity={0.12} />
+            </linearGradient>
+          </defs>
 
-        {ticks.map((t) => (
-          <g key={t}>
-            <line
-              x1={MARGIN.left}
-              x2={MARGIN.left + innerW}
-              y1={y(t)}
-              y2={y(t)}
-              className={t === 0 ? "stroke-chart-axis" : "stroke-chart-grid"}
+          {visibleBands.map((b, i) => (
+            <ReferenceArea
+              key={`${b.desde}-${i}`}
+              x1={b.x1}
+              x2={b.x2}
+              ifOverflow="hidden"
+              fill="var(--color-chart-grid)"
+              fillOpacity={i % 2 === 0 ? 0.5 : 0}
+              stroke="none"
+              label={({ viewBox }: { viewBox?: { x?: number; y?: number; width?: number } }) => {
+                const { x = 0, y = 0, width = 0 } = viewBox ?? {};
+                if (!b.label || width <= b.label.length * 6.5 + 8) return <g />;
+                return (
+                  <text x={x + width / 2} y={y - 10} textAnchor="middle" fontSize={11} fill="var(--color-text-tertiary)">
+                    {b.label}
+                  </text>
+                );
+              }}
             />
-            <text
-              x={MARGIN.left - 8}
-              y={y(t)}
-              dy="0.32em"
-              textAnchor="end"
-              className="fill-text-tertiary text-caption-2-regular tabular-nums"
-            >
-              {formatAxis(t)}
-            </text>
-          </g>
-        ))}
+          ))}
 
-        {years.map((yr) => (
-          <text
-            key={yr}
-            x={x(`${yr}-01-01`)}
-            y={height - 8}
-            textAnchor="middle"
-            className="fill-text-tertiary text-caption-2-regular tabular-nums"
-          >
-            {yr}
-          </text>
-        ))}
-
-        <path d={path} fill="none" strokeWidth={2} strokeLinejoin="round" className="stroke-highlight" />
-
-        {active && (
-          <g>
-            <line x1={x(active.fecha)} x2={x(active.fecha)} y1={MARGIN.top} y2={MARGIN.top + innerH} className="stroke-chart-axis" />
-            <circle
-              cx={x(active.fecha)}
-              cy={y(active.valor)}
-              r={4.5}
-              strokeWidth={2}
-              className="fill-highlight stroke-background-primary-default"
-            />
-          </g>
-        )}
-
-        <rect
-          x={MARGIN.left}
-          y={MARGIN.top}
-          width={innerW}
-          height={innerH}
-          fill="transparent"
-          onPointerMove={onMove}
-          onPointerLeave={() => setHover(null)}
-        />
-      </svg>
-
-      {active && (
-        <div
-          className={cx(tileVariants({ size: "sm" }), "pointer-events-none absolute px-3 py-2 text-body-regular")}
-          style={{
-            left: Math.min(x(active.fecha) + 12, width - 160),
-            top: Math.max(y(active.valor) - 56, 0),
-          }}
-        >
-          <div className="text-text-tertiary">{formatDate(active.fecha)}</div>
-          <div className="font-semibold tabular-nums">{formatValue(active.valor)}</div>
-        </div>
-      )}
+          <YAxis
+            width={yWidth}
+            domain={[0, yMax]}
+            ticks={yTicks}
+            tickFormatter={formatAxis}
+            tickLine={false}
+            axisLine={false}
+            tick={TICK}
+          />
+          <XAxis
+            type="number"
+            dataKey="t"
+            scale="time"
+            domain={[t0, t1]}
+            ticks={xTicks}
+            tickFormatter={(t: number) => String(new Date(t).getUTCFullYear())}
+            tickLine={false}
+            axisLine={false}
+            tickMargin={8}
+            interval="preserveStartEnd"
+            minTickGap={16}
+            tick={TICK}
+          />
+          <Tooltip
+            isAnimationActive={false}
+            cursor={{ stroke: "var(--color-chart-cursor)", strokeWidth: 1, strokeDasharray: "4 4" }}
+            allowEscapeViewBox={{ x: false, y: true }}
+            offset={14}
+            content={({ active, payload }) => {
+              const point = active ? (payload?.[0]?.payload as Point | undefined) : undefined;
+              if (!point) return null;
+              return (
+                <div className={cx(tileVariants({ size: "sm" }), "pointer-events-none px-3 py-2 text-body-regular")}>
+                  <div className="text-text-tertiary">{formatDate(point.fecha)}</div>
+                  <div className="font-semibold tabular-nums">{formatValue(point.valor)}</div>
+                </div>
+              );
+            }}
+          />
+          <Area
+            type="monotone"
+            dataKey="valor"
+            stroke="var(--color-highlight)"
+            strokeWidth={2}
+            fill={`url(#${gradientId})`}
+            dot={false}
+            activeDot={{ r: 4.5, strokeWidth: 2, fill: "var(--color-highlight)", stroke: "var(--color-background-primary-default)" }}
+            isAnimationActive={!reducedMotion}
+            animationDuration={450}
+          />
+        </ComposedChart>
+      </ResponsiveContainer>
     </div>
   );
 }
