@@ -1,4 +1,3 @@
-import { Chip } from "@mt/ui/components/base/badges/chip";
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { cardVariants, listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
 import { cx } from "@mt/ui/lib/cx";
@@ -53,10 +52,10 @@ export function HomePage() {
     <div className="flex flex-col gap-20">
       {/* Portada */}
       <section className="flex flex-col gap-8 pt-6">
-        <Chip variant="subtle" color="soft" className="w-fit gap-2">
-          <span className="size-1.5 rounded-full bg-highlight" aria-hidden />
+        <p className="flex items-center gap-2 text-body-medium text-text-secondary">
+          <span className="size-1.5 shrink-0 rounded-full bg-highlight" aria-hidden />
           Rumbo a las elecciones provinciales 2027
-        </Chip>
+        </p>
         <div className="flex max-w-3xl flex-col gap-5">
           <h1 className="text-display-3-semibold tracking-tight text-balance sm:text-display-1-semibold">
             Mendoza, con los números sobre la mesa.
