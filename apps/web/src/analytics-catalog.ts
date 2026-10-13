@@ -122,6 +122,11 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["leyes"],
   },
   {
+    event: "law.signer.open",
+    description: "Abrió la ficha de una persona que firma una ley. Propiedad law.",
+    tags: ["leyes"],
+  },
+  {
     event: "municipality.law.open",
     description: "Abrió una ley desde la página de un departamento. Propiedad law.",
     tags: ["municipios", "leyes"],

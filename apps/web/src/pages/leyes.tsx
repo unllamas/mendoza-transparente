@@ -1,5 +1,4 @@
 import { PersonAvatar } from "@mt/ui/components/avatar";
-import { Chip } from "@mt/ui/components/base/badges/chip";
 import { Button, buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
 import { PageHeader } from "@mt/ui/components/section";
@@ -122,6 +121,7 @@ export function LeyPage() {
             </span>
           )}
         </div>
+        {ley.signers.length > 0 && <Firmantes law={ley.numero} signers={ley.signers} />}
       </header>
 
       <section aria-labelledby="pocas-palabras" className={cx(tileVariants({ size: "lg" }), "flex flex-col gap-4 sm:p-6")}>
@@ -229,6 +229,44 @@ export function LeyPage() {
   );
 }
 
+/**
+ * Quienes firman la ley. Con ficha propia van como botón; sin ficha, con la
+ * misma altura y la misma cara pero sobre el fondo, para que la fila no salte.
+ */
+function Firmantes({ law, signers }: { law: LeyDetalle["numero"]; signers: LeyDetalle["signers"] }) {
+  return (
+    <div className="flex flex-col gap-2 pt-1">
+      <span className="text-body-regular text-text-tertiary">Firman</span>
+      <ul className="flex flex-wrap gap-2">
+        {signers.map((f) => {
+          const chip = (
+            <>
+              <PersonAvatar name={f.name} photo={f.photo} className="size-7 text-[10px]" />
+              <span className="whitespace-nowrap">{f.name}</span>
+            </>
+          );
+          return (
+            <li key={f.name}>
+              {f.path ? (
+                <Link
+                  to={f.path}
+                  data-track="law.signer.open"
+                  data-track-law={law}
+                  className={buttonClassName({ variant: "secondary", className: "gap-2 pl-1.5" })}
+                >
+                  {chip}
+                </Link>
+              ) : (
+                <span className="flex h-11 items-center gap-2 rounded-2lg pr-3 pl-1.5 text-body-medium text-text-secondary">{chip}</span>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
 /** Texto de la ley con su estructura, plegado: el que quiera leerlo entero lo abre. */
 function TextoCompleto({ ley }: { ley: LeyDetalle }) {
   const articulos = ley.bloques.filter((b) => b.tipo === "articulo").length;
@@ -276,34 +314,6 @@ function TextoCompleto({ ley }: { ley: LeyDetalle }) {
         {ley.cierre && (
           <div className="flex flex-col gap-1 border-t border-separator-border pt-4 text-body-regular text-text-tertiary">
             <p>{ley.cierre.dada}</p>
-            {ley.signers.length > 0 && (
-              <div className="flex flex-col gap-2 pt-1">
-                <span>Firman:</span>
-                <ul className="flex flex-wrap gap-2">
-                  {ley.signers.map((f) => {
-                    const chip = (
-                      <>
-                        <PersonAvatar name={f.name} photo={f.photo} className="size-7 text-[10px]" />
-                        <span className="whitespace-nowrap">{f.name}</span>
-                      </>
-                    );
-                    return (
-                      <li key={f.name}>
-                        {f.path ? (
-                          <Link to={f.path} className={buttonClassName({ variant: "secondary", className: "gap-2 pl-1.5" })}>
-                            {chip}
-                          </Link>
-                        ) : (
-                          <Chip variant="caption" color="soft" className="gap-2 pl-1">
-                            {chip}
-                          </Chip>
-                        )}
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            )}
           </div>
         )}
       </div>

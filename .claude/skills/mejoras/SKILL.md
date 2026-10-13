@@ -32,6 +32,7 @@ La gente describe lo que siente. Buscar la regla (detalle en `docs/procesos/dise
 | "Hay demasiado", "no sé dónde mirar" | Lista corta, detalle en hoja, lo informativo antes que lo crudo | `diseno` |
 | "Quedó vacío", "no sé qué hacer acá" | Pantallas vacías que orientan | `diseno` |
 | "Parece hecho por una IA", "parece un template" | Lo que no hacemos | `diseno` |
+| "Unos se ven más chicos que otros", "salta el layout" | Misma altura en una fila; lo que se toca solo cambia el fondo | `diseno` |
 | "No se ve igual que lo otro" | Componente de `@mt/ui`, no clases sueltas | `diseno`, `arquitectura` |
 | "No aparece en Google", "se ve mal al compartir" | Títulos, descripciones, imágenes para compartir | `seo-y-geo` |
 
