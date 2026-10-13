@@ -9,9 +9,10 @@ Fuente completa: `docs/procesos/diseno.md`. Público: cualquier persona de Mendo
 
 ## Sistema de diseño
 
-Los componentes base y los tokens están en `packages/ui` (`@mt/ui`, configuración de shadcn): `Button`, `IconButton`, `Badge`, `Tile`, `CardLink`, `Sheet`, `Dialog`, `Popover`, `Alert`, `Input`, `Textarea`, `Select`, `Field`, `Segmented`, `SearchInput`, `StatTile`, `Section`, `PageHeader` y `PersonAvatar`. Para estilizar otro elemento: `buttonVariants`, `tileVariants` y `cardVariants`.
+Los componentes base y los tokens están en `packages/ui` (`@mt/ui`). **La base es BoardUI** (React Aria, en `src/components/{base,application,foundations}/`) y se está migrando: lo nuevo se arma con BoardUI y lo que se toca se pasa. Se agrega con `BOARDUI_TELEMETRY_DISABLED=1 npx -y boardui@latest add <x>` desde `packages/ui`, nunca con `init`. Propios en migración: `Button`, `IconButton`, `Badge`, `Tile`, `CardLink`, `Sheet`, `Dialog`, `Popover`, `Alert`, `Input`, `Textarea`, `Select`, `Field`, `Segmented`, `SearchInput`, `StatTile`, `Section`, `PageHeader` y `PersonAvatar`. Para estilizar otro elemento: `buttonVariants`, `tileVariants` y `cardVariants`.
 
-- **Solo Tailwind:** no se escribe CSS propio. Los tokens viven en `packages/ui/src/styles/globals.css`.
+- **Solo Tailwind:** no se escribe CSS propio. Los tokens del sitio viven en `packages/ui/src/styles/mt.css`, encima de los de BoardUI (`theme.css`, que no se edita).
+- **Tema claro por defecto;** el oscuro (`.dark`) solo si la persona lo elige en el footer. Nunca `dark:` a mano.
 - **Antes de armar un botón, una etiqueta, una tarjeta o un campo a mano,** usar el componente del paquete. Si falta uno, se agrega al paquete, no a la página.
 - **Lo que alguien querría compartir va en la URL** (pestañas, búsquedas, hojas abiertas): `useUrlOption` y `useUrlText` de `apps/web/src/url-state.ts`, nunca `useState`.
 

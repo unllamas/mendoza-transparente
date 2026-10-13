@@ -1,3 +1,4 @@
+import { ThemeToggle } from "@mt/ui/components/application/theme/theme-toggle";
 import { Dialog } from "@mt/ui/components/dialog";
 import { IconButton } from "@mt/ui/components/icon-button";
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
@@ -30,6 +31,7 @@ import { usePageMeta } from "@/seo.ts";
 import { DetailSheet } from "./detail-sheet.tsx";
 import { REPO } from "./official-sources.tsx";
 import { HeaderSearchButton, SearchDialog } from "./search-dialog.tsx";
+import { UiProviders } from "./ui-providers.tsx";
 
 type Item = { to: string; label: string; descripcion: string; icon: LucideIcon };
 type Grupo = { label: string; items: Item[] };
@@ -96,137 +98,143 @@ export function Layout() {
   useEffect(() => setAbierto(false), [pathname]);
 
   return (
-    <div className="flex min-h-dvh flex-col">
-      <header className="sticky top-0 z-20 border-b border-line bg-page/90 backdrop-blur">
-        <div className="mx-auto flex h-14 max-w-6xl items-center gap-6 px-4 sm:px-5">
-          <Link to="/" className="mr-auto text-base font-semibold tracking-tight whitespace-nowrap">
-            Mendoza Transparente
-          </Link>
-          <nav aria-label="Principal" className="hidden items-center gap-1 text-sm whitespace-nowrap lg:flex">
-            {PRINCIPALES.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className="rounded-lg px-3 py-2 text-ink-2 hover:bg-tile hover:text-link [&.active]:font-medium [&.active]:text-link"
-              >
-                {item.label}
-              </Link>
-            ))}
-            {GRUPOS.map((g) => (
-              <Desplegable key={g.label} grupo={g} pathname={pathname} />
-            ))}
-          </nav>
-          <HeaderSearchButton />
-          <IconButton
-            label="Abrir menú"
-            onClick={() => setAbierto(true)}
-            id="menu-movil-boton"
-            data-track="nav.mobile_menu.toggle"
-            data-track-open="true"
-            className="-mr-1.5 text-ink lg:hidden"
-          >
-            <Menu className="size-5" aria-hidden />
-          </IconButton>
-        </div>
-      </header>
-
-      {/* Fuera del header: su backdrop-blur haría que el panel fijo se mida contra el header y no contra la pantalla. */}
-      {abierto && (
-        // Full-screen panel with its own top bar: it never depends on the page header, which can scroll away on
-        // phones while the page is scroll-locked (sticky stops working when <html> has overflow: hidden).
-        <Dialog label="Menú" onClose={() => setAbierto(false)} className="inset-0 z-50 flex flex-col bg-page lg:hidden">
-          <div className="flex h-14 shrink-0 items-center gap-6 border-b border-line px-4 sm:px-5">
+    <UiProviders>
+      <div className="flex min-h-dvh flex-col">
+        <header className="sticky top-0 z-20 border-b border-line bg-page/90 backdrop-blur">
+          <div className="mx-auto flex h-14 max-w-6xl items-center gap-6 px-4 sm:px-5">
             <Link to="/" className="mr-auto text-base font-semibold tracking-tight whitespace-nowrap">
               Mendoza Transparente
             </Link>
-            <IconButton
-              label="Cerrar menú"
-              onClick={() => setAbierto(false)}
-              id="menu-movil-cerrar"
-              data-track="nav.mobile_menu.close"
-              className="-mr-1.5 text-ink"
-            >
-              <X className="size-5" aria-hidden />
-            </IconButton>
-          </div>
-          <nav id="menu-movil" aria-label="Principal" className="flex flex-1 flex-col gap-6 overflow-y-auto overscroll-contain px-4 py-5">
-            <div className="flex flex-col">
+            <nav aria-label="Principal" className="hidden items-center gap-1 text-sm whitespace-nowrap lg:flex">
               {PRINCIPALES.map((item) => (
                 <Link
                   key={item.to}
                   to={item.to}
-                  className="flex items-center justify-between border-b border-line py-4 text-lg text-ink [&.active]:font-medium [&.active]:text-link"
+                  className="rounded-lg px-3 py-2 text-ink-2 hover:bg-tile hover:text-link [&.active]:font-medium [&.active]:text-link"
                 >
                   {item.label}
-                  <ChevronRight className="size-4 text-link" aria-hidden />
                 </Link>
               ))}
+              {GRUPOS.map((g) => (
+                <Desplegable key={g.label} grupo={g} pathname={pathname} />
+              ))}
+            </nav>
+            <HeaderSearchButton />
+            <IconButton
+              label="Abrir menú"
+              onClick={() => setAbierto(true)}
+              id="menu-movil-boton"
+              data-track="nav.mobile_menu.toggle"
+              data-track-open="true"
+              className="-mr-1.5 text-ink lg:hidden"
+            >
+              <Menu className="size-5" aria-hidden />
+            </IconButton>
+          </div>
+        </header>
+
+        {/* Fuera del header: su backdrop-blur haría que el panel fijo se mida contra el header y no contra la pantalla. */}
+        {abierto && (
+          // Full-screen panel with its own top bar: it never depends on the page header, which can scroll away on
+          // phones while the page is scroll-locked (sticky stops working when <html> has overflow: hidden).
+          <Dialog label="Menú" onClose={() => setAbierto(false)} className="inset-0 z-50 flex flex-col bg-page lg:hidden">
+            <div className="flex h-14 shrink-0 items-center gap-6 border-b border-line px-4 sm:px-5">
+              <Link to="/" className="mr-auto text-base font-semibold tracking-tight whitespace-nowrap">
+                Mendoza Transparente
+              </Link>
+              <IconButton
+                label="Cerrar menú"
+                onClick={() => setAbierto(false)}
+                id="menu-movil-cerrar"
+                data-track="nav.mobile_menu.close"
+                className="-mr-1.5 text-ink"
+              >
+                <X className="size-5" aria-hidden />
+              </IconButton>
             </div>
-            {GRUPOS.map((g) => (
-              <div key={g.label} className="flex flex-col gap-1">
-                <span className="text-xs font-medium tracking-wide text-ink-muted uppercase">{g.label}</span>
-                {g.items.map((item) => (
-                  <Link key={item.to} to={item.to} className="flex items-center gap-3 rounded-lg py-3 text-ink [&.active]:text-link">
-                    <item.icon className="size-5 shrink-0 text-ink-muted" aria-hidden />
-                    <span className="flex flex-col">
-                      <span className="text-base">{item.label}</span>
-                      <span className="text-sm text-ink-muted">{item.descripcion}</span>
-                    </span>
+            <nav id="menu-movil" aria-label="Principal" className="flex flex-1 flex-col gap-6 overflow-y-auto overscroll-contain px-4 py-5">
+              <div className="flex flex-col">
+                {PRINCIPALES.map((item) => (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className="flex items-center justify-between border-b border-line py-4 text-lg text-ink [&.active]:font-medium [&.active]:text-link"
+                  >
+                    {item.label}
+                    <ChevronRight className="size-4 text-link" aria-hidden />
                   </Link>
                 ))}
               </div>
-            ))}
-          </nav>
-        </Dialog>
-      )}
+              {GRUPOS.map((g) => (
+                <div key={g.label} className="flex flex-col gap-1">
+                  <span className="text-xs font-medium tracking-wide text-ink-muted uppercase">{g.label}</span>
+                  {g.items.map((item) => (
+                    <Link key={item.to} to={item.to} className="flex items-center gap-3 rounded-lg py-3 text-ink [&.active]:text-link">
+                      <item.icon className="size-5 shrink-0 text-ink-muted" aria-hidden />
+                      <span className="flex flex-col">
+                        <span className="text-base">{item.label}</span>
+                        <span className="text-sm text-ink-muted">{item.descripcion}</span>
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              ))}
+            </nav>
+          </Dialog>
+        )}
 
-      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-5 sm:py-10">
-        <Outlet />
-        <SearchDialog />
-        <DetailSheet />
-      </main>
+        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-5 sm:py-10">
+          <Outlet />
+          <SearchDialog />
+          <DetailSheet />
+        </main>
 
-      <footer className="border-t border-line">
-        <div className="mx-auto flex max-w-5xl flex-col gap-8 px-4 py-10 sm:px-5 md:flex-row md:justify-between">
-          <div className="flex max-w-md flex-col gap-2 text-sm">
-            <span className="font-semibold">Mendoza Transparente</span>
-            <p className="text-ink-2 text-pretty">
-              Proyecto ciudadano, independiente y apartidario. Cada número enlaza a su fuente oficial y los archivos originales se guardan
-              tal cual se descargaron.
-            </p>
-            <a href={REPO} target="_blank" rel="noreferrer" className="inline-flex w-fit items-center gap-1.5 text-link hover:underline">
-              <GitBranch className="size-4" aria-hidden /> Código y datos abiertos en GitHub
-            </a>
-            <Link
-              to="/participar"
-              search={{ tipo: "error", pagina: pathname }}
-              id="footer-reportar-error"
-              data-track="footer.report_error"
-              className="inline-flex w-fit items-center gap-1.5 text-link hover:underline"
-            >
-              <Bug className="size-4" aria-hidden /> ¿Encontraste un error? Avisanos
-            </Link>
-          </div>
-
-          <div className="flex max-w-sm flex-col gap-2 text-sm">
-            <span className="text-ink-muted">Hecho por</span>
-            <span className="font-semibold">{AUTOR.nombre}</span>
-            <p className="text-ink-2 text-pretty">
-              Indie hacker y product engineer desde Argentina. Construye herramientas que funcionan fuera del laboratorio: de billeteras
-              Lightning a la transparencia pública.
-            </p>
-            <div className="flex flex-wrap gap-x-4 gap-y-1">
-              <a href={AUTOR.x} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-link hover:underline">
-                <XLogo /> @unllamas
+        <footer className="border-t border-line">
+          <div className="mx-auto flex max-w-5xl flex-col gap-8 px-4 py-10 sm:px-5 md:flex-row md:justify-between">
+            <div className="flex max-w-md flex-col gap-2 text-sm">
+              <span className="font-semibold">Mendoza Transparente</span>
+              <p className="text-ink-2 text-pretty">
+                Proyecto ciudadano, independiente y apartidario. Cada número enlaza a su fuente oficial y los archivos originales se guardan
+                tal cual se descargaron.
+              </p>
+              <a href={REPO} target="_blank" rel="noreferrer" className="inline-flex w-fit items-center gap-1.5 text-link hover:underline">
+                <GitBranch className="size-4" aria-hidden /> Código y datos abiertos en GitHub
               </a>
-              <a href={AUTOR.web} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-link hover:underline">
-                <Globe className="size-4" aria-hidden /> jonallamas.com
-              </a>
+              <Link
+                to="/participar"
+                search={{ tipo: "error", pagina: pathname }}
+                id="footer-reportar-error"
+                data-track="footer.report_error"
+                className="inline-flex w-fit items-center gap-1.5 text-link hover:underline"
+              >
+                <Bug className="size-4" aria-hidden /> ¿Encontraste un error? Avisanos
+              </Link>
+            </div>
+
+            <div className="flex max-w-sm flex-col gap-2 text-sm">
+              <span className="text-ink-muted">Hecho por</span>
+              <span className="font-semibold">{AUTOR.nombre}</span>
+              <p className="text-ink-2 text-pretty">
+                Indie hacker y product engineer desde Argentina. Construye herramientas que funcionan fuera del laboratorio: de billeteras
+                Lightning a la transparencia pública.
+              </p>
+              <div className="flex flex-wrap gap-x-4 gap-y-1">
+                <a href={AUTOR.x} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-link hover:underline">
+                  <XLogo /> @unllamas
+                </a>
+                <a href={AUTOR.web} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-link hover:underline">
+                  <Globe className="size-4" aria-hidden /> jonallamas.com
+                </a>
+              </div>
+              <div className="flex items-center gap-3 pt-4">
+                <span className="text-ink-muted">Tema</span>
+                <ThemeToggle appearance="segmented" />
+              </div>
             </div>
           </div>
-        </div>
-      </footer>
-    </div>
+        </footer>
+      </div>
+    </UiProviders>
   );
 }
 

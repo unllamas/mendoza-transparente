@@ -1,5 +1,5 @@
 /* La app usa el design system de packages/ui: tokens, base y componentes. Acá no van estilos propios. */
-@import "@mt/ui/styles.css";
+@import "@mt/ui/styles/mt.css";
 
 /* Archivos de la app que Tailwind tiene que escanear (además de los del paquete). */
 @source "./";

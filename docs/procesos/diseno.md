@@ -4,9 +4,22 @@ Reglas de interfaz que salieron de revisar el sitio con ojos de ciudadano común
 
 ## Sistema de diseño (`packages/ui`)
 
-Los componentes base y los tokens viven en el paquete `@mt/ui`, armado con la configuración de shadcn para monorepos (`packages/ui/components.json`). Lo usa la web y lo pueden usar otros proyectos del monorepo (por ejemplo, uno de votación).
+Los componentes base y los tokens viven en el paquete `@mt/ui`. Lo usa la web y lo pueden usar otros proyectos del monorepo (por ejemplo, uno de votación).
 
-- **Solo Tailwind.** No se escribe CSS propio. El único archivo de estilos es `packages/ui/src/styles/globals.css`, con los tokens (variables de color en claro y oscuro, mapeadas con `@theme`) y una base mínima en `@layer base` hecha con `@apply`. La app lo importa desde `apps/web/src/styles.css` y no agrega estilos.
+**La base es [BoardUI](https://www.boardui.com)** (MIT): componentes en React Aria, Tailwind v4 y tokens semánticos, copiados como código fuente dentro del paquete. Estamos en plena migración: los componentes propios de abajo se van reemplazando por los de BoardUI (`packages/ui/src/components/{base,application,foundations}/`) y, cuando una pantalla se toca, se pasa a los nuevos.
+
+- **Cómo se agrega un componente de BoardUI:** desde `packages/ui`, con la telemetría del CLI apagada:
+  ```bash
+  cd packages/ui
+  BOARDUI_TELEMETRY_DISABLED=1 DO_NOT_TRACK=1 npx -y boardui@latest add <componente>
+  ```
+  `packages/ui/boardui.json` hace que los archivos caigan en `src/` y que los imports queden como `@mt/ui/...`. Las dependencias se agregan solas con Bun. **No correr `boardui init`**: escribe un `AGENTS.md` y reglas de Cursor que chocan con `CLAUDE.md` y las skills. Después de agregar: `bunx biome check --write packages/ui`, adaptar lo que no cumpla las reglas de esta página (sobre todo los 44 px y los textos en inglés) y verificar.
+- **Lo que no es de Next:** si un componente importa `next/link`, se cambia por el `Link` de `react-aria-components`; la web lo conecta con TanStack Router en `apps/web/src/components/ui-providers.tsx`.
+- **Textos de BoardUI en inglés:** casi todos llegan por props (pasarlos en español). Los pocos que vienen adentro se traducen en `UiProviders` (`TemplateCopyProvider`).
+- **Solo Tailwind.** Los estilos están en `packages/ui/src/styles/`:
+  - `globals.css`, `theme.css` y `typography.css` son de BoardUI (los escribe el CLI): no se editan a mano.
+  - `mt.css` es la capa del sitio, encima de BoardUI: la escala `accent` en borravino, las fuentes del sistema, los tokens propios (`ink`, `tile`, `brand`, `link`, `aviso`, la rampa del mapa) y la base mínima. Es lo que importa la app desde `apps/web/src/styles.css`, que no agrega estilos.
+- **Tema claro por defecto.** Un sitio de transparencia se lee de día: el oscuro solo se activa si la persona lo elige con el `ThemeToggle` del footer. Se guarda en `localStorage` (`boardui:theme`) y un script en `apps/web/index.html` lo aplica antes de pintar, sin parpadeo. El oscuro es la clase `.dark` en `<html>`; los tokens cambian solos, nunca se escribe `dark:` a mano.
 - **Piezas:**
   - `cn()` (`@mt/ui/lib/utils`) junta clases y resuelve conflictos de Tailwind.
   - Las variantes se definen con `cva`.
@@ -15,6 +28,7 @@ Los componentes base y los tokens viven en el paquete `@mt/ui`, armado con la co
 
 | Componente | Para qué |
 |---|---|
+| **Propios (en migración)** | |
 | `Button` | Variantes `primary` (relleno de marca, la acción principal), `secondary` (borde y fondo gris), `ghost` (dentro de otro control) y `link`. Tamaños de 44 px. |
 | `IconButton` | Solo ícono: 44 × 44, estilo secundario, `label` obligatorio. |
 | `Badge` | Etiquetas de una línea: `neutral`, `brand`, `warning`. Sin borde (no son clickeables). |
@@ -29,7 +43,7 @@ Los componentes base y los tokens viven en el paquete `@mt/ui`, armado con la co
 - **Nada a mano.** Un botón, un bloque, una tarjeta, una etiqueta o un campo no se arman con clases sueltas: se usa el componente o sus variantes (`buttonVariants`, `tileVariants`, `cardVariants`). Si falta una variante, se agrega al paquete. Las únicas excepciones son el campo del buscador (va sin borde dentro de su barra) y el campo trampa contra spam de Participar.
 - **Sin código muerto:** `noUnusedLocals` está activado en la web y en el paquete, así que `bunx tsc --noEmit` falla con imports o variables sin usar.
 - **Lo propio de la web** (analítica y links del router) va en `apps/web/src/components/`: `TrackedSheet` y `TrackedSegmented` (envían eventos), `ListSearch` (buscador de listas, con evento) y `Breadcrumbs` (usa el router).
-- **Componentes nuevos:** si sirven para más de una pantalla, van al paquete. Se pueden sumar de shadcn con `bunx shadcn@latest add <componente>` desde `packages/ui`, y después se adaptan a los tokens y a las reglas de esta página.
+- **Componentes nuevos:** si sirven para más de una pantalla, van al paquete. Primero se busca en BoardUI (`npx boardui@latest list`); si no está, se arma en el paquete con React Aria y los tokens de BoardUI.
 
 ## Color
 
@@ -37,7 +51,7 @@ Los componentes base y los tokens viven en el paquete `@mt/ui`, armado con la co
 - Lo **accionable se distingue por la forma**, no por otro color: botón relleno (`bg-brand`), link (`text-link`, subrayado al pasar el mouse), borde en tarjetas, flechas › y ↗.
 - **Íconos decorativos en gris** (`text-ink-muted`). Íconos de `lucide-react`.
 - Colores de estado (verde, amarillo, rojo) siempre con texto o ícono al lado: el color nunca va solo.
-- Tokens en `packages/ui/src/styles/globals.css`, con valores separados para modo claro y oscuro. La rampa del mapa (`--map-0` a `--map-4`) está validada en ambos modos: un tono, pasos visibles y contraste con el fondo.
+- Tokens del sitio en `packages/ui/src/styles/mt.css`, con valores separados para claro (`:root`) y oscuro (`.dark`). La escala `accent-50` a `accent-950` es borravino (600 es la marca) y re-tiñe todos los componentes de BoardUI. La rampa del mapa (`--map-0` a `--map-4`) está validada en ambos modos: un tono, pasos visibles y contraste con el fondo.
 
 ## Forma
 

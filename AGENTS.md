@@ -65,7 +65,7 @@ Cuando alguien pide mejorar o arreglar algo, lo describe como lo siente ("no se 
 - Dependencias ya disponibles en `@mt/scrapers`: `cheerio` (HTML), `xlsx` (SheetJS, para XLS y XLSX), `unpdf` (texto de PDF), `fflate` (ZIP) y `stream-json` (JSON grandes en streaming).
 - CSV con `writeProcessed()` y `readProcessed()`, y municipios con `normalizeMunicipio()`, todos de `@mt/core`.
 - Verificar tipos con `bunx tsc --noEmit` dentro del paquete.
-- Interfaz: los componentes base y los tokens están en `packages/ui` (`@mt/ui`, configuración de shadcn). Solo Tailwind, sin CSS propio. Ver la skill `diseno`.
+- Interfaz: los componentes base y los tokens están en `packages/ui` (`@mt/ui`), con BoardUI (React Aria) como base y tema claro por defecto. Solo Tailwind, sin CSS propio. Ver la skill `diseno`.
 - Al terminar una fuente, actualizar su `estado` en `sources.yaml`. Lo hace la sesión principal.
 
 ## Verificación

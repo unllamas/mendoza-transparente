@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0d0d0d" />
+    <meta name="theme-color" content="#ffffff" />
+    <script>
+      /* Tema claro por defecto; el oscuro solo si la persona lo eligió en el footer (ThemeToggle de @mt/ui). Va antes de pintar para que no parpadee. */
+      try { if (localStorage.getItem("boardui:theme") === "dark") document.documentElement.classList.add("dark"); } catch {}
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:site_name" content="Mendoza Transparente" />
     <title>Mendoza Transparente</title>
@@ -16,11 +20,11 @@
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <style>
       /* Contenido escrito por scripts/seo.ts para buscadores; React lo reemplaza al cargar. */
-      .prerender { max-width: 42rem; margin: 0 auto; padding: 1.5rem 1rem; font: 16px/1.5 system-ui, sans-serif; color: #e5e5e5; background: #0d0d0d; overflow-wrap: anywhere; }
+      .prerender { max-width: 42rem; margin: 0 auto; padding: 1.5rem 1rem; font: 16px/1.5 system-ui, sans-serif; color: #0a0a0a; background: #ffffff; overflow-wrap: anywhere; }
       .prerender > nav { display: none; }
-      .prerender a { color: #e06a8a; }
+      .prerender a { color: #8a1538; }
       .prerender h1 { font-size: 1.5rem; line-height: 1.25; }
-      .prerender dt { color: #a3a3a3; font-size: 0.875rem; margin-top: 0.5rem; }
+      .prerender dt { color: #737373; font-size: 0.875rem; margin-top: 0.5rem; }
       .prerender dd { margin: 0; }
     </style>
   </head>

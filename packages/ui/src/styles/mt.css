@@ -1,0 +1,121 @@
+/*
+ * Design system de Mendoza Transparente (@mt/ui): BoardUI como base + la identidad del sitio.
+ * globals.css, theme.css y typography.css los escribe el CLI de BoardUI (`npx boardui add`): no se editan a mano.
+ * Todo lo propio del sitio va acá, encima. Documentado en docs/procesos/diseno.md.
+ */
+@import "./globals.css";
+
+/* Los componentes de este paquete usan clases de Tailwind: que la app que importa este CSS también los escanee. */
+@source "../";
+
+/* Acento borravino Malbec en vez del azul de BoardUI. Toda la interacción (botón principal, foco, selección,
+   pestañas, switches) lee esta escala, así que cambiarla re-tiñe el sistema entero. 600 es la marca. */
+@theme {
+  --color-accent-50: #fdf2f5;
+  --color-accent-100: #fbe4eb;
+  --color-accent-200: #f5c7d5;
+  --color-accent-300: #eb9bb4;
+  --color-accent-400: #d9658a;
+  --color-accent-500: #a91d4a;
+  --color-accent-600: #8a1538;
+  --color-accent-700: #721230;
+  --color-accent-800: #5c1028;
+  --color-accent-900: #4b0f23;
+  --color-accent-950: #2c0612;
+
+  /* Fuentes del sistema: carga instantánea y sin pedidos extra (BoardUI espera Inter vía next/font). */
+  --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+/* Tokens propios del sitio. Claro por defecto (un sitio de transparencia se lee de día); `.dark` lo pone el
+   selector de tema del footer. Los nombres viejos (ink, tile, brand…) apuntan a los semánticos de BoardUI
+   mientras se migra la web: lo nuevo se escribe directo con los de BoardUI. */
+:root {
+  --page: var(--color-background-full);
+  --surface: var(--color-background-primary-default);
+  --tile: var(--color-background-secondary-default);
+  --ink: var(--color-text-primary);
+  --ink-2: var(--color-neutral-600);
+  --ink-muted: var(--color-text-secondary);
+  --grid: var(--color-neutral-200);
+  --axis: var(--color-neutral-300);
+  --border: var(--color-separator-border);
+  --accent: var(--color-accent-500);
+  --brand: var(--color-accent-600);
+  --brand-hover: var(--color-accent-700);
+  --on-brand: var(--color-white);
+  --link: var(--color-accent-600);
+  /* Ámbar de advertencia: color de estado, siempre con ícono y texto. */
+  --aviso: #b45309;
+  --aviso-fondo: rgba(250, 178, 25, 0.12);
+  --aviso-borde: rgba(217, 119, 6, 0.35);
+  /* Rampa del mapa: de poco (rosa claro) a mucho (borravino profundo). Validada por modo. */
+  --map-0: #e3a2b5;
+  --map-1: #cf7792;
+  --map-2: #b5506f;
+  --map-3: #8d2d4f;
+  --map-4: #5f1834;
+}
+
+.dark {
+  --ink-2: var(--color-neutral-300);
+  --ink-muted: var(--color-neutral-400);
+  --grid: var(--color-neutral-800);
+  --axis: var(--color-neutral-700);
+  --accent: var(--color-accent-400);
+  --brand: var(--color-accent-500);
+  --brand-hover: var(--color-accent-400);
+  --link: var(--color-accent-300);
+  --aviso: #fab219;
+  --aviso-fondo: rgba(250, 178, 25, 0.1);
+  --aviso-borde: rgba(250, 178, 25, 0.3);
+  --map-0: #ffb3cc;
+  --map-1: #f47ea4;
+  --map-2: #dc5785;
+  --map-3: #b93e68;
+  --map-4: #952d4f;
+}
+
+@theme inline {
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-tile: var(--tile);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-muted: var(--ink-muted);
+  --color-grid: var(--grid);
+  --color-axis: var(--axis);
+  --color-line: var(--border);
+  --color-accent: var(--accent);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-on-brand: var(--on-brand);
+  --color-link: var(--link);
+  --color-aviso: var(--aviso);
+  --color-aviso-fondo: var(--aviso-fondo);
+  --color-aviso-borde: var(--aviso-borde);
+  --color-good: #0ca30c;
+  --color-warning: #fab219;
+  --color-critical: #d03b3b;
+}
+
+@layer base {
+  /* Nunca scroll horizontal: si algo se pasa del ancho, se recorta. `clip` (y no `hidden`) para no convertir
+     la página en contenedor de scroll y no romper el header fijo. */
+  html,
+  body {
+    @apply overflow-x-clip;
+  }
+
+  /* Tailwind 4 quitó la manito por defecto en los botones: la devolvemos para que se note qué se puede tocar. */
+  button:not(:disabled),
+  [role="button"] {
+    @apply cursor-pointer;
+  }
+
+  /* Foco de teclado visible y con el color de marca. */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-link;
+  }
+}

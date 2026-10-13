@@ -4,9 +4,10 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./styles.css": "./src/styles/globals.css",
+    "./styles/*": "./src/styles/*",
     "./lib/*": "./src/lib/*.ts",
     "./hooks/*": "./src/hooks/*.ts",
+    "./components/base/dropdown/menu-styles": "./src/components/base/dropdown/menu-styles.ts",
     "./components/*": "./src/components/*.tsx"
   },
   "scripts": {
@@ -21,8 +22,11 @@
     "@radix-ui/react-dialog": "^1.3.1",
     "@radix-ui/react-popover": "^1.3.1",
     "@radix-ui/react-slot": "^1.5.0",
+    "@remixicon/react": "^4.9.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "motion": "^12.42.2",
+    "react-aria-components": "^1.17.0",
     "tailwind-merge": "^3.7.0"
   },
   "devDependencies": {

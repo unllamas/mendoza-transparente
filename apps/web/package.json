@@ -16,6 +16,7 @@
     "lucide-react": "^1.55.0",
     "posthog-js": "^1.438.8",
     "react": "^19.3.0",
+    "react-aria-components": "^1.17.0",
     "react-dom": "^19.3.0",
     "yaml": "^2.9.1"
   },
