@@ -3,8 +3,8 @@
 import { Archive, ExternalLink, Landmark } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { formatDate, loadIndex } from "../lib.ts";
-import type { DataIndex, SourceMeta } from "../types.ts";
+import { formatDate, loadIndex } from "@/lib.ts";
+import type { DataIndex, SourceMeta } from "@/types.ts";
 
 export const REPO = "https://github.com/unllamas/mendoza-transparente";
 export const archivoUrl = (sourceId: string) => `${REPO}/tree/main/data/raw/${sourceId}`;
@@ -15,10 +15,11 @@ let indexPromise: Promise<DataIndex> | null = null;
 export function useFuentes(ids: string[]): SourceMeta[] {
   const [fuentes, setFuentes] = useState<SourceMeta[]>([]);
   const key = ids.join(",");
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `key` is the stable form of `ids` (a new array on every render).
   useEffect(() => {
     indexPromise ??= loadIndex();
     indexPromise.then((index) => setFuentes(ids.map((id) => index.sources.find((s) => s.id === id)).filter((s) => s !== undefined)));
-  }, [key]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [key]);
   return fuentes;
 }
 

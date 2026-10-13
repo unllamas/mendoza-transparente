@@ -4,6 +4,8 @@
     "lib": ["ES2023", "DOM", "DOM.Iterable"],
     "jsx": "react-jsx",
     "noUnusedLocals": true,
+    "baseUrl": ".",
+    "paths": { "@/*": ["./src/*"] },
     "types": ["bun", "vite/client"]
   },
   "include": ["src", "scripts", "server", "functions", "vite.config.ts"]

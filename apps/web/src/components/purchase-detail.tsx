@@ -1,11 +1,12 @@
 import { Badge } from "@mt/ui/components/badge";
-import { cn } from "@mt/ui/lib/utils";
 import { cardVariants, tileVariants } from "@mt/ui/components/card";
+import { cn } from "@mt/ui/lib/utils";
 /** Panel lateral con el detalle de una fila y, en compras, los datos relacionados. */
 
 import { Alert } from "@mt/ui/components/alert";
 import { Button } from "@mt/ui/components/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@mt/ui/components/popover";
+import { Link } from "@tanstack/react-router";
 import {
   Archive,
   ArrowLeft,
@@ -13,22 +14,21 @@ import {
   CalendarDays,
   ChevronRight,
   ExternalLink,
-  Info,
   FileText,
+  Info,
   Landmark,
   Search,
   TriangleAlert,
   UserRound,
 } from "lucide-react";
-import { Link } from "@tanstack/react-router";
-import { useEffect, useState, type ReactNode } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 
-import { formatMoneda, type ColumnaVista } from "../celdas.ts";
-import { ColumnChart } from "../charts/column-chart.tsx";
+import { type ColumnaVista, formatMoneda } from "@/celdas.ts";
+import { ColumnChart } from "@/charts/column-chart.tsx";
+import { formatDate, formatNumber, limpiarOrganismo, loadJson } from "@/lib.ts";
+import { procesoShard } from "@/shard.ts";
+import type { DatasetMeta, OrganismoResumen, ProcesoDetalle, ProveedorDetalle } from "@/types.ts";
 import { archivoUrl, useFuentes } from "./official-sources.tsx";
-import { formatDate, formatNumber, limpiarOrganismo, loadJson } from "../lib.ts";
-import { procesoShard } from "../shard.ts";
-import type { DatasetMeta, OrganismoResumen, ProcesoDetalle, ProveedorDetalle } from "../types.ts";
 import { TrackedSegmented } from "./tracked-segmented.tsx";
 import { TrackedSheet } from "./tracked-sheet.tsx";
 
@@ -56,7 +56,8 @@ export function PanelDetalle({
   const vista = historial.at(-1)!;
   const ir = (v: Vista) => setHistorial((h) => [...h, v]);
 
-  useEffect(() => setHistorial([inicial]), [fila]); // eslint-disable-line react-hooks/exhaustive-deps
+  // biome-ignore lint/correctness/useExhaustiveDependencies: start over when another row is opened.
+  useEffect(() => setHistorial([inicial]), [fila]);
 
   return (
     <TrackedSheet
@@ -83,9 +84,7 @@ export function PanelDetalle({
 /** De dónde sale el dato: la fuente oficial, el documento de la fila si existe y nuestra copia archivada. */
 function OrigenDato({ dataset, fila, ocid }: { dataset: DatasetMeta; fila: string[]; ocid?: string }) {
   const [fuente] = useFuentes([dataset.source]);
-  const urlFila = ["url_pdf", "fuente_url", "url"]
-    .map((c) => fila[dataset.columns.indexOf(c)])
-    .find((v) => v && /^https?:\/\//.test(v));
+  const urlFila = ["url_pdf", "fuente_url", "url"].map((c) => fila[dataset.columns.indexOf(c)]).find((v) => v && /^https?:\/\//.test(v));
   const esCompra = dataset.source === "compras-ocds";
 
   return (
@@ -156,6 +155,7 @@ function CamposFila({ columnas, fila, titulo }: { columnas: ColumnaVista[]; fila
 function useCarga<T>(path: string, pick?: (data: unknown) => T | undefined) {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState(false);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: reload only when the file changes; `pick` is a new function on every render.
   useEffect(() => {
     setData(null);
     setError(false);
@@ -167,7 +167,7 @@ function useCarga<T>(path: string, pick?: (data: unknown) => T | undefined) {
       },
       () => setError(true),
     );
-  }, [path]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [path]);
   return { data, error };
 }
 
@@ -219,25 +219,25 @@ export function Proveedor({ cuit, onProceso, sinTitulo }: { cuit: string; onProc
             const to = agencySlug.get(o.nombre);
             const body = (
               <>
-              <div className="flex items-center justify-between gap-3">
-                <span className={`min-w-0 flex-1 truncate ${to ? "text-link" : ""}`} title={o.nombre}>
-                  {limpiarOrganismo(o.nombre)}
-                </span>
-                <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(o.monto, "ARS")}</span>
-                {to && <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />}
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="h-1.5 flex-1 rounded-full bg-grid/60">
-                  <span
-                    className="block h-full rounded-full bg-accent"
-                    style={{ width: `${Math.max((o.monto / p.organismos[0]!.monto) * 100, 1)}%` }}
-                  />
-                </span>
-                <span className="w-20 text-right text-xs text-ink-muted tabular-nums">
-                  {o.procesos} {o.procesos === 1 ? "proceso" : "procesos"}
-                </span>
-                {to && <span className="size-4 shrink-0" aria-hidden />}
-              </div>
+                <div className="flex items-center justify-between gap-3">
+                  <span className={`min-w-0 flex-1 truncate ${to ? "text-link" : ""}`} title={o.nombre}>
+                    {limpiarOrganismo(o.nombre)}
+                  </span>
+                  <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(o.monto, "ARS")}</span>
+                  {to && <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />}
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="h-1.5 flex-1 rounded-full bg-grid/60">
+                    <span
+                      className="block h-full rounded-full bg-accent"
+                      style={{ width: `${Math.max((o.monto / p.organismos[0]!.monto) * 100, 1)}%` }}
+                    />
+                  </span>
+                  <span className="w-20 text-right text-xs text-ink-muted tabular-nums">
+                    {o.procesos} {o.procesos === 1 ? "proceso" : "procesos"}
+                  </span>
+                  {to && <span className="size-4 shrink-0" aria-hidden />}
+                </div>
               </>
             );
             return (
@@ -317,13 +317,14 @@ function QuienEs({ proveedor: p }: { proveedor: ProveedorDetalle }) {
       ) : (
         <p className="text-sm text-ink-muted">No figura en el Registro Nacional de Sociedades.</p>
       )}
-      {e?.mesesHastaPrimeraAdjudicacion !== null && e?.mesesHastaPrimeraAdjudicacion !== undefined && e.mesesHastaPrimeraAdjudicacion < 12 && (
-        <Alert title="Empresa recién creada">
-          Ganó su primera adjudicación a los {e.mesesHastaPrimeraAdjudicacion}{" "}
-          {e.mesesHastaPrimeraAdjudicacion === 1 ? "mes" : "meses"} de constituida. No es una irregularidad en sí, pero
-          es un patrón que los organismos de control miran de cerca.
-        </Alert>
-      )}
+      {e?.mesesHastaPrimeraAdjudicacion !== null &&
+        e?.mesesHastaPrimeraAdjudicacion !== undefined &&
+        e.mesesHastaPrimeraAdjudicacion < 12 && (
+          <Alert title="Empresa recién creada">
+            Ganó su primera adjudicación a los {e.mesesHastaPrimeraAdjudicacion} {e.mesesHastaPrimeraAdjudicacion === 1 ? "mes" : "meses"}{" "}
+            de constituida. No es una irregularidad en sí, pero es un patrón que los organismos de control miran de cerca.
+          </Alert>
+        )}
       <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm">
         <a href={ARCA_CONSTANCIA} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-link hover:underline">
           Constancia de CUIT en ARCA <ExternalLink className="size-3" aria-hidden />
@@ -419,35 +420,35 @@ export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cui
           </button>
         </Bloque>
       ) : (
-      <Bloque
-        titulo={p.adjudicaciones.length ? "Adjudicado a" : "Sin adjudicaciones"}
-        ayuda={p.adjudicaciones.length ? "Tocá un proveedor para ver su perfil" : undefined}
-      >
-        {p.adjudicaciones.length > 3 && (
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <span className="text-sm text-ink-2 tabular-nums">
-              {formatNumber(p.adjudicaciones.length)} adjudicaciones · {formatMoneda(total, "ARS")}
-            </span>
-            <TrackedSegmented label="Ordenar" options={ORDENES} value={orden} onChange={setOrden} trackId="purchase.awards_sort" />
-          </div>
-        )}
-        <ul className="flex flex-col divide-y divide-line">
-          {ordenadas.map((a, i) => (
-            <li key={a.cuit + i}>
-              <button
-                type="button"
-                onClick={() => onProveedor(a.cuit)}
-                className="group -mx-2 flex w-[calc(100%+1rem)] items-center gap-3 rounded-lg px-2 py-2.5 text-left text-sm hover:bg-tile"
-              >
-                <Building2 className="size-4 shrink-0 text-ink-muted" aria-hidden />
-                <span className="min-w-0 flex-1 group-hover:text-link">{a.proveedor}</span>
-                <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(a.monto, "ARS")}</span>
-                <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
-              </button>
-            </li>
-          ))}
-        </ul>
-      </Bloque>
+        <Bloque
+          titulo={p.adjudicaciones.length ? "Adjudicado a" : "Sin adjudicaciones"}
+          ayuda={p.adjudicaciones.length ? "Tocá un proveedor para ver su perfil" : undefined}
+        >
+          {p.adjudicaciones.length > 3 && (
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <span className="text-sm text-ink-2 tabular-nums">
+                {formatNumber(p.adjudicaciones.length)} adjudicaciones · {formatMoneda(total, "ARS")}
+              </span>
+              <TrackedSegmented label="Ordenar" options={ORDENES} value={orden} onChange={setOrden} trackId="purchase.awards_sort" />
+            </div>
+          )}
+          <ul className="flex flex-col divide-y divide-line">
+            {ordenadas.map((a, i) => (
+              <li key={a.cuit + i}>
+                <button
+                  type="button"
+                  onClick={() => onProveedor(a.cuit)}
+                  className="group -mx-2 flex w-[calc(100%+1rem)] items-center gap-3 rounded-lg px-2 py-2.5 text-left text-sm hover:bg-tile"
+                >
+                  <Building2 className="size-4 shrink-0 text-ink-muted" aria-hidden />
+                  <span className="min-w-0 flex-1 group-hover:text-link">{a.proveedor}</span>
+                  <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(a.monto, "ARS")}</span>
+                  <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
+                </button>
+              </li>
+            ))}
+          </ul>
+        </Bloque>
       )}
     </>
   );
@@ -459,7 +460,9 @@ function Amount({ value }: { value: number }) {
   const n = millions ? value / 1e6 : value;
   return (
     <span className="flex items-baseline gap-1.5 whitespace-nowrap">
-      <span className="text-xl font-semibold tabular-nums">$ {formatNumber(millions && Math.abs(n) < 100 ? Math.round(n * 10) / 10 : Math.round(n))}</span>
+      <span className="text-xl font-semibold tabular-nums">
+        $ {formatNumber(millions && Math.abs(n) < 100 ? Math.round(n * 10) / 10 : Math.round(n))}
+      </span>
       {millions && <span className="text-sm text-ink-muted">millones</span>}
     </span>
   );
@@ -493,7 +496,11 @@ function processFlags(p: ProcesoDetalle, awarded: number): Flag[] {
   if (p.oferentes === 1)
     flags.push({ id: "una-oferta", label: "Una sola oferta", text: "Sin competencia, el Estado no pudo comparar precios." });
   if (/directa/i.test(p.metodo) && awarded >= 10_000_000)
-    flags.push({ id: "directa", label: "Contratación directa", text: "Sin licitación pública. La ley la permite en casos puntuales; en montos grandes conviene saber por qué." });
+    flags.push({
+      id: "directa",
+      label: "Contratación directa",
+      text: "Sin licitación pública. La ley la permite en casos puntuales; en montos grandes conviene saber por qué.",
+    });
   return flags;
 }
 

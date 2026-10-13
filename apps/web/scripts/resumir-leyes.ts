@@ -42,8 +42,24 @@ export const TEMAS = [
 ] as const;
 
 export const MUNICIPIOS = [
-  "Capital", "General Alvear", "Godoy Cruz", "Guaymallén", "Junín", "La Paz", "Las Heras", "Lavalle", "Luján de Cuyo",
-  "Maipú", "Malargüe", "Rivadavia", "San Carlos", "San Martín", "San Rafael", "Santa Rosa", "Tunuyán", "Tupungato",
+  "Capital",
+  "General Alvear",
+  "Godoy Cruz",
+  "Guaymallén",
+  "Junín",
+  "La Paz",
+  "Las Heras",
+  "Lavalle",
+  "Luján de Cuyo",
+  "Maipú",
+  "Malargüe",
+  "Rivadavia",
+  "San Carlos",
+  "San Martín",
+  "San Rafael",
+  "Santa Rosa",
+  "Tunuyán",
+  "Tupungato",
 ] as const;
 
 export const INSTRUCCIONES = `Explicás leyes de la provincia de Mendoza (Argentina) a vecinos que no siguen la política ni manejan lenguaje jurídico. Entran para saber qué pasa donde viven. La pregunta que tenés que contestar es: "¿qué cambia en la práctica y a quién le toca?".
@@ -147,7 +163,10 @@ if (import.meta.main) {
   if (!existsSync(LEYES)) throw new Error("No hay leyes generadas: corré `bun run data` en apps/web primero.");
 
   const pedidas = process.argv.slice(2);
-  const existentes = (existsSync(CURADO) ? ((parse(readFileSync(CURADO, "utf8")) as Entrada[] | null) ?? []) : []).map((e) => ({ ...e, numero: String(e.numero) }));
+  const existentes = (existsSync(CURADO) ? ((parse(readFileSync(CURADO, "utf8")) as Entrada[] | null) ?? []) : []).map((e) => ({
+    ...e,
+    numero: String(e.numero),
+  }));
   const conResumen = new Set(existentes.map((e) => e.numero));
   const numeros = readdirSync(LEYES)
     .map((f) => f.replace(/\.json$/, ""))

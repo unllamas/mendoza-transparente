@@ -1,13 +1,12 @@
-import { cn } from "@mt/ui/lib/utils";
 import { buttonVariants } from "@mt/ui/components/button";
 import { PageHeader, Section } from "@mt/ui/components/section";
+import { cn } from "@mt/ui/lib/utils";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, BookOpen, Bug, Compass, MousePointerClick, Search, ShieldCheck } from "lucide-react";
-
-import { GLOSSARY } from "../glossary.ts";
-import { openSearch } from "../components/search-dialog.tsx";
-import { Breadcrumbs } from "../components/breadcrumbs.tsx";
-import { READING_RULES } from "../components/home-guide.tsx";
+import { Breadcrumbs } from "@/components/breadcrumbs.tsx";
+import { READING_RULES } from "@/components/home-guide.tsx";
+import { openSearch } from "@/components/search-dialog.tsx";
+import { GLOSSARY } from "@/glossary.ts";
 
 const STEPS = [
   {
@@ -37,9 +36,9 @@ export function ComoLeerPage() {
     <div className="flex max-w-3xl flex-col gap-12">
       <Breadcrumbs items={[{ label: "Cómo leer estos datos" }]} />
       <PageHeader icon={BookOpen} topic="Guía" title="Para qué sirve Mendoza Transparente y cómo usarlo">
-        Reunimos los datos públicos de la provincia de Mendoza, que están dispersos en decenas de sitios oficiales, PDF y
-        planillas, y los ordenamos para que cualquier persona pueda entender en qué se gasta la plata, quién decide y qué falta
-        publicar. Es un proyecto ciudadano, independiente y apartidario.
+        Reunimos los datos públicos de la provincia de Mendoza, que están dispersos en decenas de sitios oficiales, PDF y planillas, y los
+        ordenamos para que cualquier persona pueda entender en qué se gasta la plata, quién decide y qué falta publicar. Es un proyecto
+        ciudadano, independiente y apartidario.
       </PageHeader>
 
       <Section title="Cómo empezar">
@@ -58,11 +57,7 @@ export function ComoLeerPage() {
             </li>
           ))}
         </ol>
-        <button
-          type="button"
-          onClick={() => openSearch("guide")}
-          className={cn(buttonVariants({ variant: "primary" }), "w-fit")}
-        >
+        <button type="button" onClick={() => openSearch("guide")} className={cn(buttonVariants({ variant: "primary" }), "w-fit")}>
           Abrir el buscador <ArrowRight className="size-4" aria-hidden />
         </button>
       </Section>

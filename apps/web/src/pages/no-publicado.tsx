@@ -1,23 +1,21 @@
+import { Alert } from "@mt/ui/components/alert";
+import { buttonVariants } from "@mt/ui/components/button";
 import { tileVariants } from "@mt/ui/components/card";
 import { Textarea } from "@mt/ui/components/input";
-import { cn } from "@mt/ui/lib/utils";
-import { buttonVariants } from "@mt/ui/components/button";
-import { Alert } from "@mt/ui/components/alert";
 import { PageHeader } from "@mt/ui/components/section";
+import { cn } from "@mt/ui/lib/utils";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Check, ChevronRight, Copy, ExternalLink, EyeOff, Search } from "lucide-react";
 import { useEffect, useState } from "react";
-
-import { useUrlText } from "../url-state.ts";
-import { NO_PUBLICADO_CATEGORIES, NO_PUBLICADO_THEMES, type NoPublicadoTheme } from "../no-publicado-categories.ts";
-import type { NoPublicado } from "../types.ts";
-import { TrackedSheet } from "../components/tracked-sheet.tsx";
-import { type RequestStats, useRequestStats } from "./participar.tsx";
+import { TrackedSheet } from "@/components/tracked-sheet.tsx";
+import { type RequestStats, useRequestStats } from "@/features/participation/api/request-stats.ts";
+import { NO_PUBLICADO_CATEGORIES, NO_PUBLICADO_THEMES, type NoPublicadoTheme } from "@/no-publicado-categories.ts";
+import type { NoPublicado } from "@/types.ts";
+import { useUrlText } from "@/url-state.ts";
 
 const route = getRouteApi("/no-publicado");
 
-const FORMULARIO =
-  "https://ticketsform.mendoza.gov.ar/ticketsform/servlet/responderformulario?AIP_SOLICITUDINFORMACIONPUBLICA";
+const FORMULARIO = "https://ticketsform.mendoza.gov.ar/ticketsform/servlet/responderformulario?AIP_SOLICITUDINFORMACIONPUBLICA";
 const LEY_9070 = "https://media.mendoza.gob.ar/principal/uploads/2025/08/Ley-de-Acceso-a-la-Informacion-Publica-9070-1.pdf";
 
 // Estado con punto de color y texto: el color nunca va solo.
@@ -53,7 +51,8 @@ export function NoPublicadoPage() {
     setOpenId(id);
   }, [items, setOpenId]);
 
-  const inTheme = (t: (typeof NO_PUBLICADO_THEMES)[number]) => items.filter((i) => (t.categories as readonly string[]).includes(i.categoria));
+  const inTheme = (t: (typeof NO_PUBLICADO_THEMES)[number]) =>
+    items.filter((i) => (t.categories as readonly string[]).includes(i.categoria));
   const themes = NO_PUBLICADO_THEMES.filter((t) => inTheme(t).length > 0);
   const shown = theme ? themes.filter((t) => t.id === theme) : themes;
   const counts = { sin_publicar: 0, parcial: 0, desactualizado: 0 };
@@ -62,8 +61,7 @@ export function NoPublicadoPage() {
   return (
     <div className="flex flex-col gap-10">
       <PageHeader icon={EyeOff} topic="Acceso a la información" title="Lo que el Estado no publica">
-        {items.length} datos que deberían ser públicos y no lo son. Cualquier persona puede pedirlos y el Estado está
-        obligado a responder.
+        {items.length} datos que deberían ser públicos y no lo son. Cualquier persona puede pedirlos y el Estado está obligado a responder.
       </PageHeader>
 
       <div className="flex flex-col gap-4">
@@ -154,8 +152,8 @@ export function NoPublicadoPage() {
       ))}
 
       <p className="text-sm text-ink-muted text-pretty">
-        Cómo funciona: elegí un dato, copiá el pedido que armamos y presentalo gratis en el formulario oficial. El
-        organismo tiene 15 días hábiles para responder (
+        Cómo funciona: elegí un dato, copiá el pedido que armamos y presentalo gratis en el formulario oficial. El organismo tiene 15 días
+        hábiles para responder (
         <a href={LEY_9070} target="_blank" rel="noreferrer" data-track="missing_data.law.open" className="underline hover:text-link">
           Ley 9070
         </a>
@@ -240,8 +238,7 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
           </a>
         </div>
         <p className="text-xs text-ink-muted text-pretty">
-          Para: {item.organismo}. Guardá el número de trámite que te den: si no responden en 15 días hábiles, podés
-          reclamar.
+          Para: {item.organismo}. Guardá el número de trámite que te den: si no responden en 15 días hábiles, podés reclamar.
         </p>
       </div>
 

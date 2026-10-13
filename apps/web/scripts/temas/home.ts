@@ -72,7 +72,10 @@ export function buildHome(input: {
       const anio = (a.fecha_adjudicacion || "").slice(0, 4);
       if (anio) porAnio.set(anio, (porAnio.get(anio) ?? 0) + monto);
     }
-    const fechas = procesos.map((p) => p.fecha!).filter(Boolean).sort();
+    const fechas = procesos
+      .map((p) => p.fecha!)
+      .filter(Boolean)
+      .sort();
     home.compras = {
       procesos: procesos.length,
       proveedores: new Set(adjudicaciones.map((a) => a.proveedor_cuit)).size,
@@ -97,7 +100,9 @@ export function buildHome(input: {
     };
   }
   if (ipc) {
-    const cuyo = ipc.filter((r) => r.region === "cuyo").sort((a, b) => Number(a.anio) * 12 + Number(a.mes) - (Number(b.anio) * 12 + Number(b.mes)));
+    const cuyo = ipc
+      .filter((r) => r.region === "cuyo")
+      .sort((a, b) => Number(a.anio) * 12 + Number(a.mes) - (Number(b.anio) * 12 + Number(b.mes)));
     const ultimo = cuyo.at(-1);
     const haceUnAnio = cuyo.at(-13);
     if (ultimo && haceUnAnio) {

@@ -63,4 +63,8 @@ export function limpiarOrganismo(nombre: string): string {
 }
 
 /** Text for comparing searches: no accents, lowercase ("Guaymallén" → "guaymallen"). */
-export const normalizeText = (s: string) => s.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
+export const normalizeText = (s: string) =>
+  s
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase();

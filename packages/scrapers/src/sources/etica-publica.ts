@@ -45,17 +45,7 @@ import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
-import {
-  USER_AGENT,
-  RAW_DIR,
-  ROOT,
-  archive,
-  get,
-  readRaw,
-  writeProcessed,
-  type ManifestEntry,
-  type Row,
-} from "@mt/core";
+import { archive, get, type ManifestEntry, RAW_DIR, ROOT, type Row, readRaw, USER_AGENT, writeProcessed } from "@mt/core";
 
 const SOURCE = "etica-publica";
 const BASE = "https://eticapublica.mendoza.gov.ar/api/v1/public";
@@ -69,8 +59,7 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 // ---------- Redacción ----------
 
-const DROP_COLUMN =
-  /dni|cuil|cuit|documento|domicilio|direcci|calle|patente|dominio|cbu|cuenta|alias|apellido|parentesco|nombre/i;
+const DROP_COLUMN = /dni|cuil|cuit|documento|domicilio|direcci|calle|patente|dominio|cbu|cuenta|alias|apellido|parentesco|nombre/i;
 const KEEP_NUMERIC_COLUMN = /valor|aval|monto|saldo|importe|porcentaje|superficie|fecha/i;
 
 function scrubText(s: string): string {
@@ -84,7 +73,10 @@ function scrubText(s: string): string {
 }
 
 function relation(s: string): string {
-  const t = s.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
+  const t = s
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase();
   if (/^propi[oa]$/.test(t.trim())) return "Propia";
   if (/conyuge|conviviente|esposa|esposo|pareja/.test(t)) return "Cónyuge/Conviviente";
   if (/\bhij[oa]s?\b|menor/.test(t)) return "Hijo/a";
@@ -217,7 +209,21 @@ const slug = (s: string) =>
 /** Agrupa el tipo de bien (texto libre) en pocas categorías para tener columnas estables. */
 function tipoBien(raw: string): string {
   const t = slug(raw);
-  for (const k of ["casa", "departamento", "lote", "terreno", "local", "finca", "campo", "cochera", "camioneta", "camion", "moto", "auto", "tractor"]) {
+  for (const k of [
+    "casa",
+    "departamento",
+    "lote",
+    "terreno",
+    "local",
+    "finca",
+    "campo",
+    "cochera",
+    "camioneta",
+    "camion",
+    "moto",
+    "auto",
+    "tractor",
+  ]) {
     if (t.includes(k)) return k;
   }
   return "otro";
@@ -252,7 +258,6 @@ function summarize(d: Declaration, count: number | undefined): Row {
   let propios = 0;
   let nIngDep = 0;
   let nIngInd = 0;
-  let nOtros = 0;
   for (const s of d.sections) {
     const idx = (name: RegExp) => s.columns.findIndex((c) => name.test(c));
     if (s.assets_type === 1 || s.assets_type === 3) {
@@ -277,7 +282,6 @@ function summarize(d: Declaration, count: number | undefined): Row {
       row[`valor_${prefix}`] = round(sum);
     } else if (s.assets_type === 11) nIngDep += s.rows.length;
     else if (s.assets_type === 12) nIngInd += s.rows.length;
-    else if (s.kind === "declares") nOtros += s.rows.length;
   }
   const declared = new Set<string>();
   for (const s of d.sections) {
@@ -311,7 +315,7 @@ async function fetchOfficialPage(dist: number, page: number): Promise<OfficialLi
       const r = (await api<OfficialList>(q(size, start / size + 1))).data;
       total = r.total;
       items.push(...r.items);
-    } catch (err) {
+    } catch {
       if (size === 1) {
         console.warn(`  registro ${start + 1} de la repartición ${dist} omitido (HTTP 500 del servidor)`);
         skipped++;
@@ -353,7 +357,9 @@ export async function run(args: string[]) {
       let data = await useCache<OfficialList>(file);
       if (!data) {
         data = await fetchOfficialPage(dist.distribution_id, page);
-        await archive(SOURCE, file, JSON.stringify(data), { url: `${BASE}/officials?distribution_id=${dist.distribution_id}&page=${page}&page_size=50` });
+        await archive(SOURCE, file, JSON.stringify(data), {
+          url: `${BASE}/officials?distribution_id=${dist.distribution_id}&page=${page}&page_size=50`,
+        });
       }
       for (const it of data.items) officials.set(it.id, it);
       if (page * 50 >= data.total || data.items.length === 0) break;
@@ -368,10 +374,7 @@ export async function run(args: string[]) {
     if (only) return d !== undefined && only.includes(d);
     return all || (d !== undefined && !EXCLUDED_BY_DEFAULT.has(d));
   });
-  inScope.sort(
-    (a, b) =>
-      Number(HIERARCHICAL.test(b.actual_job)) - Number(HIERARCHICAL.test(a.actual_job)) || a.id - b.id,
-  );
+  inScope.sort((a, b) => Number(HIERARCHICAL.test(b.actual_job)) - Number(HIERARCHICAL.test(a.actual_job)) || a.id - b.id);
   const targets = inScope.slice(0, limit);
   console.log(`Detalle para ${targets.length} de ${officials.size} funcionarios`);
 

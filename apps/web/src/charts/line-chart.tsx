@@ -90,9 +90,7 @@ export function LineChart({ data, bands = [], formatValue, formatAxis = formatVa
           if (bx1 - bx0 < 1) return null;
           return (
             <g key={i}>
-              {i % 2 === 0 && (
-                <rect x={bx0} y={MARGIN.top} width={bx1 - bx0} height={innerH} className="fill-grid" opacity={0.5} />
-              )}
+              {i % 2 === 0 && <rect x={bx0} y={MARGIN.top} width={bx1 - bx0} height={innerH} className="fill-grid" opacity={0.5} />}
               {bx1 - bx0 > b.label.length * 6.5 + 8 && (
                 <text x={(bx0 + bx1) / 2} y={MARGIN.top - 10} textAnchor="middle" className="fill-ink-muted text-[11px]">
                   {b.label}
@@ -112,13 +110,7 @@ export function LineChart({ data, bands = [], formatValue, formatAxis = formatVa
         ))}
 
         {years.map((yr) => (
-          <text
-            key={yr}
-            x={x(`${yr}-01-01`)}
-            y={height - 8}
-            textAnchor="middle"
-            className="fill-ink-muted text-[11px] tabular-nums"
-          >
+          <text key={yr} x={x(`${yr}-01-01`)} y={height - 8} textAnchor="middle" className="fill-ink-muted text-[11px] tabular-nums">
             {yr}
           </text>
         ))}

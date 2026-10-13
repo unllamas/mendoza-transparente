@@ -6,19 +6,13 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { procesoShard, PROCESO_SHARDS } from "../../src/shard.ts";
+import { PROCESO_SHARDS, procesoShard } from "../../src/shard.ts";
 import type { ProcesoDetalle, ProveedorDetalle } from "../../src/types.ts";
 import { deflactor } from "./inflacion.ts";
 
 type CsvRow = Record<string, string>;
 
-export function buildCompras(
-  procesos: CsvRow[],
-  adjudicaciones: CsvRow[],
-  outDir: string,
-  empresas: CsvRow[] = [],
-  ipc: CsvRow[] = [],
-) {
+export function buildCompras(procesos: CsvRow[], adjudicaciones: CsvRow[], outDir: string, empresas: CsvRow[] = [], ipc: CsvRow[] = []) {
   const inflacion = deflactor(ipc);
   const porCuitEmpresa = new Map(empresas.map((e) => [e.cuit!, e]));
   const porOcid = new Map(procesos.map((p) => [p.ocid!, p]));
@@ -64,7 +58,10 @@ export function buildCompras(
       const anio = (a.fecha_adjudicacion || porOcid.get(a.ocid!)?.fecha || "").slice(0, 4);
       if (anio) porAnio.set(anio, (porAnio.get(anio) ?? 0) + Number(a.monto));
     }
-    const fechas = filas.map((a) => a.fecha_adjudicacion!).filter(Boolean).sort();
+    const fechas = filas
+      .map((a) => a.fecha_adjudicacion!)
+      .filter(Boolean)
+      .sort();
     const e = porCuitEmpresa.get(cuit);
     const meses =
       e?.fecha_constitucion && fechas[0]

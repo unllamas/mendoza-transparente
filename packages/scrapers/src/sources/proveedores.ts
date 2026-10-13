@@ -17,8 +17,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { Readable } from "node:stream";
 import { pipeline } from "node:stream/promises";
-import { Unzip, UnzipInflate } from "fflate";
 import { archive, get, PROCESSED_DIR, writeProcessed } from "@mt/core";
+import { Unzip, UnzipInflate } from "fflate";
 
 const SOURCE = "proveedores";
 const CKAN = "https://datos.jus.gob.ar/api/3/action/package_show?id=registro-nacional-de-sociedades";
@@ -68,7 +68,7 @@ function parseCsvText(text: string): Record<string, string>[] {
   const records: string[] = [];
   let pending = "";
   for (const raw of text.split("\n")) {
-    const line = pending ? pending + "\n" + raw : raw;
+    const line = pending ? `${pending}\n${raw}` : raw;
     if (quoteCount(line) % 2 === 1) {
       pending = line;
       continue;
@@ -193,8 +193,7 @@ const title = (s: string) =>
     .replace(/\b(De|Del|La|Las|Los|Y|El)\b/g, (w) => w.toLowerCase())
     .replace(/^./, (c) => c.toUpperCase());
 
-const tipoPersona = (cuit: string) =>
-  /^(30|33|34)/.test(cuit) ? "juridica" : /^(20|23|24|27)/.test(cuit) ? "humana" : "";
+const tipoPersona = (cuit: string) => (/^(30|33|34)/.test(cuit) ? "juridica" : /^(20|23|24|27)/.test(cuit) ? "humana" : "");
 
 export async function run(_args: string[]) {
   // 1. CUIT de las adjudicaciones.
@@ -233,11 +232,11 @@ export async function run(_args: string[]) {
   for (const res of fuentes) {
     const file = join(TMP, res.url.split("/").pop()!);
     let info: { sha256: string; bytes: number };
-    if (existsSync(file) && existsSync(file + ".sha256")) {
-      info = JSON.parse(await readFile(file + ".sha256", "utf8"));
+    if (existsSync(file) && existsSync(`${file}.sha256`)) {
+      info = JSON.parse(await readFile(`${file}.sha256`, "utf8"));
       if ((await stat(file)).size !== info.bytes) info = await download(res.url, file);
     } else info = await download(res.url, file);
-    await Bun.write(file + ".sha256", JSON.stringify(info));
+    await Bun.write(`${file}.sha256`, JSON.stringify(info));
     console.log(`${res.name}: ${(info.bytes / 1e6).toFixed(1)} MB sha256 ${info.sha256.slice(0, 12)}…`);
     origen.push({
       recurso: res.name,
@@ -264,7 +263,7 @@ export async function run(_args: string[]) {
       }
       let line = l0;
       if (pending) {
-        line = pending + "\n" + l0;
+        line = `${pending}\n${l0}`;
         if (quoteCount(line) % 2 === 1) {
           pending = line;
           return;
@@ -292,7 +291,7 @@ export async function run(_args: string[]) {
   }
 
   // 3. Archivar extracto y trazabilidad.
-  const extractoCsv = headerLine + "\n" + extracto.join("\n") + "\n";
+  const extractoCsv = `${headerLine}\n${extracto.join("\n")}\n`;
   const a1 = await archive(SOURCE, "extracto-registro-sociedades.csv", extractoCsv, { url: anual.url });
   const a2 = await archive(
     SOURCE,
@@ -415,12 +414,14 @@ export async function run(_args: string[]) {
       "fuente_url",
     ],
   };
-  await Bun.write(join(PROCESSED_DIR, SOURCE, "proveedores.meta.json"), JSON.stringify(meta, null, 2) + "\n");
+  await Bun.write(join(PROCESSED_DIR, SOURCE, "proveedores.meta.json"), `${JSON.stringify(meta, null, 2)}\n`);
 
   // 5. Verificación.
   const enc = rows.filter((r) => r.tipo_persona === "juridica" && r.encontrado_en_registro === "si").length;
   console.log(`Jurídicos: ${juridicos.size}; encontrados: ${enc} (${((100 * enc) / juridicos.size).toFixed(1)} %)`);
-  console.log(`Humanos: ${rows.filter((r) => r.tipo_persona === "humana").length}; sin clasificar: ${rows.filter((r) => !r.tipo_persona).length}`);
+  console.log(
+    `Humanos: ${rows.filter((r) => r.tipo_persona === "humana").length}; sin clasificar: ${rows.filter((r) => !r.tipo_persona).length}`,
+  );
   for (const c of ["30716663511", "30707363971"]) console.log(JSON.stringify(rows.find((r) => r.cuit === c)));
 
   // Primera adjudicación con menos de 12 meses de constituida.
@@ -429,7 +430,7 @@ export async function run(_args: string[]) {
     if (!r.fecha_constitucion) continue;
     const p = primera.get(r.cuit);
     if (!p) continue;
-    const lim = new Date(r.fecha_constitucion + "T00:00:00Z");
+    const lim = new Date(`${r.fecha_constitucion}T00:00:00Z`);
     lim.setUTCMonth(lim.getUTCMonth() + 12);
     if (p < r.fecha_constitucion || p >= lim.toISOString().slice(0, 10)) continue;
     const monto = adjRows

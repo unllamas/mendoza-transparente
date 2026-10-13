@@ -9,7 +9,8 @@ const parse = (body: string) => parseNorm(wrap(body), { fecha: "2026-09-14" });
 
 describe("designaciones", () => {
   test("designación interina en bloque (decreto de Salud, 14/09/2026)", () => {
-    const { acts } = parse(`Artículo 2º- Desígnese interinamente y hasta tanto se cubra el cargo por concurso a la persona que a continuación se menciona, en el cargo que se consigna, con funciones en la dependencia que se detalla:
+    const { acts } =
+      parse(`Artículo 2º- Desígnese interinamente y hasta tanto se cubra el cargo por concurso a la persona que a continuación se menciona, en el cargo que se consigna, con funciones en la dependencia que se detalla:
 
 JURISDICCIÓN 08 – CARÁCTER 2
 
@@ -50,7 +51,8 @@ Dr. MAURO FACUNDO ALVARADO, DNI N° 37.269.721, CUIL N° 20-37269721-1.`);
   });
 
   test("tabla de personal policial: una fila por persona, sin DNI ni año de nacimiento", () => {
-    const { acts } = parse(`Artículo 1º - Desígnese, a partir de la emisión de la presente norma legal, en el cargo Carácter 1 – Jurisdicción 16 – Unidad Organizativa 06 - Clase 01 – Régimen Salarial 12 – Agrupamiento 1 – Tramo 01 – Subtramo 01 – U.G.G. J00098 –AUXILIAR– de las Policías de la Provincia de Mendoza, conforme lo previsto por los artículos 47, 49 y 52 de la Ley N° 6722 y modificatorias, al personal que se detalla a continuación:
+    const { acts } =
+      parse(`Artículo 1º - Desígnese, a partir de la emisión de la presente norma legal, en el cargo Carácter 1 – Jurisdicción 16 – Unidad Organizativa 06 - Clase 01 – Régimen Salarial 12 – Agrupamiento 1 – Tramo 01 – Subtramo 01 – U.G.G. J00098 –AUXILIAR– de las Policías de la Provincia de Mendoza, conforme lo previsto por los artículos 47, 49 y 52 de la Ley N° 6722 y modificatorias, al personal que se detalla a continuación:
 
 APELLIDOS Y NOMBRES
 
@@ -107,7 +109,10 @@ BUSTOS GOMEZ, BRISA NAIR
     expect(classifyArticle("Téngase por aceptada la donación efectuada por la UNIVERSIDAD DE MENDOZA")).toBeNull();
     expect(classifyArticle("Acéptese formalmente y rechácese sustancialmente el Recurso Jerárquico interpuesto por el Dr. X")).toBeNull();
     expect(classifyArticle("Desígnese el nombre “Héroes del Ara San Juan”, al mástil")).toBeNull();
-    expect(parse("Artículo 1º - Desígnese a los “miembros que conformarán el jurado” del concurso.")).toMatchObject({ acts: [], discarded: 1 });
+    expect(parse("Artículo 1º - Desígnese a los “miembros que conformarán el jurado” del concurso.")).toMatchObject({
+      acts: [],
+      discarded: 1,
+    });
   });
 
   test("utilidades", () => {

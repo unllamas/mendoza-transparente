@@ -18,11 +18,14 @@ const FEEDS: Record<string, string> = {
   "feed_canasta-basica.xml": `${BASE}canasta-basica/feed/`,
 };
 
-const MESES = [
-  "enero", "febrero", "marzo", "abril", "mayo", "junio",
-  "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
-];
-const mesNum = (s: string) => MESES.indexOf(s.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "")) + 1;
+const MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+const mesNum = (s: string) =>
+  MESES.indexOf(
+    s
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, ""),
+  ) + 1;
 const num = (s: string) => Number(s.replaceAll(".", "").replace(",", "."));
 
 const CAPITULOS = [
@@ -82,9 +85,7 @@ export async function run(_args: string[]) {
     const filename = url.split("/").pop()!;
     const text = await pdfText(await fetchCached(url, filename));
     const head = text.match(/registr[oó] en (\p{L}+)\s+(\d{4})/u);
-    const row = text.match(
-      /^(\d[\d.]*,\d)\s+(\d[\d.]*,\d)\s+(-?\d+,\d)\s+(-?\d+,\d)\s+(-?\d+,\d)\s*$/m,
-    );
+    const row = text.match(/^(\d[\d.]*,\d)\s+(\d[\d.]*,\d)\s+(-?\d+,\d)\s+(-?\d+,\d)\s+(-?\d+,\d)\s*$/m);
     if (!head || !row) {
       console.warn(`No se pudo parsear ${filename}`);
       continue;
@@ -123,12 +124,24 @@ export async function run(_args: string[]) {
     Number(a.anio) - Number(b.anio) || Number(a.mes) - Number(b.mes);
   const mensualRows = [...mensual.values()].sort(byDate);
   await writeProcessed(SOURCE, "ipc_mensual.csv", mensualRows, [
-    "anio", "mes", "variacion_mensual", "variacion_acumulada", "variacion_interanual",
-    "indice_nivel_general", "indice_mes_anterior", "fuente_url",
+    "anio",
+    "mes",
+    "variacion_mensual",
+    "variacion_acumulada",
+    "variacion_interanual",
+    "indice_nivel_general",
+    "indice_mes_anterior",
+    "fuente_url",
   ]);
   await writeProcessed(SOURCE, "ipc_capitulos.csv", [...capitulos.values()].sort(byDate), [
-    "anio", "mes", "capitulo", "indice", "variacion_mensual", "variacion_acumulada",
-    "variacion_interanual", "fuente_url",
+    "anio",
+    "mes",
+    "capitulo",
+    "indice",
+    "variacion_mensual",
+    "variacion_acumulada",
+    "variacion_interanual",
+    "fuente_url",
   ]);
   console.log(`ipc_mensual.csv: ${mensualRows.length} filas; ipc_capitulos.csv: ${capitulos.size} filas`);
 
@@ -159,7 +172,12 @@ export async function run(_args: string[]) {
   const canastaRows = [...canasta.values()].sort(byDate);
   if (canastaRows.length) {
     await writeProcessed(SOURCE, "canasta_mensual.csv", canastaRows, [
-      "anio", "mes", "cba_adulto_equivalente", "inversa_coef_engel", "cbt_adulto_equivalente", "fuente_url",
+      "anio",
+      "mes",
+      "cba_adulto_equivalente",
+      "inversa_coef_engel",
+      "cbt_adulto_equivalente",
+      "fuente_url",
     ]);
   }
   console.log(`canasta_mensual.csv: ${canastaRows.length} filas`);

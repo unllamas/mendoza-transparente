@@ -9,7 +9,15 @@ import { cn } from "../lib/utils.ts";
 export function PersonAvatar({ name, photo, className }: { name: string; photo: string | null | undefined; className?: string }) {
   const [error, setError] = useState(false);
   if (photo && !error) {
-    return <img src={photo} alt="" loading="lazy" onError={() => setError(true)} className={cn("shrink-0 rounded-full bg-grid object-cover", className)} />;
+    return (
+      <img
+        src={photo}
+        alt=""
+        loading="lazy"
+        onError={() => setError(true)}
+        className={cn("shrink-0 rounded-full bg-grid object-cover", className)}
+      />
+    );
   }
   return (
     <span className={cn("flex shrink-0 items-center justify-center rounded-full bg-grid font-medium text-ink-2", className)} aria-hidden>

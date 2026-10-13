@@ -313,7 +313,15 @@ export interface SenalesTema {
 export interface MunicipioPagina {
   slug: string;
   nombre: string;
-  intendente: { id: string; role: string; slug: string; nombre: string; partido: string | null; foto: string | null; mandatoHasta: string | null } | null;
+  intendente: {
+    id: string;
+    role: string;
+    slug: string;
+    nombre: string;
+    partido: string | null;
+    foto: string | null;
+    mandatoHasta: string | null;
+  } | null;
   poblacion: {
     actual: number;
     censo2010: number;

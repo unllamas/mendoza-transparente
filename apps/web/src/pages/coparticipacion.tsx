@@ -1,21 +1,20 @@
-import { tileVariants } from "@mt/ui/components/card";
-import { cn } from "@mt/ui/lib/utils";
-import { buttonVariants } from "@mt/ui/components/button";
 import { Alert } from "@mt/ui/components/alert";
+import { buttonVariants } from "@mt/ui/components/button";
+import { tileVariants } from "@mt/ui/components/card";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
+import { cn } from "@mt/ui/lib/utils";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Coins, MapPin, UserRound } from "lucide-react";
-
-import { useUrlText } from "../url-state.ts";
-import { formatMoneda } from "../celdas.ts";
-import { LineChart } from "../charts/line-chart.tsx";
-import { MapaMendoza } from "../charts/mapa.tsx";
-import { GOBIERNOS } from "../gobiernos.ts";
-import { formatNumber } from "../lib.ts";
-import { slug } from "../slug.ts";
-import type { CoparticipacionTema } from "../types.ts";
-import { FuentesOficiales } from "../components/official-sources.tsx";
+import { formatMoneda } from "@/celdas.ts";
+import { LineChart } from "@/charts/line-chart.tsx";
+import { MapaMendoza } from "@/charts/mapa.tsx";
+import { FuentesOficiales } from "@/components/official-sources.tsx";
+import { GOBIERNOS } from "@/gobiernos.ts";
+import { formatNumber } from "@/lib.ts";
+import { slug } from "@/slug.ts";
+import type { CoparticipacionTema } from "@/types.ts";
+import { useUrlText } from "@/url-state.ts";
 
 const route = getRouteApi("/coparticipacion");
 
@@ -34,8 +33,8 @@ export function CoparticipacionPage() {
   return (
     <div className="flex flex-col gap-12">
       <PageHeader icon={Coins} topic="Coparticipación" title="¿Cuánta plata reciben los municipios?">
-        La provincia reparte entre los 18 municipios una parte de lo que recauda y de lo que le manda Nación
-          (coparticipación). Todo está en pesos de {tema.referencia}, para que se pueda comparar entre años.
+        La provincia reparte entre los 18 municipios una parte de lo que recauda y de lo que le manda Nación (coparticipación). Todo está en
+        pesos de {tema.referencia}, para que se pueda comparar entre años.
       </PageHeader>
       <FuentesOficiales ids={["hacienda-participacion-municipal", "indices", "poblacion"]} />
 
@@ -113,9 +112,9 @@ export function CoparticipacionPage() {
         <a href={FUENTE} className="underline hover:text-ink">
           participación municipal (Ministerio de Hacienda)
         </a>
-        , llevados a pesos de {tema.referencia} con el IPC nacional de INDEC (promedio de cada año) y divididos por la
-        proyección de población de INDEC. Entre 2007 y 2015 el IPC oficial subestimó la inflación, así que los montos de
-        esos años quedan algo inflados. Datos completos en{" "}
+        , llevados a pesos de {tema.referencia} con el IPC nacional de INDEC (promedio de cada año) y divididos por la proyección de
+        población de INDEC. Entre 2007 y 2015 el IPC oficial subestimó la inflación, así que los montos de esos años quedan algo inflados.
+        Datos completos en{" "}
         <Link to="/datos/$fuente" params={{ fuente: "hacienda-participacion-municipal" }} className="underline hover:text-ink">
           Datos › Coparticipación
         </Link>
@@ -146,11 +145,7 @@ function DetalleMunicipio({
             Ver todo sobre {m.municipio} ›
           </Link>
         </span>
-        <button
-          type="button"
-          onClick={onClose}
-          className={cn(buttonVariants({ variant: "secondary" }))}
-        >
+        <button type="button" onClick={onClose} className={cn(buttonVariants({ variant: "secondary" }))}>
           Ver ranking
         </button>
       </div>

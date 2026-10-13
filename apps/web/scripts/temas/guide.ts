@@ -66,11 +66,26 @@ export function buildGuide(outDir: string, appointments: Row[]): HomeGuide {
   const byDay = new Map<string, number>();
   for (const a of appointments) if (a.fecha_boletin) byDay.set(a.fecha_boletin, (byDay.get(a.fecha_boletin) ?? 0) + 1);
   for (const [day, n] of [...byDay].sort((a, b) => b[0].localeCompare(a[0])).slice(0, 2))
-    news.push({ date: day, kind: "Boletín", title: `${n} ${n === 1 ? "designación o baja de personal" : "designaciones y bajas de personal"} en el Boletín Oficial`, href: "/gobierno" });
+    news.push({
+      date: day,
+      kind: "Boletín",
+      title: `${n} ${n === 1 ? "designación o baja de personal" : "designaciones y bajas de personal"} en el Boletín Oficial`,
+      href: "/gobierno",
+    });
   if (debt)
-    news.push({ date: debt.corte, kind: "Deuda", title: `La deuda de Mendoza al ${shortDate(debt.corte)}: US$ ${nf1.format(debt.totalUsd)} millones`, href: "/deuda" });
+    news.push({
+      date: debt.corte,
+      kind: "Deuda",
+      title: `La deuda de Mendoza al ${shortDate(debt.corte)}: US$ ${nf1.format(debt.totalUsd)} millones`,
+      href: "/deuda",
+    });
   if (lastQuarter)
-    news.push({ date: lastQuarter.date, kind: "Personal", title: `Cargos de planta del Estado provincial: ${nf.format(lastQuarter.staff)}`, href: "/gobierno" });
+    news.push({
+      date: lastQuarter.date,
+      kind: "Personal",
+      title: `Cargos de planta del Estado provincial: ${nf.format(lastQuarter.staff)}`,
+      href: "/gobierno",
+    });
   news.sort((a, b) => b.date.localeCompare(a.date));
 
   return {
@@ -88,7 +103,9 @@ export function buildGuide(outDir: string, appointments: Row[]): HomeGuide {
     },
     facts: {
       debt: debt ? `US$ ${nf1.format(debt.totalUsd)} millones al ${shortDate(debt.corte)}` : null,
-      latestLaw: latestLaw ? `La última: Ley ${nf.format(Number(latestLaw.numero))}, ${latestLaw.titulo.charAt(0).toLowerCase()}${latestLaw.titulo.slice(1)}` : null,
+      latestLaw: latestLaw
+        ? `La última: Ley ${nf.format(Number(latestLaw.numero))}, ${latestLaw.titulo.charAt(0).toLowerCase()}${latestLaw.titulo.slice(1)}`
+        : null,
       topSupplier: suppliers[0] ? `${suppliers.length} empresas con todos sus contratos` : null,
       staff: lastQuarter
         ? `${nf.format(lastQuarter.staff)} cargos de planta${biggestCut ? `. Mayor baja desde 2023: ${biggestCut.name} (−${Math.abs(Math.round(biggestCut.pct))} %)` : ""}`
@@ -109,12 +126,22 @@ const KIND_BY_PREFIX: [RegExp, string][] = [
   [/^\/datos\/[^/]+$/, "Datos abiertos"],
 ];
 
-const unescape = (s: string) => s.replace(/&quot;/g, '"').replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+const unescapeHtml = (s: string) =>
+  s
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
 const short = (s: string) => (s.length > 140 ? `${s.slice(0, 139).replace(/\s+\S*$/, "")}…` : s);
 
 /** "I F E L S R L" → "IFELSRL": some supplier names come letter by letter from the source. */
-const tidyName = (n: string) => n.replace(/\b(?:\p{L} ){2,}\p{L}\b/gu, (m) => m.replace(/ /g, "")).replace(/\s+/g, " ").trim();
-const amount = (v: number) => (v >= 1e9 ? `$ ${nf1.format(v / 1e9)} mil M` : v >= 1e6 ? `$ ${nf1.format(v / 1e6)} M` : `$ ${nf.format(Math.round(v))}`);
+const tidyName = (n: string) =>
+  n
+    .replace(/\b(?:\p{L} ){2,}\p{L}\b/gu, (m) => m.replace(/ /g, ""))
+    .replace(/\s+/g, " ")
+    .trim();
+const amount = (v: number) =>
+  v >= 1e9 ? `$ ${nf1.format(v / 1e9)} mil M` : v >= 1e6 ? `$ ${nf1.format(v / 1e6)} M` : `$ ${nf.format(Math.round(v))}`;
 const plural = (n: number, one: string, many: string) => `${nf.format(n)} ${n === 1 ? one : many}`;
 
 /** Where an official sits, without the gendered "Senador/a": the chamber or the office. */
@@ -184,7 +211,11 @@ export function writeSearchIndex(paginas: Pagina[], outDir: string) {
       q: `${p.cuit} ${p.localidad ?? ""} ${p.actividad ?? ""}`,
     });
   for (const b of buyers)
-    byPath.set(`/organismos/${b.slug}`, { t: b.nombre, s: `Compró ${amount(b.total)} en ${plural(b.procesos, "proceso", "procesos")}`, q: "compras" });
+    byPath.set(`/organismos/${b.slug}`, {
+      t: b.nombre,
+      s: `Compró ${amount(b.total)} en ${plural(b.procesos, "proceso", "procesos")}`,
+      q: "compras",
+    });
   for (const a of agencies)
     byPath.set(`/gobierno/${a.slug}`, {
       t: a.name,
@@ -203,14 +234,22 @@ export function writeSearchIndex(paginas: Pagina[], outDir: string) {
     return {
       p: p.path,
       k,
-      t: unescape(/<h1>(.*?)<\/h1>/.exec(p.html)?.[1] ?? p.title.replace(/ · Mendoza Transparente$/, "")),
+      t: unescapeHtml(/<h1>(.*?)<\/h1>/.exec(p.html)?.[1] ?? p.title.replace(/ · Mendoza Transparente$/, "")),
       s: short(p.description.split(/(?<=\.)\s/)[0]!),
       q: p.description,
     };
   });
   // Items that open in a sheet over their page: each one has its own URL, so it can be found and shared.
-  for (const s of signals) entries.push({ p: `/senales?senal=${s.id}`, k: "Señal", t: `${s.cifra} ${s.titulo}`, s: `Para mirar de cerca · ${s.tema}`, q: `${s.matiz} ${s.casosTitulo}` });
-  for (const m of missing) entries.push({ p: `/no-publicado?dato=${m.id}`, k: "No se publica", t: m.titulo, s: m.organismo, q: `${m.que_es} ${m.categoria}` });
+  for (const s of signals)
+    entries.push({
+      p: `/senales?senal=${s.id}`,
+      k: "Señal",
+      t: `${s.cifra} ${s.titulo}`,
+      s: `Para mirar de cerca · ${s.tema}`,
+      q: `${s.matiz} ${s.casosTitulo}`,
+    });
+  for (const m of missing)
+    entries.push({ p: `/no-publicado?dato=${m.id}`, k: "No se publica", t: m.titulo, s: m.organismo, q: `${m.que_es} ${m.categoria}` });
   const paths = new Set(entries.map((e) => e.p));
   for (const [path, e] of byPath) if (path.startsWith("/proveedores/") && !paths.has(path)) entries.push({ p: path, k: "Proveedor", ...e });
   writeFileSync(join(outDir, "search.json"), JSON.stringify(entries));

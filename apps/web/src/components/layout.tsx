@@ -1,5 +1,5 @@
-import { IconButton } from "@mt/ui/components/icon-button";
 import { Dialog } from "@mt/ui/components/dialog";
+import { IconButton } from "@mt/ui/components/icon-button";
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import {
   Archive,
@@ -25,11 +25,10 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-
-import { REPO } from "./official-sources.tsx";
-import { trackPageview } from "../analytics.ts";
-import { usePageMeta } from "../seo.ts";
+import { trackPageview } from "@/analytics.ts";
+import { usePageMeta } from "@/seo.ts";
 import { DetailSheet } from "./detail-sheet.tsx";
+import { REPO } from "./official-sources.tsx";
 import { HeaderSearchButton, SearchDialog } from "./search-dialog.tsx";
 
 type Item = { to: string; label: string; descripcion: string; icon: LucideIcon };
@@ -43,7 +42,12 @@ const GRUPOS: Grupo[] = [
     label: "Gobierno",
     items: [
       { to: "/funcionarios", label: "Funcionarios", descripcion: "Quiénes nos representan y qué declaran", icon: UserRound },
-      { to: "/gobierno", label: "Gobierno por dentro", descripcion: "Cada organismo: quién lo conduce, cuántos cargos y cuánto cuesta", icon: Building2 },
+      {
+        to: "/gobierno",
+        label: "Gobierno por dentro",
+        descripcion: "Cada organismo: quién lo conduce, cuántos cargos y cuánto cuesta",
+        icon: Building2,
+      },
       { to: "/leyes", label: "Leyes", descripcion: "Qué dice cada ley, en pocas palabras", icon: Scale },
     ],
   },
@@ -88,6 +92,7 @@ export function Layout() {
   const [abierto, setAbierto] = useState(false);
 
   // El menú se cierra al navegar y la página no se desplaza detrás mientras está abierto.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: close the menu whenever the route changes.
   useEffect(() => setAbierto(false), [pathname]);
 
   return (
@@ -123,7 +128,6 @@ export function Layout() {
             <Menu className="size-5" aria-hidden />
           </IconButton>
         </div>
-
       </header>
 
       {/* Fuera del header: su backdrop-blur haría que el panel fijo se mida contra el header y no contra la pantalla. */}
@@ -145,42 +149,34 @@ export function Layout() {
               <X className="size-5" aria-hidden />
             </IconButton>
           </div>
-        <nav
-          id="menu-movil"
-          aria-label="Principal"
-          className="flex flex-1 flex-col gap-6 overflow-y-auto overscroll-contain px-4 py-5"
-        >
-          <div className="flex flex-col">
-            {PRINCIPALES.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className="flex items-center justify-between border-b border-line py-4 text-lg text-ink [&.active]:font-medium [&.active]:text-link"
-              >
-                {item.label}
-                <ChevronRight className="size-4 text-link" aria-hidden />
-              </Link>
-            ))}
-          </div>
-          {GRUPOS.map((g) => (
-            <div key={g.label} className="flex flex-col gap-1">
-              <span className="text-xs font-medium tracking-wide text-ink-muted uppercase">{g.label}</span>
-              {g.items.map((item) => (
+          <nav id="menu-movil" aria-label="Principal" className="flex flex-1 flex-col gap-6 overflow-y-auto overscroll-contain px-4 py-5">
+            <div className="flex flex-col">
+              {PRINCIPALES.map((item) => (
                 <Link
                   key={item.to}
                   to={item.to}
-                  className="flex items-center gap-3 rounded-lg py-3 text-ink [&.active]:text-link"
+                  className="flex items-center justify-between border-b border-line py-4 text-lg text-ink [&.active]:font-medium [&.active]:text-link"
                 >
-                  <item.icon className="size-5 shrink-0 text-ink-muted" aria-hidden />
-                  <span className="flex flex-col">
-                    <span className="text-base">{item.label}</span>
-                    <span className="text-sm text-ink-muted">{item.descripcion}</span>
-                  </span>
+                  {item.label}
+                  <ChevronRight className="size-4 text-link" aria-hidden />
                 </Link>
               ))}
             </div>
-          ))}
-        </nav>
+            {GRUPOS.map((g) => (
+              <div key={g.label} className="flex flex-col gap-1">
+                <span className="text-xs font-medium tracking-wide text-ink-muted uppercase">{g.label}</span>
+                {g.items.map((item) => (
+                  <Link key={item.to} to={item.to} className="flex items-center gap-3 rounded-lg py-3 text-ink [&.active]:text-link">
+                    <item.icon className="size-5 shrink-0 text-ink-muted" aria-hidden />
+                    <span className="flex flex-col">
+                      <span className="text-base">{item.label}</span>
+                      <span className="text-sm text-ink-muted">{item.descripcion}</span>
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            ))}
+          </nav>
         </Dialog>
       )}
 
@@ -195,8 +191,8 @@ export function Layout() {
           <div className="flex max-w-md flex-col gap-2 text-sm">
             <span className="font-semibold">Mendoza Transparente</span>
             <p className="text-ink-2 text-pretty">
-              Proyecto ciudadano, independiente y apartidario. Cada número enlaza a su fuente oficial y los archivos
-              originales se guardan tal cual se descargaron.
+              Proyecto ciudadano, independiente y apartidario. Cada número enlaza a su fuente oficial y los archivos originales se guardan
+              tal cual se descargaron.
             </p>
             <a href={REPO} target="_blank" rel="noreferrer" className="inline-flex w-fit items-center gap-1.5 text-link hover:underline">
               <GitBranch className="size-4" aria-hidden /> Código y datos abiertos en GitHub
@@ -216,8 +212,8 @@ export function Layout() {
             <span className="text-ink-muted">Hecho por</span>
             <span className="font-semibold">{AUTOR.nombre}</span>
             <p className="text-ink-2 text-pretty">
-              Indie hacker y product engineer desde Argentina. Construye herramientas que funcionan fuera del
-              laboratorio: de billeteras Lightning a la transparencia pública.
+              Indie hacker y product engineer desde Argentina. Construye herramientas que funcionan fuera del laboratorio: de billeteras
+              Lightning a la transparencia pública.
             </p>
             <div className="flex flex-wrap gap-x-4 gap-y-1">
               <a href={AUTOR.x} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-link hover:underline">
@@ -240,6 +236,7 @@ function Desplegable({ grupo, pathname }: { grupo: Grupo; pathname: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const activo = grupo.items.some((i) => pathname.startsWith(i.to));
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: close the dropdown whenever the route changes.
   useEffect(() => setAbierto(false), [pathname]);
   useEffect(() => {
     if (!abierto) return;

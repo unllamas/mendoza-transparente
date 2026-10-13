@@ -1,37 +1,37 @@
 import { Badge } from "@mt/ui/components/badge";
+import { buttonVariants } from "@mt/ui/components/button";
 import { cardVariants, tileVariants } from "@mt/ui/components/card";
 import { cn } from "@mt/ui/lib/utils";
-import { buttonVariants } from "@mt/ui/components/button";
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import {
   ArrowRight,
-  BookOpen,
-  HelpCircle,
-  LayoutGrid,
-  Sparkles,
   ArrowUpRight,
+  BookOpen,
   Coins,
   ExternalLink,
   EyeOff,
+  HelpCircle,
   Landmark,
+  LayoutGrid,
   type LucideIcon,
   Map as MapIcon,
   Scale,
   ScrollText,
   ShoppingCart,
+  Sparkles,
   TrendingUp,
   Users,
   UsersRound,
 } from "lucide-react";
 import type { ReactNode } from "react";
 
-import { MapaMendoza } from "../charts/mapa.tsx";
-import { SearchTrigger } from "../components/search-dialog.tsx";
-import { DepartmentPicker, EcosystemMap, ReadingRules, StartingQuestions, WhatsNew } from "../components/home-guide.tsx";
-import { Sparkline } from "../charts/sparkline.tsx";
-import { CountUp } from "../components/count-up.tsx";
-import { formatDate, formatNumber } from "../lib.ts";
-import type { SourceMeta } from "../types.ts";
+import { MapaMendoza } from "@/charts/mapa.tsx";
+import { Sparkline } from "@/charts/sparkline.tsx";
+import { CountUp } from "@/components/count-up.tsx";
+import { DepartmentPicker, EcosystemMap, ReadingRules, StartingQuestions, WhatsNew } from "@/components/home-guide.tsx";
+import { SearchTrigger } from "@/components/search-dialog.tsx";
+import { formatDate, formatNumber } from "@/lib.ts";
+import type { SourceMeta } from "@/types.ts";
 
 const route = getRouteApi("/");
 
@@ -58,19 +58,21 @@ export function HomePage() {
           Rumbo a las elecciones provinciales 2027
         </Badge>
         <div className="flex max-w-3xl flex-col gap-5">
-          <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-6xl">
-            Mendoza, con los números sobre la mesa.
-          </h1>
+          <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-6xl">Mendoza, con los números sobre la mesa.</h1>
           <p className="max-w-2xl text-lg text-ink-2 text-pretty sm:text-xl">
-            Mirá en qué se gasta la plata de Mendoza, quién decide y qué falta publicar. Todos los datos oficiales de la
-            provincia en un solo lugar, explicados en simple y con la fuente de cada número.
+            Mirá en qué se gasta la plata de Mendoza, quién decide y qué falta publicar. Todos los datos oficiales de la provincia en un
+            solo lugar, explicados en simple y con la fuente de cada número.
           </p>
         </div>
         <div className="flex flex-col gap-4">
           <SearchTrigger />
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             <DepartmentPicker />
-            <Link to="/como-leer" data-track="home.hero.reading_guide" className="inline-flex items-center gap-1.5 text-sm text-link hover:underline">
+            <Link
+              to="/como-leer"
+              data-track="home.hero.reading_guide"
+              className="inline-flex items-center gap-1.5 text-sm text-link hover:underline"
+            >
               <BookOpen className="size-4" aria-hidden /> ¿Primera vez? Empezá por acá
             </Link>
           </div>
@@ -82,7 +84,11 @@ export function HomePage() {
 
       {guide && (
         <section className="flex flex-col gap-6">
-          <Encabezado icon={HelpCircle} titulo="Empezá por una pregunta" bajada="Las preguntas que más nos hacen, con la respuesta a un clic." />
+          <Encabezado
+            icon={HelpCircle}
+            titulo="Empezá por una pregunta"
+            bajada="Las preguntas que más nos hacen, con la respuesta a un clic."
+          />
           <StartingQuestions guide={guide} />
         </section>
       )}
@@ -235,10 +241,7 @@ export function HomePage() {
               </li>
             ))}
           </ul>
-          <Link
-            to="/no-publicado"
-            className={cn(buttonVariants({ variant: "primary" }), "w-fit")}
-          >
+          <Link to="/no-publicado" className={cn(buttonVariants({ variant: "primary" }), "w-fit")}>
             Ver todos y cómo pedirlos <ArrowRight className="size-4" aria-hidden />
           </Link>
         </section>
@@ -292,20 +295,14 @@ export function HomePage() {
               />
             )}
           </div>
-          <Link
-            to="/senales"
-            className={cn(buttonVariants({ variant: "primary" }), "w-fit")}
-          >
+          <Link to="/senales" className={cn(buttonVariants({ variant: "primary" }), "w-fit")}>
             Ver todas las señales y sus casos <ArrowRight className="size-4" aria-hidden />
           </Link>
         </section>
       )}
-
     </div>
   );
 }
-
-
 
 function Encabezado({ titulo, bajada, icon: Icon }: { titulo: string; bajada?: string; icon?: LucideIcon }) {
   return (

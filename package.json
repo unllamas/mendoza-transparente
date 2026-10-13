@@ -14,10 +14,18 @@
     "actualizar": "bun scripts/actualizar.ts",
     "verificar": "bun scripts/verificar-web.ts",
     "resumir-leyes": "cd apps/web && bun scripts/resumir-leyes.ts",
-    "posthog-sync": "cd apps/web && bun scripts/posthog-sync.ts"
+    "posthog-sync": "cd apps/web && bun scripts/posthog-sync.ts",
+    "lint": "biome check . && bun run lint:arch",
+    "lint:arch": "depcruise apps/web/src apps/web/scripts packages --config .dependency-cruiser.cjs",
+    "format": "biome check --write .",
+    "test": "bun test",
+    "hooks": "lefthook install"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.5.15",
     "@types/bun": "latest",
+    "dependency-cruiser": "^18.6.0",
+    "lefthook": "^2.2.1",
     "playwright-core": "^1.64.0",
     "turbo": "^2",
     "typescript": "^5"

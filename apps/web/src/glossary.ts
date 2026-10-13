@@ -35,7 +35,8 @@ export const GLOSSARY: GlossaryTerm[] = [
   {
     id: "licitacion",
     term: "Licitación pública",
-    definition: "Una compra abierta: se publica, cualquier empresa puede ofertar y se elige la mejor propuesta según reglas fijadas de antemano.",
+    definition:
+      "Una compra abierta: se publica, cualquier empresa puede ofertar y se elige la mejor propuesta según reglas fijadas de antemano.",
   },
   {
     id: "una-sola-oferta",
@@ -79,7 +80,8 @@ export const GLOSSARY: GlossaryTerm[] = [
   {
     id: "boletin-oficial",
     term: "Boletín Oficial",
-    definition: "El diario donde el Gobierno publica leyes, decretos, resoluciones y designaciones. Una norma rige desde que se publica ahí.",
+    definition:
+      "El diario donde el Gobierno publica leyes, decretos, resoluciones y designaciones. Una norma rige desde que se publica ahí.",
     seeAlso: { label: "Leyes", to: "/leyes" },
   },
   {

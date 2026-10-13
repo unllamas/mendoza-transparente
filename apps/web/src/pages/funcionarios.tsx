@@ -1,23 +1,22 @@
-import { tileVariants } from "@mt/ui/components/card";
-import { cn } from "@mt/ui/lib/utils";
-import { buttonVariants } from "@mt/ui/components/button";
 import { Alert } from "@mt/ui/components/alert";
 import { PersonAvatar } from "@mt/ui/components/avatar";
+import { buttonVariants } from "@mt/ui/components/button";
+import { tileVariants } from "@mt/ui/components/card";
 import { PageHeader } from "@mt/ui/components/section";
+import { cn } from "@mt/ui/lib/utils";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Building2, ChevronRight, ExternalLink, FileText, Landmark, Mail, MapPin, Vote } from "lucide-react";
 import { useMemo } from "react";
-
-import { useSetUrlParams, useUrlOption, useUrlText } from "../url-state.ts";
-import { BarList } from "../charts/bar-list.tsx";
-import { formatMoneda } from "../celdas.ts";
-import { formatDate, formatNumber, normalizeText } from "../lib.ts";
-import { FuentesOficiales } from "../components/official-sources.tsx";
-import { ROLES, roleBySlug } from "../slug.ts";
-import type { Funcionario, FuncionariosTema, GrupoFuncionario } from "../types.ts";
-import { ListSearch } from "../components/list-search.tsx";
-import { Breadcrumbs } from "../components/breadcrumbs.tsx";
-import { TrackedSegmented } from "../components/tracked-segmented.tsx";
+import { formatMoneda } from "@/celdas.ts";
+import { BarList } from "@/charts/bar-list.tsx";
+import { Breadcrumbs } from "@/components/breadcrumbs.tsx";
+import { ListSearch } from "@/components/list-search.tsx";
+import { FuentesOficiales } from "@/components/official-sources.tsx";
+import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
+import { formatDate, formatNumber, normalizeText } from "@/lib.ts";
+import { ROLES, roleBySlug } from "@/slug.ts";
+import type { Funcionario, FuncionariosTema, GrupoFuncionario } from "@/types.ts";
+import { useSetUrlParams, useUrlOption, useUrlText } from "@/url-state.ts";
 
 const route = getRouteApi("/funcionarios");
 const routeFicha = getRouteApi("/funcionarios/$role/$slug");
@@ -49,7 +48,6 @@ const PEDIDO_SUELDO: Partial<Record<GrupoFuncionario, string>> = {
   senado_provincial: "dieta-legisladores",
 };
 
-
 export function FuncionariosPage() {
   const { personas } = route.useLoaderData();
   const [pestana] = useUrlOption<Pestana>("grupo", ["ejecutivo", "legislatura", "intendentes", "nacion"], "ejecutivo");
@@ -60,21 +58,33 @@ export function FuncionariosPage() {
   const visibles = useMemo(() => {
     const q = normalizeText(busqueda.trim());
     return personas.filter((p) =>
-      q ? normalizeText(`${p.nombre} ${p.cargo} ${p.organismo} ${p.bloque ?? ""} ${p.partido ?? ""}`).includes(q) : grupos.includes(p.grupo),
+      q
+        ? normalizeText(`${p.nombre} ${p.cargo} ${p.organismo} ${p.bloque ?? ""} ${p.partido ?? ""}`).includes(q)
+        : grupos.includes(p.grupo),
     );
   }, [personas, grupos, busqueda]);
 
   return (
     <div className="flex flex-col gap-10">
       <PageHeader icon={Landmark} topic="Funcionarios" title="¿Quiénes nos representan?">
-        Gobernador, ministros, legisladores, intendentes y quienes representan a Mendoza en el Congreso: su cargo, su
-        partido o bloque, hasta cuándo dura su mandato y cuánto cobran cuando el dato es público.
+        Gobernador, ministros, legisladores, intendentes y quienes representan a Mendoza en el Congreso: su cargo, su partido o bloque,
+        hasta cuándo dura su mandato y cuánto cobran cuando el dato es público.
       </PageHeader>
       <FuentesOficiales ids={["autoridades", "legislatura"]} />
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <TrackedSegmented label="Grupo" options={PESTANAS} value={pestana} onChange={(v) => setParams({ grupo: v === "ejecutivo" ? null : v, q: null })} />
-        <ListSearch value={busqueda} onChange={setBusqueda} placeholder="Buscar por nombre, bloque o municipio" label="Buscar funcionario" />
+        <TrackedSegmented
+          label="Grupo"
+          options={PESTANAS}
+          value={pestana}
+          onChange={(v) => setParams({ grupo: v === "ejecutivo" ? null : v, q: null })}
+        />
+        <ListSearch
+          value={busqueda}
+          onChange={setBusqueda}
+          placeholder="Buscar por nombre, bloque o municipio"
+          label="Buscar funcionario"
+        />
       </div>
 
       {busqueda ? (
@@ -125,7 +135,11 @@ function Lista({ titulo, personas, role }: { titulo: string; personas: Funcionar
       <h2 className="flex min-w-0 items-baseline justify-between gap-3 text-lg font-semibold tracking-tight">
         <span className="truncate">{titulo}</span>
         {role && (
-          <Link to="/funcionarios/$role" params={{ role }} className="shrink-0 text-sm font-normal whitespace-nowrap text-link hover:underline">
+          <Link
+            to="/funcionarios/$role"
+            params={{ role }}
+            className="shrink-0 text-sm font-normal whitespace-nowrap text-link hover:underline"
+          >
             Ver página ›
           </Link>
         )}
@@ -230,7 +244,6 @@ function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: Fun
         <div className="flex min-w-0 flex-col gap-0.5">
           <h1 className="text-xl font-semibold tracking-tight text-balance sm:text-2xl">{p.nombre}</h1>
           <span className="text-sm text-ink-2">{p.cargo}</span>
-
         </div>
       </div>
 
@@ -243,9 +256,7 @@ function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: Fun
         {p.bloque && <Campo label="Bloque" value={p.bloque} />}
         <Campo label="Partido o frente" value={p.partido ?? "No lo informa la fuente oficial"} muted={!p.partido} />
         {p.seccion && <Campo label="Electo por" value={p.seccion} />}
-        {(p.mandatoDesde || p.mandatoHasta) && (
-          <Campo label="Mandato" value={`${p.mandatoDesde ?? "?"}–${p.mandatoHasta ?? "?"}`} />
-        )}
+        {(p.mandatoDesde || p.mandatoHasta) && <Campo label="Mandato" value={`${p.mandatoDesde ?? "?"}–${p.mandatoHasta ?? "?"}`} />}
       </dl>
 
       <section className="flex flex-col gap-2">
@@ -299,7 +310,12 @@ function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: Fun
           </a>
         )}
         {p.fotoCredito && <span className="text-xs text-ink-muted">Foto: {p.fotoCredito}</span>}
-        <a href={p.fuenteUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-ink-muted hover:text-link hover:underline">
+        <a
+          href={p.fuenteUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-1.5 text-ink-muted hover:text-link hover:underline"
+        >
           <Landmark className="size-4" aria-hidden /> De dónde sale este dato <ExternalLink className="size-3.5" aria-hidden />
         </a>
       </div>
@@ -405,9 +421,9 @@ function Declaracion({ persona: p, usd }: { persona: Funcionario; usd?: Funciona
             {d.declaracionesPublicadas === 1 ? "declaración" : "declaraciones"} en total).
           </p>
           <Alert variant="note" title="Por qué el número parece bajo">
-            El valor fiscal es el que usa el Estado para cobrar impuestos y suele estar muy por debajo del precio de mercado. Además,
-            el total no incluye cuentas bancarias, efectivo, inversiones ni participaciones en empresas: la Oficina de Ética Pública
-            muestra que se declaran, pero no cuánto.{" "}
+            El valor fiscal es el que usa el Estado para cobrar impuestos y suele estar muy por debajo del precio de mercado. Además, el
+            total no incluye cuentas bancarias, efectivo, inversiones ni participaciones en empresas: la Oficina de Ética Pública muestra
+            que se declaran, pero no cuánto.{" "}
             <Link to="/no-publicado" search={{ dato: "ddjj-montos" } as never} className="font-medium text-link hover:underline">
               Pedí los montos ›
             </Link>
@@ -433,7 +449,20 @@ function Declaracion({ persona: p, usd }: { persona: Funcionario; usd?: Funciona
 }
 
 const listaHumana = (xs: string[]) => (xs.length < 2 ? xs.join("") : `${xs.slice(0, -1).join(", ")} y ${xs.at(-1)}`);
-const MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+const MONTHS = [
+  "enero",
+  "febrero",
+  "marzo",
+  "abril",
+  "mayo",
+  "junio",
+  "julio",
+  "agosto",
+  "septiembre",
+  "octubre",
+  "noviembre",
+  "diciembre",
+];
 const formatMonth = (ym: string) => `${MONTHS[Number(ym.slice(5, 7)) - 1]} de ${ym.slice(0, 4)}`;
 
 function Campo({ label, value, wide, muted }: { label: string; value: string; wide?: boolean; muted?: boolean }) {

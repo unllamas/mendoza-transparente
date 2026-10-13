@@ -123,7 +123,11 @@ async function ipc(): Promise<Record<string, string | number>[]> {
     if (v) put(k, v * scale, "INDEC IPCNu 2014-oct 2015 (reescalado a dic-2016=100)");
   }
   // Pre-2014: cadena hacia atrás con var. mensual BCRA.
-  chainBack(key(2014, 1), key(START_YEAR, 1) - 1 + 1, "BCRA var. mensual (v4 var.27) encadenada hacia atrás; 2007-2015 = IPC INDEC oficial subestimado");
+  chainBack(
+    key(2014, 1),
+    key(START_YEAR, 1) - 1 + 1,
+    "BCRA var. mensual (v4 var.27) encadenada hacia atrás; 2007-2015 = IPC INDEC oficial subestimado",
+  );
   // Un mes más (dic-1996) para poder calcular la variación de ene-1997.
   chainBack(key(START_YEAR, 1) + 0, key(START_YEAR, 1) - 1, "BCRA var. mensual (v4 var.27) encadenada hacia atrás");
 
@@ -134,9 +138,12 @@ async function ipc(): Promise<Record<string, string | number>[]> {
     if (k < key(START_YEAR, 1)) continue;
     const prev = out.get(k - 1);
     rows.push({
-      anio: r.anio, mes: r.mes, indice: r4(r.indice),
+      anio: r.anio,
+      mes: r.mes,
+      indice: r4(r.indice),
       variacion_mensual: prev ? r4((r.indice / prev.indice - 1) * 100) : "",
-      region: "nacional", fuente: r.fuente,
+      region: "nacional",
+      fuente: r.fuente,
     });
   }
   // Cuyo desde dic-2016 (única disponible).
@@ -145,8 +152,12 @@ async function ipc(): Promise<Record<string, string | number>[]> {
     const [anio, mes] = ym(k);
     const prev = cuyoMap.get(k - 1);
     rows.push({
-      anio, mes, indice: v, variacion_mensual: prev ? r4((v / prev - 1) * 100) : "",
-      region: "cuyo", fuente: "INDEC IPC región Cuyo (base dic-2016)",
+      anio,
+      mes,
+      indice: v,
+      variacion_mensual: prev ? r4((v / prev - 1) * 100) : "",
+      region: "cuyo",
+      fuente: "INDEC IPC región Cuyo (base dic-2016)",
     });
   }
   return rows;
@@ -171,16 +182,19 @@ async function tipoCambio(): Promise<Record<string, string | number>[]> {
   const may = await monthly(5, 2002, "mayorista_a3500");
   const min = await monthly(4, 2010, "minorista");
   const avg = (a?: number[]) => (a?.length ? r4(a.reduce((s, v) => s + v, 0) / a.length) : "");
-  return [...may.keys()].sort((a, b) => a - b).map((k) => {
-    const [anio, mes] = ym(k);
-    return {
-      anio, mes,
-      tipo_cambio_oficial_promedio: avg(may.get(k)),
-      tipo_cambio_minorista: avg(min.get(k)),
-      dias_habiles_mayorista: may.get(k)!.length,
-      fuente: "BCRA API estadisticas v4.0: var.5 mayorista de referencia (Com. A3500), var.4 minorista (promedio vendedor)",
-    };
-  });
+  return [...may.keys()]
+    .sort((a, b) => a - b)
+    .map((k) => {
+      const [anio, mes] = ym(k);
+      return {
+        anio,
+        mes,
+        tipo_cambio_oficial_promedio: avg(may.get(k)),
+        tipo_cambio_minorista: avg(min.get(k)),
+        dias_habiles_mayorista: may.get(k)!.length,
+        fuente: "BCRA API estadisticas v4.0: var.5 mayorista de referencia (Com. A3500), var.4 minorista (promedio vendedor)",
+      };
+    });
 }
 
 const README = `# Índices para valores reales y dólares
@@ -222,11 +236,21 @@ Archivados en data/raw/indices/ (INDEC: serie_ipc_divisiones.csv, sh_ipc_apertur
 export async function run(_args: string[]) {
   const ipcRows = await ipc();
   const p1 = await writeProcessed(SOURCE, "ipc_nacional_mensual.csv", ipcRows, [
-    "anio", "mes", "indice", "variacion_mensual", "region", "fuente",
+    "anio",
+    "mes",
+    "indice",
+    "variacion_mensual",
+    "region",
+    "fuente",
   ]);
   const tcRows = await tipoCambio();
   const p2 = await writeProcessed(SOURCE, "tipo_cambio_mensual.csv", tcRows, [
-    "anio", "mes", "tipo_cambio_oficial_promedio", "tipo_cambio_minorista", "dias_habiles_mayorista", "fuente",
+    "anio",
+    "mes",
+    "tipo_cambio_oficial_promedio",
+    "tipo_cambio_minorista",
+    "dias_habiles_mayorista",
+    "fuente",
   ]);
   const { writeFile } = await import("node:fs/promises");
   await writeFile(p1.replace("ipc_nacional_mensual.csv", "README.md"), README);

@@ -41,6 +41,7 @@ export function ColumnChart({
 
       <div role="list" aria-label={ariaLabel} className="flex items-end gap-1" style={{ height: alto }}>
         {columnas.map((col, i) => (
+          // biome-ignore lint/a11y/noInteractiveElementToNoninteractiveRole: each column is an item of the chart list and also focusable to read its value.
           <button
             key={col.etiqueta}
             type="button"

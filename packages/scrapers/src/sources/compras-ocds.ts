@@ -37,7 +37,8 @@ interface Proceso {
   awards?: Record<string, unknown>[];
 }
 
-type Obj = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: OCDS releases are deeply nested, untyped JSON.
+type Obj = Record<string, any>;
 
 const procesos = new Map<string, Proceso>();
 
@@ -90,7 +91,10 @@ async function streamFile(path: string): Promise<number> {
   let n = 0;
   let source: NodeJS.ReadableStream = createReadStream(path);
   if (path.endsWith(".gz")) source = source.pipe(createGunzip());
-  const tokens = source.pipe(parser.asStream()).pipe(pick.asStream({ filter: "releases" })).pipe(streamArray.asStream());
+  const tokens = source
+    .pipe(parser.asStream())
+    .pipe(pick.asStream({ filter: "releases" }))
+    .pipe(streamArray.asStream());
   for await (const item of tokens as AsyncIterable<{ value: Obj }>) {
     ingest(item.value);
     n++;
@@ -170,12 +174,26 @@ export async function run(_args: string[]) {
   }
 
   await writeProcessed(SOURCE, "procesos.csv", procesosRows, [
-    "ocid", "fecha", "comprador", "titulo", "metodo_contratacion", "estado", "monto_estimado",
-    "cantidad_oferentes", "metodo_ocds", "categoria",
+    "ocid",
+    "fecha",
+    "comprador",
+    "titulo",
+    "metodo_contratacion",
+    "estado",
+    "monto_estimado",
+    "cantidad_oferentes",
+    "metodo_ocds",
+    "categoria",
   ]);
   await writeProcessed(SOURCE, "adjudicaciones.csv", adjRows, [
-    "ocid", "fecha_adjudicacion", "proveedor_nombre", "proveedor_cuit", "monto", "moneda",
-    "estado_adjudicacion", "proveedores_en_adjudicacion",
+    "ocid",
+    "fecha_adjudicacion",
+    "proveedor_nombre",
+    "proveedor_cuit",
+    "monto",
+    "moneda",
+    "estado_adjudicacion",
+    "proveedores_en_adjudicacion",
   ]);
   console.log(`procesos.csv: ${procesosRows.length} filas; adjudicaciones.csv: ${adjRows.length} filas`);
 }

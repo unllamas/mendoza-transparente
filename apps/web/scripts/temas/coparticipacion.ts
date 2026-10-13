@@ -10,7 +10,9 @@ type CsvRow = Record<string, string>;
 const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
 
 export function buildCoparticipacion(anual: CsvRow[], ipc: CsvRow[], poblacion: CsvRow[]): CoparticipacionTema {
-  const nacional = ipc.filter((r) => r.region === "nacional").map((r) => ({ anio: Number(r.anio), mes: Number(r.mes), indice: Number(r.indice) }));
+  const nacional = ipc
+    .filter((r) => r.region === "nacional")
+    .map((r) => ({ anio: Number(r.anio), mes: Number(r.mes), indice: Number(r.indice) }));
   const ref = nacional.at(-1)!;
   const promedioAnual = new Map<number, number>();
   for (const anio of new Set(nacional.map((r) => r.anio))) {

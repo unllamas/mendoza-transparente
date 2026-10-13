@@ -1,20 +1,19 @@
-import { cardVariants } from "@mt/ui/components/card";
-import { cn } from "@mt/ui/lib/utils";
-import { buttonVariants } from "@mt/ui/components/button";
 import { Alert } from "@mt/ui/components/alert";
+import { buttonVariants } from "@mt/ui/components/button";
+import { cardVariants } from "@mt/ui/components/card";
 import { PageHeader } from "@mt/ui/components/section";
+import { cn } from "@mt/ui/lib/utils";
 import { getRouteApi, Link, useRouter, useRouterState } from "@tanstack/react-router";
 import { Building2, ChevronRight, FileText, Scale } from "lucide-react";
 
-import { formatMoneda } from "../celdas.ts";
-import { FuentesOficiales } from "../components/official-sources.tsx";
-import { formatDate } from "../lib.ts";
-import type { Senal } from "../types.ts";
-import { TrackedSheet } from "../components/tracked-sheet.tsx";
-import { useDetail } from "../components/detail-sheet.tsx";
+import { formatMoneda } from "@/celdas.ts";
+import { useDetail } from "@/components/detail-sheet.tsx";
+import { FuentesOficiales } from "@/components/official-sources.tsx";
+import { TrackedSheet } from "@/components/tracked-sheet.tsx";
+import { formatDate } from "@/lib.ts";
+import type { Senal } from "@/types.ts";
 
 const route = getRouteApi("/senales");
-
 
 export function SenalesPage() {
   const { senales } = route.useLoaderData();
@@ -31,14 +30,13 @@ export function SenalesPage() {
     return `${url.pathname}${url.search}`;
   };
   // resetScroll: false keeps the list where it was: opening a card at the bottom must not jump to the top.
-  const setAbierta = (x: Senal | null) =>
-    router.navigate({ href: withSignal(x?.id ?? null), replace: !x, resetScroll: false });
+  const setAbierta = (x: Senal | null) => router.navigate({ href: withSignal(x?.id ?? null), replace: !x, resetScroll: false });
 
   return (
     <div className="flex flex-col gap-10">
       <PageHeader icon={Scale} topic="Para mirar de cerca" title="Lo que los datos muestran y nadie explica">
-        Patrones en los datos oficiales que merecen una explicación. No son acusaciones: son preguntas que cualquier
-        ciudadano puede hacerle al Estado, con los casos concretos para revisar.
+        Patrones en los datos oficiales que merecen una explicación. No son acusaciones: son preguntas que cualquier ciudadano puede hacerle
+        al Estado, con los casos concretos para revisar.
       </PageHeader>
 
       <ul className="grid gap-3 md:grid-cols-2">
@@ -74,7 +72,7 @@ function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }
 
   return (
     <TrackedSheet title={s.tema} onClose={onClose}>
-      {(
+      {
         <>
           <div className="flex flex-col gap-2">
             <span className="text-4xl font-semibold tracking-tight tabular-nums">{s.cifra}</span>
@@ -122,18 +120,14 @@ function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }
           )}
 
           {s.pedido && (
-            <Link
-              to="/no-publicado"
-              search={{ dato: s.pedido } as never}
-              className={cn(buttonVariants({ variant: "primary" }), "w-fit")}
-            >
+            <Link to="/no-publicado" search={{ dato: s.pedido } as never} className={cn(buttonVariants({ variant: "primary" }), "w-fit")}>
               Pedir los datos actualizados <ChevronRight className="size-4" aria-hidden />
             </Link>
           )}
 
           <p className="border-t border-line pt-4 text-xs text-ink-muted text-pretty">Cómo lo calculamos: {s.metodo}</p>
         </>
-      )}
+      }
     </TrackedSheet>
   );
 }

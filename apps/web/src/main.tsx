@@ -3,11 +3,32 @@ import { type ReactNode, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 import { installClickTracking } from "./analytics.ts";
+import { Layout } from "./components/layout.tsx";
 import { loadIndex, loadJson, loadTema } from "./lib.ts";
 import { cuitDeSlug } from "./slug.ts";
-import { Layout } from "./components/layout.tsx";
 import "./styles.css";
-import type { AgencyDetail, AgencySummary, GobiernoOverview, HomeGuide, CoparticipacionTema, DeudaTema, EmpleoTema, FuncionariosTema, HomeTema, LeyDetalle, LeyResumen, MapaMendoza, MunicipioPagina, NoPublicado, OrganismoDetalle, OrganismoResumen, PoblacionTema, ProveedorDetalle, ProveedorResumen, SenalesTema } from "./types.ts";
+import type {
+  AgencyDetail,
+  AgencySummary,
+  CoparticipacionTema,
+  DeudaTema,
+  EmpleoTema,
+  FuncionariosTema,
+  GobiernoOverview,
+  HomeGuide,
+  HomeTema,
+  LeyDetalle,
+  LeyResumen,
+  MapaMendoza,
+  MunicipioPagina,
+  NoPublicado,
+  OrganismoDetalle,
+  OrganismoResumen,
+  PoblacionTema,
+  ProveedorDetalle,
+  ProveedorResumen,
+  SenalesTema,
+} from "./types.ts";
 
 // Each page is its own chunk: the first visit downloads only the layout and the page it lands on.
 const page = <K extends string>(load: () => Promise<Record<K, () => ReactNode>>, name: K) => lazyRouteComponent(load, name);
@@ -148,7 +169,10 @@ const municipiosRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/municipios",
   loader: async () => {
-    const [municipios, mapa] = await Promise.all([loadTema<MunicipioPagina[]>("municipios"), loadTema<MapaMendoza>("mapa").catch(() => null)]);
+    const [municipios, mapa] = await Promise.all([
+      loadTema<MunicipioPagina[]>("municipios"),
+      loadTema<MapaMendoza>("mapa").catch(() => null),
+    ]);
     return { municipios, mapa };
   },
   component: page(() => import("./pages/municipios.tsx"), "MunicipiosPage"),
@@ -222,7 +246,32 @@ const senalesRoute = createRoute({
 });
 
 const router = createRouter({
-  routeTree: rootRoute.addChildren([homeRoute, deudaRoute, coparticipacionRoute, empleoRoute, poblacionRoute, funcionariosRoute, roleRoute, funcionarioRoute, gobiernoRoute, agencyRoute, municipiosRoute, municipioRoute, proveedoresRoute, proveedorRoute, organismosRoute, organismoRoute, leyesRoute, leyRoute, senalesRoute, noPublicadoRoute, participarRoute, comoLeerRoute, fuentesRoute, datosRoute]),
+  routeTree: rootRoute.addChildren([
+    homeRoute,
+    deudaRoute,
+    coparticipacionRoute,
+    empleoRoute,
+    poblacionRoute,
+    funcionariosRoute,
+    roleRoute,
+    funcionarioRoute,
+    gobiernoRoute,
+    agencyRoute,
+    municipiosRoute,
+    municipioRoute,
+    proveedoresRoute,
+    proveedorRoute,
+    organismosRoute,
+    organismoRoute,
+    leyesRoute,
+    leyRoute,
+    senalesRoute,
+    noPublicadoRoute,
+    participarRoute,
+    comoLeerRoute,
+    fuentesRoute,
+    datosRoute,
+  ]),
   defaultPreload: "intent",
   // The data only changes with each deploy: once loaded, a page does not fetch it again when its URL
   // parameters change (a tab, a search typed letter by letter).

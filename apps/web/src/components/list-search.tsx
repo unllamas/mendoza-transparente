@@ -1,10 +1,20 @@
 import { SearchInput } from "@mt/ui/components/search-input";
 import { useEffect } from "react";
 
-import { track } from "../analytics.ts";
+import { track } from "@/analytics.ts";
 
 /** Search box of the long lists, with analytics: one `search.query` when the person stops typing. */
-export function ListSearch({ value, onChange, placeholder, label }: { value: string; onChange: (v: string) => void; placeholder: string; label: string }) {
+export function ListSearch({
+  value,
+  onChange,
+  placeholder,
+  label,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  placeholder: string;
+  label: string;
+}) {
   useEffect(() => {
     const q = value.trim();
     if (q.length < 2) return;

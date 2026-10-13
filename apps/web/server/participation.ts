@@ -63,14 +63,18 @@ const MAX_PER_HOUR = 10;
 const OVERDUE_DAYS = 21;
 
 const json = (body: unknown, status = 200) =>
-  new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" } });
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+  });
 
 const text = (v: unknown, max: number): string | null => {
   if (typeof v !== "string") return null;
   const t = v.replace(/\s+/g, " ").trim();
   return t ? t.slice(0, max) : null;
 };
-const isoDate = (v: unknown): string | null => (typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v) && !Number.isNaN(Date.parse(v)) ? v : null);
+const isoDate = (v: unknown): string | null =>
+  typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v) && !Number.isNaN(Date.parse(v)) ? v : null;
 const email = (v: unknown): string | null => {
   const t = text(v, 200);
   return t && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(t) ? t : null;
@@ -119,7 +123,12 @@ export async function stats(store: Store, now = new Date()) {
     else if (r.status === "sin_respuesta" || r.filedOn < overdueBefore) s.overdue++;
   }
   const total = Object.values(items).reduce(
-    (t, s) => ({ requests: t.requests + s.requests, answered: t.answered + s.answered, denied: t.denied + s.denied, overdue: t.overdue + s.overdue }),
+    (t, s) => ({
+      requests: t.requests + s.requests,
+      answered: t.answered + s.answered,
+      denied: t.denied + s.denied,
+      overdue: t.overdue + s.overdue,
+    }),
     { requests: 0, answered: 0, denied: 0, overdue: 0 },
   );
   return { items, total, updatedAt: now.toISOString() };
@@ -144,7 +153,8 @@ export async function handle(req: Request, store: Store, env: Env, ip: string): 
     return json({ error: "El formulario llegó vacío o mal armado." }, 400);
   }
   if (typeof body.website === "string" && body.website) return json({ ok: true }); // honeypot: bots fill every field
-  if (!(await verifyTurnstile(body.token, ip, env))) return json({ error: "No pudimos verificar que no seas un robot. Probá de nuevo." }, 403);
+  if (!(await verifyTurnstile(body.token, ip, env)))
+    return json({ error: "No pudimos verificar que no seas un robot. Probá de nuevo." }, 403);
 
   const now = new Date();
   const ipHash = await sha256(`${env.ipSalt}:${ip}`);
@@ -163,8 +173,10 @@ export async function handle(req: Request, store: Store, env: Env, ip: string): 
     const itemId = text(body.itemId, 80);
     const filedOn = isoDate(body.filedOn);
     const number = filingNumber(body.filingNumber);
-    if (!itemId || !filedOn || !number) return json({ error: "Faltan el dato pedido, la fecha o el número de trámite (o el número no es válido)." }, 400);
-    if (filedOn > now.toISOString().slice(0, 10) || filedOn < "2016-01-01") return json({ error: "La fecha de presentación no es válida." }, 400);
+    if (!itemId || !filedOn || !number)
+      return json({ error: "Faltan el dato pedido, la fecha o el número de trámite (o el número no es válido)." }, 400);
+    if (filedOn > now.toISOString().slice(0, 10) || filedOn < "2016-01-01")
+      return json({ error: "La fecha de presentación no es válida." }, 400);
     const added = await store.addRequest({
       itemId,
       agency: text(body.agency, 200),

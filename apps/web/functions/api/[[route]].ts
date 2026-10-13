@@ -44,7 +44,9 @@ function d1Store(db: D1Database): Store {
     },
     async answerRequest(a) {
       const res = await db
-        .prepare("UPDATE pedidos SET estado = ?, fecha_respuesta = ?, respuesta_resumen = ?, respuesta_url = ?, updated_at = ? WHERE tramite = ?")
+        .prepare(
+          "UPDATE pedidos SET estado = ?, fecha_respuesta = ?, respuesta_resumen = ?, respuesta_url = ?, updated_at = ? WHERE tramite = ?",
+        )
         .bind(a.status, a.answeredOn, a.summary, a.url, a.updatedAt, a.filingNumber)
         .run();
       return res.meta.changes;
@@ -69,6 +71,11 @@ function d1Store(db: D1Database): Store {
 
 export const onRequest = async (ctx: { request: Request; env: PagesEnv }): Promise<Response> => {
   const ip = ctx.request.headers.get("cf-connecting-ip") ?? "0.0.0.0";
-  const res = await handle(ctx.request, d1Store(ctx.env.DB), { turnstileSecret: ctx.env.TURNSTILE_SECRET, ipSalt: ctx.env.IP_SALT ?? "mt" }, ip);
+  const res = await handle(
+    ctx.request,
+    d1Store(ctx.env.DB),
+    { turnstileSecret: ctx.env.TURNSTILE_SECRET, ipSalt: ctx.env.IP_SALT ?? "mt" },
+    ip,
+  );
   return res ?? new Response("No existe", { status: 404 });
 };

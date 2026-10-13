@@ -18,10 +18,9 @@
  * La descarga es idempotente: lo que ya está archivado no se vuelve a bajar (salvo con --refresh).
  */
 
+import { fetchAndArchive, get, latestRaw, type Row, readRaw, writeProcessed } from "@mt/core";
 import { load } from "cheerio";
 import * as XLSX from "xlsx";
-
-import { fetchAndArchive, get, latestRaw, readRaw, writeProcessed, type Row } from "@mt/core";
 
 const BASE = "https://www.argentina.gob.ar";
 const PAGES = {
@@ -49,7 +48,7 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export function cleanHref(href: string): string | null {
   let h = href.trim().replace(/^blank:#/, "");
   if (!h) return null;
-  if (h.startsWith("//")) h = "https:" + h;
+  if (h.startsWith("//")) h = `https:${h}`;
   if (h.startsWith("/")) h = BASE + h;
   if (!/^https?:\/\//.test(h)) return null;
   return h.split("#")[0] ?? null;
@@ -198,20 +197,7 @@ const round = (v: number, d: number) => Math.round(v * 10 ** d) / 10 ** d;
 // RON: transferencias automáticas
 // ---------------------------------------------------------------------------
 
-const MESES = [
-  "enero",
-  "febrero",
-  "marzo",
-  "abril",
-  "mayo",
-  "junio",
-  "julio",
-  "agosto",
-  "septiembre",
-  "octubre",
-  "noviembre",
-  "diciembre",
-];
+const MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
 
 type RonRegla = [RegExp, string];
 
@@ -367,11 +353,12 @@ function ronCompararSerie(rows: Row[], serie: Map<string, number>): void {
 async function ron(refresh: boolean, soloParsear: boolean): Promise<void> {
   const source = ID.ron;
   const links = await listFiles(PAGES.ron);
-  const serie = links
-    .filter((u) => /serie_ron_\d{4}_\d{4}\.(csv|xlsx)$/i.test(u))
-    .sort((a, b) => baseName(a).localeCompare(baseName(b)));
+  const serie = links.filter((u) => /serie_ron_\d{4}_\d{4}\.(csv|xlsx)$/i.test(u)).sort((a, b) => baseName(a).localeCompare(baseName(b)));
   // Para la serie nos quedamos con la de fin de período más nuevo (CSV y XLSX).
-  const ultimoFin = serie.map((u) => /_(\d{4})\.(csv|xlsx)$/i.exec(u)?.[1] ?? "").sort().pop();
+  const ultimoFin = serie
+    .map((u) => /_(\d{4})\.(csv|xlsx)$/i.exec(u)?.[1] ?? "")
+    .sort()
+    .pop();
   const consolidados = links.filter((u) => /informacion_consolidada/i.test(u));
   const diarios = links.filter((u) => /internet_diario/i.test(u) || /montos_diarios_-ano_2025/i.test(u));
   const aDescargar = [...serie.filter((u) => u.includes(`_${ultimoFin}.`)), ...consolidados, ...diarios];
@@ -478,7 +465,10 @@ async function aif(refresh: boolean, soloParsear: boolean): Promise<void> {
   };
 
   // 1) Serie anual (cuarto trimestre acumulado, 2005 en adelante): una hoja por provincia.
-  const series = links.filter((u) => /serie_aif-apnf-\d{4}/i.test(u)).map(baseName).sort();
+  const series = links
+    .filter((u) => /serie_aif-apnf-\d{4}/i.test(u))
+    .map(baseName)
+    .sort();
   const serieName = series.pop();
   if (serieName) {
     const wb = await readWorkbook(source, serieName);
@@ -611,7 +601,14 @@ async function ocupacion(refresh: boolean, soloParsear: boolean): Promise<void> 
     }
     if (vistas.size !== 24) advertencias.push(`${sheet}: ${vistas.size} jurisdicciones (esperadas 24)`);
   }
-  const out = await writeProcessed(source, "ocupacion_salarios.csv", rows, ["anio", "trimestre", "provincia", "concepto", "valor", "unidad"]);
+  const out = await writeProcessed(source, "ocupacion_salarios.csv", rows, [
+    "anio",
+    "trimestre",
+    "provincia",
+    "concepto",
+    "valor",
+    "unidad",
+  ]);
   console.log(`[${source}] ${rows.length} filas -> ${out}`);
   for (const a of advertencias.slice(0, 30)) console.warn(`  ! ${a}`);
 }
@@ -707,7 +704,8 @@ async function deuda(refresh: boolean, soloParsear: boolean): Promise<void> {
       vistas.add(prov);
       for (const { c, concepto } of cols) {
         const v = num(fila[c] ?? null);
-        if (v !== null) rows.push({ anio: p.anio, trimestre: p.trim, provincia: prov, concepto, valor: round(v / divisor, 4), unidad: "millones_pesos" });
+        if (v !== null)
+          rows.push({ anio: p.anio, trimestre: p.trim, provincia: prov, concepto, valor: round(v / divisor, 4), unidad: "millones_pesos" });
       }
     }
     if (vistas.size !== 24) advertencias.push(`${name}: ${vistas.size} jurisdicciones (esperadas 24)`);

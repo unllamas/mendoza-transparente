@@ -1,7 +1,7 @@
 import { Sheet } from "@mt/ui/components/sheet";
 import { type ReactNode, useEffect } from "react";
 
-import { track } from "../analytics.ts";
+import { track } from "@/analytics.ts";
 
 /** Sheet with analytics: every sheet sends `sheet.open` and `sheet.close` (with the seconds it was open). */
 export function TrackedSheet({

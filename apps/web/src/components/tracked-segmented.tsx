@@ -1,6 +1,6 @@
 import { Segmented } from "@mt/ui/components/segmented";
 
-import { track } from "../analytics.ts";
+import { track } from "@/analytics.ts";
 
 /** Segmented control with analytics: each change sends `<trackId>.change` (default `segmented.change`). */
 export function TrackedSegmented<T extends string>({

@@ -11,7 +11,14 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-import type { AgencyDetail, AgencySummary, FuncionariosTema, GobiernoOverview, OrganismoResumen, ProveedorResumen } from "../../src/types.ts";
+import type {
+  AgencyDetail,
+  AgencySummary,
+  FuncionariosTema,
+  GobiernoOverview,
+  OrganismoResumen,
+  ProveedorResumen,
+} from "../../src/types.ts";
 import type { Deflactor } from "./inflacion.ts";
 
 type Row = Record<string, string>;
@@ -69,7 +76,12 @@ function rank(role: string): number {
   if (/^(gobernador|vicegobernador|ministr)/.test(r)) return 0;
   if (/^(secretari|jefe de gabinete)/.test(r)) return 1;
   if (/^subsecretari/.test(r)) return 2;
-  if (/^(presidente|vicepresidente|administrador general|director general|directora general|fiscal de estado|contador general|tesorer)/.test(r)) return 3;
+  if (
+    /^(presidente|vicepresidente|administrador general|director general|directora general|fiscal de estado|contador general|tesorer)/.test(
+      r,
+    )
+  )
+    return 3;
   if (/^(director|directora|coordinador|coordinadora)/.test(r)) return 4;
   if (/^(subdirector|subdirectora)/.test(r)) return 5;
   if (/^(jefe|jefa|administrador|administradora)/.test(r)) return 6;
@@ -136,7 +148,8 @@ export function buildGobierno(
     const staffSeries = quarters
       .map((q) => {
         const qs = rows.filter((r) => quarterKey(r) === q);
-        const sum = (tipo: string, field = "cantidad") => qs.filter((r) => r.tipo_personal === tipo).reduce((s, r) => s + (Number(r[field]) || 0), 0);
+        const sum = (tipo: string, field = "cantidad") =>
+          qs.filter((r) => r.tipo_personal === tipo).reduce((s, r) => s + (Number(r[field]) || 0), 0);
         return {
           period: q,
           permanent: sum("permanente"),
@@ -150,12 +163,14 @@ export function buildGobierno(
 
     // Cost by year: amounts are accumulated from January, so the year's total is its last quarter.
     const years = [...new Set(rows.map((r) => Number(r.anio)))].sort();
-    const costByYear = years.map((year) => {
-      const yearRows = rows.filter((r) => Number(r.anio) === year);
-      const lastQ = Math.max(...yearRows.map((r) => Number(r.trimestre)));
-      const nominal = yearRows.filter((r) => Number(r.trimestre) === lastQ).reduce((s, r) => s + (Number(r.importe) || 0), 0);
-      return { year, nominal, real: inflation ? inflation.aReal(nominal, year) : nominal, complete: lastQ === 4 };
-    }).filter((c) => c.nominal > 0);
+    const costByYear = years
+      .map((year) => {
+        const yearRows = rows.filter((r) => Number(r.anio) === year);
+        const lastQ = Math.max(...yearRows.map((r) => Number(r.trimestre)));
+        const nominal = yearRows.filter((r) => Number(r.trimestre) === lastQ).reduce((s, r) => s + (Number(r.importe) || 0), 0);
+        return { year, nominal, real: inflation ? inflation.aReal(nominal, year) : nominal, complete: lastQ === 4 };
+      })
+      .filter((c) => c.nominal > 0);
     const lastComplete = [...costByYear].reverse().find((c) => c.complete) ?? null;
     const positionsInYear = lastComplete
       ? staffSeries.filter((p) => p.period.startsWith(`${lastComplete.year}-`)).map((p) => p.permanent + p.temporary + p.contracts)
@@ -225,7 +240,8 @@ export function buildGobierno(
     // Hierarchy first; on a tie, people with their own page (and photo) go first.
     team.sort((x, y) => rank(x.role) - rank(y.role) || Number(!x.path) - Number(!y.path) || x.name.localeCompare(y.name, "es"));
     // The head is the top-ranked person only if their role is a leadership one (not an adviser or clerk).
-    const head = team[0] && rank(team[0].role) <= 4 ? { name: team[0].name, role: team[0].role, path: team[0].path, photo: team[0].photo } : null;
+    const head =
+      team[0] && rank(team[0].role) <= 4 ? { name: team[0].name, role: team[0].role, path: team[0].path, photo: team[0].photo } : null;
 
     // Purchases by budget code prefix ("1-08-")
     const prefixes = o.alias?.prefijos_compras ?? [];
@@ -261,7 +277,9 @@ export function buildGobierno(
       .filter((a) => {
         const issuer = normalize(a.organismo_emisor ?? "");
         const unit = normalize(a.reparticion ?? "");
-        return nameKeys.some((k) => k && (issuer === k || unit === k || issuer.includes(k) || (unit && k.includes(unit) && unit.length > 12)));
+        return nameKeys.some(
+          (k) => k && (issuer === k || unit === k || issuer.includes(k) || (unit && k.includes(unit) && unit.length > 12)),
+        );
       })
       .sort((a, b) => (b.fecha_boletin ?? "").localeCompare(a.fecha_boletin ?? ""))
       .slice(0, 15)

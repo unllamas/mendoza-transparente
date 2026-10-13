@@ -77,12 +77,12 @@ function wrap(text: string, maxChars: number, maxLines: number): string[] {
   let cur = "";
   const words = text.split(/ +/);
   for (const [i, w] of words.entries()) {
-    if (cur && (cur + " " + w).length > maxChars) {
+    if (cur && `${cur} ${w}`.length > maxChars) {
       lines.push(cur);
       cur = w;
       if (lines.length === maxLines) {
         cur = "";
-        lines[maxLines - 1] = lines[maxLines - 1]!.replace(/[\s,.;:]+$/, "") + "…";
+        lines[maxLines - 1] = `${lines[maxLines - 1]!.replace(/[\s,.;:]+$/, "")}…`;
         return lines;
       }
     } else cur = cur ? `${cur} ${w}` : w;
@@ -166,7 +166,10 @@ for (const p of paginas) {
 // resuelve la ruta: un proveedor sin página propia, por ejemplo, igual se ve) pero los buscadores no la indexan.
 await writeFile(
   join(DIST, "404.html"),
-  stripBase(base).replace("</head>", `    <title>Página no encontrada · ${SITE_NAME}</title>\n    <meta name="robots" content="noindex" />\n  </head>`),
+  stripBase(base).replace(
+    "</head>",
+    `    <title>Página no encontrada · ${SITE_NAME}</title>\n    <meta name="robots" content="noindex" />\n  </head>`,
+  ),
 );
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -177,7 +180,20 @@ ${paginas.map((p) => `  <url><loc>${canonicalUrl(p.path)}</loc><lastmod>${p.last
 await writeFile(join(DIST, "sitemap.xml"), sitemap);
 
 // Datos públicos: bienvenidos los buscadores y los motores de IA (citan la fuente y traen gente).
-const BOTS_IA = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-SearchBot", "Claude-User", "PerplexityBot", "Perplexity-User", "Google-Extended", "Applebot-Extended", "CCBot", "meta-externalagent"];
+const BOTS_IA = [
+  "GPTBot",
+  "OAI-SearchBot",
+  "ChatGPT-User",
+  "ClaudeBot",
+  "Claude-SearchBot",
+  "Claude-User",
+  "PerplexityBot",
+  "Perplexity-User",
+  "Google-Extended",
+  "Applebot-Extended",
+  "CCBot",
+  "meta-externalagent",
+];
 await writeFile(
   join(DIST, "robots.txt"),
   `User-agent: *\nAllow: /\n\n${BOTS_IA.map((b) => `User-agent: ${b}\nAllow: /\n`).join("\n")}\nSitemap: ${SITE_URL}/sitemap.xml\n`,
@@ -186,7 +202,9 @@ await writeFile(
 // llms.txt (llmstxt.org): mapa del sitio para modelos de lenguaje.
 const seccion = (titulo: string, prefijo: string) => {
   const items = paginas.filter((p) => p.path.startsWith(prefijo) && p.path !== prefijo);
-  return items.length ? `\n## ${titulo}\n\n${items.map((p) => `- [${p.title.replace(/ · Mendoza Transparente$/, "")}](${canonicalUrl(p.path)}): ${p.description}`).join("\n")}\n` : "";
+  return items.length
+    ? `\n## ${titulo}\n\n${items.map((p) => `- [${p.title.replace(/ · Mendoza Transparente$/, "")}](${canonicalUrl(p.path)}): ${p.description}`).join("\n")}\n`
+    : "";
 };
 const principales = paginas.filter((p) => p.path.split("/").length === 2 && p.path !== "/");
 await writeFile(

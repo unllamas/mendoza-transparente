@@ -12,7 +12,10 @@ export function StatusBadge({ status, label, className }: { status: keyof typeof
   const s = STATUS[status];
   return (
     <span className={cn("inline-flex items-center gap-1.5 text-sm text-ink-2", className)}>
-      <span aria-hidden className={cn("inline-flex size-4 items-center justify-center rounded-full text-[10px] font-bold text-white", s.color)}>
+      <span
+        aria-hidden
+        className={cn("inline-flex size-4 items-center justify-center rounded-full text-[10px] font-bold text-white", s.color)}
+      >
         {s.icon}
       </span>
       {label}

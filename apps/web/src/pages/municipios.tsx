@@ -1,22 +1,21 @@
-import { cn } from "@mt/ui/lib/utils";
-import { cardVariants } from "@mt/ui/components/card";
 import { Alert } from "@mt/ui/components/alert";
 import { PersonAvatar } from "@mt/ui/components/avatar";
+import { cardVariants } from "@mt/ui/components/card";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
+import { cn } from "@mt/ui/lib/utils";
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { Briefcase, ChevronRight, Coins, MapPin, Users, Vote } from "lucide-react";
 import { useMemo } from "react";
-
-import { useUrlOption } from "../url-state.ts";
-import { ColumnChart } from "../charts/column-chart.tsx";
-import { MapaMendoza, MunicipalityLocator } from "../charts/mapa.tsx";
-import { FuentesOficiales } from "../components/official-sources.tsx";
-import { formatDate, formatNumber } from "../lib.ts";
-import { slug } from "../slug.ts";
-import type { MunicipioPagina } from "../types.ts";
-import { Breadcrumbs } from "../components/breadcrumbs.tsx";
-import { TrackedSegmented } from "../components/tracked-segmented.tsx";
+import { ColumnChart } from "@/charts/column-chart.tsx";
+import { MapaMendoza, MunicipalityLocator } from "@/charts/mapa.tsx";
+import { Breadcrumbs } from "@/components/breadcrumbs.tsx";
+import { FuentesOficiales } from "@/components/official-sources.tsx";
+import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
+import { formatDate, formatNumber } from "@/lib.ts";
+import { slug } from "@/slug.ts";
+import type { MunicipioPagina } from "@/types.ts";
+import { useUrlOption } from "@/url-state.ts";
 
 const SOURCES = ["hacienda-participacion-municipal", "poblacion", "autoridades", "legislatura", "municipios-personal"];
 const pesos = (v: number) => `$ ${formatNumber(Math.round(v))}`;
@@ -41,15 +40,24 @@ const metricValue = (m: MunicipioPagina, metric: Metric): number | undefined =>
   metric === "poblacion" ? m.poblacion.actual : metric === "coparticipacion" ? m.coparticipacion?.perCapita : m.staff?.perThousand;
 const perThousand = (v: number) => formatNumber(Math.round(v * 10) / 10);
 const metricFormat = (metric: Metric) =>
-  metric === "poblacion" ? (v: number) => `${formatNumber(v)} hab.` : metric === "coparticipacion" ? pesos : (v: number) => `${perThousand(v)} cada 1.000 hab.`;
+  metric === "poblacion"
+    ? (v: number) => `${formatNumber(v)} hab.`
+    : metric === "coparticipacion"
+      ? pesos
+      : (v: number) => `${perThousand(v)} cada 1.000 hab.`;
 const METRIC_UNIT: Record<Metric, string> = { poblacion: "habitantes", coparticipacion: "por habitante", personal: "cada 1.000 hab." };
 
 export function MunicipiosPage() {
   const { municipios, mapa } = listApi.useLoaderData();
   const navigate = useNavigate();
   const [metric, setMetric] = useUrlOption<Metric>("ver", ["poblacion", "coparticipacion", "personal"], "poblacion");
-  const sorted = useMemo(() => [...municipios].sort((a, b) => (metricValue(b, metric) ?? -1) - (metricValue(a, metric) ?? -1)), [municipios, metric]);
-  const values = Object.fromEntries(municipios.flatMap((m) => (metricValue(m, metric) === undefined ? [] : [[m.nombre, metricValue(m, metric)!]])));
+  const sorted = useMemo(
+    () => [...municipios].sort((a, b) => (metricValue(b, metric) ?? -1) - (metricValue(a, metric) ?? -1)),
+    [municipios, metric],
+  );
+  const values = Object.fromEntries(
+    municipios.flatMap((m) => (metricValue(m, metric) === undefined ? [] : [[m.nombre, metricValue(m, metric)!]])),
+  );
   const anio = municipios.find((m) => m.coparticipacion)?.coparticipacion;
 
   return (
@@ -82,7 +90,11 @@ export function MunicipiosPage() {
         <ol className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
           {sorted.map((m, i) => (
             <li key={m.slug}>
-              <Link to="/municipios/$slug" params={{ slug: m.slug }} className="group flex items-center gap-3 px-4 py-3 hover:bg-grid/50 sm:gap-4 sm:px-5">
+              <Link
+                to="/municipios/$slug"
+                params={{ slug: m.slug }}
+                className="group flex items-center gap-3 px-4 py-3 hover:bg-grid/50 sm:gap-4 sm:px-5"
+              >
                 <span className="w-5 shrink-0 text-right text-sm text-ink-muted tabular-nums">{i + 1}</span>
                 <PersonAvatar name={m.intendente?.nombre ?? m.nombre} photo={m.intendente?.foto} className="size-10 text-xs" />
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
@@ -100,7 +112,9 @@ export function MunicipiosPage() {
                       return metric === "poblacion" ? formatNumber(v) : metric === "coparticipacion" ? pesos(v) : perThousand(v);
                     })()}
                   </span>
-                  <span className="text-xs whitespace-nowrap text-ink-muted">{metricValue(m, metric) === undefined ? "\u00a0" : METRIC_UNIT[metric]}</span>
+                  <span className="text-xs whitespace-nowrap text-ink-muted">
+                    {metricValue(m, metric) === undefined ? "\u00a0" : METRIC_UNIT[metric]}
+                  </span>
                 </span>
                 <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
               </Link>
@@ -162,12 +176,19 @@ export function MunicipioPage() {
               <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                 <span className="text-sm text-ink-muted">Intendente</span>
                 <span className="truncate text-lg font-medium group-hover:text-link">{i.nombre}</span>
-                <span className="truncate text-sm text-ink-2">{[i.partido, i.mandatoHasta && `hasta ${i.mandatoHasta}`].filter(Boolean).join(" · ")}</span>
+                <span className="truncate text-sm text-ink-2">
+                  {[i.partido, i.mandatoHasta && `hasta ${i.mandatoHasta}`].filter(Boolean).join(" · ")}
+                </span>
               </span>
               <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
             </Link>
           )}
-          <StatTile icon={Users} label="Habitantes" value={formatNumber(m.poblacion.actual)} note={`Puesto ${m.poblacion.puesto} de 18 en la provincia`} />
+          <StatTile
+            icon={Users}
+            label="Habitantes"
+            value={formatNumber(m.poblacion.actual)}
+            note={`Puesto ${m.poblacion.puesto} de 18 en la provincia`}
+          />
           <StatTile
             icon={Coins}
             label="Coparticipación por habitante"
@@ -178,9 +199,18 @@ export function MunicipioPage() {
             icon={Briefcase}
             label="Cargos y contratos"
             value={st ? formatNumber(st.positions + st.contracts) : "No lo publica"}
-            note={st ? `${perThousand(st.perThousand)} cada 1.000 habitantes · puesto ${st.rank} de ${st.withData}` : "No publica su planta de personal"}
+            note={
+              st
+                ? `${perThousand(st.perThousand)} cada 1.000 habitantes · puesto ${st.rank} de ${st.withData}`
+                : "No publica su planta de personal"
+            }
           />
-          <StatTile icon={Vote} label="Sección electoral" value={m.seccion ?? "—"} note="Define a quiénes eligen sus vecinos en la Legislatura" />
+          <StatTile
+            icon={Vote}
+            label="Sección electoral"
+            value={m.seccion ?? "—"}
+            note="Define a quiénes eligen sus vecinos en la Legislatura"
+          />
         </div>
       </div>
 
@@ -204,7 +234,8 @@ export function MunicipioPage() {
         {st ? (
           <>
             <p className="-mt-2 text-sm text-ink-muted">
-              Cargos de planta y contratos según el anexo de personal que el municipio publica por la Ley de Responsabilidad Fiscal, {st.quarter}. Son cargos, no personas: alguien puede tener más de uno.
+              Cargos de planta y contratos según el anexo de personal que el municipio publica por la Ley de Responsabilidad Fiscal,{" "}
+              {st.quarter}. Son cargos, no personas: alguien puede tener más de uno.
             </p>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               <StatTile label="Planta permanente" value={formatNumber(st.permanent)} />
@@ -224,7 +255,13 @@ export function MunicipioPage() {
               />
             )}
             {st.note && <Alert variant="note">{st.note}</Alert>}
-            <a href={st.sourceUrl} target="_blank" rel="noreferrer" className="w-fit text-sm text-link hover:underline" data-track="municipality.staff_source.open">
+            <a
+              href={st.sourceUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="w-fit text-sm text-link hover:underline"
+              data-track="municipality.staff_source.open"
+            >
               Ver el anexo publicado por el municipio ↗
             </a>
           </>
@@ -241,7 +278,9 @@ export function MunicipioPage() {
 
       {localLaws.length > 0 && (
         <Section title={`Leyes que tocan a ${m.nombre}`}>
-          <p className="-mt-2 text-sm text-ink-muted">Leyes provinciales que hacen algo concreto en el departamento: un terreno, una obra, un convenio.</p>
+          <p className="-mt-2 text-sm text-ink-muted">
+            Leyes provinciales que hacen algo concreto en el departamento: un terreno, una obra, un convenio.
+          </p>
           <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
             {localLaws.map((l) => (
               <li key={l.numero}>
@@ -253,7 +292,9 @@ export function MunicipioPage() {
                   className="group flex min-h-11 items-center gap-4 px-4 py-3 hover:bg-grid/50"
                 >
                   <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                    <span className="truncate font-medium group-hover:text-link" title={l.titulo}>{l.titulo}</span>
+                    <span className="truncate font-medium group-hover:text-link" title={l.titulo}>
+                      {l.titulo}
+                    </span>
                     <span className="truncate text-sm whitespace-nowrap text-ink-muted">
                       {[`Ley ${l.numero}`, l.fecha && formatDate(l.fecha)].filter(Boolean).join(" · ")}
                     </span>
@@ -272,7 +313,11 @@ export function MunicipioPage() {
           <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
             {m.legisladores.map((l) => (
               <li key={l.id}>
-                <Link to="/funcionarios/$role/$slug" params={{ role: l.role, slug: l.slug }} className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50">
+                <Link
+                  to="/funcionarios/$role/$slug"
+                  params={{ role: l.role, slug: l.slug }}
+                  className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50"
+                >
                   <PersonAvatar name={l.nombre} photo={l.foto} className="size-10 text-xs" />
                   <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                     <span className="truncate font-medium group-hover:text-link">{l.nombre}</span>

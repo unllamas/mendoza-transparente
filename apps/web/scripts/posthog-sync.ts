@@ -22,6 +22,7 @@ const env = Object.fromEntries(
 const BASE = `https://us.posthog.com/api/projects/${env.POSTHOG_PROJECT_ID}`;
 const H = { Authorization: `Bearer ${env.POSTHOG_PERSONAL_API_KEY}`, "Content-Type": "application/json" };
 
+// biome-ignore lint/suspicious/noExplicitAny: PostHog API responses are untyped JSON.
 async function api<T = any>(path: string, init: RequestInit = {}): Promise<T> {
   const r = await fetch(`${BASE}${path}`, { ...init, headers: H });
   const body = await r.json().catch(() => ({}));
@@ -75,7 +76,8 @@ const DASHBOARD = {
 const INSIGHTS: { name: string; description: string; query: unknown }[] = [
   {
     name: "Visitantes por día",
-    description: "Personas distintas que entraron al sitio cada día. Como no usamos cookies, una misma persona que vuelve otro día cuenta de nuevo.",
+    description:
+      "Personas distintas que entraron al sitio cada día. Como no usamos cookies, una misma persona que vuelve otro día cuenta de nuevo.",
     query: trends([ev("$pageview", { math: "dau" })]),
   },
   {

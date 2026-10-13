@@ -15,7 +15,7 @@
  */
 
 import { mkdir, writeFile } from "node:fs/promises";
-import { dirname, join } from "node:path";
+import { join } from "node:path";
 import { archive, get, MUNICIPIOS, normalizeMunicipio, PROCESSED_DIR } from "@mt/core";
 
 const SOURCE = "geo";
@@ -185,9 +185,8 @@ function toPath(polys: Poly[]): string {
       const pts = ring.slice(0, -1);
       d += `M${fmt(pts[0]![0])} ${fmt(pts[0]![1])}l`;
       const parts: string[] = [];
-      for (let i = 1; i < pts.length; i++)
-        parts.push(`${fmt(pts[i]![0] - pts[i - 1]![0])} ${fmt(pts[i]![1] - pts[i - 1]![1])}`);
-      d += parts.join(" ").replace(/ -/g, "-") + "Z";
+      for (let i = 1; i < pts.length; i++) parts.push(`${fmt(pts[i]![0] - pts[i - 1]![0])} ${fmt(pts[i]![1] - pts[i - 1]![1])}`);
+      d += `${parts.join(" ").replace(/ -/g, "-")}Z`;
     }
   return d;
 }
@@ -262,7 +261,10 @@ export async function run(_args: string[]) {
   const features = (JSON.parse(text) as { features: Feature[] }).features;
 
   // Proyección equirectangular con corrección cos(latitud media).
-  let minLon = Infinity, maxLon = -Infinity, minLat = Infinity, maxLat = -Infinity;
+  let minLon = Infinity,
+    maxLon = -Infinity,
+    minLat = Infinity,
+    maxLat = -Infinity;
   const eachPt = (cb: (p: number[]) => void) => {
     for (const f of features) {
       const polys = (f.geometry.type === "Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates) as number[][][][];
@@ -315,18 +317,26 @@ export async function run(_args: string[]) {
     } else lo = mid;
   }
   const bytes = Buffer.byteLength(best.json);
-  console.log(`Tolerancia ${tol.toFixed(3)} unidades SVG (≈ ${((tol / scale) * 111).toFixed(2)} km); JSON de ${(bytes / 1024).toFixed(1)} KB`);
+  console.log(
+    `Tolerancia ${tol.toFixed(3)} unidades SVG (≈ ${((tol / scale) * 111).toFixed(2)} km); JSON de ${(bytes / 1024).toFixed(1)} KB`,
+  );
 
   const dir = join(PROCESSED_DIR, SOURCE);
   await mkdir(dir, { recursive: true });
-  await writeFile(join(dir, "mendoza_departamentos.json"), best.json + "\n");
+  await writeFile(join(dir, "mendoza_departamentos.json"), `${best.json}\n`);
 
   const colors = ["#dbeafe", "#fde68a", "#bbf7d0", "#fecaca", "#e9d5ff", "#fed7aa"];
   const body = best.departamentos
-    .map((d, i) => `<path d="${d.path}" fill="${colors[i % colors.length]}" stroke="#334155" stroke-width="0.8" stroke-linejoin="round"><title>${d.municipio}</title></path>`)
+    .map(
+      (d, i) =>
+        `<path d="${d.path}" fill="${colors[i % colors.length]}" stroke="#334155" stroke-width="0.8" stroke-linejoin="round"><title>${d.municipio}</title></path>`,
+    )
     .join("\n");
   const labels = best.departamentos
-    .map((d) => `<text x="${d.centroide[0]}" y="${d.centroide[1]}" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#0f172a">${d.municipio}</text>`)
+    .map(
+      (d) =>
+        `<text x="${d.centroide[0]}" y="${d.centroide[1]}" font-size="14" font-family="sans-serif" text-anchor="middle" fill="#0f172a">${d.municipio}</text>`,
+    )
     .join("\n");
   await writeFile(
     join(dir, "preview.svg"),

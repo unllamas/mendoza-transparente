@@ -1,13 +1,13 @@
-import { StatusBadge } from "@mt/ui/components/status-badge";
-import { tileVariants } from "@mt/ui/components/card";
-import { cn } from "@mt/ui/lib/utils";
 import { buttonVariants } from "@mt/ui/components/button";
+import { tileVariants } from "@mt/ui/components/card";
 import { Section } from "@mt/ui/components/section";
+import { StatusBadge } from "@mt/ui/components/status-badge";
+import { cn } from "@mt/ui/lib/utils";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { ExternalLink, Table2 } from "lucide-react";
 
-import { formatBytes, formatDate } from "../lib.ts";
-import type { SourceMeta } from "../types.ts";
+import { formatBytes, formatDate } from "@/lib.ts";
+import type { SourceMeta } from "@/types.ts";
 
 const route = getRouteApi("/fuentes");
 
@@ -28,8 +28,8 @@ export function FuentesPage() {
       <div className="flex max-w-2xl flex-col gap-2">
         <h1 className="text-3xl font-semibold tracking-tight">Fuentes</h1>
         <p className="text-ink-2 text-pretty">
-          De dónde sale cada dato. Descargamos los archivos oficiales de cada organismo y guardamos cada versión con su
-          fecha, para que nada se pierda aunque después lo borren o lo cambien.
+          De dónde sale cada dato. Descargamos los archivos oficiales de cada organismo y guardamos cada versión con su fecha, para que nada
+          se pierda aunque después lo borren o lo cambien.
         </p>
       </div>
 
@@ -75,19 +75,12 @@ function FuenteItem({ source: s, tables }: { source: SourceMeta; tables: number 
         <StatusBadge {...(SOURCE_STATUS[s.estado] ?? { status: "neutral", label: s.estado })} />
         <div className="flex gap-2">
           {tables > 0 && (
-            <Link
-              to="/datos/$fuente"
-              params={{ fuente: s.id }}
-              className={cn(buttonVariants({ variant: "secondary" }))}
-            >
+            <Link to="/datos/$fuente" params={{ fuente: s.id }} className={cn(buttonVariants({ variant: "secondary" }))}>
               <Table2 className="size-4" aria-hidden /> Ver datos
             </Link>
           )}
           {s.url && (
-            <a
-              href={s.url}
-              className={cn(buttonVariants({ variant: "secondary" }))}
-            >
+            <a href={s.url} className={cn(buttonVariants({ variant: "secondary" }))}>
               Fuente oficial <ExternalLink className="size-3.5" aria-hidden />
             </a>
           )}

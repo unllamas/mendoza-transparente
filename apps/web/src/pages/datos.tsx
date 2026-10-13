@@ -1,16 +1,15 @@
-import { Select } from "@mt/ui/components/input";
 import { Button } from "@mt/ui/components/button";
+import { Select } from "@mt/ui/components/input";
 import { StatTile } from "@mt/ui/components/stat-tile";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { ArrowLeft, Download, ExternalLink, MousePointerClick } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-
-import { useUrlText } from "../url-state.ts";
-import { columnasVisibles, type ColumnaVista } from "../celdas.ts";
-import { formatBytes, formatDate, formatNumber, humanize, loadPreview } from "../lib.ts";
-import type { DatasetMeta, Preview } from "../types.ts";
-import { useDetail } from "../components/detail-sheet.tsx";
-import { PanelDetalle } from "../components/purchase-detail.tsx";
+import { type ColumnaVista, columnasVisibles } from "@/celdas.ts";
+import { useDetail } from "@/components/detail-sheet.tsx";
+import { PanelDetalle } from "@/components/purchase-detail.tsx";
+import { formatBytes, formatDate, formatNumber, humanize, loadPreview } from "@/lib.ts";
+import type { DatasetMeta, Preview } from "@/types.ts";
+import { useUrlText } from "@/url-state.ts";
 
 const route = getRouteApi("/datos/$fuente");
 
@@ -77,10 +76,7 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
   const [preview, setPreview] = useState<Preview | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
-  const columnas = useMemo(
-    () => columnasVisibles(dataset.columns, dict).filter((c) => c.key !== dict?.agruparPor),
-    [dataset, dict],
-  );
+  const columnas = useMemo(() => columnasVisibles(dataset.columns, dict).filter((c) => c.key !== dict?.agruparPor), [dataset, dict]);
   const tieneMontos = Object.values(dict?.columnas ?? {}).some((c) => c.tipo === "moneda");
   const rowCount = group?.rowCount ?? dataset.rowCount;
 
@@ -116,11 +112,7 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
           {groups && groups.length > 1 && (
             <label className="flex items-center gap-2 text-sm text-ink-2">
               <span>{columnaEtiqueta(dict, dict?.agruparPor)}</span>
-              <Select
-                value={groupSlug}
-                onChange={(e) => setGroupSlug(e.target.value)}
-                className="w-auto"
-              >
+              <Select value={groupSlug} onChange={(e) => setGroupSlug(e.target.value)} className="w-auto">
                 {groups.map((g) => (
                   <option key={g.slug} value={g.slug}>
                     {formatGrupo(g.value)}
@@ -222,7 +214,10 @@ function UltimoDato({ columnas, fila }: { columnas: ColumnaVista[]; fila?: strin
   if (!fila) return null;
   const periodo = columnas.filter((c) => ["anio", "mes", "fecha"].includes(c.key) || /^fecha/.test(c.key));
   const valores = columnas.filter((c) => c.numerica && fila[c.index] !== "");
-  const etiquetaPeriodo = periodo.map((c) => c.formato(fila[c.index] ?? "", fila)).reverse().join(" ");
+  const etiquetaPeriodo = periodo
+    .map((c) => c.formato(fila[c.index] ?? "", fila))
+    .reverse()
+    .join(" ");
   return (
     <div className="flex flex-col gap-2">
       <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">

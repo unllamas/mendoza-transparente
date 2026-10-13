@@ -30,10 +30,9 @@
  * Uso: bun run scrape legislatura
  */
 
+import { archive, get, type Row, readProcessed, writeProcessed } from "@mt/core";
 import * as cheerio from "cheerio";
 import { extractText, getDocumentProxy } from "unpdf";
-
-import { archive, get, readProcessed, writeProcessed, type Row } from "@mt/core";
 
 const SOURCE = "legislatura";
 const HCD = "https://www.hcdmza.gob.ar";
@@ -41,8 +40,18 @@ const HCS = "https://www.senadomendoza.gob.ar";
 const SECCION = ["", "Primera", "Segunda", "Tercera", "Cuarta"];
 
 const COLUMNS = [
-  "id", "nombre", "camara", "cargo", "bloque", "partido", "seccion_electoral",
-  "mandato_desde", "mandato_hasta", "email", "perfil_url", "fuente_url",
+  "id",
+  "nombre",
+  "camara",
+  "cargo",
+  "bloque",
+  "partido",
+  "seccion_electoral",
+  "mandato_desde",
+  "mandato_hasta",
+  "email",
+  "perfil_url",
+  "fuente_url",
 ];
 
 /** Descarga y archiva (de a un pedido por vez; get() ya hace pausa). Devuelve el contenido. */
@@ -51,15 +60,18 @@ async function fetchBytes(url: string, filename: string): Promise<Uint8Array> {
   await archive(SOURCE, filename, bytes, { url });
   return bytes;
 }
-const fetchText = async (url: string, filename: string) =>
-  new TextDecoder().decode(await fetchBytes(url, filename));
+const fetchText = async (url: string, filename: string) => new TextDecoder().decode(await fetchBytes(url, filename));
 
 const clean = (s: string) => s.replace(/\s+/g, " ").trim();
 const fold = (s: string) =>
-  s.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
+  s
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 const slug = (s: string) => fold(s).replace(/ /g, "-");
-const titleCase = (s: string) =>
-  s.toLowerCase().replace(/(^|[\s-])(\p{L})/gu, (_, a: string, b: string) => a + b.toUpperCase());
 
 interface Leg extends Record<string, string> {}
 
@@ -97,7 +109,10 @@ async function diputados(): Promise<Leg[]> {
       const dist = info.match(/(\d)ª\s*distrito/i);
       const per = info.match(/(\d{4})\s+(\d{4})/);
       const email = info.match(/[\w.+-]+@hcdmza\.gov\.ar/i)?.[0].toLowerCase() ?? "";
-      const autor = back.find("a[href*='autor=']").attr("href")?.match(/autor=([^&]+)/)?.[1];
+      const autor = back
+        .find("a[href*='autor=']")
+        .attr("href")
+        ?.match(/autor=([^&]+)/)?.[1];
       const [apellido, nom] = autor ? decodeURIComponent(autor).split(",").map(clean) : ["", ""];
       const key = apellido && nom ? `${apellido} ${nom}` : nombre;
       const auth = autoridades.find((x) => {
@@ -128,7 +143,10 @@ async function diputados(): Promise<Leg[]> {
 
 // ------------------------------------------------------------------- Senado
 
-interface Term { id: number; name: string }
+interface Term {
+  id: number;
+  name: string;
+}
 
 async function wpTerms(rest: string): Promise<Map<number, string>> {
   const url = `${HCS}/wp-json/wp/v2/${rest}?per_page=100&_fields=id,name`;
@@ -144,22 +162,33 @@ async function senado(): Promise<Leg[]> {
 
   const listUrl = `${HCS}/wp-json/wp/v2/senadores?per_page=100&_fields=id,slug,link,title,bloque,distrito,periodo_legislativo,status`;
   const senadores = JSON.parse(await fetchText(listUrl, "hcs-senadores.json")) as {
-    slug: string; link: string; title: { rendered: string }; bloque: number[]; distrito: number[];
-    periodo_legislativo: number[]; status: string;
+    slug: string;
+    link: string;
+    title: { rendered: string };
+    bloque: number[];
+    distrito: number[];
+    periodo_legislativo: number[];
+    status: string;
   }[];
   // Respaldo: la página pública, para el reporte de diferencias.
   await fetchText(`${HCS}/senadores-de-mendoza/`, "hcs-senadores-de-mendoza.html");
 
   const autUrl = `${HCS}/wp-json/wp/v2/autoridades?per_page=100&_fields=title,cargo,class_list`;
   const aut = JSON.parse(await fetchText(autUrl, "hcs-autoridades.json")) as {
-    title: { rendered: string }; cargo: number[];
+    title: { rendered: string };
+    cargo: number[];
   }[];
   const autoridades = aut.map((a) => ({
     nombre: a.title.rendered.replace(/^Sen\.\s*/i, "").replace(/&#8217;/g, "'"),
     cargo: (cargos.get(a.cargo[0]!) ?? "").replace(/ H\. Cámara de Senadores/i, " de la cámara").toLowerCase(),
   }));
 
-  const decode = (s: string) => s.replace(/^D Ambrogio/, "D'Ambrogio").replace(/&#8217;/g, "'").replace(/&#038;|&amp;/g, "&").replace(/&#8211;/g, "–");
+  const decode = (s: string) =>
+    s
+      .replace(/^D Ambrogio/, "D'Ambrogio")
+      .replace(/&#8217;/g, "'")
+      .replace(/&#038;|&amp;/g, "&")
+      .replace(/&#8211;/g, "–");
   const out: Leg[] = [];
   for (const s of senadores.filter((x) => x.status === "publish")) {
     const [apellido, nom] = decode(s.title.rendered).split(",").map(clean);
@@ -169,7 +198,9 @@ async function senado(): Promise<Leg[]> {
     const auth = autoridades.find((x) => {
       const n = fold(nombre);
       return x.cargo.startsWith("vice") || x.cargo.startsWith("presidente provisional")
-        ? fold(x.nombre).split(" ").every((w) => n.includes(w))
+        ? fold(x.nombre)
+            .split(" ")
+            .every((w) => n.includes(w))
         : false;
     });
     out.push({
@@ -189,7 +220,10 @@ async function senado(): Promise<Leg[]> {
   }
   const sinCruzar = autoridades.filter((x) => !out.some((o) => o.cargo === x.cargo));
   if (sinCruzar.length)
-    console.warn("Autoridades del Senado fuera de las 38 bancas (se omiten):", sinCruzar.map((x) => `${x.nombre} (${x.cargo})`));
+    console.warn(
+      "Autoridades del Senado fuera de las 38 bancas (se omiten):",
+      sinCruzar.map((x) => `${x.nombre} (${x.cargo})`),
+    );
   return out;
 }
 
@@ -216,7 +250,10 @@ async function diputadosViaticos(): Promise<Row[]> {
     const url = encodeURI(HCD + h);
     const text = await pdfText(await fetchBytes(url, `hcd-${h.split("/").pop()}`));
     const per = text.match(/desde (\d\d)\/(\d\d)\/(\d\d) hasta (\d\d)\/(\d\d)\/(\d\d)/);
-    if (!per) { console.warn("Sin período en", h); continue; }
+    if (!per) {
+      console.warn("Sin período en", h);
+      continue;
+    }
     const periodo =
       per[1] === "01" && per[2] === "01" && per[4] === "31" && per[5] === "12"
         ? `20${per[3]}`
@@ -241,7 +278,10 @@ async function senadoViaticos(): Promise<Row[]> {
   const rows: Row[] = [];
   const items: { trim: string; anio: number; url: string }[] = [];
   $("tr").each((_, tr) => {
-    const td = $(tr).find("td").map((_, c) => clean($(c).text())).get();
+    const td = $(tr)
+      .find("td")
+      .map((_, c) => clean($(c).text()))
+      .get();
     const href = $(tr).find("a[href$='.pdf']").attr("href");
     const t = td[0]?.match(/^(Primer|Segundo|Tercer|Cuarto) Trimestre$/i);
     const anio = Number(td[1]);
@@ -253,14 +293,19 @@ async function senadoViaticos(): Promise<Row[]> {
     const iP = text.search(/\bPASAJES\b/);
     const viat = iP >= 0 ? text.slice(0, iP) : text;
     const pasa = iP >= 0 ? text.slice(iP) : "";
-    const sum = (s: string) =>
-      [...s.matchAll(/\bHL\s+(\d{1,3}(?:\.\d{3})*,\d{2})\b/g)].reduce((a, m) => a + arNum(m[1]!), 0);
+    const sum = (s: string) => [...s.matchAll(/\bHL\s+(\d{1,3}(?:\.\d{3})*,\d{2})\b/g)].reduce((a, m) => a + arNum(m[1]!), 0);
     const nV = [...viat.matchAll(/\bHL\s+\d{1,3}(?:\.\d{3})*,\d{2}\b/g)].length;
     const nP = [...pasa.matchAll(/\bHL\s+\d{1,3}(?:\.\d{3})*,\d{2}\b/g)].length;
     console.log(`Senado ${it.anio}-T${it.trim}: ${nV} viáticos, ${nP} pasajes`);
     const periodo = `${it.anio}-T${it.trim}`;
     rows.push(
-      { camara: "senado", concepto: "Viáticos (total de la cámara)", periodo, monto: Math.round(sum(viat) * 100) / 100, fuente_url: it.url },
+      {
+        camara: "senado",
+        concepto: "Viáticos (total de la cámara)",
+        periodo,
+        monto: Math.round(sum(viat) * 100) / 100,
+        fuente_url: it.url,
+      },
       { camara: "senado", concepto: "Pasajes (total de la cámara)", periodo, monto: Math.round(sum(pasa) * 100) / 100, fuente_url: it.url },
     );
   }
@@ -298,7 +343,9 @@ async function camara<T>(nombre: string, fn: () => Promise<T[]>): Promise<{ fila
   } catch (err) {
     const previas = await anteriores(nombre);
     // Anotación visible en GitHub Actions.
-    console.log(`::warning title=Legislatura (${nombre})::No se pudo actualizar (${err instanceof Error ? err.message : err}). Se conservan ${previas.length} filas anteriores.`);
+    console.log(
+      `::warning title=Legislatura (${nombre})::No se pudo actualizar (${err instanceof Error ? err.message : err}). Se conservan ${previas.length} filas anteriores.`,
+    );
     return { filas: previas as T[], ok: false };
   }
 }
@@ -309,9 +356,7 @@ export async function run(_args: string[]) {
   if (!d.ok && !s.ok) throw new Error("No se pudo actualizar ninguna de las dos cámaras");
   const dip = d.filas;
   const sen = s.filas;
-  const todos = [...dip, ...sen].sort(
-    (a, b) => a.camara!.localeCompare(b.camara!) || a.id!.localeCompare(b.id!),
-  );
+  const todos = [...dip, ...sen].sort((a, b) => a.camara!.localeCompare(b.camara!) || a.id!.localeCompare(b.id!));
 
   const ids = new Set<string>();
   for (const l of todos) {

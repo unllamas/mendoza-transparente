@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 
-import type { MapaMendoza as MapaData } from "../types.ts";
+import type { MapaMendoza as MapaData } from "@/types.ts";
 
 /** Rampa secuencial borravino de poco a mucho; los valores por modo están en styles.css (--map-0 a --map-4). */
 const RAMPA = Array.from({ length: 5 }, (_, i) => `var(--map-${i})`);
@@ -81,7 +81,12 @@ export function MapaMendoza({ mapa, valores, formatValue, seleccionado, onSelect
   return (
     <div className="flex flex-col gap-3">
       <div className="grid grid-cols-[3fr_2fr] items-start gap-3 sm:gap-4">
-        <svg viewBox={mapa.viewBox} className="block h-auto max-h-[22rem] w-full sm:max-h-[36rem]" role="group" aria-label="Mapa de departamentos de Mendoza">
+        <svg
+          viewBox={mapa.viewBox}
+          className="block h-auto max-h-[22rem] w-full sm:max-h-[36rem]"
+          role="group"
+          aria-label="Mapa de departamentos de Mendoza"
+        >
           {paths(false)}
         </svg>
         <div className="flex min-w-0 flex-col gap-1.5 overflow-hidden rounded-lg bg-surface p-1.5 sm:p-2">
@@ -96,9 +101,7 @@ export function MapaMendoza({ mapa, valores, formatValue, seleccionado, onSelect
         {activo ? (
           <span>
             <span className="font-medium">{activo}</span>{" "}
-            <span className="text-ink-2 tabular-nums">
-              {valores[activo] !== undefined ? formatValue(valores[activo]!) : "sin dato"}
-            </span>
+            <span className="text-ink-2 tabular-nums">{valores[activo] !== undefined ? formatValue(valores[activo]!) : "sin dato"}</span>
           </span>
         ) : (
           <span className="text-ink-muted">Tocá un departamento para ver su dato.</span>
@@ -125,15 +128,7 @@ export function MapaMendoza({ mapa, valores, formatValue, seleccionado, onSelect
  * Locator map: every department dimmed except `focus`, highlighted in the brand color. Other departments
  * are links to their own page (`onOpen`), so the map doubles as navigation between municipalities.
  */
-export function MunicipalityLocator({
-  mapa,
-  focus,
-  onOpen,
-}: {
-  mapa: MapaData;
-  focus: string;
-  onOpen: (municipio: string) => void;
-}) {
+export function MunicipalityLocator({ mapa, focus, onOpen }: { mapa: MapaData; focus: string; onOpen: (municipio: string) => void }) {
   const [hover, setHover] = useState<string | null>(null);
   const zoomed = GRAN_MENDOZA.includes(focus);
   const inset = useMemo(() => {
@@ -153,6 +148,7 @@ export function MunicipalityLocator({
         const isFocus = d.municipio === focus;
         const isHover = d.municipio === hover && !isFocus;
         return (
+          // biome-ignore lint/a11y/noStaticElementInteractions: hover only highlights; the same action is available from the list.
           <path
             key={d.municipio}
             d={d.path}
@@ -180,7 +176,12 @@ export function MunicipalityLocator({
   return (
     <div className="flex flex-col gap-2">
       <div className="grid grid-cols-[3fr_2fr] items-start gap-3">
-        <svg viewBox={mapa.viewBox} className="block h-auto max-h-[22rem] w-full" role="group" aria-label={`Ubicación de ${focus} en Mendoza`}>
+        <svg
+          viewBox={mapa.viewBox}
+          className="block h-auto max-h-[22rem] w-full"
+          role="group"
+          aria-label={`Ubicación de ${focus} en Mendoza`}
+        >
           {paths(false)}
         </svg>
         <div className={`flex min-w-0 flex-col gap-1.5 overflow-hidden rounded-lg bg-surface p-1.5 ${zoomed ? "" : "opacity-70"}`}>

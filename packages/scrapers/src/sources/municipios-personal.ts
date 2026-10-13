@@ -38,15 +38,15 @@
  *   - No hay nombres ni datos personales en el Anexo 19: no hay nada que redactar.
  */
 
-import { unzipSync } from "fflate";
-import * as cheerio from "cheerio";
-import * as XLSX from "xlsx";
 import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { archive, get, latestRaw, type Municipio, normalizeMunicipio, RAW_DIR, ROOT, type Row, readRaw, writeProcessed } from "@mt/core";
+import * as cheerio from "cheerio";
+import { unzipSync } from "fflate";
 import { getDocumentProxy } from "unpdf";
-import { archive, get, latestRaw, normalizeMunicipio, RAW_DIR, readRaw, ROOT, writeProcessed, type Municipio, type Row } from "@mt/core";
+import * as XLSX from "xlsx";
 
 const SOURCE = "municipios-personal";
 const FIRST_YEAR = 2018;
@@ -95,7 +95,9 @@ async function pageItems(pdf: Awaited<ReturnType<typeof getDocumentProxy>>, n: n
   const items: Item[] = [];
   for (const it of content.items as { str: string; transform: number[]; height: number }[]) {
     const parts = it.str.replace(/\$/g, " ").trim().split(/\s+/).filter(Boolean);
-    parts.forEach((s, i) => items.push({ x: it.transform[4]! + i * 0.5, y: it.transform[5]!, s, h: Math.abs(it.transform[3]!) || it.height }));
+    parts.forEach((s, i) =>
+      items.push({ x: it.transform[4]! + i * 0.5, y: it.transform[5]!, s, h: Math.abs(it.transform[3]!) || it.height }),
+    );
   }
   return items;
 }
@@ -103,10 +105,15 @@ async function pageItems(pdf: Awaited<ReturnType<typeof getDocumentProxy>>, n: n
 /** Agrupa los textos en filas por cercanía en un eje (3 puntos de tolerancia) y los ordena a lo largo del otro. */
 export function rowsOf(rawItems: Item[], axis: "h" | "v"): Tok[][] {
   // Varios PDF imprimen cada texto dos veces en el mismo lugar (negrita simulada): se descartan los repetidos.
-  const items = rawItems.filter((a, i) => !rawItems.slice(0, i).some((b) => b.s === a.s && Math.abs(b.x - a.x) < 0.3 && Math.abs(b.y - a.y) < 0.3));
+  const items = rawItems.filter(
+    (a, i) => !rawItems.slice(0, i).some((b) => b.s === a.s && Math.abs(b.x - a.x) < 0.3 && Math.abs(b.y - a.y) < 0.3),
+  );
   const along = (i: Item) => (axis === "h" ? i.x : i.y);
   const across = (i: Item) => (axis === "h" ? -i.y : i.x);
-  const heights = items.map((i) => i.h ?? 0).filter((h) => h > 0).sort((a, b) => a - b);
+  const heights = items
+    .map((i) => i.h ?? 0)
+    .filter((h) => h > 0)
+    .sort((a, b) => a - b);
   const tolerance = heights.length ? Math.min(3, Math.max(0.4, 0.4 * heights[Math.floor(heights.length / 2)]!)) : 3;
   const sorted = [...items].sort((a, b) => across(a) - across(b));
   const rows: Item[][] = [];
@@ -164,10 +171,14 @@ export function pickTotals(rowsList: Tok[][][]): { cells: number[]; how: string 
 export function checkTotals(c: number[]): { error?: string; note?: string } {
   const [pc, pi, tc, ti, oc, oi] = c as [number, number, number, number, number, number];
   const off = (a: number, b: number) => Math.abs(a - b) / Math.max(1, Math.abs(b));
-  if (off(pc + tc, oc) > 0.15 || off(pi + ti, oi) > 0.15) return { error: `permanente + temporaria (${pc} + ${tc} cargos, ${Math.round(pi + ti)} pesos) está lejos del total de planta (${oc} cargos, ${Math.round(oi)} pesos)` };
+  if (off(pc + tc, oc) > 0.15 || off(pi + ti, oi) > 0.15)
+    return {
+      error: `permanente + temporaria (${pc} + ${tc} cargos, ${Math.round(pi + ti)} pesos) está lejos del total de planta (${oc} cargos, ${Math.round(oi)} pesos)`,
+    };
   const notes: string[] = [];
   if (pc + tc !== oc) notes.push(`cargos: permanente + temporaria = ${pc + tc}, el total de planta dice ${oc}`);
-  if (Math.abs(pi + ti - oi) > Math.max(5, oi * 0.001)) notes.push(`importe: permanente + temporaria = ${Math.round(pi + ti)}, el total de planta dice ${Math.round(oi)}`);
+  if (Math.abs(pi + ti - oi) > Math.max(5, oi * 0.001))
+    notes.push(`importe: permanente + temporaria = ${Math.round(pi + ti)}, el total de planta dice ${Math.round(oi)}`);
   return notes.length ? { note: `El documento no cuadra (${notes.join("; ")}). Se publican las cifras del documento.` } : {};
 }
 
@@ -274,7 +285,10 @@ function periodFromItems(items: Item[]): Period | null {
   ];
   for (const text of texts) {
     const y = /EJERCICIO\s*:?\s*(\d{4})/i.exec(text);
-    const q = /TRIMESTRE\s*:?\s*([1-4])\b/i.exec(text)?.[1] ?? /(PRIMER|SEGUND|TERCER|CUART)\w*\s+TRIMESTRE/i.exec(text)?.[1] ?? /TRIMESTRE\s*:?\s*(PRIMER|SEGUND|TERCER|CUART)/i.exec(text)?.[1];
+    const q =
+      /TRIMESTRE\s*:?\s*([1-4])\b/i.exec(text)?.[1] ??
+      /(PRIMER|SEGUND|TERCER|CUART)\w*\s+TRIMESTRE/i.exec(text)?.[1] ??
+      /TRIMESTRE\s*:?\s*(PRIMER|SEGUND|TERCER|CUART)/i.exec(text)?.[1];
     if (y && q) return { year: +y[1]!, quarter: /^\d$/.test(q) ? +q : quarterOf(q)! };
   }
   return null;
@@ -332,7 +346,8 @@ function anchors($: cheerio.CheerioAPI, base: string): { text: string; href: str
 }
 
 const abs = (href: string, base: string) => new URL(href.trim().replace(/ /g, "%20"), base).toString();
-const isAnnex19 = (s: string) => /anexo[\s_.\-–%20]*(0?19(?!\d)|xix\b)/i.test(decodeURIComponent(s)) || /\b19\b.{0,12}(detalle de la )?planta de personal/i.test(s);
+const isAnnex19 = (s: string) =>
+  /anexo[\s_.\-–%20]*(0?19(?!\d)|xix\b)/i.test(decodeURIComponent(s)) || /\b19\b.{0,12}(detalle de la )?planta de personal/i.test(s);
 
 type Discoverer = () => Promise<Doc[]>;
 
@@ -343,11 +358,11 @@ const DISCOVERERS: Record<string, Discoverer> = {
     const docs: Doc[] = [];
     const cur = await indexPage(base, "indice-capital.html");
     const m = /(primer|segund|tercer|cuart)\w*\s+trimestre\s+(20\d\d)/i.exec(cur("body").text().replace(/\s+/g, " "));
-    const link = anchors(cur, base).find((a) => /\.pdf$/i.test(a.href) && isAnnex19(a.text + " " + a.href));
+    const link = anchors(cur, base).find((a) => /\.pdf$/i.test(a.href) && isAnnex19(`${a.text} ${a.href}`));
     if (m && link) docs.push({ municipality: "Capital", year: +m[2]!, quarter: quarterOf(m[1]!)!, url: link.href, kind: "pdf" });
-    const hist = await indexPage(base + "historico", "indice-capital-historico.html");
+    const hist = await indexPage(`${base}historico`, "indice-capital-historico.html");
     let prev: Period | undefined;
-    for (const a of anchors(hist, base + "historico/")) {
+    for (const a of anchors(hist, `${base}historico/`)) {
       if (!/\.zip$/i.test(a.href)) continue;
       const p = periodFromLabel(a.text, a.href, prev);
       if (!p) continue;
@@ -407,7 +422,14 @@ const DISCOVERERS: Record<string, Discoverer> = {
     }
     // El de la página principal es el trimestre siguiente al último ZIP (la página no lo dice).
     const link = anchors(cur, base).find((a) => /\.pdf$/i.test(a.href) && isAnnex19(a.href));
-    if (link && last.year) docs.push({ municipality: "Junín", year: last.quarter === 4 ? last.year + 1 : last.year, quarter: last.quarter === 4 ? 1 : last.quarter + 1, url: link.href, kind: "pdf" });
+    if (link && last.year)
+      docs.push({
+        municipality: "Junín",
+        year: last.quarter === 4 ? last.year + 1 : last.year,
+        quarter: last.quarter === 4 ? 1 : last.quarter + 1,
+        url: link.href,
+        kind: "pdf",
+      });
     return docs;
   },
 
@@ -438,13 +460,16 @@ const DISCOVERERS: Record<string, Discoverer> = {
     const $ = await indexPage(base, "indice-maipu.html");
     const docs: Doc[] = [];
     $("table").each((_, table) => {
-      const head = $(table).find("thead th").toArray().map((th) => $(th).text().trim());
+      const head = $(table)
+        .find("thead th")
+        .toArray()
+        .map((th) => $(th).text().trim());
       if (head.join("|") !== "Anexo|Descripción|T1|T2|T3|T4") return;
       $(table)
         .find("tr")
         .each((_, tr) => {
           const tds = $(tr).find("td").toArray();
-          if (!isAnnex19($(tds[1]).text() + " " + $(tds[0]).text().replace(/^/, "Anexo "))) return;
+          if (!isAnnex19(`${$(tds[1]).text()} ${$(tds[0]).text().replace(/^/, "Anexo ")}`)) return;
           tds.slice(2).forEach((td, i) => {
             const href = $(td).find("a").attr("href");
             const up = href ? /uploads\/(\d{4})\//.exec(href) : null;
@@ -462,7 +487,9 @@ const DISCOVERERS: Record<string, Discoverer> = {
     for (const n of [1, 2, 3]) {
       const xml = await (await get(`https://www.malargue.gov.ar/wp-sitemap-posts-post-${n}.xml`)).text();
       await sleep(800);
-      for (const m of xml.matchAll(/<loc>(https:\/\/www\.malargue\.gov\.ar\/responsabilidad-fiscal-(\d)o?-trimestre-(\d{4})(-\d)?\/)<\/loc>/g)) {
+      for (const m of xml.matchAll(
+        /<loc>(https:\/\/www\.malargue\.gov\.ar\/responsabilidad-fiscal-(\d)o?-trimestre-(\d{4})(-\d)?\/)<\/loc>/g,
+      )) {
         // Hay páginas repetidas con sufijo -2: se prefiere la que no lo tiene.
         const key = `${m[3]}-${m[2]}`;
         if (+m[3]! >= FIRST_YEAR && (!pages.has(key) || !m[4])) pages.set(key, { period: { year: +m[3]!, quarter: +m[2]! }, url: m[1]! });
@@ -588,7 +615,7 @@ const DISCOVERERS: Record<string, Discoverer> = {
     const docs: Doc[] = [];
     const text = $("body").html() ?? "";
     // Cada anexo es un bloque "Anexo N: título" seguido de su botón "Descargar Anexo".
-    for (const m of text.matchAll(/Anexo\s*19\s*:[^<]*<[^]*?href="(https:\/\/drive\.google\.com\/file\/d\/[^"]+)"/gi)) {
+    for (const m of text.matchAll(/Anexo\s*19\s*:[^<]*<[\s\S]*?href="(https:\/\/drive\.google\.com\/file\/d\/[^"]+)"/gi)) {
       docs.push({ municipality: "Luján de Cuyo", year: 0, quarter: 0, url: m[1]!, kind: "drive" });
       break;
     }
@@ -673,7 +700,9 @@ async function download(doc: Doc, manifest: Map<string, ManifestEntry>): Promise
       warn(`${doc.municipality} ${doc.url}: ZIP dañado en el sitio del municipio (${bytes.length} bytes)`);
       return null;
     }
-    const entries = Object.entries(files).filter(([n]) => !n.startsWith("__MACOSX") && /\.(pdf|xlsx?)$/i.test(n) && isAnnex19(n.split("/").pop()!));
+    const entries = Object.entries(files).filter(
+      ([n]) => !n.startsWith("__MACOSX") && /\.(pdf|xlsx?)$/i.test(n) && isAnnex19(n.split("/").pop()!),
+    );
     if (!entries.length) {
       warn(`${doc.municipality} ${doc.url}: el ZIP no trae un anexo 19`);
       return null;
@@ -688,11 +717,27 @@ async function download(doc: Doc, manifest: Map<string, ManifestEntry>): Promise
       return null;
     }
     const sha256 = createHash("sha256").update(bytes).digest("hex");
-    const json = JSON.stringify({ url: doc.url, sha256_original: sha256, bytes_original: bytes.length, page: found.page, items: found.items.map((i) => ({ x: Math.round(i.x * 100) / 100, y: Math.round(i.y * 100) / 100, s: i.s, h: Math.round((i.h ?? 0) * 100) / 100 })) });
+    const json = JSON.stringify({
+      url: doc.url,
+      sha256_original: sha256,
+      bytes_original: bytes.length,
+      page: found.page,
+      items: found.items.map((i) => ({
+        x: Math.round(i.x * 100) / 100,
+        y: Math.round(i.y * 100) / 100,
+        s: i.s,
+        h: Math.round((i.h ?? 0) * 100) / 100,
+      })),
+    });
     out = { bytes: new TextEncoder().encode(json), ext: "json" };
     period = period ?? periodFromItems(found.items);
   } else {
-    const ext = doc.kind === "drive" ? magicExt(bytes) : (/\.(xlsx?|pdf)$/i.test(doc.url.split("?")[0]!) ? doc.url.split("?")[0]!.split(".").pop()!.toLowerCase() : magicExt(bytes));
+    const ext =
+      doc.kind === "drive"
+        ? magicExt(bytes)
+        : /\.(xlsx?|pdf)$/i.test(doc.url.split("?")[0]!)
+          ? doc.url.split("?")[0]!.split(".").pop()!.toLowerCase()
+          : magicExt(bytes);
     if (ext === "bin") {
       warn(`${doc.municipality} ${doc.url}: el archivo no es PDF ni planilla`);
       return null;
@@ -710,7 +755,11 @@ async function download(doc: Doc, manifest: Map<string, ManifestEntry>): Promise
   }
   const filename = docName(doc.municipality, period, out.ext);
   const path = await archive(SOURCE, filename, out.bytes, { url: doc.url });
-  const entry: ManifestEntry = { filename, path: path ? path.replace(ROOT + "/", "") : ((await latestRaw(SOURCE, filename)) ?? "").replace(ROOT + "/", ""), url: doc.url };
+  const entry: ManifestEntry = {
+    filename,
+    path: path ? path.replace(`${ROOT}/`, "") : ((await latestRaw(SOURCE, filename)) ?? "").replace(`${ROOT}/`, ""),
+    url: doc.url,
+  };
   manifest.set(doc.url, entry);
   return entry;
 }
@@ -759,7 +808,9 @@ async function parseArchived(entry: ManifestEntry): Promise<Parsed | { error: st
   if (!picked) return { error: "no se encontró la fila de totales" };
   const check = checkTotals(picked.cells);
   if (check.error) return { error: `no cuadra (${check.error})` };
-  const sumNote = picked.how.startsWith("suma") ? "El documento no trae la fila de totales completa: las cifras son la suma de sus filas (verificar contra el original). " : "";
+  const sumNote = picked.how.startsWith("suma")
+    ? "El documento no trae la fila de totales completa: las cifras son la suma de sus filas (verificar contra el original). "
+    : "";
   return { ...picked, year: docYear, note: `${sumNote}${check.note ?? ""}`.trim() };
 }
 
@@ -856,7 +907,12 @@ async function capitalMonthly(): Promise<Row[]> {
   }
   const seen = new Set<string>();
   return rows
-    .filter((r) => (seen.has(`${r.anio}-${r.mes}`) ? false : (seen.add(`${r.anio}-${r.mes}`), true)))
+    .filter((r) => {
+      const key = `${r.anio}-${r.mes}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
     .sort((a, b) => +a.anio! * 100 + +a.mes! - (+b.anio! * 100 + +b.mes!));
 }
 
@@ -914,8 +970,14 @@ export async function run(_args: string[]): Promise<void> {
     results.forEach((r, i) => {
       const prev = results[i - 1];
       // Un acumulado igual al del trimestre anterior es casi seguro un archivo subido dos veces.
-      if (prev && prev.period.year * 4 + prev.period.quarter + 1 === r.period.year * 4 + r.period.quarter && r.cells.some((c) => c !== 0) && r.cells.every((c, k) => c === prev.cells[k])) {
-        r.note = `${r.note} Las cifras son idénticas a las del trimestre anterior: posible archivo repetido en el sitio del municipio.`.trim();
+      if (
+        prev &&
+        prev.period.year * 4 + prev.period.quarter + 1 === r.period.year * 4 + r.period.quarter &&
+        r.cells.some((c) => c !== 0) &&
+        r.cells.every((c, k) => c === prev.cells[k])
+      ) {
+        r.note =
+          `${r.note} Las cifras son idénticas a las del trimestre anterior: posible archivo repetido en el sitio del municipio.`.trim();
         warn(`${name} ${periodKey(r.period.year, r.period.quarter)}: cifras idénticas a las del trimestre anterior`);
       }
       out.push(...annexRows(municipality, r.period, r.cells, r.url, r.note));
@@ -925,13 +987,41 @@ export async function run(_args: string[]): Promise<void> {
   for (const [name, why] of Object.entries(NOT_PUBLISHED)) console.log(`${name}: sin anexo 19 publicado (${why})`);
 
   const order = new Map<string, number>(TYPES.map((t, i) => [t, i]));
-  out.sort((a, b) => String(a.municipio).localeCompare(String(b.municipio), "es") || +a.anio! - +b.anio! || +a.trimestre! - +b.trimestre! || order.get(String(a.tipo_personal))! - order.get(String(b.tipo_personal))!);
-  await writeProcessed(SOURCE, "personal.csv", out, ["municipio", "anio", "trimestre", "fecha_corte", "tipo_personal", "cantidad", "importe_acumulado", "fuente", "fuente_url", "observacion"]);
+  out.sort(
+    (a, b) =>
+      String(a.municipio).localeCompare(String(b.municipio), "es") ||
+      +a.anio! - +b.anio! ||
+      +a.trimestre! - +b.trimestre! ||
+      order.get(String(a.tipo_personal))! - order.get(String(b.tipo_personal))!,
+  );
+  await writeProcessed(SOURCE, "personal.csv", out, [
+    "municipio",
+    "anio",
+    "trimestre",
+    "fecha_corte",
+    "tipo_personal",
+    "cantidad",
+    "importe_acumulado",
+    "fuente",
+    "fuente_url",
+    "observacion",
+  ]);
   console.log(`personal.csv: ${out.length} filas, ${new Set(out.map((r) => r.municipio)).size} municipios`);
 
   try {
     const monthly = await capitalMonthly();
-    await writeProcessed(SOURCE, "personal_capital_mensual.csv", monthly, ["municipio", "anio", "mes", "fecha_corte", "planta", "locaciones", "total", "gasto_mensual", "fuente", "fuente_url"]);
+    await writeProcessed(SOURCE, "personal_capital_mensual.csv", monthly, [
+      "municipio",
+      "anio",
+      "mes",
+      "fecha_corte",
+      "planta",
+      "locaciones",
+      "total",
+      "gasto_mensual",
+      "fuente",
+      "fuente_url",
+    ]);
     console.log(`personal_capital_mensual.csv: ${monthly.length} filas`);
   } catch (err) {
     warn(`Capital mensual: ${(err as Error).message}`);

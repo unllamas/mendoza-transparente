@@ -16,9 +16,9 @@
  * Financiamiento Educativo. No hay desglose por recurso en estos archivos.
  */
 
+import { fetchAndArchive, get, latestRaw, normalizeMunicipio, type Row, readRaw, writeProcessed } from "@mt/core";
 import * as cheerio from "cheerio";
 import * as XLSX from "xlsx";
-import { fetchAndArchive, get, latestRaw, normalizeMunicipio, readRaw, writeProcessed, type Row } from "@mt/core";
 
 const SOURCE = "hacienda-participacion-municipal";
 const INDEX_URL = "https://sitios.mendoza.gob.ar/haciendayfinanzas/participacion-municipal/";
@@ -74,9 +74,18 @@ function parseMensual(rows: unknown[][], file: string, out: Row[]): void {
   const title = String(rows[0]?.[0] ?? "");
   const anio = Number(title.match(/(\d{4})/)?.[1]);
   if (!anio) throw new Error(`${file}: no encontré el año en el título "${title}"`);
-  const hi = rows.findIndex((r) => String(r[0] ?? "").trim().toUpperCase() === "MUNICIPALIDADES");
+  const hi = rows.findIndex(
+    (r) =>
+      String(r[0] ?? "")
+        .trim()
+        .toUpperCase() === "MUNICIPALIDADES",
+  );
   if (hi < 0) throw new Error(`${file}: sin fila de encabezado`);
-  const header = rows[hi]!.map((c) => String(c ?? "").trim().toLowerCase());
+  const header = rows[hi]!.map((c) =>
+    String(c ?? "")
+      .trim()
+      .toLowerCase(),
+  );
   const monthCol = new Map<number, number>();
   MESES.forEach((m, i) => {
     const c = header.indexOf(m);
@@ -139,7 +148,9 @@ function parseAnual(rows: unknown[][], file: string, out: Row[]): void {
       n++;
     }
   }
-  console.log(`  ${file}: ${cols.length} años (${Math.min(...cols.map((c) => c.anio))}-${Math.max(...cols.map((c) => c.anio))}), ${n} filas`);
+  console.log(
+    `  ${file}: ${cols.length} años (${Math.min(...cols.map((c) => c.anio))}-${Math.max(...cols.map((c) => c.anio))}), ${n} filas`,
+  );
 }
 
 export async function run(_args: string[]): Promise<void> {

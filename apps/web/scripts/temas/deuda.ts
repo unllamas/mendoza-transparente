@@ -1,7 +1,7 @@
 /** Agregados para la página de Deuda, a partir de data/processed/hacienda-deuda-stock. */
 
-import type { DeudaTema } from "../../src/types.ts";
 import { GOBIERNOS } from "../../src/gobiernos.ts";
+import type { DeudaTema } from "../../src/types.ts";
 
 type CsvRow = Record<string, string>;
 

@@ -36,7 +36,10 @@ const esMayusculas = (s: string) => /\p{L}/u.test(s) && s === s.toUpperCase();
 /** "RÉGIMEN ESPECIAL PENAL JUVENIL" → "Régimen especial penal juvenil" (respeta Mendoza y siglas). */
 export function oracion(s: string): string {
   if (!esMayusculas(s)) return s;
-  const bajo = s.toLowerCase().replace(/\bmendoza\b/g, "Mendoza").replace(/\bargentina\b/g, "Argentina");
+  const bajo = s
+    .toLowerCase()
+    .replace(/\bmendoza\b/g, "Mendoza")
+    .replace(/\bargentina\b/g, "Argentina");
   return bajo.charAt(0).toUpperCase() + bajo.slice(1);
 }
 
@@ -47,7 +50,10 @@ const nombrePropio = (s: string) =>
     .replace(/(^|[\s-])(\p{L})/gu, (_, sep: string, l: string) => sep + l.toUpperCase());
 
 export function estructurarLey(texto: string): LeyEstructurada {
-  let lineas = texto.split("\n").map((l) => l.replace(/\s+/g, " ").trim()).filter(Boolean);
+  let lineas = texto
+    .split("\n")
+    .map((l) => l.replace(/\s+/g, " ").trim())
+    .filter(Boolean);
 
   // Preámbulo: "EL SENADO Y CÁMARA DE DIPUTADOS … SANCIONAN CON FUERZA DE / L E Y :"
   const fin = lineas.slice(0, 6).findIndex((l) => PREAMBULO.test(l) && !ARTICULO.test(l));
@@ -63,7 +69,12 @@ export function estructurarLey(texto: string): LeyEstructurada {
     // "Dada en…" puede venir partida en varias líneas: se junta hasta el punto final.
     let fin = iDada;
     while (fin < lineas.length - 1 && !/\.\s*$/.test(lineas[fin]!) && !esMayusculas(lineas[fin + 1]!)) fin++;
-    const dada = lineas.slice(iDada, fin + 1).join(" ").toLowerCase().replace(/\bmendoza\b/g, "Mendoza").replace(/[\s,.]+$/, "");
+    const dada = lineas
+      .slice(iDada, fin + 1)
+      .join(" ")
+      .toLowerCase()
+      .replace(/\bmendoza\b/g, "Mendoza")
+      .replace(/[\s,.]+$/, "");
     const firmantes: string[] = [];
     for (const l of lineas.slice(fin + 1)) {
       if (firmantes.length >= 8 || l.length > 60 || /\d|ANEXO/i.test(l) || !esMayusculas(l)) break;
@@ -107,12 +118,21 @@ export function estructurarLey(texto: string): LeyEstructurada {
 /** "La presente Ley establece el Régimen…" → "Régimen…" */
 function temaDeArticulo(t: string): string {
   const limpio = t
-    .replace(/^(?:la presente ley|por la presente(?: ley)?|esta ley)\s+(?:tiene por objeto|establece|crea|regula|declara|aprueba|dispone)\s+(?:(?:el|la|los|las)\s+)?/i, "")
+    .replace(
+      /^(?:la presente ley|por la presente(?: ley)?|esta ley)\s+(?:tiene por objeto|establece|crea|regula|declara|aprueba|dispone)\s+(?:(?:el|la|los|las)\s+)?/i,
+      "",
+    )
     .replace(/^(?:tiene por objeto)\s+/i, "");
   return limpio.charAt(0).toUpperCase() + limpio.slice(1);
 }
 
-const recortar = (s: string, max: number) => (s.length <= max ? s : `${s.slice(0, max - 1).replace(/\s+\S*$/, "").replace(/[\s,.;:]+$/, "")}…`);
+const recortar = (s: string, max: number) =>
+  s.length <= max
+    ? s
+    : `${s
+        .slice(0, max - 1)
+        .replace(/\s+\S*$/, "")
+        .replace(/[\s,.;:]+$/, "")}…`;
 
 /** Título para mostrar: el curado, el nombre que se da la ley o, si no, su primer artículo. */
 export function tituloLey(curado: ResumenLey | undefined, ley: LeyEstructurada, respaldo: string): string {

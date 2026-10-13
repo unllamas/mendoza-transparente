@@ -4,6 +4,17 @@ Proyecto cívico: recopilar los datos públicos de Mendoza, normalizarlos y publ
 
 **Los procesos internos están documentados en `docs/procesos/`** (agregar una fuente, actualización de datos, reglas de `data/`, la web, diseño, metodología y trabajo con agentes). Leer el que corresponda antes de empezar. **Todo proceso nuevo o cambio en uno existente se documenta ahí en el mismo commit.**
 
+## Idioma (regla sin excepciones)
+
+| Qué | Idioma | Ejemplos |
+|---|---|---|
+| **Todo el código**: variables, funciones, tipos, componentes, nombres de archivo y carpeta, ids de eventos, comentarios en el código | **Inglés** | `buildMunicipalStaff`, `list-search.tsx`, `purchase.flag.toggle` |
+| **Toda la documentación**: `docs/`, `README`, `CLAUDE.md`, skills, mensajes de commit | **Español** | `docs/procesos/web.md` |
+| **Lo que ve la gente**: textos de la web, rutas públicas, nombres de eventos en PostHog | **Español** | `/leyes`, "Lo que no se publica" |
+| **Contratos públicos de datos**: columnas de los CSV publicados | Español, `snake_case` | `fecha_corte`, `tipo_personal` |
+
+El código viejo en español se pasa al inglés cuando se toca. Las columnas de los CSV no se renombran sin un plan de migración, porque otros pueden depender de ellas.
+
 ## Skills: qué cargar según la tarea
 
 Las skills del proyecto (`.claude/skills/`) son la puerta de entrada a cada proceso: dicen cuándo se usan y traen la checklist; el detalle vive en `docs/procesos/`. **Cargar la que corresponda antes de empezar**, y más de una si la tarea cruza procesos.
@@ -11,6 +22,7 @@ Las skills del proyecto (`.claude/skills/`) son la puerta de entrada a cada proc
 | Si vas a… | Skill |
 |---|---|
 | Escribir o cambiar código, en cualquier parte | `codigo` |
+| Crear un archivo, un paquete o una app; mover código; agregar una dependencia | `arquitectura` |
 | Crear o retocar una pantalla, un componente, un gráfico o un texto visible | `diseno` |
 | Agregar un botón, un link, un formulario o una interacción; tocar PostHog | `analitica` |
 | Crear o tocar un scraper; relevar o procesar una fuente | `datos-y-fuentes` |

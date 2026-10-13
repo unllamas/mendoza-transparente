@@ -34,13 +34,13 @@
  *     trimestres que todavía no tienen ambos anexos y de los dos últimos.
  */
 
-import { unzipSync } from "fflate";
-import * as cheerio from "cheerio";
-import { extractText, getDocumentProxy } from "unpdf";
-import { archive, fetchAndArchive, get, RAW_DIR, ROOT, readRaw, writeProcessed, type Row } from "@mt/core";
 import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { archive, fetchAndArchive, get, RAW_DIR, ROOT, type Row, readRaw, writeProcessed } from "@mt/core";
+import * as cheerio from "cheerio";
+import { unzipSync } from "fflate";
+import { extractText, getDocumentProxy } from "unpdf";
 
 const SOURCE = "lrf-personal";
 const INDEX = "https://sitios.mendoza.gob.ar/haciendayfinanzas/ley-de-responsabilidad-fiscal/";
@@ -101,7 +101,11 @@ function periodOf(filename: string): { annex: 19 | 20; year: number; quarter: nu
 async function download(): Promise<void> {
   const reports = await listReports();
   console.log(`${reports.length} informes de la Subsecretaría de Hacienda`);
-  const have = new Set((await manifestFiles()).map((f) => `${periodKey(periodOf(f.filename).year, periodOf(f.filename).quarter)}:${periodOf(f.filename).annex}`));
+  const have = new Set(
+    (await manifestFiles()).map(
+      (f) => `${periodKey(periodOf(f.filename).year, periodOf(f.filename).quarter)}:${periodOf(f.filename).annex}`,
+    ),
+  );
 
   for (const [i, r] of reports.entries()) {
     const key = periodKey(r.year, r.quarter);
@@ -125,7 +129,9 @@ async function download(): Promise<void> {
         console.log(`  ${saved ? "nuevo" : "sin cambios"}: ${filename}`);
       } catch (err) {
         // El sitio tiene links rotos (S3 devuelve 403 si el objeto no existe).
-        console.log(`::warning title=lrf-personal::no se pudo bajar ${filename} (${String(err).slice(0, 60)}): el anexo ${p.annex} de ${key} falta`);
+        console.log(
+          `::warning title=lrf-personal::no se pudo bajar ${filename} (${String(err).slice(0, 60)}): el anexo ${p.annex} de ${key} falta`,
+        );
       }
     }
   }
@@ -153,6 +159,7 @@ async function pdfLines(bytes: Uint8Array): Promise<string[][]> {
     const items = (content.items as { str: string; transform: number[] }[])
       .flatMap((it) => {
         // Un PDF (anexo 20 de 2019 T1, cuentas especiales) trae el texto con la tipografía desplazada 29 códigos.
+        // biome-ignore lint/suspicious/noControlCharactersInRegex: some PDFs encode text shifted into control characters.
         const raw = /\u0003/.test(it.str) ? it.str.replace(/[\u0001-\u007f]/g, (c) => String.fromCharCode(c.charCodeAt(0) + 29)) : it.str;
         const parts = raw === it.str ? [raw.trim()] : raw.trim().split(/\s+/);
         return parts.map((s) => ({ x: it.transform[4]!, y: it.transform[5]!, s }));
@@ -176,7 +183,10 @@ async function pdfLines(bytes: Uint8Array): Promise<string[][]> {
 /** Líneas de texto de un PDF en el orden de lectura que da unpdf (más fiel que la posición en los anexos con columnas). */
 async function pdfTextLines(bytes: Uint8Array): Promise<string[][]> {
   const { text } = await extractText(await getDocumentProxy(new Uint8Array(bytes)), { mergePages: true });
-  return text.split("\n").map((l) => l.trim().split(/\s+/).filter(Boolean)).filter((t) => t.length);
+  return text
+    .split("\n")
+    .map((l) => l.trim().split(/\s+/).filter(Boolean))
+    .filter((t) => t.length);
 }
 
 /** Los PDF de un archivo archivado (ZIP con PDF adentro, o PDF suelto). */
@@ -237,7 +247,9 @@ function parseAnnex19(lines: string[][]): Annex19 {
   let group = "";
   for (const line of lines) {
     // "Ente Mendoza Turismo Ley 8845": el número de la ley no es una cifra.
-    const toks = line.map((t, i) => (t === "8845" && line[i - 1] === "Ley" ? "Ley_8845" : t)).filter((t, i, a) => !(t === "Ley" && a[i + 1] === "Ley_8845"));
+    const toks = line
+      .map((t, i) => (t === "8845" && line[i - 1] === "Ley" ? "Ley_8845" : t))
+      .filter((t, i, a) => !(t === "Ley" && a[i + 1] === "Ley_8845"));
     const text = toks.join(" ");
     const y = /EJERCICIO:\s*(\d{4})/.exec(text);
     if (y) out.year = +y[1]!;
@@ -255,11 +267,20 @@ function parseAnnex19(lines: string[][]): Annex19 {
     // Filas con celdas vacías: sin cantidad de contratos (10 cifras) o con todo en cero y solo contratos (7 cifras).
     if (nums.length === 10 || nums.length === 7) {
       // 10 cifras: o falta la cantidad de contratos (la última es "-") o falta el importe de la planta temporaria.
-      if (nums.length === 10) nums.splice(0, 10, ...(nums[9] === "-" ? [...nums.slice(0, 9), "0", "-"] : [...nums.slice(0, 5), "0", ...nums.slice(5)]));
-      else if (nums.slice(0, 5).every((v) => parseNum(v) === 0)) nums.splice(0, 7, ...nums.slice(0, 5), "0", "0", "0", "0", nums[5]!, nums[6]!);
+      if (nums.length === 10)
+        nums.splice(0, 10, ...(nums[9] === "-" ? [...nums.slice(0, 9), "0", "-"] : [...nums.slice(0, 5), "0", ...nums.slice(5)]));
+      else if (nums.slice(0, 5).every((v) => parseNum(v) === 0))
+        nums.splice(0, 7, ...nums.slice(0, 5), "0", "0", "0", "0", nums[5]!, nums[6]!);
     }
     if (nums.length < 11) {
-      if (/\d{2}\/\d{2}\/\d{2,4}/.test(text) || /Fuentes|SIGNOS|SIDICO|OSEP|Nota|REPARTICI|ANEXO|IMPORTES|Importe|al fin|PLANTA|CONTRATOS|PERMANENTE|ORGANISMO$|Cargos|Trimestre|EJERCICIO|^\d TRIMESTRE/i.test(text) || nums.length === 0) continue;
+      if (
+        /\d{2}\/\d{2}\/\d{2,4}/.test(text) ||
+        /Fuentes|SIGNOS|SIDICO|OSEP|Nota|REPARTICI|ANEXO|IMPORTES|Importe|al fin|PLANTA|CONTRATOS|PERMANENTE|ORGANISMO$|Cargos|Trimestre|EJERCICIO|^\d TRIMESTRE/i.test(
+          text,
+        ) ||
+        nums.length === 0
+      )
+        continue;
       out.unmatched.push(text);
       continue;
     }
@@ -304,7 +325,8 @@ function annex19Rows(year: number, quarter: number, a: Annex19): Row[] {
       rows.push({ ...base, tipo_personal: t.tipo, cantidad: count, horas_catedra: hours, importe: reported ? round2(amount) : "" });
     }
     const [count, amount] = [r.cells[9]!, r.cells[10]!];
-    if (count || amount) rows.push({ ...base, tipo_personal: "contratos_locacion", cantidad: count, horas_catedra: 0, importe: round2(amount) });
+    if (count || amount)
+      rows.push({ ...base, tipo_personal: "contratos_locacion", cantidad: count, horas_catedra: 0, importe: round2(amount) });
   }
   return rows;
 }
@@ -333,7 +355,10 @@ interface ContractRow {
   amount: number;
 }
 
-function parseAnnex20(lines: string[][], file: string): { rows: ContractRow[]; total: number[] | null; year: number | null; quarter: number | null; unmatched: string[] } {
+function parseAnnex20(
+  lines: string[][],
+  file: string,
+): { rows: ContractRow[]; total: number[] | null; year: number | null; quarter: number | null; unmatched: string[] } {
   const rows: ContractRow[] = [];
   const unmatched: string[] = [];
   let total: number[] | null = null;
@@ -352,7 +377,10 @@ function parseAnnex20(lines: string[][], file: string): { rows: ContractRow[]; t
     while (k > 0 && NUM.test(toks[k - 1]!)) k--;
     const nums = toks.slice(k).map(parseNum);
     if (toks[0] === "TOTALES") {
-      total = toks.slice(1).filter((t) => NUM.test(t)).map(parseNum);
+      total = toks
+        .slice(1)
+        .filter((t) => NUM.test(t))
+        .map(parseNum);
       continue;
     }
     if (nums.length < 5) continue;
@@ -366,7 +394,18 @@ function parseAnnex20(lines: string[][], file: string): { rows: ContractRow[]; t
     }
     const name = clean(toks.slice(first, k).join(" "));
     const [start, hires, exits, end, amount] = nums.slice(-5) as [number, number, number, number, number];
-    rows.push({ group: CHARACTER_GROUP[m[1]!] ?? `Carácter ${m[1]}`, code, jurisdiction: m[2]!, unit: m[3] ?? "", name, start, hires, exits, end, amount });
+    rows.push({
+      group: CHARACTER_GROUP[m[1]!] ?? `Carácter ${m[1]}`,
+      code,
+      jurisdiction: m[2]!,
+      unit: m[3] ?? "",
+      name,
+      start,
+      hires,
+      exits,
+      end,
+      amount,
+    });
   }
   return { rows, total, year, quarter, unmatched };
 }
@@ -399,7 +438,8 @@ export async function run(_args: string[]): Promise<void> {
       const pdfs = await pdfsOf(f);
       const a = parseAnnex19(await pdfTextLines(pdfs[0]!.bytes));
       if (a.year !== null && a.year !== year) problems.push(`${f}: el PDF dice ejercicio ${a.year}`);
-      if (a.quarter !== null && a.quarter !== quarter && a.dateQuarter !== quarter) problems.push(`${f}: el PDF dice trimestre ${a.quarter}`);
+      if (a.quarter !== null && a.quarter !== quarter && a.dateQuarter !== quarter)
+        problems.push(`${f}: el PDF dice trimestre ${a.quarter}`);
       for (const u of a.unmatched) problems.push(`${f}: línea sin interpretar: ${u}`);
       // Validación: suma de los organismos contra el subtotal de su grupo y el TOTALES del PDF.
       const sums = new Map<string, number[]>();
@@ -411,13 +451,19 @@ export async function run(_args: string[]): Promise<void> {
       for (const [g, cells] of a.groupTotals) {
         const s = sums.get(g) ?? new Array(11).fill(0);
         const bad = cells.map((v, i) => ({ i, d: s[i]! - v })).filter((x) => Math.abs(x.d) > (x.i % 3 === 2 || x.i === 10 ? 5 : 0.5));
-        if (bad.length) problems.push(`${key} ${g}: la suma de organismos difiere del subtotal en columnas ${bad.map((b) => `${b.i}(${b.d.toFixed(0)})`).join(", ")}`);
+        if (bad.length)
+          problems.push(
+            `${key} ${g}: la suma de organismos difiere del subtotal en columnas ${bad.map((b) => `${b.i}(${b.d.toFixed(0)})`).join(", ")}`,
+          );
       }
       if (a.totals) {
         const s = new Array(11).fill(0);
         for (const c of a.groupTotals.values()) c.forEach((v, i) => (s[i] += v));
         const bad = a.totals.map((v, i) => ({ i, d: s[i]! - v })).filter((x) => Math.abs(x.d) > (x.i % 3 === 2 || x.i === 10 ? 5 : 0.5));
-        if (bad.length) problems.push(`${key}: subtotales de grupo difieren del TOTALES en columnas ${bad.map((b) => `${b.i}(${b.d.toFixed(0)})`).join(", ")}`);
+        if (bad.length)
+          problems.push(
+            `${key}: subtotales de grupo difieren del TOTALES en columnas ${bad.map((b) => `${b.i}(${b.d.toFixed(0)})`).join(", ")}`,
+          );
       } else problems.push(`${key}: sin fila TOTALES`);
       personal.push(...annex19Rows(year, quarter, a));
       periods.add(key);
@@ -428,10 +474,12 @@ export async function run(_args: string[]): Promise<void> {
       for (const pdf of await pdfsOf(f)) {
         const c = parseAnnex20(await pdfLines(pdf.bytes), `${f}:${pdf.name}`);
         for (const u of c.unmatched) problems.push(`${u}`);
-        if (c.year !== null && (c.year !== year || c.quarter !== quarter)) problems.push(`${f}:${pdf.name}: el PDF dice ${c.year} T${c.quarter}`);
+        if (c.year !== null && (c.year !== year || c.quarter !== quarter))
+          problems.push(`${f}:${pdf.name}: el PDF dice ${c.year} T${c.quarter}`);
         const s = [0, 0, 0, 0, 0];
         for (const r of c.rows) {
-          if (r.start + r.hires - r.exits !== r.end) problems.push(`${f}:${pdf.name} ${r.code}: inicio+altas-bajas != fin (${r.start}+${r.hires}-${r.exits}!=${r.end})`);
+          if (r.start + r.hires - r.exits !== r.end)
+            problems.push(`${f}:${pdf.name} ${r.code}: inicio+altas-bajas != fin (${r.start}+${r.hires}-${r.exits}!=${r.end})`);
           [r.start, r.hires, r.exits, r.end, r.amount].forEach((v, i) => (s[i] = (s[i] ?? 0) + v));
           contracts.push({
             anio: year,
@@ -450,7 +498,8 @@ export async function run(_args: string[]): Promise<void> {
         }
         if (c.total && c.total.length >= 5) {
           const t = c.total.slice(-5);
-          if (s.some((v, i) => Math.abs(v - t[i]!) > (i === 4 ? 5 : 0))) problems.push(`${f}:${pdf.name}: la suma de filas (${s.map((v) => Math.round(v))}) difiere del TOTALES (${t.map(Math.round)})`);
+          if (s.some((v, i) => Math.abs(v - t[i]!) > (i === 4 ? 5 : 0)))
+            problems.push(`${f}:${pdf.name}: la suma de filas (${s.map((v) => Math.round(v))}) difiere del TOTALES (${t.map(Math.round)})`);
         } else problems.push(`${f}:${pdf.name}: sin fila TOTALES`);
       }
     }
@@ -460,18 +509,31 @@ export async function run(_args: string[]): Promise<void> {
   personal.sort((a, b) => (key(a) < key(b) ? -1 : 1));
   contracts.sort((a, b) => (key(a) < key(b) ? -1 : 1));
 
-  await writeProcessed(
-    SOURCE,
-    "personal.csv",
-    personal,
-    ["anio", "trimestre", "fecha_corte", "grupo", "organismo", "tipo_personal", "cantidad", "horas_catedra", "importe"],
-  );
-  await writeProcessed(
-    SOURCE,
-    "contratos.csv",
-    contracts,
-    ["anio", "trimestre", "fecha_corte", "grupo", "codigo_jurisdiccion", "codigo_unidad", "organismo", "contratados_inicio", "altas", "bajas", "contratados_fin", "importe_trimestre"],
-  );
+  await writeProcessed(SOURCE, "personal.csv", personal, [
+    "anio",
+    "trimestre",
+    "fecha_corte",
+    "grupo",
+    "organismo",
+    "tipo_personal",
+    "cantidad",
+    "horas_catedra",
+    "importe",
+  ]);
+  await writeProcessed(SOURCE, "contratos.csv", contracts, [
+    "anio",
+    "trimestre",
+    "fecha_corte",
+    "grupo",
+    "codigo_jurisdiccion",
+    "codigo_unidad",
+    "organismo",
+    "contratados_inicio",
+    "altas",
+    "bajas",
+    "contratados_fin",
+    "importe_trimestre",
+  ]);
 
   console.log(`${periods.size} trimestres, ${personal.length} filas de personal, ${contracts.length} filas de contratos`);
   if (missing.length) console.log(`::warning title=lrf-personal::faltan en el sitio: ${missing.join("; ")}`);

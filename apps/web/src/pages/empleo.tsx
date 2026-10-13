@@ -1,17 +1,16 @@
-import { cn } from "@mt/ui/lib/utils";
 import { tileVariants } from "@mt/ui/components/card";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
+import { cn } from "@mt/ui/lib/utils";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { BriefcaseBusiness, Trophy, UsersRound } from "lucide-react";
-
-import { useUrlOption } from "../url-state.ts";
-import { BarList } from "../charts/bar-list.tsx";
-import { LineChart } from "../charts/line-chart.tsx";
-import { GOBIERNOS } from "../gobiernos.ts";
-import { formatNumber } from "../lib.ts";
-import { FuentesOficiales } from "../components/official-sources.tsx";
-import { TrackedSegmented } from "../components/tracked-segmented.tsx";
+import { BarList } from "@/charts/bar-list.tsx";
+import { LineChart } from "@/charts/line-chart.tsx";
+import { FuentesOficiales } from "@/components/official-sources.tsx";
+import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
+import { GOBIERNOS } from "@/gobiernos.ts";
+import { formatNumber } from "@/lib.ts";
+import { useUrlOption } from "@/url-state.ts";
 
 const route = getRouteApi("/empleo-publico");
 
@@ -37,8 +36,8 @@ export function EmpleoPage() {
   return (
     <div className="flex flex-col gap-12">
       <PageHeader icon={UsersRound} topic="Empleo público" title="¿Cuántos empleados públicos tiene Mendoza?">
-        Personal ocupado en la administración pública provincial, comparado con la población. Medirlo cada mil
-          habitantes permite comparar provincias de distinto tamaño.
+        Personal ocupado en la administración pública provincial, comparado con la población. Medirlo cada mil habitantes permite comparar
+        provincias de distinto tamaño.
       </PageHeader>
       <FuentesOficiales ids={["dnap-ocupacion"]} />
 
@@ -55,7 +54,12 @@ export function EmpleoPage() {
           value={`${empleo.posicion}.º`}
           note="Ordenadas de menos a más empleados por habitante"
         />
-        <StatTile icon={BriefcaseBusiness} label="Planta ocupada" value={formatNumber(Math.round(empleo.plantaMendoza))} note={`Cargos, ${empleo.anio}`} />
+        <StatTile
+          icon={BriefcaseBusiness}
+          label="Planta ocupada"
+          value={formatNumber(Math.round(empleo.plantaMendoza))}
+          note={`Cargos, ${empleo.anio}`}
+        />
       </div>
 
       <Section title={`Todas las provincias, ${empleo.anio}`}>

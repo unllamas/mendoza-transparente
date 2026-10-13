@@ -1,6 +1,6 @@
-import { cn } from "@mt/ui/lib/utils";
 import { cardVariants, tileVariants } from "@mt/ui/components/card";
 import { Select } from "@mt/ui/components/input";
+import { cn } from "@mt/ui/lib/utils";
 /**
  * Home guide: the pieces that help people find their way in the site. Global search, department picker,
  * starting questions, the map of everything there is, how to read the data and what is new.
@@ -24,10 +24,10 @@ import {
   UsersRound,
 } from "lucide-react";
 
-import { track } from "../analytics.ts";
-import { formatNumber } from "../lib.ts";
-import { SECCION_ELECTORAL, slug } from "../slug.ts";
-import type { HomeGuide } from "../types.ts";
+import { track } from "@/analytics.ts";
+import { formatNumber } from "@/lib.ts";
+import { SECCION_ELECTORAL, slug } from "@/slug.ts";
+import type { HomeGuide } from "@/types.ts";
 
 /** "¿Dónde vivís?" → the municipality page. */
 export function DepartmentPicker() {
@@ -63,12 +63,48 @@ export function DepartmentPicker() {
 export function StartingQuestions({ guide }: { guide: HomeGuide }) {
   const { facts, counts } = guide;
   const questions: { id: string; icon: LucideIcon; question: string; fact: string; to: string }[] = [
-    { id: "municipio", icon: MapPin, question: "¿Quién gobierna mi departamento?", fact: `Intendente, legisladores, habitantes y coparticipación de los ${counts.municipalities}.`, to: "/municipios" },
-    { id: "deuda", icon: Landmark, question: "¿Cuánto debe Mendoza y a quién?", fact: facts.debt ?? "Bonos, préstamos y acreedores.", to: "/deuda" },
-    { id: "compras", icon: ShoppingCart, question: "¿A quién le compra el Estado?", fact: facts.topSupplier ?? "Las empresas y cada contrato.", to: "/proveedores" },
-    { id: "leyes", icon: Scale, question: "¿Qué leyes se aprobaron?", fact: facts.latestLaw ?? `${counts.laws} leyes, explicadas en simple.`, to: "/leyes" },
-    { id: "personal", icon: UsersRound, question: "¿Cuánta gente trabaja en el Estado y cuánto cuesta?", fact: facts.staff ?? "Cargos y costo de cada organismo.", to: "/gobierno" },
-    { id: "no-publicado", icon: EyeOff, question: "¿Qué datos no se publican y cómo los pido?", fact: `${counts.missing} datos que deberían ser públicos, con el pedido listo.`, to: "/no-publicado" },
+    {
+      id: "municipio",
+      icon: MapPin,
+      question: "¿Quién gobierna mi departamento?",
+      fact: `Intendente, legisladores, habitantes y coparticipación de los ${counts.municipalities}.`,
+      to: "/municipios",
+    },
+    {
+      id: "deuda",
+      icon: Landmark,
+      question: "¿Cuánto debe Mendoza y a quién?",
+      fact: facts.debt ?? "Bonos, préstamos y acreedores.",
+      to: "/deuda",
+    },
+    {
+      id: "compras",
+      icon: ShoppingCart,
+      question: "¿A quién le compra el Estado?",
+      fact: facts.topSupplier ?? "Las empresas y cada contrato.",
+      to: "/proveedores",
+    },
+    {
+      id: "leyes",
+      icon: Scale,
+      question: "¿Qué leyes se aprobaron?",
+      fact: facts.latestLaw ?? `${counts.laws} leyes, explicadas en simple.`,
+      to: "/leyes",
+    },
+    {
+      id: "personal",
+      icon: UsersRound,
+      question: "¿Cuánta gente trabaja en el Estado y cuánto cuesta?",
+      fact: facts.staff ?? "Cargos y costo de cada organismo.",
+      to: "/gobierno",
+    },
+    {
+      id: "no-publicado",
+      icon: EyeOff,
+      question: "¿Qué datos no se publican y cómo los pido?",
+      fact: `${counts.missing} datos que deberían ser públicos, con el pedido listo.`,
+      to: "/no-publicado",
+    },
   ];
   return (
     <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -178,10 +214,22 @@ export function EcosystemMap({ guide }: { guide: HomeGuide }) {
 // ------------------------------------------------------------------ how to read the data
 
 export const READING_RULES: { icon: LucideIcon; title: string; text: string }[] = [
-  { icon: ShieldCheck, title: "Cada número tiene su fuente", text: "Todo dato enlaza al sitio oficial del que sale y a una copia guardada, por si después lo borran." },
-  { icon: Scale, title: "Señales, no acusaciones", text: "Marcamos patrones que merecen una explicación. Cada organismo puede tener una razón válida." },
+  {
+    icon: ShieldCheck,
+    title: "Cada número tiene su fuente",
+    text: "Todo dato enlaza al sitio oficial del que sale y a una copia guardada, por si después lo borran.",
+  },
+  {
+    icon: Scale,
+    title: "Señales, no acusaciones",
+    text: "Marcamos patrones que merecen una explicación. Cada organismo puede tener una razón válida.",
+  },
   { icon: Coins, title: "Pesos de hoy", text: "Para comparar años distintos, pasamos los montos a pesos de hoy con la inflación oficial." },
-  { icon: Building2, title: "La misma vara para todos", text: "La misma metodología para todos los gobiernos y partidos, y el código abierto para revisarla." },
+  {
+    icon: Building2,
+    title: "La misma vara para todos",
+    text: "La misma metodología para todos los gobiernos y partidos, y el código abierto para revisarla.",
+  },
 ];
 
 export function ReadingRules() {
@@ -242,4 +290,3 @@ export function WhatsNew({ guide }: { guide: HomeGuide }) {
     </ul>
   );
 }
-

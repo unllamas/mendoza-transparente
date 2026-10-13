@@ -22,8 +22,8 @@
 
 import { existsSync } from "node:fs";
 import { archive, get, latestRaw, normalizeMunicipio, readRaw, writeProcessed } from "@mt/core";
-import * as XLSX from "xlsx";
 import { extractText, getDocumentProxy } from "unpdf";
+import * as XLSX from "xlsx";
 
 const SOURCE = "poblacion";
 const CENSO = "https://censo.gob.ar/wp-content/uploads";
@@ -37,14 +37,37 @@ const U = {
 };
 
 const PROVINCIAS: Record<number, string> = {
-  2: "Ciudad Autónoma de Buenos Aires", 6: "Buenos Aires", 10: "Catamarca", 14: "Córdoba",
-  18: "Corrientes", 22: "Chaco", 26: "Chubut", 30: "Entre Ríos", 34: "Formosa", 38: "Jujuy",
-  42: "La Pampa", 46: "La Rioja", 50: "Mendoza", 54: "Misiones", 58: "Neuquén", 62: "Río Negro",
-  66: "Salta", 70: "San Juan", 74: "San Luis", 78: "Santa Cruz", 82: "Santa Fe",
-  86: "Santiago del Estero", 90: "Tucumán", 94: "Tierra del Fuego",
+  2: "Ciudad Autónoma de Buenos Aires",
+  6: "Buenos Aires",
+  10: "Catamarca",
+  14: "Córdoba",
+  18: "Corrientes",
+  22: "Chaco",
+  26: "Chubut",
+  30: "Entre Ríos",
+  34: "Formosa",
+  38: "Jujuy",
+  42: "La Pampa",
+  46: "La Rioja",
+  50: "Mendoza",
+  54: "Misiones",
+  58: "Neuquén",
+  62: "Río Negro",
+  66: "Salta",
+  70: "San Juan",
+  74: "San Luis",
+  78: "Santa Cruz",
+  82: "Santa Fe",
+  86: "Santiago del Estero",
+  90: "Tucumán",
+  94: "Tierra del Fuego",
 };
 const provKey = (s: string) =>
-  s.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase().replace(/[^a-z]/g, "");
+  s
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase()
+    .replace(/[^a-z]/g, "");
 const PROV_BY_KEY = new Map(Object.values(PROVINCIAS).map((n) => [provKey(n), n]));
 function provFromPdfTitle(title: string): string | null {
   const k = provKey(title.replace(/\.?\s*Años.*$/, "").replace(/^Provincia del? /i, ""));
@@ -97,7 +120,14 @@ type Row = { anio: number; nombre: string; poblacion: number; tipo: string; fuen
 export async function run(_args: string[]) {
   const bufs: Buffer[] = [];
   for (const u of Object.values(U)) bufs.push(await fetchCached(u));
-  const [censoProv, censoDeptos, proyProv22, proyDeptos22, proyProv10, proyDeptos10] = bufs as [Buffer, Buffer, Buffer, Buffer, Buffer, Buffer];
+  const [censoProv, censoDeptos, proyProv22, proyDeptos22, proyProv10, proyDeptos10] = bufs as [
+    Buffer,
+    Buffer,
+    Buffer,
+    Buffer,
+    Buffer,
+    Buffer,
+  ];
 
   const deptos: Row[] = [];
   const provs: Row[] = [];
@@ -107,7 +137,10 @@ export async function run(_args: string[]) {
     const name = String(r[1] ?? "");
     const m = normalizeMunicipio(name);
     if (!m) continue;
-    for (const [i, anio] of [[2, 2010], [3, 2022]] as const)
+    for (const [i, anio] of [
+      [2, 2010],
+      [3, 2022],
+    ] as const)
       deptos.push({ anio, nombre: m, poblacion: Number(r[i]), tipo: "censo", fuente_url: U.censoDeptos });
   }
   const censoTotalMza = { 2010: 0, 2022: 0 };
@@ -121,7 +154,10 @@ export async function run(_args: string[]) {
     const code = Number(r[0]);
     const prov = PROVINCIAS[code];
     if (!prov || String(r[1]).startsWith("2") || !(typeof r[2] === "number")) continue;
-    for (const [i, anio] of [[2, 2010], [3, 2022]] as const)
+    for (const [i, anio] of [
+      [2, 2010],
+      [3, 2022],
+    ] as const)
       provs.push({ anio, nombre: prov, poblacion: Number(r[i]), tipo: "censo", fuente_url: U.censoProv });
   }
 
@@ -213,8 +249,12 @@ export async function run(_args: string[]) {
 
   const order = (a: Row, b: Row) => a.nombre.localeCompare(b.nombre, "es") || a.anio - b.anio || a.tipo.localeCompare(b.tipo);
   const cols = ["anio", "municipio", "poblacion", "tipo", "fuente_url"];
-  const dOut = deptos.sort(order).map((r) => ({ anio: r.anio, municipio: r.nombre, poblacion: r.poblacion, tipo: r.tipo, fuente_url: r.fuente_url }));
-  const pOut = provs.sort(order).map((r) => ({ anio: r.anio, provincia: r.nombre, poblacion: r.poblacion, tipo: r.tipo, fuente_url: r.fuente_url }));
+  const dOut = deptos
+    .sort(order)
+    .map((r) => ({ anio: r.anio, municipio: r.nombre, poblacion: r.poblacion, tipo: r.tipo, fuente_url: r.fuente_url }));
+  const pOut = provs
+    .sort(order)
+    .map((r) => ({ anio: r.anio, provincia: r.nombre, poblacion: r.poblacion, tipo: r.tipo, fuente_url: r.fuente_url }));
   await writeProcessed(SOURCE, "poblacion_departamentos.csv", dOut, cols);
   await writeProcessed(SOURCE, "poblacion_provincias.csv", pOut, ["anio", "provincia", "poblacion", "tipo", "fuente_url"]);
 
@@ -225,7 +265,22 @@ export async function run(_args: string[]) {
 }
 
 const DEPTOS_ORDEN = [
-  "Capital", "General Alvear", "Godoy Cruz", "Guaymallén", "Junín", "La Paz", "Las Heras", "Lavalle",
-  "Luján de Cuyo", "Maipú", "Malargüe", "Rivadavia", "San Carlos", "San Martín", "San Rafael",
-  "Santa Rosa", "Tunuyán", "Tupungato",
+  "Capital",
+  "General Alvear",
+  "Godoy Cruz",
+  "Guaymallén",
+  "Junín",
+  "La Paz",
+  "Las Heras",
+  "Lavalle",
+  "Luján de Cuyo",
+  "Maipú",
+  "Malargüe",
+  "Rivadavia",
+  "San Carlos",
+  "San Martín",
+  "San Rafael",
+  "Santa Rosa",
+  "Tunuyán",
+  "Tupungato",
 ];

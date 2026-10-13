@@ -20,29 +20,18 @@
  * Nunca se infiere el partido: solo se completa cuando la fuente oficial lo dice.
  */
 
-import { load } from "cheerio";
-import { extractText, getDocumentProxy } from "unpdf";
-
-import {
-  archive,
-  fetchAndArchive,
-  get,
-  latestRaw,
-  normalizeMunicipio,
-  readRaw,
-  PROCESSED_DIR,
-  writeProcessed,
-  type Row,
-} from "@mt/core";
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+
+import { archive, fetchAndArchive, get, latestRaw, normalizeMunicipio, PROCESSED_DIR, type Row, readRaw, writeProcessed } from "@mt/core";
+import { load } from "cheerio";
+import { extractText, getDocumentProxy } from "unpdf";
 
 const ID = "autoridades";
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // El WAF del Senado bloquea el User-Agent con sufijo; con uno de navegador común responde.
-const UA_NAVEGADOR =
-  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36";
+const UA_NAVEGADOR = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36";
 const SENADO_HEADERS = { "User-Agent": UA_NAVEGADOR, "Accept-Language": "es-AR,es;q=0.9" };
 
 const norm = (s: string) =>
@@ -50,7 +39,10 @@ const norm = (s: string) =>
     .normalize("NFD")
     .replace(/\p{Diacritic}/gu, "")
     .toLowerCase();
-const slug = (s: string) => norm(s).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const slug = (s: string) =>
+  norm(s)
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 const clean = (s: string) => s.replace(/\s+/g, " ").trim();
 
 /** "dd/mm/yyyy" a "yyyy-mm-dd". */
@@ -131,11 +123,9 @@ const COLUMNAS = [
 // Ejecutivo provincial
 // ---------------------------------------------------------------------------
 
-const ACTA_2023 =
-  "https://jusmendoza.gob.ar/wp-content/uploads/2024/12/Acta-de-Proclamacion-de-Candidatos-03-09-2023-y-24-09-2023.pdf";
+const ACTA_2023 = "https://jusmendoza.gob.ar/wp-content/uploads/2024/12/Acta-de-Proclamacion-de-Candidatos-03-09-2023-y-24-09-2023.pdf";
 const PRENSA_GABINETE = "https://www.mendoza.gov.ar/prensa/estos-son-los-funcionarios-que-formaran-parte-del-gabinete-de-cornejo/";
-const NOTICIA_JE_FISCAL =
-  "https://jusmendoza.gob.ar/san-rafael-podra-elegir-convencionales-en-las-elecciones-a-concejales/";
+const NOTICIA_JE_FISCAL = "https://jusmendoza.gob.ar/san-rafael-podra-elegir-convencionales-en-las-elecciones-a-concejales/";
 const SITIOS = "https://sitios.mendoza.gob.ar";
 
 // Asunción de los ministros y del gobernador: sábado 2023-12-09 (nota oficial de prensa del 2023-12-06).
@@ -150,13 +140,55 @@ interface Ministro {
 }
 
 const MINISTROS: Ministro[] = [
-  { nombre: "Natalio Mema", cargo: "Ministro de Gobierno, Infraestructura y Desarrollo Territorial", organismo: "Ministerio de Gobierno, Infraestructura y Desarrollo Territorial", pagina: `${SITIOS}/gobiernoinfraestructura/informacion-oficial-plantilla-para-ministerios/`, apellido: "Mema" },
-  { nombre: "Mercedes Rus", cargo: "Ministra de Seguridad y Justicia", organismo: "Ministerio de Seguridad y Justicia", pagina: `${SITIOS}/seguridadyjusticia/informacion-oficial-plantilla-para-ministerios/`, apellido: "Rus" },
-  { nombre: "Víctor Fayad", cargo: "Ministro de Hacienda y Finanzas", organismo: "Ministerio de Hacienda y Finanzas", pagina: `${SITIOS}/haciendayfinanzas/informacion-oficial/`, apellido: "Fayad" },
-  { nombre: "Rodolfo Vargas Arizu", cargo: "Ministro de Producción", organismo: "Ministerio de Producción", pagina: `${SITIOS}/produccion/informacion-oficial/`, apellido: "Vargas Arizu" },
-  { nombre: "Rodolfo Montero", cargo: "Ministro de Salud y Deportes", organismo: "Ministerio de Salud y Deportes", pagina: `${SITIOS}/saludydeportes/informacion-oficial/`, apellido: "Montero" },
-  { nombre: "Jimena Latorre", cargo: "Ministra de Energía y Ambiente", organismo: "Ministerio de Energía y Ambiente", pagina: `${SITIOS}/energiayambiente/informacion-oficial-2/`, apellido: "Latorre" },
-  { nombre: "Tadeo García Zalazar", cargo: "Ministro de Educación, Cultura, Infancias y DGE", organismo: "Ministerio de Educación, Cultura, Infancias y DGE", pagina: `${SITIOS}/educacion-cultura-infancias-dge/informacion-oficial/`, apellido: "García Zalazar" },
+  {
+    nombre: "Natalio Mema",
+    cargo: "Ministro de Gobierno, Infraestructura y Desarrollo Territorial",
+    organismo: "Ministerio de Gobierno, Infraestructura y Desarrollo Territorial",
+    pagina: `${SITIOS}/gobiernoinfraestructura/informacion-oficial-plantilla-para-ministerios/`,
+    apellido: "Mema",
+  },
+  {
+    nombre: "Mercedes Rus",
+    cargo: "Ministra de Seguridad y Justicia",
+    organismo: "Ministerio de Seguridad y Justicia",
+    pagina: `${SITIOS}/seguridadyjusticia/informacion-oficial-plantilla-para-ministerios/`,
+    apellido: "Rus",
+  },
+  {
+    nombre: "Víctor Fayad",
+    cargo: "Ministro de Hacienda y Finanzas",
+    organismo: "Ministerio de Hacienda y Finanzas",
+    pagina: `${SITIOS}/haciendayfinanzas/informacion-oficial/`,
+    apellido: "Fayad",
+  },
+  {
+    nombre: "Rodolfo Vargas Arizu",
+    cargo: "Ministro de Producción",
+    organismo: "Ministerio de Producción",
+    pagina: `${SITIOS}/produccion/informacion-oficial/`,
+    apellido: "Vargas Arizu",
+  },
+  {
+    nombre: "Rodolfo Montero",
+    cargo: "Ministro de Salud y Deportes",
+    organismo: "Ministerio de Salud y Deportes",
+    pagina: `${SITIOS}/saludydeportes/informacion-oficial/`,
+    apellido: "Montero",
+  },
+  {
+    nombre: "Jimena Latorre",
+    cargo: "Ministra de Energía y Ambiente",
+    organismo: "Ministerio de Energía y Ambiente",
+    pagina: `${SITIOS}/energiayambiente/informacion-oficial-2/`,
+    apellido: "Latorre",
+  },
+  {
+    nombre: "Tadeo García Zalazar",
+    cargo: "Ministro de Educación, Cultura, Infancias y DGE",
+    organismo: "Ministerio de Educación, Cultura, Infancias y DGE",
+    pagina: `${SITIOS}/educacion-cultura-infancias-dge/informacion-oficial/`,
+    apellido: "García Zalazar",
+  },
 ];
 
 async function ejecutivo(): Promise<Autoridad[]> {
@@ -171,14 +203,30 @@ async function ejecutivo(): Promise<Autoridad[]> {
   const hasta = "2027-12";
   out.push(
     {
-      id: "alfredo-cornejo", nombre: "Alfredo Víctor Cornejo", cargo: "Gobernador", poder: "ejecutivo_provincial",
-      organismo: "Gobernación de Mendoza", partido: "Cambia Mendoza", bloque: "",
-      mandato_desde: ASUNCION_2023, mandato_hasta: hasta, perfil_url: "", fuente_url: ACTA_2023,
+      id: "alfredo-cornejo",
+      nombre: "Alfredo Víctor Cornejo",
+      cargo: "Gobernador",
+      poder: "ejecutivo_provincial",
+      organismo: "Gobernación de Mendoza",
+      partido: "Cambia Mendoza",
+      bloque: "",
+      mandato_desde: ASUNCION_2023,
+      mandato_hasta: hasta,
+      perfil_url: "",
+      fuente_url: ACTA_2023,
     },
     {
-      id: "hebe-casado", nombre: "Hebe Silvina Casado", cargo: "Vicegobernadora (preside el Senado provincial)", poder: "ejecutivo_provincial",
-      organismo: "Vicegobernación de Mendoza", partido: "Cambia Mendoza", bloque: "",
-      mandato_desde: ASUNCION_2023, mandato_hasta: hasta, perfil_url: "", fuente_url: ACTA_2023,
+      id: "hebe-casado",
+      nombre: "Hebe Silvina Casado",
+      cargo: "Vicegobernadora (preside el Senado provincial)",
+      poder: "ejecutivo_provincial",
+      organismo: "Vicegobernación de Mendoza",
+      partido: "Cambia Mendoza",
+      bloque: "",
+      mandato_desde: ASUNCION_2023,
+      mandato_hasta: hasta,
+      perfil_url: "",
+      fuente_url: ACTA_2023,
     },
   );
   verificar(gabinete, "Cornejo", "nota oficial del gabinete");
@@ -188,8 +236,17 @@ async function ejecutivo(): Promise<Autoridad[]> {
     verificar(txt, m.apellido, m.organismo);
     verificar(gabinete, m.apellido, `nota del gabinete (${m.organismo})`);
     out.push({
-      id: slug(m.nombre), nombre: m.nombre, cargo: m.cargo, poder: "ejecutivo_provincial", organismo: m.organismo,
-      partido: "", bloque: "", mandato_desde: ASUNCION_2023, mandato_hasta: "", perfil_url: m.pagina, fuente_url: m.pagina,
+      id: slug(m.nombre),
+      nombre: m.nombre,
+      cargo: m.cargo,
+      poder: "ejecutivo_provincial",
+      organismo: m.organismo,
+      partido: "",
+      bloque: "",
+      mandato_desde: ASUNCION_2023,
+      mandato_hasta: "",
+      perfil_url: m.pagina,
+      fuente_url: m.pagina,
     });
   }
 
@@ -198,16 +255,32 @@ async function ejecutivo(): Promise<Autoridad[]> {
   const turismoTxt = await textoRaw(await bajar(turismoUrl, "ministerio-turismo.html"));
   verificar(turismoTxt, "Testa", "Ente Mendoza Turismo");
   out.push({
-    id: "gabriela-testa", nombre: "Gabriela Testa", cargo: "Presidente del Ente Mendoza Turismo", poder: "ejecutivo_provincial",
-    organismo: "Ente Mendoza Turismo (EMETUR)", partido: "", bloque: "", mandato_desde: ASUNCION_2023, mandato_hasta: "",
-    perfil_url: turismoUrl, fuente_url: turismoUrl,
+    id: "gabriela-testa",
+    nombre: "Gabriela Testa",
+    cargo: "Presidente del Ente Mendoza Turismo",
+    poder: "ejecutivo_provincial",
+    organismo: "Ente Mendoza Turismo (EMETUR)",
+    partido: "",
+    bloque: "",
+    mandato_desde: ASUNCION_2023,
+    mandato_hasta: "",
+    perfil_url: turismoUrl,
+    fuente_url: turismoUrl,
   });
 
   verificar(fiscalTxt, "Simón", "noticia de la Junta Electoral (Fiscal de Estado)");
   out.push({
-    id: "fernando-simon", nombre: "Fernando Simón", cargo: "Fiscal de Estado", poder: "ejecutivo_provincial",
-    organismo: "Fiscalía de Estado", partido: "", bloque: "", mandato_desde: "", mandato_hasta: "",
-    perfil_url: "", fuente_url: NOTICIA_JE_FISCAL,
+    id: "fernando-simon",
+    nombre: "Fernando Simón",
+    cargo: "Fiscal de Estado",
+    poder: "ejecutivo_provincial",
+    organismo: "Fiscalía de Estado",
+    partido: "",
+    bloque: "",
+    mandato_desde: "",
+    mandato_hasta: "",
+    perfil_url: "",
+    fuente_url: NOTICIA_JE_FISCAL,
   });
   return out;
 }
@@ -248,9 +321,18 @@ async function intendentes(): Promise<Autoridad[]> {
     if (!municipio) throw new Error(`Municipio no reconocido: ${mun}`);
     verificar(actaTxt, clave, `acta de proclamación (intendente de ${municipio})`);
     out.push({
-      id: slug(nombre), nombre, cargo: "Intendente", poder: "municipal", organismo: municipio, partido, bloque: "",
+      id: slug(nombre),
+      nombre,
+      cargo: "Intendente",
+      poder: "municipal",
+      organismo: municipio,
+      partido,
+      bloque: "",
       // Mandato de cuatro años (Constitución provincial, art. 197); la fecha exacta de asunción no está en el acta.
-      mandato_desde: "2023-12", mandato_hasta: "2027-12", perfil_url: "", fuente_url: ACTA_2023,
+      mandato_desde: "2023-12",
+      mandato_hasta: "2027-12",
+      perfil_url: "",
+      fuente_url: ACTA_2023,
     });
   }
   return out;
@@ -275,19 +357,27 @@ function parseCsv(text: string): string[][] {
   for (let i = 0; i < text.length; i++) {
     const c = text[i]!;
     if (q) {
-      if (c === '"' && text[i + 1] === '"') { cell += '"'; i++; }
-      else if (c === '"') q = false;
+      if (c === '"' && text[i + 1] === '"') {
+        cell += '"';
+        i++;
+      } else if (c === '"') q = false;
       else cell += c;
     } else if (c === '"') q = true;
-    else if (c === ",") { row.push(cell); cell = ""; }
-    else if (c === "\n" || c === "\r") {
+    else if (c === ",") {
+      row.push(cell);
+      cell = "";
+    } else if (c === "\n" || c === "\r") {
       if (c === "\r" && text[i + 1] === "\n") i++;
-      row.push(cell); cell = "";
+      row.push(cell);
+      cell = "";
       if (row.some((x) => x !== "")) rows.push(row);
       row = [];
     } else cell += c;
   }
-  if (cell !== "" || row.length) { row.push(cell); rows.push(row); }
+  if (cell !== "" || row.length) {
+    row.push(cell);
+    rows.push(row);
+  }
   return rows;
 }
 
@@ -315,12 +405,18 @@ async function diputados(): Promise<Autoridad[]> {
     const mandato = r[idx("MANDATO")]!; // "2023-2027"
     const finAnio = mandato.split("-")[1] ?? "";
     out.push({
-      id: slug(`${nom} ${ape}`), nombre: `${nom} ${ape}`, cargo: "Diputado/a nacional", poder: "legislativo_nacional",
+      id: slug(`${nom} ${ape}`),
+      nombre: `${nom} ${ape}`,
+      cargo: "Diputado/a nacional",
+      poder: "legislativo_nacional",
       organismo: "Cámara de Diputados de la Nación",
       // La fuente solo informa el bloque actual; la lista por la que fue electo no figura en estos datos.
-      partido: "", bloque: titulo(r[idx("BLOQUE")]!).replace(/^Ucr - /, "UCR - "),
-      mandato_desde: isoFecha(r[idx("FECHA_DE_INICIO")]!), mandato_hasta: finAnio ? `${finAnio}-12-09` : "",
-      perfil_url: perfiles.get(norm(`${ape}, ${nom}`)) ?? "", fuente_url: HCDN_ACTUALES,
+      partido: "",
+      bloque: titulo(r[idx("BLOQUE")]!).replace(/^Ucr - /, "UCR - "),
+      mandato_desde: isoFecha(r[idx("FECHA_DE_INICIO")]!),
+      mandato_hasta: finAnio ? `${finAnio}-12-09` : "",
+      perfil_url: perfiles.get(norm(`${ape}, ${nom}`)) ?? "",
+      fuente_url: HCDN_ACTUALES,
     });
   }
   return out;
@@ -350,10 +446,12 @@ async function senadores(): Promise<Autoridad[]> {
   bloques("table tbody tr").each((_, tr) => {
     const celdas = bloques(tr).children("td");
     if (celdas.first().attr("colspan") === "12") {
-      bloques(tr).find('a[href^="/senadores/senador/"]').each((__, a) => {
-        const id = (bloques(a).attr("href") ?? "").split("/").pop()!;
-        bloquePorId.set(id, bloqueActual);
-      });
+      bloques(tr)
+        .find('a[href^="/senadores/senador/"]')
+        .each((__, a) => {
+          const id = (bloques(a).attr("href") ?? "").split("/").pop()!;
+          bloquePorId.set(id, bloqueActual);
+        });
     } else {
       bloqueActual = clean(celdas.first().text());
     }
@@ -369,12 +467,23 @@ async function senadores(): Promise<Autoridad[]> {
     const href = link.attr("href") ?? "";
     const sid = href.split("/").pop() ?? "";
     const nombre = nombreApellido(clean(link.text()));
-    const fechas = td.eq(4).text().split(/\s+/).filter((x) => /^\d{2}\/\d{2}\/\d{4}$/.test(x));
+    const fechas = td
+      .eq(4)
+      .text()
+      .split(/\s+/)
+      .filter((x) => /^\d{2}\/\d{2}\/\d{4}$/.test(x));
     out.push({
-      id: slug(nombre), nombre, cargo: "Senador/a nacional", poder: "legislativo_nacional",
-      organismo: "Senado de la Nación", partido: clean(td.eq(3).text()), bloque: bloquePorId.get(sid) ?? "",
-      mandato_desde: isoFecha(fechas[0] ?? ""), mandato_hasta: isoFecha(fechas[1] ?? ""),
-      perfil_url: href ? `https://www.senado.gob.ar${href}` : "", fuente_url: SENADO_LISTA,
+      id: slug(nombre),
+      nombre,
+      cargo: "Senador/a nacional",
+      poder: "legislativo_nacional",
+      organismo: "Senado de la Nación",
+      partido: clean(td.eq(3).text()),
+      bloque: bloquePorId.get(sid) ?? "",
+      mandato_desde: isoFecha(fechas[0] ?? ""),
+      mandato_hasta: isoFecha(fechas[1] ?? ""),
+      perfil_url: href ? `https://www.senado.gob.ar${href}` : "",
+      fuente_url: SENADO_LISTA,
     });
   });
   return out;
@@ -422,8 +531,12 @@ async function remuneraciones(): Promise<Row[]> {
       if (nombre === "Desarraigo") concepto += " (corresponde solo a quienes lo perciben)";
       if (nombre === "Movilidad") concepto += " (según la opción elegida)";
       out.push({
-        cargo_o_persona: "Diputado/a nacional", organismo: "Cámara de Diputados de la Nación", concepto, periodo,
-        monto_bruto: numeroAr(row[ii]!), fuente_url: HCDN_DIETAS_PAGINA,
+        cargo_o_persona: "Diputado/a nacional",
+        organismo: "Cámara de Diputados de la Nación",
+        concepto,
+        periodo,
+        monto_bruto: numeroAr(row[ii]!),
+        fuente_url: HCDN_DIETAS_PAGINA,
       });
     }
   }
@@ -437,8 +550,12 @@ async function remuneraciones(): Promise<Row[]> {
   ];
   for (const [concepto, modulos] of senado) {
     out.push({
-      cargo_o_persona: "Senador/a nacional", organismo: "Senado de la Nación", concepto, periodo: MODULO_PERIODO,
-      monto_bruto: Math.round(modulos * MODULO_SENADO * 100) / 100, fuente_url: SENADO_DIETAS,
+      cargo_o_persona: "Senador/a nacional",
+      organismo: "Senado de la Nación",
+      concepto,
+      periodo: MODULO_PERIODO,
+      monto_bruto: Math.round(modulos * MODULO_SENADO * 100) / 100,
+      fuente_url: SENADO_DIETAS,
     });
   }
   return out;
@@ -449,7 +566,7 @@ async function remuneraciones(): Promise<Row[]> {
 async function escribirMeta(nombre: string, meta: unknown) {
   const dir = join(PROCESSED_DIR, ID);
   await mkdir(dir, { recursive: true });
-  await writeFile(join(dir, nombre), JSON.stringify(meta, null, 2) + "\n");
+  await writeFile(join(dir, nombre), `${JSON.stringify(meta, null, 2)}\n`);
 }
 
 export async function run(_args: string[]) {
@@ -473,7 +590,9 @@ export async function run(_args: string[]) {
     ids.add(a.id);
   }
   await writeProcessed(ID, "autoridades.csv", todas as unknown as Row[], COLUMNAS);
-  console.log(`autoridades.csv: ${todas.length} filas (ejecutivo ${eje.length}, intendentes ${intend.length}, diputados ${dip.length}, senadores ${sen.length})`);
+  console.log(
+    `autoridades.csv: ${todas.length} filas (ejecutivo ${eje.length}, intendentes ${intend.length}, diputados ${dip.length}, senadores ${sen.length})`,
+  );
 
   console.log("Remuneraciones...");
   const rem = await remuneraciones();
@@ -499,9 +618,17 @@ export async function run(_args: string[]) {
         tipo: "texto",
         descripcion: "Lista o frente por el que fue electo, solo si una fuente oficial lo dice. Vacío no significa sin partido.",
       },
-      bloque: { etiqueta: "Bloque legislativo", tipo: "texto", descripcion: "Bloque actual en la cámara nacional. Solo para legisladores nacionales." },
+      bloque: {
+        etiqueta: "Bloque legislativo",
+        tipo: "texto",
+        descripcion: "Bloque actual en la cámara nacional. Solo para legisladores nacionales.",
+      },
       mandato_desde: { etiqueta: "Mandato desde", tipo: "fecha" },
-      mandato_hasta: { etiqueta: "Mandato hasta", tipo: "fecha", descripcion: "Fin del período para cargos electivos; vacío para designados." },
+      mandato_hasta: {
+        etiqueta: "Mandato hasta",
+        tipo: "fecha",
+        descripcion: "Fin del período para cargos electivos; vacío para designados.",
+      },
       perfil_url: { etiqueta: "Perfil oficial", tipo: "url" },
       fuente_url: { etiqueta: "Fuente", tipo: "url" },
     },

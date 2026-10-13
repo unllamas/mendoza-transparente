@@ -44,9 +44,9 @@
  *   - No hay datos personales: la planilla es por cargo, no por persona.
  */
 
+import { fetchAndArchive, get, latestRaw, type Row, readRaw, writeProcessed } from "@mt/core";
 import * as cheerio from "cheerio";
 import { getDocumentProxy } from "unpdf";
-import { fetchAndArchive, get, latestRaw, readRaw, writeProcessed, type Row } from "@mt/core";
 
 const SOURCE = "presupuesto-planta";
 const BASE = "https://sitios.mendoza.gob.ar/haciendayfinanzas";
@@ -143,7 +143,13 @@ async function readPages(bytes: Uint8Array): Promise<PdfPage[]> {
 
 const NUM = /^\d{1,3}(?:[.,]\d{3})+$|^\d+$/;
 const toInt = (s: string) => Number(s.replace(/[.,]/g, ""));
-const plain = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+const plain = (s: string) =>
+  s
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
 
 /** Posiciones de las columnas numéricas, leídas del encabezado de cada página. */
 interface Cols {
@@ -202,7 +208,17 @@ function splitRow(row: PdfRow, c: Cols): Split | null {
   // Cada número va a la columna cuyo encabezado lo contiene (por el borde derecho).
   const totalFirst = c.totalLeft < c.permLeft;
   const zone = (r: number): "perm" | "temp" | "total" =>
-    totalFirst ? (r < c.permLeft ? "total" : r < c.tempLeft ? "perm" : "temp") : r < c.tempLeft ? "perm" : r < c.totalLeft ? "temp" : "total";
+    totalFirst
+      ? r < c.permLeft
+        ? "total"
+        : r < c.tempLeft
+          ? "perm"
+          : "temp"
+      : r < c.tempLeft
+        ? "perm"
+        : r < c.totalLeft
+          ? "temp"
+          : "total";
   const by: Partial<Record<"perm" | "temp" | "total", number>> = {};
   for (const t of nums) by[zone(t.r)] = toInt(t.s);
   const perm = by.perm ?? null;
@@ -288,8 +304,14 @@ function parseUnits(pages: PdfPage[], kind: "cargos" | "horas"): Parsed {
         continue;
       }
       // Diseño 2026+: bloque de jurisdicción a la izquierda, bloque de unidad a la derecha de U.O.
-      const jurBlock = sp.left.filter((t) => t.x < cols!.uoLeft - 10).map((t) => t.s).join(" ");
-      const uoBlock = sp.left.filter((t) => t.x >= cols!.uoLeft - 10).map((t) => t.s).join(" ");
+      const jurBlock = sp.left
+        .filter((t) => t.x < cols!.uoLeft - 10)
+        .map((t) => t.s)
+        .join(" ");
+      const uoBlock = sp.left
+        .filter((t) => t.x >= cols!.uoLeft - 10)
+        .map((t) => t.s)
+        .join(" ");
       let m: RegExpMatchArray | null;
       if ((m = jurBlock.match(/^TOTAL CAR[AÁ]CTER (\d)/i))) {
         totals.push({ kind: "car", car: +m[1]!, name: "", perm, temp, total });
@@ -301,7 +323,15 @@ function parseUnits(pages: PdfPage[], kind: "cargos" | "horas"): Parsed {
       }
       if (/^Total\b/i.test(jurBlock) || (!uoBlock && jurBlock && !/^\d/.test(jurBlock))) {
         // "Total <jurisdicción>"; en carácter 5 hay jurisdicciones que repiten el nombre sin la palabra "Total".
-        totals.push({ kind: "jur", car: car || undefined, jur: jur || undefined, name: tidy(jurBlock.replace(/^Total\s+/i, "")), perm, temp, total });
+        totals.push({
+          kind: "jur",
+          car: car || undefined,
+          jur: jur || undefined,
+          name: tidy(jurBlock.replace(/^Total\s+/i, "")),
+          perm,
+          temp,
+          total,
+        });
         continue;
       }
       if (jurBlock) {
@@ -392,8 +422,21 @@ function parseScale(pages: PdfPage[], label: string): { rows: ScaleRow[]; printe
         if (!code) continue;
         lastCode = code;
         const cls = sp.left.find((t) => /^\d{4}$/.test(t.s) && t.x > 300 && t.x < 345);
-        const position = sp.left.filter((t) => t.x >= 345).map((t) => t.s).join(" ");
-        rows.push({ car, jur, uo, position: tidy(position), scale: code, class: cls?.s ?? "", perm: sp.perm ?? 0, temp: sp.temp ?? 0, total: sp.total! });
+        const position = sp.left
+          .filter((t) => t.x >= 345)
+          .map((t) => t.s)
+          .join(" ");
+        rows.push({
+          car,
+          jur,
+          uo,
+          position: tidy(position),
+          scale: code,
+          class: cls?.s ?? "",
+          perm: sp.perm ?? 0,
+          temp: sp.temp ?? 0,
+          total: sp.total!,
+        });
         void row;
       }
       continue;
@@ -409,8 +452,14 @@ function parseScale(pages: PdfPage[], label: string): { rows: ScaleRow[]; printe
         } else if (cols.oldLayout && row[0] && row[0].x >= 105 && row[0].x < 125 && (h = t.match(/^(\d{1,3}) \D/))) uo = +h[1]!;
         else if (!cols.oldLayout) {
           // 2026 en adelante: "1 1 Poder Legislativo | 1 Cámara de Senadores" en la primera fila de cada unidad.
-          const jb = row.filter((x) => x.x < cols!.uoLeft - 10).map((x) => x.s).join(" ");
-          const ub = row.filter((x) => x.x >= cols!.uoLeft - 10).map((x) => x.s).join(" ");
+          const jb = row
+            .filter((x) => x.x < cols!.uoLeft - 10)
+            .map((x) => x.s)
+            .join(" ");
+          const ub = row
+            .filter((x) => x.x >= cols!.uoLeft - 10)
+            .map((x) => x.s)
+            .join(" ");
           if ((h = jb.match(/^(?:(\d+) )?(\d+) \D/))) {
             if (h[1]) car = +h[1];
             jur = +h[2]!;
@@ -426,19 +475,33 @@ function parseScale(pages: PdfPage[], label: string): { rows: ScaleRow[]; printe
         continue;
       }
       const ident = s.left.filter((t) => t.x < positionX - 3);
-      const position = s.left.filter((t) => t.x >= positionX - 3 && t.x < codeZone).map((t) => t.s).join(" ");
+      const position = s.left
+        .filter((t) => t.x >= positionX - 3 && t.x < codeZone)
+        .map((t) => t.s)
+        .join(" ");
       const codes = s.left.filter((t) => t.x >= codeZone).map((t) => t.s);
       let m: RegExpMatchArray | null;
       if (cols.oldLayout) {
         // Los códigos van en la primera fila de cada unidad (2025) o en todas (2020 a 2024).
-        if ((m = ident.map((t) => t.s).join(" ").match(/^(\d) (\d+) (\d+)\b/))) {
+        if (
+          (m = ident
+            .map((t) => t.s)
+            .join(" ")
+            .match(/^(\d) (\d+) (\d+)\b/))
+        ) {
           car = +m[1]!;
           jur = +m[2]!;
           uo = +m[3]!;
         }
       } else {
-        const jurBlock = ident.filter((t) => t.x < cols!.uoLeft - 10).map((t) => t.s).join(" ");
-        const uoBlock = ident.filter((t) => t.x >= cols!.uoLeft - 10).map((t) => t.s).join(" ");
+        const jurBlock = ident
+          .filter((t) => t.x < cols!.uoLeft - 10)
+          .map((t) => t.s)
+          .join(" ");
+        const uoBlock = ident
+          .filter((t) => t.x >= cols!.uoLeft - 10)
+          .map((t) => t.s)
+          .join(" ");
         if (jurBlock && (m = jurBlock.match(/^(?:(\d+) )?(\d+)\b/))) {
           if (m[1]) car = +m[1];
           jur = +m[2]!;
@@ -603,7 +666,8 @@ export async function run(_args: string[]) {
       if (t.perm + t.temp !== t.total) warn("total 8.2", `${year} ${t.name}: ${t.perm}+${t.temp}≠${t.total} (el PDF mismo no cierra)`);
     }
     for (const u of cargos.units) {
-      if (u.perm + u.temp !== u.total) warn("fila 8.2", `${year} car ${u.car} jur ${u.jur} uo ${u.uo} (${u.uoName}): ${u.perm}+${u.temp}≠${u.total} en el PDF`);
+      if (u.perm + u.temp !== u.total)
+        warn("fila 8.2", `${year} car ${u.car} jur ${u.jur} uo ${u.uo} (${u.uoName}): ${u.perm}+${u.temp}≠${u.total} en el PDF`);
     }
 
     /* 8.4: horas cátedra por unidad */
@@ -631,7 +695,10 @@ export async function run(_args: string[]) {
           const byName = cand.filter((c) => plain(c.uoName) === plain(h.uoName));
           if (byName.length >= 1) h.car = byName[0]!.car;
           else if (cars.length > 1) {
-            warn("horas", `${year}: jur ${h.jur} uo ${h.uo} (${h.uoName}) está en más de un carácter (${cars.join(",")}); se asigna ${cars[0]}`);
+            warn(
+              "horas",
+              `${year}: jur ${h.jur} uo ${h.uo} (${h.uoName}) está en más de un carácter (${cars.join(",")}); se asigna ${cars[0]}`,
+            );
             h.car = cars[0]!;
           } else {
             h.car = h.jur === 14 ? 2 : 1;
@@ -644,14 +711,19 @@ export async function run(_args: string[]) {
     const hourKey = (u: { car: number; jur: number; uo: number }) => `${u.car}-${u.jur}-${u.uo}`;
     const hoursByUnit = new Map<string, UnitRow>();
     for (const h of hourUnits) hoursByUnit.set(hourKey(h), h);
-    for (const h of hourUnits) if (h.perm + h.temp !== h.total) warn("fila 8.4", `${year} ${hourKey(h)} ${h.uoName}: ${h.perm}+${h.temp}≠${h.total} en el PDF`);
+    for (const h of hourUnits)
+      if (h.perm + h.temp !== h.total) warn("fila 8.4", `${year} ${hourKey(h)} ${h.uoName}: ${h.perm}+${h.temp}≠${h.total} en el PDF`);
     const carTotals = hours.totals.filter((t) => t.kind === "car");
-    const hoursPrinted = hours.totals.find((t) => t.kind === "all")?.total ?? (carTotals.length ? sum(carTotals.map((t) => t.total)) : undefined);
+    const hoursPrinted =
+      hours.totals.find((t) => t.kind === "all")?.total ?? (carTotals.length ? sum(carTotals.map((t) => t.total)) : undefined);
 
     /* Cargos + horas en un solo cuadro */
     const allKeys = new Map<string, { car: number; jur: number; uo: number; name: string; jurName: string }>();
-    for (const u of cargos.units) allKeys.set(hourKey(u), { car: u.car, jur: u.jur, uo: u.uo, name: u.uoName, jurName: jurNames.get(u.jur) ?? u.jurName });
-    for (const h of hourUnits) if (!allKeys.has(hourKey(h))) allKeys.set(hourKey(h), { car: h.car, jur: h.jur, uo: h.uo, name: h.uoName, jurName: jurNames.get(h.jur) ?? h.jurName });
+    for (const u of cargos.units)
+      allKeys.set(hourKey(u), { car: u.car, jur: u.jur, uo: u.uo, name: u.uoName, jurName: jurNames.get(u.jur) ?? u.jurName });
+    for (const h of hourUnits)
+      if (!allKeys.has(hourKey(h)))
+        allKeys.set(hourKey(h), { car: h.car, jur: h.jur, uo: h.uo, name: h.uoName, jurName: jurNames.get(h.jur) ?? h.jurName });
     const cargoByUnit = new Map<string, UnitRow>();
     for (const u of cargos.units) cargoByUnit.set(hourKey(u), u);
     const keys = [...allKeys.values()].sort((a, b) => a.car - b.car || a.jur - b.jur || a.uo - b.uo);
@@ -693,7 +765,11 @@ export async function run(_args: string[]) {
         const got = bySum.get(`${u.car}-${u.jur}-${u.uo}`) ?? [0, 0, 0];
         if (got[0] !== u.perm || got[1] !== u.temp || got[2] !== u.total) {
           bad++;
-          if (bad <= 5) warn("suma 8.3", `${year} car ${u.car} jur ${u.jur} uo ${u.uo} (${u.uoName}): 8.3 suma ${got.join("/")}, 8.2 dice ${u.perm}/${u.temp}/${u.total}`);
+          if (bad <= 5)
+            warn(
+              "suma 8.3",
+              `${year} car ${u.car} jur ${u.jur} uo ${u.uo} (${u.uoName}): 8.3 suma ${got.join("/")}, 8.2 dice ${u.perm}/${u.temp}/${u.total}`,
+            );
         }
       }
       scaleCheck = `${scaleParsed.length} filas, ${bad} unidades que no cierran con 8.2`;
@@ -829,5 +905,7 @@ export async function run(_args: string[]) {
     "horas_catedra_temporarias",
     "costo_partida_personal",
   ]);
-  console.log(`cargos.csv: ${cargosRows.length} filas; cargos_escalafon.csv: ${scaleRows.length}; cargos_vacantes.csv: ${vacancyRows.length}; jurisdicciones.csv: ${summaryRows.length}`);
+  console.log(
+    `cargos.csv: ${cargosRows.length} filas; cargos_escalafon.csv: ${scaleRows.length}; cargos_vacantes.csv: ${vacancyRows.length}; jurisdicciones.csv: ${summaryRows.length}`,
+  );
 }

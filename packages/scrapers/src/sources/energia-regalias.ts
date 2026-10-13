@@ -114,8 +114,6 @@ export async function run(_args: string[]) {
       String(a.producto).localeCompare(String(b.producto)) ||
       String(a.provincia).localeCompare(String(b.provincia)),
   );
-  await writeProcessed(SOURCE, "regalias_mensual.csv", all, [
-    "anio", "mes", "provincia", "producto", "monto", "moneda", "ambito",
-  ]);
+  await writeProcessed(SOURCE, "regalias_mensual.csv", all, ["anio", "mes", "provincia", "producto", "monto", "moneda", "ambito"]);
   console.log(`regalias_mensual.csv: ${all.length} filas`);
 }

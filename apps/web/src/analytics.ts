@@ -32,21 +32,24 @@ function whenIdle(run: () => void) {
 }
 
 if (KEY && typeof window !== "undefined") {
-  whenIdle(() => void import("posthog-js").then(({ default: posthog }) => {
-    posthog.init(KEY, {
-      api_host: HOST,
-      cookieless_mode: "always",
-      autocapture: false,
-      capture_pageview: false, // sent by trackPageview on every route change
-      capture_pageleave: true,
-      disable_session_recording: true,
-      capture_dead_clicks: false,
-      // No `ip: false`: the cookieless hash needs the IP at ingestion (events without it are dropped).
-      // PostHog deletes it right after hashing, and the project also anonymizes IPs.
-    });
-    provider = { capture: (event, props) => posthog.capture(event, props) };
-    for (const [event, props] of queue.splice(0)) provider.capture(event, props);
-  }));
+  whenIdle(
+    () =>
+      void import("posthog-js").then(({ default: posthog }) => {
+        posthog.init(KEY, {
+          api_host: HOST,
+          cookieless_mode: "always",
+          autocapture: false,
+          capture_pageview: false, // sent by trackPageview on every route change
+          capture_pageleave: true,
+          disable_session_recording: true,
+          capture_dead_clicks: false,
+          // No `ip: false`: the cookieless hash needs the IP at ingestion (events without it are dropped).
+          // PostHog deletes it right after hashing, and the project also anonymizes IPs.
+        });
+        provider = { capture: (event, props) => posthog.capture(event, props) };
+        for (const [event, props] of queue.splice(0)) provider.capture(event, props);
+      }),
+  );
 }
 
 /** Sends an event. Safe to call anywhere; it is a no-op without a provider. */

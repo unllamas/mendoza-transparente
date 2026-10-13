@@ -12,10 +12,9 @@
 
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-
-import { datosMeta, PAGES, SITE_NAME, SITE_URL, TITLE_SUFFIX } from "../src/seo.ts";
 import { GLOSSARY } from "../src/glossary.ts";
 import { NO_PUBLICADO_CATEGORIES } from "../src/no-publicado-categories.ts";
+import { datosMeta, PAGES, SITE_NAME, SITE_URL, TITLE_SUFFIX } from "../src/seo.ts";
 import { ROLES } from "../src/slug.ts";
 import type {
   AgencyDetail,
@@ -63,7 +62,12 @@ const pesos = (v: number) => {
   if (abs >= 1e6) return `$ ${nf1.format(v / 1e6)} millones`;
   return `$ ${nf.format(Math.round(v))}`;
 };
-const pesosCorto = (v: number) => (Math.abs(v) >= 1e9 ? `$ ${nf1.format(v / 1e9)} mil M` : Math.abs(v) >= 1e6 ? `$ ${nf1.format(v / 1e6)} M` : `$ ${nf.format(Math.round(v))}`);
+const pesosCorto = (v: number) =>
+  Math.abs(v) >= 1e9
+    ? `$ ${nf1.format(v / 1e9)} mil M`
+    : Math.abs(v) >= 1e6
+      ? `$ ${nf1.format(v / 1e6)} M`
+      : `$ ${nf.format(Math.round(v))}`;
 
 export const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const url = (path: string) => (path === "/" ? `${SITE_URL}/` : `${SITE_URL}${path}`);
@@ -111,9 +115,7 @@ function cuerpo(o: {
   actualizado?: string;
 }): string {
   const migas = o.migas.map(([href, t]) => `<a href="${href}">${esc(t)}</a>`).join(" › ");
-  const datos = o.datos?.length
-    ? `<dl>${o.datos.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>`
-    : "";
+  const datos = o.datos?.length ? `<dl>${o.datos.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>` : "";
   const secciones = (o.secciones ?? [])
     .filter((s) => s.items.length)
     .map(
@@ -142,7 +144,11 @@ const faq = (preguntas: [string, string][]) => ({
   mainEntity: preguntas.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
 });
 
-const MENDOZA = { "@type": "AdministrativeArea", name: "Provincia de Mendoza", containedInPlace: { "@type": "Country", name: "Argentina" } };
+const MENDOZA = {
+  "@type": "AdministrativeArea",
+  name: "Provincia de Mendoza",
+  containedInPlace: { "@type": "Country", name: "Argentina" },
+};
 const publisher = { "@id": `${SITE_URL}/#organization` };
 
 // ------------------------------------------------------------------ construcción
@@ -219,7 +225,12 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
       resumen:
         "Proyecto ciudadano e independiente que reúne los datos públicos de la provincia de Mendoza (Argentina) para mirar en qué se gasta la plata, quién decide y qué falta publicar: quiénes son los funcionarios y cuánto declaran, qué leyes se sancionan, a quién le compra el Estado, cuánto debe la provincia, cuánta gente trabaja en cada organismo y cuánta plata recibe cada municipio. Cada número enlaza a su fuente oficial.",
       datos: [
-        ...(deuda ? ([["Deuda pública", `US$ ${nf.format(Math.round(deuda.totalUsd))} millones (${fechaLarga(deuda.corte)})`]] as [string, string][]) : []),
+        ...(deuda
+          ? ([["Deuda pública", `US$ ${nf.format(Math.round(deuda.totalUsd))} millones (${fechaLarga(deuda.corte)})`]] as [
+              string,
+              string,
+            ][])
+          : []),
         ...(poblacion ? ([["Habitantes", `${nf.format(poblacion.actual)} (${poblacion.anioActual})`]] as [string, string][]) : []),
         ["Funcionarios relevados", nf.format(funcionarios.personas.length)],
         ["Fuentes oficiales", nf.format(index.sources.length)],
@@ -237,18 +248,35 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
       figura: `US$ ${nf.format(Math.round(deuda.totalUsd))} M`,
       bajada: `Deuda total al ${fechaLarga(deuda.corte)}: unos US$ ${nf.format(Math.round(deuda.porHabitanteUsd))} por habitante.`,
       ld: [
-        breadcrumb([["/", "Inicio"], ["/deuda", "Deuda pública"]]),
+        breadcrumb([
+          ["/", "Inicio"],
+          ["/deuda", "Deuda pública"],
+        ]),
         faq([
           ["¿Cuánto debe la provincia de Mendoza?", resumen],
-          ["¿A quién le debe Mendoza?", `Principalmente a tenedores de bonos (${nf.format(Math.round((deuda.porAcreedor[0]?.usd ?? 0)))} millones de dólares) y a organismos internacionales como el BID.`],
+          [
+            "¿A quién le debe Mendoza?",
+            `Principalmente a tenedores de bonos (${nf.format(Math.round(deuda.porAcreedor[0]?.usd ?? 0))} millones de dólares) y a organismos internacionales como el BID.`,
+          ],
         ]),
       ],
       html: cuerpo({
-        migas: [["/", "Inicio"], ["/deuda", "Deuda pública"]],
+        migas: [
+          ["/", "Inicio"],
+          ["/deuda", "Deuda pública"],
+        ],
         h1: "¿Cuánto debe Mendoza? Deuda pública de la provincia",
         resumen,
-        datos: deuda.mandatos.map((m) => [`${m.gobierno} ${m.desde.slice(0, 4)}–${m.hasta?.slice(0, 4) ?? "hoy"}`, `de US$ ${nf.format(Math.round(m.inicio.usd))} M a US$ ${nf.format(Math.round(m.fin.usd))} M`]),
-        secciones: [{ titulo: "A quién le debe", items: deuda.porAcreedor.map((a) => ({ texto: `${a.nombre}: US$ ${nf.format(Math.round(a.usd))} millones` })) }],
+        datos: deuda.mandatos.map((m) => [
+          `${m.gobierno} ${m.desde.slice(0, 4)}–${m.hasta?.slice(0, 4) ?? "hoy"}`,
+          `de US$ ${nf.format(Math.round(m.inicio.usd))} M a US$ ${nf.format(Math.round(m.fin.usd))} M`,
+        ]),
+        secciones: [
+          {
+            titulo: "A quién le debe",
+            items: deuda.porAcreedor.map((a) => ({ texto: `${a.nombre}: US$ ${nf.format(Math.round(a.usd))} millones` })),
+          },
+        ],
         fuente: { nombre: "Ministerio de Hacienda y Finanzas de Mendoza", url: fuente("hacienda-deuda-stock")?.url },
         actualizado: lastFetch("hacienda-deuda-stock"),
       }),
@@ -263,12 +291,29 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
     estatica("/coparticipacion", {
       figura: `$ ${nf.format(Math.round(copa.totalReal / 1e9))} mil M`,
       bajada: `Repartido entre los municipios en ${copa.anioCompleto}, en pesos de ${copa.referencia}.`,
-      ld: [breadcrumb([["/", "Inicio"], ["/coparticipacion", "Coparticipación"]]), faq([["¿Cuánta coparticipación reciben los municipios de Mendoza?", resumen]])],
+      ld: [
+        breadcrumb([
+          ["/", "Inicio"],
+          ["/coparticipacion", "Coparticipación"],
+        ]),
+        faq([["¿Cuánta coparticipación reciben los municipios de Mendoza?", resumen]]),
+      ],
       html: cuerpo({
-        migas: [["/", "Inicio"], ["/coparticipacion", "Coparticipación"]],
+        migas: [
+          ["/", "Inicio"],
+          ["/coparticipacion", "Coparticipación"],
+        ],
         h1: "Coparticipación a los municipios de Mendoza",
         resumen,
-        secciones: [{ titulo: "Por habitante", items: ranking.map((m) => ({ texto: `${m.municipio}: ${pesos(m.perCapita)} por habitante`, href: `/municipios/${slugMunicipio(m.municipio)}` })) }],
+        secciones: [
+          {
+            titulo: "Por habitante",
+            items: ranking.map((m) => ({
+              texto: `${m.municipio}: ${pesos(m.perCapita)} por habitante`,
+              href: `/municipios/${slugMunicipio(m.municipio)}`,
+            })),
+          },
+        ],
         fuente: { nombre: "Ministerio de Hacienda y Finanzas de Mendoza", url: fuente("hacienda-participacion-municipal")?.url },
         actualizado: lastFetch("hacienda-participacion-municipal"),
       }),
@@ -282,12 +327,26 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
     estatica("/empleo-publico", {
       figura: `${nf1.format(empleo.cadaMilMendoza)} cada mil`,
       bajada: `Empleados públicos cada mil habitantes en ${empleo.anio}. Promedio del país: ${nf1.format(empleo.promedioPais)}.`,
-      ld: [breadcrumb([["/", "Inicio"], ["/empleo-publico", "Empleo público"]]), faq([["¿Cuántos empleados públicos tiene Mendoza?", resumen]])],
+      ld: [
+        breadcrumb([
+          ["/", "Inicio"],
+          ["/empleo-publico", "Empleo público"],
+        ]),
+        faq([["¿Cuántos empleados públicos tiene Mendoza?", resumen]]),
+      ],
       html: cuerpo({
-        migas: [["/", "Inicio"], ["/empleo-publico", "Empleo público"]],
+        migas: [
+          ["/", "Inicio"],
+          ["/empleo-publico", "Empleo público"],
+        ],
         h1: "Empleo público en Mendoza comparado con las demás provincias",
         resumen,
-        secciones: [{ titulo: "Empleados públicos cada mil habitantes", items: empleo.ranking.map((r) => ({ texto: `${r.provincia}: ${nf1.format(r.cadaMil)}` })) }],
+        secciones: [
+          {
+            titulo: "Empleados públicos cada mil habitantes",
+            items: empleo.ranking.map((r) => ({ texto: `${r.provincia}: ${nf1.format(r.cadaMil)}` })),
+          },
+        ],
         fuente: { nombre: "Dirección Nacional de Asuntos Provinciales", url: fuente("dnap-ocupacion")?.url },
         actualizado: lastFetch("dnap-ocupacion"),
       }),
@@ -301,15 +360,29 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
     estatica("/poblacion", {
       figura: nf.format(poblacion.actual),
       bajada: `Habitantes estimados en ${poblacion.anioActual}, repartidos en 18 departamentos.`,
-      ld: [breadcrumb([["/", "Inicio"], ["/poblacion", "Población"]]), faq([["¿Cuántos habitantes tiene Mendoza?", resumen]])],
+      ld: [
+        breadcrumb([
+          ["/", "Inicio"],
+          ["/poblacion", "Población"],
+        ]),
+        faq([["¿Cuántos habitantes tiene Mendoza?", resumen]]),
+      ],
       html: cuerpo({
-        migas: [["/", "Inicio"], ["/poblacion", "Población"]],
+        migas: [
+          ["/", "Inicio"],
+          ["/poblacion", "Población"],
+        ],
         h1: "Población de Mendoza por departamento",
         resumen,
         secciones: [
           {
             titulo: "Habitantes por departamento",
-            items: [...poblacion.departamentos].sort((a, b) => b.actual - a.actual).map((d) => ({ texto: `${d.municipio}: ${nf.format(d.actual)} habitantes`, href: `/municipios/${slugMunicipio(d.municipio)}` })),
+            items: [...poblacion.departamentos]
+              .sort((a, b) => b.actual - a.actual)
+              .map((d) => ({
+                texto: `${d.municipio}: ${nf.format(d.actual)} habitantes`,
+                href: `/municipios/${slugMunicipio(d.municipio)}`,
+              })),
           },
         ],
         fuente: { nombre: "INDEC, censos y proyecciones de población", url: fuente("poblacion")?.url },
@@ -322,11 +395,20 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
   estatica("/senales", {
     figura: `${senales.senales.length} señales`,
     bajada: "Contrataciones directas, una sola oferta, empresas nuevas: patrones que merecen explicación.",
-    ld: [breadcrumb([["/", "Inicio"], ["/senales", "Para mirar de cerca"]])],
+    ld: [
+      breadcrumb([
+        ["/", "Inicio"],
+        ["/senales", "Para mirar de cerca"],
+      ]),
+    ],
     html: cuerpo({
-      migas: [["/", "Inicio"], ["/senales", "Para mirar de cerca"]],
+      migas: [
+        ["/", "Inicio"],
+        ["/senales", "Para mirar de cerca"],
+      ],
       h1: "Señales en el gasto público de Mendoza",
-      resumen: "Patrones en los datos oficiales de compras del Estado de Mendoza que merecen una explicación. No son acusaciones: son preguntas con los casos concretos para revisar.",
+      resumen:
+        "Patrones en los datos oficiales de compras del Estado de Mendoza que merecen una explicación. No son acusaciones: son preguntas con los casos concretos para revisar.",
       secciones: [{ titulo: "Señales", items: senales.senales.map((s) => ({ texto: `${s.cifra} ${s.titulo}. ${s.matiz}` })) }],
       fuente: { nombre: "COMPR.AR Mendoza (contrataciones abiertas) y Registro Nacional de Sociedades", url: fuente("compras-ocds")?.url },
     }),
@@ -337,15 +419,26 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
   estatica("/no-publicado", {
     figura: `${noPublicado.length} datos`,
     bajada: "Que deberían ser públicos y no lo son. Te explicamos cómo pedirlos con la Ley 9070.",
-    ld: [breadcrumb([["/", "Inicio"], ["/no-publicado", "Lo que no se publica"]])],
+    ld: [
+      breadcrumb([
+        ["/", "Inicio"],
+        ["/no-publicado", "Lo que no se publica"],
+      ]),
+    ],
     html: cuerpo({
-      migas: [["/", "Inicio"], ["/no-publicado", "Lo que no se publica"]],
+      migas: [
+        ["/", "Inicio"],
+        ["/no-publicado", "Lo que no se publica"],
+      ],
       h1: "Lo que el Estado de Mendoza no publica",
-      resumen: "Datos que deberían ser públicos y no están en ningún sitio oficial de Mendoza. Cualquier persona puede pedirlos con la Ley 9070 de Acceso a la Información Pública.",
+      resumen:
+        "Datos que deberían ser públicos y no están en ningún sitio oficial de Mendoza. Cualquier persona puede pedirlos con la Ley 9070 de Acceso a la Información Pública.",
       secciones: Object.entries(NO_PUBLICADO_CATEGORIES)
         .map(([c, cat]) => ({
           titulo: cat.label,
-          items: noPublicado.filter((n) => n.categoria === c).map((n) => ({ texto: `${n.titulo}: ${n.que_es} Debería publicarlo: ${n.organismo}.` })),
+          items: noPublicado
+            .filter((n) => n.categoria === c)
+            .map((n) => ({ texto: `${n.titulo}: ${n.que_es} Debería publicarlo: ${n.organismo}.` })),
         }))
         .filter((g) => g.items.length),
     }),
@@ -357,20 +450,34 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
     figura: "Guía y glosario",
     bajada: "Para qué sirve, cómo empezar y qué significan los términos que más confunden.",
     ld: [
-      breadcrumb([["/", "Inicio"], ["/como-leer", "Cómo leer estos datos"]]),
+      breadcrumb([
+        ["/", "Inicio"],
+        ["/como-leer", "Cómo leer estos datos"],
+      ]),
       faq([
-        ["¿Para qué sirve Mendoza Transparente?", "Reúne los datos públicos de la provincia de Mendoza, dispersos en decenas de sitios oficiales, y los ordena para entender en qué se gasta la plata, quién decide y qué falta publicar. Cada número enlaza a su fuente oficial."],
+        [
+          "¿Para qué sirve Mendoza Transparente?",
+          "Reúne los datos públicos de la provincia de Mendoza, dispersos en decenas de sitios oficiales, y los ordena para entender en qué se gasta la plata, quién decide y qué falta publicar. Cada número enlaza a su fuente oficial.",
+        ],
         ...GLOSSARY.map((g) => [`¿Qué es ${g.term.replace(/\s*\(.*\)$/, "").toLowerCase()}?`, g.definition] as [string, string]),
       ]),
       {
         "@type": "DefinedTermSet",
         name: "Glosario de Mendoza Transparente",
         url: url("/como-leer"),
-        hasDefinedTerm: GLOSSARY.map((g) => ({ "@type": "DefinedTerm", name: g.term, description: g.definition, url: url(`/como-leer#${g.id}`) })),
+        hasDefinedTerm: GLOSSARY.map((g) => ({
+          "@type": "DefinedTerm",
+          name: g.term,
+          description: g.definition,
+          url: url(`/como-leer#${g.id}`),
+        })),
       },
     ],
     html: cuerpo({
-      migas: [["/", "Inicio"], ["/como-leer", "Cómo leer estos datos"]],
+      migas: [
+        ["/", "Inicio"],
+        ["/como-leer", "Cómo leer estos datos"],
+      ],
       h1: "Para qué sirve Mendoza Transparente y cómo usarlo",
       resumen:
         "Mendoza Transparente reúne los datos públicos de la provincia de Mendoza y los ordena para que cualquier persona pueda entender en qué se gasta la plata, quién decide y qué falta publicar. Cada número enlaza a su fuente oficial.",
@@ -383,9 +490,17 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
   estatica("/participar", {
     figura: "Participá",
     bajada: "Registrá tu pedido de información y contanos qué te respondió el Estado.",
-    ld: [breadcrumb([["/", "Inicio"], ["/participar", "Participá"]])],
+    ld: [
+      breadcrumb([
+        ["/", "Inicio"],
+        ["/participar", "Participá"],
+      ]),
+    ],
     html: cuerpo({
-      migas: [["/", "Inicio"], ["/participar", "Participá"]],
+      migas: [
+        ["/", "Inicio"],
+        ["/participar", "Participá"],
+      ],
       h1: "Sumate a Mendoza Transparente",
       resumen:
         "Registrá los pedidos de acceso a la información pública que presentaste en Mendoza (Ley 9070) con su número de trámite, contanos qué te respondieron, reportá errores o sugerí datos. Publicamos cuántos pedidos hay y cuánto responde el Estado.",
@@ -397,12 +512,22 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
   estatica("/fuentes", {
     figura: `${index.sources.length} fuentes`,
     bajada: "Oficiales y abiertas: de dónde sale cada dato, cada cuánto se actualiza y cómo bajarlo.",
-    ld: [breadcrumb([["/", "Inicio"], ["/fuentes", "Fuentes"]])],
+    ld: [
+      breadcrumb([
+        ["/", "Inicio"],
+        ["/fuentes", "Fuentes"],
+      ]),
+    ],
     html: cuerpo({
-      migas: [["/", "Inicio"], ["/fuentes", "Fuentes"]],
+      migas: [
+        ["/", "Inicio"],
+        ["/fuentes", "Fuentes"],
+      ],
       h1: "Fuentes de datos públicos de Mendoza",
       resumen: "Todas las fuentes oficiales que usa Mendoza Transparente, con su organismo, frecuencia y descarga en CSV.",
-      secciones: [{ titulo: "Fuentes", items: index.sources.map((s) => ({ texto: `${s.nombre} (${s.organismo})`, href: `/datos/${s.id}` })) }],
+      secciones: [
+        { titulo: "Fuentes", items: index.sources.map((s) => ({ texto: `${s.nombre} (${s.organismo})`, href: `/datos/${s.id}` })) },
+      ],
     }),
     lastmod: hoy,
     prioridad: 0.5,
@@ -420,14 +545,25 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
   estatica("/funcionarios", {
     figura: `${funcionarios.personas.length} funcionarios`,
     bajada: "Gobierno, Legislatura, intendentes y Congreso: partido, mandato, patrimonio y sueldo.",
-    ld: [breadcrumb([["/", "Inicio"], ["/funcionarios", "Funcionarios"]])],
+    ld: [
+      breadcrumb([
+        ["/", "Inicio"],
+        ["/funcionarios", "Funcionarios"],
+      ]),
+    ],
     html: cuerpo({
-      migas: [["/", "Inicio"], ["/funcionarios", "Funcionarios"]],
+      migas: [
+        ["/", "Inicio"],
+        ["/funcionarios", "Funcionarios"],
+      ],
       h1: "Funcionarios públicos de Mendoza",
-      resumen: "Quiénes representan a Mendoza: gobernador, ministros, diputados y senadores provinciales, intendentes y legisladores nacionales, con su partido o bloque, mandato, declaración jurada y sueldo cuando es público.",
+      resumen:
+        "Quiénes representan a Mendoza: gobernador, ministros, diputados y senadores provinciales, intendentes y legisladores nacionales, con su partido o bloque, mandato, declaración jurada y sueldo cuando es público.",
       secciones: Object.entries(GRUPO).map(([g, t]) => ({
         titulo: t,
-        items: funcionarios.personas.filter((p) => p.grupo === g).map((p) => ({ texto: `${p.nombre}, ${p.cargo}`, href: `/funcionarios/${p.role}/${p.slug}` })),
+        items: funcionarios.personas
+          .filter((p) => p.grupo === g)
+          .map((p) => ({ texto: `${p.nombre}, ${p.cargo}`, href: `/funcionarios/${p.role}/${p.slug}` })),
       })),
     }),
     lastmod: hoy,
@@ -439,18 +575,36 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
     const people = funcionarios.personas.filter((p) => p.grupo === key);
     if (!people.length) continue;
     const path = `/funcionarios/${role.slug}`;
-    const migas: Miga[] = [["/", "Inicio"], ["/funcionarios", "Funcionarios"], [path, role.title]];
+    const migas: Miga[] = [
+      ["/", "Inicio"],
+      ["/funcionarios", "Funcionarios"],
+      [path, role.title],
+    ];
     paginas.push({
       path,
       title: titulo(role.title),
       description: descripcion(role.description),
-      og: { slug: `cargo-${role.slug}`, eyebrow: "FUNCIONARIOS", titulo: role.title, figura: `${people.length} ${people.length === 1 ? "persona" : "personas"}`, bajada: role.description },
+      og: {
+        slug: `cargo-${role.slug}`,
+        eyebrow: "FUNCIONARIOS",
+        titulo: role.title,
+        figura: `${people.length} ${people.length === 1 ? "persona" : "personas"}`,
+        bajada: role.description,
+      },
       ld: [breadcrumb(migas)],
       html: cuerpo({
         migas,
         h1: role.title,
         resumen: role.description,
-        secciones: [{ titulo: role.title, items: people.map((p) => ({ texto: `${p.nombre}, ${[p.cargo, p.bloque ?? p.partido, p.seccion].filter(Boolean).join(", ")}`, href: `/funcionarios/${p.role}/${p.slug}` })) }],
+        secciones: [
+          {
+            titulo: role.title,
+            items: people.map((p) => ({
+              texto: `${p.nombre}, ${[p.cargo, p.bloque ?? p.partido, p.seccion].filter(Boolean).join(", ")}`,
+              href: `/funcionarios/${p.role}/${p.slug}`,
+            })),
+          },
+        ],
       }),
       lastmod: hoy,
       prioridad: 0.8,
@@ -461,30 +615,46 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
     const path = `/funcionarios/${p.role}/${p.slug}`;
     const lugar = p.grupo === "intendentes" ? `intendente de ${p.organismo}` : p.cargo.replace(/\s*\(.*\)$/, "");
     const filiacion = p.partido ?? p.bloque;
-    const bienes = p.ddjj ? `Declaró inmuebles y vehículos a su nombre por ${pesos(p.ddjj.totalBienes)} (pesos a valor fiscal, menor al de mercado; ${p.ddjj.inmuebles} inmuebles y ${p.ddjj.rodados} vehículos). Los montos de cuentas y otros bienes no se publican.` : "";
+    const bienes = p.ddjj
+      ? `Declaró inmuebles y vehículos a su nombre por ${pesos(p.ddjj.totalBienes)} (pesos a valor fiscal, menor al de mercado; ${p.ddjj.inmuebles} inmuebles y ${p.ddjj.rodados} vehículos). Los montos de cuentas y otros bienes no se publican.`
+      : "";
     const sueldo = p.remuneracion.length ? `Cobra una dieta de ${pesos(p.remuneracion[0]!.monto)} brutos.` : "Su sueldo no está publicado.";
-    const resumen = `${p.nombre} es ${lugar}${p.grupo.endsWith("nacional") ? "" : " de Mendoza"}${filiacion ? ` (${filiacion})` : ""}${p.mandatoHasta ? `, con mandato hasta ${p.mandatoHasta}` : ""}. ${bienes} ${sueldo}`.replace(/\s+/g, " ").trim();
-    const migas: Miga[] = [["/", "Inicio"], ["/funcionarios", "Funcionarios"], [`/funcionarios/${p.role}`, ROLES[p.grupo].title], [path, p.nombre]];
+    const resumen =
+      `${p.nombre} es ${lugar}${p.grupo.endsWith("nacional") ? "" : " de Mendoza"}${filiacion ? ` (${filiacion})` : ""}${p.mandatoHasta ? `, con mandato hasta ${p.mandatoHasta}` : ""}. ${bienes} ${sueldo}`
+        .replace(/\s+/g, " ")
+        .trim();
+    const migas: Miga[] = [
+      ["/", "Inicio"],
+      ["/funcionarios", "Funcionarios"],
+      [`/funcionarios/${p.role}`, ROLES[p.grupo].title],
+      [path, p.nombre],
+    ];
     const datos: [string, string][] = [
       ["Cargo", p.cargo],
       ["Organismo", p.organismo],
       ...(p.partido ? ([["Partido o frente", p.partido]] as [string, string][]) : []),
       ...(p.bloque ? ([["Bloque", p.bloque]] as [string, string][]) : []),
       ...(p.seccion ? ([["Electo por", p.seccion]] as [string, string][]) : []),
-      ...(p.mandatoDesde || p.mandatoHasta ? ([["Mandato", `${p.mandatoDesde ?? "?"}–${p.mandatoHasta ?? "?"}`]] as [string, string][]) : []),
+      ...(p.mandatoDesde || p.mandatoHasta
+        ? ([["Mandato", `${p.mandatoDesde ?? "?"}–${p.mandatoHasta ?? "?"}`]] as [string, string][])
+        : []),
       ...(p.ddjj ? ([["Bienes declarados (valor fiscal)", pesos(p.ddjj.totalBienes)]] as [string, string][]) : []),
       ["Sueldo", p.remuneracion.length ? p.remuneracion.map((r) => `${r.concepto}: ${pesos(r.monto)}`).join("; ") : "No publicado"],
     ];
     paginas.push({
       path,
-      title: titulo(`${p.nombre}: ${p.grupo === "intendentes" ? `intendente de ${p.organismo}` : recortar(p.cargo.replace(/\s*\(.*\)$/, ""), 30)}`),
+      title: titulo(
+        `${p.nombre}: ${p.grupo === "intendentes" ? `intendente de ${p.organismo}` : recortar(p.cargo.replace(/\s*\(.*\)$/, ""), 30)}`,
+      ),
       description: descripcion(resumen),
       og: {
         slug: `funcionario-${p.id}`,
         eyebrow: GRUPO[p.grupo]!.toUpperCase(),
         titulo: p.nombre,
         figura: p.ddjj ? pesosCorto(p.ddjj.totalBienes) : (filiacion ?? lugar),
-        bajada: p.ddjj ? `Inmuebles y vehículos declarados, en pesos a valor fiscal. ${lugar}.` : `${lugar}${p.mandatoHasta ? `, mandato hasta ${p.mandatoHasta}` : ""}.`,
+        bajada: p.ddjj
+          ? `Inmuebles y vehículos declarados, en pesos a valor fiscal. ${lugar}.`
+          : `${lugar}${p.mandatoHasta ? `, mandato hasta ${p.mandatoHasta}` : ""}.`,
       },
       ld: [
         {
@@ -500,7 +670,12 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
         breadcrumb(migas),
         faq([
           [`¿Quién es ${p.nombre}?`, resumen],
-          [`¿Cuánto gana ${p.nombre}?`, p.remuneracion.length ? sueldo : "Su sueldo no está publicado en ningún sitio oficial. Se puede pedir con la Ley 9070 de Acceso a la Información Pública."],
+          [
+            `¿Cuánto gana ${p.nombre}?`,
+            p.remuneracion.length
+              ? sueldo
+              : "Su sueldo no está publicado en ningún sitio oficial. Se puede pedir con la Ley 9070 de Acceso a la Información Pública.",
+          ],
           ...(p.ddjj ? ([[`¿Qué patrimonio declaró ${p.nombre}?`, bienes]] as [string, string][]) : []),
         ]),
       ],
@@ -510,9 +685,17 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
         resumen,
         datos,
         secciones: p.municipalities.length
-          ? [{ titulo: p.grupo === "intendentes" ? "Gobierna" : `Representa a la ${p.seccion?.toLowerCase() ?? "sección"}`, items: p.municipalities.map((m) => ({ texto: m.name, href: `/municipios/${m.slug}` })) }]
+          ? [
+              {
+                titulo: p.grupo === "intendentes" ? "Gobierna" : `Representa a la ${p.seccion?.toLowerCase() ?? "sección"}`,
+                items: p.municipalities.map((m) => ({ texto: m.name, href: `/municipios/${m.slug}` })),
+              },
+            ]
           : [],
-        fuente: { nombre: "Fuentes oficiales: Legislatura, Gobierno de Mendoza, Junta Electoral, Congreso y Oficina de Ética Pública", url: p.fuenteUrl },
+        fuente: {
+          nombre: "Fuentes oficiales: Legislatura, Gobierno de Mendoza, Junta Electoral, Congreso y Oficina de Ética Pública",
+          url: p.fuenteUrl,
+        },
       }),
       lastmod: p.ddjj?.fecha ?? hoy,
       prioridad: 0.7,
@@ -526,12 +709,28 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
     estatica("/gobierno", {
       figura: `${nf.format(totalStaff)} cargos`,
       bajada: "Cada ministerio y organismo: quién lo conduce, cuántos cargos tiene y cuánto cuesta.",
-      ld: [breadcrumb([["/", "Inicio"], ["/gobierno", "Gobierno por dentro"]])],
+      ld: [
+        breadcrumb([
+          ["/", "Inicio"],
+          ["/gobierno", "Gobierno por dentro"],
+        ]),
+      ],
       html: cuerpo({
-        migas: [["/", "Inicio"], ["/gobierno", "Gobierno por dentro"]],
+        migas: [
+          ["/", "Inicio"],
+          ["/gobierno", "Gobierno por dentro"],
+        ],
         h1: "Cómo está organizado el Estado de Mendoza",
         resumen: `El Estado provincial de Mendoza tiene ${nf.format(totalStaff)} cargos de planta, repartidos en ministerios, organismos de control y entes. Para cada uno: quién lo conduce, cuántos cargos tiene, cuánto cuesta su personal, qué hace y qué compra.`,
-        secciones: [{ titulo: "Organismos", items: agencies.map((a) => ({ texto: `${a.name}${a.head ? `: ${a.head.name}, ${a.head.role}` : ""}${a.staff ? ` (${nf.format(a.staff)} cargos)` : ""}`, href: `/gobierno/${a.slug}` })) }],
+        secciones: [
+          {
+            titulo: "Organismos",
+            items: agencies.map((a) => ({
+              texto: `${a.name}${a.head ? `: ${a.head.name}, ${a.head.role}` : ""}${a.staff ? ` (${nf.format(a.staff)} cargos)` : ""}`,
+              href: `/gobierno/${a.slug}`,
+            })),
+          },
+        ],
         fuente: { nombre: "Ley de Responsabilidad Fiscal (anexo 19), Oficina de Ética Pública y COMPR.AR" },
       }),
       lastmod: hoy,
@@ -542,19 +741,38 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
     const a = await json<AgencyDetail | null>(`temas/gobierno/${s.slug}.json`, null);
     if (!a) continue;
     const path = `/gobierno/${a.slug}`;
-    const migas: Miga[] = [["/", "Inicio"], ["/gobierno", "Gobierno por dentro"], ...(a.parent ? ([[`/gobierno/${a.parent.slug}`, a.parent.name]] as Miga[]) : []), [path, a.name]];
+    const migas: Miga[] = [
+      ["/", "Inicio"],
+      ["/gobierno", "Gobierno por dentro"],
+      ...(a.parent ? ([[`/gobierno/${a.parent.slug}`, a.parent.name]] as Miga[]) : []),
+      [path, a.name],
+    ];
     const resumen = [
       `${a.name}${a.parent ? `, que depende de ${a.parent.name},` : ""} es un organismo del Estado de Mendoza.`,
       a.head ? `Lo conduce ${a.head.name} (${a.head.role}).` : "",
-      a.staff ? `Tiene ${nf.format(a.staff)} cargos de planta${a.staffPeriod ? ` (${a.staffPeriod.replace("-T", ", trimestre ")})` : ""}.` : "",
+      a.staff
+        ? `Tiene ${nf.format(a.staff)} cargos de planta${a.staffPeriod ? ` (${a.staffPeriod.replace("-T", ", trimestre ")})` : ""}.`
+        : "",
       a.annualCostReal ? `Su personal cuesta ${pesos(a.annualCostReal)} por año, en pesos de ${a.realReference}.` : "",
       a.purchases ? `Hizo ${nf.format(a.purchases.processes)} procesos de compra.` : "",
-    ].filter(Boolean).join(" ");
+    ]
+      .filter(Boolean)
+      .join(" ");
     paginas.push({
       path,
       title: titulo(a.name.length > 36 ? a.name : `${a.name}: personal, costo y compras`),
       description: descripcion(a.whatItDoes ? `${resumen} ${a.whatItDoes}` : resumen),
-      og: { slug: `gobierno-${a.slug}`, eyebrow: "GOBIERNO DE MENDOZA", titulo: a.name, figura: a.staff ? `${nf.format(a.staff)} cargos` : (a.head?.name ?? "Organismo"), bajada: a.annualCostReal ? `Costo anual del personal: ${pesosCorto(a.annualCostReal)} (pesos de hoy).` : (a.whatItDoes ? recortar(a.whatItDoes, 110) : "Quién lo conduce y qué compra.") },
+      og: {
+        slug: `gobierno-${a.slug}`,
+        eyebrow: "GOBIERNO DE MENDOZA",
+        titulo: a.name,
+        figura: a.staff ? `${nf.format(a.staff)} cargos` : (a.head?.name ?? "Organismo"),
+        bajada: a.annualCostReal
+          ? `Costo anual del personal: ${pesosCorto(a.annualCostReal)} (pesos de hoy).`
+          : a.whatItDoes
+            ? recortar(a.whatItDoes, 110)
+            : "Quién lo conduce y qué compra.",
+      },
       ld: [
         {
           "@type": "GovernmentOrganization",
@@ -562,15 +780,33 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
           url: url(path),
           areaServed: MENDOZA,
           ...(a.whatItDoes ? { description: a.whatItDoes } : {}),
-          ...(a.parent ? { parentOrganization: { "@type": "GovernmentOrganization", name: a.parent.name, url: url(`/gobierno/${a.parent.slug}`) } } : {}),
-          ...(a.head ? { employee: { "@type": "Person", name: a.head.name, jobTitle: a.head.role, ...(a.head.path ? { url: url(a.head.path) } : {}) } } : {}),
+          ...(a.parent
+            ? { parentOrganization: { "@type": "GovernmentOrganization", name: a.parent.name, url: url(`/gobierno/${a.parent.slug}`) } }
+            : {}),
+          ...(a.head
+            ? {
+                employee: {
+                  "@type": "Person",
+                  name: a.head.name,
+                  jobTitle: a.head.role,
+                  ...(a.head.path ? { url: url(a.head.path) } : {}),
+                },
+              }
+            : {}),
           ...(a.staff ? { numberOfEmployees: { "@type": "QuantitativeValue", value: a.staff } } : {}),
           ...(a.site ? { sameAs: a.site } : {}),
         },
         breadcrumb(migas),
         faq([
           ...(a.head ? ([[`¿Quién conduce ${a.name}?`, `${a.head.name}, ${a.head.role}.`]] as [string, string][]) : []),
-          ...(a.staff ? ([[`¿Cuántos empleados tiene ${a.name}?`, `${nf.format(a.staff)} cargos de planta según el último informe de Responsabilidad Fiscal. Son cargos, no personas.`]] as [string, string][]) : []),
+          ...(a.staff
+            ? ([
+                [
+                  `¿Cuántos empleados tiene ${a.name}?`,
+                  `${nf.format(a.staff)} cargos de planta según el último informe de Responsabilidad Fiscal. Son cargos, no personas.`,
+                ],
+              ] as [string, string][])
+            : []),
           ...(a.whatItDoes ? ([[`¿Qué hace ${a.name}?`, a.whatItDoes]] as [string, string][]) : []),
         ]),
       ],
@@ -586,8 +822,17 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
         ],
         secciones: [
           { titulo: "Qué hace", items: a.points.map((texto) => ({ texto })) },
-          { titulo: "Equipo de conducción", items: a.team.map((t) => ({ texto: `${t.name}, ${t.role}`, ...(t.path ? { href: t.path } : {}) })) },
-          { titulo: "Principales proveedores", items: (a.purchases?.topSuppliers ?? []).map((p) => ({ texto: `${p.name}: ${pesos(p.amount)}`, ...(p.slug ? { href: `/proveedores/${p.slug}` } : {}) })) },
+          {
+            titulo: "Equipo de conducción",
+            items: a.team.map((t) => ({ texto: `${t.name}, ${t.role}`, ...(t.path ? { href: t.path } : {}) })),
+          },
+          {
+            titulo: "Principales proveedores",
+            items: (a.purchases?.topSuppliers ?? []).map((p) => ({
+              texto: `${p.name}: ${pesos(p.amount)}`,
+              ...(p.slug ? { href: `/proveedores/${p.slug}` } : {}),
+            })),
+          },
           { titulo: "Organismos que dependen de este", items: a.children.map((c) => ({ texto: c.name, href: `/gobierno/${c.slug}` })) },
         ],
         fuente: { nombre: "Ley de Responsabilidad Fiscal (anexo 19), Oficina de Ética Pública, COMPR.AR y Boletín Oficial" },
@@ -601,12 +846,29 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
   estatica("/municipios", {
     figura: "18 municipios",
     bajada: "Intendente, habitantes, coparticipación y legisladores de cada departamento de Mendoza.",
-    ld: [breadcrumb([["/", "Inicio"], ["/municipios", "Municipios"]])],
+    ld: [
+      breadcrumb([
+        ["/", "Inicio"],
+        ["/municipios", "Municipios"],
+      ]),
+    ],
     html: cuerpo({
-      migas: [["/", "Inicio"], ["/municipios", "Municipios"]],
+      migas: [
+        ["/", "Inicio"],
+        ["/municipios", "Municipios"],
+      ],
       h1: "Los 18 municipios de Mendoza",
-      resumen: "Datos públicos de cada departamento de Mendoza: quién es el intendente, cuántos habitantes tiene, cuánta coparticipación recibe y quiénes son sus legisladores.",
-      secciones: [{ titulo: "Municipios", items: municipios.map((m) => ({ texto: `${m.nombre}${m.intendente ? `: intendente ${m.intendente.nombre}` : ""}`, href: `/municipios/${m.slug}` })) }],
+      resumen:
+        "Datos públicos de cada departamento de Mendoza: quién es el intendente, cuántos habitantes tiene, cuánta coparticipación recibe y quiénes son sus legisladores.",
+      secciones: [
+        {
+          titulo: "Municipios",
+          items: municipios.map((m) => ({
+            texto: `${m.nombre}${m.intendente ? `: intendente ${m.intendente.nombre}` : ""}`,
+            href: `/municipios/${m.slug}`,
+          })),
+        },
+      ],
     }),
     lastmod: hoy,
     prioridad: 0.8,
@@ -618,7 +880,11 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
     const resumen = `${m.nombre} es uno de los 18 departamentos de Mendoza, con ${nf.format(m.poblacion.actual)} habitantes estimados (${m.poblacion.puesto}.º de la provincia).${
       m.intendente ? ` Su intendente es ${m.intendente.nombre}${m.intendente.partido ? ` (${m.intendente.partido})` : ""}.` : ""
     }${c ? ` En ${c.anio} recibió ${pesos(c.perCapita)} de coparticipación por habitante, ${c.puesto}.º entre los 18.` : ""}`;
-    const migas: Miga[] = [["/", "Inicio"], ["/municipios", "Municipios"], [path, m.nombre]];
+    const migas: Miga[] = [
+      ["/", "Inicio"],
+      ["/municipios", "Municipios"],
+      [path, m.nombre],
+    ];
     paginas.push({
       path,
       title: titulo(`${m.nombre}, Mendoza: intendente, habitantes y coparticipación`),
@@ -628,7 +894,9 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
         eyebrow: "MUNICIPIO",
         titulo: `${m.nombre}, Mendoza`,
         figura: `${nf.format(m.poblacion.actual)} hab.`,
-        bajada: c ? `${pesos(c.perCapita)} de coparticipación por habitante en ${c.anio} (${c.puesto}.º de 18).` : "Datos públicos del municipio.",
+        bajada: c
+          ? `${pesos(c.perCapita)} de coparticipación por habitante en ${c.anio} (${c.puesto}.º de 18).`
+          : "Datos públicos del municipio.",
       },
       ld: [
         {
@@ -642,13 +910,39 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
           "@type": "GovernmentOrganization",
           name: `Municipalidad de ${m.nombre}`,
           areaServed: { "@type": "AdministrativeArea", name: m.nombre, containedInPlace: MENDOZA },
-          ...(m.intendente ? { employee: { "@type": "Person", name: m.intendente.nombre, jobTitle: "Intendente", url: url(`/funcionarios/${m.intendente.role}/${m.intendente.slug}`) } } : {}),
+          ...(m.intendente
+            ? {
+                employee: {
+                  "@type": "Person",
+                  name: m.intendente.nombre,
+                  jobTitle: "Intendente",
+                  url: url(`/funcionarios/${m.intendente.role}/${m.intendente.slug}`),
+                },
+              }
+            : {}),
         },
         breadcrumb(migas),
         faq([
-          ...(m.intendente ? ([[`¿Quién es el intendente de ${m.nombre}?`, `${m.intendente.nombre}${m.intendente.partido ? `, de ${m.intendente.partido}` : ""}${m.intendente.mandatoHasta ? `, con mandato hasta ${m.intendente.mandatoHasta}` : ""}.`]] as [string, string][]) : []),
-          [`¿Cuántos habitantes tiene ${m.nombre}?`, `${nf.format(m.poblacion.actual)} habitantes estimados (INDEC). En el Censo 2022 tenía ${nf.format(m.poblacion.censo2022)}.`],
-          ...(c ? ([[`¿Cuánta coparticipación recibe ${m.nombre}?`, `${pesos(c.real)} en ${c.anio} (en pesos de ${c.referencia}), ${pesos(c.perCapita)} por habitante.`]] as [string, string][]) : []),
+          ...(m.intendente
+            ? ([
+                [
+                  `¿Quién es el intendente de ${m.nombre}?`,
+                  `${m.intendente.nombre}${m.intendente.partido ? `, de ${m.intendente.partido}` : ""}${m.intendente.mandatoHasta ? `, con mandato hasta ${m.intendente.mandatoHasta}` : ""}.`,
+                ],
+              ] as [string, string][])
+            : []),
+          [
+            `¿Cuántos habitantes tiene ${m.nombre}?`,
+            `${nf.format(m.poblacion.actual)} habitantes estimados (INDEC). En el Censo 2022 tenía ${nf.format(m.poblacion.censo2022)}.`,
+          ],
+          ...(c
+            ? ([
+                [
+                  `¿Cuánta coparticipación recibe ${m.nombre}?`,
+                  `${pesos(c.real)} en ${c.anio} (en pesos de ${c.referencia}), ${pesos(c.perCapita)} por habitante.`,
+                ],
+              ] as [string, string][])
+            : []),
         ]),
       ],
       html: cuerpo({
@@ -662,8 +956,21 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
           ...(m.seccion ? ([["Sección electoral", m.seccion]] as [string, string][]) : []),
         ],
         secciones: [
-          ...(m.intendente ? [{ titulo: "Intendente", items: [{ texto: m.intendente.nombre, href: `/funcionarios/${m.intendente.role}/${m.intendente.slug}` }] }] : []),
-          { titulo: `Legisladores provinciales de la ${m.seccion ?? ""} sección`, items: m.legisladores.map((l) => ({ texto: `${l.nombre}, ${l.cargo}${l.bloque ? ` (${l.bloque})` : ""}`, href: `/funcionarios/${l.role}/${l.slug}` })) },
+          ...(m.intendente
+            ? [
+                {
+                  titulo: "Intendente",
+                  items: [{ texto: m.intendente.nombre, href: `/funcionarios/${m.intendente.role}/${m.intendente.slug}` }],
+                },
+              ]
+            : []),
+          {
+            titulo: `Legisladores provinciales de la ${m.seccion ?? ""} sección`,
+            items: m.legisladores.map((l) => ({
+              texto: `${l.nombre}, ${l.cargo}${l.bloque ? ` (${l.bloque})` : ""}`,
+              href: `/funcionarios/${l.role}/${l.slug}`,
+            })),
+          },
         ],
         fuente: { nombre: "Ministerio de Hacienda, INDEC y Junta Electoral de Mendoza" },
       }),
@@ -676,12 +983,29 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
   estatica("/proveedores", {
     figura: `${proveedores.length} empresas`,
     bajada: "Las empresas que más contratos ganaron con el Estado de Mendoza, con cada adjudicación.",
-    ld: [breadcrumb([["/", "Inicio"], ["/proveedores", "Proveedores del Estado"]])],
+    ld: [
+      breadcrumb([
+        ["/", "Inicio"],
+        ["/proveedores", "Proveedores del Estado"],
+      ]),
+    ],
     html: cuerpo({
-      migas: [["/", "Inicio"], ["/proveedores", "Proveedores del Estado"]],
+      migas: [
+        ["/", "Inicio"],
+        ["/proveedores", "Proveedores del Estado"],
+      ],
       h1: "Proveedores del Estado de Mendoza",
-      resumen: "Las empresas que le venden al Estado provincial de Mendoza: cuánto ganaron en contrataciones, en cuántos procesos y qué organismos les compran.",
-      secciones: [{ titulo: "Empresas con más adjudicaciones", items: proveedores.map((p) => ({ texto: `${p.nombre}: ${pesos(p.total)} en ${p.procesos} procesos`, href: `/proveedores/${p.slug}` })) }],
+      resumen:
+        "Las empresas que le venden al Estado provincial de Mendoza: cuánto ganaron en contrataciones, en cuántos procesos y qué organismos les compran.",
+      secciones: [
+        {
+          titulo: "Empresas con más adjudicaciones",
+          items: proveedores.map((p) => ({
+            texto: `${p.nombre}: ${pesos(p.total)} en ${p.procesos} procesos`,
+            href: `/proveedores/${p.slug}`,
+          })),
+        },
+      ],
       fuente: { nombre: "COMPR.AR Mendoza (contrataciones abiertas)", url: fuente("compras-ocds")?.url },
     }),
     lastmod: lastFetch("compras-ocds"),
@@ -691,14 +1015,26 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
   for (const p of proveedores) {
     const path = `/proveedores/${p.slug}`;
     const anios = p.primera && p.ultima ? ` entre ${p.primera.slice(0, 4)} y ${p.ultima.slice(0, 4)}` : "";
-    const quien = [p.tipoSocietario, p.localidad ? `de ${p.localidad}` : null, p.actividad ? `(${p.actividad.toLowerCase()})` : null].filter(Boolean).join(" ");
+    const quien = [p.tipoSocietario, p.localidad ? `de ${p.localidad}` : null, p.actividad ? `(${p.actividad.toLowerCase()})` : null]
+      .filter(Boolean)
+      .join(" ");
     const resumen = `${p.nombre} ganó ${pesos(p.total)} en contrataciones con el Estado de Mendoza en ${p.procesos} procesos${anios}.${quien ? ` Es una ${quien}.` : ""}`;
-    const migas: Miga[] = [["/", "Inicio"], ["/proveedores", "Proveedores"], [path, p.nombre]];
+    const migas: Miga[] = [
+      ["/", "Inicio"],
+      ["/proveedores", "Proveedores"],
+      [path, p.nombre],
+    ];
     paginas.push({
       path,
       title: titulo(`${p.nombre}: contratos con Mendoza`),
       description: descripcion(`${resumen} Quién le compra y cada adjudicación, con su fuente oficial.`),
-      og: { slug: `proveedor-${p.cuit}`, eyebrow: "PROVEEDOR DEL ESTADO", titulo: p.nombre, figura: pesosCorto(p.total), bajada: `Adjudicado en ${p.procesos} procesos${anios}.` },
+      og: {
+        slug: `proveedor-${p.cuit}`,
+        eyebrow: "PROVEEDOR DEL ESTADO",
+        titulo: p.nombre,
+        figura: pesosCorto(p.total),
+        bajada: `Adjudicado en ${p.procesos} procesos${anios}.`,
+      },
       ld: [
         {
           "@type": "Organization",
@@ -733,12 +1069,29 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
   estatica("/organismos", {
     figura: `${organismos.length} organismos`,
     bajada: "Qué compra cada organismo del Estado de Mendoza, a quién y cómo.",
-    ld: [breadcrumb([["/", "Inicio"], ["/organismos", "Organismos que compran"]])],
+    ld: [
+      breadcrumb([
+        ["/", "Inicio"],
+        ["/organismos", "Organismos que compran"],
+      ]),
+    ],
     html: cuerpo({
-      migas: [["/", "Inicio"], ["/organismos", "Organismos que compran"]],
+      migas: [
+        ["/", "Inicio"],
+        ["/organismos", "Organismos que compran"],
+      ],
       h1: "Organismos del Estado de Mendoza que compran",
-      resumen: "Hospitales, ministerios y reparticiones del Estado de Mendoza: cuánto compran, a qué proveedores y qué parte por contratación directa.",
-      secciones: [{ titulo: "Organismos", items: organismos.map((o) => ({ texto: `${o.nombre}: ${pesos(o.total)} en ${o.procesos} procesos`, href: `/organismos/${o.slug}` })) }],
+      resumen:
+        "Hospitales, ministerios y reparticiones del Estado de Mendoza: cuánto compran, a qué proveedores y qué parte por contratación directa.",
+      secciones: [
+        {
+          titulo: "Organismos",
+          items: organismos.map((o) => ({
+            texto: `${o.nombre}: ${pesos(o.total)} en ${o.procesos} procesos`,
+            href: `/organismos/${o.slug}`,
+          })),
+        },
+      ],
       fuente: { nombre: "COMPR.AR Mendoza (contrataciones abiertas)", url: fuente("compras-ocds")?.url },
     }),
     lastmod: lastFetch("compras-ocds"),
@@ -748,14 +1101,26 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
   for (const o of organismos) {
     const path = `/organismos/${o.slug}`;
     const resumen = `${o.nombre} adjudicó ${pesos(o.total)} en ${o.procesos} procesos de compra. El ${Math.round(o.pctDirecta)} % fueron contrataciones directas y el ${Math.round(o.pctUnaOferta)} % recibió una sola oferta.${
-      o.proveedorPrincipal ? ` Su principal proveedor es ${o.proveedorPrincipal.nombre} (${Math.round(o.proveedorPrincipal.pct)} % del total).` : ""
+      o.proveedorPrincipal
+        ? ` Su principal proveedor es ${o.proveedorPrincipal.nombre} (${Math.round(o.proveedorPrincipal.pct)} % del total).`
+        : ""
     }`;
-    const migas: Miga[] = [["/", "Inicio"], ["/organismos", "Organismos"], [path, o.nombre]];
+    const migas: Miga[] = [
+      ["/", "Inicio"],
+      ["/organismos", "Organismos"],
+      [path, o.nombre],
+    ];
     paginas.push({
       path,
       title: titulo(`Compras de ${o.nombre}`),
       description: descripcion(resumen),
-      og: { slug: `organismo-${o.slug}`, eyebrow: "ORGANISMO QUE COMPRA", titulo: o.nombre, figura: pesosCorto(o.total), bajada: `${o.procesos} procesos · ${Math.round(o.pctDirecta)} % por contratación directa.` },
+      og: {
+        slug: `organismo-${o.slug}`,
+        eyebrow: "ORGANISMO QUE COMPRA",
+        titulo: o.nombre,
+        figura: pesosCorto(o.total),
+        bajada: `${o.procesos} procesos · ${Math.round(o.pctDirecta)} % por contratación directa.`,
+      },
       ld: [
         { "@type": "GovernmentOrganization", name: o.nombre, url: url(path), areaServed: MENDOZA, description: resumen },
         breadcrumb(migas),
@@ -781,11 +1146,20 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
   estatica("/leyes", {
     figura: `${leyes.length} leyes`,
     bajada: "Qué dice cada ley provincial, explicado en pocas palabras y con el documento oficial.",
-    ld: [breadcrumb([["/", "Inicio"], ["/leyes", "Leyes"]])],
+    ld: [
+      breadcrumb([
+        ["/", "Inicio"],
+        ["/leyes", "Leyes"],
+      ]),
+    ],
     html: cuerpo({
-      migas: [["/", "Inicio"], ["/leyes", "Leyes"]],
+      migas: [
+        ["/", "Inicio"],
+        ["/leyes", "Leyes"],
+      ],
       h1: "Leyes de la provincia de Mendoza",
-      resumen: "Leyes provinciales de Mendoza publicadas en el Boletín Oficial: qué dice cada una explicado en lenguaje simple, su número, fecha y el enlace al texto oficial.",
+      resumen:
+        "Leyes provinciales de Mendoza publicadas en el Boletín Oficial: qué dice cada una explicado en lenguaje simple, su número, fecha y el enlace al texto oficial.",
       secciones: [{ titulo: "Leyes", items: leyes.map((l) => ({ texto: `Ley ${l.numero}: ${l.titulo}`, href: `/leyes/${l.numero}` })) }],
       fuente: { nombre: "Boletín Oficial de la Provincia de Mendoza", url: fuente("boletin-oficial")?.url },
     }),
@@ -801,15 +1175,27 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
     const resumen = d?.resumen
       ? `${numero} de Mendoza${sancion}: ${d.resumen.texto}`
       : `La ${numero} de la provincia de Mendoza${sancion}: ${l.titulo.replace(/…$/, "")}.`;
-    const migas: Miga[] = [["/", "Inicio"], ["/leyes", "Leyes"], [path, numero]];
+    const migas: Miga[] = [
+      ["/", "Inicio"],
+      ["/leyes", "Leyes"],
+      [path, numero],
+    ];
     const articulos = (d?.bloques ?? []).flatMap((b) =>
-      b.tipo === "articulo" ? [{ texto: `Artículo ${b.numero}${b.titulo ? ` (${b.titulo})` : ""}: ${recortar(b.parrafos.join(" "), 600)}` }] : [],
+      b.tipo === "articulo"
+        ? [{ texto: `Artículo ${b.numero}${b.titulo ? ` (${b.titulo})` : ""}: ${recortar(b.parrafos.join(" "), 600)}` }]
+        : [],
     );
     paginas.push({
       path,
       title: titulo(`${numero} de Mendoza: ${l.titulo}`),
       description: descripcion(resumen),
-      og: { slug: `ley-${l.numero}`, eyebrow: `LEY ${nf.format(Number(l.numero))} DE MENDOZA`, titulo: l.titulo, figura: numero, bajada: recortar(d?.resumen?.texto ?? l.titulo, 120) },
+      og: {
+        slug: `ley-${l.numero}`,
+        eyebrow: `LEY ${nf.format(Number(l.numero))} DE MENDOZA`,
+        titulo: l.titulo,
+        figura: numero,
+        bajada: recortar(d?.resumen?.texto ?? l.titulo, 120),
+      },
       ld: [
         {
           "@type": "Legislation",
@@ -838,7 +1224,12 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
           ["Número", numero],
           ...(l.tema ? ([["Tema", l.tema]] as [string, string][]) : []),
           ...(l.fecha ? ([["Sancionada", fechaLarga(l.fecha)]] as [string, string][]) : []),
-          ...(l.publicada ? ([["Publicada en el Boletín Oficial", `${fechaLarga(l.publicada)}${l.boletin ? ` (N.º ${l.boletin})` : ""}`]] as [string, string][]) : []),
+          ...(l.publicada
+            ? ([["Publicada en el Boletín Oficial", `${fechaLarga(l.publicada)}${l.boletin ? ` (N.º ${l.boletin})` : ""}`]] as [
+                string,
+                string,
+              ][])
+            : []),
         ],
         secciones: [
           ...(d?.resumen?.puntos.length ? [{ titulo: "En pocas palabras", items: d.resumen.puntos.map((texto) => ({ texto })) }] : []),
@@ -860,7 +1251,13 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
       path,
       title: m.title,
       description: m.description,
-      og: { slug: m.ogSlug, eyebrow: m.eyebrow, titulo: m.ogTitle, figura: `${nf.format(tablas.reduce((a, d) => a + d.rowCount, 0))} filas`, bajada: s.descripcion },
+      og: {
+        slug: m.ogSlug,
+        eyebrow: m.eyebrow,
+        titulo: m.ogTitle,
+        figura: `${nf.format(tablas.reduce((a, d) => a + d.rowCount, 0))} filas`,
+        bajada: s.descripcion,
+      },
       ld: [
         {
           "@type": "Dataset",
@@ -875,15 +1272,35 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
           isBasedOn: s.url,
           dateModified: s.raw.lastFetch ?? index.generatedAt,
           publisher,
-          distribution: tablas.map((d) => ({ "@type": "DataDownload", encodingFormat: "text/csv", contentUrl: `${SITE_URL}/data/${d.source}/${d.file}` })),
+          distribution: tablas.map((d) => ({
+            "@type": "DataDownload",
+            encodingFormat: "text/csv",
+            contentUrl: `${SITE_URL}/data/${d.source}/${d.file}`,
+          })),
         },
-        breadcrumb([["/", "Inicio"], ["/fuentes", "Fuentes"], [path, s.nombre]]),
+        breadcrumb([
+          ["/", "Inicio"],
+          ["/fuentes", "Fuentes"],
+          [path, s.nombre],
+        ]),
       ],
       html: cuerpo({
-        migas: [["/", "Inicio"], ["/fuentes", "Fuentes"], [path, s.nombre]],
+        migas: [
+          ["/", "Inicio"],
+          ["/fuentes", "Fuentes"],
+          [path, s.nombre],
+        ],
         h1: s.nombre,
         resumen: `${s.descripcion} Datos abiertos de ${s.organismo}, para descargar en CSV.`,
-        secciones: [{ titulo: "Tablas para descargar", items: tablas.map((d) => ({ texto: `${d.dict?.titulo ?? d.file} (${nf.format(d.rowCount)} filas)`, href: `/data/${d.source}/${d.file}` })) }],
+        secciones: [
+          {
+            titulo: "Tablas para descargar",
+            items: tablas.map((d) => ({
+              texto: `${d.dict?.titulo ?? d.file} (${nf.format(d.rowCount)} filas)`,
+              href: `/data/${d.source}/${d.file}`,
+            })),
+          },
+        ],
         fuente: { nombre: s.organismo, url: s.url },
         actualizado: s.raw.lastFetch ?? undefined,
       }),

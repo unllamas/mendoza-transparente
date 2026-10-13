@@ -18,7 +18,11 @@ export function Segmented<T extends string>({
   className?: string;
 }) {
   return (
-    <div role="radiogroup" aria-label={label} className={cn("-mx-4 flex max-w-[100vw] overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:max-w-full sm:px-0", className)}>
+    <div
+      role="radiogroup"
+      aria-label={label}
+      className={cn("-mx-4 flex max-w-[100vw] overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:max-w-full sm:px-0", className)}
+    >
       <div className="inline-flex shrink-0 rounded-lg border border-line bg-surface p-0.5 text-sm">
         {options.map((o) => (
           <button

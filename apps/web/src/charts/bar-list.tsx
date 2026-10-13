@@ -12,9 +12,7 @@ export function BarList({
       {items.map((item) => (
         <li key={item.nombre} className="group flex flex-col gap-1">
           <div className="flex items-baseline justify-between gap-3 text-sm">
-            <span className={item.destacado ? "font-semibold text-ink" : "text-ink-2 group-hover:text-ink"}>
-              {item.nombre}
-            </span>
+            <span className={item.destacado ? "font-semibold text-ink" : "text-ink-2 group-hover:text-ink"}>{item.nombre}</span>
             <span className="font-medium tabular-nums">
               {formatValue(item.valor)}
               {item.detalle && <span className="ml-2 font-normal text-ink-muted">{item.detalle}</span>}

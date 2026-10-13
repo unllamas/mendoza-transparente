@@ -12,8 +12,15 @@ import { IconButton } from "./icon-button.tsx";
 let sequence = 0;
 const openSheets = new Set<number>();
 const listeners = new Set<() => void>();
-const emit = () => listeners.forEach((l) => l());
-const subscribe = (l: () => void) => (listeners.add(l), () => listeners.delete(l));
+const emit = () => {
+  for (const l of listeners) l();
+};
+const subscribe = (l: () => void) => {
+  listeners.add(l);
+  return () => {
+    listeners.delete(l);
+  };
+};
 const topSheet = () => Math.max(-1, ...openSheets);
 
 function useIsTopSheet() {

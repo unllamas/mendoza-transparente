@@ -30,7 +30,11 @@ export function Dialog({
     <DialogPrimitive.Root open onOpenChange={(open) => !open && onClose()}>
       <DialogPrimitive.Portal>
         {overlayClassName && <DialogPrimitive.Overlay className={overlayClassName} />}
-        <DialogPrimitive.Content aria-describedby={undefined} onOpenAutoFocus={onOpenAutoFocus} className={cn("fixed outline-none", className)}>
+        <DialogPrimitive.Content
+          aria-describedby={undefined}
+          onOpenAutoFocus={onOpenAutoFocus}
+          className={cn("fixed outline-none", className)}
+        >
           <DialogPrimitive.Title className="sr-only">{label}</DialogPrimitive.Title>
           {children}
         </DialogPrimitive.Content>

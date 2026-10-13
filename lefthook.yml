@@ -1,0 +1,13 @@
+# Revisión antes de cada commit (docs/procesos/arquitectura.md). Se instala una vez con `bun run hooks`.
+pre-commit:
+  parallel: true
+  commands:
+    biome:
+      glob: "*.{ts,tsx,js,cjs,css}"
+      run: bunx biome check --no-errors-on-unmatched {staged_files}
+    arquitectura:
+      glob: "*.{ts,tsx}"
+      run: bun run lint:arch
+    tipos:
+      glob: "*.{ts,tsx}"
+      run: bun run typecheck

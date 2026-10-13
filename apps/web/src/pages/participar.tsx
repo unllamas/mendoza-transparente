@@ -1,17 +1,17 @@
+import { Alert } from "@mt/ui/components/alert";
+import { buttonVariants } from "@mt/ui/components/button";
 import { tileVariants } from "@mt/ui/components/card";
 import { Field, Input, Select, Textarea } from "@mt/ui/components/input";
-import { cn } from "@mt/ui/lib/utils";
-import { buttonVariants } from "@mt/ui/components/button";
-import { Alert } from "@mt/ui/components/alert";
 import { PageHeader } from "@mt/ui/components/section";
+import { cn } from "@mt/ui/lib/utils";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Bug, CheckCircle2, FilePlus2, MessageSquareReply, Send, Stamp } from "lucide-react";
 import { type FormEvent, type ReactNode, useEffect, useRef, useState } from "react";
-
-import { useUrlOption } from "../url-state.ts";
-import { track } from "../analytics.ts";
-import type { NoPublicado } from "../types.ts";
-import { TrackedSegmented } from "../components/tracked-segmented.tsx";
+import { track } from "@/analytics.ts";
+import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
+import { useRequestStats } from "@/features/participation/api/request-stats.ts";
+import type { NoPublicado } from "@/types.ts";
+import { useUrlOption } from "@/url-state.ts";
 
 const route = getRouteApi("/participar");
 
@@ -23,27 +23,6 @@ const FORMS: { value: Form; label: string }[] = [
   { value: "dato", label: "Sugerir un dato" },
 ];
 
-export interface RequestStats {
-  items: Record<string, { requests: number; answered: number; denied: number; overdue: number }>;
-  total: { requests: number; answered: number; denied: number; overdue: number };
-}
-
-/** Public counters of the requests people filed (null while loading or if the API is not available). */
-export function useRequestStats(): RequestStats | null {
-  const [stats, setStats] = useState<RequestStats | null>(null);
-  useEffect(() => {
-    let cancelled = false;
-    fetch("/api/pedidos/stats")
-      .then((r) => (r.ok && r.headers.get("content-type")?.includes("json") ? (r.json() as Promise<RequestStats>) : null))
-      .then((s) => !cancelled && setStats(s))
-      .catch(() => {});
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-  return stats;
-}
-
 export function ParticiparPage() {
   const items = route.useLoaderData();
   const search = route.useSearch();
@@ -54,8 +33,8 @@ export function ParticiparPage() {
   return (
     <div className="flex max-w-2xl flex-col gap-10">
       <PageHeader icon={Stamp} topic="Participá" title="Sumate a Mendoza Transparente">
-        Registrá los pedidos de información que presentaste y lo que te respondieron, avisanos si encontrás un error o
-        sugerinos datos que falten. Así medimos cuánto se pide y cuánto responde el Estado.
+        Registrá los pedidos de información que presentaste y lo que te respondieron, avisanos si encontrás un error o sugerinos datos que
+        falten. Así medimos cuánto se pide y cuánto responde el Estado.
       </PageHeader>
 
       {stats && stats.total.requests > 0 && (
@@ -74,8 +53,8 @@ export function ParticiparPage() {
       {form === "dato" && <FeedbackForm kind="dato" defaultPage={null} />}
 
       <Alert variant="note" title="Qué hacemos con lo que nos mandás">
-        Publicamos solo números agregados: cuántos pedidos hay por dato y cuántos tuvieron respuesta. Tu correo es opcional, no
-        se publica y solo lo usamos para escribirte sobre tu envío. No pedimos tu DNI.
+        Publicamos solo números agregados: cuántos pedidos hay por dato y cuántos tuvieron respuesta. Tu correo es opcional, no se publica y
+        solo lo usamos para escribirte sobre tu envío. No pedimos tu DNI.
       </Alert>
     </div>
   );
@@ -99,7 +78,11 @@ function useSubmit(endpoint: string, trackEvent: string) {
   async function submit(body: Record<string, unknown>, token: string | null) {
     setState({ status: "sending" });
     try {
-      const r = await fetch(endpoint, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...body, token }) });
+      const r = await fetch(endpoint, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ ...body, token }),
+      });
       const data = (await r.json().catch(() => ({}))) as { error?: string };
       if (!r.ok) {
         track(`${trackEvent}.error`, { status: r.status });
@@ -123,8 +106,8 @@ function RequestForm({ items, defaultItem }: { items: NoPublicado[]; defaultItem
   if (state.status === "done")
     return (
       <Done onAgain={reset} again="Registrar otro pedido">
-        Registramos tu pedido. Cuando te respondan (o si pasan 15 días hábiles sin respuesta), contanos qué pasó con el mismo
-        número de trámite.
+        Registramos tu pedido. Cuando te respondan (o si pasan 15 días hábiles sin respuesta), contanos qué pasó con el mismo número de
+        trámite.
       </Done>
     );
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -147,8 +130,8 @@ function RequestForm({ items, defaultItem }: { items: NoPublicado[]; defaultItem
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-5" id="form-pedido" data-track-form="request">
       <Intro icon={FilePlus2}>
-        ¿Presentaste un pedido de acceso a la información? Registralo con el número de trámite que te dio el formulario oficial.
-        No publicamos tu número: lo usamos para contar los pedidos y para que después puedas contarnos la respuesta.
+        ¿Presentaste un pedido de acceso a la información? Registralo con el número de trámite que te dio el formulario oficial. No
+        publicamos tu número: lo usamos para contar los pedidos y para que después puedas contarnos la respuesta.
       </Intro>
       <Field label="Qué dato pediste">
         <Select value={itemId} onChange={(e) => setItemId(e.target.value)} id="pedido-dato">
@@ -197,7 +180,14 @@ function AnswerForm() {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
     void submit(
-      { filingNumber: f.get("filingNumber"), status: f.get("status"), answeredOn: f.get("answeredOn"), summary: f.get("summary"), url: f.get("url"), website: f.get("website") },
+      {
+        filingNumber: f.get("filingNumber"),
+        status: f.get("status"),
+        answeredOn: f.get("answeredOn"),
+        summary: f.get("summary"),
+        url: f.get("url"),
+        website: f.get("website"),
+      },
       token,
     );
   };
@@ -289,9 +279,7 @@ function EmailField() {
 
 /** Hidden field that only bots fill. */
 function Honeypot() {
-  return (
-    <input name="website" tabIndex={-1} autoComplete="off" aria-hidden className="absolute -left-[9999px] h-0 w-0 opacity-0" />
-  );
+  return <input name="website" tabIndex={-1} autoComplete="off" aria-hidden className="absolute -left-[9999px] h-0 w-0 opacity-0" />;
 }
 
 function SubmitRow({ state, label, id }: { state: SubmitState; label: string; id: string }) {

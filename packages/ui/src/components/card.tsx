@@ -13,7 +13,12 @@ export const tileVariants = cva("bg-tile", {
   defaultVariants: { size: "default" },
 });
 
-export function Tile({ className, size, asChild = false, ...props }: ComponentProps<"div"> & VariantProps<typeof tileVariants> & { asChild?: boolean }) {
+export function Tile({
+  className,
+  size,
+  asChild = false,
+  ...props
+}: ComponentProps<"div"> & VariantProps<typeof tileVariants> & { asChild?: boolean }) {
   const Comp = asChild ? Slot : "div";
   return <Comp className={cn(tileVariants({ size }), className)} {...props} />;
 }
@@ -27,7 +32,12 @@ export const cardVariants = cva("group min-h-11 border border-line bg-surface te
   defaultVariants: { size: "default" },
 });
 
-export function CardLink({ className, size, asChild = false, ...props }: ComponentProps<"a"> & VariantProps<typeof cardVariants> & { asChild?: boolean }) {
+export function CardLink({
+  className,
+  size,
+  asChild = false,
+  ...props
+}: ComponentProps<"a"> & VariantProps<typeof cardVariants> & { asChild?: boolean }) {
   const Comp = asChild ? Slot : "a";
   return <Comp className={cn(cardVariants({ size }), className)} {...props} />;
 }

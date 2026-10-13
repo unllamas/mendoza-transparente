@@ -16,11 +16,22 @@ jobs:
         with:
           bun-version: 1.4.2
       - run: bun install --frozen-lockfile
+      - name: Formato y lint (Biome)
+        run: bunx biome ci .
+      - name: Reglas de arquitectura (dependency-cruiser)
+        run: bun run lint:arch
       - name: Tipos
         run: bunx turbo run typecheck
+      - name: Pruebas
+        run: bun test
       - name: Web
         working-directory: apps/web
         run: |
           bun run data
           bunx vite build
           bun scripts/seo.ts
+      - name: Verificación visual (scroll horizontal, consola, menú, 44 px, alertas)
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+          MT_NO_DATA_WATCH: "1"
+        run: bun scripts/verificar-web.ts

@@ -9,11 +9,11 @@ import { join } from "node:path";
 
 import { SECCION_ELECTORAL, slug, slugProveedor } from "../../src/slug.ts";
 import type {
-  MunicipalStaff,
   CoparticipacionTema,
   FuncionariosTema,
   LeyDetalle,
   LeyResumen,
+  MunicipalStaff,
   MunicipioPagina,
   OrganismoDetalle,
   OrganismoResumen,
@@ -21,7 +21,7 @@ import type {
   ProveedorResumen,
 } from "../../src/types.ts";
 import type { Deflactor } from "./inflacion.ts";
-import { estructurarLey, tituloLey, type ResumenLey } from "./leyes.ts";
+import { estructurarLey, type ResumenLey, tituloLey } from "./leyes.ts";
 
 type CsvRow = Record<string, string>;
 
@@ -158,7 +158,10 @@ export function buildOrganismosYProveedores(
     const total = filas.reduce((s, a) => s + (Number(a.monto) || 0), 0);
     const nProcesos = new Set(filas.map((a) => a.ocid)).size;
     const nombre = e.razon_social || filas.at(-1)!.proveedor_nombre!;
-    const fechas = filas.map((a) => a.fecha_adjudicacion!).filter(Boolean).sort();
+    const fechas = filas
+      .map((a) => a.fecha_adjudicacion!)
+      .filter(Boolean)
+      .sort();
     proveedores.push({
       slug: slugProveedor(nombre, cuit),
       cuit,
@@ -264,7 +267,13 @@ const numeroLey = (n: string) => n.replace(/\D/g, "");
 
 /** "Hebe Casado" and "Hebe Silvina Casado" are the same person: every word of the shorter name is in the longer one. */
 function samePerson(a: string, b: string): boolean {
-  const words = (s: string) => s.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase().split(/[^a-z]+/).filter(Boolean);
+  const words = (s: string) =>
+    s
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "")
+      .toLowerCase()
+      .split(/[^a-z]+/)
+      .filter(Boolean);
   const [x, y] = [words(a), words(b)].sort((p, q) => p.length - q.length);
   return x!.length >= 2 && x!.every((w) => y!.includes(w));
 }
@@ -309,7 +318,15 @@ export function buildLeyes(
       ...resumen,
       ...estructura,
       signers,
-      resumen: r ? { texto: r.resumen, aQuien: r.a_quien ?? null, puntos: r.puntos ?? [], noDice: r.no_dice ?? [], revisado: r.revisado ? String(r.revisado) : null } : null,
+      resumen: r
+        ? {
+            texto: r.resumen,
+            aQuien: r.a_quien ?? null,
+            puntos: r.puntos ?? [],
+            noDice: r.no_dice ?? [],
+            revisado: r.revisado ? String(r.revisado) : null,
+          }
+        : null,
       places,
     };
     writeFileSync(join(outDir, "leyes", `${numero}.json`), JSON.stringify(detalle));

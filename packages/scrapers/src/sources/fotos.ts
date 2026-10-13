@@ -27,9 +27,8 @@
 import { mkdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { archive, get, latestRaw, PROCESSED_DIR, type Row, readRaw, toCsv } from "@mt/core";
 import * as cheerio from "cheerio";
-
-import { archive, get, latestRaw, PROCESSED_DIR, readRaw, toCsv, type Row } from "@mt/core";
 
 const SOURCE = "fotos";
 const HCD = "https://www.hcdmza.gob.ar";
@@ -38,7 +37,13 @@ const OUT_DIR = join(PROCESSED_DIR, SOURCE);
 const SIZE = 192;
 
 const fold = (s: string) =>
-  s.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
+  s
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 
 /** CSV simple con comillas (los CSV de entrada las usan en cargos con coma). */
 function parseCsv(text: string): Record<string, string>[] {
@@ -49,13 +54,21 @@ function parseCsv(text: string): Record<string, string>[] {
   for (let i = 0; i < text.length; i++) {
     const c = text[i]!;
     if (q) {
-      if (c === '"' && text[i + 1] === '"') { cur += '"'; i++; }
-      else if (c === '"') q = false;
+      if (c === '"' && text[i + 1] === '"') {
+        cur += '"';
+        i++;
+      } else if (c === '"') q = false;
       else cur += c;
     } else if (c === '"') q = true;
-    else if (c === ",") { row.push(cur); cur = ""; }
-    else if (c === "\n") { row.push(cur); rows.push(row); row = []; cur = ""; }
-    else if (c !== "\r") cur += c;
+    else if (c === ",") {
+      row.push(cur);
+      cur = "";
+    } else if (c === "\n") {
+      row.push(cur);
+      rows.push(row);
+      row = [];
+      cur = "";
+    } else if (c !== "\r") cur += c;
   }
   const [head, ...rest] = rows;
   return rest.filter((r) => r.length > 1).map((r) => Object.fromEntries(head!.map((h, k) => [h, r[k] ?? ""])));
@@ -105,7 +118,15 @@ async function diputadosProv(legs: Record<string, string>[]): Promise<Candidate[
     });
     for (const p of people) {
       const src = imgs.get(fold(p.nombre!));
-      if (src) out.push({ id: p.id!, grupo: "diputados_prov", foto_url: src, pagina: url, credito: "Honorable Cámara de Diputados de Mendoza", top: 0.1 });
+      if (src)
+        out.push({
+          id: p.id!,
+          grupo: "diputados_prov",
+          foto_url: src,
+          pagina: url,
+          credito: "Honorable Cámara de Diputados de Mendoza",
+          top: 0.1,
+        });
     }
   }
   return out;
@@ -148,14 +169,23 @@ async function diputadosNac(auts: Record<string, string>[]): Promise<Candidate[]
   const html = await page(url, "hcdn-diputados-por-distrito.html");
   const m = html.match(/let listado = (\{.*\})\.data\.diputados;/);
   if (!m) throw new Error("No se encontró el JSON listado en hcdn.gob.ar/diputados/");
-  const data = JSON.parse(m[1]!) as { data: { diputados: Record<string, { nombre: string; apellido: string; foto: string; mail: string }[]> } };
-  const mza = data.data.diputados["MENDOZA"] ?? [];
+  const data = JSON.parse(m[1]!) as {
+    data: { diputados: Record<string, { nombre: string; apellido: string; foto: string; mail: string }[]> };
+  };
+  const mza = data.data.diputados.MENDOZA ?? [];
   const out: Candidate[] = [];
   for (const a of auts.filter((x) => x.poder === "legislativo_nacional" && /diputado/i.test(x.cargo!))) {
     // perfil_url: https://www.hcdn.gob.ar/diputados/<usuario>/ y el usuario es el mail sin dominio.
     const user = a.perfil_url!.split("/").filter(Boolean).pop()!.toLowerCase();
     const d = mza.find((x) => x.mail.split("@")[0]!.toLowerCase() === user);
-    if (d?.foto) out.push({ id: a.id!, grupo: "diputados_nac", foto_url: d.foto, pagina: a.perfil_url!, credito: "Honorable Cámara de Diputados de la Nación" });
+    if (d?.foto)
+      out.push({
+        id: a.id!,
+        grupo: "diputados_nac",
+        foto_url: d.foto,
+        pagina: a.perfil_url!,
+        credito: "Honorable Cámara de Diputados de la Nación",
+      });
   }
   return out;
 }
@@ -178,7 +208,14 @@ async function senadoNac(auts: Record<string, string>[]): Promise<Candidate[]> {
   for (const a of auts.filter((x) => x.poder === "legislativo_nacional" && /senador/i.test(x.cargo!))) {
     const sid = a.perfil_url!.split("/").pop()!;
     const src = $(`a[href$="/senadores/senador/${sid}"] img`).first().attr("data-src");
-    if (src) out.push({ id: a.id!, grupo: "senadores_nac", foto_url: new URL(src, "https://www.senado.gob.ar").href, pagina: a.perfil_url!, credito: "Honorable Senado de la Nación" });
+    if (src)
+      out.push({
+        id: a.id!,
+        grupo: "senadores_nac",
+        foto_url: new URL(src, "https://www.senado.gob.ar").href,
+        pagina: a.perfil_url!,
+        credito: "Honorable Senado de la Nación",
+      });
   }
   return out;
 }
@@ -226,7 +263,12 @@ async function ejecutivo(): Promise<Candidate[]> {
 
 // ---------------------------------------------------------------- Intendentes (URL cargadas a mano)
 
-interface Manual { foto: string; pagina: string; credito: string; top?: number }
+interface Manual {
+  foto: string;
+  pagina: string;
+  credito: string;
+  top?: number;
+}
 // Incluye al Fiscal de Estado. No hay foto oficial utilizable de La Paz, Tupungato ni San Carlos (sus sitios
 // no publican un retrato del intendente). Rivadavia publica a otro intendente que el de autoridades.csv: se omite.
 const INTENDENTES: Record<string, Manual> = {
@@ -236,22 +278,86 @@ const INTENDENTES: Record<string, Manual> = {
     pagina: "https://rivadavia.gob.ar/gobierno/intendente/",
     credito: "Municipalidad de Rivadavia",
   },
-  "ulpiano-leandro-suarez": { foto: "https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/10/ulpiano-suarez.jpg", pagina: "https://ciudaddemendoza.gob.ar/gobierno/", credito: "Municipalidad de la Ciudad de Mendoza" },
-  "edgardo-arnaldo-gonzalez": { foto: "https://lavallemendoza.gob.ar/public/wp-content/uploads/2024/06/edgardogonzalez.jpg", pagina: "https://lavallemendoza.gob.ar/public/autoridades/", credito: "Municipalidad de Lavalle" },
-  "jose-matias-stevanato": { foto: "https://www.maipu.gob.ar/wp-content/uploads/2025/10/gabinete-stevanato.png", pagina: "https://www.maipu.gob.ar/transparencia/institucional/intendente-y-gabinete/", credito: "Municipalidad de Maipú" },
-  "raul-antonio-rufeil": { foto: "https://sanmartinmza.gob.ar/wp-content/uploads/2020/05/rufeil-institucional.jpg.html", pagina: "https://sanmartinmza.gob.ar/intendente/", credito: "Municipalidad de General San Martín" },
-  "mario-enrique-nestor-abed": { foto: "https://www.juninmendoza.gov.ar/wp-content/uploads/Mario-Abed.jpg", pagina: "https://www.juninmendoza.gov.ar/autoridades-junin/", credito: "Municipalidad de Junín" },
-  "maria-flor-destefanis": { foto: "https://santarosamendoza.gob.ar/wp-content/uploads/2024/11/2.jpg", pagina: "https://santarosamendoza.gob.ar/autoridades/", credito: "Municipalidad de Santa Rosa" },
-  "diego-costarelli": { foto: "https://www.godoycruz.gob.ar/wp-content/uploads/2017/08/costarelli.png", pagina: "https://www.godoycruz.gob.ar/gobierno/intendente-2/", credito: "Municipalidad de Godoy Cruz" },
-  "andres-esteban-allasino": { foto: "https://lujandecuyo.gob.ar/wp-content/uploads/2023/12/Perfil-Esteban-Allasino.jpeg", pagina: "https://lujandecuyo.gob.ar/estebanallasino/", credito: "Municipalidad de Luján de Cuyo", top: 0.1 },
-  "jose-emir-andraos": { foto: "https://www.tunuyan.gov.ar/site/wp-content/uploads/2025/06/Intendente_Emir_Andraos.jpg", pagina: "https://www.tunuyan.gov.ar/site/gabinete-municipal/", credito: "Municipalidad de Tunuyán" },
-  "alejandro-adrian-molero": { foto: "https://alvearmendoza.gob.ar/wp-content/uploads/2023/12/MOLERO.jpeg", pagina: "https://alvearmendoza.gob.ar/molero-dio-a-conocer-el-estado-en-el-que-recibio-el-municipio/", credito: "Municipalidad de General Alvear" },
-  "omar-chafi-felix": { foto: "https://www.sanrafael.gov.ar/wp-content/uploads/2024/01/omar-intendente.jpg", pagina: "https://www.sanrafael.gov.ar/intendente-omar-felix/", credito: "Municipalidad de San Rafael" },
+  "ulpiano-leandro-suarez": {
+    foto: "https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/10/ulpiano-suarez.jpg",
+    pagina: "https://ciudaddemendoza.gob.ar/gobierno/",
+    credito: "Municipalidad de la Ciudad de Mendoza",
+  },
+  "edgardo-arnaldo-gonzalez": {
+    foto: "https://lavallemendoza.gob.ar/public/wp-content/uploads/2024/06/edgardogonzalez.jpg",
+    pagina: "https://lavallemendoza.gob.ar/public/autoridades/",
+    credito: "Municipalidad de Lavalle",
+  },
+  "jose-matias-stevanato": {
+    foto: "https://www.maipu.gob.ar/wp-content/uploads/2025/10/gabinete-stevanato.png",
+    pagina: "https://www.maipu.gob.ar/transparencia/institucional/intendente-y-gabinete/",
+    credito: "Municipalidad de Maipú",
+  },
+  "raul-antonio-rufeil": {
+    foto: "https://sanmartinmza.gob.ar/wp-content/uploads/2020/05/rufeil-institucional.jpg.html",
+    pagina: "https://sanmartinmza.gob.ar/intendente/",
+    credito: "Municipalidad de General San Martín",
+  },
+  "mario-enrique-nestor-abed": {
+    foto: "https://www.juninmendoza.gov.ar/wp-content/uploads/Mario-Abed.jpg",
+    pagina: "https://www.juninmendoza.gov.ar/autoridades-junin/",
+    credito: "Municipalidad de Junín",
+  },
+  "maria-flor-destefanis": {
+    foto: "https://santarosamendoza.gob.ar/wp-content/uploads/2024/11/2.jpg",
+    pagina: "https://santarosamendoza.gob.ar/autoridades/",
+    credito: "Municipalidad de Santa Rosa",
+  },
+  "diego-costarelli": {
+    foto: "https://www.godoycruz.gob.ar/wp-content/uploads/2017/08/costarelli.png",
+    pagina: "https://www.godoycruz.gob.ar/gobierno/intendente-2/",
+    credito: "Municipalidad de Godoy Cruz",
+  },
+  "andres-esteban-allasino": {
+    foto: "https://lujandecuyo.gob.ar/wp-content/uploads/2023/12/Perfil-Esteban-Allasino.jpeg",
+    pagina: "https://lujandecuyo.gob.ar/estebanallasino/",
+    credito: "Municipalidad de Luján de Cuyo",
+    top: 0.1,
+  },
+  "jose-emir-andraos": {
+    foto: "https://www.tunuyan.gov.ar/site/wp-content/uploads/2025/06/Intendente_Emir_Andraos.jpg",
+    pagina: "https://www.tunuyan.gov.ar/site/gabinete-municipal/",
+    credito: "Municipalidad de Tunuyán",
+  },
+  "alejandro-adrian-molero": {
+    foto: "https://alvearmendoza.gob.ar/wp-content/uploads/2023/12/MOLERO.jpeg",
+    pagina: "https://alvearmendoza.gob.ar/molero-dio-a-conocer-el-estado-en-el-que-recibio-el-municipio/",
+    credito: "Municipalidad de General Alvear",
+  },
+  "omar-chafi-felix": {
+    foto: "https://www.sanrafael.gov.ar/wp-content/uploads/2024/01/omar-intendente.jpg",
+    pagina: "https://www.sanrafael.gov.ar/intendente-omar-felix/",
+    credito: "Municipalidad de San Rafael",
+  },
   // Intendentes agregados a mano. Calvente: foto de prensa de su asunción en la que aparece solo y de frente.
-  "francisco-nicolas-lo-presti": { foto: "https://lasheras.gob.ar/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-07-at-10.24.07-AM.jpeg", pagina: "https://lasheras.gob.ar/autoridades/", credito: "Municipalidad de Las Heras", top: 0.1 },
-  "celso-alejandro-jaque": { foto: "https://www.malargue.gov.ar/wp-content/uploads/2025/07/DSC_3703.jpg", pagina: "https://www.malargue.gov.ar/gobierno/", credito: "Municipalidad de Malargüe", top: 0.1 },
-  "marcos-emanuel-calvente": { foto: "https://www.guaymallen.gob.ar/wp-content/uploads/2023/12/Asuncion-y-Jura-Marcos-Calvente-1.jpg", pagina: "https://www.guaymallen.gob.ar/marcos-calvente-asumio-con-el-compromiso-de-continuar-la-transformacion-y-potenciar-el-desarrollo-de-guaymallen/", credito: "Municipalidad de Guaymallén" },
-  "fernando-simon": { foto: "https://fiscaliadeestadomendoza.gob.ar/wp-content/uploads/2024/09/fernando-simon.jpg", pagina: "https://fiscaliadeestadomendoza.gob.ar/autoridades/", credito: "Fiscalía de Estado de Mendoza" },
+  "francisco-nicolas-lo-presti": {
+    foto: "https://lasheras.gob.ar/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-07-at-10.24.07-AM.jpeg",
+    pagina: "https://lasheras.gob.ar/autoridades/",
+    credito: "Municipalidad de Las Heras",
+    top: 0.1,
+  },
+  "celso-alejandro-jaque": {
+    foto: "https://www.malargue.gov.ar/wp-content/uploads/2025/07/DSC_3703.jpg",
+    pagina: "https://www.malargue.gov.ar/gobierno/",
+    credito: "Municipalidad de Malargüe",
+    top: 0.1,
+  },
+  "marcos-emanuel-calvente": {
+    foto: "https://www.guaymallen.gob.ar/wp-content/uploads/2023/12/Asuncion-y-Jura-Marcos-Calvente-1.jpg",
+    pagina:
+      "https://www.guaymallen.gob.ar/marcos-calvente-asumio-con-el-compromiso-de-continuar-la-transformacion-y-potenciar-el-desarrollo-de-guaymallen/",
+    credito: "Municipalidad de Guaymallén",
+  },
+  "fernando-simon": {
+    foto: "https://fiscaliadeestadomendoza.gob.ar/wp-content/uploads/2024/09/fernando-simon.jpg",
+    pagina: "https://fiscaliadeestadomendoza.gob.ar/autoridades/",
+    credito: "Fiscalía de Estado de Mendoza",
+  },
 };
 
 // ---------------------------------------------------------------- Titulares de organismos (URL cargadas a mano)
@@ -259,9 +365,25 @@ const INTENDENTES: Record<string, Manual> = {
 // Titulares de organismos de la Oficina de Ética Pública. El id es `etica-<official_id>` (la web los busca así).
 // Sólo se cargan los que el sitio oficial del organismo muestra con su nombre junto a una foto individual.
 const AGENCY_HEADS: Record<string, Manual & { nombre: string }> = {
-  "etica-3107": { nombre: "Diego Coronel", foto: "https://www.irrigacion.gov.ar/web/wp-content/uploads/2020/01/Diego-Coronel.png", pagina: "https://www.irrigacion.gov.ar/web/autoridades/", credito: "Departamento General de Irrigación" },
-  "etica-5030": { nombre: "Cristian Samir Azar", foto: "https://epremendoza.gob.ar/wp-content/uploads/2026/03/Cristian-Azar.jpeg", pagina: "https://epremendoza.gob.ar/directorio/", credito: "Ente Provincial Regulador Eléctrico" },
-  "etica-7030": { nombre: "Osvaldo Federico Romagnoli", foto: "https://media.mendoza.gob.ar/informacion-oficial/uploads/sites/20/2025/08/1DSC_8159-scaled.jpg", pagina: "https://www.mendoza.gob.ar/vialidad/informacionoficial/", credito: "Dirección Provincial de Vialidad", top: 0.1 },
+  "etica-3107": {
+    nombre: "Diego Coronel",
+    foto: "https://www.irrigacion.gov.ar/web/wp-content/uploads/2020/01/Diego-Coronel.png",
+    pagina: "https://www.irrigacion.gov.ar/web/autoridades/",
+    credito: "Departamento General de Irrigación",
+  },
+  "etica-5030": {
+    nombre: "Cristian Samir Azar",
+    foto: "https://epremendoza.gob.ar/wp-content/uploads/2026/03/Cristian-Azar.jpeg",
+    pagina: "https://epremendoza.gob.ar/directorio/",
+    credito: "Ente Provincial Regulador Eléctrico",
+  },
+  "etica-7030": {
+    nombre: "Osvaldo Federico Romagnoli",
+    foto: "https://media.mendoza.gob.ar/informacion-oficial/uploads/sites/20/2025/08/1DSC_8159-scaled.jpg",
+    pagina: "https://www.mendoza.gob.ar/vialidad/informacionoficial/",
+    credito: "Dirección Provincial de Vialidad",
+    top: 0.1,
+  },
 };
 
 // ---------------------------------------------------------------- Miniaturas
@@ -282,8 +404,24 @@ async function thumbnail(src: string, dest: string, top = 0): Promise<void> {
   const side = Math.min(w, h);
   const offY = h > w ? Math.round((h - side) * top) : Math.round((h - side) / 2);
   const offX = w > h ? Math.round((w - side) / 2) : 0;
-  const tmp = dest + ".tmp.jpg";
-  await sips("-s", "format", "jpeg", "-s", "formatOptions", "80", "-c", String(side), String(side), "--cropOffset", String(offY), String(offX), src, "--out", tmp);
+  const tmp = `${dest}.tmp.jpg`;
+  await sips(
+    "-s",
+    "format",
+    "jpeg",
+    "-s",
+    "formatOptions",
+    "80",
+    "-c",
+    String(side),
+    String(side),
+    "--cropOffset",
+    String(offY),
+    String(offX),
+    src,
+    "--out",
+    tmp,
+  );
   await sips("-z", String(SIZE), String(SIZE), "-s", "format", "jpeg", "-s", "formatOptions", "80", tmp, "--out", dest);
   await rm(tmp, { force: true });
 }
@@ -305,8 +443,14 @@ export async function run(_args: string[]) {
   const personas = new Map<string, { nombre: string; grupo: string }>();
   for (const l of legs) personas.set(l.id!, { nombre: l.nombre!, grupo: l.camara === "senado" ? "senadores_prov" : "diputados_prov" });
   for (const a of auts) {
-    const grupo = a.poder === "municipal" ? "intendentes" : a.poder === "ejecutivo_provincial" ? "ejecutivo"
-      : /diputado/i.test(a.cargo!) ? "diputados_nac" : "senadores_nac";
+    const grupo =
+      a.poder === "municipal"
+        ? "intendentes"
+        : a.poder === "ejecutivo_provincial"
+          ? "ejecutivo"
+          : /diputado/i.test(a.cargo!)
+            ? "diputados_nac"
+            : "senadores_nac";
     personas.set(a.id!, { nombre: a.nombre!, grupo });
   }
 
@@ -314,7 +458,11 @@ export async function run(_args: string[]) {
 
   const cands: Candidate[] = [];
   const guard = async (nombre: string, fn: () => Promise<Candidate[]>) => {
-    try { cands.push(...(await fn())); } catch (e) { console.warn(`${nombre}: ${(e as Error).message}`); }
+    try {
+      cands.push(...(await fn()));
+    } catch (e) {
+      console.warn(`${nombre}: ${(e as Error).message}`);
+    }
   };
   await guard("diputados provinciales", () => diputadosProv(legs));
   await guard("senado provincial", () => senadoProv(legs));
@@ -382,5 +530,5 @@ export async function run(_args: string[]) {
     },
     orden: ["id", "foto", "credito", "pagina_fuente_url", "foto_original_url"],
   };
-  await writeFile(join(OUT_DIR, "fotos.meta.json"), JSON.stringify(meta, null, 2) + "\n");
+  await writeFile(join(OUT_DIR, "fotos.meta.json"), `${JSON.stringify(meta, null, 2)}\n`);
 }

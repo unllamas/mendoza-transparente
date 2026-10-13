@@ -43,7 +43,11 @@ export function DetailSheet() {
   const proveedor = asId(search.proveedor);
   if (!proceso && !proveedor) return null;
   return (
-    <TrackedSheet title={proceso ? "Proceso de compra" : "Proveedor"} onClose={close} trackId={proceso ? "purchase.process" : "purchase.supplier"}>
+    <TrackedSheet
+      title={proceso ? "Proceso de compra" : "Proveedor"}
+      onClose={close}
+      trackId={proceso ? "purchase.process" : "purchase.supplier"}
+    >
       <Suspense fallback={<p className="text-sm text-ink-muted">Cargando…</p>}>
         {proceso ? (
           <Proceso key={proceso} ocid={proceso} onProveedor={(cuit) => open("proveedor", cuit)} />

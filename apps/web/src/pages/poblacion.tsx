@@ -1,20 +1,19 @@
-import { tileVariants } from "@mt/ui/components/card";
-import { cn } from "@mt/ui/lib/utils";
-import { buttonVariants } from "@mt/ui/components/button";
 import { Alert } from "@mt/ui/components/alert";
+import { buttonVariants } from "@mt/ui/components/button";
+import { tileVariants } from "@mt/ui/components/card";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
+import { cn } from "@mt/ui/lib/utils";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { MapPin, TrendingUp, Users } from "lucide-react";
-
-import { useUrlOption, useUrlText } from "../url-state.ts";
-import { LineChart } from "../charts/line-chart.tsx";
-import { MapaMendoza } from "../charts/mapa.tsx";
-import { formatNumber } from "../lib.ts";
-import { slug } from "../slug.ts";
-import type { PoblacionTema } from "../types.ts";
-import { FuentesOficiales } from "../components/official-sources.tsx";
-import { TrackedSegmented } from "../components/tracked-segmented.tsx";
+import { LineChart } from "@/charts/line-chart.tsx";
+import { MapaMendoza } from "@/charts/mapa.tsx";
+import { FuentesOficiales } from "@/components/official-sources.tsx";
+import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
+import { formatNumber } from "@/lib.ts";
+import { slug } from "@/slug.ts";
+import type { PoblacionTema } from "@/types.ts";
+import { useUrlOption, useUrlText } from "@/url-state.ts";
 
 const route = getRouteApi("/poblacion");
 
@@ -36,8 +35,8 @@ export function PoblacionPage() {
   return (
     <div className="flex flex-col gap-12">
       <PageHeader icon={Users} topic="Población" title="¿Cuántos somos en Mendoza?">
-        Población de la provincia y de cada departamento según los censos 2010 y 2022, y las proyecciones oficiales de
-          INDEC para los años sin censo.
+        Población de la provincia y de cada departamento según los censos 2010 y 2022, y las proyecciones oficiales de INDEC para los años
+        sin censo.
       </PageHeader>
       <FuentesOficiales ids={["poblacion"]} />
 
@@ -67,8 +66,7 @@ export function PoblacionPage() {
           />
         </div>
         <Alert variant="note">
-          Hasta 2021 la proyección parte del Censo 2010 y desde 2022 del Censo 2022, por eso hay un pequeño salto entre
-          esos años.
+          Hasta 2021 la proyección parte del Censo 2010 y desde 2022 del Censo 2022, por eso hay un pequeño salto entre esos años.
         </Alert>
       </Section>
 
@@ -85,9 +83,7 @@ export function PoblacionPage() {
         <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_22rem]">
           <MapaMendoza
             mapa={mapa}
-            valores={Object.fromEntries(
-              tema.departamentos.map((d) => [d.municipio, medida === "habitantes" ? d.actual : d.variacion]),
-            )}
+            valores={Object.fromEntries(tema.departamentos.map((d) => [d.municipio, medida === "habitantes" ? d.actual : d.variacion]))}
             formatValue={medida === "habitantes" ? (v) => `${personas(v)} hab.` : porcentaje}
             seleccionado={sel}
             onSelect={setSel}
@@ -152,11 +148,7 @@ function Detalle({ depto: d, onClose }: { depto: PoblacionTema["departamentos"][
             Ver todo sobre {d.municipio} ›
           </Link>
         </span>
-        <button
-          type="button"
-          onClick={onClose}
-          className={cn(buttonVariants({ variant: "secondary" }))}
-        >
+        <button type="button" onClick={onClose} className={cn(buttonVariants({ variant: "secondary" }))}>
           Ver ranking
         </button>
       </div>

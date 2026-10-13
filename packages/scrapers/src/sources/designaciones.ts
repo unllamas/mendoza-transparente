@@ -30,15 +30,26 @@ import { existsSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
-import { PROCESSED_DIR, readProcessed, writeProcessed, type Row } from "@mt/core";
+import { PROCESSED_DIR, type Row, readProcessed, writeProcessed } from "@mt/core";
 
 const SOURCE = "designaciones";
 const BOE = "boletin-oficial";
 const NORM_TYPES = new Set(["decreto", "resolucion", "decretos municipales", "resoluciones municipales"]);
 
 export const COLUMNS = [
-  "fecha_boletin", "norma_id", "tipo_norma", "numero_norma", "organismo_emisor", "accion", "modalidad",
-  "persona", "cargo", "reparticion", "desde", "articulo", "url_pdf",
+  "fecha_boletin",
+  "norma_id",
+  "tipo_norma",
+  "numero_norma",
+  "organismo_emisor",
+  "accion",
+  "modalidad",
+  "persona",
+  "cargo",
+  "reparticion",
+  "desde",
+  "articulo",
+  "url_pdf",
 ];
 
 export type Action = "designa" | "renuncia" | "cese" | "otro";
@@ -74,8 +85,19 @@ const fold = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "");
 const squash = (s: string) => s.replace(/\s+/g, " ").trim();
 
 const MONTHS: Record<string, string> = {
-  enero: "01", febrero: "02", marzo: "03", abril: "04", mayo: "05", junio: "06", julio: "07", agosto: "08",
-  septiembre: "09", setiembre: "09", octubre: "10", noviembre: "11", diciembre: "12",
+  enero: "01",
+  febrero: "02",
+  marzo: "03",
+  abril: "04",
+  mayo: "05",
+  junio: "06",
+  julio: "07",
+  agosto: "08",
+  septiembre: "09",
+  setiembre: "09",
+  octubre: "10",
+  noviembre: "11",
+  diciembre: "12",
 };
 
 /** Borra números de documento y otros datos personales de un texto libre. */
@@ -83,7 +105,7 @@ export function redact(s: string): string {
   return squash(
     s
       .replace(/\b(?:D\.?\s?N\.?\s?I\.?|C\.?\s?U\.?\s?I\.?\s?[LT]\.?|C\.?\s?U\.?\s?I\.?)\s*(?:N\s*[º°o]?\.?)?\s*:?\s*[\d.\-\s/]{6,}/gi, "")
-      .replace(/\bLegajo\s*\/?\s*(?:CUI[LT])?\s*N?[º°]?\s*[\d\-]+/gi, "")
+      .replace(/\bLegajo\s*\/?\s*(?:CUI[LT])?\s*N?[º°]?\s*[\d-]+/gi, "")
       .replace(/\bmatr[ií]cula\s*N?[º°]?\s*\d+/gi, "")
       .replace(/\bclase\s+(?:19|20)\d{2}\b/gi, "")
       .replace(/\b\d{2}\.\d{3}\.\d{3}\b/g, "")
@@ -98,12 +120,12 @@ export function redact(s: string): string {
 function cleanCargo(raw: string): string {
   const original = redact(raw);
   let s = original
-    .replace(/\b(?:Car[aá]cter|Jurisdicci[oó]n|Unidad Organizativa|R[eé]gimen Salarial|Agrupamiento|Tramo|Subtramo)\s*:?\s*\d[\d\-]*/gi, "")
+    .replace(/\b(?:Car[aá]cter|Jurisdicci[oó]n|Unidad Organizativa|R[eé]gimen Salarial|Agrupamiento|Tramo|Subtramo)\s*:?\s*\d[\d-]*/gi, "")
     .replace(/\bU\.?\s?O\.?\s*:?\s*\d+\b/g, "")
     .replace(/\bU\.?\s?G\.?\s?G\.?\s*[A-Z]?\d+\b/g, "")
-    .replace(/\bC[oó]digo(?:\s+Escalafonario)?\s*:?\s*[\d\-]+/gi, "")
-    .replace(/\bC[oó]d\.?\s*[\d\-]+/gi, "")
-    .replace(/\bC\.?Ju\.?O\.?\s*[\d\-]+/gi, "")
+    .replace(/\bC[oó]digo(?:\s+Escalafonario)?\s*:?\s*[\d-]+/gi, "")
+    .replace(/\bC[oó]d\.?\s*[\d-]+/gi, "")
+    .replace(/\bC\.?Ju\.?O\.?\s*[\d-]+/gi, "")
     .replace(/\b(?:Clase|Categor[ií]a)\s*\d+\b/gi, "");
   s = s
     .replace(/[–—]/g, " – ")
@@ -140,13 +162,16 @@ export function headerDate(text: string): string {
 export function findStartDate(text: string, fallbackYear: string, allowDesde = true): string {
   const t = squash(text);
   const lead = allowDesde ? "(?:a partir|desde)" : "a partir";
-  const wordy = new RegExp(`${lead}\\s+(?:(?:del?|el)\\s+)?(?:d[ií]a\\s+)?(\\d{1,2})\\s*(?:º|°)?\\s+de\\s+([A-Za-zÁÉÍÓÚáéíóú]+)(?:\\s+de\\s+(\\d{4}))?`, "i");
+  const wordy = new RegExp(
+    `${lead}\\s+(?:(?:del?|el)\\s+)?(?:d[ií]a\\s+)?(\\d{1,2})\\s*(?:º|°)?\\s+de\\s+([A-Za-zÁÉÍÓÚáéíóú]+)(?:\\s+de\\s+(\\d{4}))?`,
+    "i",
+  );
   let m = wordy.exec(t);
   if (m) {
     const iso = toIsoDate(m[1]!, m[2]!, m[3] ?? fallbackYear);
     if (iso) return iso;
   }
-  m = /a partir (?:del?|el)\s+(?:d[ií]a\s+)?(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/i.exec(t);
+  m = /a partir (?:del?|el)\s+(?:d[ií]a\s+)?(\d{1,2})[/-](\d{1,2})[/-](\d{4})/i.exec(t);
   if (m) return `${m[3]}-${m[2]!.padStart(2, "0")}-${m[1]!.padStart(2, "0")}`;
   return "";
 }
@@ -220,15 +245,62 @@ export function classifyArticle(body: string): Kind | null {
 
 // ---------------------------------------------------------------- personas
 
-const TITLE_WORDS = new Set(
-  [
-    "dr", "dra", "lic", "licda", "sr", "sra", "srta", "dn", "dna", "dña", "prof", "profa", "ing", "arq", "abg", "mgtr",
-    "mag", "cdor", "cdora", "cpn", "cp", "pp", "esp", "mg", "tca", "tec", "bioq", "farm", "med", "dr(a)",
-    "senor", "senora", "agente", "agentes", "doctor", "doctora", "licenciado", "licenciada", "profesional", "y",
-    "ministro", "ministra", "contador", "contadora", "escribano", "escribana", "personal", "martillero", "martillera",
-    "publico", "publica", "bioing", "cr", "cra",
-  ],
-);
+const TITLE_WORDS = new Set([
+  "dr",
+  "dra",
+  "lic",
+  "licda",
+  "sr",
+  "sra",
+  "srta",
+  "dn",
+  "dna",
+  "dña",
+  "prof",
+  "profa",
+  "ing",
+  "arq",
+  "abg",
+  "mgtr",
+  "mag",
+  "cdor",
+  "cdora",
+  "cpn",
+  "cp",
+  "pp",
+  "esp",
+  "mg",
+  "tca",
+  "tec",
+  "bioq",
+  "farm",
+  "med",
+  "dr(a)",
+  "senor",
+  "senora",
+  "agente",
+  "agentes",
+  "doctor",
+  "doctora",
+  "licenciado",
+  "licenciada",
+  "profesional",
+  "y",
+  "ministro",
+  "ministra",
+  "contador",
+  "contadora",
+  "escribano",
+  "escribana",
+  "personal",
+  "martillero",
+  "martillera",
+  "publico",
+  "publica",
+  "bioing",
+  "cr",
+  "cra",
+]);
 
 const PARTICLES = new Set(["de", "del", "la", "las", "los", "da", "di", "van", "von", "y"]);
 
@@ -245,8 +317,11 @@ function isTitle(token: string): boolean {
 
 /** Toma el nombre que termina justo antes de `prefix` (la parte del texto previa a un DNI/CUIL). */
 export function nameBefore(prefix: string): string {
-  const tokens = squash(prefix.replace(/[,;]\s*$/, "")).split(" ").map((t) => t.replace(/^[-–•*]+/, "")).filter(Boolean);
-  const isCaps = (t: string) => /^[A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ'’.\-]*,?$/.test(t);
+  const tokens = squash(prefix.replace(/[,;]\s*$/, ""))
+    .split(" ")
+    .map((t) => t.replace(/^[-–•*]+/, ""))
+    .filter(Boolean);
+  const isCaps = (t: string) => /^[A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ'’.-]*,?$/.test(t);
   const last = (tokens.at(-1) ?? "").replace(/[,;:]+$/g, "");
   // Nombre en mayúsculas ("CALLAEY, MARIO ALBERTO"): se corta en la primera palabra en minúsculas (el cargo que lo precede).
   // Nombre en mixto ("Rauss, Nicolás Yves"): se acepta cualquier palabra capitalizada.
@@ -266,7 +341,10 @@ export function nameBefore(prefix: string): string {
   }
   // Un nombre no empieza con partícula suelta.
   while (out.length && PARTICLES.has(fold(out[0]!).toLowerCase().replace(/[,]+$/g, "")) && out.length > 2) out.shift();
-  const name = out.join(" ").replace(/[,;:]+$/g, "").replace(/\s+,/g, ",");
+  const name = out
+    .join(" ")
+    .replace(/[,;:]+$/g, "")
+    .replace(/\s+,/g, ",");
   return validName(name) ? name.toUpperCase() : "";
 }
 
@@ -325,7 +403,9 @@ const CARGO_CUT = new RegExp(
 );
 
 function trimTitleTail(s: string): string {
-  return s.replace(/,?\s+(?:al|a la|a los|a las|del|de la)\s*(?:se[ñn]or[a]?|Sr\.?|Sra\.?|Dr\.?|Dra\.?|Lic\.?|Licenciad[oa])?\s*$/i, "").trim();
+  return s
+    .replace(/,?\s+(?:al|a la|a los|a las|del|de la)\s*(?:se[ñn]or[a]?|Sr\.?|Sra\.?|Dr\.?|Dra\.?|Lic\.?|Licenciad[oa])?\s*$/i, "")
+    .trim();
 }
 
 /** Cargo que sigue al nombre (o al verbo): "en el cargo de X", "al cargo X", "como X", "las funciones de X". */
@@ -347,7 +427,7 @@ export function cargoFrom(text: string, opts: { quoted?: boolean; lastCargo?: bo
   }
   if (rest) {
     // Los códigos presupuestarios llevan puntos ("Cód. 01-2-00-04") que cortarían la oración: se sacan antes.
-    rest = rest.replace(/\bC[oó]d(?:igo|\.)?(?:\s+Escalafonario)?\s*:?\s*[\d\-]+/gi, "");
+    rest = rest.replace(/\bC[oó]d(?:igo|\.)?(?:\s+Escalafonario)?\s*:?\s*[\d-]+/gi, "");
     const idx = rest.search(CARGO_CUT);
     if (idx > 0) rest = rest.slice(0, idx);
     const cleaned = cleanCargo(trimTitleTail(rest));
@@ -363,9 +443,12 @@ export function cargoFrom(text: string, opts: { quoted?: boolean; lastCargo?: bo
 /** Cargo de una asignación de funciones: "las funciones inherentes al cargo X", "las funciones de X". */
 function functionsCargo(text: string): string {
   const t = squash(text);
-  const m = /\bfunciones\s+(?:inherentes\s+al\s+cargo\s+(?:de\s+)?|del\s+cargo\s+(?:de\s+)?|de(?:l)?\s+cargo\s+(?:de\s+)?|de\s+(?:la\s+)?|del\s+)(.+)/i.exec(t);
+  const m =
+    /\bfunciones\s+(?:inherentes\s+al\s+cargo\s+(?:de\s+)?|del\s+cargo\s+(?:de\s+)?|de(?:l)?\s+cargo\s+(?:de\s+)?|de\s+(?:la\s+)?|del\s+)(.+)/i.exec(
+      t,
+    );
   if (!m) return "";
-  let rest = m[1]!.replace(/\bC[oó]d(?:igo|\.)?(?:\s+Escalafonario)?\s*:?\s*[\d\-]+/gi, "");
+  let rest = m[1]!.replace(/\bC[oó]d(?:igo|\.)?(?:\s+Escalafonario)?\s*:?\s*[\d-]+/gi, "");
   const idx = rest.search(new RegExp(`${CARGO_CUT.source}|,\\s*de\\s+Clase|,\\s*(?:a|al)\\s`, "i"));
   if (idx > 0) rest = rest.slice(0, idx);
   return cleanCargo(rest).slice(0, 160);
@@ -374,7 +457,10 @@ function functionsCargo(text: string): string {
 /** Repartición en una frase: "U.O. 06 - Dirección X", "UNIDAD ORGANIZATIVA 02- Dirección Y", "del Ministerio Z". */
 export function reparticionFrom(text: string): string {
   const t = squash(text);
-  const uo = /\b(?:U\.?\s?O\.?|UNIDAD ORGANIZATIVA)\s*:?\s*\d+\s*[-–—]\s*([^,;.]+?)(?:,|;|\s+dependiente|\s+del Ministerio|\s+de la Subsecretar[ií]a|$)/i.exec(t);
+  const uo =
+    /\b(?:U\.?\s?O\.?|UNIDAD ORGANIZATIVA)\s*:?\s*\d+\s*[-–—]\s*([^,;.]+?)(?:,|;|\s+dependiente|\s+del Ministerio|\s+de la Subsecretar[ií]a|$)/i.exec(
+      t,
+    );
   if (uo) {
     const name = cleanCargo(uo[1]!);
     if (!/^Ministerio$/i.test(name)) return name;
@@ -382,7 +468,9 @@ export function reparticionFrom(text: string): string {
     if (j) return cleanCargo(j[1]!);
   }
   const dep =
-    /\b(?:del|de la|en la|en el)\s+((?:Ministerio|Direcci[oó]n|Secretar[ií]a|Subsecretar[ií]a|Hospital|Orquesta|Registro|Instituto|Fiscal[ií]a|Poder|Polic[ií]a)[^,;.]*)/i.exec(t);
+    /\b(?:del|de la|en la|en el)\s+((?:Ministerio|Direcci[oó]n|Secretar[ií]a|Subsecretar[ií]a|Hospital|Orquesta|Registro|Instituto|Fiscal[ií]a|Poder|Polic[ií]a)[^,;.]*)/i.exec(
+      t,
+    );
   if (dep) return cleanCargo(dep[1]!);
   const j = /Jurisdicci[oó]n\s*\d+\s*[-–—]\s*((?:Ministerio|Secretar[ií]a|Poder|Fiscal[ií]a)[^,;.]*)/i.exec(t);
   if (j) return cleanCargo(j[1]!);
@@ -414,7 +502,10 @@ const UO_ONLY = /^UNIDAD ORGANIZATIVA\s*\d+\s*$/i;
 
 /** Extrae las filas (una por persona) de un artículo ya clasificado. */
 export function extractFromArticle(kind: Kind, body: string, fallbackYear: string, normDate: string): Act[] {
-  const lines = body.split("\n").map((l) => l.trim()).filter(Boolean);
+  const lines = body
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean);
   const first = lines[0] ?? "";
   const acts: Act[] = [];
   const start = (txt: string) => {
@@ -433,9 +524,16 @@ export function extractFromArticle(kind: Kind, body: string, fallbackYear: strin
   if (kind.modalidad === "encargo_cartera") {
     const t = squash(body);
     const org = /(?:Cartera|despacho)\s+del\s+(Ministerio de .+?),?\s+(?:a partir|mientras)/i.exec(t);
-    const who = /\bal\s+(?:se[ñn]or\s+|Sr\.?\s+)?(Ministro\b.*?)[,\s]+(?:(?:Lic|LIC|Abg|ABG|Dr|Dra|Ing|Cdor|C\.P\.N|Mgtr|Prof)\.?\s+)*([A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ'’ ]+[A-ZÁÉÍÓÚÑ])\.?\s*$/s.exec(t);
+    const who =
+      /\bal\s+(?:se[ñn]or\s+|Sr\.?\s+)?(Ministro\b.*?)[,\s]+(?:(?:Lic|LIC|Abg|ABG|Dr|Dra|Ing|Cdor|C\.P\.N|Mgtr|Prof)\.?\s+)*([A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ'’ ]+[A-ZÁÉÍÓÚÑ])\.?\s*$/s.exec(
+        t,
+      );
     if (org && who) {
-      push(who[2]!.trim(), `${who[1]!.trim()} (a cargo interino de ${org[1]!.replace(/^Ministerio de /, "la cartera de ")})`, org[1]!.trim());
+      push(
+        who[2]!.trim(),
+        `${who[1]!.trim()} (a cargo interino de ${org[1]!.replace(/^Ministerio de /, "la cartera de ")})`,
+        org[1]!.trim(),
+      );
     }
     return acts;
   }
@@ -621,7 +719,20 @@ const META = {
     articulo: { etiqueta: "Artículo", tipo: "texto", descripcion: "Artículo de la norma donde está el acto." },
     url_pdf: { etiqueta: "Texto original", tipo: "url", descripcion: "PDF publicado en el Boletín Oficial." },
   },
-  orden: ["fecha_boletin", "accion", "persona", "cargo", "reparticion", "organismo_emisor", "desde", "modalidad", "tipo_norma", "numero_norma", "articulo", "url_pdf"],
+  orden: [
+    "fecha_boletin",
+    "accion",
+    "persona",
+    "cargo",
+    "reparticion",
+    "organismo_emisor",
+    "desde",
+    "modalidad",
+    "tipo_norma",
+    "numero_norma",
+    "articulo",
+    "url_pdf",
+  ],
 };
 
 export async function run(_args: string[]) {
@@ -662,13 +773,14 @@ export async function run(_args: string[]) {
       });
     }
   }
-  rows.sort((a, b) =>
-    String(b.fecha_boletin).localeCompare(String(a.fecha_boletin)) ||
-    String(a.norma_id).localeCompare(String(b.norma_id)) ||
-    Number(a.articulo) - Number(b.articulo),
+  rows.sort(
+    (a, b) =>
+      String(b.fecha_boletin).localeCompare(String(a.fecha_boletin)) ||
+      String(a.norma_id).localeCompare(String(b.norma_id)) ||
+      Number(a.articulo) - Number(b.articulo),
   );
   await writeProcessed(SOURCE, "designaciones.csv", rows, COLUMNS);
-  await writeFile(join(PROCESSED_DIR, SOURCE, "designaciones.meta.json"), JSON.stringify(META, null, 2) + "\n");
+  await writeFile(join(PROCESSED_DIR, SOURCE, "designaciones.meta.json"), `${JSON.stringify(META, null, 2)}\n`);
 
   const byAction: Record<string, number> = {};
   for (const r of rows) byAction[String(r.accion)] = (byAction[String(r.accion)] ?? 0) + 1;

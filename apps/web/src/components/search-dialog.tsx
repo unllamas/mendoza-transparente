@@ -1,5 +1,5 @@
-import { cn } from "@mt/ui/lib/utils";
 import { buttonVariants } from "@mt/ui/components/button";
+import { cn } from "@mt/ui/lib/utils";
 /**
  * Advanced search: a dialog over everything (full screen on phones, a centered panel on desktop) with results
  * grouped by kind and filters by kind. Opened from the home page, the header search button, or "/" and
@@ -8,8 +8,8 @@ import { buttonVariants } from "@mt/ui/components/button";
  */
 
 import { PersonAvatar } from "@mt/ui/components/avatar";
-import { IconButton } from "@mt/ui/components/icon-button";
 import { Dialog } from "@mt/ui/components/dialog";
+import { IconButton } from "@mt/ui/components/icon-button";
 import { Link, useNavigate } from "@tanstack/react-router";
 import {
   ArrowRight,
@@ -31,8 +31,8 @@ import {
 } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 
-import { track } from "../analytics.ts";
-import type { SearchEntry } from "../types.ts";
+import { track } from "@/analytics.ts";
+import type { SearchEntry } from "@/types.ts";
 
 // ------------------------------------------------------------------ index and matching
 
@@ -54,7 +54,16 @@ const fold = (s: string) =>
     .replace(/(\d)\.(?=\d)/g, "$1");
 
 /** People, places and laws first: they are what most searches are about. */
-const KIND_WEIGHT: Record<string, number> = { Municipio: 6, Funcionario: 5, Ley: 4, Organismo: 4, Señal: 4, "No se publica": 3, Proveedor: 3, Sección: 3 };
+const KIND_WEIGHT: Record<string, number> = {
+  Municipio: 6,
+  Funcionario: 5,
+  Ley: 4,
+  Organismo: 4,
+  Señal: 4,
+  "No se publica": 3,
+  Proveedor: 3,
+  Sección: 3,
+};
 
 /** Result groups, in the order the filters show them: plural label and icon. */
 const GROUPS: { kind: string; label: string; icon: LucideIcon }[] = [
@@ -82,8 +91,8 @@ function match(entries: SearchEntry[], query: string): SearchEntry[] {
     const title = fold(e.t);
     const all = `${title} ${fold(e.s)} ${fold(e.q ?? "")}`;
     // "ecoclean" finds "ECO CLEAN S.A.S." and "acp" finds "A.C.P.": also compare without spaces or dots.
-    const compact = all.replace(/[\s.\-]/g, "");
-    if (!words.every((w) => all.includes(w) || compact.includes(w.replace(/[.\-]/g, "")))) continue;
+    const compact = all.replace(/[\s.-]/g, "");
+    if (!words.every((w) => all.includes(w) || compact.includes(w.replace(/[.-]/g, "")))) continue;
     let score = KIND_WEIGHT[e.k] ?? 1;
     if (words.every((w) => title.includes(w))) score += 20;
     if (title.startsWith(words[0]!)) score += 15;
@@ -188,6 +197,7 @@ export function SearchDialog() {
   }, [matches, kind]);
   const results = useMemo(() => groups.flatMap((g) => g.items), [groups]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: back to the first result when the query or the filter changes.
   useEffect(() => setActive(0), [q, kind]);
   useEffect(() => {
     if (!entries || q.length < 3 || matches.length) return;
@@ -224,143 +234,148 @@ export function SearchDialog() {
       }}
       className="inset-0 z-[60] flex flex-col overflow-hidden bg-page sm:inset-auto sm:top-[10vh] sm:left-1/2 sm:max-h-[80vh] sm:w-[calc(100%-3rem)] sm:max-w-2xl sm:-translate-x-1/2 sm:rounded-2xl sm:border sm:border-line sm:bg-surface sm:shadow-2xl"
     >
-        {/* Search box */}
-        <div className="flex min-h-14 shrink-0 items-center gap-2 border-b border-line pr-1.5 pl-3 sm:pl-4">
-          <Search className="size-5 shrink-0 text-ink-muted" aria-hidden />
-          <input
-            ref={input}
-            type="search"
-            role="combobox"
-            aria-expanded={results.length > 0}
-            aria-controls={listId}
-            aria-autocomplete="list"
-            autoComplete="off"
-            enterKeyHint="search"
-            value={query}
-            placeholder="Funcionarios, leyes, empresas, municipios…"
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "ArrowDown") {
-                e.preventDefault();
-                setActive((i) => Math.min(i + 1, results.length - 1));
-              } else if (e.key === "ArrowUp") {
-                e.preventDefault();
-                setActive((i) => Math.max(i - 1, 0));
-              } else if (e.key === "Enter" && results[active]) {
-                e.preventDefault();
-                go(results[active], active);
-              }
-            }}
-            className="min-w-0 flex-1 bg-transparent py-2 text-base text-ink !outline-none placeholder:text-ink-muted [&::-webkit-search-cancel-button]:hidden"
-          />
-          {/* Phones: a "Cancelar" text button; desktop: a square close button. */}
-          <button
-            type="button"
-            onClick={close}
-            id="buscador-cerrar"
-            data-track="search.close"
-            className="min-h-11 shrink-0 rounded-lg px-2 text-sm text-ink-2 hover:bg-tile hover:text-ink sm:hidden"
-          >
-            Cancelar
-          </button>
-          <IconButton label="Cerrar" onClick={close} data-track="search.close" className="hidden sm:flex">
-            <X className="size-5" aria-hidden />
-          </IconButton>
-        </div>
+      {/* Search box */}
+      <div className="flex min-h-14 shrink-0 items-center gap-2 border-b border-line pr-1.5 pl-3 sm:pl-4">
+        <Search className="size-5 shrink-0 text-ink-muted" aria-hidden />
+        <input
+          ref={input}
+          type="search"
+          role="combobox"
+          aria-expanded={results.length > 0}
+          aria-controls={listId}
+          aria-autocomplete="list"
+          autoComplete="off"
+          enterKeyHint="search"
+          value={query}
+          placeholder="Funcionarios, leyes, empresas, municipios…"
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowDown") {
+              e.preventDefault();
+              setActive((i) => Math.min(i + 1, results.length - 1));
+            } else if (e.key === "ArrowUp") {
+              e.preventDefault();
+              setActive((i) => Math.max(i - 1, 0));
+            } else if (e.key === "Enter" && results[active]) {
+              e.preventDefault();
+              go(results[active], active);
+            }
+          }}
+          className="min-w-0 flex-1 bg-transparent py-2 text-base text-ink !outline-none placeholder:text-ink-muted [&::-webkit-search-cancel-button]:hidden"
+        />
+        {/* Phones: a "Cancelar" text button; desktop: a square close button. */}
+        <button
+          type="button"
+          onClick={close}
+          id="buscador-cerrar"
+          data-track="search.close"
+          className="min-h-11 shrink-0 rounded-lg px-2 text-sm text-ink-2 hover:bg-tile hover:text-ink sm:hidden"
+        >
+          Cancelar
+        </button>
+        <IconButton label="Cerrar" onClick={close} data-track="search.close" className="hidden sm:flex">
+          <X className="size-5" aria-hidden />
+        </IconButton>
+      </div>
 
-        {/* Filters by kind */}
-        {q && matches.length > 0 && (
-          <div className="flex shrink-0 gap-1.5 overflow-x-auto border-b border-line px-3 py-2 [scrollbar-width:none] sm:px-4" role="radiogroup" aria-label="Filtrar por tipo">
-            <Chip active={kind === null} onClick={() => choose(null)} label={`Todo (${matches.length})`} />
-            {GROUPS.filter((g) => counts.get(g.kind)).map((g) => (
-              <Chip key={g.kind} active={kind === g.kind} onClick={() => choose(g.kind)} label={`${g.label} (${counts.get(g.kind)})`} />
-            ))}
+      {/* Filters by kind */}
+      {q && matches.length > 0 && (
+        <div
+          className="flex shrink-0 gap-1.5 overflow-x-auto border-b border-line px-3 py-2 [scrollbar-width:none] sm:px-4"
+          role="radiogroup"
+          aria-label="Filtrar por tipo"
+        >
+          <Chip active={kind === null} onClick={() => choose(null)} label={`Todo (${matches.length})`} />
+          {GROUPS.filter((g) => counts.get(g.kind)).map((g) => (
+            <Chip key={g.kind} active={kind === g.kind} onClick={() => choose(g.kind)} label={`${g.label} (${counts.get(g.kind)})`} />
+          ))}
+        </div>
+      )}
+
+      {/* Body */}
+      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+        {!q ? (
+          <EmptyState onExample={(ex) => setQuery(ex)} onNavigate={close} />
+        ) : !entries ? (
+          <p className="px-4 py-4 text-sm text-ink-muted">Buscando…</p>
+        ) : results.length ? (
+          <div id={listId} role="listbox" aria-label="Resultados" className="py-1">
+            {groups.map((g) => {
+              const group = groupOf(g.kind);
+              const GroupIcon = group.icon;
+              const total = counts.get(g.kind) ?? 0;
+              return (
+                <div key={g.kind} role="group" aria-label={group.label} className="border-b border-line py-1 last:border-b-0">
+                  {!kind && (
+                    <div className="flex items-center gap-2 px-4 pt-2 pb-1 text-xs font-medium tracking-wide text-ink-muted uppercase">
+                      <GroupIcon className="size-3.5" aria-hidden />
+                      {group.label}
+                    </div>
+                  )}
+                  {g.items.map((e) => {
+                    const i = results.indexOf(e);
+                    return (
+                      <a
+                        key={e.p}
+                        href={e.p}
+                        role="option"
+                        aria-selected={i === active}
+                        onClick={(ev) => {
+                          ev.preventDefault();
+                          go(e, i);
+                        }}
+                        onMouseEnter={() => setActive(i)}
+                        className={`flex min-w-0 items-center gap-3 px-4 py-2.5 ${i === active ? "bg-tile" : ""}`}
+                      >
+                        {e.k === "Funcionario" && <PersonAvatar name={e.t} photo={e.i} className="size-9 text-xs" />}
+                        <span className="flex min-w-0 flex-1 flex-col">
+                          <span className={`truncate font-medium ${i === active ? "text-link" : ""}`}>{e.t}</span>
+                          <span className="truncate text-sm text-ink-muted">{e.s}</span>
+                        </span>
+                      </a>
+                    );
+                  })}
+                  {!kind && total > g.items.length && (
+                    <button
+                      type="button"
+                      onClick={() => choose(g.kind)}
+                      className="flex w-full items-center gap-1 px-4 py-2 text-sm text-link hover:underline"
+                    >
+                      Ver {total === 1 ? "el resultado" : `los ${total}`} en {group.label.toLowerCase()}{" "}
+                      <ArrowRight className="size-3.5" aria-hidden />
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="flex flex-col gap-1 px-4 py-5 text-sm">
+            <span>No encontramos nada con «{q}».</span>
+            <span className="text-ink-muted">
+              Probá con otra palabra, o{" "}
+              <Link to="/participar" search={{ tipo: "dato" }} onClick={close} className="text-link hover:underline">
+                sugerinos ese dato
+              </Link>
+              .
+            </span>
           </div>
         )}
+      </div>
 
-        {/* Body */}
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
-          {!q ? (
-            <EmptyState onExample={(ex) => setQuery(ex)} onNavigate={close} />
-          ) : !entries ? (
-            <p className="px-4 py-4 text-sm text-ink-muted">Buscando…</p>
-          ) : results.length ? (
-            <div id={listId} role="listbox" aria-label="Resultados" className="py-1">
-              {groups.map((g) => {
-                const group = groupOf(g.kind);
-                const GroupIcon = group.icon;
-                const total = counts.get(g.kind) ?? 0;
-                return (
-                  <div key={g.kind} role="group" aria-label={group.label} className="border-b border-line py-1 last:border-b-0">
-                    {!kind && (
-                      <div className="flex items-center gap-2 px-4 pt-2 pb-1 text-xs font-medium tracking-wide text-ink-muted uppercase">
-                        <GroupIcon className="size-3.5" aria-hidden />
-                        {group.label}
-                      </div>
-                    )}
-                    {g.items.map((e) => {
-                      const i = results.indexOf(e);
-                      return (
-                        <a
-                          key={e.p}
-                          href={e.p}
-                          role="option"
-                          aria-selected={i === active}
-                          onClick={(ev) => {
-                            ev.preventDefault();
-                            go(e, i);
-                          }}
-                          onMouseEnter={() => setActive(i)}
-                          className={`flex min-w-0 items-center gap-3 px-4 py-2.5 ${i === active ? "bg-tile" : ""}`}
-                        >
-                          {e.k === "Funcionario" && <PersonAvatar name={e.t} photo={e.i} className="size-9 text-xs" />}
-                          <span className="flex min-w-0 flex-1 flex-col">
-                            <span className={`truncate font-medium ${i === active ? "text-link" : ""}`}>{e.t}</span>
-                            <span className="truncate text-sm text-ink-muted">{e.s}</span>
-                          </span>
-                        </a>
-                      );
-                    })}
-                    {!kind && total > g.items.length && (
-                      <button
-                        type="button"
-                        onClick={() => choose(g.kind)}
-                        className="flex w-full items-center gap-1 px-4 py-2 text-sm text-link hover:underline"
-                      >
-                        Ver {total === 1 ? "el resultado" : `los ${total}`} en {group.label.toLowerCase()} <ArrowRight className="size-3.5" aria-hidden />
-                      </button>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <div className="flex flex-col gap-1 px-4 py-5 text-sm">
-              <span>No encontramos nada con «{q}».</span>
-              <span className="text-ink-muted">
-                Probá con otra palabra, o{" "}
-                <Link to="/participar" search={{ tipo: "dato" }} onClick={close} className="text-link hover:underline">
-                  sugerinos ese dato
-                </Link>
-                .
-              </span>
-            </div>
-          )}
-        </div>
-
-        {/* Keyboard hints (desktop) */}
-        <div className="hidden shrink-0 items-center gap-4 border-t border-line px-4 py-2 text-xs text-ink-muted sm:flex">
-          <span className="inline-flex items-center gap-1">
-            <kbd className="rounded border border-line px-1">↑</kbd>
-            <kbd className="rounded border border-line px-1">↓</kbd> moverse
-          </span>
-          <span className="inline-flex items-center gap-1">
-            <CornerDownLeft className="size-3.5" aria-hidden /> abrir
-          </span>
-          <span className="inline-flex items-center gap-1">
-            <kbd className="rounded border border-line px-1">esc</kbd> cerrar
-          </span>
-        </div>
+      {/* Keyboard hints (desktop) */}
+      <div className="hidden shrink-0 items-center gap-4 border-t border-line px-4 py-2 text-xs text-ink-muted sm:flex">
+        <span className="inline-flex items-center gap-1">
+          <kbd className="rounded border border-line px-1">↑</kbd>
+          <kbd className="rounded border border-line px-1">↓</kbd> moverse
+        </span>
+        <span className="inline-flex items-center gap-1">
+          <CornerDownLeft className="size-3.5" aria-hidden /> abrir
+        </span>
+        <span className="inline-flex items-center gap-1">
+          <kbd className="rounded border border-line px-1">esc</kbd> cerrar
+        </span>
+      </div>
     </Dialog>
   );
 }
@@ -407,7 +422,13 @@ function EmptyState({ onExample, onNavigate }: { onExample: (q: string) => void;
         <ul className="grid gap-1 sm:grid-cols-2">
           {SHORTCUTS.map(({ label, to, icon: Icon }) => (
             <li key={to}>
-              <Link to={to} onClick={onNavigate} data-track="search.shortcut" data-track-to={to} className="group flex items-center gap-3 rounded-lg px-2 py-2.5 hover:bg-tile">
+              <Link
+                to={to}
+                onClick={onNavigate}
+                data-track="search.shortcut"
+                data-track-to={to}
+                className="group flex items-center gap-3 rounded-lg px-2 py-2.5 hover:bg-tile"
+              >
                 <Icon className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
                 <span className="group-hover:text-link">{label}</span>
               </Link>

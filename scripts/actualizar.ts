@@ -61,8 +61,7 @@ async function sh(cmd: string[], cwd = ROOT, silencioso = false): Promise<{ ok: 
   return { ok, salida: out + err };
 }
 
-const cambiosEnData = async () =>
-  (await sh(["git", "status", "--porcelain", "--", "data"], ROOT, true)).salida.split("\n").filter(Boolean);
+const cambiosEnData = async () => (await sh(["git", "status", "--porcelain", "--", "data"], ROOT, true)).salida.split("\n").filter(Boolean);
 
 console.log(`\nActualización manual: ${fuentes.join(", ")}\n`);
 const antes = new Set(await cambiosEnData());

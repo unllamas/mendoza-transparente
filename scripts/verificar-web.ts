@@ -55,7 +55,9 @@ const ANCHOS = [320, 360, 375, 390, 1024, 1280];
 await Bun.spawn(["bun", "run", "data"], { cwd: WEB, stdout: "ignore" }).exited;
 // Un proveedor y un organismo reales (los slugs cambian con los datos).
 const temas = join(WEB, "public", "data", "temas");
-const proveedor = ((await Bun.file(join(temas, "proveedores.json")).json()) as { slug: string; indexable: boolean }[]).find((p) => p.indexable);
+const proveedor = ((await Bun.file(join(temas, "proveedores.json")).json()) as { slug: string; indexable: boolean }[]).find(
+  (p) => p.indexable,
+);
 const organismo = ((await Bun.file(join(temas, "organismos.json")).json()) as { slug: string }[])[0];
 if (proveedor) RUTAS.push(`/proveedores/${proveedor.slug}`);
 if (organismo) RUTAS.push(`/organismos/${organismo.slug}`);
@@ -66,7 +68,13 @@ const servidor = Bun.spawn(["bunx", "vite", "--port", String(PUERTO), "--strictP
   env: { ...process.env, MT_NO_DATA_WATCH: "1" },
 });
 for (let i = 0; i < 60; i++) {
-  if (await fetch(BASE).then((r) => r.ok, () => false)) break;
+  if (
+    await fetch(BASE).then(
+      (r) => r.ok,
+      () => false,
+    )
+  )
+    break;
   await Bun.sleep(500);
 }
 
@@ -79,7 +87,10 @@ try {
     for (const ruta of RUTAS) {
       await page.goto(BASE + ruta, { waitUntil: "networkidle" });
       await page.waitForTimeout(800);
-      const { vw, sw } = await page.evaluate(() => ({ vw: document.documentElement.clientWidth, sw: document.documentElement.scrollWidth }));
+      const { vw, sw } = await page.evaluate(() => ({
+        vw: document.documentElement.clientWidth,
+        sw: document.documentElement.scrollWidth,
+      }));
       if (sw > vw) problemas.push(`Scroll horizontal en ${ruta} a ${ancho} px (${sw} > ${vw})`);
       // Touch targets: icon-only buttons at least 44×44 px, and the header between 48 and 60 px tall.
       const touch = await page.evaluate(() => {
@@ -93,7 +104,8 @@ try {
         return { small, header };
       });
       if (touch.small.length) problemas.push(`Botones de ícono chicos en ${ruta} a ${ancho} px: ${[...new Set(touch.small)].join(", ")}`);
-      if (touch.header < 48 || touch.header > 60) problemas.push(`Header de ${Math.round(touch.header)} px en ${ruta} a ${ancho} px (debe medir entre 48 y 60)`);
+      if (touch.header < 48 || touch.header > 60)
+        problemas.push(`Header de ${Math.round(touch.header)} px en ${ruta} a ${ancho} px (debe medir entre 48 y 60)`);
     }
     await page.close();
   }
@@ -101,7 +113,8 @@ try {
   // 2. Consola, con interacciones
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
   page.on("console", (m) => {
-    if (m.type() === "error" || m.type() === "warning") problemas.push(`Consola (${m.type()}) en ${new URL(page.url()).pathname}: ${m.text().slice(0, 160)}`);
+    if (m.type() === "error" || m.type() === "warning")
+      problemas.push(`Consola (${m.type()}) en ${new URL(page.url()).pathname}: ${m.text().slice(0, 160)}`);
   });
   page.on("pageerror", (e) => problemas.push(`Error de página en ${new URL(page.url()).pathname}: ${e.message.slice(0, 160)}`));
   for (const ruta of RUTAS) {
@@ -112,7 +125,7 @@ try {
   //    (un solo scroll, el del menú).
   {
     const mobile = await browser.newPage({ viewport: { width: 375, height: 700 }, isMobile: true, hasTouch: true });
-    await mobile.goto(BASE + "/leyes", { waitUntil: "networkidle" });
+    await mobile.goto(`${BASE}/leyes`, { waitUntil: "networkidle" });
     await mobile.evaluate(() => window.scrollTo(0, 1500));
     await mobile.waitForTimeout(200);
     await mobile.getByRole("button", { name: "Abrir menú" }).click();
@@ -139,7 +152,9 @@ try {
   // 5. Floating notes of a purchase process: opening each one must not overflow the sheet.
   {
     // A process over the estimate usually carries several notes (percentage, one offer, direct purchase).
-    const senales = (await Bun.file(join(temas, "senales.json")).json()) as { senales: { id: string; casos: { tipo: string; id: string }[] }[] };
+    const senales = (await Bun.file(join(temas, "senales.json")).json()) as {
+      senales: { id: string; casos: { tipo: string; id: string }[] }[];
+    };
     const ocid = senales.senales.find((s) => s.id === "adjudicado-sobre-estimado")?.casos.find((c) => c.tipo === "proceso")?.id;
     for (const width of [320, 1280]) {
       if (!ocid) break;
@@ -150,15 +165,18 @@ try {
         await chip.click();
         await p.waitForTimeout(150);
         const overflow = await sheet.evaluate(
-          (el) => el.scrollWidth > el.clientWidth || [...el.querySelectorAll("*")].some((c) => c.scrollWidth > c.clientWidth + 1 && getComputedStyle(c).overflowX !== "visible"),
+          (el) =>
+            el.scrollWidth > el.clientWidth ||
+            [...el.querySelectorAll("*")].some((c) => c.scrollWidth > c.clientWidth + 1 && getComputedStyle(c).overflowX !== "visible"),
         );
-        if (overflow) problemas.push(`Hoja de proceso a ${width} px: abrir «${(await chip.textContent())?.trim()}» genera scroll horizontal`);
+        if (overflow)
+          problemas.push(`Hoja de proceso a ${width} px: abrir «${(await chip.textContent())?.trim()}» genera scroll horizontal`);
       }
       await p.close();
     }
   }
 
-  await page.goto(BASE + "/senales", { waitUntil: "networkidle" });
+  await page.goto(`${BASE}/senales`, { waitUntil: "networkidle" });
   for (const boton of await page.locator("main ul button").all()) {
     await boton.click();
     await page.waitForTimeout(400);
@@ -169,9 +187,9 @@ try {
     }
     await page.keyboard.press("Escape");
   }
-  await page.goto(BASE + "/funcionarios", { waitUntil: "networkidle" });
+  await page.goto(`${BASE}/funcionarios`, { waitUntil: "networkidle" });
   for (const radio of await page.getByRole("radio").all()) await radio.click();
-  await page.goto(BASE + "/datos/compras-ocds", { waitUntil: "networkidle" });
+  await page.goto(`${BASE}/datos/compras-ocds`, { waitUntil: "networkidle" });
   await page.locator("tbody tr").first().click();
   await page.waitForTimeout(1000);
 } finally {

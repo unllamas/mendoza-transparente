@@ -12,20 +12,20 @@ import { parse as parseYaml } from "yaml";
 
 import { NO_PUBLICADO_CATEGORIES } from "../src/no-publicado-categories.ts";
 import type { DataIndex, DatasetMeta, Diccionario, NoPublicado, Preview, SourceMeta } from "../src/types.ts";
-import { buildDeuda } from "./temas/deuda.ts";
+import { construirPaginas } from "./paginas.ts";
 import { buildCompras } from "./temas/compras.ts";
 import { buildCoparticipacion } from "./temas/coparticipacion.ts";
+import { buildDeuda } from "./temas/deuda.ts";
 import { buildEmpleo } from "./temas/empleo.ts";
-import { buildFuncionarios, type Correccion } from "./temas/funcionarios.ts";
 import { buildLeyes, buildMunicipios, buildOrganismosYProveedores } from "./temas/entidades.ts";
-import { buildGobierno, type AgencyTable } from "./temas/gobierno.ts";
+import { buildFuncionarios, type Correccion } from "./temas/funcionarios.ts";
+import { type AgencyTable, buildGobierno } from "./temas/gobierno.ts";
 import { buildGuide, writeSearchIndex } from "./temas/guide.ts";
 import { buildHome } from "./temas/home.ts";
 import { deflactor } from "./temas/inflacion.ts";
+import type { ResumenLey } from "./temas/leyes.ts";
 import { buildPoblacion } from "./temas/poblacion.ts";
 import { buildSenales } from "./temas/senales.ts";
-import { construirPaginas } from "./paginas.ts";
-import type { ResumenLey } from "./temas/leyes.ts";
 
 const ROOT = join(import.meta.dir, "..", "..", "..");
 const RAW_DIR = join(ROOT, "data", "raw");
@@ -138,7 +138,12 @@ function sortKey(columns: string[], dict: Diccionario | null): ((row: string[]) 
 }
 
 const slug = (s: string) =>
-  s.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "sin-dato";
+  s
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "") || "sin-dato";
 
 const DETALLE: Record<string, DatasetMeta["detalle"]> = {
   "compras-ocds/adjudicaciones.csv": "proveedor",
@@ -149,7 +154,9 @@ const datasets: DatasetMeta[] = [];
 for (const id of listDirs(PROCESSED_DIR)) {
   const dir = join(PROCESSED_DIR, id);
   const outDir = join(OUT, id);
-  for (const file of readdirSync(dir).filter((f) => f.endsWith(".csv")).sort()) {
+  for (const file of readdirSync(dir)
+    .filter((f) => f.endsWith(".csv"))
+    .sort()) {
     const path = join(dir, file);
     const [columns = [], ...rows] = parseCsv(readFileSync(path, "utf8"));
     const dictPath = join(dir, file.replace(/\.csv$/, ".meta.json"));
@@ -159,7 +166,12 @@ for (const id of listDirs(PROCESSED_DIR)) {
 
     const key = sortKey(columns, dict);
     // Orden estable: a igual fecha se respeta el orden original.
-    const sorted = key ? rows.map((r, i) => [r, i] as const).sort((a, b) => key(b[0]).localeCompare(key(a[0])) || a[1] - b[1]).map(([r]) => r) : rows;
+    const sorted = key
+      ? rows
+          .map((r, i) => [r, i] as const)
+          .sort((a, b) => key(b[0]).localeCompare(key(a[0])) || a[1] - b[1])
+          .map(([r]) => r)
+      : rows;
 
     const base = file.replace(/\.csv$/, "");
     let groups: DatasetMeta["groups"] = null;
@@ -168,12 +180,14 @@ for (const id of listDirs(PROCESSED_DIR)) {
       const byGroup = new Map<string, string[][]>();
       for (const r of sorted) byGroup.set(r[groupIdx] ?? "", [...(byGroup.get(r[groupIdx] ?? "") ?? []), r]);
       mkdirSync(join(outDir, base), { recursive: true });
-      groups = [...byGroup.keys()].sort((a, b) => a.localeCompare(b, "es")).map((value) => {
-        const groupRows = byGroup.get(value)!;
-        const preview: Preview = { columns, rows: groupRows.slice(0, PREVIEW_ROWS) };
-        writeFileSync(join(outDir, base, `${slug(value)}.json`), JSON.stringify(preview));
-        return { value, slug: slug(value), rowCount: groupRows.length };
-      });
+      groups = [...byGroup.keys()]
+        .sort((a, b) => a.localeCompare(b, "es"))
+        .map((value) => {
+          const groupRows = byGroup.get(value)!;
+          const preview: Preview = { columns, rows: groupRows.slice(0, PREVIEW_ROWS) };
+          writeFileSync(join(outDir, base, `${slug(value)}.json`), JSON.stringify(preview));
+          return { value, slug: slug(value), rowCount: groupRows.length };
+        });
     } else {
       const preview: Preview = { columns, rows: sorted.slice(0, PREVIEW_ROWS) };
       writeFileSync(join(outDir, `${base}.preview.json`), JSON.stringify(preview));
@@ -204,9 +218,7 @@ function readTable(id: string, file: string): Record<string, string>[] | null {
 const poblacionProv = readTable("poblacion", "poblacion_provincias.csv") ?? [];
 const proyeccionesMza = poblacionProv.filter((r) => r.provincia === "Mendoza" && r.tipo === "proyeccion");
 const anioActual = String(new Date().getFullYear());
-const POBLACION_MENDOZA = Number(
-  (proyeccionesMza.find((r) => r.anio === anioActual) ?? proyeccionesMza.at(-1))?.poblacion ?? 2_043_540,
-);
+const POBLACION_MENDOZA = Number((proyeccionesMza.find((r) => r.anio === anioActual) ?? proyeccionesMza.at(-1))?.poblacion ?? 2_043_540);
 
 mkdirSync(join(OUT, "temas"), { recursive: true });
 const trimestral = readTable("hacienda-deuda-stock", "deuda_total_trimestral.csv");
@@ -303,7 +315,10 @@ writeFileSync(
 
 // Entidades con página propia
 if (copaTema && poblacionTema && funcionariosTema) {
-  writeFileSync(join(OUT, "temas", "municipios.json"), JSON.stringify(buildMunicipios(copaTema, poblacionTema, funcionariosTema, readTable("municipios-personal", "personal.csv") ?? [])));
+  writeFileSync(
+    join(OUT, "temas", "municipios.json"),
+    JSON.stringify(buildMunicipios(copaTema, poblacionTema, funcionariosTema, readTable("municipios-personal", "personal.csv") ?? [])),
+  );
 }
 if (procesos && adjudicaciones) {
   const { organismos, proveedores } = buildOrganismosYProveedores(
@@ -368,7 +383,12 @@ writeFileSync(join(OUT, "index.json"), JSON.stringify(index));
 // (el HTML de cada ruta ya los trae; ver scripts/seo.ts).
 writeFileSync(
   join(OUT, "temas", "guia.json"),
-  JSON.stringify(buildGuide(OUT, (readTable("designaciones", "designaciones.csv") ?? []).filter((r) => !/martiller/i.test(r.cargo ?? "")))),
+  JSON.stringify(
+    buildGuide(
+      OUT,
+      (readTable("designaciones", "designaciones.csv") ?? []).filter((r) => !/martiller/i.test(r.cargo ?? "")),
+    ),
+  ),
 );
 const paginas = await construirPaginas(OUT);
 writeSearchIndex(paginas, OUT);

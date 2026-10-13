@@ -12,7 +12,17 @@ export function Section({ title, children }: { title: string; children: ReactNod
 }
 
 /** Header of the topic pages: icon and topic name above the title, then a short plain-language intro. */
-export function PageHeader({ icon: Icon, topic, title, children }: { icon: LucideIcon; topic: string; title: string; children: ReactNode }) {
+export function PageHeader({
+  icon: Icon,
+  topic,
+  title,
+  children,
+}: {
+  icon: LucideIcon;
+  topic: string;
+  title: string;
+  children: ReactNode;
+}) {
   return (
     <div className="flex max-w-2xl flex-col gap-3">
       <span className="flex items-center gap-2 text-sm text-ink-muted">

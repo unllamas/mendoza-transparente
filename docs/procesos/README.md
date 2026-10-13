@@ -7,6 +7,7 @@ Cómo se trabaja en Mendoza Transparente, para poder replicarlo, retomarlo o sum
 | [Agregar una fuente](agregar-una-fuente.md) | Sumar un dato público nuevo: del relevamiento al CSV y a la web |
 | [Actualización de datos](actualizacion-de-datos.md) | Cómo se mantienen al día los datos, en la nube y a mano, y qué hacer si algo falla |
 | [Datos y archivo](datos-y-archivo.md) | Reglas de `data/`: archivo crudo, procesados, diccionario y contenido curado |
+| [Arquitectura](arquitectura.md) | Dónde va cada cosa en el monorepo y las reglas que se controlan solas (Biome, dependency-cruiser, hooks, CI) |
 | [La web](web.md) | Cómo está armada `apps/web`, cómo se suma una página y cómo se verifica |
 | [Diseño](diseno.md) | Reglas de interfaz que no se negocian |
 | [Metodología y criterios](metodologia.md) | Cómo se calculan los números y cómo se presentan los hallazgos |

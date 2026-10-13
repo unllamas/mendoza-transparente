@@ -1,4 +1,16 @@
-import { Banknote, Building2, FileSpreadsheet, HeartPulse, Landmark, MapPin, Receipt, ShoppingCart, UsersRound, Vote, type LucideIcon } from "lucide-react";
+import {
+  Banknote,
+  Building2,
+  FileSpreadsheet,
+  HeartPulse,
+  Landmark,
+  type LucideIcon,
+  MapPin,
+  Receipt,
+  ShoppingCart,
+  UsersRound,
+  Vote,
+} from "lucide-react";
 
 /** Categories for "Lo que no se publica". Every entry in data/curado/no-publicado.yaml has one `categoria`. */
 export const NO_PUBLICADO_CATEGORIES = {
@@ -7,7 +19,11 @@ export const NO_PUBLICADO_CATEGORIES = {
   presupuesto: { label: "Presupuesto y cuentas", description: "En qué se gasta la plata y cómo se rinde cuentas.", icon: FileSpreadsheet },
   impuestos: { label: "Impuestos y recaudación", description: "Cuánto se recauda, de quién y qué exenciones hay.", icon: Receipt },
   compras: { label: "Compras y contratos", description: "Qué compra el Estado, a quién y con qué contratos.", icon: ShoppingCart },
-  empresas: { label: "Empresas y fondos del Estado", description: "Sociedades, fideicomisos y fondos fuera del presupuesto.", icon: Banknote },
+  empresas: {
+    label: "Empresas y fondos del Estado",
+    description: "Sociedades, fideicomisos y fondos fuera del presupuesto.",
+    icon: Banknote,
+  },
   legislatura: { label: "Legislatura", description: "Qué hacen, cómo votan y cuánto cuestan los legisladores.", icon: Landmark },
   elecciones: { label: "Elecciones y campañas", description: "Quién financia la política.", icon: Vote },
   servicios: { label: "Salud, seguridad y servicios", description: "Cómo funcionan los servicios que usa la gente.", icon: HeartPulse },
@@ -46,6 +62,12 @@ export const NO_PUBLICADO_THEMES = [
     icon: HeartPulse,
     categories: ["servicios", "municipios"],
   },
-] as const satisfies readonly { id: string; label: string; description: string; icon: LucideIcon; categories: readonly NoPublicadoCategory[] }[];
+] as const satisfies readonly {
+  id: string;
+  label: string;
+  description: string;
+  icon: LucideIcon;
+  categories: readonly NoPublicadoCategory[];
+}[];
 
 export type NoPublicadoTheme = (typeof NO_PUBLICADO_THEMES)[number]["id"];

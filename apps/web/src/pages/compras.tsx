@@ -1,22 +1,21 @@
-import { cn } from "@mt/ui/lib/utils";
-import { buttonVariants } from "@mt/ui/components/button";
 import { Alert } from "@mt/ui/components/alert";
+import { buttonVariants } from "@mt/ui/components/button";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
+import { cn } from "@mt/ui/lib/utils";
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { Building2, ChevronRight, FileText, Landmark, Percent, Receipt, Users2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-
-import { useUrlText } from "../url-state.ts";
-import { formatMoneda } from "../celdas.ts";
-import { ColumnChart } from "../charts/column-chart.tsx";
-import { FuentesOficiales } from "../components/official-sources.tsx";
-import { formatDate, formatNumber, limpiarOrganismo, normalizeText } from "../lib.ts";
-import { slugProveedor } from "../slug.ts";
-import { ListSearch } from "../components/list-search.tsx";
-import { Breadcrumbs } from "../components/breadcrumbs.tsx";
-import { useDetail } from "../components/detail-sheet.tsx";
-import { Proveedor } from "../components/purchase-detail.tsx";
+import { formatMoneda } from "@/celdas.ts";
+import { ColumnChart } from "@/charts/column-chart.tsx";
+import { Breadcrumbs } from "@/components/breadcrumbs.tsx";
+import { useDetail } from "@/components/detail-sheet.tsx";
+import { ListSearch } from "@/components/list-search.tsx";
+import { FuentesOficiales } from "@/components/official-sources.tsx";
+import { Proveedor } from "@/components/purchase-detail.tsx";
+import { formatDate, formatNumber, limpiarOrganismo, normalizeText } from "@/lib.ts";
+import { slugProveedor } from "@/slug.ts";
+import { useUrlText } from "@/url-state.ts";
 
 const FUENTES = ["compras-ocds", "proveedores"];
 const PAGINA = 40;
@@ -49,14 +48,28 @@ export function ProveedoresPage() {
       </PageHeader>
       <FuentesOficiales ids={FUENTES} />
       <div className="flex flex-col gap-4">
-        <ListSearch value={q} onChange={(v) => { setQ(v); setMostrar(PAGINA); }} placeholder="Buscar por nombre o CUIT" label="Buscar proveedor" />
+        <ListSearch
+          value={q}
+          onChange={(v) => {
+            setQ(v);
+            setMostrar(PAGINA);
+          }}
+          placeholder="Buscar por nombre o CUIT"
+          label="Buscar proveedor"
+        />
         <p className="text-sm text-ink-muted">{formatNumber(visibles.length)} proveedores</p>
         <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
           {visibles.slice(0, mostrar).map((p) => (
             <li key={p.slug}>
-              <Link to="/proveedores/$slug" params={{ slug: p.slug }} className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50 sm:px-5">
+              <Link
+                to="/proveedores/$slug"
+                params={{ slug: p.slug }}
+                className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50 sm:px-5"
+              >
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                  <span className="truncate font-medium group-hover:text-link" title={p.nombre}>{p.nombre}</span>
+                  <span className="truncate font-medium group-hover:text-link" title={p.nombre}>
+                    {p.nombre}
+                  </span>
                   <span className="truncate text-sm text-ink-muted">
                     {formatNumber(p.procesos)} {p.procesos === 1 ? "proceso" : "procesos"}
                     {p.localidad ? ` · ${p.localidad}` : ""}
@@ -126,13 +139,27 @@ export function OrganismosPage() {
       </PageHeader>
       <FuentesOficiales ids={FUENTES} />
       <div className="flex flex-col gap-4">
-        <ListSearch value={q} onChange={(v) => { setQ(v); setMostrar(PAGINA); }} placeholder="Buscar organismo" label="Buscar organismo" />
+        <ListSearch
+          value={q}
+          onChange={(v) => {
+            setQ(v);
+            setMostrar(PAGINA);
+          }}
+          placeholder="Buscar organismo"
+          label="Buscar organismo"
+        />
         <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
           {visibles.slice(0, mostrar).map((o) => (
             <li key={o.slug}>
-              <Link to="/organismos/$slug" params={{ slug: o.slug }} className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50 sm:px-5">
+              <Link
+                to="/organismos/$slug"
+                params={{ slug: o.slug }}
+                className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50 sm:px-5"
+              >
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                  <span className="truncate font-medium group-hover:text-link" title={limpiarOrganismo(o.nombre)}>{limpiarOrganismo(o.nombre)}</span>
+                  <span className="truncate font-medium group-hover:text-link" title={limpiarOrganismo(o.nombre)}>
+                    {limpiarOrganismo(o.nombre)}
+                  </span>
                   <span className="truncate text-sm text-ink-muted">
                     {formatNumber(o.procesos)} procesos · {pct(o.pctDirecta)} directa
                   </span>
@@ -207,7 +234,9 @@ export function OrganismoPage() {
             const fila = (
               <>
                 <span className="flex items-baseline justify-between gap-3">
-                  <span className="min-w-0 truncate group-hover:text-link" title={p.nombre}>{p.nombre}</span>
+                  <span className="min-w-0 truncate group-hover:text-link" title={p.nombre}>
+                    {p.nombre}
+                  </span>
                   <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(p.monto, "ARS")}</span>
                 </span>
                 <span className="flex items-center gap-2">
@@ -240,9 +269,15 @@ export function OrganismoPage() {
         <ul className="flex flex-col divide-y divide-line">
           {o.recientes.map((r) => (
             <li key={r.ocid}>
-              <button type="button" onClick={() => detail.open("proceso", r.ocid)} className="group flex w-full items-center gap-3 py-2.5 text-left">
+              <button
+                type="button"
+                onClick={() => detail.open("proceso", r.ocid)}
+                className="group flex w-full items-center gap-3 py-2.5 text-left"
+              >
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                  <span className="truncate text-sm group-hover:text-link" title={r.titulo}>{r.titulo || "Sin título"}</span>
+                  <span className="truncate text-sm group-hover:text-link" title={r.titulo}>
+                    {r.titulo || "Sin título"}
+                  </span>
                   <span className="truncate text-xs text-ink-muted">
                     {r.fecha ? `${formatDate(r.fecha)} · ` : ""}
                     {r.metodo}

@@ -24,10 +24,10 @@
  * completar acreedor_grupo y acreedor (BID, BIRF dentro de Multilateral).
  */
 
-import { unzipSync } from "fflate";
+import { fetchAndArchive, get, latestRaw, type Row, readRaw, writeProcessed } from "@mt/core";
 import * as cheerio from "cheerio";
+import { unzipSync } from "fflate";
 import * as XLSX from "xlsx";
-import { fetchAndArchive, get, latestRaw, readRaw, writeProcessed, type Row } from "@mt/core";
 
 const SOURCE = "hacienda-deuda-stock";
 const PAGES = [
@@ -39,7 +39,10 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 type Cell = unknown;
 type Grid = Cell[][];
 
-const clean = (v: Cell): string => String(v ?? "").replace(/\s+/g, " ").trim();
+const clean = (v: Cell): string =>
+  String(v ?? "")
+    .replace(/\s+/g, " ")
+    .trim();
 const num = (v: Cell): number | null => (typeof v === "number" && Number.isFinite(v) ? v : null);
 
 /** Serial de Excel a YYYY-MM-DD. Si ya es texto, lo devuelve tal cual. */
@@ -76,7 +79,15 @@ const normMoneda = (s: string): string => {
   if (k === "pesos") return "Pesos";
   return s;
 };
-const FREC: Record<string, string> = { monthly: "Mensual", quarterly: "Trimestral", "semi annual": "Semestral", "semi-annual": "Semestral", annual: "Anual", "zero coupon": "Cupón cero", bullet: "Al vencimiento" };
+const FREC: Record<string, string> = {
+  monthly: "Mensual",
+  quarterly: "Trimestral",
+  "semi annual": "Semestral",
+  "semi-annual": "Semestral",
+  annual: "Anual",
+  "zero coupon": "Cupón cero",
+  bullet: "Al vencimiento",
+};
 const normFrec = (s: string): string => {
   const t = s.replace(/\s+/g, " ").trim();
   return FREC[t.toLowerCase()] ?? t;
@@ -96,7 +107,25 @@ function tasaTexto(v: Cell): string {
 
 interface Layout {
   header: number;
-  cols: Partial<Record<"acreedor" | "id" | "moneda" | "origen" | "ars" | "usd" | "garantia" | "inicio" | "tasa" | "duracion" | "frecuencia" | "vto" | "pago" | "tipo", number>>;
+  cols: Partial<
+    Record<
+      | "acreedor"
+      | "id"
+      | "moneda"
+      | "origen"
+      | "ars"
+      | "usd"
+      | "garantia"
+      | "inicio"
+      | "tasa"
+      | "duracion"
+      | "frecuencia"
+      | "vto"
+      | "pago"
+      | "tipo",
+      number
+    >
+  >;
 }
 
 function findLayout(g: Grid): Layout {
@@ -172,7 +201,11 @@ function parseStock(wb: XLSX.WorkBook, archivo: string): Corte {
       continue;
     }
     if (/^(tipo de cambio|exchange rate|exchage rate)/i.test(label)) {
-      tipoCambio = r.slice(cols.acreedor! + 1).map(num).find((v) => v !== null && v > 0) ?? null;
+      tipoCambio =
+        r
+          .slice(cols.acreedor! + 1)
+          .map(num)
+          .find((v) => v !== null && v > 0) ?? null;
       continue;
     }
     if (/^operaciones financieras no consolidadas/i.test(label)) {
@@ -314,14 +347,32 @@ export async function run(_args: string[]): Promise<void> {
     cortes.set(corte.fecha, { corte, wb });
     const sum = consolidado(corte);
     const dif = corte.totalUsd === null ? "sin total" : `dif ${(sum - corte.totalUsd).toFixed(2)}`;
-    console.log(`  ${corte.fecha}: ${corte.rows.length} instrumentos, suma USD ${sum.toFixed(1)} (total tablero ${corte.totalUsd?.toFixed(1)}; ${dif}) [${name}]`);
+    console.log(
+      `  ${corte.fecha}: ${corte.rows.length} instrumentos, suma USD ${sum.toFixed(1)} (total tablero ${corte.totalUsd?.toFixed(1)}; ${dif}) [${name}]`,
+    );
   }
 
   const fechas = [...cortes.keys()].sort();
   const stock = fechas.flatMap((f) => cortes.get(f)!.corte.rows);
   const cols = [
-    "fecha_corte", "consolidada", "instrumento", "id_instrumento", "acreedor", "acreedor_grupo", "moneda", "saldo_moneda_origen", "saldo_usd",
-    "tasa", "vencimiento", "fecha_inicio", "duracion_meses", "frecuencia_pago", "garantia", "forma_pago", "formato", "archivo_origen",
+    "fecha_corte",
+    "consolidada",
+    "instrumento",
+    "id_instrumento",
+    "acreedor",
+    "acreedor_grupo",
+    "moneda",
+    "saldo_moneda_origen",
+    "saldo_usd",
+    "tasa",
+    "vencimiento",
+    "fecha_inicio",
+    "duracion_meses",
+    "frecuencia_pago",
+    "garantia",
+    "forma_pago",
+    "formato",
+    "archivo_origen",
   ];
   const p1 = await writeProcessed(SOURCE, "deuda_stock.csv", stock, cols);
 
@@ -334,9 +385,19 @@ export async function run(_args: string[]): Promise<void> {
     return { ...r, fecha_corte_tablero: c?.fecha ?? null, stock_instrumentos_usd_mill: c ? +consolidado(c).toFixed(3) : null };
   });
   const p2 = await writeProcessed(SOURCE, "deuda_total_trimestral.csv", serie, [
-    "fecha_corte", "deuda_consolidada_ars_mill", "deuda_flotante_ars_mill", "deuda_total_ars_mill", "tipo_cambio_com3500",
-    "deuda_consolidada_usd_mill", "deuda_total_usd_mill", "deuda_flotante_descentralizadas_ars_mill", "factor_ipc",
-    "deuda_total_ars_reales_mill", "deuda_total_sobre_pbg", "fecha_corte_tablero", "stock_instrumentos_usd_mill",
+    "fecha_corte",
+    "deuda_consolidada_ars_mill",
+    "deuda_flotante_ars_mill",
+    "deuda_total_ars_mill",
+    "tipo_cambio_com3500",
+    "deuda_consolidada_usd_mill",
+    "deuda_total_usd_mill",
+    "deuda_flotante_descentralizadas_ars_mill",
+    "factor_ipc",
+    "deuda_total_ars_reales_mill",
+    "deuda_total_sobre_pbg",
+    "fecha_corte_tablero",
+    "stock_instrumentos_usd_mill",
   ]);
   console.log(`${stock.length} filas (${fechas.length} cortes, ${fechas[0]} a ${fechas.at(-1)}) -> ${p1}\n${serie.length} filas -> ${p2}`);
 }

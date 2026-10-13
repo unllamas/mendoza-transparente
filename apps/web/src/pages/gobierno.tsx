@@ -1,37 +1,62 @@
-import { cardVariants, tileVariants } from "@mt/ui/components/card";
-import { cn } from "@mt/ui/lib/utils";
-import { buttonVariants } from "@mt/ui/components/button";
 import { Alert } from "@mt/ui/components/alert";
 import { PersonAvatar } from "@mt/ui/components/avatar";
+import { buttonVariants } from "@mt/ui/components/button";
+import { cardVariants, tileVariants } from "@mt/ui/components/card";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
+import { cn } from "@mt/ui/lib/utils";
 import { getRouteApi, Link } from "@tanstack/react-router";
-import { Building2, ChevronRight, Search, Coins, ExternalLink, FileSignature, ScrollText, ShoppingCart, UserRound, UsersRound } from "lucide-react";
+import {
+  Building2,
+  ChevronRight,
+  Coins,
+  ExternalLink,
+  FileSignature,
+  ScrollText,
+  Search,
+  ShoppingCart,
+  UserRound,
+  UsersRound,
+} from "lucide-react";
 
-import { ColumnChart } from "../charts/column-chart.tsx";
-import { LineChart } from "../charts/line-chart.tsx";
-import { GOBIERNOS } from "../gobiernos.ts";
-import { FuentesOficiales } from "../components/official-sources.tsx";
-import { formatDate, formatNumber } from "../lib.ts";
-import type { AgencyDetail, AgencySummary, GobiernoOverview } from "../types.ts";
-import { Breadcrumbs } from "../components/breadcrumbs.tsx";
+import { ColumnChart } from "@/charts/column-chart.tsx";
+import { LineChart } from "@/charts/line-chart.tsx";
+import { Breadcrumbs } from "@/components/breadcrumbs.tsx";
+import { FuentesOficiales } from "@/components/official-sources.tsx";
+import { GOBIERNOS } from "@/gobiernos.ts";
+import { formatDate, formatNumber } from "@/lib.ts";
+import type { AgencyDetail, AgencySummary, GobiernoOverview } from "@/types.ts";
 
 const SOURCES = ["lrf-personal", "etica-publica", "compras-ocds", "designaciones"];
 const listApi = getRouteApi("/gobierno");
 const detailApi = getRouteApi("/gobierno/$slug");
 
 const GROUPS = [
-  { id: "gobernacion", title: "Gobernación", description: "El gobernador, la vicegobernación y las unidades que dependen directamente de ellos." },
+  {
+    id: "gobernacion",
+    title: "Gobernación",
+    description: "El gobernador, la vicegobernación y las unidades que dependen directamente de ellos.",
+  },
   { id: "ministerio", title: "Ministerios", description: "Los siete ministerios que fija la Ley 9501." },
   { id: "organismo_control", title: "Organismos de control", description: "Controlan las cuentas y la legalidad de los actos del Estado." },
-  { id: "ente", title: "Entes, fuerzas y organismos descentralizados", description: "Tienen presupuesto o conducción propios, pero dependen de un ministerio." },
+  {
+    id: "ente",
+    title: "Entes, fuerzas y organismos descentralizados",
+    description: "Tienen presupuesto o conducción propios, pero dependen de un ministerio.",
+  },
   { id: "empresa", title: "Empresas y sociedades del Estado", description: "Sociedades con participación de la Provincia." },
   { id: "poder", title: "Otros poderes", description: "Legislatura, Poder Judicial y ministerios públicos." },
 ] as const;
 const GOVERNORSHIP = new Set(["gobernacion", "vicegobernacion", "unidad-promendoza"]);
 const POWERS = new Set(["poder-legislativo", "poder-judicial", "ministerio-publico-fiscal", "ministerio-publico-de-la-defensa"]);
 const groupOf = (a: AgencySummary): (typeof GROUPS)[number]["id"] =>
-  GOVERNORSHIP.has(a.slug) ? "gobernacion" : POWERS.has(a.slug) ? "poder" : a.kind === "ministerio" || a.kind === "organismo_control" || a.kind === "empresa" ? a.kind : "ente";
+  GOVERNORSHIP.has(a.slug)
+    ? "gobernacion"
+    : POWERS.has(a.slug)
+      ? "poder"
+      : a.kind === "ministerio" || a.kind === "organismo_control" || a.kind === "empresa"
+        ? a.kind
+        : "ente";
 
 const billions = (v: number) => `$ ${formatNumber(Math.round(v / 1e9))} mil M`;
 const millionsOrBillions = (v: number) => (v >= 1e9 ? billions(v) : `$ ${formatNumber(Math.round(v / 1e6))} M`);
@@ -50,12 +75,17 @@ export function GobiernoPage() {
       </PageHeader>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        <StatTile icon={UsersRound} label="Cargos de planta en el Estado provincial" value={formatNumber(totalStaff)} note={period ? `${periodLabel(period)}, sin contar la Legislatura` : undefined} />
+        <StatTile
+          icon={UsersRound}
+          label="Cargos de planta en el Estado provincial"
+          value={formatNumber(totalStaff)}
+          note={period ? `${periodLabel(period)}, sin contar la Legislatura` : undefined}
+        />
         <StatTile icon={Coins} label="Costo anual del personal" value={billions(totalCost)} note="Último año completo, en pesos de hoy" />
       </div>
       <Alert variant="note">
-        Son cargos, no personas: una persona puede ocupar más de un cargo y los docentes suman además horas cátedra. Mendoza no
-        publica la nómina con nombres.{" "}
+        Son cargos, no personas: una persona puede ocupar más de un cargo y los docentes suman además horas cátedra. Mendoza no publica la
+        nómina con nombres.{" "}
         <Link to="/no-publicado" search={{ dato: "nomina-sueldos" } as never} className="font-medium text-link hover:underline">
           Pedila ›
         </Link>
@@ -142,7 +172,12 @@ export function AgencyPage() {
       {a.head && <HeadCard head={a.head} />}
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <StatTile icon={UsersRound} label="Cargos de planta" value={a.staff ? formatNumber(a.staff) : "—"} note={a.staffPeriod ? periodLabel(a.staffPeriod) : "No figura en el informe"} />
+        <StatTile
+          icon={UsersRound}
+          label="Cargos de planta"
+          value={a.staff ? formatNumber(a.staff) : "—"}
+          note={a.staffPeriod ? periodLabel(a.staffPeriod) : "No figura en el informe"}
+        />
         <StatTile
           icon={Coins}
           label="Costo anual del personal"
@@ -164,8 +199,8 @@ export function AgencyPage() {
       </div>
       {(a.staff || a.annualCostReal) && (
         <Alert variant="note">
-          Son cargos liquidados según el informe trimestral de Responsabilidad Fiscal, no personas. El costo es lo liquidado en el
-          año e incluye el aguinaldo, por eso el promedio mensual es aproximado.
+          Son cargos liquidados según el informe trimestral de Responsabilidad Fiscal, no personas. El costo es lo liquidado en el año e
+          incluye el aguinaldo, por eso el promedio mensual es aproximado.
         </Alert>
       )}
 
@@ -195,7 +230,11 @@ export function AgencyPage() {
       {yearly.length > 1 && (
         <Section title="Cargos de planta por año">
           <ColumnChart
-            columnas={yearly.map((p) => ({ etiqueta: p.period.slice(0, 4), valor: p.permanent + p.temporary, detalle: `${formatNumber(p.contracts)} contratados` }))}
+            columnas={yearly.map((p) => ({
+              etiqueta: p.period.slice(0, 4),
+              valor: p.permanent + p.temporary,
+              detalle: `${formatNumber(p.contracts)} contratados`,
+            }))}
             formatValue={(v) => `${formatNumber(v)} cargos`}
             ariaLabel={`Cargos de planta de ${a.name} por año`}
           />
@@ -206,11 +245,17 @@ export function AgencyPage() {
       {a.costByYear.length > 1 && (
         <Section title={`Costo del personal por año, en pesos de ${a.realReference ?? "hoy"}`}>
           <ColumnChart
-            columnas={a.costByYear.map((c) => ({ etiqueta: c.complete ? String(c.year) : `${c.year}*`, valor: c.real, detalle: `${billions(c.nominal)} nominales` }))}
+            columnas={a.costByYear.map((c) => ({
+              etiqueta: c.complete ? String(c.year) : `${c.year}*`,
+              valor: c.real,
+              detalle: `${billions(c.nominal)} nominales`,
+            }))}
             formatValue={millionsOrBillions}
             ariaLabel={`Costo del personal de ${a.name} por año`}
           />
-          {a.costByYear.some((c) => !c.complete) && <p className="text-xs text-ink-muted">* Año en curso: acumulado hasta el último trimestre publicado.</p>}
+          {a.costByYear.some((c) => !c.complete) && (
+            <p className="text-xs text-ink-muted">* Año en curso: acumulado hasta el último trimestre publicado.</p>
+          )}
         </Section>
       )}
 
@@ -244,7 +289,9 @@ export function AgencyPage() {
                     <span className={`truncate font-medium ${t.path ? "group-hover:text-link" : ""}`}>{t.name}</span>
                     <span className="truncate text-sm text-ink-muted">{t.role}</span>
                   </span>
-                  {t.since && <span className="hidden shrink-0 text-sm whitespace-nowrap text-ink-muted sm:block">desde {formatDate(t.since)}</span>}
+                  {t.since && (
+                    <span className="hidden shrink-0 text-sm whitespace-nowrap text-ink-muted sm:block">desde {formatDate(t.since)}</span>
+                  )}
                   {t.path && <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />}
                 </>
               );
@@ -261,7 +308,12 @@ export function AgencyPage() {
               );
             })}
           </ul>
-          <a href="https://eticapublica.mendoza.gov.ar/declaraciones" target="_blank" rel="noreferrer" className="inline-flex w-fit items-center gap-1 text-sm text-link hover:underline">
+          <a
+            href="https://eticapublica.mendoza.gov.ar/declaraciones"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex w-fit items-center gap-1 text-sm text-link hover:underline"
+          >
             Ver sus declaraciones juradas en Ética Pública <ExternalLink className="size-3.5" aria-hidden />
           </a>
         </Section>
@@ -274,11 +326,18 @@ export function AgencyPage() {
           <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
             {a.appointments.map((d) => (
               <li key={`${d.url}-${d.person}`}>
-                <a href={d.url} target="_blank" rel="noreferrer" className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50 sm:px-5">
+                <a
+                  href={d.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50 sm:px-5"
+                >
                   <PersonAvatar name={d.person} photo={d.photo} className="size-10 text-xs" />
                   <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                     <span className="truncate font-medium group-hover:text-link">{d.person}</span>
-                    <span className="truncate text-sm text-ink-muted">{[ACTIONS[d.action] ?? d.action, d.role, d.unit].filter(Boolean).join(" · ")}</span>
+                    <span className="truncate text-sm text-ink-muted">
+                      {[ACTIONS[d.action] ?? d.action, d.role, d.unit].filter(Boolean).join(" · ")}
+                    </span>
                   </span>
                   <span className="shrink-0 text-sm whitespace-nowrap text-ink-muted">{formatDate(d.date)}</span>
                   <ExternalLink className="size-3.5 shrink-0 text-link" aria-hidden />
@@ -364,7 +423,12 @@ function Purchases({ agency: a }: { agency: AgencyDetail }) {
   return (
     <Section title="Qué compra">
       <div className="grid gap-3 sm:grid-cols-3">
-        <StatTile icon={ShoppingCart} label="Procesos de compra" value={formatNumber(p.processes)} note={`${billions(p.total)} adjudicados en total`} />
+        <StatTile
+          icon={ShoppingCart}
+          label="Procesos de compra"
+          value={formatNumber(p.processes)}
+          note={`${billions(p.total)} adjudicados en total`}
+        />
         <StatTile label="Por contratación directa" value={`${Math.round(p.direct)} %`} note="De los procesos" />
         <StatTile label="Con una sola oferta" value={`${Math.round(p.singleBid)} %`} note="De los que informan ofertas" />
       </div>
@@ -381,7 +445,11 @@ function Purchases({ agency: a }: { agency: AgencyDetail }) {
             return (
               <li key={s.name}>
                 {s.slug ? (
-                  <Link to="/proveedores/$slug" params={{ slug: s.slug }} className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50 sm:px-5">
+                  <Link
+                    to="/proveedores/$slug"
+                    params={{ slug: s.slug }}
+                    className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50 sm:px-5"
+                  >
                     {content}
                   </Link>
                 ) : (
@@ -452,7 +520,10 @@ function Overview({ overview: o }: { overview: GobiernoOverview }) {
   const first = o.series[0]!;
   const last = o.series.at(-1)!;
   const up = o.changes.filter((c) => c.pct >= 1).slice(0, 5);
-  const down = [...o.changes].reverse().filter((c) => c.pct <= -1).slice(0, 5);
+  const down = [...o.changes]
+    .reverse()
+    .filter((c) => c.pct <= -1)
+    .slice(0, 5);
   const yearEnds = o.series.filter((p, i, all) => p.period.endsWith("-T4") || i === all.length - 1);
   return (
     <>
@@ -479,8 +550,8 @@ function Overview({ overview: o }: { overview: GobiernoOverview }) {
 
       <Section title="Para mirar de cerca">
         <p className="-mt-2 text-sm text-ink-muted text-pretty">
-          Cambios en la planta desde el inicio de la gestión actual ({periodLabel(o.baseline)}) y organismos con más contratados.
-          No son irregularidades: son preguntas que cada organismo podría explicar.
+          Cambios en la planta desde el inicio de la gestión actual ({periodLabel(o.baseline)}) y organismos con más contratados. No son
+          irregularidades: son preguntas que cada organismo podría explicar.
         </p>
         <div className="grid gap-6 lg:grid-cols-2">
           <ChangeList title="Los que más cargos sumaron" items={up} />
@@ -492,7 +563,11 @@ function Overview({ overview: o }: { overview: GobiernoOverview }) {
             <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
               {o.contractShare.map((c) => (
                 <li key={c.slug}>
-                  <Link to="/gobierno/$slug" params={{ slug: c.slug }} className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50 sm:px-5">
+                  <Link
+                    to="/gobierno/$slug"
+                    params={{ slug: c.slug }}
+                    className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50 sm:px-5"
+                  >
                     <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                       <span className="truncate group-hover:text-link">{c.name}</span>
                       <span className="truncate text-sm text-ink-muted">
@@ -509,8 +584,8 @@ function Overview({ overview: o }: { overview: GobiernoOverview }) {
         )}
         <p className="flex items-start gap-2 text-xs text-ink-muted">
           <Search className="mt-0.5 size-3.5 shrink-0" aria-hidden />
-          Los marcados con * cambiaron de áreas entre gestiones, así que la comparación no es exacta: parte de la diferencia puede
-          ser un traspaso a otro organismo.
+          Los marcados con * cambiaron de áreas entre gestiones, así que la comparación no es exacta: parte de la diferencia puede ser un
+          traspaso a otro organismo.
         </p>
       </Section>
     </>

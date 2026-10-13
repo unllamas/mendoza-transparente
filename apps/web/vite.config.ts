@@ -103,6 +103,8 @@ function devApi(): Plugin {
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), liveData(), devApi()],
+  // `@/…` is apps/web/src (same alias as tsconfig.json): imports do not break when a file moves.
+  resolve: { alias: { "@": join(import.meta.dirname, "src") } },
   // Source maps: the repo is public, and they let anyone (and Lighthouse) read the production code.
   build: { sourcemap: true },
   server: {

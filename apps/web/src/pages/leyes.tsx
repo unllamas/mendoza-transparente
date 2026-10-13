@@ -1,18 +1,17 @@
-import { tileVariants } from "@mt/ui/components/card";
-import { cn } from "@mt/ui/lib/utils";
-import { buttonVariants } from "@mt/ui/components/button";
 import { PersonAvatar } from "@mt/ui/components/avatar";
+import { buttonVariants } from "@mt/ui/components/button";
+import { tileVariants } from "@mt/ui/components/card";
 import { PageHeader } from "@mt/ui/components/section";
+import { cn } from "@mt/ui/lib/utils";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { BadgeCheck, ChevronDown, ChevronRight, CircleHelp, ExternalLink, FileText, MapPin, Scale, Sparkles, Users } from "lucide-react";
 import { useMemo, useState } from "react";
-
-import { useUrlText } from "../url-state.ts";
-import { FuentesOficiales } from "../components/official-sources.tsx";
-import { formatDate, normalizeText } from "../lib.ts";
-import type { LeyDetalle } from "../types.ts";
-import { ListSearch } from "../components/list-search.tsx";
-import { Breadcrumbs } from "../components/breadcrumbs.tsx";
+import { Breadcrumbs } from "@/components/breadcrumbs.tsx";
+import { ListSearch } from "@/components/list-search.tsx";
+import { FuentesOficiales } from "@/components/official-sources.tsx";
+import { formatDate, normalizeText } from "@/lib.ts";
+import type { LeyDetalle } from "@/types.ts";
+import { useUrlText } from "@/url-state.ts";
 
 const listaRoute = getRouteApi("/leyes");
 const detalleRoute = getRouteApi("/leyes/$numero");
@@ -34,15 +33,31 @@ export function LeyesPage() {
       </PageHeader>
       <FuentesOficiales ids={["boletin-oficial"]} />
       <div className="flex flex-col gap-4">
-        <ListSearch value={q} onChange={(v) => { setQ(v); setMostrar(PAGINA); }} placeholder="Buscar por número o palabra" label="Buscar ley" />
-        <p className="text-sm text-ink-muted">{visibles.length} {visibles.length === 1 ? "ley" : "leyes"}</p>
+        <ListSearch
+          value={q}
+          onChange={(v) => {
+            setQ(v);
+            setMostrar(PAGINA);
+          }}
+          placeholder="Buscar por número o palabra"
+          label="Buscar ley"
+        />
+        <p className="text-sm text-ink-muted">
+          {visibles.length} {visibles.length === 1 ? "ley" : "leyes"}
+        </p>
         <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
           {visibles.slice(0, mostrar).map((l) => (
             <li key={l.numero}>
-              <Link to="/leyes/$numero" params={{ numero: l.numero }} className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50 sm:px-5">
+              <Link
+                to="/leyes/$numero"
+                params={{ numero: l.numero }}
+                className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50 sm:px-5"
+              >
                 <span className="w-14 shrink-0 font-medium tabular-nums">{l.numero}</span>
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                  <span className="truncate group-hover:text-link" title={l.titulo}>{l.titulo}</span>
+                  <span className="truncate group-hover:text-link" title={l.titulo}>
+                    {l.titulo}
+                  </span>
                   <span className="truncate text-sm whitespace-nowrap text-ink-muted">
                     {[l.tema, l.fecha && formatDate(l.fecha)].filter(Boolean).join(" · ")}
                   </span>
@@ -53,7 +68,11 @@ export function LeyesPage() {
           ))}
         </ul>
         {mostrar < visibles.length && (
-          <button type="button" onClick={() => setMostrar((n) => n + PAGINA)} className={cn(buttonVariants({ variant: "secondary" }), "w-fit")}>
+          <button
+            type="button"
+            onClick={() => setMostrar((n) => n + PAGINA)}
+            className={cn(buttonVariants({ variant: "secondary" }), "w-fit")}
+          >
             Ver más
           </button>
         )}
@@ -162,7 +181,11 @@ export function LeyPage() {
               </div>
             )}
             <p className="flex items-start gap-2 text-xs text-ink-muted">
-              {ley.resumen.revisado ? <BadgeCheck className="mt-0.5 size-3.5 shrink-0" aria-hidden /> : <Sparkles className="mt-0.5 size-3.5 shrink-0" aria-hidden />}
+              {ley.resumen.revisado ? (
+                <BadgeCheck className="mt-0.5 size-3.5 shrink-0" aria-hidden />
+              ) : (
+                <Sparkles className="mt-0.5 size-3.5 shrink-0" aria-hidden />
+              )}
               {ley.resumen.revisado
                 ? `Resumen revisado a mano el ${formatDate(ley.resumen.revisado)}. Ante cualquier duda, vale el texto oficial.`
                 : "Resumen hecho con IA a partir del texto oficial. Ante cualquier duda, vale el texto oficial."}
@@ -170,9 +193,7 @@ export function LeyPage() {
           </>
         ) : (
           <>
-            {primerArticulo?.tipo === "articulo" && (
-              <p className="leading-relaxed text-pretty text-ink">{primerArticulo.parrafos[0]}</p>
-            )}
+            {primerArticulo?.tipo === "articulo" && <p className="leading-relaxed text-pretty text-ink">{primerArticulo.parrafos[0]}</p>}
             <p className="text-xs text-ink-muted">Todavía no tiene un resumen en lenguaje simple: arriba, su primer artículo.</p>
           </>
         )}
@@ -208,7 +229,8 @@ function TextoCompleto({ ley }: { ley: LeyDetalle }) {
         id="ley-texto-completo"
         data-track="law.full_text.toggle"
         data-track-law={ley.numero}
-        className="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 hover:bg-grid/50 [&::-webkit-details-marker]:hidden">
+        className="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 hover:bg-grid/50 [&::-webkit-details-marker]:hidden"
+      >
         <span className="flex min-w-0 flex-col">
           <span className="font-medium">Texto completo</span>
           <span className="truncate text-sm whitespace-nowrap text-ink-muted">
@@ -259,7 +281,10 @@ function TextoCompleto({ ley }: { ley: LeyDetalle }) {
                     return (
                       <li key={f.name}>
                         {f.path ? (
-                          <Link to={f.path} className="inline-flex items-center gap-2 rounded-full border border-line py-1 pr-3 pl-1 text-ink hover:border-link hover:text-link">
+                          <Link
+                            to={f.path}
+                            className="inline-flex items-center gap-2 rounded-full border border-line py-1 pr-3 pl-1 text-ink hover:border-link hover:text-link"
+                          >
                             {chip}
                           </Link>
                         ) : (

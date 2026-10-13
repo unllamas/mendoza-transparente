@@ -37,7 +37,11 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
   };
 
   const senales: Senal[] = [];
-  const ultimaFecha = procesos.map((p) => p.fecha!).filter(Boolean).sort().at(-1)!;
+  const ultimaFecha = procesos
+    .map((p) => p.fecha!)
+    .filter(Boolean)
+    .sort()
+    .at(-1)!;
 
   // 1. Contratación directa
   const directas = procesos.filter((p) => esDirecta(p));
@@ -148,7 +152,10 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
   for (const [cuit, filas] of porCuit) {
     const e = empresa.get(cuit);
     if (!e?.fecha_constitucion || e.tipo_persona !== "juridica") continue;
-    const primera = filas.map((a) => a.fecha_adjudicacion!).filter(Boolean).sort()[0];
+    const primera = filas
+      .map((a) => a.fecha_adjudicacion!)
+      .filter(Boolean)
+      .sort()[0];
     if (!primera) continue;
     const meses = Math.floor((Date.parse(primera) - Date.parse(e.fecha_constitucion)) / (30.44 * 24 * 3600 * 1000));
     if (meses < 0 || meses >= 12) continue;

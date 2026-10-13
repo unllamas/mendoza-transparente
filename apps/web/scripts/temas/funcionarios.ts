@@ -1,7 +1,7 @@
 /** Quiénes representan a Mendoza: Ejecutivo, Legislatura, intendentes y Congreso nacional. */
 
 import { municipalitiesInSection, ROLES, slug } from "../../src/slug.ts";
-import type { FuncionariosTema, Funcionario } from "../../src/types.ts";
+import type { Funcionario, FuncionariosTema } from "../../src/types.ts";
 
 type CsvRow = Record<string, string>;
 
@@ -28,9 +28,7 @@ const tokens = (s: string) =>
  */
 function cruzarDeclaraciones(eticaFuncionarios: CsvRow[], declaraciones: CsvRow[]) {
   const porId = new Map(declaraciones.map((d) => [d.official_id!, d]));
-  const candidatos = eticaFuncionarios
-    .filter((f) => porId.has(f.official_id!))
-    .map((f) => ({ f, tokens: new Set(tokens(f.nombre!)) }));
+  const candidatos = eticaFuncionarios.filter((f) => porId.has(f.official_id!)).map((f) => ({ f, tokens: new Set(tokens(f.nombre!)) }));
   return (nombre: string): Funcionario["ddjj"] => {
     const t = tokens(nombre);
     const matches = candidatos.filter(({ tokens: c }) => {
@@ -120,8 +118,7 @@ export function buildFuncionarios(
         email: null,
         perfilUrl: a.perfil_url || null,
         fuenteUrl: a.fuente_url!,
-        remuneracion:
-          grupo === "diputados_nacional" ? sueldo("Diputado") : grupo === "senado_nacional" ? sueldo("Senador") : [],
+        remuneracion: grupo === "diputados_nacional" ? sueldo("Diputado") : grupo === "senado_nacional" ? sueldo("Senador") : [],
         // Los legisladores nacionales declaran ante la Oficina Anticorrupción, no ante Ética Pública de Mendoza.
         ddjj: grupo === "diputados_nacional" || grupo === "senado_nacional" ? null : ddjj(a.nombre!),
         foto: null,
@@ -175,7 +172,15 @@ export function buildFuncionarios(
 
   // El Ejecutivo va por jerarquía (gobernador, vice, ministros, resto); los demás grupos, por apellido.
   const rango = (p: Funcionario) =>
-    p.grupo !== "ejecutivo" ? 0 : /^gobernador/i.test(p.cargo) ? 1 : /^vicegobernador/i.test(p.cargo) ? 2 : /^ministr/i.test(p.cargo) ? 3 : 4;
+    p.grupo !== "ejecutivo"
+      ? 0
+      : /^gobernador/i.test(p.cargo)
+        ? 1
+        : /^vicegobernador/i.test(p.cargo)
+          ? 2
+          : /^ministr/i.test(p.cargo)
+            ? 3
+            : 4;
   const apellido = (n: string) => n.split(/\s+/).at(-1) ?? n;
   return {
     personas: personas.sort((a, b) => rango(a) - rango(b) || apellido(a.nombre).localeCompare(apellido(b.nombre), "es")),

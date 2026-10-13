@@ -30,22 +30,30 @@
 import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import { archive, get, PROCESSED_DIR, type Row, writeProcessed } from "@mt/core";
 import * as cheerio from "cheerio";
-
-import { PROCESSED_DIR, archive, get, writeProcessed, type Row } from "@mt/core";
 
 const SOURCE = "boletin-oficial";
 const BASE = "https://portalgateway.mendoza.gov.ar/api/boe";
 const OUT_DIR = join(PROCESSED_DIR, SOURCE);
 
 const COLUMNS = [
-  "fecha", "nro_boletin", "norma_id", "tipo", "numero", "organismo", "expediente",
-  "sumario", "largo_texto", "url_pdf", "categoria", "fecha_norma", "titulo_ley",
+  "fecha",
+  "nro_boletin",
+  "norma_id",
+  "tipo",
+  "numero",
+  "organismo",
+  "expediente",
+  "sumario",
+  "largo_texto",
+  "url_pdf",
+  "categoria",
+  "fecha_norma",
+  "titulo_ley",
 ];
 
-type Categoria =
-  | "designacion" | "contratacion" | "presupuesto" | "coparticipacion"
-  | "deuda" | "ley" | "convocatoria_electoral" | "otro";
+type Categoria = "designacion" | "contratacion" | "presupuesto" | "coparticipacion" | "deuda" | "ley" | "convocatoria_electoral" | "otro";
 
 interface IndexItem {
   kind: "norma" | "edicto";
@@ -95,7 +103,9 @@ function parseIndex(html: string, supplement: boolean): IndexItem[] {
   const $ = cheerio.load(html);
   const items: IndexItem[] = [];
   $("li.list-group-item").each((_, li) => {
-    const a = $(li).find(supplement ? "a.supplement-detail" : "a.boe-detail").first();
+    const a = $(li)
+      .find(supplement ? "a.supplement-detail" : "a.boe-detail")
+      .first();
     if (!a.length) return;
     const text = clean($(li).text());
     const heading = clean($(li).closest(".accordion-item").children("h2").text());
@@ -104,7 +114,10 @@ function parseIndex(html: string, supplement: boolean): IndexItem[] {
       kind: supplement ? "norma" : ((a.attr("data-type") as "norma" | "edicto") ?? "norma"),
       id: (supplement ? a.attr("data-norma-id") : a.attr("data-id")) ?? "",
       fechaNorma: (supplement ? dmy(text.match(/Fecha:\s*([\d/]+)/)?.[1] ?? "") : a.attr("data-fecha")) ?? "",
-      tipo: heading.toLowerCase().replace(/^leyes$/, "ley").replace(/^decretos$/, "decreto")
+      tipo: heading
+        .toLowerCase()
+        .replace(/^leyes$/, "ley")
+        .replace(/^decretos$/, "decreto")
         .replace(/^resoluciones$/, "resolucion"),
       numero: label?.[2] ?? "",
       organismo: text.match(/Origen:\s*(.+)$/)?.[1] ?? "",
@@ -116,22 +129,29 @@ function parseIndex(html: string, supplement: boolean): IndexItem[] {
 
 function classify(tipo: string, sumario: string, texto: string): Categoria {
   const art1 = texto.search(/art[ií]culo\s*1\s*[º°o.]/i);
-  const t = clean(
-    sumario + " " + texto.slice(0, 700) + " " + (art1 >= 0 ? texto.slice(art1, art1 + 700) : ""),
-  );
-  if (/convoc\w+\s+(a|al)\s+(el\s+)?(cuerpo\s+)?(elecciones|comicios|electoral)|convoc[aá]se[^.]{0,80}(elecciones|comicios)|convocatoria a elecciones/i.test(t))
+  const t = clean(`${sumario} ${texto.slice(0, 700)} ${art1 >= 0 ? texto.slice(art1, art1 + 700) : ""}`);
+  if (
+    /convoc\w+\s+(a|al)\s+(el\s+)?(cuerpo\s+)?(elecciones|comicios|electoral)|convoc[aá]se[^.]{0,80}(elecciones|comicios)|convocatoria a elecciones/i.test(
+      t,
+    )
+  )
     return "convocatoria_electoral";
   if (tipo === "ley") return "ley";
-  if (/coparticipaci|coeficiente de equilibrio|distribuci[oó]n de (los )?recursos[^.]{0,60}municip/i.test(t))
-    return "coparticipacion";
-  if (/(emisi[oó]n|colocaci[oó]n)\s+de\s+(t[ií]tulos|letras|bonos|deuda|obligaciones negociables|valores)|endeudamiento|operaci[oó]n de cr[eé]dito|deuda p[uú]blica|letras del tesoro|t[ií]tulos de deuda/i.test(t))
+  if (/coparticipaci|coeficiente de equilibrio|distribuci[oó]n de (los )?recursos[^.]{0,60}municip/i.test(t)) return "coparticipacion";
+  if (
+    /(emisi[oó]n|colocaci[oó]n)\s+de\s+(t[ií]tulos|letras|bonos|deuda|obligaciones negociables|valores)|endeudamiento|operaci[oó]n de cr[eé]dito|deuda p[uú]blica|letras del tesoro|t[ií]tulos de deuda/i.test(
+      t,
+    )
+  )
     return "deuda";
-  if (/(ampl[ií]|increment|modif[ií]c|refuerz|reestructur)\w*[^.]{0,80}(presupuesto|c[aá]lculo de recursos)|(presupuesto|c[aá]lculo de recursos)[^.]{0,80}(ampl[ií]|increment|modific|refuerz|reestructur)|cr[eé]ditos? presupuestari/i.test(t))
+  if (
+    /(ampl[ií]|increment|modif[ií]c|refuerz|reestructur)\w*[^.]{0,80}(presupuesto|c[aá]lculo de recursos)|(presupuesto|c[aá]lculo de recursos)[^.]{0,80}(ampl[ií]|increment|modific|refuerz|reestructur)|cr[eé]ditos? presupuestari/i.test(
+      t,
+    )
+  )
     return "presupuesto";
-  if (/adjudic|licitaci[oó]n|contrataci[oó]n directa|concurso de precios|compra directa|contr[aá]tase\b/i.test(t))
-    return "contratacion";
-  if (/\bdes[ií]gn\w*|\bnombr[aá]\w*|\bencom[ií]end\w*[^.]{0,40}(cargo|funciones)|\bd[aá]se por\b/i.test(t))
-    return "designacion";
+  if (/adjudic|licitaci[oó]n|contrataci[oó]n directa|concurso de precios|compra directa|contr[aá]tase\b/i.test(t)) return "contratacion";
+  if (/\bdes[ií]gn\w*|\bnombr[aá]\w*|\bencom[ií]end\w*[^.]{0,40}(cargo|funciones)|\bd[aá]se por\b/i.test(t)) return "designacion";
   return "otro";
 }
 
@@ -142,10 +162,23 @@ function parseDetail(html: string) {
   $("#detail-body p, #detail-body div, #detail-body li, #detail-body tr").each((_, el) => {
     $(el).append("\n");
   });
-  const texto = $("#detail-body").text().replace(/[ \t ]+/g, " ").replace(/ ?\n ?/g, "\n")
-    .replace(/\n{3,}/g, "\n\n").trim();
-  const url_pdf = $("#detail-header a").filter((_, a) => /pdf_pedido/.test($(a).attr("href") ?? "")).attr("href") ?? "";
-  const tema = clean($("#detail-sub-header .col").filter((_, c) => /Tema:/.test($(c).text())).first().text().replace("Tema:", ""));
+  const texto = $("#detail-body")
+    .text()
+    .replace(/[ \t ]+/g, " ")
+    .replace(/ ?\n ?/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+  const url_pdf =
+    $("#detail-header a")
+      .filter((_, a) => /pdf_pedido/.test($(a).attr("href") ?? ""))
+      .attr("href") ?? "";
+  const tema = clean(
+    $("#detail-sub-header .col")
+      .filter((_, c) => /Tema:/.test($(c).text()))
+      .first()
+      .text()
+      .replace("Tema:", ""),
+  );
   return { texto, url_pdf, tema };
 }
 
@@ -161,7 +194,12 @@ function tituloLey(texto: string): string {
   let fin = resto.length;
   for (const m of resto.matchAll(/([.:])\s+(?=[A-ZÁÉÍÓÚa-z"“(])/g)) {
     const antes = resto.slice(Math.max(0, m.index! - 6), m.index!);
-    if (m[1] === "." && (/(Art|N[º°]|inc|Dr|Dra|Sr|Lic|Ing|Nro|apdo|Depto|Dpto|Pto|Av|Gral|Cnel)$/i.test(antes) || !/[A-ZÁÉÍÓÚ"“(]/.test(resto[m.index! + m[0].length]!))) continue;
+    if (
+      m[1] === "." &&
+      (/(Art|N[º°]|inc|Dr|Dra|Sr|Lic|Ing|Nro|apdo|Depto|Dpto|Pto|Av|Gral|Cnel)$/i.test(antes) ||
+        !/[A-ZÁÉÍÓÚ"“(]/.test(resto[m.index! + m[0].length]!))
+    )
+      continue;
     fin = m.index! + (m[1] === "." ? 1 : 0);
     break;
   }
@@ -169,7 +207,7 @@ function tituloLey(texto: string): string {
   if (frase.length > 180) {
     const corte = frase.slice(0, 180);
     const coma = corte.lastIndexOf(", ");
-    frase = (coma > 100 ? corte.slice(0, coma) : corte.replace(/\s+\S*$/, "")).replace(/[\s,;:(–-]+$/, "") + "…";
+    frase = `${(coma > 100 ? corte.slice(0, coma) : corte.replace(/\s+\S*$/, "")).replace(/[\s,;:(–-]+$/, "")}…`;
   }
   return frase;
 }
@@ -177,16 +215,28 @@ function tituloLey(texto: string): string {
 // CSV mínimo con comillas, para releer normas.csv.
 function parseCsv(text: string): Row[] {
   const rows: string[][] = [];
-  let row: string[] = [], cur = "", q = false;
+  let row: string[] = [],
+    cur = "",
+    q = false;
   for (let i = 0; i < text.length; i++) {
     const c = text[i]!;
     if (q) {
-      if (c === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; }
-      else cur += c;
+      if (c === '"') {
+        if (text[i + 1] === '"') {
+          cur += '"';
+          i++;
+        } else q = false;
+      } else cur += c;
     } else if (c === '"') q = true;
-    else if (c === ",") { row.push(cur); cur = ""; }
-    else if (c === "\n") { row.push(cur); rows.push(row); row = []; cur = ""; }
-    else if (c !== "\r") cur += c;
+    else if (c === ",") {
+      row.push(cur);
+      cur = "";
+    } else if (c === "\n") {
+      row.push(cur);
+      rows.push(row);
+      row = [];
+      cur = "";
+    } else if (c !== "\r") cur += c;
   }
   const [head, ...body] = rows;
   return body.map((r) => Object.fromEntries(head!.map((h, i) => [h, r[i] ?? ""])));
@@ -197,12 +247,15 @@ function parseArgs(args: string[]) {
   const val = (k: string) => {
     const i = args.indexOf(k);
     if (i >= 0) return args[i + 1];
-    return args.find((a) => a.startsWith(k + "="))?.slice(k.length + 1);
+    return args.find((a) => a.startsWith(`${k}=`))?.slice(k.length + 1);
   };
   const desde = val("--desde") ?? val("--hasta") ?? today;
   const hasta = val("--hasta") ?? today;
   for (const d of [desde, hasta]) if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) throw new Error(`Fecha inválida: ${d}`);
-  const soloTipo = (val("--solo-tipo") ?? "").split(",").map((x) => x.trim().toLowerCase()).filter(Boolean);
+  const soloTipo = (val("--solo-tipo") ?? "")
+    .split(",")
+    .map((x) => x.trim().toLowerCase())
+    .filter(Boolean);
   return { desde, hasta, soloTipo };
 }
 
@@ -234,17 +287,23 @@ export async function run(args: string[]) {
   }
 
   const failed: string[] = [];
-  let ediciones = 0, edictos = 0, detalles = 0;
+  let ediciones = 0,
+    edictos = 0,
+    detalles = 0;
   const flush = async () => {
-    const rows = [...existing.values()].sort((a, b) =>
-      String(a.fecha).localeCompare(String(b.fecha)) || Number(a.norma_id) - Number(b.norma_id));
+    const rows = [...existing.values()].sort(
+      (a, b) => String(a.fecha).localeCompare(String(b.fecha)) || Number(a.norma_id) - Number(b.norma_id),
+    );
     await writeProcessed(SOURCE, "normas.csv", rows, COLUMNS);
   };
 
   for (const fecha of dias(desde, hasta)) {
     const found = await post("find", { fecha });
     const nro = found.match(/data-boe-nro="(\d+)"/)?.[1];
-    if (!nro) { console.log(`${fecha}: sin edición`); continue; }
+    if (!nro) {
+      console.log(`${fecha}: sin edición`);
+      continue;
+    }
     ediciones++;
 
     const indexHtml = await post("index", { fecha, numero: nro });
@@ -253,7 +312,9 @@ export async function run(args: string[]) {
 
     const supHtml = await post("supplement/index", { fecha, numero: nro });
     if (/supplement-detail/.test(supHtml)) {
-      await archive(SOURCE, `suplemento-index-${fecha}-${nro}.html`, supHtml, { url: `${BASE}/supplement/index (fecha=${fecha}&numero=${nro})` });
+      await archive(SOURCE, `suplemento-index-${fecha}-${nro}.html`, supHtml, {
+        url: `${BASE}/supplement/index (fecha=${fecha}&numero=${nro})`,
+      });
       const known = new Set(items.map((i) => i.id));
       for (const s of parseIndex(supHtml, true)) if (!known.has(s.id)) items.push(s);
     }
@@ -268,10 +329,19 @@ export async function run(args: string[]) {
         if (!existing.has(n.id)) {
           nuevas++;
           existing.set(n.id, {
-            fecha, nro_boletin: nro, norma_id: n.id, tipo: n.tipo, numero: n.numero,
-            organismo: n.organismo, expediente: n.tema.match(/EX-\d{4}-\d+-[\w-]+/)?.[0] ?? "",
-            sumario: n.tema.slice(0, 300), largo_texto: "", url_pdf: "", categoria: "",
-            fecha_norma: n.fechaNorma, titulo_ley: "",
+            fecha,
+            nro_boletin: nro,
+            norma_id: n.id,
+            tipo: n.tipo,
+            numero: n.numero,
+            organismo: n.organismo,
+            expediente: n.tema.match(/EX-\d{4}-\d+-[\w-]+/)?.[0] ?? "",
+            sumario: n.tema.slice(0, 300),
+            largo_texto: "",
+            url_pdf: "",
+            categoria: "",
+            fecha_norma: n.fechaNorma,
+            titulo_ley: "",
           });
         }
         continue;
@@ -280,8 +350,11 @@ export async function run(args: string[]) {
       if (existing.has(n.id) && existsSync(txtPath)) continue;
       try {
         const params = {
-          tipo_busqueda: "norma", norma_edicto_id: n.id,
-          fecha_desde: n.fechaNorma || fecha, fecha_hasta: fecha, tipo_boletin: "2",
+          tipo_busqueda: "norma",
+          norma_edicto_id: n.id,
+          fecha_desde: n.fechaNorma || fecha,
+          fecha_hasta: fecha,
+          tipo_boletin: "2",
         };
         const html = await post("detail", params);
         await archive(SOURCE, `detalle-${fecha}-${n.id}.html`, html, {
@@ -291,15 +364,24 @@ export async function run(args: string[]) {
         if (!d.texto) throw new Error("detalle sin texto");
         detalles++;
         await mkdir(join(OUT_DIR, "textos", fecha), { recursive: true });
-        await writeFile(txtPath, d.texto + "\n");
+        await writeFile(txtPath, `${d.texto}\n`);
 
         const sumario = clean(d.texto.replace(/^\s*MENDOZA,?[^\n]{0,60}?\d{4}\.?\s*/i, "")).slice(0, 300);
         const expediente = (d.tema || n.tema).match(/EX-\d{4}-\d+-[\w-]+/)?.[0] ?? "";
         if (!existing.has(n.id)) nuevas++;
         existing.set(n.id, {
-          fecha, nro_boletin: nro, norma_id: n.id, tipo: n.tipo, numero: n.numero,
-          organismo: n.organismo, expediente, sumario, largo_texto: d.texto.length,
-          url_pdf: d.url_pdf, categoria: classify(n.tipo, sumario, d.texto), fecha_norma: n.fechaNorma,
+          fecha,
+          nro_boletin: nro,
+          norma_id: n.id,
+          tipo: n.tipo,
+          numero: n.numero,
+          organismo: n.organismo,
+          expediente,
+          sumario,
+          largo_texto: d.texto.length,
+          url_pdf: d.url_pdf,
+          categoria: classify(n.tipo, sumario, d.texto),
+          fecha_norma: n.fechaNorma,
           titulo_ley: n.tipo === "ley" ? tituloLey(d.texto) : "",
         });
       } catch (err) {
@@ -315,7 +397,6 @@ export async function run(args: string[]) {
   await flush();
   console.log(
     `Listo: ${ediciones} ediciones, ${detalles} detalles bajados, ${edictos} edictos (solo índice), ` +
-      `normas.csv ${before} -> ${existing.size} filas, ${failed.length} fallos${failed.length ? ": " + failed.join(", ") : ""}`,
+      `normas.csv ${before} -> ${existing.size} filas, ${failed.length} fallos${failed.length ? `: ${failed.join(", ")}` : ""}`,
   );
 }
-

@@ -8,7 +8,8 @@
 
 const SECRET_FILES = /\.env\.(cloudflare|posthog)\b/;
 // Commands that would show the file's content. Sourcing (`.` / `source`), `ls`, `wc` and `test` are fine.
-const DISPLAY = /\b(cat|less|more|head|tail|bat|nl|xxd|od|strings|grep|rg|sed|awk|perl|python3?|node|cut|sort|uniq|diff|cp|scp|curl\s+.*-d\s*@)\b/;
+const DISPLAY =
+  /\b(cat|less|more|head|tail|bat|nl|xxd|od|strings|grep|rg|sed|awk|perl|python3?|node|cut|sort|uniq|diff|cp|scp|curl\s+.*-d\s*@)\b/;
 
 const input = (await Bun.stdin.json()) as { tool_name?: string; tool_input?: Record<string, unknown> };
 const tool = input.tool_name ?? "";

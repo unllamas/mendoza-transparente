@@ -153,22 +153,17 @@ export async function archive(
     filename,
     path: relative(ROOT, path),
     url,
-    fetched_at: now.toISOString().slice(0, 19) + "Z",
+    fetched_at: `${now.toISOString().slice(0, 19)}Z`,
     sha256,
     bytes: bytes.length,
     gzip: compressed,
   };
-  await appendFile(manifest, JSON.stringify(entry) + "\n");
+  await appendFile(manifest, `${JSON.stringify(entry)}\n`);
   return path;
 }
 
 /** Descarga `url` y la archiva bajo la fuente `source`. */
-export async function fetchAndArchive(
-  source: string,
-  url: string,
-  filename: string,
-  init?: RequestInit,
-): Promise<string | null> {
+export async function fetchAndArchive(source: string, url: string, filename: string, init?: RequestInit): Promise<string | null> {
   const resp = await get(url, init);
   return archive(source, filename, new Uint8Array(await resp.arrayBuffer()), { url });
 }
