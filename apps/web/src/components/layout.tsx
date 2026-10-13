@@ -216,14 +216,18 @@ export function Layout() {
               >
                 <RiGitBranchLine className="size-4" aria-hidden /> Código y datos abiertos en GitHub
               </a>
+              <div className="flex items-center gap-2 pt-4">
+                <span className="text-text-tertiary">Tema</span>
+                <ThemeToggle appearance="segmented" size="compact" />
+              </div>
             </div>
 
             <div className="flex max-w-sm flex-col gap-2 text-body-regular">
               <span className="text-text-tertiary">Hecho por</span>
               <span className="text-body-semibold">{AUTOR.nombre}</span>
               <p className="text-text-secondary text-pretty">
-                Indie hacker y product engineer desde Argentina. Construye herramientas que funcionan fuera del laboratorio: de billeteras
-                Lightning a la transparencia pública.
+                Indie hacker y product engineer desde Argentina. Construye proyectos open source pensados para usarse fuera del laboratorio,
+                como este.
               </p>
               <div className="flex flex-wrap gap-x-4 gap-y-1">
                 <a
@@ -242,10 +246,6 @@ export function Layout() {
                 >
                   <RiGlobalLine className="size-4" aria-hidden /> jonallamas.com
                 </a>
-              </div>
-              <div className="flex items-center gap-3 pt-4">
-                <span className="text-text-tertiary">Tema</span>
-                <ThemeToggle appearance="segmented" />
               </div>
             </div>
           </div>

@@ -205,8 +205,11 @@ export interface ThemeToggleProps {
    */
   appearance?: "sidebar" | "segmented" | "sidebar-segmented" | "glass-segmented";
   className?: string;
-  /** Size of segmented controls; small fits inside dropdown rows. */
-  size?: "small" | "medium";
+  /**
+   * Size of segmented controls; small fits inside dropdown rows. Compact looks
+   * small (36 px track) but keeps each button's 44 px touch target.
+   */
+  size?: "small" | "compact" | "medium";
   /** Circular reveal duration in milliseconds. */
   transitionDuration?: number;
 }
@@ -234,6 +237,7 @@ export function ThemeToggle({
   if (appearance === "segmented" || appearance === "sidebar-segmented" || appearance === "glass-segmented") {
     const glass = appearance === "glass-segmented";
     const small = size === "small" && !glass;
+    const compact = size === "compact" && !glass;
     const sidebarSurface = appearance === "sidebar-segmented";
     const options = [
       { mode: "light" as const, label: "Use light mode", Icon: RiSunLine },
@@ -250,17 +254,26 @@ export function ThemeToggle({
           // small icon buttons beside it. Desktop keeps the roomier 40px.
           glass && "p-0.5 sm:p-1",
           small && "gap-0.5 p-0.5",
-          glass
-            ? // No track of its own: the host supplies the surface. A fill
-              // here would paint over it. Kept registry-safe — this component
-              // never imports the landing page's glass.
-              "z-10 bg-transparent"
-            : sidebarSurface
-              ? "bg-theme-toggle-sidebar-background"
-              : "border border-border-button-default bg-background-interactive",
+          // The visible track is the absolute span below, inset so the 44 px buttons overhang it.
+          compact
+            ? "gap-0 p-0"
+            : glass
+              ? // No track of its own: the host supplies the surface. A fill
+                // here would paint over it. Kept registry-safe — this component
+                // never imports the landing page's glass.
+                "z-10 bg-transparent"
+              : sidebarSurface
+                ? "bg-theme-toggle-sidebar-background"
+                : "border border-border-button-default bg-background-interactive",
           className,
         )}
       >
+        {compact && (
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-1 rounded-lg border border-border-button-default bg-background-interactive"
+          />
+        )}
         <span
           aria-hidden
           className={cx(
@@ -268,6 +281,7 @@ export function ThemeToggle({
             "shadow-xs transition-transform duration-200 ease",
             glass && "top-0.5 start-0.5 size-7 sm:top-1 sm:start-1 sm:size-8",
             small && "top-0.5 start-0.5 size-6",
+            compact && "top-2 start-2 size-7 rounded-md",
             glass
               ? "bg-white dark:bg-[#2e2e33]"
               : sidebarSurface
@@ -277,9 +291,11 @@ export function ThemeToggle({
             dark &&
               (small
                 ? "translate-x-6.5 rtl:-translate-x-6.5"
-                : glass
-                  ? "translate-x-8 rtl:-translate-x-8 sm:translate-x-9 sm:rtl:-translate-x-9"
-                  : "translate-x-12 rtl:-translate-x-12"),
+                : compact
+                  ? "translate-x-11 rtl:-translate-x-11"
+                  : glass
+                    ? "translate-x-8 rtl:-translate-x-8 sm:translate-x-9 sm:rtl:-translate-x-9"
+                    : "translate-x-12 rtl:-translate-x-12"),
           )}
         />
         {options.map(({ mode, label, Icon }) => {
@@ -317,7 +333,7 @@ export function ThemeToggle({
                     : "text-foreground-icon-secondary hover:text-foreground-icon-primary",
               )}
             >
-              <Icon className={small ? "size-3.5" : "size-4"} aria-hidden />
+              <Icon className={small || compact ? "size-3.5" : "size-4"} aria-hidden />
             </button>
           );
         })}
