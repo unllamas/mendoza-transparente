@@ -157,4 +157,33 @@
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-text-link;
   }
+
+  /* Barras de scroll finas y pegadas al borde. La nativa de macOS con «mostrar siempre» reserva un carril de
+     ~15 px con la barra centrada, y deja un hueco a la derecha del contenido en hojas, menús y campos de texto.
+     El margen del carril evita que la barra se corte contra las esquinas redondeadas. */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-track {
+    margin-block: 4px;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background: var(--color-foreground-icon-quaternary);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-foreground-icon-tertiary);
+  }
+  /* Firefox no tiene los pseudo-elementos. Va aparte porque Chrome, si ve `scrollbar-color`, ignora los de arriba. */
+  @supports (-moz-appearance: none) {
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-foreground-icon-quaternary) transparent;
+    }
+  }
 }

@@ -78,6 +78,7 @@ Los componentes base y los tokens viven en el paquete `@mt/ui`. Lo usa la web y 
 - `bun run verificar` controla las tres medidas en todas las páginas y en todos los anchos.
 - **Nada se corta en dos líneas**: cifras, títulos de tarjetas, fechas y montos. La unidad va aparte y en chico («$ 965.709» + «millones»).
 - **Nunca scroll horizontal**, en ningún ancho. Hay una red de seguridad global (`overflow-x: clip`), pero la causa se corrige igual.
+- **Las barras de scroll van pegadas al borde derecho**, sin hueco entre la barra y el contenedor. El estilo es global (finas, sin carril, en `packages/ui/src/styles/mt.css`): no se estilan barras por componente ni se agrega `padding` a la derecha de un contenedor que scrollea.
 - **Mobile first**: menú hamburguesa por debajo de 1024 px, pestañas desplazables, hojas a pantalla completa en celular.
 
 ## Celular
