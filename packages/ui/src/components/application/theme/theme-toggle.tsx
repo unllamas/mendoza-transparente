@@ -257,7 +257,7 @@ export function ThemeToggle({
               "z-10 bg-transparent"
             : sidebarSurface
               ? "bg-theme-toggle-sidebar-background"
-              : "border border-border-button-default bg-background-secondary-default",
+              : "border border-border-button-default bg-background-interactive",
           className,
         )}
       >

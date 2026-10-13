@@ -58,6 +58,10 @@
   /* Texto secundario y terciario un paso más oscuros que en BoardUI: el sitio es de lectura y tienen que pasar AA. */
   --color-text-secondary: var(--color-neutral-600);
   --color-text-tertiary: var(--color-neutral-500);
+  /* Fondo de lo que se toca (botón secundario, campos, selects, tarjetas y filas clickeables): un gris entre el
+     fondo y el borde, para que se distinga de lo informativo (que va en la superficie) y se lea como "acá se hace clic". */
+  --color-background-interactive: #f2f2f2;
+  --color-background-interactive-hover: var(--color-neutral-200);
   /* Links y lo que lleva a otra página: azul de la marca. */
   --color-text-link: var(--color-accent-600);
   --color-border-link: var(--color-accent-600);
@@ -84,6 +88,8 @@
 }
 
 .dark {
+  --color-background-interactive: #333333;
+  --color-background-interactive-hover: #3d3d3d;
   --color-text-secondary: var(--color-neutral-300);
   --color-text-tertiary: var(--color-neutral-400);
   --color-text-link: var(--color-accent-300);
@@ -107,6 +113,8 @@
 }
 
 @theme inline {
+  --color-background-interactive: var(--color-background-interactive);
+  --color-background-interactive-hover: var(--color-background-interactive-hover);
   --color-text-link: var(--color-text-link);
   --color-border-link: var(--color-border-link);
   --color-highlight: var(--color-highlight);

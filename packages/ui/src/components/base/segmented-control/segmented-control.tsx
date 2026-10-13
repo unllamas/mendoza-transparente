@@ -92,7 +92,7 @@ export function SegmentedControl({ className, children, variant = "solid", ref, 
       className={(state) =>
         cx(
           "relative inline-flex items-start gap-0.5 rounded-2lg",
-          variant === "solid" && "border border-border-button-default bg-segmented-control-background p-1",
+          variant === "solid" && "border border-border-button-default bg-background-interactive p-1",
           typeof className === "function" ? className(state) : className,
         )
       }

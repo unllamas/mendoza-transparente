@@ -62,7 +62,7 @@ const textareaStyles = sortCx({
     "relative flex w-full flex-col",
     // Mendoza Transparente: same shell as Select and the secondary Button (border + surface), one look for every control.
     "rounded-2lg border border-border-button-default shadow-xs",
-    "bg-background-primary-default text-foreground-icon-secondary",
+    "bg-background-interactive text-foreground-icon-secondary",
     "transition-[background-color,border-color,box-shadow,color] duration-[var(--input-transition-ms)] ease",
   ].join(" "),
 
