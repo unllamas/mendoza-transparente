@@ -69,6 +69,7 @@ const textareaStyles = sortCx({
   // Matches Input's insets, so a stacked input and textarea share one edge:
   // 8px shell + 4px on the control = 12px to the text (10px at `small`).
   fieldSize: {
+    large: "px-2.5 py-2.5",
     medium: "p-2",
     small: "px-1.5 py-2",
   },
@@ -76,6 +77,8 @@ const textareaStyles = sortCx({
   textarea: [
     "block w-full min-w-0 bg-transparent border-0 outline-none m-0 p-0 px-1",
     "font-sans text-body-regular text-text-primary",
+    // 16 px on phones: below that, iOS zooms the page when the field gets focus.
+    "max-sm:text-base",
     "placeholder:text-text-tertiary",
     "focus:placeholder:text-text-primary",
     "disabled:text-input-disabled-text disabled:placeholder:text-input-disabled-text",
@@ -109,7 +112,7 @@ export function TextareaBase({
   ...textareaProps
 }: TextareaBaseProps) {
   const ctx = useContext(TextFieldContext);
-  const size: TextareaSize = sizeProp ?? ctx.size ?? "medium";
+  const size: TextareaSize = sizeProp ?? ctx.size ?? "large";
   const innerRef = useRef<HTMLTextAreaElement | null>(null);
 
   const attachRef = (node: HTMLTextAreaElement | null) => {

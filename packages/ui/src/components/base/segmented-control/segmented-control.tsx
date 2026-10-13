@@ -125,7 +125,8 @@ export function SegmentedControlItem({ className, children, ref, ...props }: Seg
       {...props}
       className={(state) =>
         cx(
-          "relative z-10 inline-flex cursor-pointer items-center justify-center rounded-md px-2.5 py-1 text-center whitespace-nowrap",
+          // Mendoza Transparente: 36 px items inside the 4 px padding = a 44 px control.
+          "relative z-10 inline-flex min-h-9 cursor-pointer items-center justify-center rounded-md px-3 py-1 text-center whitespace-nowrap",
           "transition-colors duration-200 ease",
           "outline-none focus-visible:ring-2 focus-visible:ring-border-focus-ring",
           state.isSelected ? "text-body-medium text-text-primary" : "text-body-regular text-text-secondary hover:text-text-primary",

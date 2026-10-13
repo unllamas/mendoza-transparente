@@ -1,5 +1,5 @@
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
-import { Select } from "@mt/ui/components/input";
+import { Select, SelectItem } from "@mt/ui/components/base/select/select";
 import { StatTile } from "@mt/ui/components/stat-tile";
 import { RiDownloadLine } from "@remixicon/react";
 import { getRouteApi, Link } from "@tanstack/react-router";
@@ -111,16 +111,21 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
         </div>
         <div className="flex flex-wrap items-center gap-2">
           {groups && groups.length > 1 && (
-            <label className="flex items-center gap-2 text-sm text-ink-2">
-              <span>{columnaEtiqueta(dict, dict?.agruparPor)}</span>
-              <Select value={groupSlug} onChange={(e) => setGroupSlug(e.target.value)} className="w-auto">
+            <div className="flex min-w-0 items-center gap-2 text-sm text-ink-2">
+              <span id="datos-grupo-label">{columnaEtiqueta(dict, dict?.agruparPor)}</span>
+              <Select
+                aria-labelledby="datos-grupo-label"
+                value={groupSlug}
+                onChange={(key) => setGroupSlug(String(key))}
+                className="min-w-0"
+              >
                 {groups.map((g) => (
-                  <option key={g.slug} value={g.slug}>
+                  <SelectItem key={g.slug} id={g.slug}>
                     {formatGrupo(g.value)}
-                  </option>
+                  </SelectItem>
                 ))}
               </Select>
-            </label>
+            </div>
           )}
           <a href={`/data/${dataset.source}/${dataset.file}`} download className={buttonClassName({ variant: "secondary" })}>
             <RiDownloadLine className="size-5" aria-hidden /> Descargar CSV

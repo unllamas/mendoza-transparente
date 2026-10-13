@@ -1,7 +1,7 @@
 import { Alert } from "@mt/ui/components/alert";
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
+import { Textarea } from "@mt/ui/components/base/textarea/textarea";
 import { tileVariants } from "@mt/ui/components/card";
-import { Textarea } from "@mt/ui/components/input";
 import { PageHeader } from "@mt/ui/components/section";
 import { cn } from "@mt/ui/lib/utils";
 import { getRouteApi, Link } from "@tanstack/react-router";
@@ -211,7 +211,7 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
           <span className="font-medium">Tu pedido</span>
           <span className="text-xs text-ink-muted">Completá tus datos al final</span>
         </div>
-        <Textarea value={texto} onChange={(e) => setTexto(e.target.value)} rows={13} aria-label="Texto del pedido" className="bg-page" />
+        <Textarea value={texto} onChange={setTexto} rows={13} aria-label="Texto del pedido" />
         <div className="flex flex-wrap gap-2">
           <button
             type="button"

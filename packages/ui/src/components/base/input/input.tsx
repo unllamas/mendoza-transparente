@@ -32,7 +32,8 @@ import { Label } from "./label";
  * Visuals stay 1:1 with Figma — see `styles/theme.css` for the tokens.
  */
 
-export type InputSize = "medium" | "small";
+/** Mendoza Transparente: `large` (44 px) is the default touch size. */
+export type InputSize = "large" | "medium" | "small";
 
 type IconComponent = ComponentType<{
   className?: string;
@@ -64,7 +65,7 @@ export interface TextFieldProps extends Omit<AriaTextFieldProps, "className">, T
   children?: ReactNode | ((state: { isRequired: boolean; isInvalid: boolean; isDisabled: boolean; isReadOnly: boolean }) => ReactNode);
 }
 
-export function TextField({ size = "medium", fieldClassName, inputClassName, className, children, ...props }: TextFieldProps) {
+export function TextField({ size = "large", fieldClassName, inputClassName, className, children, ...props }: TextFieldProps) {
   return (
     <TextFieldContext.Provider value={{ size, fieldClassName, inputClassName }}>
       <AriaTextField {...props} data-input-size={size} className={cx("group flex h-max w-full flex-col items-start gap-1", className)}>
@@ -105,12 +106,14 @@ const inputStyles = sortCx({
   ].join(" "),
 
   fieldSize: {
+    large: "min-h-11 px-2.5 py-2",
     medium: "p-2", // 8px all sides → h auto = 36
     small: "h-8 px-1.5 py-2", // 32 / 6 / 8
   },
 
   // When a leadingAddon is present (Phone basic): tighten left padding.
   fieldWithAddonSize: {
+    large: "min-h-11 ps-1 pe-2.5 py-2",
     medium: "h-9 ps-1 pe-2 py-2", // 36 / 4 / 8 / 8
     small: "h-8 ps-1 pe-1.5 py-2",
   },
@@ -121,6 +124,8 @@ const inputStyles = sortCx({
   input: [
     "min-w-0 flex-1 bg-transparent border-0 outline-none p-0 m-0",
     "font-sans text-body-regular text-text-primary",
+    // 16 px on phones: below that, iOS zooms the page when the field gets focus.
+    "max-sm:text-base",
     "placeholder:text-text-tertiary",
     "focus:placeholder:text-text-primary",
     "disabled:text-input-disabled-text disabled:placeholder:text-input-disabled-text",
@@ -144,7 +149,7 @@ export function InputBase({
 }: InputBaseProps) {
   const { direction } = useLocale();
   const ctx = useContext(TextFieldContext);
-  const size: InputSize = sizeProp ?? ctx.size ?? "medium";
+  const size: InputSize = sizeProp ?? ctx.size ?? "large";
   const hasAddon = leadingAddon !== undefined && leadingAddon !== null;
 
   return (

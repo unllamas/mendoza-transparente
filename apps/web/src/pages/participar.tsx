@@ -1,7 +1,10 @@
 import { Alert } from "@mt/ui/components/alert";
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
+import { Input, InputBase, TextField } from "@mt/ui/components/base/input/input";
+import { Label } from "@mt/ui/components/base/input/label";
+import { Select, SelectItem } from "@mt/ui/components/base/select/select";
+import { Textarea } from "@mt/ui/components/base/textarea/textarea";
 import { tileVariants } from "@mt/ui/components/card";
-import { Field, Input, Select, Textarea } from "@mt/ui/components/input";
 import { PageHeader } from "@mt/ui/components/section";
 import { cn } from "@mt/ui/lib/utils";
 import { getRouteApi, Link } from "@tanstack/react-router";
@@ -133,32 +136,27 @@ function RequestForm({ items, defaultItem }: { items: NoPublicado[]; defaultItem
         ¿Presentaste un pedido de acceso a la información? Registralo con el número de trámite que te dio el formulario oficial. No
         publicamos tu número: lo usamos para contar los pedidos y para que después puedas contarnos la respuesta.
       </Intro>
-      <Field label="Qué dato pediste">
-        <Select value={itemId} onChange={(e) => setItemId(e.target.value)} id="pedido-dato">
-          {items.map((i) => (
-            <option key={i.id} value={i.id}>
-              {i.titulo}
-            </option>
-          ))}
-          <option value="otro">Otro dato</option>
-        </Select>
-      </Field>
-      <Field label="A qué organismo" hint={item ? `Sugerido: ${item.organismo}` : undefined}>
-        <Input name="agency" defaultValue={item?.organismo ?? ""} key={itemId} maxLength={200} />
-      </Field>
+      <Select label="Qué dato pediste" value={itemId} onChange={(key) => setItemId(String(key))} id="pedido-dato">
+        {items.map((i) => (
+          <SelectItem key={i.id} id={i.id}>
+            {i.titulo}
+          </SelectItem>
+        ))}
+        <SelectItem id="otro">Otro dato</SelectItem>
+      </Select>
+      <Input
+        label="A qué organismo"
+        hint={item ? `Sugerido: ${item.organismo}` : undefined}
+        name="agency"
+        defaultValue={item?.organismo ?? ""}
+        key={itemId}
+        maxLength={200}
+      />
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Fecha en que lo presentaste">
-          <Input name="filedOn" type="date" required max={new Date().toISOString().slice(0, 10)} />
-        </Field>
-        <Field label="Número de trámite">
-          <Input name="filingNumber" required placeholder="EX-2026-…" maxLength={60} autoComplete="off" />
-        </Field>
+        <DateInput label="Fecha en que lo presentaste" name="filedOn" isRequired max={new Date().toISOString().slice(0, 10)} />
+        <Input label="Número de trámite" name="filingNumber" isRequired placeholder="EX-2026-…" maxLength={60} autoComplete="off" />
       </div>
-      {itemId === "otro" && (
-        <Field label="Qué pediste">
-          <Textarea name="detail" required rows={3} maxLength={1000} />
-        </Field>
-      )}
+      {itemId === "otro" && <Textarea label="Qué pediste" name="detail" isRequired rows={3} maxLength={1000} />}
       <EmailField />
       <Honeypot />
       <Turnstile onToken={setToken} />
@@ -194,26 +192,22 @@ function AnswerForm() {
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-5" id="form-respuesta">
       <Intro icon={MessageSquareReply}>Contanos qué pasó con un pedido que registraste antes, con el mismo número de trámite.</Intro>
-      <Field label="Número de trámite">
-        <Input name="filingNumber" required maxLength={60} autoComplete="off" />
-      </Field>
-      <Field label="Qué pasó">
-        <Select name="status" required defaultValue="respondido">
-          <option value="respondido">Me respondieron con lo que pedí</option>
-          <option value="parcial">Me respondieron en parte</option>
-          <option value="denegado">Me lo negaron</option>
-          <option value="sin_respuesta">Pasó el plazo y no me respondieron</option>
-        </Select>
-      </Field>
-      <Field label="Fecha de la respuesta (si hubo)">
-        <Input name="answeredOn" type="date" max={new Date().toISOString().slice(0, 10)} />
-      </Field>
-      <Field label="Qué te respondieron, en pocas palabras (opcional)">
-        <Textarea name="summary" rows={3} maxLength={2000} />
-      </Field>
-      <Field label="Link a la respuesta, si la subiste a algún lado (opcional)">
-        <Input name="url" type="url" maxLength={500} placeholder="https://" />
-      </Field>
+      <Input label="Número de trámite" name="filingNumber" isRequired maxLength={60} autoComplete="off" />
+      <Select label="Qué pasó" name="status" isRequired defaultValue="respondido">
+        <SelectItem id="respondido">Me respondieron con lo que pedí</SelectItem>
+        <SelectItem id="parcial">Me respondieron en parte</SelectItem>
+        <SelectItem id="denegado">Me lo negaron</SelectItem>
+        <SelectItem id="sin_respuesta">Pasó el plazo y no me respondieron</SelectItem>
+      </Select>
+      <DateInput label="Fecha de la respuesta (si hubo)" name="answeredOn" max={new Date().toISOString().slice(0, 10)} />
+      <Textarea label="Qué te respondieron, en pocas palabras (opcional)" name="summary" rows={3} maxLength={2000} />
+      <Input
+        label="Link a la respuesta, si la subiste a algún lado (opcional)"
+        name="url"
+        type="url"
+        maxLength={500}
+        placeholder="https://"
+      />
       <Honeypot />
       <Turnstile onToken={setToken} />
       <SubmitRow state={state} label="Enviar respuesta" id="respuesta-enviar" />
@@ -243,13 +237,16 @@ function FeedbackForm({ kind, defaultPage }: { kind: "error" | "dato"; defaultPa
           : "¿Qué dato público de Mendoza te gustaría encontrar acá? Si sabés dónde está publicado, dejanos el link."}
       </Intro>
       {kind === "error" && (
-        <Field label="En qué página">
-          <Input name="page" defaultValue={defaultPage ?? ""} placeholder="/deuda" maxLength={300} />
-        </Field>
+        <Input label="En qué página" name="page" defaultValue={defaultPage ?? ""} placeholder="/deuda" maxLength={300} />
       )}
-      <Field label={kind === "error" ? "Qué encontraste" : "Qué dato y por qué te interesa"}>
-        <Textarea name="message" required minLength={10} rows={5} maxLength={2000} />
-      </Field>
+      <Textarea
+        label={kind === "error" ? "Qué encontraste" : "Qué dato y por qué te interesa"}
+        name="message"
+        isRequired
+        minLength={10}
+        rows={5}
+        maxLength={2000}
+      />
       <EmailField />
       <Honeypot />
       <Turnstile onToken={setToken} />
@@ -259,6 +256,16 @@ function FeedbackForm({ kind, defaultPage }: { kind: "error" | "dato"; defaultPa
 }
 
 // ------------------------------------------------------------------ pieces
+
+/** Date field with the phone's own date picker (React Aria's TextField only types text-like inputs). */
+function DateInput({ label, name, isRequired, max }: { label: string; name: string; isRequired?: boolean; max?: string }) {
+  return (
+    <TextField name={name} isRequired={isRequired} className="flex flex-col gap-1.5">
+      <Label isRequired={isRequired}>{label}</Label>
+      <InputBase type="date" max={max} />
+    </TextField>
+  );
+}
 
 function Intro({ icon: Icon, children }: { icon: typeof Bug; children: ReactNode }) {
   return (
@@ -271,9 +278,14 @@ function Intro({ icon: Icon, children }: { icon: typeof Bug; children: ReactNode
 
 function EmailField() {
   return (
-    <Field label="Tu correo (opcional)" hint="Solo para escribirte sobre este envío. No se publica.">
-      <Input name="email" type="email" maxLength={200} autoComplete="email" />
-    </Field>
+    <Input
+      label="Tu correo (opcional)"
+      hint="Solo para escribirte sobre este envío. No se publica."
+      name="email"
+      type="email"
+      maxLength={200}
+      autoComplete="email"
+    />
   );
 }
 

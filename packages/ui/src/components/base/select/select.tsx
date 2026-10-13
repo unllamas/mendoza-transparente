@@ -7,6 +7,7 @@ import {
   MENU_POPOVER_SURFACE,
   MENU_POPOVER_WIDTH,
 } from "@mt/ui/components/base/dropdown/menu-styles";
+import { Label } from "@mt/ui/components/base/input/label";
 import { ChevronDownSmall } from "@mt/ui/components/foundations/icons/chevrons";
 import { cx } from "@mt/ui/lib/cx";
 import { useDismissOnOutsidePress, useTriggerToggle } from "@mt/ui/lib/use-dismiss-on-outside-press";
@@ -43,7 +44,8 @@ import {
  * Item content is free-form: pass a `StatusDot` + text for status selects.
  */
 
-export type SelectSize = "sm" | "md";
+/** Mendoza Transparente: `lg` (44 px) is the default touch size. */
+export type SelectSize = "sm" | "md" | "lg";
 
 const SelectSizeContext = createContext<SelectSize>("md");
 
@@ -60,6 +62,8 @@ export interface SelectProps<T extends object> extends Omit<AriaSelectProps<T>, 
   /** Customise the trigger's rendered value (e.g. a compact flag + dial code).
    *  Falls back to the selected item's own content when omitted. */
   renderValue?: ReactNode | ((values: AriaSelectValueRenderProps<T>) => ReactNode);
+  /** Visible label above the trigger (Mendoza Transparente). Without it, pass `aria-label`. */
+  label?: ReactNode;
   ref?: Ref<HTMLDivElement>;
 }
 
@@ -67,10 +71,11 @@ export function Select<T extends object>({
   className,
   triggerClassName,
   popoverClassName,
-  size = "md",
+  size = "lg",
   children,
   items,
   renderValue,
+  label,
   ref,
   ...props
 }: SelectProps<T>) {
@@ -95,10 +100,11 @@ export function Select<T extends object>({
       {...props}
       isOpen={isOpen}
       onOpenChange={(o) => allowOpenChange(o) && setIsOpen(o)}
-      className={cx("group flex flex-col", className)}
+      className={cx("group flex flex-col", label != null && "gap-1.5", className)}
     >
       {({ isOpen }) => (
         <>
+          {label != null && <Label>{label}</Label>}
           <AriaButton
             ref={triggerRef}
             className={cx(
@@ -109,7 +115,11 @@ export function Select<T extends object>({
               "hover:bg-background-primary-hover hover:border-border-button-hover",
               "outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-border-focus-ring",
               "disabled:cursor-not-allowed disabled:bg-background-primary-disabled disabled:text-text-tertiary disabled:shadow-none",
-              size === "sm" ? "gap-1 px-[7px] py-1 text-body-2-medium" : "gap-1.5 px-2.5 py-2 text-body-medium",
+              size === "sm"
+                ? "gap-1 px-[7px] py-1 text-body-2-medium"
+                : size === "lg"
+                  ? "min-h-11 gap-1.5 px-3 py-2.5 text-body-medium"
+                  : "gap-1.5 px-2.5 py-2 text-body-medium",
               triggerClassName,
             )}
           >
@@ -137,7 +147,7 @@ export function Select<T extends object>({
               popoverClassName,
             )}
           >
-            <AriaListBox items={items} className={cx(MENU_ITEMS_CONTAINER, "max-h-[240px] overflow-auto")}>
+            <AriaListBox items={items} className={cx(MENU_ITEMS_CONTAINER, "max-h-[min(320px,60dvh)] overflow-auto")}>
               <SelectSizeContext.Provider value={size}>{children}</SelectSizeContext.Provider>
             </AriaListBox>
           </AriaPopover>
@@ -159,7 +169,7 @@ export function SelectItem({ className, children, ...props }: SelectItemProps) {
       className={(state) =>
         cx(
           MENU_ITEM,
-          size === "sm" ? "px-2 py-1.5 text-body-2-medium" : "text-body-medium",
+          size === "sm" ? "px-2 py-1.5 text-body-2-medium" : size === "lg" ? "min-h-11 px-3 text-body-medium" : "text-body-medium",
           (state.isFocused || state.isSelected) && MENU_ITEM_ACTIVE,
           state.isDisabled && "cursor-not-allowed text-text-disabled",
           typeof className === "function" ? className(state) : className,

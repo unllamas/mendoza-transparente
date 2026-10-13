@@ -32,15 +32,18 @@ Los componentes base y los tokens viven en el paquete `@mt/ui`. Lo usa la web y 
 | **BoardUI** | |
 | `Button` (`base/buttons/button`) | Variantes `primary` (relleno borravino, la acción principal), `secondary` (borde, el resto de las acciones), `ghost` y `danger`. Tamaño `large` (44 px) por defecto; `medium`, `small` y `xs` solo en superficies densas de escritorio. Íconos por prop (`leadingIcon={RiArrowLeftLine}`). Para un `Link` del router o un `<a>`: `className={buttonClassName({ variant: "secondary" })}`. |
 | `IconButton` (`base/buttons/icon-button`) | Solo ícono: 44 × 44 por defecto, `icon` y `aria-label` obligatorios. |
+| `Input`, `Textarea` (`base/input`, `base/textarea`) | Campos de React Aria con su etiqueta (`label`), ayuda (`hint`) y validación nativa (`isRequired`, `maxLength`). 44 px por defecto. `onChange` recibe el texto, no el evento. Para una fecha: `TextField` + `Label` + `InputBase type="date"` (el selector del celular). |
+| `Select`, `SelectItem` (`base/select`) | Lista de opciones de React Aria (`value`/`onChange` con el `id` de cada `SelectItem`, o `name` + `defaultValue` en un formulario). Disparador y filas de 44 px. Con `label` visible arriba, o `aria-labelledby` si la etiqueta va al costado. |
+| `SegmentedControl` (`base/segmented-control`) | Opciones excluyentes. `Segmented` (`@mt/ui/components/segmented`) lo arma desde una lista de opciones y lo hace desplazable en el celular. |
+| `SearchInput` | `Input` de BoardUI con lupa, para filtrar listas. |
 | **Propios (en migración)** | |
 | `Badge` | Etiquetas de una línea: `neutral`, `brand`, `warning`. Sin borde (no son clickeables). |
 | `Tile` / `CardLink` | Bloque informativo (solo fondo; tamaños `sm`, `default`, `lg`) y tarjeta clickeable (borde, se marca en hover). Para otro elemento (`<li>`, `<details>`, un `Link`): `tileVariants()` y `cardVariants()`. |
 | `Sheet` | Hoja modal (Radix Dialog): foco adentro, Escape y la X cierran. Con dos apiladas se muestra solo la de arriba; al cerrarla vuelve la de abajo. |
 | `Popover` | Nota flotante (Radix Popover) que se reacomoda sola para no salirse de la pantalla. |
 | `Dialog` | Ventana a pantalla completa o centrada (Radix Dialog): el buscador y el menú del celular. Foco adentro, Escape cierra. |
-| `Input`, `Textarea`, `Select`, `Field` | Controles de formulario de 44 px con el mismo borde y foco, y el campo con su etiqueta y ayuda. |
 | `Alert` | Aviso `warning` o `note`. |
-| `Segmented`, `SearchInput`, `StatTile`, `Section`, `PageHeader`, `PersonAvatar` | Selector de opciones, buscador, cifra con etiqueta, bloque con título, encabezado de página y cara de una persona. |
+| `StatTile`, `Section`, `PageHeader`, `PersonAvatar` | Cifra con etiqueta, bloque con título, encabezado de página y cara de una persona. |
 
 - **Nada a mano.** Un botón, un bloque, una tarjeta, una etiqueta o un campo no se arman con clases sueltas: se usa el componente o sus clases (`buttonClassName`, `tileVariants`, `cardVariants`). Si falta una variante, se agrega al paquete. Las únicas excepciones son el campo del buscador (va sin borde dentro de su barra) y el campo trampa contra spam de Participar.
 - **Sin código muerto:** `noUnusedLocals` está activado en la web y en el paquete, así que `bunx tsc --noEmit` falla con imports o variables sin usar.
@@ -71,7 +74,7 @@ Los componentes base y los tokens viven en el paquete `@mt/ui`. Lo usa la web y 
 
 La mayoría entra desde el teléfono. Estos detalles separan «una página web en el celular» de algo cómodo:
 
-- **Campos de formulario con letra de 16 px** en el celular (`text-base sm:text-sm`, ya incluido en `Input`, `Textarea`, `Select` y `SearchInput`). Con menos, iOS agranda la página al tocar el campo y no la vuelve a achicar. Nunca se arregla bloqueando el zoom (`maximum-scale=1` o `user-scalable=no`): es un problema de accesibilidad. `bun run verificar` lo controla.
+- **Campos de formulario con letra de 16 px** en el celular (`max-sm:text-base`, ya incluido en `Input`, `Textarea` y `SearchInput` de BoardUI). Con menos, iOS agranda la página al tocar el campo y no la vuelve a achicar. Nunca se arregla bloqueando el zoom (`maximum-scale=1` o `user-scalable=no`): es un problema de accesibilidad. `bun run verificar` lo controla.
 - **Teclado correcto:** `type="email"`, `type="tel"`, `inputMode="numeric"` para números y `enterKeyHint="search"` en los buscadores.
 - **El hover no existe en el celular.** En Tailwind 4, `hover:` ya se aplica solo en dispositivos con mouse. Por eso nada importante puede depender del hover (ver Forma).
 - **Respuesta al tocar:** lo que se toca cambia algo en el momento (`active:`), no recién al soltar.
@@ -124,7 +127,7 @@ Complementa a Contenido: cómo se escriben los botones, los errores y las pantal
 - **Los botones de solo ícono nombran la acción**, no el dibujo: `label="Cerrar"`, no «X» ni «ícono de cruz».
 - **Los errores dicen cómo seguir** y van al lado de lo que falló: «No pudimos enviar el pedido. Revisá la conexión y probá de nuevo», no «Algo salió mal». Sin «¡Ups!» ni signos de exclamación.
 - **Pantallas vacías que orientan:** qué es este lugar y qué se puede hacer. Con un filtro: «No hay leyes que digan "riego". Borrar la búsqueda». Si el vacío es que el Estado no publica el dato, se dice así y se enlaza a `/no-publicado`.
-- **El ejemplo del campo es un ejemplo,** no una instrucción: `nombre@correo.com`, no «Ingrese su correo». La instrucción va en la ayuda de `Field`.
+- **El ejemplo del campo es un ejemplo,** no una instrucción: `nombre@correo.com`, no «Ingrese su correo». La instrucción va en la ayuda (`hint`) del campo.
 - **Sin «por favor» ni «exitosamente»** en mensajes de rutina: «Pedido enviado».
 - **Un aviso al lado de lo que se tocó:** al copiar, un tilde en el mismo botón; no una notificación lejos.
 

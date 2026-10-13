@@ -1,5 +1,5 @@
+import { Select, SelectItem } from "@mt/ui/components/base/select/select";
 import { cardVariants, tileVariants } from "@mt/ui/components/card";
-import { Select } from "@mt/ui/components/input";
 import { cn } from "@mt/ui/lib/utils";
 /**
  * Home guide: the pieces that help people find their way in the site. Global search, department picker,
@@ -34,27 +34,30 @@ export function DepartmentPicker() {
   const navigate = useNavigate();
   const names = Object.keys(SECCION_ELECTORAL).sort((a, b) => a.localeCompare(b, "es"));
   return (
-    <label className="flex min-w-0 items-center gap-2 text-sm text-ink-2">
+    <div className="flex min-w-0 items-center gap-2 text-sm text-ink-2">
       <MapPin className="size-4 shrink-0 text-ink-muted" aria-hidden />
-      <span className="whitespace-nowrap">¿Dónde vivís?</span>
+      <span className="whitespace-nowrap" id="selector-departamento-label">
+        ¿Dónde vivís?
+      </span>
       <Select
         id="selector-departamento"
-        defaultValue=""
-        onChange={(e) => {
-          if (!e.target.value) return;
-          track("home.department.select", { municipality: e.target.value });
-          void navigate({ to: "/municipios/$slug", params: { slug: e.target.value } });
+        aria-labelledby="selector-departamento-label"
+        placeholder="Elegí tu departamento"
+        onChange={(key) => {
+          if (key == null) return;
+          const municipality = String(key);
+          track("home.department.select", { municipality });
+          void navigate({ to: "/municipios/$slug", params: { slug: municipality } });
         }}
-        className="w-auto min-w-0"
+        className="min-w-0"
       >
-        <option value="">Elegí tu departamento</option>
         {names.map((n) => (
-          <option key={n} value={slug(n)}>
+          <SelectItem key={n} id={slug(n)}>
             {n}
-          </option>
+          </SelectItem>
         ))}
       </Select>
-    </label>
+    </div>
   );
 }
 

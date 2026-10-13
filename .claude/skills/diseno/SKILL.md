@@ -9,7 +9,7 @@ Fuente completa: `docs/procesos/diseno.md`. Público: cualquier persona de Mendo
 
 ## Sistema de diseño
 
-Los componentes base y los tokens están en `packages/ui` (`@mt/ui`). **La base es BoardUI** (React Aria, en `src/components/{base,application,foundations}/`) y se está migrando: lo nuevo se arma con BoardUI y lo que se toca se pasa. Se agrega con `BOARDUI_TELEMETRY_DISABLED=1 npx -y boardui@latest add <x>` desde `packages/ui`, nunca con `init`. De BoardUI ya en uso: `Button` e `IconButton` (44 px por defecto; `buttonClassName()` para un `Link`), íconos de `@remixicon/react`. Propios en migración: `Badge`, `Tile`, `CardLink`, `Sheet`, `Dialog`, `Popover`, `Alert`, `Input`, `Textarea`, `Select`, `Field`, `Segmented`, `SearchInput`, `StatTile`, `Section`, `PageHeader` y `PersonAvatar`. Para estilizar otro elemento: `buttonClassName`, `tileVariants` y `cardVariants`.
+Los componentes base y los tokens están en `packages/ui` (`@mt/ui`). **La base es BoardUI** (React Aria, en `src/components/{base,application,foundations}/`) y se está migrando: lo nuevo se arma con BoardUI y lo que se toca se pasa. Se agrega con `BOARDUI_TELEMETRY_DISABLED=1 npx -y boardui@latest add <x>` desde `packages/ui`, nunca con `init`. De BoardUI ya en uso: `Button` e `IconButton` (44 px por defecto; `buttonClassName()` para un `Link`), `Input`, `Textarea`, `Select`/`SelectItem`, `SegmentedControl` (y `Segmented`/`SearchInput` armados encima), íconos de `@remixicon/react`. Propios en migración: `Badge`, `Tile`, `CardLink`, `Sheet`, `Dialog`, `Popover`, `Alert`, `StatTile`, `Section`, `PageHeader` y `PersonAvatar`. Para estilizar otro elemento: `buttonClassName`, `tileVariants` y `cardVariants`.
 
 - **Solo Tailwind:** no se escribe CSS propio. Los tokens del sitio viven en `packages/ui/src/styles/mt.css`, encima de los de BoardUI (`theme.css`, que no se edita).
 - **Tema claro por defecto;** el oscuro (`.dark`) solo si la persona lo elige en el footer. Nunca `dark:` a mano.
@@ -38,7 +38,7 @@ Los componentes base y los tokens están en `packages/ui` (`@mt/ui`). **La base 
 
 ## Celular, accesibilidad y movimiento (detalle en `diseno.md`)
 
-- **Campos de 16 px en el celular** (`text-base sm:text-sm`, ya en los controles de `@mt/ui`): con menos, iOS agranda la página. Nunca bloquear el zoom.
+- **Campos de 16 px en el celular** (`max-sm:text-base`, ya en los campos de `@mt/ui`): con menos, iOS agranda la página. Nunca bloquear el zoom.
 - **Teclado correcto** (`type`, `inputMode`, `enterKeyHint`) y **respuesta al tocar** (`active:`).
 - **Elementos nativos:** `<button>` para acciones, `<a>`/`Link` para navegar; nunca `<div onClick>`. Foco visible siempre; Escape cierra; todo se hace con teclado.
 - **Nombre accesible** en todo lo que se toca; el color nunca va solo; contraste 4,5:1 en texto.

@@ -21,5 +21,5 @@ export function ListSearch({
     const t = setTimeout(() => track("search.query", { search: label, query: q.slice(0, 80) }), 1200);
     return () => clearTimeout(t);
   }, [value, label]);
-  return <SearchInput value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} label={label} />;
+  return <SearchInput value={value} onChange={onChange} placeholder={placeholder} label={label} />;
 }

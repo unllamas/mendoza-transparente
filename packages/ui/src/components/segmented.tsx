@@ -1,8 +1,9 @@
-import { cn } from "../lib/utils.ts";
+import { SegmentedControl, SegmentedControlItem } from "@mt/ui/components/base/segmented-control/segmented-control";
+import { cx } from "@mt/ui/lib/cx";
 
 /**
- * Mutually exclusive options (the period of a chart, the order of a list). On phones it scrolls sideways
- * inside its own strip instead of widening the page. Each option keeps a 36 px height inside a 44 px control.
+ * Mutually exclusive options (the period of a chart, the order of a list), on BoardUI's `SegmentedControl`.
+ * On phones it scrolls sideways inside its own strip instead of widening the page. 44 px high.
  */
 export function Segmented<T extends string>({
   options,
@@ -18,28 +19,22 @@ export function Segmented<T extends string>({
   className?: string;
 }) {
   return (
-    <div
-      role="radiogroup"
-      aria-label={label}
-      className={cn("-mx-4 flex max-w-[100vw] overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:max-w-full sm:px-0", className)}
-    >
-      <div className="inline-flex shrink-0 rounded-lg border border-line bg-surface p-0.5 text-sm">
+    <div className={cx("-mx-4 flex max-w-[100vw] overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:max-w-full sm:px-0", className)}>
+      <SegmentedControl
+        aria-label={label}
+        selectedKeys={[value]}
+        onSelectionChange={(keys) => {
+          const [next] = [...keys];
+          if (next !== undefined) onChange(next as T);
+        }}
+        className="shrink-0"
+      >
         {options.map((o) => (
-          <button
-            key={o.value}
-            type="button"
-            role="radio"
-            aria-checked={o.value === value}
-            onClick={() => onChange(o.value)}
-            className={cn(
-              "min-h-9 rounded-md px-3 whitespace-nowrap transition-colors",
-              o.value === value ? "bg-grid font-medium text-ink" : "text-ink-2 hover:text-ink",
-            )}
-          >
+          <SegmentedControlItem key={o.value} id={o.value}>
             {o.label}
-          </button>
+          </SegmentedControlItem>
         ))}
-      </div>
+      </SegmentedControl>
     </div>
   );
 }
