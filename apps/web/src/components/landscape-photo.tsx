@@ -10,26 +10,29 @@ import { PHOTOS, type PhotoId } from "@/photos.ts";
  */
 export function LandscapePhoto({ id, className }: { id: PhotoId; className?: string }) {
   const photo = PHOTOS[id];
+  const credit = `${photo.title} · Foto: ${photo.author} · ${photo.license}`;
   return (
     <figure className="-mx-4 -mt-8 flex flex-col gap-2 sm:-mx-5 sm:-mt-10">
       <DotImage src={photo.src} focus={photo.focus} className={cx("w-full", className)} />
-      <figcaption className="flex flex-wrap justify-end gap-x-3 px-4 text-caption-1-regular text-text-tertiary sm:px-5">
+      {/* One line always (the credit truncates): a caption that wraps would move the page below it. */}
+      <figcaption className="flex justify-end gap-x-3 px-4 text-caption-1-regular text-text-tertiary sm:px-5">
         <a
           href={photo.url}
           target="_blank"
           rel="noreferrer"
           data-track="landscape.credit"
           data-track-photo={id}
-          className="hover:underline"
+          title={credit}
+          className="min-w-0 truncate hover:underline"
         >
-          {photo.title} · Foto: {photo.author} · {photo.license}
+          {credit}
         </a>
         <Link
           to="/participar"
           search={{ tipo: "foto" }}
           data-track="landscape.propose"
           data-track-photo={id}
-          className="text-text-link hover:underline"
+          className="shrink-0 text-text-link hover:underline"
         >
           Proponé tu foto
         </Link>

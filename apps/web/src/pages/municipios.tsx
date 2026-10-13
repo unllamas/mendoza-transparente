@@ -14,7 +14,7 @@ import { LandscapePhoto } from "@/components/landscape-photo.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
 import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
 import { formatDate, formatNumber } from "@/lib.ts";
-import { municipalityPhoto } from "@/photos.ts";
+import { DEFAULT_PHOTO, municipalityPhoto } from "@/photos.ts";
 import { slug } from "@/slug.ts";
 import type { MunicipioPagina } from "@/types.ts";
 import { useUrlOption } from "@/url-state.ts";
@@ -49,6 +49,9 @@ const metricFormat = (metric: Metric) =>
       : (v: number) => `${perThousand(v)} cada 1.000 hab.`;
 const METRIC_UNIT: Record<Metric, string> = { poblacion: "habitantes", coparticipacion: "por habitante", personal: "cada 1.000 hab." };
 
+/** The list and each municipality share the band's height and place, so going from one to the other moves nothing. */
+const LANDSCAPE_HEIGHT = "h-44 sm:h-64";
+
 export function MunicipiosPage() {
   const { municipios, mapa } = listApi.useLoaderData();
   const navigate = useNavigate();
@@ -64,6 +67,10 @@ export function MunicipiosPage() {
 
   return (
     <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-6">
+        <LandscapePhoto id={DEFAULT_PHOTO} className={LANDSCAPE_HEIGHT} />
+        <Breadcrumbs items={[{ label: "Municipios" }]} />
+      </div>
       <PageHeader icon={RiMapPinLine} topic="Municipios" title="Los 18 municipios de Mendoza">
         Quién gobierna cada uno, cuántos habitantes tiene, cuánta coparticipación recibe y cuánto personal tiene.
       </PageHeader>
@@ -155,7 +162,7 @@ export function MunicipioPage() {
   return (
     <div className="flex flex-col gap-10">
       <div className="flex flex-col gap-6">
-        <LandscapePhoto id={municipalityPhoto(m.slug)} className="h-44 sm:h-64" />
+        <LandscapePhoto id={municipalityPhoto(m.slug)} className={LANDSCAPE_HEIGHT} />
         <Breadcrumbs items={[{ label: "Municipios", to: "/municipios" }, { label: m.nombre }]} />
       </div>
       <PageHeader icon={RiMapPinLine} topic="Municipio" title={m.nombre}>
