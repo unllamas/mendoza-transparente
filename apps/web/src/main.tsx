@@ -137,10 +137,12 @@ const comoLeerRoute = createRoute({
 const participarRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/participar",
-  validateSearch: (s: Record<string, unknown>): { tipo?: string; dato?: string; pagina?: string } => ({
+  validateSearch: (s: Record<string, unknown>): { tipo?: string; dato?: string; pagina?: string; titulo?: string; cita?: string } => ({
     tipo: typeof s.tipo === "string" ? s.tipo : undefined,
     dato: typeof s.dato === "string" ? s.dato : undefined,
     pagina: typeof s.pagina === "string" ? s.pagina : undefined,
+    titulo: typeof s.titulo === "string" ? s.titulo : undefined,
+    cita: typeof s.cita === "string" ? s.cita : undefined,
   }),
   loader: () => loadTema<NoPublicado[]>("no-publicado").catch(() => [] as NoPublicado[]),
   component: page(() => import("./pages/participar.tsx"), "ParticiparPage"),

@@ -27,7 +27,11 @@ export const EVENT_CATALOG: EventDoc[] = [
     description: "Abrió o cerró un grupo del menú (Gobierno, Datos, Compras del Estado, Transparencia). Propiedades group y open.",
     tags: ["navegación"],
   },
-  { event: "footer.report_error", description: "Tocó «¿Encontraste un error? Avisanos» en el pie de página.", tags: ["participación"] },
+  {
+    event: "footer.report_error",
+    description: "Tocó «Reportar un error» en la franja de arriba del pie. Propiedad path: la página donde lo vio.",
+    tags: ["participación"],
+  },
   {
     event: "sheet.open",
     description: "Abrió una hoja de detalle (un pedido, un proceso de compra, un proveedor, una fila de datos). Propiedad sheet: cuál.",
@@ -152,7 +156,12 @@ export const EVENT_CATALOG: EventDoc[] = [
     description: "Falló el envío de una respuesta (por ejemplo, número de trámite no registrado). Propiedad status.",
     tags: ["participación"],
   },
-  { event: "participation.bug.success", description: "Reportó un error del sitio.", tags: ["participación"] },
+  {
+    event: "participation.bug.success",
+    description:
+      "Reportó un error del sitio. Propiedad type: dato_incorrecto, dato_desactualizado, falta_dato, link_roto, se_ve_mal u otro.",
+    tags: ["participación"],
+  },
   { event: "participation.bug.error", description: "Falló el envío de un reporte de error. Propiedad status.", tags: ["participación"] },
   { event: "participation.data_suggestion.success", description: "Sugirió un dato para sumar al sitio.", tags: ["participación"] },
   {

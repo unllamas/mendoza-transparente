@@ -10,7 +10,6 @@ import {
   RiArrowRightSLine,
   RiBankLine,
   RiBookOpenLine,
-  RiBugLine,
   RiBuilding2Line,
   RiCloseLine,
   RiCoinsLine,
@@ -32,6 +31,7 @@ import { trackPageview } from "@/analytics.ts";
 import { usePageMeta } from "@/seo.ts";
 import { DetailSheet } from "./detail-sheet.tsx";
 import { REPO } from "./official-sources.tsx";
+import { ReportErrorBand } from "./report-error.tsx";
 import { HeaderSearchButton, SearchDialog } from "./search-dialog.tsx";
 import { UiProviders } from "./ui-providers.tsx";
 
@@ -200,6 +200,7 @@ export function Layout() {
         </main>
 
         <footer className="border-t border-separator-border">
+          <ReportErrorBand />
           <div className="mx-auto flex max-w-5xl flex-col gap-8 px-4 py-10 sm:px-5 md:flex-row md:justify-between">
             <div className="flex max-w-md flex-col gap-2 text-body-regular">
               <span className="text-body-semibold">Mendoza Transparente</span>
@@ -215,15 +216,6 @@ export function Layout() {
               >
                 <RiGitBranchLine className="size-4" aria-hidden /> Código y datos abiertos en GitHub
               </a>
-              <Link
-                to="/participar"
-                search={{ tipo: "error", pagina: pathname }}
-                id="footer-reportar-error"
-                data-track="footer.report_error"
-                className="inline-flex w-fit items-center gap-1.5 text-text-link hover:underline"
-              >
-                <RiBugLine className="size-4" aria-hidden /> ¿Encontraste un error? Avisanos
-              </Link>
             </div>
 
             <div className="flex max-w-sm flex-col gap-2 text-body-regular">

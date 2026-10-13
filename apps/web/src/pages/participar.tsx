@@ -62,8 +62,8 @@ export function ParticiparPage() {
 
       {form === "pedido" && <RequestForm items={items} defaultItem={search.dato ?? null} />}
       {form === "respuesta" && <AnswerForm />}
-      {form === "error" && <FeedbackForm kind="error" defaultPage={search.pagina ?? null} />}
-      {form === "dato" && <FeedbackForm kind="dato" defaultPage={null} />}
+      {form === "error" && <FeedbackForm kind="error" context={{ page: search.pagina, title: search.titulo, quote: search.cita }} />}
+      {form === "dato" && <FeedbackForm kind="dato" context={{}} />}
       {form === "foto" && <PhotoForm />}
 
       <Alert variant="note" title="Qué hacemos con lo que nos mandás">
@@ -89,7 +89,7 @@ type SubmitState = { status: "idle" | "sending" | "done" } | { status: "error"; 
 
 function useSubmit(endpoint: string, trackEvent: string) {
   const [state, setState] = useState<SubmitState>({ status: "idle" });
-  async function submit(body: Record<string, unknown>, token: string | null) {
+  async function submit(body: Record<string, unknown>, token: string | null, props?: Record<string, string>) {
     setState({ status: "sending" });
     try {
       const r = await fetch(endpoint, {
@@ -103,7 +103,7 @@ function useSubmit(endpoint: string, trackEvent: string) {
         setState({ status: "error", message: data.error ?? "No pudimos guardar tu envío. Probá de nuevo en un rato." });
         return;
       }
-      track(`${trackEvent}.success`);
+      track(`${trackEvent}.success`, props);
       setState({ status: "done" });
     } catch {
       track(`${trackEvent}.error`, { status: 0 });
@@ -226,9 +226,24 @@ function AnswerForm() {
   );
 }
 
-function FeedbackForm({ kind, defaultPage }: { kind: "error" | "dato"; defaultPage: string | null }) {
+/** Kinds of error, so a report says what to check without having to write it. */
+const ERROR_TYPES = [
+  { id: "dato_incorrecto", label: "Un dato está mal" },
+  { id: "dato_desactualizado", label: "Un dato está desactualizado" },
+  { id: "falta_dato", label: "Falta un dato" },
+  { id: "link_roto", label: "Un link no funciona" },
+  { id: "se_ve_mal", label: "Algo se ve mal o no se entiende" },
+  { id: "otro", label: "Otra cosa" },
+] as const;
+type ErrorType = (typeof ERROR_TYPES)[number]["id"];
+
+/** What the "Report an error" button brings from the page (see components/report-error.tsx). */
+type ReportContext = { page?: string; title?: string; quote?: string };
+
+function FeedbackForm({ kind, context }: { kind: "error" | "dato"; context: ReportContext }) {
   const { state, submit, reset } = useSubmit("/api/feedback", `participation.${kind === "error" ? "bug" : "data_suggestion"}`);
   const [token, setToken] = useState<string | null>(null);
+  const [errorType, setErrorType] = useState<ErrorType>("dato_incorrecto");
   if (state.status === "done")
     return (
       <Done onAgain={reset} again="Enviar otro">
@@ -238,7 +253,20 @@ function FeedbackForm({ kind, defaultPage }: { kind: "error" | "dato"; defaultPa
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
-    void submit({ kind, message: f.get("message"), page: f.get("page"), email: f.get("email"), website: f.get("website") }, token);
+    const message = String(f.get("message") ?? "");
+    if (kind === "dato") {
+      void submit({ kind, message, page: null, email: f.get("email"), website: f.get("website") }, token);
+      return;
+    }
+    // The API keeps one text per report: the type, the page title, the marked text and the source go in front.
+    const typeLabel = ERROR_TYPES.find((t) => t.id === errorType)?.label;
+    const quote = String(f.get("quote") ?? "").trim();
+    const source = String(f.get("source") ?? "").trim();
+    const details = [message, quote && `Texto marcado: «${quote}»`, source && `Dato correcto en: ${source}`].filter(Boolean);
+    const full = `[${[typeLabel, context.title].filter(Boolean).join(" · ")}] ${details.join(" | ")}`;
+    void submit({ kind, message: full, page: f.get("page"), email: f.get("email"), website: f.get("website") }, token, {
+      type: errorType,
+    });
   };
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-5" id={kind === "error" ? "form-error" : "form-dato"}>
@@ -248,16 +276,45 @@ function FeedbackForm({ kind, defaultPage }: { kind: "error" | "dato"; defaultPa
           : "¿Qué dato público de Mendoza te gustaría encontrar acá? Si sabés dónde está publicado, dejanos el link."}
       </Intro>
       {kind === "error" && (
-        <Input label="En qué página" name="page" defaultValue={defaultPage ?? ""} placeholder="/deuda" maxLength={300} />
+        <>
+          <Input
+            label="En qué página"
+            hint={context.title ? `Venís de «${context.title}».` : undefined}
+            name="page"
+            defaultValue={context.page ?? ""}
+            placeholder="/deuda"
+            maxLength={300}
+          />
+          <Select label="Qué tipo de error" value={errorType} onChange={(key) => setErrorType(key as ErrorType)} id="error-tipo">
+            {ERROR_TYPES.map((t) => (
+              <SelectItem key={t.id} id={t.id}>
+                {t.label}
+              </SelectItem>
+            ))}
+          </Select>
+          {context.quote && <Textarea label="Texto que marcaste" name="quote" defaultValue={context.quote} rows={2} maxLength={300} />}
+        </>
       )}
       <Textarea
         label={kind === "error" ? "Qué encontraste" : "Qué dato y por qué te interesa"}
+        hint={kind === "error" ? "Si sabés cuál es el dato correcto, contanos cuál es." : undefined}
         name="message"
         isRequired
         minLength={10}
         rows={5}
-        maxLength={2000}
+        maxLength={1300}
       />
+      {kind === "error" && (
+        <Input
+          label="Dónde está el dato correcto (opcional)"
+          hint="El link a la fuente oficial, si la tenés."
+          name="source"
+          type="url"
+          inputMode="url"
+          placeholder="https://"
+          maxLength={300}
+        />
+      )}
       <EmailField />
       <Honeypot />
       <Turnstile onToken={setToken} />

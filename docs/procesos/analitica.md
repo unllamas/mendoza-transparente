@@ -62,7 +62,7 @@ Resumen de los eventos:
 |---|---|---|
 | `$pageview` | Toda ruta | `path` |
 | `nav.mobile_menu.toggle`, `nav.mobile_menu.close`, `nav.group.toggle` | Menú | `open`, `group` |
-| `footer.report_error` | Pie | — |
+| `footer.report_error` | Franja «Reportar un error» arriba del pie | `path` |
 | `sheet.open` / `sheet.close` | Toda hoja modal | `sheet`, `seconds` |
 | `search.query` | Buscadores | `search`, `query` |
 | `link.outbound` / `data.download` | Todo enlace | `href`, `host`, `text` / `file` |

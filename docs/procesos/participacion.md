@@ -9,6 +9,21 @@ Página `/participar`. Ahí la gente puede:
 
 Con eso publicamos cuántos pedidos hay por dato y cuánto responde el Estado. Se ve en la página y en cada hoja de "Lo que no se publica".
 
+## Reportar un error desde cualquier página
+
+Arriba del pie de todas las páginas (menos `/participar`) hay una franja «¿Viste un dato mal en esta página?» con el botón **Reportar un error** (`apps/web/src/components/report-error.tsx`). Lleva al formulario de error de `/participar` con todo lo que se puede completar solo:
+
+| Parámetro | Qué lleva |
+|---|---|
+| `tipo=error` | Abre el formulario de error. |
+| `pagina` | La dirección completa, con sus parámetros: si había una hoja abierta (`?proceso=`, `?proveedor=`) o una búsqueda, queda en el reporte. |
+| `titulo` | El título de la página, para que se lea de qué se trata sin abrir el link. |
+| `cita` | El texto que la persona marcó en la página antes de tocar el botón (hasta 300 caracteres). |
+
+En el formulario la persona elige además **qué tipo de error** es (un dato mal, desactualizado, que falta, un link roto, algo que se ve mal u otra cosa) y puede dejar el link a la fuente con el dato correcto. Como la API guarda un solo texto por reporte, todo eso va al principio del mensaje: `[Tipo · Título] mensaje | Texto marcado: «…» | Dato correcto en: https://…`.
+
+Cualquier link puede armar el mismo pedido: `/participar?tipo=error&pagina=/deuda`.
+
 ## Cómo funciona
 
 - **Lógica:** `apps/web/server/participation.ts`. Son funciones puras sobre una interfaz `Store`. Valida y normaliza los datos y aplica el anti-spam y el límite de envíos.
