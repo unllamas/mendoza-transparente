@@ -31,6 +31,7 @@ import { DepartmentPicker, EcosystemMap, ReadingRules, StartingQuestions, WhatsN
 import { LandscapePhoto } from "@/components/landscape-photo.tsx";
 import { SearchTrigger } from "@/components/search-dialog.tsx";
 import { formatDate, formatNumber } from "@/lib.ts";
+import { slug } from "@/slug.ts";
 import type { SourceMeta } from "@/types.ts";
 
 const route = getRouteApi("/");
@@ -267,7 +268,7 @@ export function HomePage() {
               valores={coparticipacion.porMunicipio}
               formatValue={pesos}
               seleccionado={null}
-              onSelect={() => navigate({ to: "/coparticipacion" })}
+              onSelect={(m) => m && navigate({ to: "/municipios/$slug", params: { slug: slug(m) } })}
               leyenda={`Pesos por habitante (de ${coparticipacion.referencia})`}
             />
           </div>

@@ -129,6 +129,8 @@ El ámbar es un color de estado, como el verde y el rojo: va siempre con ícono 
 - Una sola serie por gráfico de línea; el eje Y sin unidad (va en el título) y el eje X con etiquetas espaciadas según el ancho.
 - Franjas por gobernador, neutras, en las series temporales; comparación por mandato con el dato inicial y final.
 - Mapas con escala por cuantiles (cada tono agrupa una cantidad parecida de departamentos) y más = más intenso en ambos modos.
+- **El borde entre departamentos se ve igual en el mapa y en el recuadro ampliado** (mismo grosor en pantalla, con `vectorEffect="non-scaling-stroke"`): si en el ampliado se afina, los departamentos con tonos parecidos se funden en una sola mancha.
+- **Tocar un departamento en un mapa que no es de un tema lleva a la página del municipio** (`/municipios/<slug>`), no a la página del tema.
 - Montos en valores reales (pesos de hoy) y por habitante cuando se comparan años o lugares.
 
 ## Textos de la interfaz

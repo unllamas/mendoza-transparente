@@ -60,7 +60,7 @@ export function MapaMendoza({ mapa, valores, formatValue, seleccionado, onSelect
             d={d.path}
             style={{ fill: color(valores[d.municipio]) }}
             stroke={sel ? "var(--color-text-primary)" : "var(--color-background-primary-default)"}
-            strokeWidth={sel ? (zoom ? 0.8 : 3) : zoom ? 0.3 : 1.2}
+            strokeWidth={sel ? 3 : 1.2}
             vectorEffect="non-scaling-stroke"
             role="button"
             tabIndex={zoom ? -1 : 0}
@@ -161,7 +161,7 @@ export function MunicipalityLocator({ mapa, focus, onOpen }: { mapa: MapaData; f
             d={d.path}
             style={{ fill: isFocus ? "var(--color-highlight)" : isHover ? "var(--color-map-1)" : "var(--color-chart-grid)" }}
             stroke="var(--color-background-primary-default)"
-            strokeWidth={zoom ? 0.3 : 1.2}
+            strokeWidth={1.2}
             vectorEffect="non-scaling-stroke"
             role={isFocus ? "img" : "link"}
             tabIndex={isFocus || zoom ? -1 : 0}
