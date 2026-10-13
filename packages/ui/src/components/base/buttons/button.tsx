@@ -38,8 +38,12 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ComponentType, ReactNo
  * `variant` to avoid the clash.
  */
 
-type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
-type ButtonSize = "medium" | "small" | "xs";
+/**
+ * Mendoza Transparente: `large` (44 px, the minimum touch target) is the default. `medium`, `small` and `xs`
+ * stay for dense desktop-only surfaces.
+ */
+export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
+export type ButtonSize = "large" | "medium" | "small" | "xs";
 
 type IconComponent = ComponentType<{
   className?: string;
@@ -77,6 +81,7 @@ const styles = sortCx({
 
   // Base shape per size (used when label is present OR medium icon-only).
   size: {
+    large: "h-11 rounded-2lg px-3 text-body-medium",
     medium: "h-9 rounded-2lg p-2 text-body-medium",
     small: "h-8 rounded-lg px-2 py-1.5 text-body-medium",
     xs: "h-6 rounded-sm px-2 text-caption-1-semibold",
@@ -89,18 +94,21 @@ const styles = sortCx({
   //   Xs     → forces 24×24, content-centered — used for the calendar
   //            template's edit-icon buttons (timezone/participants/reminder).
   iconOnlySize: {
+    large: "size-11 p-0",
     medium: "", // base size already produces 36×36 with a 20px icon
     small: "size-8 p-0", // hard 32×32, content-centered
     xs: "size-6 p-0", // hard 24×24, content-centered
   },
 
   icon: {
+    large: "size-5 shrink-0", // 20px
     medium: "size-5 shrink-0", // 20px
     small: "size-[18px] shrink-0", // 18px
     xs: "size-3.5 shrink-0", // 14px
   },
 
   label: {
+    large: "inline-flex items-center justify-center px-1 shrink-0",
     medium: "inline-flex items-center justify-center px-1 shrink-0", // px=4
     small: "inline-flex items-center justify-center px-0.5 shrink-0", // px=2
     xs: "inline-flex items-center justify-center px-0.5 shrink-0", // px=2
@@ -136,7 +144,7 @@ const styles = sortCx({
 
 export function Button({
   variant = "primary",
-  size = "medium",
+  size = "large",
   iconOnly = false,
   leadingIcon: Leading,
   trailingIcon: Trailing,
@@ -163,7 +171,7 @@ export function Button({
 /** Anchor counterpart to Button for navigational actions. */
 export function ButtonLink({
   variant = "primary",
-  size = "medium",
+  size = "large",
   iconOnly = false,
   leadingIcon: Leading,
   trailingIcon: Trailing,
@@ -187,3 +195,21 @@ export function ButtonLink({
 
 /** Style maps, exported for advanced composition and the dev Design Tuner. */
 export const buttonStyles = styles;
+
+/**
+ * Button classes for an element this file does not render: a router `Link`, an `<a>` with a download.
+ * Put the label inside; icons go as children with `size-5`.
+ */
+export function buttonClassName({
+  variant = "primary",
+  size = "large",
+  iconOnly = false,
+  className,
+}: {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  iconOnly?: boolean;
+  className?: string;
+} = {}) {
+  return cx(styles.base, styles.size[size], styles.variant[variant], iconOnly && styles.iconOnlySize[size], "gap-1.5", className);
+}

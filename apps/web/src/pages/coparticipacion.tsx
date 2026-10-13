@@ -1,5 +1,5 @@
 import { Alert } from "@mt/ui/components/alert";
-import { buttonVariants } from "@mt/ui/components/button";
+import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { tileVariants } from "@mt/ui/components/card";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
@@ -145,7 +145,7 @@ function DetalleMunicipio({
             Ver todo sobre {m.municipio} ›
           </Link>
         </span>
-        <button type="button" onClick={onClose} className={cn(buttonVariants({ variant: "secondary" }))}>
+        <button type="button" onClick={onClose} className={buttonClassName({ variant: "secondary" })}>
           Ver ranking
         </button>
       </div>

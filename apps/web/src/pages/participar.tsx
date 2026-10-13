@@ -1,5 +1,5 @@
 import { Alert } from "@mt/ui/components/alert";
-import { buttonVariants } from "@mt/ui/components/button";
+import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { tileVariants } from "@mt/ui/components/card";
 import { Field, Input, Select, Textarea } from "@mt/ui/components/input";
 import { PageHeader } from "@mt/ui/components/section";
@@ -291,7 +291,7 @@ function SubmitRow({ state, label, id }: { state: SubmitState; label: string; id
         id={id}
         data-track={`${id}.click`}
         disabled={state.status === "sending"}
-        className={cn(buttonVariants({ variant: "primary" }), "w-fit")}
+        className={buttonClassName({ variant: "primary", className: "w-fit" })}
       >
         <Send className="size-4" aria-hidden /> {state.status === "sending" ? "Enviando…" : label}
       </button>

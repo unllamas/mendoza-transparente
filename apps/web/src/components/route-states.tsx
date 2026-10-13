@@ -1,7 +1,7 @@
 import { Alert } from "@mt/ui/components/alert";
-import { Button } from "@mt/ui/components/button";
+import { Button, buttonClassName } from "@mt/ui/components/base/buttons/button";
+import { RiRefreshLine } from "@remixicon/react";
 import { type ErrorComponentProps, Link, useRouter, useRouterState } from "@tanstack/react-router";
-import { RotateCw } from "lucide-react";
 import { useEffect } from "react";
 
 import { captureError } from "@/analytics.ts";
@@ -22,19 +22,17 @@ export function RouteError({ error, reset }: ErrorComponentProps) {
       </Alert>
       <div className="flex flex-wrap gap-2">
         <Button
-          variant="primary"
+          leadingIcon={RiRefreshLine}
           onClick={() => {
             reset();
             void router.invalidate();
           }}
         >
-          <RotateCw className="size-4" aria-hidden /> Reintentar
+          Reintentar
         </Button>
-        <Button asChild>
-          <Link to="/participar" search={{ tipo: "error", pagina: path } as never}>
-            Reportar el error
-          </Link>
-        </Button>
+        <Link to="/participar" search={{ tipo: "error", pagina: path } as never} className={buttonClassName({ variant: "secondary" })}>
+          Reportar el error
+        </Link>
       </div>
     </div>
   );
@@ -47,12 +45,12 @@ export function RouteNotFound() {
       <h1 className="text-2xl font-semibold tracking-tight">No encontramos esta página</h1>
       <p className="text-ink-2 text-pretty">Puede que el enlace esté mal escrito o que la página haya cambiado de lugar.</p>
       <div className="flex flex-wrap gap-2">
-        <Button variant="primary" asChild>
-          <Link to="/">Ir al inicio</Link>
-        </Button>
-        <Button asChild>
-          <Link to="/fuentes">Ver todas las fuentes</Link>
-        </Button>
+        <Link to="/" className={buttonClassName()}>
+          Ir al inicio
+        </Link>
+        <Link to="/fuentes" className={buttonClassName({ variant: "secondary" })}>
+          Ver todas las fuentes
+        </Link>
       </div>
     </div>
   );

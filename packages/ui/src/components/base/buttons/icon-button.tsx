@@ -17,7 +17,8 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ComponentType, Ref } f
  * shadow/xs). Hover/active/disabled states reuse the secondary Button tokens.
  */
 
-type IconButtonSize = "medium" | "small";
+/** Mendoza Transparente: `large` (44 × 44, the minimum touch target) is the default. */
+type IconButtonSize = "large" | "medium" | "small";
 
 type IconComponent = ComponentType<{
   className?: string;
@@ -53,16 +54,18 @@ const styles = sortCx({
     "disabled:cursor-not-allowed disabled:bg-background-primary-disabled disabled:border-border-button-default disabled:text-icon-button-disabled-foreground disabled:opacity-60 disabled:shadow-none",
   ].join(" "),
   size: {
+    large: "size-11",
     medium: "size-9",
     small: "size-8",
   },
   icon: {
+    large: "size-5 shrink-0",
     medium: "size-5 shrink-0",
     small: "size-4 shrink-0",
   },
 });
 
-export function IconButton({ icon: Icon, size = "medium", className, type = "button", ref, ...props }: IconButtonProps) {
+export function IconButton({ icon: Icon, size = "large", className, type = "button", ref, ...props }: IconButtonProps) {
   return (
     <button ref={ref} type={type} className={cx(styles.base, styles.size[size], className)} {...props}>
       <Icon className={cx(styles.icon[size], directionalIconClass(Icon))} aria-hidden />
@@ -71,7 +74,7 @@ export function IconButton({ icon: Icon, size = "medium", className, type = "but
 }
 
 /** Anchor counterpart to IconButton for external and navigational actions. */
-export function IconLinkButton({ icon: Icon, size = "medium", className, ref, ...props }: IconLinkButtonProps) {
+export function IconLinkButton({ icon: Icon, size = "large", className, ref, ...props }: IconLinkButtonProps) {
   return (
     <a ref={ref} className={cx(styles.base, styles.size[size], className)} {...props}>
       <Icon className={cx(styles.icon[size], directionalIconClass(Icon))} aria-hidden />

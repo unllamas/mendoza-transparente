@@ -1,5 +1,5 @@
 import { PersonAvatar } from "@mt/ui/components/avatar";
-import { buttonVariants } from "@mt/ui/components/button";
+import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { tileVariants } from "@mt/ui/components/card";
 import { PageHeader } from "@mt/ui/components/section";
 import { cn } from "@mt/ui/lib/utils";
@@ -71,7 +71,7 @@ export function LeyesPage() {
           <button
             type="button"
             onClick={() => setMostrar((n) => n + PAGINA)}
-            className={cn(buttonVariants({ variant: "secondary" }), "w-fit")}
+            className={buttonClassName({ variant: "secondary", className: "w-fit" })}
           >
             Ver más
           </button>
@@ -207,7 +207,7 @@ export function LeyPage() {
           id="ley-texto-oficial"
           data-track="law.official_pdf.open"
           data-track-law={ley.numero}
-          className={cn(buttonVariants({ variant: "primary" }), "w-fit")}
+          className={buttonClassName({ variant: "primary", className: "w-fit" })}
         >
           <FileText className="size-4" aria-hidden /> Leer el texto oficial (PDF) <ExternalLink className="size-3.5" aria-hidden />
         </a>

@@ -1,6 +1,5 @@
-import { buttonVariants } from "@mt/ui/components/button";
+import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { PageHeader, Section } from "@mt/ui/components/section";
-import { cn } from "@mt/ui/lib/utils";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, BookOpen, Bug, Compass, MousePointerClick, Search, ShieldCheck } from "lucide-react";
 import { Breadcrumbs } from "@/components/breadcrumbs.tsx";
@@ -57,7 +56,7 @@ export function ComoLeerPage() {
             </li>
           ))}
         </ol>
-        <button type="button" onClick={() => openSearch("guide")} className={cn(buttonVariants({ variant: "primary" }), "w-fit")}>
+        <button type="button" onClick={() => openSearch("guide")} className={buttonClassName({ variant: "primary", className: "w-fit" })}>
           Abrir el buscador <ArrowRight className="size-4" aria-hidden />
         </button>
       </Section>

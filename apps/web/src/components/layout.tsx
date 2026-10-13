@@ -1,6 +1,7 @@
 import { ThemeToggle } from "@mt/ui/components/application/theme/theme-toggle";
+import { IconButton } from "@mt/ui/components/base/buttons/icon-button";
 import { Dialog } from "@mt/ui/components/dialog";
-import { IconButton } from "@mt/ui/components/icon-button";
+import { RiCloseLine, RiMenuLine } from "@remixicon/react";
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import {
   Archive,
@@ -16,14 +17,12 @@ import {
   Landmark,
   type LucideIcon,
   MapPin,
-  Menu,
   Scale,
   Stamp,
   Store,
   UserRound,
   Users,
   UsersRound,
-  X,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { trackPageview } from "@/analytics.ts";
@@ -121,15 +120,14 @@ export function Layout() {
             </nav>
             <HeaderSearchButton />
             <IconButton
-              label="Abrir menú"
+              icon={RiMenuLine}
+              aria-label="Abrir menú"
               onClick={() => setAbierto(true)}
               id="menu-movil-boton"
               data-track="nav.mobile_menu.toggle"
               data-track-open="true"
-              className="-mr-1.5 text-ink lg:hidden"
-            >
-              <Menu className="size-5" aria-hidden />
-            </IconButton>
+              className="-mr-1.5 lg:hidden"
+            />
           </div>
         </header>
 
@@ -143,14 +141,13 @@ export function Layout() {
                 Mendoza Transparente
               </Link>
               <IconButton
-                label="Cerrar menú"
+                icon={RiCloseLine}
+                aria-label="Cerrar menú"
                 onClick={() => setAbierto(false)}
                 id="menu-movil-cerrar"
                 data-track="nav.mobile_menu.close"
-                className="-mr-1.5 text-ink"
-              >
-                <X className="size-5" aria-hidden />
-              </IconButton>
+                className="-mr-1.5"
+              />
             </div>
             <nav id="menu-movil" aria-label="Principal" className="flex flex-1 flex-col gap-6 overflow-y-auto overscroll-contain px-4 py-5">
               <div className="flex flex-col">

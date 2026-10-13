@@ -19,6 +19,7 @@
       "version": "0.1.0",
       "dependencies": {
         "@mt/ui": "workspace:*",
+        "@remixicon/react": "^4.9.0",
         "@tanstack/react-router": "^1.170.42",
         "lucide-react": "^1.55.0",
         "posthog-js": "^1.438.8",

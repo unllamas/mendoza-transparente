@@ -1,5 +1,4 @@
-import { buttonVariants } from "@mt/ui/components/button";
-import { cn } from "@mt/ui/lib/utils";
+import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 /**
  * Advanced search: a dialog over everything (full screen on phones, a centered panel on desktop) with results
  * grouped by kind and filters by kind. Opened from the home page, the header search button, or "/" and
@@ -8,8 +7,9 @@ import { cn } from "@mt/ui/lib/utils";
  */
 
 import { PersonAvatar } from "@mt/ui/components/avatar";
+import { IconButton } from "@mt/ui/components/base/buttons/icon-button";
 import { Dialog } from "@mt/ui/components/dialog";
-import { IconButton } from "@mt/ui/components/icon-button";
+import { RiCloseLine, RiSearchLine } from "@remixicon/react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import {
   ArrowRight,
@@ -27,7 +27,6 @@ import {
   Store,
   TriangleAlert,
   UsersRound,
-  X,
 } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 
@@ -126,11 +125,7 @@ export function SearchTrigger() {
 
 /** Search button for the header, on every page. */
 export function HeaderSearchButton() {
-  return (
-    <IconButton label="Buscar" onClick={() => openSearch("header")} id="buscador-header" className="hover:text-link">
-      <Search className="size-5" aria-hidden />
-    </IconButton>
-  );
+  return <IconButton icon={RiSearchLine} aria-label="Buscar" onClick={() => openSearch("header")} id="buscador-header" />;
 }
 
 // ------------------------------------------------------------------ dialog
@@ -273,9 +268,7 @@ export function SearchDialog() {
         >
           Cancelar
         </button>
-        <IconButton label="Cerrar" onClick={close} data-track="search.close" className="hidden sm:flex">
-          <X className="size-5" aria-hidden />
-        </IconButton>
+        <IconButton icon={RiCloseLine} aria-label="Cerrar" onClick={close} data-track="search.close" className="hidden sm:flex" />
       </div>
 
       {/* Filters by kind */}
@@ -410,7 +403,7 @@ function EmptyState({ onExample, onNavigate }: { onExample: (q: string) => void;
                 track("search.example", { query: ex });
                 onExample(ex);
               }}
-              className={cn(buttonVariants({ variant: "secondary" }), "rounded-full font-normal")}
+              className={buttonClassName({ variant: "secondary", className: "rounded-full font-normal" })}
             >
               {ex}
             </button>

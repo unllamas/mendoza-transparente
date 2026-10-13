@@ -21,16 +21,18 @@ Los componentes base y los tokens viven en el paquete `@mt/ui`. Lo usa la web y 
   - `mt.css` es la capa del sitio, encima de BoardUI: la escala `accent` en borravino, las fuentes del sistema, los tokens propios (`ink`, `tile`, `brand`, `link`, `aviso`, la rampa del mapa) y la base mínima. Es lo que importa la app desde `apps/web/src/styles.css`, que no agrega estilos.
 - **Tema claro por defecto.** Un sitio de transparencia se lee de día: el oscuro solo se activa si la persona lo elige con el `ThemeToggle` del footer. Se guarda en `localStorage` (`boardui:theme`) y un script en `apps/web/index.html` lo aplica antes de pintar, sin parpadeo. El oscuro es la clase `.dark` en `<html>`; los tokens cambian solos, nunca se escribe `dark:` a mano.
 - **Piezas:**
-  - `cn()` (`@mt/ui/lib/utils`) junta clases y resuelve conflictos de Tailwind.
+  - `cx()` (`@mt/ui/lib/cx`, de BoardUI) junta clases y entiende la tipografía compuesta de BoardUI; `cn()` (`@mt/ui/lib/utils`) queda para los componentes propios mientras se migran.
+  - Íconos: `@remixicon/react` (los de BoardUI) en todo lo nuevo; `lucide-react` se va reemplazando al tocar cada pantalla.
   - Las variantes se definen con `cva`.
   - `asChild` (Radix Slot) aplica el estilo a un `Link` del router o a un `<a>`.
 - **Componentes:**
 
 | Componente | Para qué |
 |---|---|
+| **BoardUI** | |
+| `Button` (`base/buttons/button`) | Variantes `primary` (relleno borravino, la acción principal), `secondary` (borde, el resto de las acciones), `ghost` y `danger`. Tamaño `large` (44 px) por defecto; `medium`, `small` y `xs` solo en superficies densas de escritorio. Íconos por prop (`leadingIcon={RiArrowLeftLine}`). Para un `Link` del router o un `<a>`: `className={buttonClassName({ variant: "secondary" })}`. |
+| `IconButton` (`base/buttons/icon-button`) | Solo ícono: 44 × 44 por defecto, `icon` y `aria-label` obligatorios. |
 | **Propios (en migración)** | |
-| `Button` | Variantes `primary` (relleno de marca, la acción principal), `secondary` (borde y fondo gris), `ghost` (dentro de otro control) y `link`. Tamaños de 44 px. |
-| `IconButton` | Solo ícono: 44 × 44, estilo secundario, `label` obligatorio. |
 | `Badge` | Etiquetas de una línea: `neutral`, `brand`, `warning`. Sin borde (no son clickeables). |
 | `Tile` / `CardLink` | Bloque informativo (solo fondo; tamaños `sm`, `default`, `lg`) y tarjeta clickeable (borde, se marca en hover). Para otro elemento (`<li>`, `<details>`, un `Link`): `tileVariants()` y `cardVariants()`. |
 | `Sheet` | Hoja modal (Radix Dialog): foco adentro, Escape y la X cierran. Con dos apiladas se muestra solo la de arriba; al cerrarla vuelve la de abajo. |
@@ -40,7 +42,7 @@ Los componentes base y los tokens viven en el paquete `@mt/ui`. Lo usa la web y 
 | `Alert` | Aviso `warning` o `note`. |
 | `Segmented`, `SearchInput`, `StatTile`, `Section`, `PageHeader`, `PersonAvatar` | Selector de opciones, buscador, cifra con etiqueta, bloque con título, encabezado de página y cara de una persona. |
 
-- **Nada a mano.** Un botón, un bloque, una tarjeta, una etiqueta o un campo no se arman con clases sueltas: se usa el componente o sus variantes (`buttonVariants`, `tileVariants`, `cardVariants`). Si falta una variante, se agrega al paquete. Las únicas excepciones son el campo del buscador (va sin borde dentro de su barra) y el campo trampa contra spam de Participar.
+- **Nada a mano.** Un botón, un bloque, una tarjeta, una etiqueta o un campo no se arman con clases sueltas: se usa el componente o sus clases (`buttonClassName`, `tileVariants`, `cardVariants`). Si falta una variante, se agrega al paquete. Las únicas excepciones son el campo del buscador (va sin borde dentro de su barra) y el campo trampa contra spam de Participar.
 - **Sin código muerto:** `noUnusedLocals` está activado en la web y en el paquete, así que `bunx tsc --noEmit` falla con imports o variables sin usar.
 - **Lo propio de la web** (analítica y links del router) va en `apps/web/src/components/`: `TrackedSheet` y `TrackedSegmented` (envían eventos), `ListSearch` (buscador de listas, con evento) y `Breadcrumbs` (usa el router).
 - **Componentes nuevos:** si sirven para más de una pantalla, van al paquete. Primero se busca en BoardUI (`npx boardui@latest list`); si no está, se arma en el paquete con React Aria y los tokens de BoardUI.

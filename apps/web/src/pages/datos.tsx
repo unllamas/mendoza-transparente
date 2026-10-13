@@ -1,8 +1,9 @@
-import { Button } from "@mt/ui/components/button";
+import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { Select } from "@mt/ui/components/input";
 import { StatTile } from "@mt/ui/components/stat-tile";
+import { RiDownloadLine } from "@remixicon/react";
 import { getRouteApi, Link } from "@tanstack/react-router";
-import { ArrowLeft, Download, ExternalLink, MousePointerClick } from "lucide-react";
+import { ArrowLeft, ExternalLink, MousePointerClick } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { type ColumnaVista, columnasVisibles } from "@/celdas.ts";
 import { useDetail } from "@/components/detail-sheet.tsx";
@@ -121,11 +122,9 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
               </Select>
             </label>
           )}
-          <Button asChild>
-            <a href={`/data/${dataset.source}/${dataset.file}`} download>
-              <Download className="size-4" aria-hidden /> Descargar CSV
-            </a>
-          </Button>
+          <a href={`/data/${dataset.source}/${dataset.file}`} download className={buttonClassName({ variant: "secondary" })}>
+            <RiDownloadLine className="size-5" aria-hidden /> Descargar CSV
+          </a>
         </div>
       </div>
 

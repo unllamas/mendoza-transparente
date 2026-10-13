@@ -1,5 +1,5 @@
 import { Alert } from "@mt/ui/components/alert";
-import { buttonVariants } from "@mt/ui/components/button";
+import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { tileVariants } from "@mt/ui/components/card";
 import { Textarea } from "@mt/ui/components/input";
 import { PageHeader } from "@mt/ui/components/section";
@@ -220,7 +220,7 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
             data-track="missing_data.request.copy"
             data-track-item={item.id}
             data-track-edited={String(texto !== armarPedido(item))}
-            className={cn(buttonVariants({ variant: "secondary" }))}
+            className={buttonClassName({ variant: "secondary" })}
           >
             {copiado ? <Check className="size-4 text-good" aria-hidden /> : <Copy className="size-4" aria-hidden />}
             {copiado ? "Copiado" : "1. Copiar pedido"}
@@ -232,7 +232,7 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
             data-track-item={item.id}
             target="_blank"
             rel="noreferrer"
-            className={cn(buttonVariants({ variant: "primary" }))}
+            className={buttonClassName({ variant: "primary" })}
           >
             2. Presentarlo en el formulario oficial <ExternalLink className="size-4" aria-hidden />
           </a>

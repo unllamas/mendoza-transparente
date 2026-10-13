@@ -4,12 +4,12 @@ import { cn } from "@mt/ui/lib/utils";
 /** Panel lateral con el detalle de una fila y, en compras, los datos relacionados. */
 
 import { Alert } from "@mt/ui/components/alert";
-import { Button } from "@mt/ui/components/button";
+import { Button } from "@mt/ui/components/base/buttons/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@mt/ui/components/popover";
+import { RiArrowLeftLine } from "@remixicon/react";
 import { Link } from "@tanstack/react-router";
 import {
   Archive,
-  ArrowLeft,
   Building2,
   CalendarDays,
   ChevronRight,
@@ -66,8 +66,7 @@ export function PanelDetalle({
       trackId="data.row"
       header={
         historial.length > 1 && (
-          <Button variant="ghost" size="sm" className="-ml-2" onClick={() => setHistorial((h) => h.slice(0, -1))}>
-            <ArrowLeft className="size-4" aria-hidden />
+          <Button variant="secondary" leadingIcon={RiArrowLeftLine} className="w-fit" onClick={() => setHistorial((h) => h.slice(0, -1))}>
             Volver
           </Button>
         )

@@ -1,6 +1,6 @@
 import { Alert } from "@mt/ui/components/alert";
 import { PersonAvatar } from "@mt/ui/components/avatar";
-import { buttonVariants } from "@mt/ui/components/button";
+import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { tileVariants } from "@mt/ui/components/card";
 import { PageHeader } from "@mt/ui/components/section";
 import { cn } from "@mt/ui/lib/utils";
@@ -366,7 +366,7 @@ function Territorio({ persona: p }: { persona: Funcionario }) {
             <Link
               to="/municipios/$slug"
               params={{ slug: m.slug }}
-              className={cn(buttonVariants({ variant: "secondary" }), "rounded-full font-normal")}
+              className={buttonClassName({ variant: "secondary", className: "rounded-full font-normal" })}
             >
               {m.name} <ChevronRight className="size-3.5" aria-hidden />
             </Link>

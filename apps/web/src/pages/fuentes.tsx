@@ -1,4 +1,4 @@
-import { buttonVariants } from "@mt/ui/components/button";
+import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { tileVariants } from "@mt/ui/components/card";
 import { Section } from "@mt/ui/components/section";
 import { StatusBadge } from "@mt/ui/components/status-badge";
@@ -75,12 +75,12 @@ function FuenteItem({ source: s, tables }: { source: SourceMeta; tables: number 
         <StatusBadge {...(SOURCE_STATUS[s.estado] ?? { status: "neutral", label: s.estado })} />
         <div className="flex gap-2">
           {tables > 0 && (
-            <Link to="/datos/$fuente" params={{ fuente: s.id }} className={cn(buttonVariants({ variant: "secondary" }))}>
+            <Link to="/datos/$fuente" params={{ fuente: s.id }} className={buttonClassName({ variant: "secondary" })}>
               <Table2 className="size-4" aria-hidden /> Ver datos
             </Link>
           )}
           {s.url && (
-            <a href={s.url} className={cn(buttonVariants({ variant: "secondary" }))}>
+            <a href={s.url} className={buttonClassName({ variant: "secondary" })}>
               Fuente oficial <ExternalLink className="size-3.5" aria-hidden />
             </a>
           )}

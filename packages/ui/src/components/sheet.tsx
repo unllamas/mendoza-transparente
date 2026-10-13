@@ -1,10 +1,10 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import { X } from "lucide-react";
+import { RiCloseLine } from "@remixicon/react";
 import { type ReactNode, useLayoutEffect, useState, useSyncExternalStore } from "react";
 
 import { useScrollLock } from "../hooks/use-scroll-lock.ts";
 import { cn } from "../lib/utils.ts";
-import { IconButton } from "./icon-button.tsx";
+import { IconButton } from "./base/buttons/icon-button.tsx";
 
 // Stack of open sheets, in the order they were mounted. Only the topmost one is shown: two modal dialogs open
 // at once hide each other from screen readers (each marks everything else aria-hidden). When the top one
@@ -81,9 +81,7 @@ export function Sheet({
             {header}
             <Dialog.Title className="mr-auto truncate text-base font-medium">{title}</Dialog.Title>
             <Dialog.Close asChild>
-              <IconButton label="Cerrar" {...closeProps}>
-                <X className="size-5" aria-hidden />
-              </IconButton>
+              <IconButton icon={RiCloseLine} aria-label="Cerrar" {...closeProps} />
             </Dialog.Close>
           </div>
           <div className="flex flex-col gap-6 overflow-y-auto overscroll-contain p-4">{children}</div>

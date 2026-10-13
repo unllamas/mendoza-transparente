@@ -1,5 +1,5 @@
 import { Badge } from "@mt/ui/components/badge";
-import { buttonVariants } from "@mt/ui/components/button";
+import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { cardVariants, tileVariants } from "@mt/ui/components/card";
 import { cn } from "@mt/ui/lib/utils";
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
@@ -241,7 +241,7 @@ export function HomePage() {
               </li>
             ))}
           </ul>
-          <Link to="/no-publicado" className={cn(buttonVariants({ variant: "primary" }), "w-fit")}>
+          <Link to="/no-publicado" className={buttonClassName({ variant: "primary", className: "w-fit" })}>
             Ver todos y cómo pedirlos <ArrowRight className="size-4" aria-hidden />
           </Link>
         </section>
@@ -295,7 +295,7 @@ export function HomePage() {
               />
             )}
           </div>
-          <Link to="/senales" className={cn(buttonVariants({ variant: "primary" }), "w-fit")}>
+          <Link to="/senales" className={buttonClassName({ variant: "primary", className: "w-fit" })}>
             Ver todas las señales y sus casos <ArrowRight className="size-4" aria-hidden />
           </Link>
         </section>

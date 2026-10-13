@@ -1,8 +1,7 @@
 import { Alert } from "@mt/ui/components/alert";
-import { buttonVariants } from "@mt/ui/components/button";
+import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
-import { cn } from "@mt/ui/lib/utils";
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { Building2, ChevronRight, FileText, Landmark, Percent, Receipt, Users2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -27,7 +26,7 @@ const organismosRoute = getRouteApi("/organismos");
 const organismoRoute = getRouteApi("/organismos/$slug");
 
 const VerMas = ({ onClick }: { onClick: () => void }) => (
-  <button type="button" onClick={onClick} className={cn(buttonVariants({ variant: "secondary" }), "w-fit")}>
+  <button type="button" onClick={onClick} className={buttonClassName({ variant: "secondary", className: "w-fit" })}>
     Ver más
   </button>
 );

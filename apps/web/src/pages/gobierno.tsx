@@ -1,6 +1,6 @@
 import { Alert } from "@mt/ui/components/alert";
 import { PersonAvatar } from "@mt/ui/components/avatar";
-import { buttonVariants } from "@mt/ui/components/button";
+import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { cardVariants, tileVariants } from "@mt/ui/components/card";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
@@ -362,7 +362,7 @@ export function AgencyPage() {
                 <Link
                   to="/gobierno/$slug"
                   params={{ slug: c.slug }}
-                  className={cn(buttonVariants({ variant: "secondary" }), "rounded-full font-normal")}
+                  className={buttonClassName({ variant: "secondary", className: "rounded-full font-normal" })}
                 >
                   {c.name} <ChevronRight className="size-3.5" aria-hidden />
                 </Link>
@@ -469,7 +469,7 @@ function Purchases({ agency: a }: { agency: AgencyDetail }) {
                 <Link
                   to="/organismos/$slug"
                   params={{ slug: b.slug }}
-                  className={cn(buttonVariants({ variant: "secondary" }), "rounded-full font-normal")}
+                  className={buttonClassName({ variant: "secondary", className: "rounded-full font-normal" })}
                 >
                   {b.name} <ChevronRight className="size-3.5" aria-hidden />
                 </Link>

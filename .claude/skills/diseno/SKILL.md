@@ -9,7 +9,7 @@ Fuente completa: `docs/procesos/diseno.md`. Público: cualquier persona de Mendo
 
 ## Sistema de diseño
 
-Los componentes base y los tokens están en `packages/ui` (`@mt/ui`). **La base es BoardUI** (React Aria, en `src/components/{base,application,foundations}/`) y se está migrando: lo nuevo se arma con BoardUI y lo que se toca se pasa. Se agrega con `BOARDUI_TELEMETRY_DISABLED=1 npx -y boardui@latest add <x>` desde `packages/ui`, nunca con `init`. Propios en migración: `Button`, `IconButton`, `Badge`, `Tile`, `CardLink`, `Sheet`, `Dialog`, `Popover`, `Alert`, `Input`, `Textarea`, `Select`, `Field`, `Segmented`, `SearchInput`, `StatTile`, `Section`, `PageHeader` y `PersonAvatar`. Para estilizar otro elemento: `buttonVariants`, `tileVariants` y `cardVariants`.
+Los componentes base y los tokens están en `packages/ui` (`@mt/ui`). **La base es BoardUI** (React Aria, en `src/components/{base,application,foundations}/`) y se está migrando: lo nuevo se arma con BoardUI y lo que se toca se pasa. Se agrega con `BOARDUI_TELEMETRY_DISABLED=1 npx -y boardui@latest add <x>` desde `packages/ui`, nunca con `init`. De BoardUI ya en uso: `Button` e `IconButton` (44 px por defecto; `buttonClassName()` para un `Link`), íconos de `@remixicon/react`. Propios en migración: `Badge`, `Tile`, `CardLink`, `Sheet`, `Dialog`, `Popover`, `Alert`, `Input`, `Textarea`, `Select`, `Field`, `Segmented`, `SearchInput`, `StatTile`, `Section`, `PageHeader` y `PersonAvatar`. Para estilizar otro elemento: `buttonClassName`, `tileVariants` y `cardVariants`.
 
 - **Solo Tailwind:** no se escribe CSS propio. Los tokens del sitio viven en `packages/ui/src/styles/mt.css`, encima de los de BoardUI (`theme.css`, que no se edita).
 - **Tema claro por defecto;** el oscuro (`.dark`) solo si la persona lo elige en el footer. Nunca `dark:` a mano.
@@ -24,7 +24,7 @@ Los componentes base y los tokens están en `packages/ui` (`@mt/ui`). **La base 
    - Toda fila que lleva a otra página tiene la flecha en `text-link` siempre.
    - En listas de navegación, el nombre del destino también va en `text-link`.
    - Los CTA principales van en botón relleno `bg-brand`.
-4. **44 px mínimos** (`min-h-11`) para tocar filas y botones; **botones de solo ícono, cuadrados de 44 × 44** (`IconButton` de `@mt/ui`); **encabezados de 48 a 60 px** (`h-14`).
+4. **44 px mínimos** (`min-h-11`) para tocar filas y botones; **botones de solo ícono, cuadrados de 44 × 44** (`IconButton` de `@mt/ui/components/base/buttons/icon-button`); **encabezados de 48 a 60 px** (`h-14`).
 5. **Una sola línea** para cifras, títulos de tarjetas, fechas y montos (`truncate`, `whitespace-nowrap`, `min-w-0`). La unidad va aparte y en chico ("$ 965.709" + "millones").
 6. **Nunca scroll horizontal**, en ningún ancho. Lo controla `bun run verificar`.
 7. **Toda persona lleva su cara:** `PersonAvatar` (`@mt/ui`) con la foto oficial, o con iniciales mientras falte. Una foto faltante es un pendiente: se busca en sitios oficiales (`bun run scrape fotos`).

@@ -1,5 +1,5 @@
 import { Alert } from "@mt/ui/components/alert";
-import { buttonVariants } from "@mt/ui/components/button";
+import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { cardVariants } from "@mt/ui/components/card";
 import { PageHeader } from "@mt/ui/components/section";
 import { cn } from "@mt/ui/lib/utils";
@@ -120,7 +120,11 @@ function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }
           )}
 
           {s.pedido && (
-            <Link to="/no-publicado" search={{ dato: s.pedido } as never} className={cn(buttonVariants({ variant: "primary" }), "w-fit")}>
+            <Link
+              to="/no-publicado"
+              search={{ dato: s.pedido } as never}
+              className={buttonClassName({ variant: "primary", className: "w-fit" })}
+            >
               Pedir los datos actualizados <ChevronRight className="size-4" aria-hidden />
             </Link>
           )}
