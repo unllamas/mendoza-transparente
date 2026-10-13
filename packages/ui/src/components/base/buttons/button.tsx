@@ -42,7 +42,8 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ComponentType, ReactNo
  * Mendoza Transparente: `large` (44 px, the minimum touch target) is the default. `medium`, `small` and `xs`
  * stay for dense desktop-only surfaces.
  */
-export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
+/** `tertiary` (Mendoza Transparente): no fill and no border, for navigation links and actions inside another control. */
+export type ButtonVariant = "primary" | "secondary" | "tertiary" | "ghost" | "danger";
 export type ButtonSize = "large" | "medium" | "small" | "xs";
 
 type IconComponent = ComponentType<{
@@ -83,8 +84,8 @@ const styles = sortCx({
   size: {
     large: "h-11 rounded-2lg px-3 text-body-medium",
     medium: "h-9 rounded-2lg p-2 text-body-medium",
-    small: "h-8 rounded-lg px-2 py-1.5 text-body-medium",
-    xs: "h-6 rounded-sm px-2 text-caption-1-semibold",
+    small: "h-8 rounded-2lg px-2 py-1.5 text-body-medium",
+    xs: "h-6 rounded-2lg px-2 text-caption-1-semibold",
   },
 
   // Icon-only override:
@@ -132,6 +133,11 @@ const styles = sortCx({
       "active:bg-background-primary-active active:border-border-button-active",
       "disabled:bg-background-primary-disabled disabled:border-border-button-default disabled:text-text-tertiary disabled:shadow-none",
       "aria-disabled:bg-background-primary-disabled aria-disabled:border-border-button-default aria-disabled:text-text-tertiary aria-disabled:shadow-none",
+    ].join(" "),
+    tertiary: [
+      "bg-transparent text-text-secondary",
+      "hover:bg-background-primary-hover hover:text-text-primary active:bg-background-primary-active",
+      "disabled:text-text-tertiary aria-disabled:text-text-tertiary",
     ].join(" "),
     ghost: [
       "bg-button-ghost-background text-button-ghost-foreground",

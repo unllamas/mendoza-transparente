@@ -1,14 +1,26 @@
 import { Chip } from "@mt/ui/components/base/badges/chip";
-import { cardVariants, tileVariants } from "@mt/ui/components/card";
+import { cardVariants, listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
 import { cx } from "@mt/ui/lib/cx";
 /** Panel lateral con el detalle de una fila y, en compras, los datos relacionados. */
 
 import { Alert } from "@mt/ui/components/alert";
 import { Button } from "@mt/ui/components/base/buttons/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@mt/ui/components/popover";
-import { RiArrowLeftLine, RiCalendarLine } from "@remixicon/react";
+import {
+  RiAlertLine,
+  RiArchiveLine,
+  RiArrowLeftLine,
+  RiArrowRightSLine,
+  RiBankLine,
+  RiBuilding2Line,
+  RiCalendarLine,
+  RiExternalLinkLine,
+  RiFileTextLine,
+  RiInformationLine,
+  RiSearchLine,
+  RiUserLine,
+} from "@remixicon/react";
 import { Link } from "@tanstack/react-router";
-import { Archive, Building2, ChevronRight, ExternalLink, FileText, Info, Landmark, Search, TriangleAlert, UserRound } from "lucide-react";
 import { type ReactNode, useEffect, useState } from "react";
 
 import { type ColumnaVista, formatMoneda } from "@/celdas.ts";
@@ -75,15 +87,15 @@ function OrigenDato({ dataset, fila, ocid }: { dataset: DatasetMeta; fila: strin
   const esCompra = dataset.source === "compras-ocds";
 
   return (
-    <section className={cx(tileVariants(), "flex flex-col gap-2 text-sm")}>
-      <h4 className="flex items-center gap-1.5 font-semibold">
-        <Landmark className="size-4 text-ink-muted" aria-hidden /> De dónde sale este dato
+    <section className={cx(tileVariants(), "flex flex-col gap-2 text-body-regular")}>
+      <h4 className="flex items-center gap-1.5 text-body-semibold">
+        <RiBankLine className="size-4 text-foreground-icon-secondary" aria-hidden /> De dónde sale este dato
       </h4>
-      {fuente && <p className="text-ink-2">{fuente.organismo || fuente.nombre}</p>}
+      {fuente && <p className="text-text-secondary">{fuente.organismo || fuente.nombre}</p>}
       <div className="flex flex-col gap-1.5">
         {urlFila && (
-          <a href={urlFila} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-link hover:underline">
-            <FileText className="size-3.5" aria-hidden /> Documento original <ExternalLink className="size-3" aria-hidden />
+          <a href={urlFila} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-text-link hover:underline">
+            <RiFileTextLine className="size-4" aria-hidden /> Documento original <RiExternalLinkLine className="size-4" aria-hidden />
           </a>
         )}
         {esCompra && ocid && (
@@ -91,24 +103,24 @@ function OrigenDato({ dataset, fila, ocid }: { dataset: DatasetMeta; fila: strin
             href="https://comprar.mendoza.gov.ar/"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1.5 text-link hover:underline"
+            className="inline-flex items-center gap-1.5 text-text-link hover:underline"
           >
-            <Search className="size-3.5" aria-hidden /> Buscar el proceso {ocid.replace(/^ocds-ppv9mm-/, "")} en COMPR.AR{" "}
-            <ExternalLink className="size-3" aria-hidden />
+            <RiSearchLine className="size-4" aria-hidden /> Buscar el proceso {ocid.replace(/^ocds-ppv9mm-/, "")} en COMPR.AR{" "}
+            <RiExternalLinkLine className="size-4" aria-hidden />
           </a>
         )}
         {fuente?.url && (
-          <a href={fuente.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-link hover:underline">
-            <Landmark className="size-3.5" aria-hidden /> Sitio oficial de la fuente <ExternalLink className="size-3" aria-hidden />
+          <a href={fuente.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-text-link hover:underline">
+            <RiBankLine className="size-4" aria-hidden /> Sitio oficial de la fuente <RiExternalLinkLine className="size-4" aria-hidden />
           </a>
         )}
         <a
           href={archivoUrl(dataset.source)}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-1.5 text-ink-muted hover:text-ink hover:underline"
+          className="inline-flex items-center gap-1.5 text-text-tertiary hover:text-text-primary hover:underline"
         >
-          <Archive className="size-3.5" aria-hidden /> Copia archivada del archivo original
+          <RiArchiveLine className="size-4" aria-hidden /> Copia archivada del archivo original
         </a>
       </div>
     </section>
@@ -121,17 +133,17 @@ function CamposFila({ columnas, fila, titulo }: { columnas: ColumnaVista[]; fila
       <dl className="flex flex-col gap-3">
         {columnas.map((c) => (
           <div key={c.key} className="flex flex-col gap-0.5">
-            <dt className="text-xs text-ink-muted">{c.etiqueta}</dt>
-            <dd className="text-sm break-words">
+            <dt className="text-caption-1-regular text-text-tertiary">{c.etiqueta}</dt>
+            <dd className="text-body-regular break-words">
               {c.url && fila[c.index] ? (
-                <a href={fila[c.index]} target="_blank" rel="noreferrer" className="text-link hover:underline">
+                <a href={fila[c.index]} target="_blank" rel="noreferrer" className="text-text-link hover:underline">
                   {c.formato(fila[c.index]!, fila)}
                 </a>
               ) : (
                 c.formato(fila[c.index] ?? "", fila)
               )}
             </dd>
-            {c.descripcion && <dd className="text-xs text-ink-muted text-pretty">{c.descripcion}</dd>}
+            {c.descripcion && <dd className="text-caption-1-regular text-text-tertiary text-pretty">{c.descripcion}</dd>}
           </div>
         ))}
       </dl>
@@ -163,17 +175,17 @@ export function Proveedor({ cuit, onProceso, sinTitulo }: { cuit: string; onProc
   // Agencies with their own page (the ones with enough processes), by their name in the purchase data.
   const { data: agencies } = useCarga<OrganismoResumen[]>("temas/organismos.json");
   const agencySlug = new Map((agencies ?? []).map((a) => [a.buyer, a.slug]));
-  if (error) return <p className="text-sm text-ink-2">No hay más datos de este proveedor.</p>;
-  if (!p) return <p className="text-sm text-ink-muted">Cargando proveedor…</p>;
+  if (error) return <p className="text-body-regular text-text-secondary">No hay más datos de este proveedor.</p>;
+  if (!p) return <p className="text-body-regular text-text-tertiary">Cargando proveedor…</p>;
 
   return (
     <>
       {!sinTitulo && (
         <div className="flex flex-col gap-1">
-          <span className="flex items-center gap-1.5 text-xs text-ink-muted">
-            <Building2 className="size-3.5" aria-hidden /> Proveedor · CUIT {cuit}
+          <span className="flex items-center gap-1.5 text-caption-1-regular text-text-tertiary">
+            <RiBuilding2Line className="size-4" aria-hidden /> Proveedor · CUIT {cuit}
           </span>
-          <h3 className="text-lg font-semibold tracking-tight text-balance">{p.empresa?.razonSocial ?? p.nombre}</h3>
+          <h3 className="text-title-3-semibold tracking-tight text-balance">{p.empresa?.razonSocial ?? p.nombre}</h3>
         </div>
       )}
 
@@ -201,26 +213,26 @@ export function Proveedor({ cuit, onProceso, sinTitulo }: { cuit: string; onProc
       )}
 
       <Bloque titulo="Quién le compra" ayuda={agencySlug.size ? "Tocá un organismo para ver todo lo que compra" : undefined}>
-        <ul className="flex flex-col gap-1 text-sm">
+        <ul className="flex flex-col gap-1 text-body-regular">
           {p.organismos.map((o) => {
             const to = agencySlug.get(o.nombre);
             const body = (
               <>
                 <div className="flex items-center justify-between gap-3">
-                  <span className={`min-w-0 flex-1 truncate ${to ? "text-link" : ""}`} title={o.nombre}>
+                  <span className={`min-w-0 flex-1 truncate ${to ? "text-text-link" : ""}`} title={o.nombre}>
                     {limpiarOrganismo(o.nombre)}
                   </span>
-                  <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(o.monto, "ARS")}</span>
-                  {to && <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />}
+                  <span className="text-body-medium whitespace-nowrap tabular-nums">{formatMoneda(o.monto, "ARS")}</span>
+                  {to && <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />}
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="h-1.5 flex-1 rounded-full bg-grid/60">
+                  <span className="h-1.5 flex-1 rounded-full bg-chart-grid/60">
                     <span
-                      className="block h-full rounded-full bg-accent"
+                      className="block h-full rounded-full bg-highlight"
                       style={{ width: `${Math.max((o.monto / p.organismos[0]!.monto) * 100, 1)}%` }}
                     />
                   </span>
-                  <span className="w-20 text-right text-xs text-ink-muted tabular-nums">
+                  <span className="w-20 text-right text-caption-1-regular text-text-tertiary tabular-nums">
                     {o.procesos} {o.procesos === 1 ? "proceso" : "procesos"}
                   </span>
                   {to && <span className="size-4 shrink-0" aria-hidden />}
@@ -234,7 +246,7 @@ export function Proveedor({ cuit, onProceso, sinTitulo }: { cuit: string; onProc
                     to="/organismos/$slug"
                     params={{ slug: to }}
                     data-track="purchase.supplier.agency_open"
-                    className="-mx-2 flex min-h-11 flex-col justify-center gap-1 rounded-lg px-2 py-2 hover:bg-tile"
+                    className="-mx-2 flex min-h-11 flex-col justify-center gap-1 rounded-lg px-2 py-2 hover:bg-background-secondary-default"
                   >
                     {body}
                   </Link>
@@ -248,17 +260,13 @@ export function Proveedor({ cuit, onProceso, sinTitulo }: { cuit: string; onProc
       </Bloque>
 
       <Bloque titulo="Adjudicaciones recientes" ayuda="Tocá una para ver el proceso completo">
-        <ul className="flex flex-col divide-y divide-line">
+        <ul className={listVariants()}>
           {p.recientes.map((r, i) => (
             <li key={r.ocid + i}>
-              <button
-                type="button"
-                onClick={() => onProceso(r.ocid)}
-                className="group -mx-2 flex w-[calc(100%+1rem)] items-center gap-3 rounded-lg px-2 py-2.5 text-left hover:bg-tile"
-              >
+              <button type="button" onClick={() => onProceso(r.ocid)} className={listRowVariants()}>
                 <span className="flex min-w-0 flex-1 flex-col gap-1.5">
-                  <span className="line-clamp-2 text-sm text-pretty group-hover:text-link">{r.titulo || "Sin título"}</span>
-                  <span className="flex flex-wrap items-center gap-1.5 text-xs text-ink-muted">
+                  <span className="line-clamp-2 text-body-regular text-pretty group-hover:text-text-link">{r.titulo || "Sin título"}</span>
+                  <span className="flex flex-wrap items-center gap-1.5 text-caption-1-regular text-text-tertiary">
                     {r.fecha && (
                       <Chip variant="caption" color="soft" className="tabular-nums">
                         <RiCalendarLine aria-hidden /> {formatDate(r.fecha)}
@@ -267,8 +275,8 @@ export function Proveedor({ cuit, onProceso, sinTitulo }: { cuit: string; onProc
                     <span>{r.metodo}</span>
                   </span>
                 </span>
-                <span className="text-sm font-medium whitespace-nowrap tabular-nums">{formatMoneda(r.monto, "ARS")}</span>
-                <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
+                <span className="text-body-medium whitespace-nowrap tabular-nums">{formatMoneda(r.monto, "ARS")}</span>
+                <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
               </button>
             </li>
           ))}
@@ -285,8 +293,8 @@ function QuienEs({ proveedor: p }: { proveedor: ProveedorDetalle }) {
   const e = p.empresa;
   if (e?.tipoPersona === "humana") {
     return (
-      <p className="flex items-start gap-2 rounded-xl bg-tile p-3 text-sm text-ink-2">
-        <UserRound className="mt-0.5 size-4 shrink-0 text-ink-muted" aria-hidden />
+      <p className={cx(tileVariants({ size: "sm" }), "flex items-start gap-2 text-body-regular text-text-secondary")}>
+        <RiUserLine className="mt-0.5 size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
         Persona humana que vende al Estado a título individual. Por privacidad no mostramos más datos personales.
       </p>
     );
@@ -295,14 +303,14 @@ function QuienEs({ proveedor: p }: { proveedor: ProveedorDetalle }) {
   return (
     <Bloque titulo="Quién es">
       {e ? (
-        <dl className="grid grid-cols-2 gap-x-3 gap-y-3 text-sm">
+        <dl className="grid grid-cols-2 gap-x-3 gap-y-3 text-body-regular">
           {e.tipoSocietario && <Campo label="Tipo de sociedad" value={e.tipoSocietario} />}
           {e.fechaConstitucion && <Campo label="Constituida" value={formatDate(e.fechaConstitucion)} />}
           {e.localidad && <Campo label="Domicilio" value={e.localidad} />}
           {e.actividad && <Campo label="Actividad" value={e.actividad} wide />}
         </dl>
       ) : (
-        <p className="text-sm text-ink-muted">No figura en el Registro Nacional de Sociedades.</p>
+        <p className="text-body-regular text-text-tertiary">No figura en el Registro Nacional de Sociedades.</p>
       )}
       {e?.mesesHastaPrimeraAdjudicacion !== null &&
         e?.mesesHastaPrimeraAdjudicacion !== undefined &&
@@ -312,20 +320,27 @@ function QuienEs({ proveedor: p }: { proveedor: ProveedorDetalle }) {
             de constituida. No es una irregularidad en sí, pero es un patrón que los organismos de control miran de cerca.
           </Alert>
         )}
-      <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm">
-        <a href={ARCA_CONSTANCIA} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-link hover:underline">
-          Constancia de CUIT en ARCA <ExternalLink className="size-3" aria-hidden />
+      <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-body-regular">
+        <a
+          href={ARCA_CONSTANCIA}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-1.5 text-text-link hover:underline"
+        >
+          Constancia de CUIT en ARCA <RiExternalLinkLine className="size-4" aria-hidden />
         </a>
         <a
           href={`https://duckduckgo.com/?q=${encodeURIComponent(`"${nombre}" Mendoza`)}`}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-1.5 text-link hover:underline"
+          className="inline-flex items-center gap-1.5 text-text-link hover:underline"
         >
-          <Search className="size-3.5" aria-hidden /> Buscar en la web <ExternalLink className="size-3" aria-hidden />
+          <RiSearchLine className="size-4" aria-hidden /> Buscar en la web <RiExternalLinkLine className="size-4" aria-hidden />
         </a>
       </div>
-      <p className="text-xs text-ink-muted">Fuente: Registro Nacional de Sociedades (Ministerio de Justicia, con datos de ARCA).</p>
+      <p className="text-caption-1-regular text-text-tertiary">
+        Fuente: Registro Nacional de Sociedades (Ministerio de Justicia, con datos de ARCA).
+      </p>
     </Bloque>
   );
 }
@@ -333,7 +348,7 @@ function QuienEs({ proveedor: p }: { proveedor: ProveedorDetalle }) {
 function Campo({ label, value, wide }: { label: string; value: string; wide?: boolean }) {
   return (
     <div className={`flex flex-col gap-0.5 ${wide ? "col-span-2" : ""}`}>
-      <dt className="text-xs text-ink-muted">{label}</dt>
+      <dt className="text-caption-1-regular text-text-tertiary">{label}</dt>
       <dd className="text-pretty">{value}</dd>
     </div>
   );
@@ -358,8 +373,8 @@ export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cui
     `temas/compras/procesos/${procesoShard(ocid)}.json`,
     (d) => (d as Record<string, ProcesoDetalle>)[ocid],
   );
-  if (error) return <p className="text-sm text-ink-2">No encontramos este proceso.</p>;
-  if (!p) return <p className="text-sm text-ink-muted">Cargando proceso…</p>;
+  if (error) return <p className="text-body-regular text-text-secondary">No encontramos este proceso.</p>;
+  if (!p) return <p className="text-body-regular text-text-tertiary">Cargando proceso…</p>;
   const total = p.adjudicaciones.reduce((s, a) => s + a.monto, 0);
   const ordenadas = [...p.adjudicaciones].sort((a, b) =>
     orden === "nombre" ? a.proveedor.localeCompare(b.proveedor, "es") : orden === "menor" ? a.monto - b.monto : b.monto - a.monto,
@@ -368,11 +383,11 @@ export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cui
   return (
     <>
       <div className="flex flex-col gap-1">
-        <span className="flex items-center gap-1.5 text-xs text-ink-muted">
-          <FileText className="size-3.5" aria-hidden /> Proceso de compra · N.º {ocid.replace(/^ocds-ppv9mm-/, "")}
+        <span className="flex items-center gap-1.5 text-caption-1-regular text-text-tertiary">
+          <RiFileTextLine className="size-4" aria-hidden /> Proceso de compra · N.º {ocid.replace(/^ocds-ppv9mm-/, "")}
         </span>
-        <h3 className="text-lg font-semibold tracking-tight text-pretty">{p.titulo}</h3>
-        <span className="text-sm text-ink-2" title={p.comprador}>
+        <h3 className="text-title-3-semibold tracking-tight text-pretty">{p.titulo}</h3>
+        <span className="text-body-regular text-text-secondary" title={p.comprador}>
           {limpiarOrganismo(p.comprador)}
         </span>
       </div>
@@ -396,14 +411,14 @@ export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cui
             data-track="purchase.winner.open"
             className={cx(cardVariants(), "flex items-center gap-3")}
           >
-            <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-tile text-ink-muted">
-              <Building2 className="size-5" aria-hidden />
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-background-secondary-default text-foreground-icon-secondary">
+              <RiBuilding2Line className="size-5" aria-hidden />
             </span>
             <span className="flex min-w-0 flex-1 flex-col gap-1">
-              <span className="font-medium text-pretty text-link">{p.adjudicaciones[0]!.proveedor}</span>
+              <span className="text-body-medium text-pretty text-text-link">{p.adjudicaciones[0]!.proveedor}</span>
               <Amount value={p.adjudicaciones[0]!.monto} />
             </span>
-            <ChevronRight className="size-5 shrink-0 text-link" aria-hidden />
+            <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
           </button>
         </Bloque>
       ) : (
@@ -413,24 +428,20 @@ export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cui
         >
           {p.adjudicaciones.length > 3 && (
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="text-sm text-ink-2 tabular-nums">
+              <span className="text-body-regular text-text-secondary tabular-nums">
                 {formatNumber(p.adjudicaciones.length)} adjudicaciones · {formatMoneda(total, "ARS")}
               </span>
               <TrackedSegmented label="Ordenar" options={ORDENES} value={orden} onChange={setOrden} trackId="purchase.awards_sort" />
             </div>
           )}
-          <ul className="flex flex-col divide-y divide-line">
+          <ul className={listVariants()}>
             {ordenadas.map((a, i) => (
               <li key={a.cuit + i}>
-                <button
-                  type="button"
-                  onClick={() => onProveedor(a.cuit)}
-                  className="group -mx-2 flex w-[calc(100%+1rem)] items-center gap-3 rounded-lg px-2 py-2.5 text-left text-sm hover:bg-tile"
-                >
-                  <Building2 className="size-4 shrink-0 text-ink-muted" aria-hidden />
-                  <span className="min-w-0 flex-1 group-hover:text-link">{a.proveedor}</span>
-                  <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(a.monto, "ARS")}</span>
-                  <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
+                <button type="button" onClick={() => onProveedor(a.cuit)} className={cx(listRowVariants(), "text-body-regular")}>
+                  <RiBuilding2Line className="size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
+                  <span className="min-w-0 flex-1 group-hover:text-text-link">{a.proveedor}</span>
+                  <span className="text-body-medium whitespace-nowrap tabular-nums">{formatMoneda(a.monto, "ARS")}</span>
+                  <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
                 </button>
               </li>
             ))}
@@ -447,10 +458,10 @@ function Amount({ value }: { value: number }) {
   const n = millions ? value / 1e6 : value;
   return (
     <span className="flex items-baseline gap-1.5 whitespace-nowrap">
-      <span className="text-xl font-semibold tabular-nums">
+      <span className="text-title-2-semibold tabular-nums">
         $ {formatNumber(millions && Math.abs(n) < 100 ? Math.round(n * 10) / 10 : Math.round(n))}
       </span>
-      {millions && <span className="text-sm text-ink-muted">millones</span>}
+      {millions && <span className="text-body-regular text-text-tertiary">millones</span>}
     </span>
   );
 }
@@ -501,13 +512,13 @@ function Flags({ flags }: { flags: Flag[] }) {
             <PopoverTrigger
               data-track="purchase.flag.toggle"
               data-track-flag={f.id}
-              className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-aviso-borde bg-aviso-fondo/60 px-3.5 text-sm font-medium whitespace-nowrap hover:border-aviso aria-expanded:border-aviso aria-expanded:bg-aviso-fondo"
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-2lg border border-warning-border bg-warning-background/60 px-3.5 text-body-medium whitespace-nowrap hover:border-warning-foreground aria-expanded:border-warning-foreground aria-expanded:bg-warning-background"
             >
-              <TriangleAlert className="size-4 text-aviso" aria-hidden />
+              <RiAlertLine className="size-4 text-warning-foreground" aria-hidden />
               {f.label}
-              <Info className="size-3.5 text-ink-muted" aria-hidden />
+              <RiInformationLine className="size-4 text-foreground-icon-secondary" aria-hidden />
             </PopoverTrigger>
-            <PopoverContent className="border-aviso-borde">{f.text}</PopoverContent>
+            <PopoverContent className="border-warning-border">{f.text}</PopoverContent>
           </Popover>
         </li>
       ))}
@@ -528,20 +539,20 @@ function Montos({ estimado, adjudicado }: { estimado: number | null; adjudicado:
       <ul className="flex flex-col gap-2.5">
         {filas.map((f) => (
           <li key={f.label} className="flex flex-col gap-1">
-            <div className="flex items-baseline justify-between gap-3 text-sm">
-              <span className="text-ink-2">{f.label}</span>
-              <span className="font-medium tabular-nums">{f.valor ? formatMoneda(f.valor, "ARS") : "—"}</span>
+            <div className="flex items-baseline justify-between gap-3 text-body-regular">
+              <span className="text-text-secondary">{f.label}</span>
+              <span className="text-body-medium tabular-nums">{f.valor ? formatMoneda(f.valor, "ARS") : "—"}</span>
             </div>
-            <div className="h-2.5 rounded-full bg-grid/60">
+            <div className="h-2.5 rounded-full bg-chart-grid/60">
               {f.valor ? (
-                <div className="h-full rounded-full bg-accent" style={{ width: `${Math.max((f.valor / max) * 100, 1)}%` }} />
+                <div className="h-full rounded-full bg-highlight" style={{ width: `${Math.max((f.valor / max) * 100, 1)}%` }} />
               ) : null}
             </div>
           </li>
         ))}
       </ul>
       {estimado && adjudicado && <Desvio estimado={estimado} adjudicado={adjudicado} />}
-      {estimado && !adjudicado && <p className="text-sm text-ink-2">No se adjudicó.</p>}
+      {estimado && !adjudicado && <p className="text-body-regular text-text-secondary">No se adjudicó.</p>}
     </Bloque>
   );
 }
@@ -553,11 +564,11 @@ const SYMBOLIC_ESTIMATE = 1000;
 function Desvio({ estimado, adjudicado }: { estimado: number; adjudicado: number }) {
   const ratio = adjudicado / estimado;
   const pct = Math.abs(ratio - 1) * 100;
-  if (pct < 0.5) return <p className="text-sm text-ink-2">Se adjudicó lo mismo que se estimó.</p>;
+  if (pct < 0.5) return <p className="text-body-regular text-text-secondary">Se adjudicó lo mismo que se estimó.</p>;
   if (estimado < SYMBOLIC_ESTIMATE && adjudicado >= 100 * estimado)
-    return <p className="text-sm text-ink-2">El estimado cargado es simbólico: no permite comparar.</p>;
+    return <p className="text-body-regular text-text-secondary">El estimado cargado es simbólico: no permite comparar.</p>;
   return (
-    <p className="text-sm text-ink-2">
+    <p className="text-body-regular text-text-secondary">
       Se adjudicó un {formatNumber(Math.round(pct))} % {ratio > 1 ? "más" : "menos"} de lo estimado.
     </p>
   );
@@ -566,8 +577,8 @@ function Desvio({ estimado, adjudicado }: { estimado: number; adjudicado: number
 function Dato({ label, value }: { label: string; value: string }) {
   return (
     <div className={cx(tileVariants({ size: "sm" }), "flex flex-col gap-0.5")}>
-      <span className="text-xs text-ink-muted">{label}</span>
-      <span className="text-sm font-medium tabular-nums">{value}</span>
+      <span className="text-caption-1-regular text-text-tertiary">{label}</span>
+      <span className="text-body-medium tabular-nums">{value}</span>
     </div>
   );
 }
@@ -577,8 +588,8 @@ function Bloque({ titulo, ayuda, children }: { titulo?: string; ayuda?: string; 
     <section className="flex flex-col gap-3">
       {titulo && (
         <div className="flex flex-col gap-0.5">
-          <h4 className="text-sm font-semibold">{titulo}</h4>
-          {ayuda && <span className="text-xs text-ink-muted">{ayuda}</span>}
+          <h4 className="text-body-semibold">{titulo}</h4>
+          {ayuda && <span className="text-caption-1-regular text-text-tertiary">{ayuda}</span>}
         </div>
       )}
       {children}

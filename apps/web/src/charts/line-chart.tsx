@@ -1,3 +1,5 @@
+import { tileVariants } from "@mt/ui/components/card";
+import { cx } from "@mt/ui/lib/cx";
 import { useLayoutEffect, useRef, useState } from "react";
 
 export interface Band {
@@ -90,9 +92,9 @@ export function LineChart({ data, bands = [], formatValue, formatAxis = formatVa
           if (bx1 - bx0 < 1) return null;
           return (
             <g key={i}>
-              {i % 2 === 0 && <rect x={bx0} y={MARGIN.top} width={bx1 - bx0} height={innerH} className="fill-grid" opacity={0.5} />}
+              {i % 2 === 0 && <rect x={bx0} y={MARGIN.top} width={bx1 - bx0} height={innerH} className="fill-chart-grid" opacity={0.5} />}
               {bx1 - bx0 > b.label.length * 6.5 + 8 && (
-                <text x={(bx0 + bx1) / 2} y={MARGIN.top - 10} textAnchor="middle" className="fill-ink-muted text-[11px]">
+                <text x={(bx0 + bx1) / 2} y={MARGIN.top - 10} textAnchor="middle" className="fill-text-tertiary text-caption-2-regular">
                   {b.label}
                 </text>
               )}
@@ -102,25 +104,49 @@ export function LineChart({ data, bands = [], formatValue, formatAxis = formatVa
 
         {ticks.map((t) => (
           <g key={t}>
-            <line x1={MARGIN.left} x2={MARGIN.left + innerW} y1={y(t)} y2={y(t)} className={t === 0 ? "stroke-axis" : "stroke-grid"} />
-            <text x={MARGIN.left - 8} y={y(t)} dy="0.32em" textAnchor="end" className="fill-ink-muted text-[11px] tabular-nums">
+            <line
+              x1={MARGIN.left}
+              x2={MARGIN.left + innerW}
+              y1={y(t)}
+              y2={y(t)}
+              className={t === 0 ? "stroke-chart-axis" : "stroke-chart-grid"}
+            />
+            <text
+              x={MARGIN.left - 8}
+              y={y(t)}
+              dy="0.32em"
+              textAnchor="end"
+              className="fill-text-tertiary text-caption-2-regular tabular-nums"
+            >
               {formatAxis(t)}
             </text>
           </g>
         ))}
 
         {years.map((yr) => (
-          <text key={yr} x={x(`${yr}-01-01`)} y={height - 8} textAnchor="middle" className="fill-ink-muted text-[11px] tabular-nums">
+          <text
+            key={yr}
+            x={x(`${yr}-01-01`)}
+            y={height - 8}
+            textAnchor="middle"
+            className="fill-text-tertiary text-caption-2-regular tabular-nums"
+          >
             {yr}
           </text>
         ))}
 
-        <path d={path} fill="none" strokeWidth={2} strokeLinejoin="round" className="stroke-accent" />
+        <path d={path} fill="none" strokeWidth={2} strokeLinejoin="round" className="stroke-highlight" />
 
         {active && (
           <g>
-            <line x1={x(active.fecha)} x2={x(active.fecha)} y1={MARGIN.top} y2={MARGIN.top + innerH} className="stroke-axis" />
-            <circle cx={x(active.fecha)} cy={y(active.valor)} r={4.5} strokeWidth={2} className="fill-accent stroke-surface" />
+            <line x1={x(active.fecha)} x2={x(active.fecha)} y1={MARGIN.top} y2={MARGIN.top + innerH} className="stroke-chart-axis" />
+            <circle
+              cx={x(active.fecha)}
+              cy={y(active.valor)}
+              r={4.5}
+              strokeWidth={2}
+              className="fill-highlight stroke-background-primary-default"
+            />
           </g>
         )}
 
@@ -137,13 +163,13 @@ export function LineChart({ data, bands = [], formatValue, formatAxis = formatVa
 
       {active && (
         <div
-          className="pointer-events-none absolute rounded-lg border border-line bg-surface px-3 py-2 text-sm shadow-sm"
+          className={cx(tileVariants({ size: "sm" }), "pointer-events-none absolute px-3 py-2 text-body-regular")}
           style={{
             left: Math.min(x(active.fecha) + 12, width - 160),
             top: Math.max(y(active.valor) - 56, 0),
           }}
         >
-          <div className="text-ink-muted">{formatDate(active.fecha)}</div>
+          <div className="text-text-tertiary">{formatDate(active.fecha)}</div>
           <div className="font-semibold tabular-nums">{formatValue(active.valor)}</div>
         </div>
       )}

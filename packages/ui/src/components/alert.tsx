@@ -26,11 +26,13 @@ export function Alert({
       role={warning ? "note" : undefined}
       className={cx(
         "flex items-start gap-3 rounded-xl p-4 text-body-regular",
-        warning ? "border border-aviso-borde bg-aviso-fondo" : "bg-background-secondary-default",
+        warning
+          ? "border border-warning-border bg-warning-background"
+          : "border border-border-button-default bg-background-secondary-default",
         className,
       )}
     >
-      <Icon className={cx("mt-px size-5 shrink-0", warning ? "text-aviso" : "text-foreground-icon-secondary")} aria-hidden />
+      <Icon className={cx("mt-px size-5 shrink-0", warning ? "text-warning-foreground" : "text-foreground-icon-secondary")} aria-hidden />
       <div className="flex min-w-0 flex-col gap-1">
         {title && <span className="text-body-medium text-text-primary">{title}</span>}
         <div className="text-text-secondary text-pretty">{children}</div>

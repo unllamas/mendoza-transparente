@@ -1,11 +1,11 @@
 import { Alert } from "@mt/ui/components/alert";
-import { buttonClassName } from "@mt/ui/components/base/buttons/button";
-import { tileVariants } from "@mt/ui/components/card";
+import { Button } from "@mt/ui/components/base/buttons/button";
+import { listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
 import { cx } from "@mt/ui/lib/cx";
+import { RiArrowRightSLine, RiCoinsLine, RiMapPinLine, RiUserLine } from "@remixicon/react";
 import { getRouteApi, Link } from "@tanstack/react-router";
-import { Coins, MapPin, UserRound } from "lucide-react";
 import { formatMoneda } from "@/celdas.ts";
 import { LineChart } from "@/charts/line-chart.tsx";
 import { MapaMendoza } from "@/charts/mapa.tsx";
@@ -32,7 +32,7 @@ export function CoparticipacionPage() {
 
   return (
     <div className="flex flex-col gap-12">
-      <PageHeader icon={Coins} topic="Coparticipación" title="¿Cuánta plata reciben los municipios?">
+      <PageHeader icon={RiCoinsLine} topic="Coparticipación" title="¿Cuánta plata reciben los municipios?">
         La provincia reparte entre los 18 municipios una parte de lo que recauda y de lo que le manda Nación (coparticipación). Todo está en
         pesos de {tema.referencia}, para que se pueda comparar entre años.
       </PageHeader>
@@ -40,19 +40,19 @@ export function CoparticipacionPage() {
 
       <div className="grid gap-3 md:grid-cols-3">
         <StatTile
-          icon={Coins}
+          icon={RiCoinsLine}
           label={`Repartido en ${tema.anioCompleto}`}
           value={formatMoneda(tema.totalReal, "ARS")}
           note={`En pesos de ${tema.referencia}`}
         />
         <StatTile
-          icon={UserRound}
+          icon={RiUserLine}
           label="Promedio por habitante"
           value={provincial.perCapita ? pesos(provincial.perCapita) : "—"}
           note={`Toda la provincia, ${tema.anioCompleto}`}
         />
         <StatTile
-          icon={MapPin}
+          icon={RiMapPinLine}
           label="Recibe más por habitante"
           value={ranking[0]!.municipio}
           note={`${pesos(ranking[0]!.perCapita)} por habitante`}
@@ -72,17 +72,18 @@ export function CoparticipacionPage() {
           {municipio ? (
             <DetalleMunicipio tema={tema} municipio={municipio} puesto={ranking.indexOf(municipio) + 1} onClose={() => setSel(null)} />
           ) : (
-            <ol className="flex flex-col">
+            <ol className={listVariants()}>
               {ranking.map((m, i) => (
                 <li key={m.municipio}>
                   <button
                     type="button"
                     onClick={() => setSel(m.municipio)}
-                    className="grid w-full grid-cols-[1.5rem_1fr_auto] items-baseline gap-2 rounded-md px-2 py-1.5 text-left text-sm hover:bg-tile"
+                    className={cx(listRowVariants(), "grid grid-cols-[1.5rem_1fr_auto_1rem] text-body-regular")}
                   >
-                    <span className="text-ink-muted tabular-nums">{i + 1}</span>
+                    <span className="text-text-tertiary tabular-nums">{i + 1}</span>
                     <span>{m.municipio}</span>
-                    <span className="tabular-nums text-ink-2">{pesos(m.perCapita)}</span>
+                    <span className="tabular-nums text-text-secondary">{pesos(m.perCapita)}</span>
+                    <RiArrowRightSLine className="size-4 text-text-link" aria-hidden />
                   </button>
                 </li>
               ))}
@@ -107,15 +108,15 @@ export function CoparticipacionPage() {
         </div>
       </Section>
 
-      <p className="text-sm text-ink-muted text-pretty">
+      <p className="text-body-regular text-text-tertiary text-pretty">
         Cómo lo calculamos: montos anuales de{" "}
-        <a href={FUENTE} className="underline hover:text-ink">
+        <a href={FUENTE} className="underline hover:text-text-primary">
           participación municipal (Ministerio de Hacienda)
         </a>
         , llevados a pesos de {tema.referencia} con el IPC nacional de INDEC (promedio de cada año) y divididos por la proyección de
         población de INDEC. Entre 2007 y 2015 el IPC oficial subestimó la inflación, así que los montos de esos años quedan algo inflados.
         Datos completos en{" "}
-        <Link to="/datos/$fuente" params={{ fuente: "hacienda-participacion-municipal" }} className="underline hover:text-ink">
+        <Link to="/datos/$fuente" params={{ fuente: "hacienda-participacion-municipal" }} className="underline hover:text-text-primary">
           Datos › Coparticipación
         </Link>
         .
@@ -140,23 +141,27 @@ function DetalleMunicipio({
     <div className="flex flex-col gap-4">
       <div className="flex items-start justify-between gap-2">
         <span className="flex min-w-0 flex-col gap-0.5">
-          <h3 className="truncate text-xl font-semibold tracking-tight">{m.municipio}</h3>
-          <Link to="/municipios/$slug" params={{ slug: slug(m.municipio) }} className="text-sm whitespace-nowrap text-link hover:underline">
+          <h3 className="truncate text-title-2-semibold tracking-tight">{m.municipio}</h3>
+          <Link
+            to="/municipios/$slug"
+            params={{ slug: slug(m.municipio) }}
+            className="text-body-regular whitespace-nowrap text-text-link hover:underline"
+          >
             Ver todo sobre {m.municipio} ›
           </Link>
         </span>
-        <button type="button" onClick={onClose} className={buttonClassName({ variant: "secondary" })}>
+        <Button variant="secondary" onClick={onClose}>
           Ver ranking
-        </button>
+        </Button>
       </div>
       <div className="grid grid-cols-2 gap-2">
         <StatTile label="Por habitante" value={pesos(m.perCapita)} note={`Puesto ${puesto} de 18`} />
         <StatTile label="Total del año" value={formatMoneda(m.real, "ARS")} note={String(tema.anioCompleto)} />
       </div>
-      <p className="text-sm text-ink-2">{formatNumber(m.poblacion)} habitantes (proyección INDEC).</p>
+      <p className="text-body-regular text-text-secondary">{formatNumber(m.poblacion)} habitantes (proyección INDEC).</p>
       <div className="flex flex-col gap-2">
-        <span className="text-sm font-medium">Por habitante, en pesos de {tema.referencia}</span>
-        <div className="rounded-xl bg-tile p-3">
+        <span className="text-body-medium">Por habitante, en pesos de {tema.referencia}</span>
+        <div className={tileVariants({ size: "sm" })}>
           <LineChart
             data={serie.map((p) => ({ fecha: `${p.anio}-01-01`, valor: p.perCapita! }))}
             formatValue={pesos}

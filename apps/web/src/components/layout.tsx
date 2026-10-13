@@ -1,29 +1,32 @@
 import { ThemeToggle } from "@mt/ui/components/application/theme/theme-toggle";
+import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { IconButton } from "@mt/ui/components/base/buttons/icon-button";
 import { Dialog } from "@mt/ui/components/dialog";
-import { RiCloseLine, RiMenuLine } from "@remixicon/react";
-import { Link, Outlet, useRouterState } from "@tanstack/react-router";
+import { cx } from "@mt/ui/lib/cx";
 import {
-  Archive,
-  BookOpen,
-  Bug,
-  Building2,
-  ChevronDown,
-  ChevronRight,
-  Coins,
-  EyeOff,
-  GitBranch,
-  Globe,
-  Landmark,
-  type LucideIcon,
-  MapPin,
-  Scale,
-  Stamp,
-  Store,
-  UserRound,
-  Users,
-  UsersRound,
-} from "lucide-react";
+  type RemixiconComponentType,
+  RiArchiveLine,
+  RiArrowDownSLine,
+  RiArrowRightSLine,
+  RiBankLine,
+  RiBookOpenLine,
+  RiBugLine,
+  RiBuilding2Line,
+  RiCloseLine,
+  RiCoinsLine,
+  RiEyeOffLine,
+  RiGitBranchLine,
+  RiGlobalLine,
+  RiGroupLine,
+  RiMapPinLine,
+  RiMenuLine,
+  RiQuillPenLine,
+  RiScales3Line,
+  RiStore2Line,
+  RiTeamLine,
+  RiUserLine,
+} from "@remixicon/react";
+import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { trackPageview } from "@/analytics.ts";
 import { usePageMeta } from "@/seo.ts";
@@ -32,7 +35,7 @@ import { REPO } from "./official-sources.tsx";
 import { HeaderSearchButton, SearchDialog } from "./search-dialog.tsx";
 import { UiProviders } from "./ui-providers.tsx";
 
-type Item = { to: string; label: string; descripcion: string; icon: LucideIcon };
+type Item = { to: string; label: string; descripcion: string; icon: RemixiconComponentType };
 type Grupo = { label: string; items: Item[] };
 
 /** Navegación: un destino principal y grupos desplegables. */
@@ -42,40 +45,40 @@ const GRUPOS: Grupo[] = [
   {
     label: "Gobierno",
     items: [
-      { to: "/funcionarios", label: "Funcionarios", descripcion: "Quiénes nos representan y qué declaran", icon: UserRound },
+      { to: "/funcionarios", label: "Funcionarios", descripcion: "Quiénes nos representan y qué declaran", icon: RiUserLine },
       {
         to: "/gobierno",
         label: "Gobierno por dentro",
         descripcion: "Cada organismo: quién lo conduce, cuántos cargos y cuánto cuesta",
-        icon: Building2,
+        icon: RiBuilding2Line,
       },
-      { to: "/leyes", label: "Leyes", descripcion: "Qué dice cada ley, en pocas palabras", icon: Scale },
+      { to: "/leyes", label: "Leyes", descripcion: "Qué dice cada ley, en pocas palabras", icon: RiScales3Line },
     ],
   },
   {
     label: "Datos",
     items: [
-      { to: "/deuda", label: "Deuda", descripcion: "Cuánto debe la provincia y a quién", icon: Landmark },
-      { to: "/coparticipacion", label: "Coparticipación", descripcion: "Cuánto recibe cada municipio", icon: Coins },
-      { to: "/empleo-publico", label: "Empleo público", descripcion: "Empleados por habitante y por provincia", icon: UsersRound },
-      { to: "/poblacion", label: "Población", descripcion: "Cuántos somos en cada departamento", icon: Users },
-      { to: "/municipios", label: "Municipios", descripcion: "Una página por cada uno de los 18", icon: MapPin },
+      { to: "/deuda", label: "Deuda", descripcion: "Cuánto debe la provincia y a quién", icon: RiBankLine },
+      { to: "/coparticipacion", label: "Coparticipación", descripcion: "Cuánto recibe cada municipio", icon: RiCoinsLine },
+      { to: "/empleo-publico", label: "Empleo público", descripcion: "Empleados por habitante y por provincia", icon: RiTeamLine },
+      { to: "/poblacion", label: "Población", descripcion: "Cuántos somos en cada departamento", icon: RiGroupLine },
+      { to: "/municipios", label: "Municipios", descripcion: "Una página por cada uno de los 18", icon: RiMapPinLine },
     ],
   },
   {
     label: "Compras del Estado",
     items: [
-      { to: "/proveedores", label: "Proveedores", descripcion: "A quiénes les compra el Gobierno", icon: Store },
-      { to: "/organismos", label: "Organismos", descripcion: "Quién compra, cuánto y cómo", icon: Landmark },
+      { to: "/proveedores", label: "Proveedores", descripcion: "A quiénes les compra el Gobierno", icon: RiStore2Line },
+      { to: "/organismos", label: "Organismos", descripcion: "Quién compra, cuánto y cómo", icon: RiBankLine },
     ],
   },
   {
     label: "Transparencia",
     items: [
-      { to: "/no-publicado", label: "Lo que no se publica", descripcion: "Datos que faltan y cómo pedirlos", icon: EyeOff },
-      { to: "/participar", label: "Participá", descripcion: "Registrá tu pedido, reportá un error o sugerí un dato", icon: Stamp },
-      { to: "/fuentes", label: "Fuentes", descripcion: "De dónde sale cada dato", icon: Archive },
-      { to: "/como-leer", label: "Cómo leer estos datos", descripcion: "Para qué sirve, cómo empezar y glosario", icon: BookOpen },
+      { to: "/no-publicado", label: "Lo que no se publica", descripcion: "Datos que faltan y cómo pedirlos", icon: RiEyeOffLine },
+      { to: "/participar", label: "Participá", descripcion: "Registrá tu pedido, reportá un error o sugerí un dato", icon: RiQuillPenLine },
+      { to: "/fuentes", label: "Fuentes", descripcion: "De dónde sale cada dato", icon: RiArchiveLine },
+      { to: "/como-leer", label: "Cómo leer estos datos", descripcion: "Para qué sirve, cómo empezar y glosario", icon: RiBookOpenLine },
     ],
   },
 ];
@@ -99,17 +102,17 @@ export function Layout() {
   return (
     <UiProviders>
       <div className="flex min-h-dvh flex-col">
-        <header className="sticky top-0 z-20 border-b border-line bg-page/90 backdrop-blur">
+        <header className="sticky top-0 z-20 border-b border-separator-border bg-background-full/90 backdrop-blur">
           <div className="mx-auto flex h-14 max-w-6xl items-center gap-6 px-4 sm:px-5">
-            <Link to="/" className="mr-auto text-base font-semibold tracking-tight whitespace-nowrap">
+            <Link to="/" className="mr-auto text-headline-semibold tracking-tight whitespace-nowrap">
               Mendoza Transparente
             </Link>
-            <nav aria-label="Principal" className="hidden items-center gap-1 text-sm whitespace-nowrap lg:flex">
+            <nav aria-label="Principal" className="hidden items-center gap-1 text-body-regular whitespace-nowrap lg:flex">
               {PRINCIPALES.map((item) => (
                 <Link
                   key={item.to}
                   to={item.to}
-                  className="rounded-lg px-3 py-2 text-ink-2 hover:bg-tile hover:text-link [&.active]:font-medium [&.active]:text-link"
+                  className={buttonClassName({ variant: "tertiary", className: "[&.active]:text-text-link" })}
                 >
                   {item.label}
                 </Link>
@@ -139,10 +142,10 @@ export function Layout() {
             label="Menú"
             onClose={() => setAbierto(false)}
             overlayClassName="z-50 lg:hidden"
-            className="inset-0 flex flex-col bg-page"
+            className="inset-0 flex flex-col bg-background-full"
           >
-            <div className="flex h-14 shrink-0 items-center gap-6 border-b border-line px-4 sm:px-5">
-              <Link to="/" className="mr-auto text-base font-semibold tracking-tight whitespace-nowrap">
+            <div className="flex h-14 shrink-0 items-center gap-6 border-b border-separator-border px-4 sm:px-5">
+              <Link to="/" className="mr-auto text-headline-semibold tracking-tight whitespace-nowrap">
                 Mendoza Transparente
               </Link>
               <IconButton
@@ -160,23 +163,28 @@ export function Layout() {
                   <Link
                     key={item.to}
                     to={item.to}
-                    className="flex items-center justify-between border-b border-line py-4 text-lg text-ink [&.active]:font-medium [&.active]:text-link"
+                    className="flex items-center justify-between min-h-11 border-b border-separator-border py-4 text-title-3-regular text-text-primary [&.active]:font-medium [&.active]:text-text-link"
                   >
                     {item.label}
-                    <ChevronRight className="size-4 text-link" aria-hidden />
+                    <RiArrowRightSLine className="size-5 text-text-link" aria-hidden />
                   </Link>
                 ))}
               </div>
               {GRUPOS.map((g) => (
                 <div key={g.label} className="flex flex-col gap-1">
-                  <span className="text-xs font-medium tracking-wide text-ink-muted uppercase">{g.label}</span>
+                  <span className="text-caption-1-medium tracking-wide text-text-tertiary uppercase">{g.label}</span>
                   {g.items.map((item) => (
-                    <Link key={item.to} to={item.to} className="flex items-center gap-3 rounded-lg py-3 text-ink [&.active]:text-link">
-                      <item.icon className="size-5 shrink-0 text-ink-muted" aria-hidden />
+                    <Link
+                      key={item.to}
+                      to={item.to}
+                      className="flex min-h-11 items-center gap-3 rounded-2lg py-3 text-text-primary [&.active]:text-text-link"
+                    >
+                      <item.icon className="size-5 shrink-0 text-foreground-icon-secondary" aria-hidden />
                       <span className="flex flex-col">
-                        <span className="text-base">{item.label}</span>
-                        <span className="text-sm text-ink-muted">{item.descripcion}</span>
+                        <span className="text-headline-regular">{item.label}</span>
+                        <span className="text-body-regular text-text-tertiary">{item.descripcion}</span>
                       </span>
+                      <RiArrowRightSLine className="ml-auto size-5 shrink-0 text-text-link" aria-hidden />
                     </Link>
                   ))}
                 </div>
@@ -191,45 +199,60 @@ export function Layout() {
           <DetailSheet />
         </main>
 
-        <footer className="border-t border-line">
+        <footer className="border-t border-separator-border">
           <div className="mx-auto flex max-w-5xl flex-col gap-8 px-4 py-10 sm:px-5 md:flex-row md:justify-between">
-            <div className="flex max-w-md flex-col gap-2 text-sm">
-              <span className="font-semibold">Mendoza Transparente</span>
-              <p className="text-ink-2 text-pretty">
+            <div className="flex max-w-md flex-col gap-2 text-body-regular">
+              <span className="text-body-semibold">Mendoza Transparente</span>
+              <p className="text-text-secondary text-pretty">
                 Proyecto ciudadano, independiente y apartidario. Cada número enlaza a su fuente oficial y los archivos originales se guardan
                 tal cual se descargaron.
               </p>
-              <a href={REPO} target="_blank" rel="noreferrer" className="inline-flex w-fit items-center gap-1.5 text-link hover:underline">
-                <GitBranch className="size-4" aria-hidden /> Código y datos abiertos en GitHub
+              <a
+                href={REPO}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex w-fit items-center gap-1.5 text-text-link hover:underline"
+              >
+                <RiGitBranchLine className="size-4" aria-hidden /> Código y datos abiertos en GitHub
               </a>
               <Link
                 to="/participar"
                 search={{ tipo: "error", pagina: pathname }}
                 id="footer-reportar-error"
                 data-track="footer.report_error"
-                className="inline-flex w-fit items-center gap-1.5 text-link hover:underline"
+                className="inline-flex w-fit items-center gap-1.5 text-text-link hover:underline"
               >
-                <Bug className="size-4" aria-hidden /> ¿Encontraste un error? Avisanos
+                <RiBugLine className="size-4" aria-hidden /> ¿Encontraste un error? Avisanos
               </Link>
             </div>
 
-            <div className="flex max-w-sm flex-col gap-2 text-sm">
-              <span className="text-ink-muted">Hecho por</span>
-              <span className="font-semibold">{AUTOR.nombre}</span>
-              <p className="text-ink-2 text-pretty">
+            <div className="flex max-w-sm flex-col gap-2 text-body-regular">
+              <span className="text-text-tertiary">Hecho por</span>
+              <span className="text-body-semibold">{AUTOR.nombre}</span>
+              <p className="text-text-secondary text-pretty">
                 Indie hacker y product engineer desde Argentina. Construye herramientas que funcionan fuera del laboratorio: de billeteras
                 Lightning a la transparencia pública.
               </p>
               <div className="flex flex-wrap gap-x-4 gap-y-1">
-                <a href={AUTOR.x} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-link hover:underline">
+                <a
+                  href={AUTOR.x}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 text-text-link hover:underline"
+                >
                   <XLogo /> @unllamas
                 </a>
-                <a href={AUTOR.web} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-link hover:underline">
-                  <Globe className="size-4" aria-hidden /> jonallamas.com
+                <a
+                  href={AUTOR.web}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 text-text-link hover:underline"
+                >
+                  <RiGlobalLine className="size-4" aria-hidden /> jonallamas.com
                 </a>
               </div>
               <div className="flex items-center gap-3 pt-4">
-                <span className="text-ink-muted">Tema</span>
+                <span className="text-text-tertiary">Tema</span>
                 <ThemeToggle appearance="segmented" />
               </div>
             </div>
@@ -269,25 +292,23 @@ function Desplegable({ grupo, pathname }: { grupo: Grupo; pathname: string }) {
         data-track="nav.group.toggle"
         data-track-group={grupo.label}
         data-track-open={String(!abierto)}
-        className={`inline-flex items-center gap-1 rounded-lg px-3 py-2 hover:bg-tile hover:text-link ${
-          activo ? "font-medium text-link" : "text-ink-2"
-        }`}
+        className={buttonClassName({ variant: "tertiary", className: cx(activo && "text-text-link") })}
       >
         {grupo.label}
-        <ChevronDown className={`size-4 transition-transform ${abierto ? "rotate-180" : ""}`} aria-hidden />
+        <RiArrowDownSLine className={cx("size-5 transition-transform", abierto && "rotate-180")} aria-hidden />
       </button>
       {abierto && (
-        <div className="absolute top-full right-0 z-30 mt-2 flex w-80 flex-col gap-1 rounded-xl border border-line bg-surface p-2 shadow-xl">
+        <div className="absolute top-full right-0 z-30 mt-2 flex w-80 flex-col gap-1 rounded-xl border border-separator-border bg-background-primary-default p-2 shadow-xl">
           {grupo.items.map((item) => (
             <Link
               key={item.to}
               to={item.to}
-              className="group flex items-start gap-3 rounded-lg p-3 whitespace-normal hover:bg-tile [&.active]:bg-tile"
+              className="group flex min-h-11 items-start gap-3 rounded-2lg p-3 whitespace-normal hover:bg-background-secondary-default [&.active]:bg-background-secondary-default"
             >
-              <item.icon className="mt-0.5 size-5 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
+              <item.icon className="mt-0.5 size-5 shrink-0 text-foreground-icon-secondary group-hover:text-text-link" aria-hidden />
               <span className="flex flex-col gap-0.5">
-                <span className="font-medium text-ink group-hover:text-link">{item.label}</span>
-                <span className="text-ink-muted">{item.descripcion}</span>
+                <span className="text-body-medium text-text-link">{item.label}</span>
+                <span className="text-text-tertiary">{item.descripcion}</span>
               </span>
             </Link>
           ))}
@@ -297,7 +318,7 @@ function Desplegable({ grupo, pathname }: { grupo: Grupo; pathname: string }) {
   );
 }
 
-/** Logo de X (lucide no lo incluye). */
+/** Logo de X (el set de íconos no lo incluye). */
 function XLogo() {
   return (
     <svg viewBox="0 0 24 24" className="size-3.5 fill-current" aria-hidden>

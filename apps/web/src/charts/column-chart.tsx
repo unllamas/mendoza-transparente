@@ -32,10 +32,10 @@ export function ColumnChart({
   return (
     <div className="flex flex-col gap-3">
       <div className="flex min-h-10 flex-col" aria-live="polite">
-        <span className="text-xs text-ink-muted">{c.etiqueta}</span>
+        <span className="text-caption-1-regular text-text-tertiary">{c.etiqueta}</span>
         <span className="flex flex-wrap items-baseline gap-x-2">
-          <span className="text-lg font-semibold tabular-nums">{c.valor ? formatValue(c.valor) : "Sin adjudicaciones"}</span>
-          {c.detalle && c.valor > 0 && <span className="text-xs text-ink-muted">{c.detalle}</span>}
+          <span className="text-title-3-semibold tabular-nums">{c.valor ? formatValue(c.valor) : "Sin adjudicaciones"}</span>
+          {c.detalle && c.valor > 0 && <span className="text-caption-1-regular text-text-tertiary">{c.detalle}</span>}
         </span>
       </div>
 
@@ -55,7 +55,7 @@ export function ColumnChart({
           >
             <span
               className={`block w-full rounded-t-[4px] transition-opacity ${
-                col.valor ? "bg-accent" : "bg-axis"
+                col.valor ? "bg-highlight" : "bg-chart-axis"
               } ${i === activa ? "opacity-100" : "opacity-55 group-hover:opacity-80"}`}
               style={{ height: col.valor ? `${Math.max((col.valor / max) * 100, 2)}%` : 2 }}
             />
@@ -63,11 +63,11 @@ export function ColumnChart({
         ))}
       </div>
 
-      <div className="flex gap-1 border-t border-axis pt-1.5">
+      <div className="flex gap-1 border-t border-chart-axis pt-1.5">
         {columnas.map((col, i) => (
           <span
             key={col.etiqueta}
-            className={`min-w-0 flex-1 text-center text-[11px] tabular-nums ${i === activa ? "font-medium text-ink" : "text-ink-muted"}`}
+            className={`min-w-0 flex-1 text-center text-caption-2-regular tabular-nums ${i === activa ? "font-medium text-text-primary" : "text-text-tertiary"}`}
           >
             {columnas.length > 8 ? `'${col.etiqueta.slice(-2)}` : col.etiqueta}
           </span>

@@ -60,10 +60,10 @@ export interface TextareaBaseProps extends Omit<AriaTextAreaProps, "size" | "cla
 const textareaStyles = sortCx({
   field: [
     "relative flex w-full flex-col",
-    "rounded-2lg",
-    "bg-background-tertiary-default text-foreground-icon-tertiary",
-    "ring-2 ring-inset ring-transparent",
-    "transition-[background-color,box-shadow,color] duration-[var(--input-transition-ms)] ease",
+    // Mendoza Transparente: same shell as Select and the secondary Button (border + surface), one look for every control.
+    "rounded-2lg border border-border-button-default shadow-xs",
+    "bg-background-primary-default text-foreground-icon-secondary",
+    "transition-[background-color,border-color,box-shadow,color] duration-[var(--input-transition-ms)] ease",
   ].join(" "),
 
   // Matches Input's insets, so a stacked input and textarea share one edge:
@@ -155,13 +155,13 @@ export function TextareaBase({
           textareaStyles.field,
           textareaStyles.fieldSize[size],
           // Hover: idle, no focus, no disabled, no invalid
-          isHovered && !isFocusWithin && !isDisabled && !isInvalid && "ring-border-button-hover",
+          isHovered && !isFocusWithin && !isDisabled && !isInvalid && "border-border-button-hover",
           // Focus wins over hover
-          isFocusWithin && !isDisabled && !isInvalid && "ring-border-button-active",
+          isFocusWithin && !isDisabled && !isInvalid && "border-border-focus-ring ring-2 ring-border-focus-ring/20",
           // Disabled
           isDisabled && "bg-input-disabled-background text-input-disabled-foreground",
           // Invalid
-          isInvalid && "bg-background-tertiary-error text-foreground-icon-error",
+          isInvalid && "border-border-error-default text-foreground-icon-error",
           ctx.fieldClassName,
           fieldClassName,
         )

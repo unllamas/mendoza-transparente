@@ -25,7 +25,7 @@ Un archivo cambiado es una pista. Revisar las pantallas donde aparece: quién lo
 
 ## 3. Leer lo que se borró
 
-En cada `-` del diff, buscar señales que desaparecen sin reemplazo: `aria-label`, `label` de `IconButton`, `min-h-11`, `truncate`, `min-w-0`, `shrink-0`, `whitespace-nowrap`, `text-link` en una flecha, `overscroll-contain`, `motion-safe:`, `text-base` en un campo, `FuentesOficiales`, `PersonAvatar`. Si el mismo efecto reaparece en otro lado del diff, no es regresión.
+En cada `-` del diff, buscar señales que desaparecen sin reemplazo: `aria-label` (también el de `IconButton`), `min-h-11`, `truncate`, `min-w-0`, `shrink-0`, `whitespace-nowrap`, `text-text-link` en una flecha, `overscroll-contain`, `motion-safe:`, `max-sm:text-base` en un campo, `FuentesOficiales`, `PersonAvatar`. Si el mismo efecto reaparece en otro lado del diff, no es regresión.
 
 ## 4. ¿Hace lo que dice?
 

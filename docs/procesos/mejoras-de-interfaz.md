@@ -37,7 +37,7 @@ La conexión es opcional a propósito: si la barra apunta al servidor y el servi
 
 | Lo que se dice | La regla detrás | Dónde está |
 |---|---|---|
-| «No se entiende que se puede tocar» | Borde = clickeable; la acción se ve antes del hover; flecha en `text-link` | `diseno.md`, Forma |
+| «No se entiende que se puede tocar» | Una sola forma por tipo; la acción se ve antes del hover; flecha en `text-text-link` | `diseno.md`, Forma |
 | «Se corta», «queda feo en el celu» | Una sola línea en cifras, títulos y montos; nunca scroll horizontal | `diseno.md`, Forma |
 | «Es muy chico para tocar», «toco y no pasa nada» | 44 px para tocar; respuesta al tocar (`active:`) | `diseno.md`, Forma y Celular |
 | «Al escribir se agranda la pantalla» | Campos con letra de 16 px en el celular | `diseno.md`, Celular |
@@ -111,7 +111,7 @@ Los componentes se diseñan con datos amables: nombres cortos, montos redondos, 
 | `agentation-mcp` (`.mcp.json`) | Que las notas lleguen solas al agente | En uso |
 | `bun run verificar` | Scroll horizontal, consola, 44 px, encabezado, menú móvil y campos de 16 px | En uso |
 | Rams (rams.ai) | Revisión automática de interfaz | No: es pago y la sección 4 cubre lo mismo |
-| Skills de terceros instaladas tal cual (`npx skills add …`) | — | No: están en inglés, son genéricas y chocan con reglas nuestras (borravino, sin CSS propio). Se toman las ideas y se escriben acá |
+| Skills de terceros instaladas tal cual (`npx skills add …`) | — | No: están en inglés, son genéricas y chocan con reglas nuestras (paleta celeste, sin CSS propio). Se toman las ideas y se escriben acá |
 
 ## Fuentes
 

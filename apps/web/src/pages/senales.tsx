@@ -1,10 +1,10 @@
 import { Alert } from "@mt/ui/components/alert";
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
-import { cardVariants } from "@mt/ui/components/card";
+import { cardVariants, listRowVariants, listVariants } from "@mt/ui/components/card";
 import { PageHeader } from "@mt/ui/components/section";
 import { cx } from "@mt/ui/lib/cx";
+import { RiArrowRightSLine, RiBuilding2Line, RiFileTextLine, RiScalesLine } from "@remixicon/react";
 import { getRouteApi, Link, useRouter, useRouterState } from "@tanstack/react-router";
-import { Building2, ChevronRight, FileText, Scale } from "lucide-react";
 
 import { formatMoneda } from "@/celdas.ts";
 import { useDetail } from "@/components/detail-sheet.tsx";
@@ -34,7 +34,7 @@ export function SenalesPage() {
 
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={Scale} topic="Para mirar de cerca" title="Lo que los datos muestran y nadie explica">
+      <PageHeader icon={RiScalesLine} topic="Para mirar de cerca" title="Lo que los datos muestran y nadie explica">
         Patrones en los datos oficiales que merecen una explicación. No son acusaciones: son preguntas que cualquier ciudadano puede hacerle
         al Estado, con los casos concretos para revisar.
       </PageHeader>
@@ -47,12 +47,12 @@ export function SenalesPage() {
               onClick={() => setAbierta(s)}
               className={cx(cardVariants({ size: "lg" }), "flex h-full w-full flex-col gap-3")}
             >
-              <span className="text-xs font-medium tracking-wide text-ink-muted uppercase">{s.tema}</span>
-              <span className="text-4xl font-semibold tracking-tight whitespace-nowrap tabular-nums">{s.cifra}</span>
-              <span className="text-pretty">{s.titulo}</span>
-              <span className="text-sm text-ink-muted text-pretty">{s.matiz}</span>
-              <span className="mt-auto inline-flex items-center gap-1 pt-1 text-sm font-medium text-link">
-                {s.casos.length ? `Ver los ${s.casos.length} casos` : "Ver más"} <ChevronRight className="size-4" aria-hidden />
+              <span className="text-caption-1-medium tracking-wide text-text-tertiary uppercase">{s.tema}</span>
+              <span className="text-display-3-semibold tracking-tight whitespace-nowrap tabular-nums">{s.cifra}</span>
+              <span className="text-body-regular text-pretty">{s.titulo}</span>
+              <span className="text-body-regular text-text-tertiary text-pretty">{s.matiz}</span>
+              <span className="mt-auto inline-flex items-center gap-1 pt-1 text-body-medium text-text-link">
+                {s.casos.length ? `Ver los ${s.casos.length} casos` : "Ver más"} <RiArrowRightSLine className="size-5" aria-hidden />
               </span>
             </button>
           </li>
@@ -75,9 +75,9 @@ function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }
       {
         <>
           <div className="flex flex-col gap-2">
-            <span className="text-4xl font-semibold tracking-tight tabular-nums">{s.cifra}</span>
-            <h3 className="text-lg font-medium text-balance">{s.titulo}</h3>
-            <p className="text-sm text-ink-2 text-pretty">{s.matiz}</p>
+            <span className="text-display-3-semibold tracking-tight tabular-nums">{s.cifra}</span>
+            <h3 className="text-title-3-medium text-balance">{s.titulo}</h3>
+            <p className="text-body-regular text-text-secondary text-pretty">{s.matiz}</p>
           </div>
 
           <Alert title="Por qué importa">{s.porQueImporta}</Alert>
@@ -85,33 +85,29 @@ function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }
           {s.casos.length > 0 && (
             <section className="flex flex-col gap-2">
               <div className="flex flex-col gap-0.5">
-                <h4 className="text-sm font-semibold">{s.casosTitulo}</h4>
-                <span className="text-xs text-ink-muted">Tocá un caso para ver el detalle completo</span>
+                <h4 className="text-body-semibold">{s.casosTitulo}</h4>
+                <span className="text-caption-1-regular text-text-tertiary">Tocá un caso para ver el detalle completo</span>
               </div>
-              <ul className="flex flex-col divide-y divide-line">
+              <ul className={listVariants()}>
                 {s.casos.map((c) => (
                   <li key={`${c.tipo}-${c.id}-${c.titulo}`}>
-                    <button
-                      type="button"
-                      onClick={() => detail.open(c.tipo, c.id)}
-                      className="group -mx-2 flex w-[calc(100%+1rem)] items-center gap-3 rounded-lg px-2 py-2.5 text-left hover:bg-tile"
-                    >
+                    <button type="button" onClick={() => detail.open(c.tipo, c.id)} className={listRowVariants()}>
                       {c.tipo === "proveedor" ? (
-                        <Building2 className="size-4 shrink-0 text-ink-muted" aria-hidden />
+                        <RiBuilding2Line className="size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
                       ) : (
-                        <FileText className="size-4 shrink-0 text-ink-muted" aria-hidden />
+                        <RiFileTextLine className="size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
                       )}
                       <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                        <span className="line-clamp-2 text-sm group-hover:text-link">{c.titulo}</span>
-                        <span className="line-clamp-2 text-xs text-ink-muted">
+                        <span className="line-clamp-2 text-body-regular group-hover:text-text-link">{c.titulo}</span>
+                        <span className="line-clamp-2 text-caption-1-regular text-text-tertiary">
                           {c.fecha ? `${formatDate(c.fecha)} · ` : ""}
                           {c.detalle}
                         </span>
                       </span>
                       {c.monto !== null && (
-                        <span className="text-sm font-medium whitespace-nowrap tabular-nums">{formatMoneda(c.monto, "ARS")}</span>
+                        <span className="text-body-medium whitespace-nowrap tabular-nums">{formatMoneda(c.monto, "ARS")}</span>
                       )}
-                      <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
+                      <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
                     </button>
                   </li>
                 ))}
@@ -125,11 +121,13 @@ function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }
               search={{ dato: s.pedido } as never}
               className={buttonClassName({ variant: "primary", className: "w-fit" })}
             >
-              Pedir los datos actualizados <ChevronRight className="size-4" aria-hidden />
+              Pedir los datos actualizados <RiArrowRightSLine className="size-5" aria-hidden />
             </Link>
           )}
 
-          <p className="border-t border-line pt-4 text-xs text-ink-muted text-pretty">Cómo lo calculamos: {s.metodo}</p>
+          <p className="border-t border-separator-border pt-4 text-caption-1-regular text-text-tertiary text-pretty">
+            Cómo lo calculamos: {s.metodo}
+          </p>
         </>
       }
     </TrackedSheet>

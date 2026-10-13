@@ -1,28 +1,28 @@
 import { Chip } from "@mt/ui/components/base/badges/chip";
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
-import { cardVariants, tileVariants } from "@mt/ui/components/card";
+import { cardVariants, listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
 import { cx } from "@mt/ui/lib/cx";
-import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import {
-  ArrowRight,
-  ArrowUpRight,
-  BookOpen,
-  Coins,
-  ExternalLink,
-  EyeOff,
-  HelpCircle,
-  Landmark,
-  LayoutGrid,
-  type LucideIcon,
-  Map as MapIcon,
-  Scale,
-  ScrollText,
-  ShoppingCart,
-  Sparkles,
-  TrendingUp,
-  Users,
-  UsersRound,
-} from "lucide-react";
+  type RemixiconComponentType,
+  RiArrowRightLine,
+  RiArrowRightSLine,
+  RiBankLine,
+  RiBookOpenLine,
+  RiCoinsLine,
+  RiExternalLinkLine,
+  RiEyeOffLine,
+  RiFileTextLine,
+  RiGroupLine,
+  RiLayoutGridLine,
+  RiLineChartLine,
+  RiMapLine,
+  RiQuestionLine,
+  RiScales3Line,
+  RiShoppingCartLine,
+  RiSparklingLine,
+  RiTeamLine,
+} from "@remixicon/react";
+import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
 import { MapaMendoza } from "@/charts/mapa.tsx";
@@ -53,13 +53,15 @@ export function HomePage() {
     <div className="flex flex-col gap-20">
       {/* Portada */}
       <section className="flex flex-col gap-8 pt-6">
-        <Chip variant="subtle" color="soft" className="w-fit gap-2 rounded-full px-3">
-          <span className="size-1.5 rounded-full bg-accent" aria-hidden />
+        <Chip variant="subtle" color="soft" className="w-fit gap-2">
+          <span className="size-1.5 rounded-full bg-highlight" aria-hidden />
           Rumbo a las elecciones provinciales 2027
         </Chip>
         <div className="flex max-w-3xl flex-col gap-5">
-          <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-6xl">Mendoza, con los números sobre la mesa.</h1>
-          <p className="max-w-2xl text-lg text-ink-2 text-pretty sm:text-xl">
+          <h1 className="text-display-3-semibold tracking-tight text-balance sm:text-display-1-semibold">
+            Mendoza, con los números sobre la mesa.
+          </h1>
+          <p className="max-w-2xl text-title-3-regular text-text-secondary text-pretty sm:text-title-2-regular">
             Mirá en qué se gasta la plata de Mendoza, quién decide y qué falta publicar. Todos los datos oficiales de la provincia en un
             solo lugar, explicados en simple y con la fuente de cada número.
           </p>
@@ -71,13 +73,13 @@ export function HomePage() {
             <Link
               to="/como-leer"
               data-track="home.hero.reading_guide"
-              className="inline-flex items-center gap-1.5 text-sm text-link hover:underline"
+              className="inline-flex items-center gap-1.5 text-body-regular text-text-link hover:underline"
             >
-              <BookOpen className="size-4" aria-hidden /> ¿Primera vez? Empezá por acá
+              <RiBookOpenLine className="size-4" aria-hidden /> ¿Primera vez? Empezá por acá
             </Link>
           </div>
         </div>
-        <p className="text-sm text-ink-muted">
+        <p className="text-body-regular text-text-tertiary">
           {formatNumber(registros)} registros de {fuentesConDatos} fuentes oficiales · Actualizado al {formatDate(index.generatedAt)}
         </p>
       </section>
@@ -85,7 +87,7 @@ export function HomePage() {
       {guide && (
         <section className="flex flex-col gap-6">
           <Encabezado
-            icon={HelpCircle}
+            icon={RiQuestionLine}
             titulo="Empezá por una pregunta"
             bajada="Las preguntas que más nos hacen, con la respuesta a un clic."
           />
@@ -95,7 +97,7 @@ export function HomePage() {
 
       {guide && guide.news.length > 0 && (
         <section className="flex flex-col gap-6">
-          <Encabezado icon={Sparkles} titulo="Lo nuevo" bajada="Las últimas leyes, nombramientos y datos actualizados." />
+          <Encabezado icon={RiSparklingLine} titulo="Lo nuevo" bajada="Las últimas leyes, nombramientos y datos actualizados." />
           <WhatsNew guide={guide} />
         </section>
       )}
@@ -108,7 +110,7 @@ export function HomePage() {
             <Cifra
               fuente={fuente("hacienda-deuda-stock")}
               to="/deuda"
-              icon={Landmark}
+              icon={RiBankLine}
               titulo="Deuda pública"
               valor={<CountUp value={deuda.totalUsd} format={(v) => `US$ ${entero(v)}`} />}
               unidad="millones"
@@ -120,7 +122,7 @@ export function HomePage() {
             <Cifra
               fuente={fuente("hacienda-participacion-municipal")}
               to="/coparticipacion"
-              icon={Coins}
+              icon={RiCoinsLine}
               titulo={`Coparticipación ${coparticipacion.anio}`}
               valor={<CountUp value={coparticipacion.totalReal} format={millones} />}
               unidad="millones"
@@ -132,7 +134,7 @@ export function HomePage() {
             <Cifra
               fuente={fuente("dnap-ocupacion")}
               to="/empleo-publico"
-              icon={UsersRound}
+              icon={RiTeamLine}
               titulo="Empleo público"
               valor={<CountUp value={empleo.cadaMil} format={(v) => decimal.format(v)} />}
               unidad="cada mil hab."
@@ -145,7 +147,7 @@ export function HomePage() {
               fuente={fuente("compras-ocds")}
               to="/datos/$fuente"
               params={{ fuente: "compras-ocds" }}
-              icon={ShoppingCart}
+              icon={RiShoppingCartLine}
               titulo="Compras del Estado"
               valor={<CountUp value={compras.totalAdjudicado} format={millones} />}
               unidad="millones"
@@ -157,7 +159,7 @@ export function HomePage() {
             <Cifra
               fuente={fuente("poblacion")}
               to="/poblacion"
-              icon={Users}
+              icon={RiGroupLine}
               titulo={`Población ${poblacion.anio}`}
               valor={<CountUp value={poblacion.actual} format={entero} />}
               unidad="hab."
@@ -170,7 +172,7 @@ export function HomePage() {
               fuente={fuente("boletin-oficial")}
               to="/datos/$fuente"
               params={{ fuente: "boletin-oficial" }}
-              icon={ScrollText}
+              icon={RiFileTextLine}
               titulo="Boletín Oficial"
               valor={<CountUp value={boletin.normas} format={entero} />}
               unidad="normas"
@@ -180,20 +182,22 @@ export function HomePage() {
         </div>
 
         {(inflacion || dolar) && (
-          <div className="flex flex-wrap gap-x-8 gap-y-3 rounded-xl bg-tile px-4 py-3 text-sm">
+          <div className={cx(tileVariants({ size: "sm" }), "flex flex-wrap gap-x-8 gap-y-3 text-body-regular")}>
             {inflacion && (
-              <Link to="/datos/$fuente" params={{ fuente: "indices" }} className="flex flex-wrap items-center gap-x-2 hover:text-link">
-                <TrendingUp className="size-4 text-ink-muted" aria-hidden />
-                <span className="text-ink-2">Inflación en Cuyo ({inflacion.periodo}):</span>
+              <Link to="/datos/$fuente" params={{ fuente: "indices" }} className="flex flex-wrap items-center gap-x-2 hover:text-text-link">
+                <RiLineChartLine className="size-4 text-foreground-icon-secondary" aria-hidden />
+                <span className="text-text-secondary">Inflación en Cuyo ({inflacion.periodo}):</span>
                 <span className="font-medium tabular-nums">{decimal.format(inflacion.mensual)} % mensual</span>
-                <span className="text-ink-muted tabular-nums">· {decimal.format(inflacion.interanual)} % en 12 meses</span>
+                <span className="text-text-tertiary tabular-nums">· {decimal.format(inflacion.interanual)} % en 12 meses</span>
+                <RiArrowRightSLine className="size-4 text-text-link" aria-hidden />
               </Link>
             )}
             {dolar && (
-              <Link to="/datos/$fuente" params={{ fuente: "indices" }} className="flex items-center gap-2 hover:text-link">
-                <Coins className="size-4 text-ink-muted" aria-hidden />
-                <span className="text-ink-2">Dólar oficial ({dolar.periodo}):</span>
+              <Link to="/datos/$fuente" params={{ fuente: "indices" }} className="flex items-center gap-2 hover:text-text-link">
+                <RiCoinsLine className="size-4 text-foreground-icon-secondary" aria-hidden />
+                <span className="text-text-secondary">Dólar oficial ({dolar.periodo}):</span>
                 <span className="font-medium tabular-nums">{pesos(dolar.oficial)}</span>
+                <RiArrowRightSLine className="size-4 text-text-link" aria-hidden />
               </Link>
             )}
           </div>
@@ -203,7 +207,7 @@ export function HomePage() {
       {guide && (
         <section className="flex flex-col gap-6">
           <Encabezado
-            icon={LayoutGrid}
+            icon={RiLayoutGridLine}
             titulo="Todo lo que hay en Mendoza Transparente"
             bajada={`${formatNumber(guide.counts.records)} registros ordenados en cuatro preguntas. Elegí por dónde seguir.`}
           />
@@ -212,7 +216,7 @@ export function HomePage() {
       )}
 
       <section className="flex flex-col gap-6">
-        <Encabezado icon={BookOpen} titulo="Cómo leer estos datos" bajada="Cuatro reglas para entender lo que vas a ver." />
+        <Encabezado icon={RiBookOpenLine} titulo="Cómo leer estos datos" bajada="Cuatro reglas para entender lo que vas a ver." />
         <ReadingRules />
       </section>
 
@@ -220,29 +224,30 @@ export function HomePage() {
       {noPublicado.length > 0 && (
         <section className="flex flex-col gap-6">
           <Encabezado
-            icon={EyeOff}
+            icon={RiEyeOffLine}
             titulo="Lo que el Estado no publica"
             bajada={`${noPublicado.length} datos que deberían ser públicos y no encontramos en ningún sitio oficial. Podés pedirlos vos.`}
           />
-          <ul className="grid gap-2 sm:grid-cols-2">
+          <ul className={listVariants()}>
             {noPublicado.slice(0, 6).map((item) => (
               <li key={item.id}>
                 <Link
                   to="/no-publicado"
                   search={{ dato: item.id } as never}
-                  className="flex h-full items-start gap-3 rounded-xl border border-line px-4 py-3 text-sm hover:border-link"
+                  className={cx(listRowVariants(), "items-start text-body-regular")}
                 >
-                  <EyeOff className="mt-0.5 size-4 shrink-0 text-ink-muted" aria-hidden />
-                  <span className="flex flex-col gap-0.5">
+                  <RiEyeOffLine className="mt-0.5 size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
+                  <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                     <span className="font-medium">{item.titulo}</span>
-                    <span className="text-ink-muted">{item.organismo}</span>
+                    <span className="text-text-tertiary">{item.organismo}</span>
                   </span>
+                  <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
                 </Link>
               </li>
             ))}
           </ul>
           <Link to="/no-publicado" className={buttonClassName({ variant: "primary", className: "w-fit" })}>
-            Ver todos y cómo pedirlos <ArrowRight className="size-4" aria-hidden />
+            Ver todos y cómo pedirlos <RiArrowRightLine className="size-5" aria-hidden />
           </Link>
         </section>
       )}
@@ -251,7 +256,7 @@ export function HomePage() {
       {coparticipacion && mapa && (
         <section className="flex flex-col gap-6">
           <Encabezado
-            icon={MapIcon}
+            icon={RiMapLine}
             titulo="Tu departamento"
             bajada={`Cuánto recibió cada municipio por habitante en ${coparticipacion.anio}. Tocá uno para ver su detalle.`}
           />
@@ -272,7 +277,7 @@ export function HomePage() {
       {compras && (
         <section className="flex flex-col gap-6">
           <Encabezado
-            icon={Scale}
+            icon={RiScales3Line}
             titulo="Para mirar de cerca"
             bajada="No son acusaciones: son patrones en los datos oficiales que merecen una explicación."
           />
@@ -296,7 +301,7 @@ export function HomePage() {
             )}
           </div>
           <Link to="/senales" className={buttonClassName({ variant: "primary", className: "w-fit" })}>
-            Ver todas las señales y sus casos <ArrowRight className="size-4" aria-hidden />
+            Ver todas las señales y sus casos <RiArrowRightLine className="size-5" aria-hidden />
           </Link>
         </section>
       )}
@@ -304,20 +309,20 @@ export function HomePage() {
   );
 }
 
-function Encabezado({ titulo, bajada, icon: Icon }: { titulo: string; bajada?: string; icon?: LucideIcon }) {
+function Encabezado({ titulo, bajada, icon: Icon }: { titulo: string; bajada?: string; icon?: RemixiconComponentType }) {
   return (
     <div className="flex max-w-2xl flex-col gap-1.5">
-      <h2 className="flex items-center gap-2 text-2xl font-semibold tracking-tight">
-        {Icon && <Icon className="size-5 text-ink-muted" aria-hidden />}
+      <h2 className="flex items-center gap-2 text-title-1-semibold tracking-tight">
+        {Icon && <Icon className="size-5 text-foreground-icon-secondary" aria-hidden />}
         {titulo}
       </h2>
-      {bajada && <p className="text-ink-2 text-pretty">{bajada}</p>}
+      {bajada && <p className="text-text-secondary text-pretty">{bajada}</p>}
     </div>
   );
 }
 
 type CifraProps = {
-  icon: LucideIcon;
+  icon: RemixiconComponentType;
   titulo: string;
   valor: ReactNode;
   /** Unidad chica al lado de la cifra ("millones", "hab."), para que el número no se corte. */
@@ -333,7 +338,7 @@ type CifraProps = {
 /** Cifra principal clickeable: lleva borde porque abre su página. */
 function Cifra({ icon: Icon, titulo, valor, unidad, detalle, serie, fuente, to, params }: CifraProps) {
   // La tarjeta entera abre su página; el enlace a la fuente oficial queda por encima y abre el sitio del organismo.
-  const linkClass = "after:absolute after:inset-0 after:rounded-2xl";
+  const linkClass = "after:absolute after:inset-0 after:rounded-xl";
   const tituloLink =
     to === "/datos/$fuente" ? (
       <Link to={to} params={params} className={linkClass}>
@@ -347,32 +352,29 @@ function Cifra({ icon: Icon, titulo, valor, unidad, detalle, serie, fuente, to, 
   return (
     <div className={cx(cardVariants({ size: "lg" }), "relative flex min-w-0 flex-col gap-4")}>
       <div className="flex items-center justify-between gap-3">
-        <span className="flex min-w-0 items-center gap-2 text-sm text-ink-2">
-          <Icon className="size-4 shrink-0 text-ink-muted" aria-hidden />
+        <span className="flex min-w-0 items-center gap-2 text-body-regular text-text-secondary">
+          <Icon className="size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
           <span className="truncate">{tituloLink}</span>
         </span>
-        <ArrowUpRight
-          className="size-4 shrink-0 text-ink-muted transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-          aria-hidden
-        />
+        <RiArrowRightSLine className="size-5 shrink-0 text-text-link transition-transform group-hover:translate-x-0.5" aria-hidden />
       </div>
       <div className="flex items-baseline gap-2 whitespace-nowrap">
-        <span className="text-3xl font-semibold tracking-tight sm:text-4xl">{valor}</span>
-        {unidad && <span className="text-sm text-ink-muted">{unidad}</span>}
+        <span className="text-display-4-semibold tracking-tight sm:text-display-3-semibold">{valor}</span>
+        {unidad && <span className="text-body-regular text-text-tertiary">{unidad}</span>}
       </div>
       {serie && <Sparkline values={serie} width={320} className="w-full" />}
-      <p className="text-sm text-ink-muted text-pretty">{detalle}</p>
+      <p className="text-body-regular text-text-tertiary text-pretty">{detalle}</p>
       {fuente?.url && (
-        <div className="mt-auto border-t border-line pt-3">
+        <div className="mt-auto border-t border-separator-border pt-3">
           <a
             href={fuente.url}
             target="_blank"
             rel="noreferrer"
-            className="relative z-10 inline-flex max-w-full items-center gap-1 text-xs text-ink-muted hover:text-link"
+            className="relative z-10 inline-flex max-w-full items-center gap-1 text-caption-1-regular text-text-tertiary hover:text-text-link"
           >
-            <Landmark className="size-3.5 shrink-0" aria-hidden />
+            <RiBankLine className="size-3.5 shrink-0" aria-hidden />
             <span className="truncate">Fuente: {fuente.organismo || fuente.nombre}</span>
-            <ExternalLink className="size-3 shrink-0" aria-hidden />
+            <RiExternalLinkLine className="size-3 shrink-0" aria-hidden />
           </a>
         </div>
       )}
@@ -383,9 +385,9 @@ function Cifra({ icon: Icon, titulo, valor, unidad, detalle, serie, fuente, to, 
 function Senal({ valor, texto, matiz }: { valor: string; texto: string; matiz: string }) {
   return (
     <div className={cx(tileVariants({ size: "lg" }), "flex flex-col gap-2")}>
-      <span className="text-3xl font-semibold tracking-tight tabular-nums">{valor}</span>
-      <span className="text-ink text-pretty">{texto}</span>
-      <span className="text-sm text-ink-muted text-pretty">{matiz}</span>
+      <span className="text-display-4-semibold tracking-tight tabular-nums">{valor}</span>
+      <span className="text-text-primary text-pretty">{texto}</span>
+      <span className="text-body-regular text-text-tertiary text-pretty">{matiz}</span>
     </div>
   );
 }

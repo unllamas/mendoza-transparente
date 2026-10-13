@@ -1,9 +1,11 @@
+import { tileVariants } from "@mt/ui/components/card";
+import { cx } from "@mt/ui/lib/cx";
 import { useMemo, useState } from "react";
 
 import type { MapaMendoza as MapaData } from "@/types.ts";
 
-/** Rampa secuencial borravino de poco a mucho; los valores por modo están en styles.css (--map-0 a --map-4). */
-const RAMPA = Array.from({ length: 5 }, (_, i) => `var(--map-${i})`);
+/** Sequential celeste ramp, from little to a lot; the values per theme are in @mt/ui styles/mt.css (--color-map-0 to --color-map-4). */
+const RAMPA = Array.from({ length: 5 }, (_, i) => `var(--color-map-${i})`);
 
 // Departamentos chicos del Gran Mendoza: se muestran ampliados en un recuadro.
 const GRAN_MENDOZA = ["Capital", "Godoy Cruz", "Guaymallén", "Maipú", "Las Heras", "Luján de Cuyo"];
@@ -29,7 +31,7 @@ export function MapaMendoza({ mapa, valores, formatValue, seleccionado, onSelect
   // extremo (por ejemplo La Paz en coparticipación por habitante) no deja a todos los demás del mismo color.
   const ordenados = [...nums].sort((a, b) => a - b);
   const color = (v: number | undefined) => {
-    if (v === undefined) return "var(--grid)";
+    if (v === undefined) return "var(--color-chart-grid)";
     const rank = ordenados.findIndex((x) => x >= v);
     return RAMPA[Math.min(Math.floor((rank / ordenados.length) * RAMPA.length), RAMPA.length - 1)]!;
   };
@@ -57,7 +59,7 @@ export function MapaMendoza({ mapa, valores, formatValue, seleccionado, onSelect
             key={d.municipio}
             d={d.path}
             style={{ fill: color(valores[d.municipio]) }}
-            stroke={sel ? "var(--ink)" : "var(--surface)"}
+            stroke={sel ? "var(--color-text-primary)" : "var(--color-background-primary-default)"}
             strokeWidth={sel ? (zoom ? 0.8 : 3) : zoom ? 0.3 : 1.2}
             vectorEffect="non-scaling-stroke"
             role="button"
@@ -89,33 +91,38 @@ export function MapaMendoza({ mapa, valores, formatValue, seleccionado, onSelect
         >
           {paths(false)}
         </svg>
-        <div className="flex min-w-0 flex-col gap-1.5 overflow-hidden rounded-lg bg-surface p-1.5 sm:p-2">
+        <div className={cx(tileVariants({ size: "sm" }), "flex min-w-0 flex-col gap-1.5 overflow-hidden p-1.5 sm:p-2")}>
           <svg viewBox={inset} className="block aspect-square w-full overflow-hidden" aria-hidden>
             {paths(true)}
           </svg>
-          <span className="px-1 text-xs text-ink-muted">Gran Mendoza, ampliado</span>
+          <span className="px-1 text-caption-1-regular text-text-tertiary">Gran Mendoza, ampliado</span>
         </div>
       </div>
 
-      <div className="flex min-h-11 flex-col justify-center rounded-lg bg-surface px-3 py-2 text-sm" aria-live="polite">
+      <div
+        className={cx(tileVariants({ size: "sm" }), "flex min-h-11 flex-col justify-center px-3 py-2 text-body-regular")}
+        aria-live="polite"
+      >
         {activo ? (
           <span>
             <span className="font-medium">{activo}</span>{" "}
-            <span className="text-ink-2 tabular-nums">{valores[activo] !== undefined ? formatValue(valores[activo]!) : "sin dato"}</span>
+            <span className="text-text-secondary tabular-nums">
+              {valores[activo] !== undefined ? formatValue(valores[activo]!) : "sin dato"}
+            </span>
           </span>
         ) : (
-          <span className="text-ink-muted">Tocá un departamento para ver su dato.</span>
+          <span className="text-text-tertiary">Tocá un departamento para ver su dato.</span>
         )}
       </div>
 
       <div className="flex flex-col gap-1">
-        <span className="text-xs text-ink-muted">{leyenda}</span>
+        <span className="text-caption-1-regular text-text-tertiary">{leyenda}</span>
         <div className="flex h-2.5 overflow-hidden rounded-full">
           {RAMPA.map((c) => (
             <span key={c} className="flex-1" style={{ background: c }} />
           ))}
         </div>
-        <div className="flex justify-between text-xs text-ink-muted tabular-nums">
+        <div className="flex justify-between text-caption-1-regular text-text-tertiary tabular-nums">
           <span>Menos · {formatValue(min)}</span>
           <span>{formatValue(max)} · Más</span>
         </div>
@@ -152,8 +159,8 @@ export function MunicipalityLocator({ mapa, focus, onOpen }: { mapa: MapaData; f
           <path
             key={d.municipio}
             d={d.path}
-            style={{ fill: isFocus ? "var(--brand)" : isHover ? "var(--map-1)" : "var(--grid)" }}
-            stroke="var(--surface)"
+            style={{ fill: isFocus ? "var(--color-highlight)" : isHover ? "var(--color-map-1)" : "var(--color-chart-grid)" }}
+            stroke="var(--color-background-primary-default)"
             strokeWidth={zoom ? 0.3 : 1.2}
             vectorEffect="non-scaling-stroke"
             role={isFocus ? "img" : "link"}
@@ -184,14 +191,14 @@ export function MunicipalityLocator({ mapa, focus, onOpen }: { mapa: MapaData; f
         >
           {paths(false)}
         </svg>
-        <div className={`flex min-w-0 flex-col gap-1.5 overflow-hidden rounded-lg bg-surface p-1.5 ${zoomed ? "" : "opacity-70"}`}>
+        <div className={cx(tileVariants({ size: "sm" }), "flex min-w-0 flex-col gap-1.5 overflow-hidden p-1.5", !zoomed && "opacity-70")}>
           <svg viewBox={inset} className="block aspect-square w-full overflow-hidden" aria-hidden>
             {paths(true)}
           </svg>
-          <span className="px-1 text-xs text-ink-muted">Gran Mendoza, ampliado</span>
+          <span className="px-1 text-caption-1-regular text-text-tertiary">Gran Mendoza, ampliado</span>
         </div>
       </div>
-      <span className="min-h-5 truncate text-xs text-ink-muted" aria-live="polite">
+      <span className="min-h-5 truncate text-caption-1-regular text-text-tertiary" aria-live="polite">
         {hover && hover !== focus ? `Ir a ${hover} ›` : "Tocá otro departamento para ir a su página."}
       </span>
     </div>

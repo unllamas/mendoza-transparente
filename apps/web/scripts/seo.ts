@@ -19,7 +19,7 @@ const DIST = join(WEB, "dist");
 const DATA = join(WEB, "public", "data");
 const FONTS = join(import.meta.dirname, "fonts");
 
-const ACCENT = "#c0395f";
+const ACCENT = "#74acdf";
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const jsonLd = (o: unknown) => JSON.stringify(o).replace(/</g, "\\u003c");

@@ -245,7 +245,7 @@ export function ThemeToggle({
         role="group"
         aria-label="Theme"
         className={cx(
-          "relative inline-flex w-fit items-center gap-1 rounded-full p-1",
+          "relative inline-flex w-fit items-center gap-1 rounded-2lg p-1",
           // Mobile: 2px padding + 28px segments = 32px tall, matching the
           // small icon buttons beside it. Desktop keeps the roomier 40px.
           glass && "p-0.5 sm:p-1",
@@ -257,14 +257,14 @@ export function ThemeToggle({
               "z-10 bg-transparent"
             : sidebarSurface
               ? "bg-theme-toggle-sidebar-background"
-              : "bg-background-secondary-default",
+              : "border border-border-button-default bg-background-secondary-default",
           className,
         )}
       >
         <span
           aria-hidden
           className={cx(
-            "pointer-events-none absolute top-1 start-1 size-11 rounded-full",
+            "pointer-events-none absolute top-1 start-1 size-11 rounded-lg",
             "shadow-xs transition-transform duration-200 ease",
             glass && "top-0.5 start-0.5 size-7 sm:top-1 sm:start-1 sm:size-8",
             small && "top-0.5 start-0.5 size-6",
@@ -301,7 +301,7 @@ export function ThemeToggle({
                 });
               }}
               className={cx(
-                "relative z-10 grid size-11 cursor-pointer place-items-center rounded-full outline-none",
+                "relative z-10 grid size-11 cursor-pointer place-items-center rounded-lg outline-none",
                 glass && "size-7 sm:size-8",
                 small && "size-6",
                 "transition-colors duration-150 ease",

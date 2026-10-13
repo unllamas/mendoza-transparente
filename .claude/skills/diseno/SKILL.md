@@ -1,6 +1,6 @@
 ---
 name: diseno
-description: Principios de diseño, UI y UX de Mendoza Transparente. Cubre color borravino, borde igual a clickeable, acción visible sin hover, 44 px para tocar, una línea, cara de cada persona, hojas modales, avisos, gráficos, mobile first, detalles del celular (campos de 16 px), textos de la interfaz, accesibilidad, movimiento y lo que no hacemos. Cargar antes de crear o retocar cualquier pantalla, componente, gráfico o texto visible, y al revisar capturas.
+description: Principios de diseño, UI y UX de Mendoza Transparente. Cubre color celeste y azul de la bandera, una sola forma por tipo de elemento, acción visible sin hover, 44 px para tocar, una línea, cara de cada persona, hojas modales, avisos, gráficos, mobile first, detalles del celular (campos de 16 px), textos de la interfaz, accesibilidad, movimiento y lo que no hacemos. Cargar antes de crear o retocar cualquier pantalla, componente, gráfico o texto visible, y al revisar capturas.
 ---
 
 # Diseño de Mendoza Transparente
@@ -9,7 +9,7 @@ Fuente completa: `docs/procesos/diseno.md`. Público: cualquier persona de Mendo
 
 ## Sistema de diseño
 
-Los componentes base y los tokens están en `packages/ui` (`@mt/ui`). **La base es BoardUI** (React Aria, en `src/components/{base,application,foundations}/`) y se está migrando: lo nuevo se arma con BoardUI y lo que se toca se pasa. Se agrega con `BOARDUI_TELEMETRY_DISABLED=1 npx -y boardui@latest add <x>` desde `packages/ui`, nunca con `init`. De BoardUI: `Button` e `IconButton` (44 px por defecto; `buttonClassName()` para un `Link`), `Input`, `Textarea`, `Select`/`SelectItem`, `SegmentedControl`, `Chip`, `StatusDot` y `Avatar`, con íconos de `@remixicon/react`. Propios armados con BoardUI y React Aria: `Sheet`, `Dialog`, `Popover`, `Alert`, `StatTile`, `Section`, `PageHeader`, `PersonAvatar`, `SearchInput` y `Segmented`. Para estilizar otro elemento: `buttonClassName`, `tileVariants` y `cardVariants`. Clases con `cx()` (`@mt/ui/lib/cx`); sin Radix ni `cva`.
+Los componentes base y los tokens están en `packages/ui` (`@mt/ui`). **La base es BoardUI** (React Aria, en `src/components/{base,application,foundations}/`) y se está migrando: lo nuevo se arma con BoardUI y lo que se toca se pasa. Se agrega con `BOARDUI_TELEMETRY_DISABLED=1 npx -y boardui@latest add <x>` desde `packages/ui`, nunca con `init`. De BoardUI: `Button` e `IconButton` (44 px por defecto; `buttonClassName()` para un `Link`), `Input`, `Textarea`, `Select`/`SelectItem`, `SegmentedControl`, `Chip`, `StatusDot` y `Avatar`, con íconos de `@remixicon/react`. Propios armados con BoardUI y React Aria: `Sheet`, `Dialog`, `Popover`, `Alert`, `StatTile`, `Section`, `PageHeader`, `PersonAvatar`, `SearchInput` y `Segmented`. Para estilizar otro elemento: `buttonClassName`, `tileVariants`, `cardVariants`, `listVariants` y `listRowVariants`. Clases con `cx()` (`@mt/ui/lib/cx`); sin Radix ni `cva`.
 
 - **Solo Tailwind:** no se escribe CSS propio. Los tokens del sitio viven en `packages/ui/src/styles/mt.css`, encima de los de BoardUI (`theme.css`, que no se edita).
 - **Tema claro por defecto;** el oscuro (`.dark`) solo si la persona lo elige en el footer. Nunca `dark:` a mano.
@@ -18,12 +18,12 @@ Los componentes base y los tokens están en `packages/ui` (`@mt/ui`). **La base 
 
 ## Reglas que no se negocian
 
-1. **Color:** el borravino (`--brand`, `--link`, `--accent`) es la identidad en todo, incluidos gráficos y mapa. Nada de azules. Los avisos van en ámbar (`Alert`). Los íconos decorativos van en gris.
-2. **Borde = clickeable.** Lo informativo lleva solo fondo (`bg-tile`).
+1. **Color:** el celeste y azul de la bandera argentina (escala `accent`: 400 es el celeste oficial #74ACDF, 600 la marca; `text-text-link`, `highlight`) son la identidad en todo, incluidos gráficos y mapa. Nada de rojos ni bordós como acento. Los avisos van en ámbar (`Alert`). Los íconos decorativos van en gris.
+2. **Una sola forma por tipo:** controles y campos con `rounded-2lg`, borde y fondo de superficie (los campos igual que el botón secundario); tarjetas informativas y accionables con la misma superficie (`tileVariants`/`cardVariants`, `rounded-xl`); listas en un solo bloque con filas divididas (`listVariants`/`listRowVariants`), nunca una tarjeta por fila; etiquetas con `Chip`. Redondo solo caras y puntos. Lo accionable se distingue por la flecha o el link visibles, no por el borde.
 3. **La acción se ve antes del hover:** en el celular no hay hover.
-   - Toda fila que lleva a otra página tiene la flecha en `text-link` siempre.
-   - En listas de navegación, el nombre del destino también va en `text-link`.
-   - Los CTA principales van en botón relleno `bg-brand`.
+   - Toda fila que lleva a otra página tiene la flecha en `text-text-link` siempre.
+   - En listas de navegación, el nombre del destino también va en `text-text-link`.
+   - Los CTA principales van en `Button` primary (relleno azul, liso).
 4. **44 px mínimos** (`min-h-11`) para tocar filas y botones; **botones de solo ícono, cuadrados de 44 × 44** (`IconButton` de `@mt/ui/components/base/buttons/icon-button`); **encabezados de 48 a 60 px** (`h-14`).
 5. **Una sola línea** para cifras, títulos de tarjetas, fechas y montos (`truncate`, `whitespace-nowrap`, `min-w-0`). La unidad va aparte y en chico ("$ 965.709" + "millones").
 6. **Nunca scroll horizontal**, en ningún ancho. Lo controla `bun run verificar`.

@@ -8,93 +8,118 @@
 /* Los componentes de este paquete usan clases de Tailwind: que la app que importa este CSS también los escanee. */
 @source "../";
 
-/* Acento borravino Malbec en vez del azul de BoardUI. Toda la interacción (botón principal, foco, selección,
-   pestañas, switches) lee esta escala, así que cambiarla re-tiñe el sistema entero. 600 es la marca. */
+/* Acento celeste y azul de la bandera argentina (400 es el celeste oficial, #74ACDF). Toda la interacción (botón
+   principal, links, foco, selección, pestañas, switches) y lo resaltado en gráficos y mapas leen esta escala, así
+   que cambiarla re-tiñe el sistema entero. 600 es la marca: links y botón principal (5,4:1 sobre blanco). */
 @theme {
-  --color-accent-50: #fdf2f5;
-  --color-accent-100: #fbe4eb;
-  --color-accent-200: #f5c7d5;
-  --color-accent-300: #eb9bb4;
-  --color-accent-400: #d9658a;
-  --color-accent-500: #a91d4a;
-  --color-accent-600: #8a1538;
-  --color-accent-700: #721230;
-  --color-accent-800: #5c1028;
-  --color-accent-900: #4b0f23;
-  --color-accent-950: #2c0612;
+  --color-accent-50: #f0f7fd;
+  --color-accent-100: #dfeefa;
+  --color-accent-200: #c0dcf3;
+  --color-accent-300: #97c4ea;
+  --color-accent-400: #74acdf;
+  --color-accent-500: #3f8bd0;
+  --color-accent-600: #1f6db5;
+  --color-accent-700: #185893;
+  --color-accent-800: #164878;
+  --color-accent-900: #143c63;
+  --color-accent-950: #0c2540;
 
   /* Fuentes del sistema: carga instantánea y sin pedidos extra (BoardUI espera Inter vía next/font). */
   --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  /* Títulos grandes con interlineado de 1,15: los de BoardUI son de panel y en titulares de dos líneas quedan sueltos. */
+  --text-large-title-regular--line-height: 4.5rem;
+  --text-large-title-medium--line-height: 4.5rem;
+  --text-large-title-semibold--line-height: 4.5rem;
+  --text-large-title-bold--line-height: 4.5rem;
+  --text-display-1-regular--line-height: 4rem;
+  --text-display-1-medium--line-height: 4rem;
+  --text-display-1-semibold--line-height: 4rem;
+  --text-display-1-bold--line-height: 4rem;
+  --text-display-2-regular--line-height: 3.5rem;
+  --text-display-2-medium--line-height: 3.5rem;
+  --text-display-2-semibold--line-height: 3.5rem;
+  --text-display-2-bold--line-height: 3.5rem;
+  --text-display-3-regular--line-height: 2.875rem;
+  --text-display-3-medium--line-height: 2.875rem;
+  --text-display-3-semibold--line-height: 2.875rem;
+  --text-display-3-bold--line-height: 2.875rem;
+  --text-display-4-regular--line-height: 2.375rem;
+  --text-display-4-medium--line-height: 2.375rem;
+  --text-display-4-semibold--line-height: 2.375rem;
+  --text-display-4-bold--line-height: 2.375rem;
 }
 
-/* Tokens propios del sitio. Claro por defecto (un sitio de transparencia se lee de día); `.dark` lo pone el
-   selector de tema del footer. Los nombres viejos (ink, tile, brand…) apuntan a los semánticos de BoardUI
-   mientras se migra la web: lo nuevo se escribe directo con los de BoardUI. */
+/* Tokens propios del sitio, con nombres al estilo de BoardUI. Claro por defecto (un sitio de transparencia se lee de
+   día); `.dark` lo pone el selector de tema del footer. Lo demás (texto, superficies, bordes, íconos) se escribe con
+   los semánticos de BoardUI: text-text-primary, bg-background-primary-default, border-separator-border… */
 :root {
-  --page: var(--color-background-full);
-  --surface: var(--color-background-primary-default);
-  --tile: var(--color-background-secondary-default);
-  --ink: var(--color-text-primary);
-  --ink-2: var(--color-neutral-600);
-  --ink-muted: var(--color-text-secondary);
-  --grid: var(--color-neutral-200);
-  --axis: var(--color-neutral-300);
-  --border: var(--color-separator-border);
-  --accent: var(--color-accent-500);
-  --brand: var(--color-accent-600);
-  --brand-hover: var(--color-accent-700);
-  --on-brand: var(--color-white);
-  --link: var(--color-accent-600);
+  /* Texto secundario y terciario un paso más oscuros que en BoardUI: el sitio es de lectura y tienen que pasar AA. */
+  --color-text-secondary: var(--color-neutral-600);
+  --color-text-tertiary: var(--color-neutral-500);
+  /* Links y lo que lleva a otra página: azul de la marca. */
+  --color-text-link: var(--color-accent-600);
+  --color-border-link: var(--color-accent-600);
+  /* Lo resaltado en gráficos, mapas y puntos: la misma familia celeste. */
+  --color-highlight: var(--color-accent-500);
   /* Ámbar de advertencia: color de estado, siempre con ícono y texto. */
-  --aviso: #b45309;
-  --aviso-fondo: rgba(250, 178, 25, 0.12);
-  --aviso-borde: rgba(217, 119, 6, 0.35);
-  /* Rampa del mapa: de poco (rosa claro) a mucho (borravino profundo). Validada por modo. */
-  --map-0: #e3a2b5;
-  --map-1: #cf7792;
-  --map-2: #b5506f;
-  --map-3: #8d2d4f;
-  --map-4: #5f1834;
+  --color-warning-foreground: #b45309;
+  --color-warning-background: rgba(250, 178, 25, 0.12);
+  --color-warning-border: rgba(217, 119, 6, 0.35);
+  /* Gráficos: líneas de guía y ejes. */
+  --color-chart-grid: var(--color-neutral-200);
+  --color-chart-axis: var(--color-neutral-300);
+  /* Botón principal liso, sin el degradé de BoardUI (en diseno.md, "Lo que no hacemos": gradientes). */
+  --gradient-button-primary-default: linear-gradient(var(--color-accent-600), var(--color-accent-600));
+  --gradient-button-primary-hover: linear-gradient(var(--color-accent-700), var(--color-accent-700));
+  --gradient-button-primary-active: linear-gradient(var(--color-accent-800), var(--color-accent-800));
+  --gradient-button-primary-disabled: linear-gradient(var(--color-neutral-200), var(--color-neutral-200));
+  /* Rampa del mapa: de poco (celeste claro) a mucho (azul profundo). Validada por modo. */
+  --color-map-0: #c0dcf3;
+  --color-map-1: #8dbde8;
+  --color-map-2: #5a9bd5;
+  --color-map-3: #2f78bd;
+  --color-map-4: #17508a;
 }
 
 .dark {
-  --ink-2: var(--color-neutral-300);
-  --ink-muted: var(--color-neutral-400);
-  --grid: var(--color-neutral-800);
-  --axis: var(--color-neutral-700);
-  --accent: var(--color-accent-400);
-  --brand: var(--color-accent-500);
-  --brand-hover: var(--color-accent-400);
-  --link: var(--color-accent-300);
-  --aviso: #fab219;
-  --aviso-fondo: rgba(250, 178, 25, 0.1);
-  --aviso-borde: rgba(250, 178, 25, 0.3);
-  --map-0: #ffb3cc;
-  --map-1: #f47ea4;
-  --map-2: #dc5785;
-  --map-3: #b93e68;
-  --map-4: #952d4f;
+  --color-text-secondary: var(--color-neutral-300);
+  --color-text-tertiary: var(--color-neutral-400);
+  --color-text-link: var(--color-accent-300);
+  --color-border-link: var(--color-accent-400);
+  --color-highlight: var(--color-accent-400);
+  --color-warning-foreground: #fab219;
+  --color-warning-background: rgba(250, 178, 25, 0.1);
+  --color-warning-border: rgba(250, 178, 25, 0.3);
+  --color-chart-grid: var(--color-neutral-800);
+  --color-chart-axis: var(--color-neutral-700);
+  /* En oscuro el botón sigue en 600: con 500, el texto blanco no llega a 4,5:1. */
+  --gradient-button-primary-default: linear-gradient(var(--color-accent-600), var(--color-accent-600));
+  --gradient-button-primary-hover: linear-gradient(var(--color-accent-700), var(--color-accent-700));
+  --gradient-button-primary-active: linear-gradient(var(--color-accent-800), var(--color-accent-800));
+  --gradient-button-primary-disabled: linear-gradient(var(--color-neutral-800), var(--color-neutral-800));
+  --color-map-0: #cfe5f7;
+  --color-map-1: #9cc7ec;
+  --color-map-2: #6eaadf;
+  --color-map-3: #4a8fd0;
+  --color-map-4: #2f72b8;
 }
 
 @theme inline {
-  --color-page: var(--page);
-  --color-surface: var(--surface);
-  --color-tile: var(--tile);
-  --color-ink: var(--ink);
-  --color-ink-2: var(--ink-2);
-  --color-ink-muted: var(--ink-muted);
-  --color-grid: var(--grid);
-  --color-axis: var(--axis);
-  --color-line: var(--border);
-  --color-accent: var(--accent);
-  --color-brand: var(--brand);
-  --color-brand-hover: var(--brand-hover);
-  --color-on-brand: var(--on-brand);
-  --color-link: var(--link);
-  --color-aviso: var(--aviso);
-  --color-aviso-fondo: var(--aviso-fondo);
-  --color-aviso-borde: var(--aviso-borde);
+  --color-text-link: var(--color-text-link);
+  --color-border-link: var(--color-border-link);
+  --color-highlight: var(--color-highlight);
+  --color-warning-foreground: var(--color-warning-foreground);
+  --color-warning-background: var(--color-warning-background);
+  --color-warning-border: var(--color-warning-border);
+  --color-chart-grid: var(--color-chart-grid);
+  --color-chart-axis: var(--color-chart-axis);
+  --color-map-0: var(--color-map-0);
+  --color-map-1: var(--color-map-1);
+  --color-map-2: var(--color-map-2);
+  --color-map-3: var(--color-map-3);
+  --color-map-4: var(--color-map-4);
   --color-good: #0ca30c;
   --color-warning: #fab219;
   --color-critical: #d03b3b;
@@ -116,6 +141,6 @@
 
   /* Foco de teclado visible y con el color de marca. */
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-link;
+    @apply outline-2 outline-offset-2 outline-text-link;
   }
 }

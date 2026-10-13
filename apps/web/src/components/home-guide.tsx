@@ -1,5 +1,6 @@
+import { Chip } from "@mt/ui/components/base/badges/chip";
 import { Select, SelectItem } from "@mt/ui/components/base/select/select";
-import { cardVariants, tileVariants } from "@mt/ui/components/card";
+import { cardVariants, listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
 import { cx } from "@mt/ui/lib/cx";
 /**
  * Home guide: the pieces that help people find their way in the site. Global search, department picker,
@@ -7,22 +8,22 @@ import { cx } from "@mt/ui/lib/cx";
  * Data: temas/guia.json and data/search.json (scripts/temas/guide.ts).
  */
 
-import { Link, useNavigate } from "@tanstack/react-router";
 import {
-  ArrowRight,
-  BookOpen,
-  Building2,
-  ChevronRight,
-  Coins,
-  EyeOff,
-  Landmark,
-  type LucideIcon,
-  MapPin,
-  Scale,
-  ShieldCheck,
-  ShoppingCart,
-  UsersRound,
-} from "lucide-react";
+  type RemixiconComponentType,
+  RiArrowRightLine,
+  RiArrowRightSLine,
+  RiBankLine,
+  RiBookOpenLine,
+  RiBuilding2Line,
+  RiCoinsLine,
+  RiEyeOffLine,
+  RiMapPinLine,
+  RiScales3Line,
+  RiShieldCheckLine,
+  RiShoppingCartLine,
+  RiTeamLine,
+} from "@remixicon/react";
+import { Link, useNavigate } from "@tanstack/react-router";
 
 import { track } from "@/analytics.ts";
 import { formatNumber } from "@/lib.ts";
@@ -34,8 +35,8 @@ export function DepartmentPicker() {
   const navigate = useNavigate();
   const names = Object.keys(SECCION_ELECTORAL).sort((a, b) => a.localeCompare(b, "es"));
   return (
-    <div className="flex min-w-0 items-center gap-2 text-sm text-ink-2">
-      <MapPin className="size-4 shrink-0 text-ink-muted" aria-hidden />
+    <div className="flex min-w-0 items-center gap-2 text-body-regular text-text-secondary">
+      <RiMapPinLine className="size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
       <span className="whitespace-nowrap" id="selector-departamento-label">
         ¿Dónde vivís?
       </span>
@@ -65,45 +66,45 @@ export function DepartmentPicker() {
 
 export function StartingQuestions({ guide }: { guide: HomeGuide }) {
   const { facts, counts } = guide;
-  const questions: { id: string; icon: LucideIcon; question: string; fact: string; to: string }[] = [
+  const questions: { id: string; icon: RemixiconComponentType; question: string; fact: string; to: string }[] = [
     {
       id: "municipio",
-      icon: MapPin,
+      icon: RiMapPinLine,
       question: "¿Quién gobierna mi departamento?",
       fact: `Intendente, legisladores, habitantes y coparticipación de los ${counts.municipalities}.`,
       to: "/municipios",
     },
     {
       id: "deuda",
-      icon: Landmark,
+      icon: RiBankLine,
       question: "¿Cuánto debe Mendoza y a quién?",
       fact: facts.debt ?? "Bonos, préstamos y acreedores.",
       to: "/deuda",
     },
     {
       id: "compras",
-      icon: ShoppingCart,
+      icon: RiShoppingCartLine,
       question: "¿A quién le compra el Estado?",
       fact: facts.topSupplier ?? "Las empresas y cada contrato.",
       to: "/proveedores",
     },
     {
       id: "leyes",
-      icon: Scale,
+      icon: RiScales3Line,
       question: "¿Qué leyes se aprobaron?",
       fact: facts.latestLaw ?? `${counts.laws} leyes, explicadas en simple.`,
       to: "/leyes",
     },
     {
       id: "personal",
-      icon: UsersRound,
+      icon: RiTeamLine,
       question: "¿Cuánta gente trabaja en el Estado y cuánto cuesta?",
       fact: facts.staff ?? "Cargos y costo de cada organismo.",
       to: "/gobierno",
     },
     {
       id: "no-publicado",
-      icon: EyeOff,
+      icon: RiEyeOffLine,
       question: "¿Qué datos no se publican y cómo los pido?",
       fact: `${counts.missing} datos que deberían ser públicos, con el pedido listo.`,
       to: "/no-publicado",
@@ -120,11 +121,11 @@ export function StartingQuestions({ guide }: { guide: HomeGuide }) {
             data-track-question={id}
             className={cx(cardVariants({ size: "lg" }), "flex h-full flex-col gap-3")}
           >
-            <Icon className="size-6 text-ink-muted group-hover:text-link" aria-hidden />
-            <span className="text-lg font-semibold tracking-tight text-balance group-hover:text-link">{question}</span>
-            <span className="text-sm text-ink-2 text-pretty">{fact}</span>
-            <span className="mt-auto inline-flex items-center gap-1 pt-1 text-sm font-medium text-link">
-              Ver la respuesta <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
+            <Icon className="size-6 text-foreground-icon-secondary group-hover:text-text-link" aria-hidden />
+            <span className="text-title-3-semibold tracking-tight text-balance group-hover:text-text-link">{question}</span>
+            <span className="text-body-regular text-text-secondary text-pretty">{fact}</span>
+            <span className="mt-auto inline-flex items-center gap-1 pt-1 text-body-medium text-text-link">
+              Ver la respuesta <RiArrowRightLine className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
             </span>
           </Link>
         </li>
@@ -137,11 +138,16 @@ export function StartingQuestions({ guide }: { guide: HomeGuide }) {
 
 export function EcosystemMap({ guide }: { guide: HomeGuide }) {
   const c = guide.counts;
-  const groups: { title: string; description: string; icon: LucideIcon; items: { label: string; count?: number; to: string }[] }[] = [
+  const groups: {
+    title: string;
+    description: string;
+    icon: RemixiconComponentType;
+    items: { label: string; count?: number; to: string }[];
+  }[] = [
     {
       title: "Quién gobierna",
       description: "Las personas y los organismos que deciden.",
-      icon: UsersRound,
+      icon: RiTeamLine,
       items: [
         { label: "Funcionarios", count: c.officials, to: "/funcionarios" },
         { label: "Organismos", count: c.agencies, to: "/gobierno" },
@@ -151,7 +157,7 @@ export function EcosystemMap({ guide }: { guide: HomeGuide }) {
     {
       title: "En qué se gasta",
       description: "De dónde sale la plata y a dónde va.",
-      icon: Coins,
+      icon: RiCoinsLine,
       items: [
         { label: "Deuda pública", to: "/deuda" },
         { label: "Coparticipación", to: "/coparticipacion" },
@@ -163,7 +169,7 @@ export function EcosystemMap({ guide }: { guide: HomeGuide }) {
     {
       title: "Qué se decide",
       description: "Las normas y los nombramientos.",
-      icon: Scale,
+      icon: RiScales3Line,
       items: [
         { label: "Leyes", count: c.laws, to: "/leyes" },
         { label: "Designaciones", count: c.appointments, to: "/gobierno" },
@@ -173,7 +179,7 @@ export function EcosystemMap({ guide }: { guide: HomeGuide }) {
     {
       title: "Qué falta",
       description: "Lo que no se publica y cómo pedirlo.",
-      icon: EyeOff,
+      icon: RiEyeOffLine,
       items: [
         { label: "Lo que no se publica", count: c.missing, to: "/no-publicado" },
         { label: "Registrá tu pedido", to: "/participar" },
@@ -184,26 +190,28 @@ export function EcosystemMap({ guide }: { guide: HomeGuide }) {
   return (
     <div className="grid gap-3 md:grid-cols-2">
       {groups.map(({ title, description, icon: Icon, items }) => (
-        <section key={title} className="flex min-w-0 flex-col gap-3 rounded-2xl bg-tile p-4" aria-label={title}>
+        <section key={title} className={cx(tileVariants(), "flex min-w-0 flex-col gap-3")} aria-label={title}>
           <div className="flex items-start gap-2.5">
-            <Icon className="mt-0.5 size-5 shrink-0 text-ink-muted" aria-hidden />
+            <Icon className="mt-0.5 size-5 shrink-0 text-foreground-icon-secondary" aria-hidden />
             <span className="flex min-w-0 flex-col">
               <span className="font-semibold">{title}</span>
-              <span className="text-sm text-ink-muted">{description}</span>
+              <span className="text-body-regular text-text-tertiary">{description}</span>
             </span>
           </div>
-          <ul className="flex flex-col divide-y divide-line/60">
+          <ul className="flex flex-col divide-y divide-separator-border/60">
             {items.map((i) => (
               <li key={i.label}>
                 <Link
                   to={i.to}
                   data-track="home.map.open"
                   data-track-section={i.to}
-                  className="group flex min-h-11 items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-grid/60"
+                  className="group flex min-h-11 items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-chart-grid/60"
                 >
-                  <span className="min-w-0 flex-1 truncate font-medium text-link group-hover:underline">{i.label}</span>
-                  {i.count !== undefined && <span className="shrink-0 text-sm tabular-nums text-ink-muted">{formatNumber(i.count)}</span>}
-                  <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
+                  <span className="min-w-0 flex-1 truncate font-medium text-text-link group-hover:underline">{i.label}</span>
+                  {i.count !== undefined && (
+                    <span className="shrink-0 text-body-regular tabular-nums text-text-tertiary">{formatNumber(i.count)}</span>
+                  )}
+                  <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
                 </Link>
               </li>
             ))}
@@ -216,20 +224,24 @@ export function EcosystemMap({ guide }: { guide: HomeGuide }) {
 
 // ------------------------------------------------------------------ how to read the data
 
-export const READING_RULES: { icon: LucideIcon; title: string; text: string }[] = [
+export const READING_RULES: { icon: RemixiconComponentType; title: string; text: string }[] = [
   {
-    icon: ShieldCheck,
+    icon: RiShieldCheckLine,
     title: "Cada número tiene su fuente",
     text: "Todo dato enlaza al sitio oficial del que sale y a una copia guardada, por si después lo borran.",
   },
   {
-    icon: Scale,
+    icon: RiScales3Line,
     title: "Señales, no acusaciones",
     text: "Marcamos patrones que merecen una explicación. Cada organismo puede tener una razón válida.",
   },
-  { icon: Coins, title: "Pesos de hoy", text: "Para comparar años distintos, pasamos los montos a pesos de hoy con la inflación oficial." },
   {
-    icon: Building2,
+    icon: RiCoinsLine,
+    title: "Pesos de hoy",
+    text: "Para comparar años distintos, pasamos los montos a pesos de hoy con la inflación oficial.",
+  },
+  {
+    icon: RiBuilding2Line,
     title: "La misma vara para todos",
     text: "La misma metodología para todos los gobiernos y partidos, y el código abierto para revisarla.",
   },
@@ -241,10 +253,10 @@ export function ReadingRules() {
       <ul className={cx(tileVariants({ size: "lg" }), "grid gap-4 sm:grid-cols-2")}>
         {READING_RULES.map(({ icon: Icon, title, text }) => (
           <li key={title} className="flex items-start gap-3">
-            <Icon className="mt-0.5 size-5 shrink-0 text-ink-2" aria-hidden />
+            <Icon className="mt-0.5 size-5 shrink-0 text-foreground-icon-secondary" aria-hidden />
             <span className="flex flex-col gap-0.5">
               <span className="font-medium">{title}</span>
-              <span className="text-sm text-ink-2 text-pretty">{text}</span>
+              <span className="text-body-regular text-text-secondary text-pretty">{text}</span>
             </span>
           </li>
         ))}
@@ -253,9 +265,10 @@ export function ReadingRules() {
         to="/como-leer"
         id="home-como-leer"
         data-track="home.reading_guide.open"
-        className="inline-flex w-fit items-center gap-2 text-sm font-medium text-link hover:underline"
+        className="inline-flex w-fit items-center gap-2 text-body-medium text-text-link hover:underline"
       >
-        <BookOpen className="size-4" aria-hidden /> Guía para empezar y glosario de términos <ArrowRight className="size-4" aria-hidden />
+        <RiBookOpenLine className="size-4" aria-hidden /> Guía para empezar y glosario de términos{" "}
+        <RiArrowRightLine className="size-4" aria-hidden />
       </Link>
     </div>
   );
@@ -269,24 +282,25 @@ const shortDate = (iso: string) => `${Number(iso.slice(8, 10))} ${MONTHS[Number(
 export function WhatsNew({ guide }: { guide: HomeGuide }) {
   if (!guide.news.length) return null;
   return (
-    <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
+    <ul className={listVariants()}>
       {guide.news.map((n) => (
         <li key={`${n.href}-${n.date}-${n.title}`}>
-          <Link
-            to={n.href}
-            data-track="home.news.open"
-            data-track-kind={n.kind}
-            className="group flex items-center gap-3 px-4 py-3 hover:bg-grid/50 sm:gap-4 sm:px-5"
-          >
-            <span className="hidden w-14 shrink-0 text-sm whitespace-nowrap text-ink-muted tabular-nums sm:block">{shortDate(n.date)}</span>
+          <Link to={n.href} data-track="home.news.open" data-track-kind={n.kind} className={cx(listRowVariants(), "sm:gap-4")}>
+            <span className="hidden w-14 shrink-0 text-body-regular whitespace-nowrap text-text-tertiary tabular-nums sm:block">
+              {shortDate(n.date)}
+            </span>
             <span className="flex min-w-0 flex-1 flex-col gap-1 sm:flex-row sm:items-center sm:gap-3">
               <span className="flex items-center gap-2">
-                <span className="w-fit shrink-0 rounded bg-grid px-1.5 py-0.5 text-[11px] font-medium text-ink-2">{n.kind}</span>
-                <span className="text-xs whitespace-nowrap text-ink-muted tabular-nums sm:hidden">{shortDate(n.date)}</span>
+                <Chip variant="caption" color="soft" className="w-fit shrink-0">
+                  {n.kind}
+                </Chip>
+                <span className="text-caption-1-regular whitespace-nowrap text-text-tertiary tabular-nums sm:hidden">
+                  {shortDate(n.date)}
+                </span>
               </span>
-              <span className="line-clamp-2 group-hover:text-link sm:line-clamp-1">{n.title}</span>
+              <span className="line-clamp-2 group-hover:text-text-link sm:line-clamp-1">{n.title}</span>
             </span>
-            <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
+            <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
           </Link>
         </li>
       ))}

@@ -1,11 +1,11 @@
 import { Alert } from "@mt/ui/components/alert";
 import { PersonAvatar } from "@mt/ui/components/avatar";
-import { cardVariants } from "@mt/ui/components/card";
+import { cardVariants, listRowVariants, listVariants } from "@mt/ui/components/card";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
 import { cx } from "@mt/ui/lib/cx";
+import { RiArrowRightSLine, RiAuctionLine, RiBriefcaseLine, RiCoinsLine, RiGroupLine, RiMapPinLine } from "@remixicon/react";
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
-import { Briefcase, ChevronRight, Coins, MapPin, Users, Vote } from "lucide-react";
 import { useMemo } from "react";
 import { ColumnChart } from "@/charts/column-chart.tsx";
 import { MapaMendoza, MunicipalityLocator } from "@/charts/mapa.tsx";
@@ -62,7 +62,7 @@ export function MunicipiosPage() {
 
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={MapPin} topic="Municipios" title="Los 18 municipios de Mendoza">
+      <PageHeader icon={RiMapPinLine} topic="Municipios" title="Los 18 municipios de Mendoza">
         Quién gobierna cada uno, cuántos habitantes tiene, cuánta coparticipación recibe y cuánto personal tiene.
       </PageHeader>
       <TrackedSegmented label="Ver en el mapa" options={METRICS} value={metric} onChange={setMetric} />
@@ -87,19 +87,19 @@ export function MunicipiosPage() {
           </div>
         )}
 
-        <ol className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
+        <ol className={listVariants()}>
           {sorted.map((m, i) => (
             <li key={m.slug}>
-              <Link
-                to="/municipios/$slug"
-                params={{ slug: m.slug }}
-                className="group flex items-center gap-3 px-4 py-3 hover:bg-grid/50 sm:gap-4 sm:px-5"
-              >
-                <span className="w-5 shrink-0 text-right text-sm text-ink-muted tabular-nums">{i + 1}</span>
-                <PersonAvatar name={m.intendente?.nombre ?? m.nombre} photo={m.intendente?.foto} className="size-10 text-xs" />
+              <Link to="/municipios/$slug" params={{ slug: m.slug }} className={cx(listRowVariants(), "sm:gap-4 sm:px-5")}>
+                <span className="w-5 shrink-0 text-right text-body-regular text-text-tertiary tabular-nums">{i + 1}</span>
+                <PersonAvatar
+                  name={m.intendente?.nombre ?? m.nombre}
+                  photo={m.intendente?.foto}
+                  className="size-10 text-caption-1-regular"
+                />
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                  <span className="truncate font-medium group-hover:text-link">{m.nombre}</span>
-                  <span className="truncate text-sm text-ink-muted">
+                  <span className="truncate font-medium group-hover:text-text-link">{m.nombre}</span>
+                  <span className="truncate text-body-regular text-text-tertiary">
                     {m.intendente ? m.intendente.nombre : "Intendente sin cargar"}
                     {m.intendente?.partido && ` · ${m.intendente.partido}`}
                   </span>
@@ -112,11 +112,11 @@ export function MunicipiosPage() {
                       return metric === "poblacion" ? formatNumber(v) : metric === "coparticipacion" ? pesos(v) : perThousand(v);
                     })()}
                   </span>
-                  <span className="text-xs whitespace-nowrap text-ink-muted">
+                  <span className="text-caption-1-regular whitespace-nowrap text-text-tertiary">
                     {metricValue(m, metric) === undefined ? "\u00a0" : METRIC_UNIT[metric]}
                   </span>
                 </span>
-                <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
+                <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
               </Link>
             </li>
           ))}
@@ -137,8 +137,8 @@ export function MunicipioPage() {
     return (
       <div className="flex flex-col gap-4">
         <Breadcrumbs items={[{ label: "Municipios", to: "/municipios" }, { label: "No encontrado" }]} />
-        <h1 className="text-2xl font-semibold tracking-tight">No encontramos ese municipio</h1>
-        <Link to="/municipios" className="w-fit text-link hover:underline">
+        <h1 className="text-title-1-semibold tracking-tight">No encontramos ese municipio</h1>
+        <Link to="/municipios" className="w-fit text-text-link hover:underline">
           Ver los 18 municipios ›
         </Link>
       </div>
@@ -153,7 +153,7 @@ export function MunicipioPage() {
   return (
     <div className="flex flex-col gap-10">
       <Breadcrumbs items={[{ label: "Municipios", to: "/municipios" }, { label: m.nombre }]} />
-      <PageHeader icon={MapPin} topic="Municipio" title={m.nombre}>
+      <PageHeader icon={RiMapPinLine} topic="Municipio" title={m.nombre}>
         Quién lo gobierna, cuántos habitantes tiene, cuánta coparticipación recibe y quiénes lo representan en la Legislatura.
       </PageHeader>
 
@@ -172,31 +172,31 @@ export function MunicipioPage() {
               params={{ role: i.role, slug: i.slug }}
               className={cx(cardVariants(), "flex items-center gap-4")}
             >
-              <PersonAvatar name={i.nombre} photo={i.foto} className="size-14 text-base" />
+              <PersonAvatar name={i.nombre} photo={i.foto} className="size-14 text-headline-regular" />
               <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                <span className="text-sm text-ink-muted">Intendente</span>
-                <span className="truncate text-lg font-medium group-hover:text-link">{i.nombre}</span>
-                <span className="truncate text-sm text-ink-2">
+                <span className="text-body-regular text-text-tertiary">Intendente</span>
+                <span className="truncate text-title-3-medium group-hover:text-text-link">{i.nombre}</span>
+                <span className="truncate text-body-regular text-text-secondary">
                   {[i.partido, i.mandatoHasta && `hasta ${i.mandatoHasta}`].filter(Boolean).join(" · ")}
                 </span>
               </span>
-              <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
+              <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
             </Link>
           )}
           <StatTile
-            icon={Users}
+            icon={RiGroupLine}
             label="Habitantes"
             value={formatNumber(m.poblacion.actual)}
             note={`Puesto ${m.poblacion.puesto} de 18 en la provincia`}
           />
           <StatTile
-            icon={Coins}
+            icon={RiCoinsLine}
             label="Coparticipación por habitante"
             value={c ? pesos(c.perCapita) : "—"}
             note={c ? `Puesto ${c.puesto} de 18 · ${c.anio}, en pesos de ${c.referencia}` : "Sin datos"}
           />
           <StatTile
-            icon={Briefcase}
+            icon={RiBriefcaseLine}
             label="Cargos y contratos"
             value={st ? formatNumber(st.positions + st.contracts) : "No lo publica"}
             note={
@@ -206,7 +206,7 @@ export function MunicipioPage() {
             }
           />
           <StatTile
-            icon={Vote}
+            icon={RiAuctionLine}
             label="Sección electoral"
             value={m.seccion ?? "—"}
             note="Define a quiénes eligen sus vecinos en la Legislatura"
@@ -224,7 +224,7 @@ export function MunicipioPage() {
           {m.poblacion.actual < 20000 && (
             <Alert variant="note">Los municipios chicos reciben más por habitante porque parte del reparto es un piso fijo.</Alert>
           )}
-          <Link to="/coparticipacion" className="w-fit text-sm text-link hover:underline">
+          <Link to="/coparticipacion" className="w-fit text-body-regular text-text-link hover:underline">
             Comparar con los demás municipios ›
           </Link>
         </Section>
@@ -233,7 +233,7 @@ export function MunicipioPage() {
       <Section title="Personal del municipio">
         {st ? (
           <>
-            <p className="-mt-2 text-sm text-ink-muted">
+            <p className="-mt-2 text-body-regular text-text-tertiary">
               Cargos de planta y contratos según el anexo de personal que el municipio publica por la Ley de Responsabilidad Fiscal,{" "}
               {st.quarter}. Son cargos, no personas: alguien puede tener más de uno.
             </p>
@@ -259,7 +259,7 @@ export function MunicipioPage() {
               href={st.sourceUrl}
               target="_blank"
               rel="noreferrer"
-              className="w-fit text-sm text-link hover:underline"
+              className="w-fit text-body-regular text-text-link hover:underline"
               data-track="municipality.staff_source.open"
             >
               Ver el anexo publicado por el municipio ↗
@@ -268,7 +268,11 @@ export function MunicipioPage() {
         ) : (
           <Alert variant="warning" title="No publica su planta de personal">
             No encontramos el anexo de personal que exige la Ley de Responsabilidad Fiscal en un formato que se pueda leer.{" "}
-            <Link to="/no-publicado" search={{ dato: MISSING_STAFF[m.nombre] ?? undefined } as never} className="text-link hover:underline">
+            <Link
+              to="/no-publicado"
+              search={{ dato: MISSING_STAFF[m.nombre] ?? undefined } as never}
+              className="text-text-link hover:underline"
+            >
               Ver qué falta y cómo pedirlo
             </Link>
             .
@@ -278,10 +282,10 @@ export function MunicipioPage() {
 
       {localLaws.length > 0 && (
         <Section title={`Leyes que tocan a ${m.nombre}`}>
-          <p className="-mt-2 text-sm text-ink-muted">
+          <p className="-mt-2 text-body-regular text-text-tertiary">
             Leyes provinciales que hacen algo concreto en el departamento: un terreno, una obra, un convenio.
           </p>
-          <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
+          <ul className={listVariants()}>
             {localLaws.map((l) => (
               <li key={l.numero}>
                 <Link
@@ -289,17 +293,17 @@ export function MunicipioPage() {
                   params={{ numero: l.numero }}
                   data-track="municipality.law.open"
                   data-track-law={l.numero}
-                  className="group flex min-h-11 items-center gap-4 px-4 py-3 hover:bg-grid/50"
+                  className={listRowVariants()}
                 >
                   <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                    <span className="truncate font-medium group-hover:text-link" title={l.titulo}>
+                    <span className="truncate font-medium group-hover:text-text-link" title={l.titulo}>
                       {l.titulo}
                     </span>
-                    <span className="truncate text-sm whitespace-nowrap text-ink-muted">
+                    <span className="truncate text-body-regular whitespace-nowrap text-text-tertiary">
                       {[`Ley ${l.numero}`, l.fecha && formatDate(l.fecha)].filter(Boolean).join(" · ")}
                     </span>
                   </span>
-                  <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
+                  <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
                 </Link>
               </li>
             ))}
@@ -309,21 +313,17 @@ export function MunicipioPage() {
 
       {m.legisladores.length > 0 && (
         <Section title={`Legisladores provinciales de la ${m.seccion?.toLowerCase() ?? ""} sección`}>
-          <p className="-mt-2 text-sm text-ink-muted">Los eligen los vecinos de {m.nombre} y del resto de la sección.</p>
-          <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
+          <p className="-mt-2 text-body-regular text-text-tertiary">Los eligen los vecinos de {m.nombre} y del resto de la sección.</p>
+          <ul className={listVariants()}>
             {m.legisladores.map((l) => (
               <li key={l.id}>
-                <Link
-                  to="/funcionarios/$role/$slug"
-                  params={{ role: l.role, slug: l.slug }}
-                  className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50"
-                >
-                  <PersonAvatar name={l.nombre} photo={l.foto} className="size-10 text-xs" />
+                <Link to="/funcionarios/$role/$slug" params={{ role: l.role, slug: l.slug }} className={listRowVariants()}>
+                  <PersonAvatar name={l.nombre} photo={l.foto} className="size-10 text-caption-1-regular" />
                   <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                    <span className="truncate font-medium group-hover:text-link">{l.nombre}</span>
-                    <span className="truncate text-sm text-ink-muted">{[l.cargo, l.bloque].filter(Boolean).join(" · ")}</span>
+                    <span className="truncate font-medium group-hover:text-text-link">{l.nombre}</span>
+                    <span className="truncate text-body-regular text-text-tertiary">{[l.cargo, l.bloque].filter(Boolean).join(" · ")}</span>
                   </span>
-                  <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
+                  <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
                 </Link>
               </li>
             ))}

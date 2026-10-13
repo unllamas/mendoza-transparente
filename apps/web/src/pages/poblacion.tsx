@@ -1,11 +1,11 @@
 import { Alert } from "@mt/ui/components/alert";
-import { buttonClassName } from "@mt/ui/components/base/buttons/button";
-import { tileVariants } from "@mt/ui/components/card";
+import { Button } from "@mt/ui/components/base/buttons/button";
+import { listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
 import { cx } from "@mt/ui/lib/cx";
+import { RiArrowRightSLine, RiGroupLine, RiLineChartLine, RiMapPinLine } from "@remixicon/react";
 import { getRouteApi, Link } from "@tanstack/react-router";
-import { MapPin, TrendingUp, Users } from "lucide-react";
 import { LineChart } from "@/charts/line-chart.tsx";
 import { MapaMendoza } from "@/charts/mapa.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
@@ -34,17 +34,17 @@ export function PoblacionPage() {
 
   return (
     <div className="flex flex-col gap-12">
-      <PageHeader icon={Users} topic="Población" title="¿Cuántos somos en Mendoza?">
+      <PageHeader icon={RiGroupLine} topic="Población" title="¿Cuántos somos en Mendoza?">
         Población de la provincia y de cada departamento según los censos 2010 y 2022, y las proyecciones oficiales de INDEC para los años
         sin censo.
       </PageHeader>
       <FuentesOficiales ids={["poblacion"]} />
 
       <div className="grid gap-3 md:grid-cols-3">
-        <StatTile icon={Users} label={`Habitantes en ${tema.anioActual}`} value={personas(tema.actual)} note="Proyección INDEC" />
-        <StatTile icon={TrendingUp} label="Crecimiento entre censos" value={porcentaje(variacionProv)} note="De 2010 a 2022" />
+        <StatTile icon={RiGroupLine} label={`Habitantes en ${tema.anioActual}`} value={personas(tema.actual)} note="Proyección INDEC" />
+        <StatTile icon={RiLineChartLine} label="Crecimiento entre censos" value={porcentaje(variacionProv)} note="De 2010 a 2022" />
         <StatTile
-          icon={MapPin}
+          icon={RiMapPinLine}
           label="Creció más"
           value={porCrecimiento[0]!.municipio}
           note={`${porcentaje(porCrecimiento[0]!.variacion)} entre 2010 y 2022`}
@@ -96,29 +96,30 @@ export function PoblacionPage() {
           {depto ? (
             <Detalle depto={depto} onClose={() => setSel(null)} />
           ) : (
-            <ol className="flex flex-col">
+            <ol className={listVariants()}>
               {ranking.map((d, i) => (
                 <li key={d.municipio}>
                   <button
                     type="button"
                     onClick={() => setSel(d.municipio)}
-                    className="grid w-full grid-cols-[1.5rem_1fr_auto] items-baseline gap-2 rounded-md px-2 py-1.5 text-left text-sm hover:bg-tile"
+                    className={cx(listRowVariants(), "grid grid-cols-[1.5rem_1fr_auto_1rem] text-body-regular")}
                   >
-                    <span className="text-ink-muted tabular-nums">{i + 1}</span>
+                    <span className="text-text-tertiary tabular-nums">{i + 1}</span>
                     <span>{d.municipio}</span>
                     <span className="flex items-baseline gap-2 tabular-nums">
                       {medida === "habitantes" ? (
                         <>
-                          <span className="text-ink-2">{personas(d.actual)}</span>
-                          <span className="w-14 text-right text-xs text-ink-muted">{porcentaje(d.variacion)}</span>
+                          <span className="text-text-secondary">{personas(d.actual)}</span>
+                          <span className="w-14 text-right text-caption-1-regular text-text-tertiary">{porcentaje(d.variacion)}</span>
                         </>
                       ) : (
                         <>
-                          <span className="text-ink-2">{porcentaje(d.variacion)}</span>
-                          <span className="w-20 text-right text-xs text-ink-muted">{personas(d.actual)}</span>
+                          <span className="text-text-secondary">{porcentaje(d.variacion)}</span>
+                          <span className="w-20 text-right text-caption-1-regular text-text-tertiary">{personas(d.actual)}</span>
                         </>
                       )}
                     </span>
+                    <RiArrowRightSLine className="size-4 text-text-link" aria-hidden />
                   </button>
                 </li>
               ))}
@@ -127,9 +128,9 @@ export function PoblacionPage() {
         </div>
       </Section>
 
-      <p className="text-sm text-ink-muted">
+      <p className="text-body-regular text-text-tertiary">
         Fuente: INDEC, censos y proyecciones de población. Datos completos en{" "}
-        <Link to="/datos/$fuente" params={{ fuente: "poblacion" }} className="underline hover:text-ink">
+        <Link to="/datos/$fuente" params={{ fuente: "poblacion" }} className="underline hover:text-text-primary">
           Datos › Población
         </Link>
         .
@@ -143,21 +144,25 @@ function Detalle({ depto: d, onClose }: { depto: PoblacionTema["departamentos"][
     <div className="flex flex-col gap-4">
       <div className="flex items-start justify-between gap-2">
         <span className="flex min-w-0 flex-col gap-0.5">
-          <h3 className="truncate text-xl font-semibold tracking-tight">{d.municipio}</h3>
-          <Link to="/municipios/$slug" params={{ slug: slug(d.municipio) }} className="text-sm whitespace-nowrap text-link hover:underline">
+          <h3 className="truncate text-title-2-semibold tracking-tight">{d.municipio}</h3>
+          <Link
+            to="/municipios/$slug"
+            params={{ slug: slug(d.municipio) }}
+            className="text-body-regular whitespace-nowrap text-text-link hover:underline"
+          >
             Ver todo sobre {d.municipio} ›
           </Link>
         </span>
-        <button type="button" onClick={onClose} className={buttonClassName({ variant: "secondary" })}>
+        <Button variant="secondary" onClick={onClose}>
           Ver ranking
-        </button>
+        </Button>
       </div>
       <div className="grid grid-cols-2 gap-2">
         <StatTile label="Censo 2010" value={personas(d.censo2010)} />
         <StatTile label="Censo 2022" value={personas(d.censo2022)} note={porcentaje(d.variacion)} />
       </div>
-      <p className="text-sm text-ink-2">Hoy: {personas(d.actual)} habitantes (proyección INDEC).</p>
-      <div className="rounded-xl bg-tile p-3">
+      <p className="text-body-regular text-text-secondary">Hoy: {personas(d.actual)} habitantes (proyección INDEC).</p>
+      <div className={tileVariants({ size: "sm" })}>
         <LineChart
           data={d.serie.map((p) => ({ fecha: `${p.anio}-01-01`, valor: p.poblacion }))}
           formatValue={(v) => `${personas(v)} hab.`}

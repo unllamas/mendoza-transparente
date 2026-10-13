@@ -48,7 +48,7 @@ export function DetailSheet() {
       onClose={close}
       trackId={proceso ? "purchase.process" : "purchase.supplier"}
     >
-      <Suspense fallback={<p className="text-sm text-ink-muted">Cargando…</p>}>
+      <Suspense fallback={<p className="text-body-regular text-text-tertiary">Cargando…</p>}>
         {proceso ? (
           <Proceso key={proceso} ocid={proceso} onProveedor={(cuit) => open("proveedor", cuit)} />
         ) : (

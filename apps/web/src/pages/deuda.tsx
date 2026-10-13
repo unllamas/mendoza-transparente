@@ -3,8 +3,8 @@ import { tileVariants } from "@mt/ui/components/card";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
 import { cx } from "@mt/ui/lib/cx";
+import { RiBankLine, RiLineChartLine, RiUserLine } from "@remixicon/react";
 import { getRouteApi, Link } from "@tanstack/react-router";
-import { Landmark, TrendingUp, UserRound } from "lucide-react";
 
 import { BarList } from "@/charts/bar-list.tsx";
 import { LineChart } from "@/charts/line-chart.tsx";
@@ -28,21 +28,21 @@ export function DeudaPage() {
 
   return (
     <div className="flex flex-col gap-12">
-      <PageHeader icon={Landmark} topic="Deuda pública" title="¿Cuánto debe Mendoza?">
+      <PageHeader icon={RiBankLine} topic="Deuda pública" title="¿Cuánto debe Mendoza?">
         La deuda pública consolidada de la provincia: bonos, préstamos de organismos internacionales y de bancos. Los montos están en
         dólares para poder comparar años con distinta inflación.
       </PageHeader>
       <FuentesOficiales ids={["hacienda-deuda-stock"]} />
 
       <div className="grid gap-3 md:grid-cols-3">
-        <StatTile icon={Landmark} label="Deuda consolidada" value={usdM(deuda.totalUsd)} note={`Al ${formatDate(deuda.corte)}`} />
+        <StatTile icon={RiBankLine} label="Deuda consolidada" value={usdM(deuda.totalUsd)} note={`Al ${formatDate(deuda.corte)}`} />
         <StatTile
-          icon={UserRound}
+          icon={RiUserLine}
           label="Por habitante"
           value={`US$ ${formatNumber(Math.round(deuda.porHabitanteUsd))}`}
           note={`Sobre ${formatNumber(deuda.poblacion)} habitantes (proyección INDEC)`}
         />
-        <StatTile icon={TrendingUp} label="Máximo de la serie" value={usdM(pico.usd)} note={trimestre(pico.fecha)} />
+        <StatTile icon={RiLineChartLine} label="Máximo de la serie" value={usdM(pico.usd)} note={trimestre(pico.fecha)} />
       </div>
 
       <Section title="Evolución de la deuda, en millones de dólares">
@@ -56,7 +56,7 @@ export function DeudaPage() {
             ariaLabel="Deuda consolidada de Mendoza en millones de dólares, por trimestre"
           />
         </div>
-        <p className="text-sm text-ink-muted text-pretty">
+        <p className="text-body-regular text-text-tertiary text-pretty">
           Deuda consolidada en millones de dólares al cierre de cada trimestre. Las franjas marcan cada gobernación.
         </p>
         <Alert variant="note" title="Cómo leer este gráfico">
@@ -71,14 +71,14 @@ export function DeudaPage() {
             const delta = m.fin.usd - m.inicio.usd;
             return (
               <div key={m.desde} className={cx(tileVariants(), "flex flex-col gap-1")}>
-                <span className="text-sm text-ink-2">
+                <span className="text-body-regular text-text-secondary">
                   {m.gobierno} {m.desde.slice(0, 4)}–{m.hasta ? m.hasta.slice(0, 4) : "hoy"}
                 </span>
-                <span className="text-2xl font-semibold tracking-tight tabular-nums">
+                <span className="text-title-1-semibold tracking-tight tabular-nums">
                   {delta >= 0 ? "+" : "−"}
                   {usdM(Math.abs(delta))}
                 </span>
-                <span className="text-xs text-ink-muted tabular-nums">
+                <span className="text-caption-1-regular text-text-tertiary tabular-nums">
                   De {usdM(m.inicio.usd)} ({trimestre(m.inicio.fecha)}) a {usdM(m.fin.usd)} ({trimestre(m.fin.fecha)})
                   {m.enCurso && " · en curso"}
                 </span>
@@ -108,16 +108,16 @@ export function DeudaPage() {
             }))}
             formatValue={usdM}
           />
-          <p className="text-sm text-ink-muted">
+          <p className="text-body-regular text-text-tertiary">
             "Pesos ajustados" son deudas en pesos que se actualizan por inflación (CER) o por otro índice.
           </p>
         </Section>
       </div>
 
       <Section title="Instrumentos vigentes">
-        <div className="overflow-x-auto rounded-xl bg-tile">
-          <table className="w-full text-left text-sm">
-            <thead className="border-b border-line text-ink-muted">
+        <div className={cx(tileVariants({ size: "sm" }), "overflow-x-auto p-0")}>
+          <table className="w-full text-left text-body-regular">
+            <thead className="border-b border-separator-border text-text-tertiary">
               <tr>
                 <th className="px-4 py-3 font-medium">Instrumento</th>
                 <th className="px-4 py-3 font-medium">Acreedor</th>
@@ -127,27 +127,27 @@ export function DeudaPage() {
                 <th className="px-4 py-3 font-medium">Vence</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-line tabular-nums">
+            <tbody className="divide-y divide-separator-border tabular-nums">
               {deuda.instrumentos.map((i) => (
                 <tr key={i.instrumento + i.vencimiento}>
                   <td className="px-4 py-2">{i.instrumento}</td>
-                  <td className="px-4 py-2 text-ink-2">{i.acreedor}</td>
-                  <td className="whitespace-nowrap px-4 py-2 text-ink-2">{i.moneda}</td>
+                  <td className="px-4 py-2 text-text-secondary">{i.acreedor}</td>
+                  <td className="whitespace-nowrap px-4 py-2 text-text-secondary">{i.moneda}</td>
                   <td className="whitespace-nowrap px-4 py-2 text-right">{usdM(i.usd)}</td>
-                  <td className="px-4 py-2 text-ink-2">{i.tasa || "—"}</td>
-                  <td className="whitespace-nowrap px-4 py-2 text-ink-2">{i.vencimiento ? mesAnio(i.vencimiento) : "—"}</td>
+                  <td className="px-4 py-2 text-text-secondary">{i.tasa || "—"}</td>
+                  <td className="whitespace-nowrap px-4 py-2 text-text-secondary">{i.vencimiento ? mesAnio(i.vencimiento) : "—"}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p className="text-sm text-ink-muted">
+        <p className="text-body-regular text-text-tertiary">
           Fuente:{" "}
-          <a href={FUENTE} className="underline hover:text-ink">
+          <a href={FUENTE} className="underline hover:text-text-primary">
             Ministerio de Hacienda y Finanzas de Mendoza, tablero de deuda
           </a>
           . Datos crudos y metodología en{" "}
-          <Link to="/datos/$fuente" params={{ fuente: "hacienda-deuda-stock" }} className="underline hover:text-ink">
+          <Link to="/datos/$fuente" params={{ fuente: "hacienda-deuda-stock" }} className="underline hover:text-text-primary">
             Datos › Deuda
           </Link>
           .

@@ -92,7 +92,7 @@ export function SegmentedControl({ className, children, variant = "solid", ref, 
       className={(state) =>
         cx(
           "relative inline-flex items-start gap-0.5 rounded-2lg",
-          variant === "solid" && "bg-segmented-control-background p-1",
+          variant === "solid" && "border border-border-button-default bg-segmented-control-background p-1",
           typeof className === "function" ? className(state) : className,
         )
       }
@@ -100,7 +100,7 @@ export function SegmentedControl({ className, children, variant = "solid", ref, 
       {variant === "solid" && thumb && (
         <span
           aria-hidden
-          className="pointer-events-none absolute left-0 top-0 rounded-md bg-segmented-control-selected-background shadow-2xs transition-[transform,width,height] duration-200 ease"
+          className="pointer-events-none absolute left-0 top-0 rounded-lg bg-segmented-control-selected-background shadow-2xs transition-[transform,width,height] duration-200 ease"
           style={{
             transform: `translate(${thumb.left}px, ${thumb.top}px)`,
             width: thumb.width,
@@ -126,7 +126,7 @@ export function SegmentedControlItem({ className, children, ref, ...props }: Seg
       className={(state) =>
         cx(
           // Mendoza Transparente: 36 px items inside the 4 px padding = a 44 px control.
-          "relative z-10 inline-flex min-h-9 cursor-pointer items-center justify-center rounded-md px-3 py-1 text-center whitespace-nowrap",
+          "relative z-10 inline-flex min-h-9 cursor-pointer items-center justify-center rounded-lg px-3 py-1 text-center whitespace-nowrap",
           "transition-colors duration-200 ease",
           "outline-none focus-visible:ring-2 focus-visible:ring-border-focus-ring",
           state.isSelected ? "text-body-medium text-text-primary" : "text-body-regular text-text-secondary hover:text-text-primary",

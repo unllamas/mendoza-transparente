@@ -1,5 +1,5 @@
 import { Alert } from "@mt/ui/components/alert";
-import { buttonClassName } from "@mt/ui/components/base/buttons/button";
+import { Button, buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { Input, InputBase, TextField } from "@mt/ui/components/base/input/input";
 import { Label } from "@mt/ui/components/base/input/label";
 import { Select, SelectItem } from "@mt/ui/components/base/select/select";
@@ -7,8 +7,16 @@ import { Textarea } from "@mt/ui/components/base/textarea/textarea";
 import { tileVariants } from "@mt/ui/components/card";
 import { PageHeader } from "@mt/ui/components/section";
 import { cx } from "@mt/ui/lib/cx";
+import {
+  type RemixiconComponentType,
+  RiBugLine,
+  RiCheckboxCircleLine,
+  RiContractLine,
+  RiFileAddLine,
+  RiReplyLine,
+  RiSendPlaneLine,
+} from "@remixicon/react";
 import { getRouteApi, Link } from "@tanstack/react-router";
-import { Bug, CheckCircle2, FilePlus2, MessageSquareReply, Send, Stamp } from "lucide-react";
 import { type FormEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import { track } from "@/analytics.ts";
 import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
@@ -35,13 +43,13 @@ export function ParticiparPage() {
 
   return (
     <div className="flex max-w-2xl flex-col gap-10">
-      <PageHeader icon={Stamp} topic="Participá" title="Sumate a Mendoza Transparente">
+      <PageHeader icon={RiContractLine} topic="Participá" title="Sumate a Mendoza Transparente">
         Registrá los pedidos de información que presentaste y lo que te respondieron, avisanos si encontrás un error o sugerinos datos que
         falten. Así medimos cuánto se pide y cuánto responde el Estado.
       </PageHeader>
 
       {stats && stats.total.requests > 0 && (
-        <div className="grid grid-cols-3 divide-x divide-line rounded-2xl bg-tile py-3 text-center">
+        <div className={cx(tileVariants({ size: "sm" }), "grid grid-cols-3 divide-x divide-separator-border text-center")}>
           <Counter value={stats.total.requests} label={stats.total.requests === 1 ? "pedido registrado" : "pedidos registrados"} />
           <Counter value={stats.total.answered} label="con respuesta" />
           <Counter value={stats.total.denied + stats.total.overdue} label="negados o sin respuesta" />
@@ -66,8 +74,8 @@ export function ParticiparPage() {
 function Counter({ value, label }: { value: number; label: string }) {
   return (
     <div className="flex min-w-0 flex-col gap-0.5 px-2">
-      <span className="text-2xl font-semibold tabular-nums">{value}</span>
-      <span className="text-xs text-balance text-ink-muted">{label}</span>
+      <span className="text-title-1-semibold tabular-nums">{value}</span>
+      <span className="text-caption-1-regular text-balance text-text-tertiary">{label}</span>
     </div>
   );
 }
@@ -132,7 +140,7 @@ function RequestForm({ items, defaultItem }: { items: NoPublicado[]; defaultItem
   const item = items.find((i) => i.id === itemId);
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-5" id="form-pedido" data-track-form="request">
-      <Intro icon={FilePlus2}>
+      <Intro icon={RiFileAddLine}>
         ¿Presentaste un pedido de acceso a la información? Registralo con el número de trámite que te dio el formulario oficial. No
         publicamos tu número: lo usamos para contar los pedidos y para que después puedas contarnos la respuesta.
       </Intro>
@@ -191,7 +199,7 @@ function AnswerForm() {
   };
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-5" id="form-respuesta">
-      <Intro icon={MessageSquareReply}>Contanos qué pasó con un pedido que registraste antes, con el mismo número de trámite.</Intro>
+      <Intro icon={RiReplyLine}>Contanos qué pasó con un pedido que registraste antes, con el mismo número de trámite.</Intro>
       <Input label="Número de trámite" name="filingNumber" isRequired maxLength={60} autoComplete="off" />
       <Select label="Qué pasó" name="status" isRequired defaultValue="respondido">
         <SelectItem id="respondido">Me respondieron con lo que pedí</SelectItem>
@@ -231,7 +239,7 @@ function FeedbackForm({ kind, defaultPage }: { kind: "error" | "dato"; defaultPa
   };
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-5" id={kind === "error" ? "form-error" : "form-dato"}>
-      <Intro icon={kind === "error" ? Bug : Send}>
+      <Intro icon={kind === "error" ? RiBugLine : RiSendPlaneLine}>
         {kind === "error"
           ? "¿Un número que no cierra, un link roto o algo que se ve mal? Contanos dónde y qué pasó."
           : "¿Qué dato público de Mendoza te gustaría encontrar acá? Si sabés dónde está publicado, dejanos el link."}
@@ -267,10 +275,10 @@ function DateInput({ label, name, isRequired, max }: { label: string; name: stri
   );
 }
 
-function Intro({ icon: Icon, children }: { icon: typeof Bug; children: ReactNode }) {
+function Intro({ icon: Icon, children }: { icon: RemixiconComponentType; children: ReactNode }) {
   return (
-    <p className="flex items-start gap-3 text-ink-2 text-pretty">
-      <Icon className="mt-0.5 size-5 shrink-0 text-ink-muted" aria-hidden />
+    <p className="flex items-start gap-3 text-text-secondary text-pretty">
+      <Icon className="mt-0.5 size-5 shrink-0 text-foreground-icon-secondary" aria-hidden />
       <span>{children}</span>
     </p>
   );
@@ -298,15 +306,16 @@ function SubmitRow({ state, label, id }: { state: SubmitState; label: string; id
   return (
     <div className="flex flex-col gap-3">
       {state.status === "error" && <Alert title="No se pudo enviar">{state.message}</Alert>}
-      <button
+      <Button
         type="submit"
         id={id}
         data-track={`${id}.click`}
         disabled={state.status === "sending"}
-        className={buttonClassName({ variant: "primary", className: "w-fit" })}
+        leadingIcon={RiSendPlaneLine}
+        className="w-fit"
       >
-        <Send className="size-4" aria-hidden /> {state.status === "sending" ? "Enviando…" : label}
-      </button>
+        {state.status === "sending" ? "Enviando…" : label}
+      </Button>
     </div>
   );
 }
@@ -314,15 +323,15 @@ function SubmitRow({ state, label, id }: { state: SubmitState; label: string; id
 function Done({ children, onAgain, again }: { children: ReactNode; onAgain: () => void; again: string }) {
   return (
     <div className={cx(tileVariants({ size: "lg" }), "flex flex-col gap-4")}>
-      <p className="flex items-start gap-3 text-ink">
-        <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-good" aria-hidden />
+      <p className="flex items-start gap-3 text-text-primary">
+        <RiCheckboxCircleLine className="mt-0.5 size-5 shrink-0 text-good" aria-hidden />
         <span className="text-pretty">{children}</span>
       </p>
-      <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
-        <button type="button" onClick={onAgain} className="text-link hover:underline">
+      <div className="flex flex-wrap gap-2">
+        <Button variant="secondary" onClick={onAgain}>
           {again}
-        </button>
-        <Link to="/no-publicado" className="text-link hover:underline">
+        </Button>
+        <Link to="/no-publicado" className={buttonClassName({ variant: "tertiary" })}>
           Ver lo que el Estado no publica ›
         </Link>
       </div>

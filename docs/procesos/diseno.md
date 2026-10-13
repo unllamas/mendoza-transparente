@@ -18,27 +18,28 @@ Los componentes base y los tokens viven en el paquete `@mt/ui`. Lo usa la web y 
 - **Textos de BoardUI en inglés:** casi todos llegan por props (pasarlos en español). Los pocos que vienen adentro se traducen en `UiProviders` (`TemplateCopyProvider`).
 - **Solo Tailwind.** Los estilos están en `packages/ui/src/styles/`:
   - `globals.css`, `theme.css` y `typography.css` son de BoardUI (los escribe el CLI): no se editan a mano.
-  - `mt.css` es la capa del sitio, encima de BoardUI: la escala `accent` en borravino, las fuentes del sistema, los tokens propios (`ink`, `tile`, `brand`, `link`, `aviso`, la rampa del mapa) y la base mínima. Es lo que importa la app desde `apps/web/src/styles.css`, que no agrega estilos.
+  - `mt.css` es la capa del sitio, encima de BoardUI: la escala `accent` celeste y azul, las fuentes del sistema, los tokens propios con nombres al estilo de BoardUI (`text-text-link`, `border-border-link`, `highlight`, `warning-foreground`/`-background`/`-border`, `chart-grid`, `chart-axis`, `map-0` a `map-4`), el botón principal liso y la base mínima. Es lo que importa la app desde `apps/web/src/styles.css`, que no agrega estilos.
 - **Tema claro por defecto.** Un sitio de transparencia se lee de día: el oscuro solo se activa si la persona lo elige con el `ThemeToggle` del footer. Se guarda en `localStorage` (`boardui:theme`) y un script en `apps/web/index.html` lo aplica antes de pintar, sin parpadeo. El oscuro es la clase `.dark` en `<html>`; los tokens cambian solos, nunca se escribe `dark:` a mano.
 - **Piezas:**
   - `cx()` (`@mt/ui/lib/cx`, de BoardUI) junta clases, resuelve conflictos de Tailwind y entiende la tipografía compuesta de BoardUI (`text-body-medium`, `text-title-3-semibold`…). No hay `cva` ni Radix: las variantes son objetos de clases (`sortCx`) y las piezas interactivas son de React Aria.
-  - Íconos: `@remixicon/react` (los de BoardUI) en todo lo nuevo; `lucide-react` se va reemplazando al tocar cada pantalla.
+  - Íconos: `@remixicon/react` (los de BoardUI), en todo el sitio.
 - **Componentes:**
 
 | Componente | Para qué |
 |---|---|
 | **BoardUI** | |
-| `Button` (`base/buttons/button`) | Variantes `primary` (relleno borravino, la acción principal), `secondary` (borde, el resto de las acciones), `ghost` y `danger`. Tamaño `large` (44 px) por defecto; `medium`, `small` y `xs` solo en superficies densas de escritorio. Íconos por prop (`leadingIcon={RiArrowLeftLine}`). Para un `Link` del router o un `<a>`: `className={buttonClassName({ variant: "secondary" })}`. |
+| `Button` (`base/buttons/button`) | Variantes `primary` (relleno azul, la acción principal), `secondary` (borde, el resto de las acciones), `ghost` y `danger`. Tamaño `large` (44 px) por defecto; `medium`, `small` y `xs` solo en superficies densas de escritorio. Íconos por prop (`leadingIcon={RiArrowLeftLine}`). Para un `Link` del router o un `<a>`: `className={buttonClassName({ variant: "secondary" })}`. |
 | `IconButton` (`base/buttons/icon-button`) | Solo ícono: 44 × 44 por defecto, `icon` y `aria-label` obligatorios. |
 | `Input`, `Textarea` (`base/input`, `base/textarea`) | Campos de React Aria con su etiqueta (`label`), ayuda (`hint`) y validación nativa (`isRequired`, `maxLength`). 44 px por defecto. `onChange` recibe el texto, no el evento. Para una fecha: `TextField` + `Label` + `InputBase type="date"` (el selector del celular). |
 | `Select`, `SelectItem` (`base/select`) | Lista de opciones de React Aria (`value`/`onChange` con el `id` de cada `SelectItem`, o `name` + `defaultValue` en un formulario). Disparador y filas de 44 px. Con `label` visible arriba, o `aria-labelledby` si la etiqueta va al costado. |
 | `SegmentedControl` (`base/segmented-control`) | Opciones excluyentes. `Segmented` (`@mt/ui/components/segmented`) lo arma desde una lista de opciones y lo hace desplazable en el celular. |
 | `SearchInput` | `Input` de BoardUI con lupa, para filtrar listas. |
-| `Chip` (`base/badges/chip`) | Etiquetas de una línea, sin borde (no son clickeables). Colores de BoardUI más `brand` (borravino) y `warning` (ámbar, siempre con ícono). |
+| `Chip` (`base/badges/chip`) | Etiquetas de una línea, no clickeables (esquinas `rounded-md`, sin borde). Colores de BoardUI más `brand` (celeste claro) y `warning` (ámbar, siempre con ícono). |
 | `StatusDot` (`base/badges/status-dot`) | Punto de estado; `StatusBadge` lo acompaña con su texto (nunca el color solo). |
 | `Avatar` (`base/avatar`) | Foto redonda o iniciales; si la foto no carga, muestra las iniciales. `PersonAvatar` lo usa para toda persona. |
 | **Propios, armados con BoardUI** | |
-| `tileVariants()` / `cardVariants()` (`card`) | Bloque informativo (solo fondo; tamaños `sm`, `default`, `lg`) y tarjeta clickeable (borde, se marca en hover). Se aplican al elemento que corresponda (`<li>`, `<details>`, un `Link`). |
+| `listVariants()` / `listRowVariants()` (`card`) | Lista larga: un bloque con la misma superficie y filas divididas de 44 px; la fila accionable se marca al pasar el mouse. |
+| `tileVariants()` / `cardVariants()` (`card`) | La misma superficie (borde, fondo, sombra suave, `rounded-xl`) para el bloque informativo (tamaños `sm`, `default`, `lg`) y la tarjeta accionable, que además marca el borde en azul al pasar el mouse. Se aplican al elemento que corresponda (`<li>`, `<details>`, un `Link`). |
 | `Sheet` | Hoja modal (React Aria `Modal` + `Dialog`): foco adentro, Escape, la X y tocar afuera cierran. Con dos apiladas se muestra solo la de arriba; al cerrarla vuelve la de abajo. |
 | `Popover` | Nota flotante (React Aria `DialogTrigger` + `Popover`): `PopoverTrigger` es el botón (abierto, lleva `aria-expanded`) y `PopoverContent` la nota, que se reacomoda sola para no salirse de la pantalla. |
 | `Dialog` | Ventana a pantalla completa o centrada (React Aria): el buscador y el menú del celular. Foco adentro, Escape cierra. Para enfocar un campo al abrir, se enfoca desde un efecto del contenido. |
@@ -52,18 +53,26 @@ Los componentes base y los tokens viven en el paquete `@mt/ui`. Lo usa la web y 
 
 ## Color
 
-- **El borravino Malbec es la identidad**: domina todo el sitio, también gráficos, mapa, minigráficos, puntos y favicon. Nada de azules ni de otros colores de acento.
-- Lo **accionable se distingue por la forma**, no por otro color: botón relleno (`bg-brand`), link (`text-link`, subrayado al pasar el mouse), borde en tarjetas, flechas › y ↗.
-- **Íconos decorativos en gris** (`text-ink-muted`). Íconos de `lucide-react`.
+- **El celeste y azul de la bandera argentina son la identidad**: dominan todo el sitio, también gráficos, mapa, minigráficos, puntos y favicon. Es un sitio sobre el Estado argentino y sobre transparencia: el celeste es nacional y se asocia a confianza y claridad (el rojo, a alarma). Nada de otros colores de acento.
+  - `accent-400` (#74ACDF) es el celeste oficial de la bandera: va en lo resaltado en oscuro, en el favicon y en las imágenes para compartir.
+  - `accent-600` (#1F6DB5) es el azul de la marca: links, botón principal y lo resaltado en claro (5,4:1 sobre blanco). En oscuro, los links pasan a `accent-300`.
+- Lo **accionable se distingue por lo que muestra**, no por otro color: botón relleno (`Button` primary), link (`text-text-link`, subrayado al pasar el mouse), flechas › y ↗ en azul.
+- **Íconos decorativos en gris** (`text-foreground-icon-secondary`). Íconos de `@remixicon/react`, variantes `Line`.
+- **Texto:** `text-text-primary`, `text-text-secondary` y `text-text-tertiary` (los dos últimos, un paso más oscuros que en BoardUI para pasar AA). Tipografía con la escala compuesta de BoardUI, que junta tamaño, peso e interlineado: `text-caption-1-regular`, `text-body-medium`, `text-headline-regular`, `text-title-3-semibold`, `text-display-4-semibold`… Nunca `text-sm font-medium` sueltos.
 - Colores de estado (verde, amarillo, rojo) siempre con texto o ícono al lado: el color nunca va solo.
-- Tokens del sitio en `packages/ui/src/styles/mt.css`, con valores separados para claro (`:root`) y oscuro (`.dark`). La escala `accent-50` a `accent-950` es borravino (600 es la marca) y re-tiñe todos los componentes de BoardUI. La rampa del mapa (`--map-0` a `--map-4`) está validada en ambos modos: un tono, pasos visibles y contraste con el fondo.
+- Tokens del sitio en `packages/ui/src/styles/mt.css`, con valores separados para claro (`:root`) y oscuro (`.dark`). La escala `accent-50` a `accent-950` es celeste y azul (400 es el celeste de la bandera, 600 la marca) y re-tiñe todos los componentes de BoardUI. La rampa del mapa (`--map-0` a `--map-4`) está validada en ambos modos: un tono, pasos visibles y contraste con el fondo.
 
 ## Forma
 
-- **Borde = clickeable.** Las tarjetas informativas llevan solo fondo (`bg-tile`).
-- **Lo accionable se ve antes del hover** (en el celular no hay hover): las filas que llevan a otra página tienen la flecha en el color de link (`text-link`) siempre. En listas de navegación, como "Todo lo que hay", el nombre del destino también va en ese color.
+- **Una sola forma por tipo de cosa:**
+  - **Controles** (botones, botones de ícono, campos, selects, selectores de opciones, filtros): esquinas `rounded-2lg` (10 px), borde y fondo de superficie, 44 px. Nada de botones redondos ni casi cuadrados sueltos: los filtros también son `Button`/`buttonClassName` (primary el elegido, secondary el resto).
+  - **Campos** (`Input`, `Textarea`, `Select`): el mismo marco que el botón secundario (borde + fondo), con anillo azul al enfocar. Ninguno va solo con fondo gris.
+  - **Tarjetas y bloques:** una sola superficie, `tileVariants()` (informativa) y `cardVariants()` (accionable): borde, fondo, sombra suave y `rounded-xl`.
+  - **Listas** (personas, organismos, procesos, leyes): un solo bloque con las filas divididas, `listVariants()` en la lista y `listRowVariants()` en cada fila (44 px, flecha visible si lleva a otro lado). Nunca una tarjeta por fila: `cardVariants()` es para tarjetas sueltas en grilla.
+  - **Etiquetas no clickeables:** `Chip`, `rounded-md`. Redondo solo lo que es redondo: caras (`Avatar`), puntos de estado y marcas de gráficos.
+- **Lo accionable se ve antes del hover** (en el celular no hay hover): las filas que llevan a otra página tienen la flecha en el color de link (`text-text-link`) siempre. En listas de navegación, como "Todo lo que hay", el nombre del destino también va en ese color.
 - **Tamaño mínimo para tocar: 44 px de alto** (`min-h-11`) en filas y botones.
-- **Botones de solo ícono: cuadrados de 44 × 44 px**, con `IconButton` (`@mt/ui/components/icon-button`), que exige un nombre accesible (`label`). Llevan borde y fondo gris (estilo secundario) para que se vean como botón antes del hover; un ícono suelto no se reconoce como botón.
+- **Botones de solo ícono: cuadrados de 44 × 44 px**, con `IconButton` (`@mt/ui/components/base/buttons/icon-button`), que exige un nombre accesible (`aria-label`). Llevan borde y fondo gris (estilo secundario) para que se vean como botón antes del hover; un ícono suelto no se reconoce como botón.
 - **Encabezados de 48 a 60 px de alto:** el del sitio, el de las hojas y el del buscador miden 56 px (`h-14`).
 - `bun run verificar` controla las tres medidas en todas las páginas y en todos los anchos.
 - **Nada se corta en dos líneas**: cifras, títulos de tarjetas, fechas y montos. La unidad va aparte y en chico («$ 965.709» + «millones»).
@@ -107,7 +116,7 @@ Componente `Alert` (`@mt/ui/components/alert`) para lo que hay que leer sí o s�
 | `warning` (ámbar, ⚠) | Un problema o una señal | «Por qué importa» en datos no publicados y en señales; sueldo no publicado; fuentes oficiales que no coinciden; proceso con una sola oferta; empresa que ganó antes de cumplir un año |
 | `note` (neutra, ⓘ) | Una aclaración de método para leer bien un número | La deuda en pesos baja con la devaluación; por qué los municipios chicos reciben más por habitante; salto entre proyecciones de población; límites de las declaraciones juradas; montos sin ajustar por inflación |
 
-El ámbar es un color de estado, como el verde y el rojo: va siempre con ícono y título, y no reemplaza al borravino de la marca. No abusar: un aviso por bloque como máximo, y solo si cambia cómo se interpreta el dato.
+El ámbar es un color de estado, como el verde y el rojo: va siempre con ícono y título, y no reemplaza al azul de la marca. No abusar: un aviso por bloque como máximo, y solo si cambia cómo se interpreta el dato.
 
 ## Gráficos
 
@@ -167,6 +176,6 @@ Cosas típicas de las interfaces armadas con IA o con plantillas. Hacen que el s
 - Todas las tarjetas con el mismo peso: lo que define el caso va con protagonismo (ver Avisos).
 - Botones genéricos («Saber más», «Comenzar») y títulos vagos («Transparencia para todos»). El título dice qué dato hay: «¿Cuánto debe Mendoza?».
 - Animaciones de «pensando» o de carga decorativas.
-- Colores fuera de la paleta (ver Color), incluidos los azules.
+- Colores fuera de la paleta (ver Color), incluidos los rojos y bordós como acento.
 
 Más sobre cómo se piden, se revisan y se estresan los cambios: [Mejoras de interfaz](mejoras-de-interfaz.md).

@@ -11,8 +11,8 @@ export function Sparkline({ values, width = 120, className = "w-28" }: { values:
   const last = values.length - 1;
   return (
     <svg viewBox={`0 0 ${w} ${h}`} className={`h-auto max-w-full min-w-0 overflow-visible ${className}`} aria-hidden>
-      <path d={d} fill="none" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" className="stroke-accent" />
-      <circle cx={x(last)} cy={y(values[last]!)} r={3} className="fill-accent" />
+      <path d={d} fill="none" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" className="stroke-highlight" />
+      <circle cx={x(last)} cy={y(values[last]!)} r={3} className="fill-highlight" />
     </svg>
   );
 }

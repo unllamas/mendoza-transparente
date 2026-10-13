@@ -23,7 +23,7 @@ La gente describe lo que siente. Buscar la regla (detalle en `docs/procesos/dise
 
 | Lo que se dice | Regla | Skill |
 |---|---|---|
-| "No se entiende que se puede tocar" | Borde = clickeable, acción visible sin hover, flecha en `text-link` | `diseno` |
+| "No se entiende que se puede tocar" | Una sola forma por tipo, acción visible sin hover, flecha en `text-text-link` | `diseno` |
 | "Se corta", "queda feo en el celu" | Una línea en cifras, títulos y montos; nunca scroll horizontal | `diseno` |
 | "Es chico para tocar", "toco y no pasa nada" | 44 px, respuesta con `active:` | `diseno` |
 | "Al escribir se agranda la pantalla" | Campos de 16 px en el celular | `diseno` |

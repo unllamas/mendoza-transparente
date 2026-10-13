@@ -1,11 +1,20 @@
 import { Alert } from "@mt/ui/components/alert";
 import { PersonAvatar } from "@mt/ui/components/avatar";
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
-import { tileVariants } from "@mt/ui/components/card";
+import { cardVariants, listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
 import { PageHeader } from "@mt/ui/components/section";
 import { cx } from "@mt/ui/lib/cx";
+import {
+  RiArrowRightSLine,
+  RiBankLine,
+  RiBuilding2Line,
+  RiExternalLinkLine,
+  RiFileTextLine,
+  RiMailLine,
+  RiMapPinLine,
+  RiSurveyLine,
+} from "@remixicon/react";
 import { getRouteApi, Link } from "@tanstack/react-router";
-import { Building2, ChevronRight, ExternalLink, FileText, Landmark, Mail, MapPin, Vote } from "lucide-react";
 import { useMemo } from "react";
 import { formatMoneda } from "@/celdas.ts";
 import { BarList } from "@/charts/bar-list.tsx";
@@ -66,7 +75,7 @@ export function FuncionariosPage() {
 
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={Landmark} topic="Funcionarios" title="¿Quiénes nos representan?">
+      <PageHeader icon={RiBankLine} topic="Funcionarios" title="¿Quiénes nos representan?">
         Gobernador, ministros, legisladores, intendentes y quienes representan a Mendoza en el Congreso: su cargo, su partido o bloque,
         hasta cuándo dura su mandato y cuánto cobran cuando el dato es público.
       </PageHeader>
@@ -110,9 +119,9 @@ function Bloques({ personas }: { personas: Funcionario[] }) {
   const items = [...conteo].sort((a, b) => b[1] - a[1]).map(([nombre, valor]) => ({ nombre, valor }));
   return (
     <details className={cx(tileVariants(), "group")}>
-      <summary className="cursor-pointer list-none text-sm font-medium [&::-webkit-details-marker]:hidden">
+      <summary className="cursor-pointer list-none text-body-medium [&::-webkit-details-marker]:hidden">
         <span className="inline-flex items-center gap-1.5">
-          <ChevronRight className="size-4 transition-transform group-open:rotate-90" aria-hidden />
+          <RiArrowRightSLine className="size-5 transition-transform group-open:rotate-90" aria-hidden />
           Composición por bloque · {items.length} bloques
         </span>
       </summary>
@@ -132,35 +141,33 @@ function subtitulo(p: Funcionario) {
 function Lista({ titulo, personas, role }: { titulo: string; personas: Funcionario[]; role?: string }) {
   return (
     <section className="flex flex-col gap-3">
-      <h2 className="flex min-w-0 items-baseline justify-between gap-3 text-lg font-semibold tracking-tight">
+      <h2 className="flex min-w-0 items-baseline justify-between gap-3 text-title-3-semibold tracking-tight">
         <span className="truncate">{titulo}</span>
         {role && (
           <Link
             to="/funcionarios/$role"
             params={{ role }}
-            className="shrink-0 text-sm font-normal whitespace-nowrap text-link hover:underline"
+            className="shrink-0 text-body-regular whitespace-nowrap text-text-link hover:underline"
           >
             Ver página ›
           </Link>
         )}
       </h2>
-      <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
+      <ul className={listVariants()}>
         {personas.map((p) => (
           <li key={p.id}>
-            <Link
-              to="/funcionarios/$role/$slug"
-              params={{ role: p.role, slug: p.slug }}
-              className="group flex w-full items-center gap-4 px-4 py-3 text-left hover:bg-grid/50 sm:px-5"
-            >
-              <PersonAvatar name={p.nombre} photo={p.foto} className="size-10 text-xs" />
+            <Link to="/funcionarios/$role/$slug" params={{ role: p.role, slug: p.slug }} className={listRowVariants()}>
+              <PersonAvatar name={p.nombre} photo={p.foto} className="size-10 text-caption-1-regular" />
               <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                <span className="truncate font-medium group-hover:text-link">{p.nombre}</span>
-                <span className="truncate text-sm text-ink-muted">{subtitulo(p)}</span>
+                <span className="truncate font-medium group-hover:text-text-link">{p.nombre}</span>
+                <span className="truncate text-body-regular text-text-tertiary">{subtitulo(p)}</span>
               </span>
               {p.mandatoHasta && (
-                <span className="hidden text-sm whitespace-nowrap text-ink-muted tabular-nums sm:block">hasta {p.mandatoHasta}</span>
+                <span className="hidden text-body-regular whitespace-nowrap text-text-tertiary tabular-nums sm:block">
+                  hasta {p.mandatoHasta}
+                </span>
               )}
-              <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
+              <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
             </Link>
           </li>
         ))}
@@ -184,7 +191,7 @@ export function RolePage() {
   return (
     <div className="flex flex-col gap-10">
       <Breadcrumbs items={[{ label: "Funcionarios", to: "/funcionarios" }, { label: r.title }]} />
-      <PageHeader icon={Landmark} topic="Funcionarios" title={r.title}>
+      <PageHeader icon={RiBankLine} topic="Funcionarios" title={r.title}>
         {r.description}
       </PageHeader>
       <FuentesOficiales ids={["autoridades", "legislatura"]} />
@@ -205,9 +212,9 @@ function NotFound() {
   return (
     <div className="flex flex-col gap-3">
       <Breadcrumbs items={[{ label: "Funcionarios", to: "/funcionarios" }, { label: "No encontrada" }]} />
-      <h1 className="text-2xl font-semibold tracking-tight">No encontramos a esa persona</h1>
-      <p className="text-ink-2">Puede que haya dejado el cargo o que el enlace esté mal escrito.</p>
-      <Link to="/funcionarios" className="w-fit text-link hover:underline">
+      <h1 className="text-title-1-semibold tracking-tight">No encontramos a esa persona</h1>
+      <p className="text-text-secondary">Puede que haya dejado el cargo o que el enlace esté mal escrito.</p>
+      <Link to="/funcionarios" className="w-fit text-text-link hover:underline">
         Ver todos los funcionarios ›
       </Link>
     </div>
@@ -240,10 +247,10 @@ function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: Fun
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center gap-3">
-        <PersonAvatar name={p.nombre} photo={p.foto} className="size-16 text-base" />
+        <PersonAvatar name={p.nombre} photo={p.foto} className="size-16 text-headline-regular" />
         <div className="flex min-w-0 flex-col gap-0.5">
-          <h1 className="text-xl font-semibold tracking-tight text-balance sm:text-2xl">{p.nombre}</h1>
-          <span className="text-sm text-ink-2">{p.cargo}</span>
+          <h1 className="text-title-2-semibold tracking-tight text-balance sm:text-title-1-regular">{p.nombre}</h1>
+          <span className="text-body-regular text-text-secondary">{p.cargo}</span>
         </div>
       </div>
 
@@ -251,7 +258,7 @@ function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: Fun
 
       <Territorio persona={p} />
 
-      <dl className={cx(tileVariants(), "grid grid-cols-2 gap-x-3 gap-y-4 text-sm")}>
+      <dl className={cx(tileVariants(), "grid grid-cols-2 gap-x-3 gap-y-4 text-body-regular")}>
         <Campo label="Organismo" value={p.organismo} wide />
         {p.bloque && <Campo label="Bloque" value={p.bloque} />}
         <Campo label="Partido o frente" value={p.partido ?? "No lo informa la fuente oficial"} muted={!p.partido} />
@@ -260,20 +267,20 @@ function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: Fun
       </dl>
 
       <section className="flex flex-col gap-2">
-        <h4 className="text-sm font-semibold">Cuánto cobra</h4>
+        <h4 className="text-body-semibold">Cuánto cobra</h4>
         {p.remuneracion.length > 0 ? (
           <>
-            <ul className="flex flex-col gap-2 text-sm">
+            <ul className="flex flex-col gap-2 text-body-regular">
               {p.remuneracion.map((r) => (
                 <li key={r.concepto} className="flex items-baseline justify-between gap-3">
-                  <span className="text-ink-2">{r.concepto}</span>
+                  <span className="text-text-secondary">{r.concepto}</span>
                   <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(r.monto, "ARS")}</span>
                 </li>
               ))}
             </ul>
-            <p className="text-xs text-ink-muted">
+            <p className="text-caption-1-regular text-text-tertiary">
               Montos brutos mensuales del cargo, vigentes a {p.remuneracion[0]!.periodo}.{" "}
-              <a href={p.remuneracion[0]!.fuenteUrl} target="_blank" rel="noreferrer" className="text-link hover:underline">
+              <a href={p.remuneracion[0]!.fuenteUrl} target="_blank" rel="noreferrer" className="text-text-link hover:underline">
                 Fuente oficial
               </a>
             </p>
@@ -282,7 +289,7 @@ function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: Fun
           <Alert title="No está publicado">
             El sueldo de este cargo no figura en ningún sitio oficial.{" "}
             {pedido && (
-              <Link to="/no-publicado" search={{ dato: pedido } as never} className="font-medium text-link hover:underline">
+              <Link to="/no-publicado" search={{ dato: pedido } as never} className="font-medium text-text-link hover:underline">
                 Pedilo con la Ley 9070 ›
               </Link>
             )}
@@ -293,30 +300,35 @@ function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: Fun
       <Declaracion persona={p} usd={usd} />
 
       {/diputados|senado/.test(p.grupo) && (
-        <p className="flex items-center gap-2 text-sm text-ink-muted">
-          <Vote className="size-4 shrink-0" aria-hidden /> Próximamente: los proyectos que presentó y cómo votó.
+        <p className="flex items-center gap-2 text-body-regular text-text-tertiary">
+          <RiSurveyLine className="size-4 shrink-0" aria-hidden /> Próximamente: los proyectos que presentó y cómo votó.
         </p>
       )}
 
-      <div className="flex flex-col gap-2 border-t border-line pt-4 text-sm">
+      <div className="flex flex-col gap-2 border-t border-separator-border pt-4 text-body-regular">
         {p.email && (
-          <a href={`mailto:${p.email}`} className="inline-flex items-center gap-1.5 text-link hover:underline">
-            <Mail className="size-4" aria-hidden /> {p.email}
+          <a href={`mailto:${p.email}`} className="inline-flex items-center gap-1.5 text-text-link hover:underline">
+            <RiMailLine className="size-4" aria-hidden /> {p.email}
           </a>
         )}
         {p.perfilUrl && (
-          <a href={p.perfilUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-link hover:underline">
-            Perfil oficial <ExternalLink className="size-3.5" aria-hidden />
+          <a
+            href={p.perfilUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 text-text-link hover:underline"
+          >
+            Perfil oficial <RiExternalLinkLine className="size-4" aria-hidden />
           </a>
         )}
-        {p.fotoCredito && <span className="text-xs text-ink-muted">Foto: {p.fotoCredito}</span>}
+        {p.fotoCredito && <span className="text-caption-1-regular text-text-tertiary">Foto: {p.fotoCredito}</span>}
         <a
           href={p.fuenteUrl}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-1.5 text-ink-muted hover:text-link hover:underline"
+          className="inline-flex items-center gap-1.5 text-text-tertiary hover:text-text-link hover:underline"
         >
-          <Landmark className="size-4" aria-hidden /> De dónde sale este dato <ExternalLink className="size-3.5" aria-hidden />
+          <RiBankLine className="size-4" aria-hidden /> De dónde sale este dato <RiExternalLinkLine className="size-4" aria-hidden />
         </a>
       </div>
     </div>
@@ -330,24 +342,24 @@ function Territorio({ persona: p }: { persona: Funcionario }) {
       <Link
         to="/gobierno/$slug"
         params={{ slug: p.agency.slug }}
-        className="group flex items-center gap-3 rounded-xl border border-line p-3 text-sm hover:border-link"
+        className={cx(cardVariants(), "flex items-center gap-3 text-body-regular")}
       >
-        <Building2 className="size-4 shrink-0 text-ink-muted" aria-hidden />
+        <RiBuilding2Line className="size-5 shrink-0 text-foreground-icon-secondary" aria-hidden />
         <span className="flex min-w-0 flex-1 flex-col">
-          <span className="text-ink-muted">Organismo que conduce o integra</span>
-          <span className="truncate font-medium group-hover:text-link">{p.agency.name}</span>
+          <span className="text-text-tertiary">Organismo que conduce o integra</span>
+          <span className="truncate font-medium group-hover:text-text-link">{p.agency.name}</span>
         </span>
-        <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
+        <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
       </Link>
     );
   }
   if (!p.municipalities.length) {
     const nacional = p.grupo === "diputados_nacional" || p.grupo === "senado_nacional";
     return (
-      <p className="flex items-center gap-2 text-sm text-ink-2">
-        <MapPin className="size-4 shrink-0 text-ink-muted" aria-hidden />
+      <p className="flex items-center gap-2 text-body-regular text-text-secondary">
+        <RiMapPinLine className="size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
         {nacional ? "Representa a toda la provincia de Mendoza en el Congreso." : "Su cargo abarca toda la provincia."}{" "}
-        <Link to="/municipios" className="whitespace-nowrap text-link hover:underline">
+        <Link to="/municipios" className="whitespace-nowrap text-text-link hover:underline">
           Ver municipios ›
         </Link>
       </p>
@@ -356,19 +368,15 @@ function Territorio({ persona: p }: { persona: Funcionario }) {
   const intendente = p.grupo === "intendentes";
   return (
     <section className="flex flex-col gap-2">
-      <h2 className="flex items-center gap-1.5 text-sm font-semibold">
-        <MapPin className="size-4 text-ink-muted" aria-hidden />
+      <h2 className="flex items-center gap-1.5 text-body-semibold">
+        <RiMapPinLine className="size-4 text-foreground-icon-secondary" aria-hidden />
         {intendente ? "Gobierna" : `Representa a la ${p.seccion?.toLowerCase() ?? "sección"}`}
       </h2>
       <ul className="flex flex-wrap gap-2">
         {p.municipalities.map((m) => (
           <li key={m.slug}>
-            <Link
-              to="/municipios/$slug"
-              params={{ slug: m.slug }}
-              className={buttonClassName({ variant: "secondary", className: "rounded-full font-normal" })}
-            >
-              {m.name} <ChevronRight className="size-3.5" aria-hidden />
+            <Link to="/municipios/$slug" params={{ slug: m.slug }} className={buttonClassName({ variant: "secondary" })}>
+              {m.name} <RiArrowRightSLine className="size-5" aria-hidden />
             </Link>
           </li>
         ))}
@@ -387,36 +395,36 @@ function Declaracion({ persona: p, usd }: { persona: Funcionario; usd?: Funciona
   const d = p.ddjj;
   return (
     <section className="flex flex-col gap-3">
-      <h4 className="flex items-center gap-1.5 text-sm font-semibold">
-        <FileText className="size-4 text-ink-muted" aria-hidden /> Qué declara
+      <h4 className="flex items-center gap-1.5 text-body-semibold">
+        <RiFileTextLine className="size-4 text-foreground-icon-secondary" aria-hidden /> Qué declara
       </h4>
       {d ? (
         <>
           <div className="grid grid-cols-2 gap-2">
             <div className={cx(tileVariants({ size: "sm" }), "col-span-2 flex flex-col gap-0.5")}>
-              <span className="text-xs text-ink-muted">Inmuebles y vehículos a su nombre, en pesos a valor fiscal</span>
-              <span className="text-lg font-semibold whitespace-nowrap tabular-nums">{millonesDePesos(d.totalBienes)}</span>
+              <span className="text-caption-1-regular text-text-tertiary">Inmuebles y vehículos a su nombre, en pesos a valor fiscal</span>
+              <span className="text-title-3-semibold whitespace-nowrap tabular-nums">{millonesDePesos(d.totalBienes)}</span>
               {usd && d.totalBienes > 0 && (
-                <span className="text-xs text-ink-muted">
+                <span className="text-caption-1-regular text-text-tertiary">
                   Unos US$ {formatNumber(Math.round(d.totalBienes / usd.rate))} al dólar oficial de {formatMonth(usd.month)}
                 </span>
               )}
             </div>
             <div className={cx(tileVariants({ size: "sm" }), "flex flex-col gap-0.5")}>
-              <span className="text-xs text-ink-muted">Inmuebles</span>
+              <span className="text-caption-1-regular text-text-tertiary">Inmuebles</span>
               <span className="font-medium tabular-nums">{d.inmuebles}</span>
             </div>
             <div className={cx(tileVariants({ size: "sm" }), "flex flex-col gap-0.5")}>
-              <span className="text-xs text-ink-muted">Vehículos</span>
+              <span className="text-caption-1-regular text-text-tertiary">Vehículos</span>
               <span className="font-medium tabular-nums">{d.rodados}</span>
             </div>
           </div>
           {d.declaredWithoutAmount.length > 0 && (
-            <p className="text-sm text-ink-2 text-pretty">
+            <p className="text-body-regular text-text-secondary text-pretty">
               También declara {listaHumana(d.declaredWithoutAmount)}, pero el sitio oficial no publica esos montos.
             </p>
           )}
-          <p className="text-xs text-ink-muted">
+          <p className="text-caption-1-regular text-text-tertiary">
             Última declaración publicada{d.fecha ? ` el ${formatDate(d.fecha)}` : ""} ({d.declaracionesPublicadas}{" "}
             {d.declaracionesPublicadas === 1 ? "declaración" : "declaraciones"} en total).
           </p>
@@ -424,13 +432,13 @@ function Declaracion({ persona: p, usd }: { persona: Funcionario; usd?: Funciona
             El valor fiscal es el que usa el Estado para cobrar impuestos y suele estar muy por debajo del precio de mercado. Además, el
             total no incluye cuentas bancarias, efectivo, inversiones ni participaciones en empresas: la Oficina de Ética Pública muestra
             que se declaran, pero no cuánto.{" "}
-            <Link to="/no-publicado" search={{ dato: "ddjj-montos" } as never} className="font-medium text-link hover:underline">
+            <Link to="/no-publicado" search={{ dato: "ddjj-montos" } as never} className="font-medium text-text-link hover:underline">
               Pedí los montos ›
             </Link>
           </Alert>
         </>
       ) : (
-        <p className="text-sm text-ink-2">
+        <p className="text-body-regular text-text-secondary">
           {nacional
             ? "Los legisladores nacionales presentan su declaración ante la Oficina Anticorrupción de la Nación."
             : "No encontramos su declaración publicada en la Oficina de Ética Pública."}
@@ -440,9 +448,9 @@ function Declaracion({ persona: p, usd }: { persona: Funcionario; usd?: Funciona
         href={nacional ? "https://www.argentina.gob.ar/anticorrupcion" : ETICA}
         target="_blank"
         rel="noreferrer"
-        className="inline-flex w-fit items-center gap-1.5 text-sm text-link hover:underline"
+        className="inline-flex w-fit items-center gap-1.5 text-body-regular text-text-link hover:underline"
       >
-        {nacional ? "Oficina Anticorrupción" : "Ver en Ética Pública"} <ExternalLink className="size-3.5" aria-hidden />
+        {nacional ? "Oficina Anticorrupción" : "Ver en Ética Pública"} <RiExternalLinkLine className="size-4" aria-hidden />
       </a>
     </section>
   );
@@ -468,8 +476,8 @@ const formatMonth = (ym: string) => `${MONTHS[Number(ym.slice(5, 7)) - 1]} de ${
 function Campo({ label, value, wide, muted }: { label: string; value: string; wide?: boolean; muted?: boolean }) {
   return (
     <div className={`flex flex-col gap-0.5 ${wide ? "col-span-2" : ""}`}>
-      <dt className="text-xs text-ink-muted">{label}</dt>
-      <dd className={`text-pretty ${muted ? "text-ink-muted" : ""}`}>{value}</dd>
+      <dt className="text-caption-1-regular text-text-tertiary">{label}</dt>
+      <dd className={`text-pretty ${muted ? "text-text-tertiary" : ""}`}>{value}</dd>
     </div>
   );
 }

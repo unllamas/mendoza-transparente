@@ -1,4 +1,3 @@
-import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 /**
  * Advanced search: a dialog over everything (full screen on phones, a centered panel on desktop) with results
  * grouped by kind and filters by kind. Opened from the home page, the header search button, or "/" and
@@ -7,27 +6,30 @@ import { buttonClassName } from "@mt/ui/components/base/buttons/button";
  */
 
 import { PersonAvatar } from "@mt/ui/components/avatar";
+import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { IconButton } from "@mt/ui/components/base/buttons/icon-button";
+import { cardVariants } from "@mt/ui/components/card";
 import { Dialog } from "@mt/ui/components/dialog";
-import { RiCloseLine, RiSearchLine } from "@remixicon/react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { cx } from "@mt/ui/lib/cx";
 import {
-  ArrowRight,
-  Building2,
-  CornerDownLeft,
-  Database,
-  EyeOff,
-  Landmark,
-  LayoutGrid,
-  type LucideIcon,
-  MapPin,
-  Scale,
-  Search,
-  ShoppingCart,
-  Store,
-  TriangleAlert,
-  UsersRound,
-} from "lucide-react";
+  type RemixiconComponentType,
+  RiAlertLine,
+  RiArrowRightLine,
+  RiBankLine,
+  RiBuilding2Line,
+  RiCloseLine,
+  RiCornerDownLeftLine,
+  RiDatabase2Line,
+  RiEyeOffLine,
+  RiLayoutGridLine,
+  RiMapPinLine,
+  RiScales3Line,
+  RiSearchLine,
+  RiShoppingCartLine,
+  RiStore2Line,
+  RiTeamLine,
+} from "@remixicon/react";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 import { track } from "@/analytics.ts";
@@ -65,20 +67,20 @@ const KIND_WEIGHT: Record<string, number> = {
 };
 
 /** Result groups, in the order the filters show them: plural label and icon. */
-const GROUPS: { kind: string; label: string; icon: LucideIcon }[] = [
-  { kind: "Funcionario", label: "Funcionarios", icon: UsersRound },
-  { kind: "Municipio", label: "Municipios", icon: MapPin },
-  { kind: "Ley", label: "Leyes", icon: Scale },
-  { kind: "Organismo", label: "Organismos", icon: Building2 },
-  { kind: "Proveedor", label: "Proveedores", icon: Store },
-  { kind: "Área que compra", label: "Áreas que compran", icon: ShoppingCart },
-  { kind: "Cargo", label: "Cargos", icon: Landmark },
-  { kind: "Señal", label: "Para mirar de cerca", icon: TriangleAlert },
-  { kind: "No se publica", label: "Lo que no se publica", icon: EyeOff },
-  { kind: "Datos abiertos", label: "Datos abiertos", icon: Database },
-  { kind: "Sección", label: "Secciones", icon: LayoutGrid },
+const GROUPS: { kind: string; label: string; icon: RemixiconComponentType }[] = [
+  { kind: "Funcionario", label: "Funcionarios", icon: RiTeamLine },
+  { kind: "Municipio", label: "Municipios", icon: RiMapPinLine },
+  { kind: "Ley", label: "Leyes", icon: RiScales3Line },
+  { kind: "Organismo", label: "Organismos", icon: RiBuilding2Line },
+  { kind: "Proveedor", label: "Proveedores", icon: RiStore2Line },
+  { kind: "Área que compra", label: "Áreas que compran", icon: RiShoppingCartLine },
+  { kind: "Cargo", label: "Cargos", icon: RiBankLine },
+  { kind: "Señal", label: "Para mirar de cerca", icon: RiAlertLine },
+  { kind: "No se publica", label: "Lo que no se publica", icon: RiEyeOffLine },
+  { kind: "Datos abiertos", label: "Datos abiertos", icon: RiDatabase2Line },
+  { kind: "Sección", label: "Secciones", icon: RiLayoutGridLine },
 ];
-const groupOf = (kind: string) => GROUPS.find((g) => g.kind === kind) ?? { kind, label: kind, icon: LayoutGrid };
+const groupOf = (kind: string) => GROUPS.find((g) => g.kind === kind) ?? { kind, label: kind, icon: RiLayoutGridLine };
 const PER_GROUP = 3;
 const MAX_FILTERED = 50;
 
@@ -114,11 +116,13 @@ export function SearchTrigger() {
       type="button"
       id="buscador-global"
       onClick={() => openSearch("home")}
-      className="group relative flex w-full max-w-2xl items-center rounded-xl border border-line bg-surface py-3.5 pr-4 pl-12 text-left text-base text-ink-muted shadow-sm hover:border-link"
+      className={cx(cardVariants(), "flex w-full max-w-2xl items-center gap-3 text-headline-regular text-text-tertiary")}
     >
-      <Search className="absolute left-4 size-5 text-ink-muted group-hover:text-link" aria-hidden />
+      <RiSearchLine className="size-5 shrink-0 text-text-link" aria-hidden />
       <span className="truncate">Buscá funcionarios, leyes, empresas…</span>
-      <kbd className="ml-auto hidden shrink-0 rounded border border-line px-1.5 py-0.5 font-sans text-xs text-ink-muted sm:block">/</kbd>
+      <kbd className="ml-auto hidden shrink-0 rounded border border-separator-border px-1.5 py-0.5 font-sans text-caption-1-regular text-text-tertiary sm:block">
+        /
+      </kbd>
     </button>
   );
 }
@@ -131,13 +135,13 @@ export function HeaderSearchButton() {
 // ------------------------------------------------------------------ dialog
 
 const EXAMPLES = ["Cornejo", "Ley 9735", "Maipú", "Hospital Central", "ECO CLEAN", "Vialidad"];
-const SHORTCUTS: { label: string; to: string; icon: LucideIcon }[] = [
-  { label: "Funcionarios", to: "/funcionarios", icon: UsersRound },
-  { label: "Municipios", to: "/municipios", icon: MapPin },
-  { label: "Leyes", to: "/leyes", icon: Scale },
-  { label: "Gobierno por dentro", to: "/gobierno", icon: Building2 },
-  { label: "Proveedores", to: "/proveedores", icon: Store },
-  { label: "Lo que no se publica", to: "/no-publicado", icon: LayoutGrid },
+const SHORTCUTS: { label: string; to: string; icon: RemixiconComponentType }[] = [
+  { label: "Funcionarios", to: "/funcionarios", icon: RiTeamLine },
+  { label: "Municipios", to: "/municipios", icon: RiMapPinLine },
+  { label: "Leyes", to: "/leyes", icon: RiScales3Line },
+  { label: "Gobierno por dentro", to: "/gobierno", icon: RiBuilding2Line },
+  { label: "Proveedores", to: "/proveedores", icon: RiStore2Line },
+  { label: "Lo que no se publica", to: "/no-publicado", icon: RiLayoutGridLine },
 ];
 
 export function SearchDialog() {
@@ -228,11 +232,11 @@ export function SearchDialog() {
       label="Buscar"
       onClose={close}
       overlayClassName="z-[60] sm:bg-black/60 sm:backdrop-blur-[2px]"
-      className="inset-0 z-[60] flex flex-col overflow-hidden bg-page sm:inset-auto sm:top-[10vh] sm:left-1/2 sm:max-h-[80vh] sm:w-[calc(100%-3rem)] sm:max-w-2xl sm:-translate-x-1/2 sm:rounded-2xl sm:border sm:border-line sm:bg-surface sm:shadow-2xl"
+      className="inset-0 z-[60] flex flex-col overflow-hidden bg-background-full sm:inset-auto sm:top-[10vh] sm:left-1/2 sm:max-h-[80vh] sm:w-[calc(100%-3rem)] sm:max-w-2xl sm:-translate-x-1/2 sm:rounded-2xl sm:border sm:border-separator-border sm:bg-background-primary-default sm:shadow-2xl"
     >
       {/* Search box */}
-      <div className="flex min-h-14 shrink-0 items-center gap-2 border-b border-line pr-1.5 pl-3 sm:pl-4">
-        <Search className="size-5 shrink-0 text-ink-muted" aria-hidden />
+      <div className="flex min-h-14 shrink-0 items-center gap-2 border-b border-separator-border pr-1.5 pl-3 sm:pl-4">
+        <RiSearchLine className="size-5 shrink-0 text-foreground-icon-secondary" aria-hidden />
         <input
           ref={input}
           type="search"
@@ -257,7 +261,7 @@ export function SearchDialog() {
               go(results[active], active);
             }
           }}
-          className="min-w-0 flex-1 bg-transparent py-2 text-base text-ink !outline-none placeholder:text-ink-muted [&::-webkit-search-cancel-button]:hidden"
+          className="min-w-0 flex-1 bg-transparent py-2 text-headline-regular text-text-primary !outline-none placeholder:text-text-tertiary [&::-webkit-search-cancel-button]:hidden"
         />
         {/* Phones: a "Cancelar" text button; desktop: a square close button. */}
         <button
@@ -265,7 +269,7 @@ export function SearchDialog() {
           onClick={close}
           id="buscador-cerrar"
           data-track="search.close"
-          className="min-h-11 shrink-0 rounded-lg px-2 text-sm text-ink-2 hover:bg-tile hover:text-ink sm:hidden"
+          className={buttonClassName({ variant: "tertiary", className: "shrink-0 sm:hidden" })}
         >
           Cancelar
         </button>
@@ -275,13 +279,13 @@ export function SearchDialog() {
       {/* Filters by kind */}
       {q && matches.length > 0 && (
         <div
-          className="flex shrink-0 gap-1.5 overflow-x-auto border-b border-line px-3 py-2 [scrollbar-width:none] sm:px-4"
+          className="flex shrink-0 gap-2 overflow-x-auto border-b border-separator-border px-3 py-2 [scrollbar-width:none] sm:px-4"
           role="radiogroup"
           aria-label="Filtrar por tipo"
         >
-          <Chip active={kind === null} onClick={() => choose(null)} label={`Todo (${matches.length})`} />
+          <FilterChip active={kind === null} onClick={() => choose(null)} label={`Todo (${matches.length})`} />
           {GROUPS.filter((g) => counts.get(g.kind)).map((g) => (
-            <Chip key={g.kind} active={kind === g.kind} onClick={() => choose(g.kind)} label={`${g.label} (${counts.get(g.kind)})`} />
+            <FilterChip key={g.kind} active={kind === g.kind} onClick={() => choose(g.kind)} label={`${g.label} (${counts.get(g.kind)})`} />
           ))}
         </div>
       )}
@@ -291,7 +295,7 @@ export function SearchDialog() {
         {!q ? (
           <EmptyState onExample={(ex) => setQuery(ex)} onNavigate={close} />
         ) : !entries ? (
-          <p className="px-4 py-4 text-sm text-ink-muted">Buscando…</p>
+          <p className="px-4 py-4 text-body-regular text-text-tertiary">Buscando…</p>
         ) : results.length ? (
           <div id={listId} role="listbox" aria-label="Resultados" className="py-1">
             {groups.map((g) => {
@@ -299,9 +303,9 @@ export function SearchDialog() {
               const GroupIcon = group.icon;
               const total = counts.get(g.kind) ?? 0;
               return (
-                <div key={g.kind} role="group" aria-label={group.label} className="border-b border-line py-1 last:border-b-0">
+                <div key={g.kind} role="group" aria-label={group.label} className="border-b border-separator-border py-1 last:border-b-0">
                   {!kind && (
-                    <div className="flex items-center gap-2 px-4 pt-2 pb-1 text-xs font-medium tracking-wide text-ink-muted uppercase">
+                    <div className="flex items-center gap-2 px-4 pt-2 pb-1 text-caption-1-medium tracking-wide text-text-tertiary uppercase">
                       <GroupIcon className="size-3.5" aria-hidden />
                       {group.label}
                     </div>
@@ -319,12 +323,15 @@ export function SearchDialog() {
                           go(e, i);
                         }}
                         onMouseEnter={() => setActive(i)}
-                        className={`flex min-w-0 items-center gap-3 px-4 py-2.5 ${i === active ? "bg-tile" : ""}`}
+                        className={cx(
+                          "flex min-h-11 min-w-0 items-center gap-3 px-4 py-2.5",
+                          i === active && "bg-background-secondary-default",
+                        )}
                       >
-                        {e.k === "Funcionario" && <PersonAvatar name={e.t} photo={e.i} className="size-9 text-xs" />}
+                        {e.k === "Funcionario" && <PersonAvatar name={e.t} photo={e.i} className="size-9 text-caption-1-regular" />}
                         <span className="flex min-w-0 flex-1 flex-col">
-                          <span className={`truncate font-medium ${i === active ? "text-link" : ""}`}>{e.t}</span>
-                          <span className="truncate text-sm text-ink-muted">{e.s}</span>
+                          <span className={cx("truncate text-body-medium", i === active && "text-text-link")}>{e.t}</span>
+                          <span className="truncate text-body-regular text-text-tertiary">{e.s}</span>
                         </span>
                       </a>
                     );
@@ -333,10 +340,10 @@ export function SearchDialog() {
                     <button
                       type="button"
                       onClick={() => choose(g.kind)}
-                      className="flex w-full items-center gap-1 px-4 py-2 text-sm text-link hover:underline"
+                      className="flex min-h-11 w-full items-center gap-1 px-4 py-2 text-body-regular text-text-link hover:underline"
                     >
                       Ver {total === 1 ? "el resultado" : `los ${total}`} en {group.label.toLowerCase()}{" "}
-                      <ArrowRight className="size-3.5" aria-hidden />
+                      <RiArrowRightLine className="size-3.5" aria-hidden />
                     </button>
                   )}
                 </div>
@@ -344,11 +351,11 @@ export function SearchDialog() {
             })}
           </div>
         ) : (
-          <div className="flex flex-col gap-1 px-4 py-5 text-sm">
+          <div className="flex flex-col gap-1 px-4 py-5 text-body-regular">
             <span>No encontramos nada con «{q}».</span>
-            <span className="text-ink-muted">
+            <span className="text-text-tertiary">
               Probá con otra palabra, o{" "}
-              <Link to="/participar" search={{ tipo: "dato" }} onClick={close} className="text-link hover:underline">
+              <Link to="/participar" search={{ tipo: "dato" }} onClick={close} className="text-text-link hover:underline">
                 sugerinos ese dato
               </Link>
               .
@@ -358,32 +365,30 @@ export function SearchDialog() {
       </div>
 
       {/* Keyboard hints (desktop) */}
-      <div className="hidden shrink-0 items-center gap-4 border-t border-line px-4 py-2 text-xs text-ink-muted sm:flex">
+      <div className="hidden shrink-0 items-center gap-4 border-t border-separator-border px-4 py-2 text-caption-1-regular text-text-tertiary sm:flex">
         <span className="inline-flex items-center gap-1">
-          <kbd className="rounded border border-line px-1">↑</kbd>
-          <kbd className="rounded border border-line px-1">↓</kbd> moverse
+          <kbd className="rounded border border-separator-border px-1">↑</kbd>
+          <kbd className="rounded border border-separator-border px-1">↓</kbd> moverse
         </span>
         <span className="inline-flex items-center gap-1">
-          <CornerDownLeft className="size-3.5" aria-hidden /> abrir
+          <RiCornerDownLeftLine className="size-3.5" aria-hidden /> abrir
         </span>
         <span className="inline-flex items-center gap-1">
-          <kbd className="rounded border border-line px-1">esc</kbd> cerrar
+          <kbd className="rounded border border-separator-border px-1">esc</kbd> cerrar
         </span>
       </div>
     </Dialog>
   );
 }
 
-function Chip({ active, onClick, label }: { active: boolean; onClick: () => void; label: string }) {
+function FilterChip({ active, onClick, label }: { active: boolean; onClick: () => void; label: string }) {
   return (
     <button
       type="button"
       role="radio"
       aria-checked={active}
       onClick={onClick}
-      className={`shrink-0 rounded-full border px-3 py-1 text-sm whitespace-nowrap ${
-        active ? "border-brand bg-brand/15 text-ink" : "border-line text-ink-2 hover:border-link hover:text-ink"
-      }`}
+      className={buttonClassName({ variant: active ? "primary" : "secondary", className: "shrink-0 whitespace-nowrap" })}
     >
       {label}
     </button>
@@ -394,7 +399,7 @@ function EmptyState({ onExample, onNavigate }: { onExample: (q: string) => void;
   return (
     <div className="flex flex-col gap-6 px-4 py-5">
       <div className="flex flex-col gap-2">
-        <span className="text-xs font-medium tracking-wide text-ink-muted uppercase">Probá con</span>
+        <span className="text-caption-1-medium tracking-wide text-text-tertiary uppercase">Probá con</span>
         <div className="flex flex-wrap gap-2">
           {EXAMPLES.map((ex) => (
             <button
@@ -404,7 +409,7 @@ function EmptyState({ onExample, onNavigate }: { onExample: (q: string) => void;
                 track("search.example", { query: ex });
                 onExample(ex);
               }}
-              className={buttonClassName({ variant: "secondary", className: "rounded-full font-normal" })}
+              className={buttonClassName({ variant: "secondary" })}
             >
               {ex}
             </button>
@@ -412,7 +417,7 @@ function EmptyState({ onExample, onNavigate }: { onExample: (q: string) => void;
         </div>
       </div>
       <div className="flex flex-col gap-1">
-        <span className="text-xs font-medium tracking-wide text-ink-muted uppercase">O explorá</span>
+        <span className="text-caption-1-medium tracking-wide text-text-tertiary uppercase">O explorá</span>
         <ul className="grid gap-1 sm:grid-cols-2">
           {SHORTCUTS.map(({ label, to, icon: Icon }) => (
             <li key={to}>
@@ -421,10 +426,11 @@ function EmptyState({ onExample, onNavigate }: { onExample: (q: string) => void;
                 onClick={onNavigate}
                 data-track="search.shortcut"
                 data-track-to={to}
-                className="group flex items-center gap-3 rounded-lg px-2 py-2.5 hover:bg-tile"
+                className="group flex min-h-11 items-center gap-3 rounded-2lg px-2 py-2.5 hover:bg-background-secondary-default"
               >
-                <Icon className="size-4 shrink-0 text-ink-muted group-hover:text-link" aria-hidden />
-                <span className="group-hover:text-link">{label}</span>
+                <Icon className="size-5 shrink-0 text-foreground-icon-secondary" aria-hidden />
+                <span className="text-text-link">{label}</span>
+                <RiArrowRightLine className="ml-auto size-4 shrink-0 text-text-link" aria-hidden />
               </Link>
             </li>
           ))}

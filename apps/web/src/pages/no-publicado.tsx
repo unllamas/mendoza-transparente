@@ -1,11 +1,11 @@
 import { Alert } from "@mt/ui/components/alert";
-import { buttonClassName } from "@mt/ui/components/base/buttons/button";
+import { Button, buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { Textarea } from "@mt/ui/components/base/textarea/textarea";
-import { tileVariants } from "@mt/ui/components/card";
+import { cardVariants, listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
 import { PageHeader } from "@mt/ui/components/section";
 import { cx } from "@mt/ui/lib/cx";
+import { RiArrowRightSLine, RiCheckLine, RiExternalLinkLine, RiEyeOffLine, RiFileCopyLine, RiSearchLine } from "@remixicon/react";
 import { getRouteApi, Link } from "@tanstack/react-router";
-import { Check, ChevronRight, Copy, ExternalLink, EyeOff, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { TrackedSheet } from "@/components/tracked-sheet.tsx";
 import { type RequestStats, useRequestStats } from "@/features/participation/api/request-stats.ts";
@@ -60,12 +60,12 @@ export function NoPublicadoPage() {
 
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={EyeOff} topic="Acceso a la información" title="Lo que el Estado no publica">
+      <PageHeader icon={RiEyeOffLine} topic="Acceso a la información" title="Lo que el Estado no publica">
         {items.length} datos que deberían ser públicos y no lo son. Cualquier persona puede pedirlos y el Estado está obligado a responder.
       </PageHeader>
 
       <div className="flex flex-col gap-4">
-        <div className="flex flex-wrap gap-x-5 gap-y-1 text-sm text-ink-2">
+        <div className="flex flex-wrap gap-x-5 gap-y-1 text-body-regular text-text-secondary">
           {(Object.keys(counts) as NoPublicado["estado"][]).map((e) =>
             counts[e] ? (
               <span key={e} className="inline-flex items-center gap-1.5 whitespace-nowrap">
@@ -89,39 +89,40 @@ export function NoPublicadoPage() {
                 data-track-theme={t.id}
                 data-track-active={String(!active)}
                 onClick={() => setTheme(active ? null : t.id)}
-                className={`flex min-w-0 flex-col gap-1.5 rounded-xl border p-3 text-left transition-colors sm:p-4 ${
-                  active ? "border-brand bg-brand/10" : "border-line hover:border-link"
-                }`}
+                className={cx(
+                  cardVariants(),
+                  "flex min-w-0 flex-col gap-1.5 aria-pressed:border-border-link aria-pressed:bg-button-ghost-background",
+                )}
               >
                 <span className="flex items-center justify-between gap-2">
-                  <Icon className={`size-5 shrink-0 ${active ? "text-link" : "text-ink-muted"}`} aria-hidden />
-                  <span className="text-lg font-semibold tabular-nums">{inTheme(t).length}</span>
+                  <Icon className={cx("size-5 shrink-0", active ? "text-text-link" : "text-foreground-icon-secondary")} aria-hidden />
+                  <span className="text-title-3-semibold tabular-nums">{inTheme(t).length}</span>
                 </span>
-                <span className="text-sm font-medium text-balance">{t.label}</span>
-                <span className="hidden text-xs text-ink-muted sm:block">{t.description}</span>
+                <span className="text-body-medium text-balance">{t.label}</span>
+                <span className="hidden text-caption-1-regular text-text-tertiary sm:block">{t.description}</span>
               </button>
             );
           })}
         </div>
         {theme && (
-          <button
-            type="button"
+          <Button
+            variant="tertiary"
             id="tema-filtro-todos"
             onClick={() => setTheme(null)}
             data-track="missing_data.theme.clear"
-            className="w-fit text-sm text-link hover:underline"
+            className="w-fit"
           >
             Ver todos los temas
-          </button>
+          </Button>
         )}
       </div>
 
       {shown.map((t) => (
         <section key={t.id} className="flex flex-col gap-3" aria-labelledby={`tema-${t.id}`}>
-          <h2 id={`tema-${t.id}`} className="text-lg font-semibold tracking-tight">
+          <h2 id={`tema-${t.id}`} className="text-title-3-semibold tracking-tight">
             {t.label}
           </h2>
-          <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
+          <ul className={listVariants()}>
             {inTheme(t).map((item) => (
               <li key={item.id} id={item.id} className="scroll-mt-8">
                 <button
@@ -131,19 +132,19 @@ export function NoPublicadoPage() {
                   data-track="missing_data.request.open"
                   data-track-item={item.id}
                   data-track-theme={t.id}
-                  className="group flex w-full items-center gap-4 px-4 py-4 text-left hover:bg-grid/50 sm:px-5"
+                  className={cx(listRowVariants(), "gap-4")}
                 >
                   <span className={`size-2.5 shrink-0 rounded-full ${ESTADOS[item.estado].dot}`} aria-hidden />
                   <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                    <span className="font-medium group-hover:text-link">{item.titulo}</span>
-                    <span className="truncate text-sm text-ink-muted">
+                    <span className="font-medium group-hover:text-text-link">{item.titulo}</span>
+                    <span className="truncate text-body-regular text-text-tertiary">
                       {NO_PUBLICADO_CATEGORIES[item.categoria].label} · {ESTADOS[item.estado].label}
                     </span>
                   </span>
-                  <span className="hidden items-center gap-1 text-sm font-medium text-link sm:inline-flex">
-                    Pedir <ChevronRight className="size-4" aria-hidden />
+                  <span className="hidden items-center gap-1 text-body-medium text-text-link sm:inline-flex">
+                    Pedir <RiArrowRightSLine className="size-4" aria-hidden />
                   </span>
-                  <ChevronRight className="size-4 shrink-0 text-ink-muted sm:hidden" aria-hidden />
+                  <RiArrowRightSLine className="size-4 shrink-0 text-text-link sm:hidden" aria-hidden />
                 </button>
               </li>
             ))}
@@ -151,10 +152,10 @@ export function NoPublicadoPage() {
         </section>
       ))}
 
-      <p className="text-sm text-ink-muted text-pretty">
+      <p className="text-body-regular text-text-tertiary text-pretty">
         Cómo funciona: elegí un dato, copiá el pedido que armamos y presentalo gratis en el formulario oficial. El organismo tiene 15 días
         hábiles para responder (
-        <a href={LEY_9070} target="_blank" rel="noreferrer" data-track="missing_data.law.open" className="underline hover:text-link">
+        <a href={LEY_9070} target="_blank" rel="noreferrer" data-track="missing_data.law.open" className="underline hover:text-text-link">
           Ley 9070
         </a>
         ). Revisamos los sitios oficiales el 11 de octubre de 2026.
@@ -193,38 +194,37 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
   return (
     <TrackedSheet title="Pedir este dato" onClose={onClose} trackId="missing_data.request">
       <div className="flex flex-col gap-2">
-        <span className="inline-flex w-fit items-center gap-1.5 text-xs text-ink-muted">
+        <span className="inline-flex w-fit items-center gap-1.5 text-caption-1-regular text-text-tertiary">
           <span className={`size-2 rounded-full ${ESTADOS[item.estado].dot}`} aria-hidden />
           {ESTADOS[item.estado].label}
         </span>
-        <h3 className="text-xl font-semibold tracking-tight text-balance">{item.titulo}</h3>
-        <p className="text-ink-2 text-pretty">{item.que_es}</p>
+        <h3 className="text-title-2-semibold tracking-tight text-balance">{item.titulo}</h3>
+        <p className="text-text-secondary text-pretty">{item.que_es}</p>
       </div>
 
       <Alert title="Por qué importa">
         {item.por_que_importa}
-        {item.detalle_estado && <p className="mt-1 text-ink-muted">{item.detalle_estado}</p>}
+        {item.detalle_estado && <p className="mt-1 text-text-tertiary">{item.detalle_estado}</p>}
       </Alert>
 
       <div className="flex flex-col gap-3">
         <div className="flex items-baseline justify-between gap-3">
           <span className="font-medium">Tu pedido</span>
-          <span className="text-xs text-ink-muted">Completá tus datos al final</span>
+          <span className="text-caption-1-regular text-text-tertiary">Completá tus datos al final</span>
         </div>
         <Textarea value={texto} onChange={setTexto} rows={13} aria-label="Texto del pedido" />
         <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
+          <Button
+            variant="secondary"
             onClick={copiar}
+            leadingIcon={copiado ? RiCheckLine : RiFileCopyLine}
             id="pedido-copiar"
             data-track="missing_data.request.copy"
             data-track-item={item.id}
             data-track-edited={String(texto !== armarPedido(item))}
-            className={buttonClassName({ variant: "secondary" })}
           >
-            {copiado ? <Check className="size-4 text-good" aria-hidden /> : <Copy className="size-4" aria-hidden />}
             {copiado ? "Copiado" : "1. Copiar pedido"}
-          </button>
+          </Button>
           <a
             href={FORMULARIO}
             id="pedido-formulario-oficial"
@@ -234,17 +234,17 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
             rel="noreferrer"
             className={buttonClassName({ variant: "primary" })}
           >
-            2. Presentarlo en el formulario oficial <ExternalLink className="size-4" aria-hidden />
+            2. Presentarlo en el formulario oficial <RiExternalLinkLine className="size-5" aria-hidden />
           </a>
         </div>
-        <p className="text-xs text-ink-muted text-pretty">
+        <p className="text-caption-1-regular text-text-tertiary text-pretty">
           Para: {item.organismo}. Guardá el número de trámite que te den: si no responden en 15 días hábiles, podés reclamar.
         </p>
       </div>
 
-      <div className={cx(tileVariants(), "flex flex-col gap-2 text-sm")}>
+      <div className={cx(tileVariants(), "flex flex-col gap-2 text-body-regular")}>
         <span className="font-medium">¿Ya lo presentaste?</span>
-        <span className="text-ink-2 text-pretty">
+        <span className="text-text-secondary text-pretty">
           {stats && stats.requests > 0
             ? `${stats.requests} ${stats.requests === 1 ? "persona ya lo pidió" : "personas ya lo pidieron"}: ${stats.answered} con respuesta y ${stats.denied + stats.overdue} negados o sin respuesta en plazo.`
             : "Registrá tu número de trámite: así contamos cuántas personas lo piden y cuánto responde el Estado."}
@@ -255,15 +255,15 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
           id="pedido-registrar-tramite"
           data-track="missing_data.request.register_filing"
           data-track-item={item.id}
-          className="inline-flex w-fit items-center gap-1 font-medium text-link hover:underline"
+          className="inline-flex w-fit items-center gap-1 text-body-medium text-text-link hover:underline"
         >
-          Registrar mi número de trámite <ChevronRight className="size-4" aria-hidden />
+          Registrar mi número de trámite <RiArrowRightSLine className="size-4" aria-hidden />
         </Link>
       </div>
 
-      <div className="flex flex-col gap-2 border-t border-line pt-4 text-sm">
-        <span className="text-ink-muted">Qué lo respalda: {item.marco_legal}</span>
-        <span className="text-ink-muted">Dónde lo buscamos:</span>
+      <div className="flex flex-col gap-2 border-t border-separator-border pt-4 text-body-regular">
+        <span className="text-text-tertiary">Qué lo respalda: {item.marco_legal}</span>
+        <span className="text-text-tertiary">Dónde lo buscamos:</span>
         <div className="flex flex-wrap gap-2">
           {item.donde_buscamos.map((url) => (
             <a
@@ -273,9 +273,9 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
               href={url}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-link hover:underline"
+              className="inline-flex items-center gap-1.5 text-text-link hover:underline"
             >
-              <Search className="size-3.5" aria-hidden /> {new URL(url).hostname.replace(/^www\./, "")}
+              <RiSearchLine className="size-3.5" aria-hidden /> {new URL(url).hostname.replace(/^www\./, "")}
             </a>
           ))}
         </div>

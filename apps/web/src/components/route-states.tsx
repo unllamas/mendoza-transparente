@@ -16,7 +16,7 @@ export function RouteError({ error, reset }: ErrorComponentProps) {
   useEffect(() => captureError(error, { path, boundary: "route" }), [error, path]);
   return (
     <div className="flex max-w-2xl flex-col gap-4">
-      <h1 className="text-2xl font-semibold tracking-tight">No pudimos mostrar esta página</h1>
+      <h1 className="text-title-1-semibold tracking-tight">No pudimos mostrar esta página</h1>
       <Alert variant="warning" title="Algo falló al cargarla">
         Ya nos llegó el aviso del error. Probá de nuevo en unos segundos; si sigue pasando, contanos qué estabas mirando.
       </Alert>
@@ -42,8 +42,8 @@ export function RouteError({ error, reset }: ErrorComponentProps) {
 export function RouteNotFound() {
   return (
     <div className="flex max-w-2xl flex-col gap-4">
-      <h1 className="text-2xl font-semibold tracking-tight">No encontramos esta página</h1>
-      <p className="text-ink-2 text-pretty">Puede que el enlace esté mal escrito o que la página haya cambiado de lugar.</p>
+      <h1 className="text-title-1-semibold tracking-tight">No encontramos esta página</h1>
+      <p className="text-text-secondary text-pretty">Puede que el enlace esté mal escrito o que la página haya cambiado de lugar.</p>
       <div className="flex flex-wrap gap-2">
         <Link to="/" className={buttonClassName()}>
           Ir al inicio

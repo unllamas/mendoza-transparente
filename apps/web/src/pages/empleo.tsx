@@ -2,8 +2,8 @@ import { tileVariants } from "@mt/ui/components/card";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
 import { cx } from "@mt/ui/lib/cx";
+import { RiBriefcase4Line, RiTeamLine, RiTrophyLine } from "@remixicon/react";
 import { getRouteApi, Link } from "@tanstack/react-router";
-import { BriefcaseBusiness, Trophy, UsersRound } from "lucide-react";
 import { BarList } from "@/charts/bar-list.tsx";
 import { LineChart } from "@/charts/line-chart.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
@@ -35,7 +35,7 @@ export function EmpleoPage() {
 
   return (
     <div className="flex flex-col gap-12">
-      <PageHeader icon={UsersRound} topic="Empleo público" title="¿Cuántos empleados públicos tiene Mendoza?">
+      <PageHeader icon={RiTeamLine} topic="Empleo público" title="¿Cuántos empleados públicos tiene Mendoza?">
         Personal ocupado en la administración pública provincial, comparado con la población. Medirlo cada mil habitantes permite comparar
         provincias de distinto tamaño.
       </PageHeader>
@@ -43,19 +43,19 @@ export function EmpleoPage() {
 
       <div className="grid gap-3 md:grid-cols-3">
         <StatTile
-          icon={UsersRound}
+          icon={RiTeamLine}
           label="Empleados cada mil habitantes"
           value={decimal.format(empleo.cadaMilMendoza)}
           note={`Promedio de las provincias: ${decimal.format(empleo.promedioPais)} · ${empleo.anio}`}
         />
         <StatTile
-          icon={Trophy}
+          icon={RiTrophyLine}
           label="Puesto entre 24 jurisdicciones"
           value={`${empleo.posicion}.º`}
           note="Ordenadas de menos a más empleados por habitante"
         />
         <StatTile
-          icon={BriefcaseBusiness}
+          icon={RiBriefcase4Line}
           label="Planta ocupada"
           value={formatNumber(Math.round(empleo.plantaMendoza))}
           note={`Cargos, ${empleo.anio}`}
@@ -71,7 +71,9 @@ export function EmpleoPage() {
           }))}
           formatValue={(v) => decimal.format(v)}
         />
-        <p className="text-sm text-ink-muted">Empleados públicos provinciales cada mil habitantes. No incluye municipios ni Nación.</p>
+        <p className="text-body-regular text-text-tertiary">
+          Empleados públicos provinciales cada mil habitantes. No incluye municipios ni Nación.
+        </p>
       </Section>
 
       <Section title="Evolución en Mendoza, empleados cada mil habitantes">
@@ -86,18 +88,18 @@ export function EmpleoPage() {
             ariaLabel="Empleados públicos provinciales cada mil habitantes en Mendoza, por año"
           />
         </div>
-        <p className="text-sm text-ink-muted text-pretty">
+        <p className="text-body-regular text-text-tertiary text-pretty">
           Máximo de la serie: {decimal.format(pico.cadaMil)} en {pico.anio}. Las franjas marcan cada gobernación.
         </p>
       </Section>
 
-      <p className="text-sm text-ink-muted">
+      <p className="text-body-regular text-text-tertiary">
         Fuente:{" "}
-        <a href={FUENTE} className="underline hover:text-ink">
+        <a href={FUENTE} className="underline hover:text-text-primary">
           Dirección Nacional de Asuntos Provinciales, ocupación y salarios
         </a>
         . Datos completos en{" "}
-        <Link to="/datos/$fuente" params={{ fuente: "dnap-ocupacion" }} className="underline hover:text-ink">
+        <Link to="/datos/$fuente" params={{ fuente: "dnap-ocupacion" }} className="underline hover:text-text-primary">
           Datos › Empleo público
         </Link>
         .

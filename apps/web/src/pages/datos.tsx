@@ -1,9 +1,10 @@
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { Select, SelectItem } from "@mt/ui/components/base/select/select";
+import { tileVariants } from "@mt/ui/components/card";
 import { StatTile } from "@mt/ui/components/stat-tile";
-import { RiDownloadLine } from "@remixicon/react";
+import { cx } from "@mt/ui/lib/cx";
+import { RiArrowLeftLine, RiCursorLine, RiDownloadLine, RiExternalLinkLine } from "@remixicon/react";
 import { getRouteApi, Link } from "@tanstack/react-router";
-import { ArrowLeft, ExternalLink, MousePointerClick } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { type ColumnaVista, columnasVisibles } from "@/celdas.ts";
 import { useDetail } from "@/components/detail-sheet.tsx";
@@ -22,7 +23,7 @@ export function DatosPage() {
 
   if (!source) {
     return (
-      <p className="text-ink-2">
+      <p className="text-text-secondary">
         No encontramos esa fuente.{" "}
         <Link to="/fuentes" className="underline">
           Ver todas las fuentes
@@ -34,19 +35,19 @@ export function DatosPage() {
   return (
     <div className="flex flex-col gap-12">
       <div className="flex max-w-2xl flex-col gap-3">
-        <Link to="/fuentes" className="flex w-fit items-center gap-1 text-sm text-ink-muted hover:text-ink">
-          <ArrowLeft className="size-4" aria-hidden /> Fuentes
+        <Link to="/fuentes" className={buttonClassName({ variant: "tertiary", className: "w-fit" })}>
+          <RiArrowLeftLine className="size-5" aria-hidden /> Fuentes
         </Link>
-        <h1 className="text-3xl font-semibold tracking-tight text-balance">{source.nombre}</h1>
-        {source.descripcion && <p className="text-ink-2 text-pretty">{source.descripcion}</p>}
-        <p className="text-sm text-ink-muted">
+        <h1 className="text-display-4-semibold tracking-tight text-balance">{source.nombre}</h1>
+        {source.descripcion && <p className="text-text-secondary text-pretty">{source.descripcion}</p>}
+        <p className="text-body-regular text-text-tertiary">
           {source.organismo}
           {source.raw.lastFetch && <> · Descargado el {formatDate(source.raw.lastFetch)}</>}
           {source.url && (
             <>
               {" · "}
-              <a href={source.url} className="inline-flex items-center gap-1 text-link hover:underline">
-                Fuente oficial <ExternalLink className="size-3.5" aria-hidden />
+              <a href={source.url} className="inline-flex items-center gap-1 text-text-link hover:underline">
+                Fuente oficial <RiExternalLinkLine className="size-4" aria-hidden />
               </a>
             </>
           )}
@@ -54,7 +55,7 @@ export function DatosPage() {
       </div>
 
       {own.length === 0 ? (
-        <p className="text-ink-2">Esta fuente todavía no tiene datos procesados.</p>
+        <p className="text-text-secondary">Esta fuente todavía no tiene datos procesados.</p>
       ) : (
         // Primero lo informativo (tarjetas de último dato), después las tablas crudas.
         [...own]
@@ -103,15 +104,15 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
     <section className="flex flex-col gap-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div className="flex max-w-2xl flex-col gap-1">
-          <h2 className="text-lg font-semibold tracking-tight">{dict?.titulo ?? humanize(dataset.file)}</h2>
-          {dict?.descripcion && <p className="text-sm text-ink-2 text-pretty">{dict.descripcion}</p>}
-          <p className="text-sm text-ink-muted">
+          <h2 className="text-title-3-semibold tracking-tight">{dict?.titulo ?? humanize(dataset.file)}</h2>
+          {dict?.descripcion && <p className="text-body-regular text-text-secondary text-pretty">{dict.descripcion}</p>}
+          <p className="text-body-regular text-text-tertiary">
             {formatNumber(rowCount)} filas{group ? ` de ${group.value}` : ""} · CSV completo: {formatBytes(dataset.bytes)}
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           {groups && groups.length > 1 && (
-            <div className="flex min-w-0 items-center gap-2 text-sm text-ink-2">
+            <div className="flex min-w-0 items-center gap-2 text-body-regular text-text-secondary">
               <span id="datos-grupo-label">{columnaEtiqueta(dict, dict?.agruparPor)}</span>
               <Select
                 aria-labelledby="datos-grupo-label"
@@ -133,22 +134,22 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
         </div>
       </div>
 
-      {error && <p className="text-sm text-ink-2">{error}</p>}
-      {!preview && !error && <p className="text-sm text-ink-muted">Cargando…</p>}
+      {error && <p className="text-body-regular text-text-secondary">{error}</p>}
+      {!preview && !error && <p className="text-body-regular text-text-tertiary">Cargando…</p>}
 
       {preview && dict?.vista === "ultimo" && <UltimoDato columnas={columnas} fila={preview.rows[0]} />}
 
       {preview && dict?.vista !== "ultimo" && (
         <>
-          <div className="max-h-[32rem] overflow-auto rounded-xl bg-tile">
-            <table className="w-full text-left text-sm tabular-nums">
-              <thead className="sticky top-0 bg-tile text-ink-muted shadow-[0_1px_0_var(--border)]">
+          <div className={cx(tileVariants(), "max-h-[32rem] overflow-auto p-0")}>
+            <table className="w-full text-left text-body-regular tabular-nums">
+              <thead className="sticky top-0 bg-background-primary-default text-text-tertiary shadow-[0_1px_0_var(--color-separator-border)]">
                 <tr>
                   {columnas.map((c) => (
                     <th
                       key={c.key}
                       title={c.descripcion}
-                      className={`whitespace-nowrap px-3 py-2 font-medium ${c.numerica ? "text-right" : ""} ${
+                      className={`whitespace-nowrap px-3 py-2 text-body-medium ${c.numerica ? "text-right" : ""} ${
                         c.descripcion ? "cursor-help underline decoration-dotted underline-offset-4" : ""
                       }`}
                     >
@@ -157,20 +158,20 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-line">
+              <tbody className="divide-y divide-separator-border">
                 {preview.rows.map((row, i) => (
                   <tr
                     key={i}
                     onClick={() => abrirFila(i)}
                     aria-selected={i === selected}
-                    className={`cursor-pointer ${i === selected ? "bg-grid" : "hover:bg-grid/50"}`}
+                    className={`cursor-pointer ${i === selected ? "bg-chart-grid" : "hover:bg-background-secondary-default"}`}
                   >
                     {columnas.map((c) => {
                       const valor = c.formato(row[c.index] ?? "", row);
                       return (
                         <td
                           key={c.key}
-                          className={`max-w-xs truncate whitespace-nowrap px-3 py-1.5 text-ink-2 ${c.numerica ? "text-right" : ""}`}
+                          className={`max-w-xs truncate whitespace-nowrap px-3 py-1.5 text-text-secondary ${c.numerica ? "text-right" : ""}`}
                         >
                           {c.url && row[c.index] ? (
                             <a
@@ -178,7 +179,7 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
                               target="_blank"
                               rel="noreferrer"
                               onClick={(e) => e.stopPropagation()}
-                              className="text-link hover:underline"
+                              className="text-text-link hover:underline"
                             >
                               {valor}
                             </a>
@@ -197,10 +198,10 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
         </>
       )}
 
-      <p className="text-xs text-ink-muted">
+      <p className="text-caption-1-regular text-text-tertiary">
         {dict?.vista !== "ultimo" && (
           <>
-            <MousePointerClick className="mr-1 inline size-3.5 align-[-2px]" aria-hidden />
+            <RiCursorLine className="mr-1 inline size-4 align-[-3px]" aria-hidden />
             Tocá una fila para ver el detalle.{" "}
           </>
         )}
@@ -229,7 +230,7 @@ function UltimoDato({ columnas, fila }: { columnas: ColumnaVista[]; fila?: strin
           <StatTile key={c.key} label={c.etiqueta} value={c.formato(fila[c.index] ?? "", fila)} note={c.descripcion} />
         ))}
       </div>
-      {etiquetaPeriodo && <p className="text-sm text-ink-muted">Último dato: {etiquetaPeriodo}</p>}
+      {etiquetaPeriodo && <p className="text-body-regular text-text-tertiary">Último dato: {etiquetaPeriodo}</p>}
     </div>
   );
 }

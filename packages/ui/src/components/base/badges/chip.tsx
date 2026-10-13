@@ -27,7 +27,7 @@ import type { HTMLAttributes, Ref } from "react";
  */
 
 type ChipVariant = "bold" | "subtle" | "caption";
-/** Mendoza Transparente adds `brand` (borravino tint) and `warning` (the amber of signals, always with an icon). */
+/** Mendoza Transparente adds `brand` (light celeste tint) and `warning` (the amber of signals, always with an icon). */
 type ChipColor = "orange" | "lime" | "rose" | "yellow" | "cyan" | "blue" | "purple" | "neutral" | "gray" | "soft" | "brand" | "warning";
 
 export interface ChipProps extends HTMLAttributes<HTMLSpanElement> {
@@ -55,7 +55,7 @@ const styles = sortCx({
     gray: "bg-background-secondary-default text-text-primary",
     soft: "bg-background-secondary-default text-text-secondary",
     brand: "bg-button-ghost-background text-button-ghost-foreground",
-    warning: "bg-aviso-fondo text-text-primary [&_svg]:text-aviso",
+    warning: "bg-warning-background text-text-primary [&_svg]:text-warning-foreground",
   },
 });
 

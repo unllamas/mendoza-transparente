@@ -1,9 +1,18 @@
 import { Alert } from "@mt/ui/components/alert";
-import { buttonClassName } from "@mt/ui/components/base/buttons/button";
+import { Button } from "@mt/ui/components/base/buttons/button";
+import { listRowVariants, listVariants } from "@mt/ui/components/card";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
+import {
+  RiArrowRightSLine,
+  RiBankLine,
+  RiBuilding2Line,
+  RiFileTextLine,
+  RiGroupLine,
+  RiPercentLine,
+  RiReceiptLine,
+} from "@remixicon/react";
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
-import { Building2, ChevronRight, FileText, Landmark, Percent, Receipt, Users2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { formatMoneda } from "@/celdas.ts";
 import { ColumnChart } from "@/charts/column-chart.tsx";
@@ -26,9 +35,9 @@ const organismosRoute = getRouteApi("/organismos");
 const organismoRoute = getRouteApi("/organismos/$slug");
 
 const VerMas = ({ onClick }: { onClick: () => void }) => (
-  <button type="button" onClick={onClick} className={buttonClassName({ variant: "secondary", className: "w-fit" })}>
+  <Button variant="secondary" className="w-fit" onClick={onClick}>
     Ver más
-  </button>
+  </Button>
 );
 
 export function ProveedoresPage() {
@@ -42,7 +51,7 @@ export function ProveedoresPage() {
 
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={Building2} topic="Proveedores" title="¿A quiénes les compra el Estado?">
+      <PageHeader icon={RiBuilding2Line} topic="Proveedores" title="¿A quiénes les compra el Estado?">
         Las empresas que más le vendieron al Gobierno de Mendoza, ordenadas por lo que se les adjudicó.
       </PageHeader>
       <FuentesOficiales ids={FUENTES} />
@@ -56,26 +65,22 @@ export function ProveedoresPage() {
           placeholder="Buscar por nombre o CUIT"
           label="Buscar proveedor"
         />
-        <p className="text-sm text-ink-muted">{formatNumber(visibles.length)} proveedores</p>
-        <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
+        <p className="text-body-regular text-text-tertiary">{formatNumber(visibles.length)} proveedores</p>
+        <ul className={listVariants()}>
           {visibles.slice(0, mostrar).map((p) => (
             <li key={p.slug}>
-              <Link
-                to="/proveedores/$slug"
-                params={{ slug: p.slug }}
-                className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50 sm:px-5"
-              >
+              <Link to="/proveedores/$slug" params={{ slug: p.slug }} className={listRowVariants()}>
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                  <span className="truncate font-medium group-hover:text-link" title={p.nombre}>
+                  <span className="truncate text-body-medium group-hover:text-text-link" title={p.nombre}>
                     {p.nombre}
                   </span>
-                  <span className="truncate text-sm text-ink-muted">
+                  <span className="truncate text-body-regular text-text-tertiary">
                     {formatNumber(p.procesos)} {p.procesos === 1 ? "proceso" : "procesos"}
                     {p.localidad ? ` · ${p.localidad}` : ""}
                   </span>
                 </span>
-                <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(p.total, "ARS")}</span>
-                <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
+                <span className="text-body-medium whitespace-nowrap tabular-nums">{formatMoneda(p.total, "ARS")}</span>
+                <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
               </Link>
             </li>
           ))}
@@ -100,8 +105,8 @@ export function ProveedorPage() {
     return (
       <div className="flex flex-col gap-4">
         <Breadcrumbs items={[{ label: "Proveedores", to: "/proveedores" }, { label: "No encontrado" }]} />
-        <h1 className="text-2xl font-semibold tracking-tight">No encontramos a ese proveedor</h1>
-        <Link to="/proveedores" className="w-fit text-link hover:underline">
+        <h1 className="text-title-1-semibold tracking-tight">No encontramos a ese proveedor</h1>
+        <Link to="/proveedores" className="w-fit text-text-link hover:underline">
           Ver todos los proveedores ›
         </Link>
       </div>
@@ -112,10 +117,10 @@ export function ProveedorPage() {
     <div className="flex max-w-2xl flex-col gap-8">
       <Breadcrumbs items={[{ label: "Proveedores", to: "/proveedores" }, { label: nombre }]} />
       <div className="flex flex-col gap-2">
-        <span className="flex items-center gap-2 text-sm text-ink-muted">
-          <Building2 className="size-4" aria-hidden /> Proveedor · CUIT {cuit}
+        <span className="flex items-center gap-2 text-body-regular text-text-tertiary">
+          <RiBuilding2Line className="size-4" aria-hidden /> Proveedor · CUIT {cuit}
         </span>
-        <h1 className="text-2xl font-semibold tracking-tight text-balance break-words sm:text-3xl">{nombre}</h1>
+        <h1 className="text-title-1-semibold tracking-tight text-balance break-words sm:text-display-4-semibold">{nombre}</h1>
       </div>
       <FuentesOficiales ids={FUENTES} />
       <Proveedor cuit={cuit} sinTitulo onProceso={(ocid) => detail.open("proceso", ocid)} />
@@ -133,7 +138,7 @@ export function OrganismosPage() {
   }, [organismos, q]);
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={Landmark} topic="Organismos" title="¿Quién compra y cómo?">
+      <PageHeader icon={RiBankLine} topic="Organismos" title="¿Quién compra y cómo?">
         Los organismos del Estado provincial que más compran, cuánto gastan y qué parte lo hace por contratación directa.
       </PageHeader>
       <FuentesOficiales ids={FUENTES} />
@@ -147,24 +152,20 @@ export function OrganismosPage() {
           placeholder="Buscar organismo"
           label="Buscar organismo"
         />
-        <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
+        <ul className={listVariants()}>
           {visibles.slice(0, mostrar).map((o) => (
             <li key={o.slug}>
-              <Link
-                to="/organismos/$slug"
-                params={{ slug: o.slug }}
-                className="group flex items-center gap-4 px-4 py-3 hover:bg-grid/50 sm:px-5"
-              >
+              <Link to="/organismos/$slug" params={{ slug: o.slug }} className={listRowVariants()}>
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                  <span className="truncate font-medium group-hover:text-link" title={limpiarOrganismo(o.nombre)}>
+                  <span className="truncate text-body-medium group-hover:text-text-link" title={limpiarOrganismo(o.nombre)}>
                     {limpiarOrganismo(o.nombre)}
                   </span>
-                  <span className="truncate text-sm text-ink-muted">
+                  <span className="truncate text-body-regular text-text-tertiary">
                     {formatNumber(o.procesos)} procesos · {pct(o.pctDirecta)} directa
                   </span>
                 </span>
-                <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(o.total, "ARS")}</span>
-                <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
+                <span className="text-body-medium whitespace-nowrap tabular-nums">{formatMoneda(o.total, "ARS")}</span>
+                <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
               </Link>
             </li>
           ))}
@@ -183,9 +184,9 @@ export function OrganismoPage() {
     return (
       <div className="flex flex-col gap-4">
         <Breadcrumbs items={[{ label: "Organismos", to: "/organismos" }, { label: "No encontrado" }]} />
-        <h1 className="text-2xl font-semibold tracking-tight">No encontramos a ese organismo</h1>
-        <p className="text-sm text-ink-muted">{slug}</p>
-        <Link to="/organismos" className="w-fit text-link hover:underline">
+        <h1 className="text-title-1-semibold tracking-tight">No encontramos a ese organismo</h1>
+        <p className="text-body-regular text-text-tertiary">{slug}</p>
+        <Link to="/organismos" className="w-fit text-text-link hover:underline">
           Ver todos los organismos ›
         </Link>
       </div>
@@ -196,16 +197,16 @@ export function OrganismoPage() {
   return (
     <div className="flex flex-col gap-10">
       <Breadcrumbs items={[{ label: "Organismos", to: "/organismos" }, { label: nombre }]} />
-      <PageHeader icon={Landmark} topic="Organismo" title={nombre}>
+      <PageHeader icon={RiBankLine} topic="Organismo" title={nombre}>
         Cuánto compró, a quiénes y con qué modalidad.
       </PageHeader>
       <FuentesOficiales ids={FUENTES} />
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <StatTile icon={Receipt} label="Total adjudicado" value={formatMoneda(o.total, "ARS")} />
-        <StatTile icon={FileText} label="Procesos" value={formatNumber(o.procesos)} />
-        <StatTile icon={Percent} label="Contratación directa" value={pct(o.pctDirecta)} note="De los procesos" />
-        <StatTile icon={Users2} label="Una sola oferta" value={pct(o.pctUnaOferta)} note="De los procesos" />
+        <StatTile icon={RiReceiptLine} label="Total adjudicado" value={formatMoneda(o.total, "ARS")} />
+        <StatTile icon={RiFileTextLine} label="Procesos" value={formatNumber(o.procesos)} />
+        <StatTile icon={RiPercentLine} label="Contratación directa" value={pct(o.pctDirecta)} note="De los procesos" />
+        <StatTile icon={RiGroupLine} label="Una sola oferta" value={pct(o.pctUnaOferta)} note="De los procesos" />
       </div>
       {o.pctUnaOferta >= 20 && (
         <Alert title="Poca competencia">
@@ -228,21 +229,24 @@ export function OrganismoPage() {
       )}
 
       <Section title="Principales proveedores">
-        <ul className="flex flex-col gap-3 text-sm">
+        <ul className="flex flex-col gap-3 text-body-regular">
           {o.proveedores.map((p) => {
             const fila = (
               <>
                 <span className="flex items-baseline justify-between gap-3">
-                  <span className="min-w-0 truncate group-hover:text-link" title={p.nombre}>
+                  <span className="min-w-0 truncate group-hover:text-text-link" title={p.nombre}>
                     {p.nombre}
                   </span>
-                  <span className="font-medium whitespace-nowrap tabular-nums">{formatMoneda(p.monto, "ARS")}</span>
+                  <span className="text-body-medium whitespace-nowrap tabular-nums">{formatMoneda(p.monto, "ARS")}</span>
                 </span>
                 <span className="flex items-center gap-2">
-                  <span className="h-1.5 flex-1 rounded-full bg-grid/60">
-                    <span className="block h-full rounded-full bg-accent" style={{ width: `${Math.max((p.monto / maxProv) * 100, 1)}%` }} />
+                  <span className="h-1.5 flex-1 rounded-full bg-chart-grid/60">
+                    <span
+                      className="block h-full rounded-full bg-highlight"
+                      style={{ width: `${Math.max((p.monto / maxProv) * 100, 1)}%` }}
+                    />
                   </span>
-                  <span className="w-20 text-right text-xs whitespace-nowrap text-ink-muted tabular-nums">
+                  <span className="w-20 text-right text-caption-1-regular whitespace-nowrap text-text-tertiary tabular-nums">
                     {p.procesos} {p.procesos === 1 ? "proceso" : "procesos"}
                   </span>
                 </span>
@@ -251,7 +255,11 @@ export function OrganismoPage() {
             return (
               <li key={p.cuit}>
                 {p.slug ? (
-                  <Link to="/proveedores/$slug" params={{ slug: p.slug }} className="group flex flex-col gap-1 rounded-lg hover:bg-tile">
+                  <Link
+                    to="/proveedores/$slug"
+                    params={{ slug: p.slug }}
+                    className="group flex flex-col gap-1 rounded-lg hover:bg-background-secondary-default"
+                  >
                     {fila}
                   </Link>
                 ) : (
@@ -264,26 +272,22 @@ export function OrganismoPage() {
       </Section>
 
       <Section title="Procesos recientes">
-        <p className="-mt-2 text-sm text-ink-muted">Tocá uno para ver el proceso completo.</p>
-        <ul className="flex flex-col divide-y divide-line">
+        <p className="-mt-2 text-body-regular text-text-tertiary">Tocá uno para ver el proceso completo.</p>
+        <ul className={listVariants()}>
           {o.recientes.map((r) => (
             <li key={r.ocid}>
-              <button
-                type="button"
-                onClick={() => detail.open("proceso", r.ocid)}
-                className="group flex w-full items-center gap-3 py-2.5 text-left"
-              >
+              <button type="button" onClick={() => detail.open("proceso", r.ocid)} className={listRowVariants()}>
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                  <span className="truncate text-sm group-hover:text-link" title={r.titulo}>
+                  <span className="truncate text-body-regular group-hover:text-text-link" title={r.titulo}>
                     {r.titulo || "Sin título"}
                   </span>
-                  <span className="truncate text-xs text-ink-muted">
+                  <span className="truncate text-caption-1-regular text-text-tertiary">
                     {r.fecha ? `${formatDate(r.fecha)} · ` : ""}
                     {r.metodo}
                   </span>
                 </span>
-                <span className="text-sm font-medium whitespace-nowrap tabular-nums">{r.monto ? formatMoneda(r.monto, "ARS") : "—"}</span>
-                <ChevronRight className="size-4 shrink-0 text-link" aria-hidden />
+                <span className="text-body-medium whitespace-nowrap tabular-nums">{r.monto ? formatMoneda(r.monto, "ARS") : "—"}</span>
+                <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
               </button>
             </li>
           ))}
