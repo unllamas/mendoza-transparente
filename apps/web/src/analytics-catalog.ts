@@ -168,6 +168,13 @@ export const EVENT_CATALOG: EventDoc[] = [
   { event: "respuesta-enviar.click", description: "Tocó «Enviar respuesta» en «Participá».", tags: ["participación"] },
   { event: "error-enviar.click", description: "Tocó «Enviar» en el formulario de errores.", tags: ["participación"] },
   { event: "dato-enviar.click", description: "Tocó «Enviar» en el formulario de sugerencias de datos.", tags: ["participación"] },
+  { event: "foto-enviar.click", description: "Tocó «Enviar foto» en el formulario de fotos.", tags: ["participación"] },
+  { event: "participation.photo.success", description: "Propuso una foto de paisaje para el sitio.", tags: ["participación"] },
+  {
+    event: "participation.photo.error",
+    description: "Falló el envío de una foto propuesta. Propiedad status.",
+    tags: ["participación"],
+  },
   {
     event: "search.open",
     description: "Abrió el buscador. Propiedad source: desde dónde (portada, lupa del header, teclado, guía).",
@@ -205,4 +212,6 @@ export const EVENT_CATALOG: EventDoc[] = [
   { event: "home.map.open", description: "Abrió una sección desde «Todo lo que hay». Propiedad section.", tags: ["portada"] },
   { event: "home.reading_guide.open", description: "Abrió la guía «Cómo leer estos datos» desde la portada.", tags: ["portada"] },
   { event: "home.hero.reading_guide", description: "Tocó «¿Primera vez? Empezá por acá» en la portada.", tags: ["portada"] },
+  { event: "landscape.credit", description: "Abrió el crédito de una foto de paisaje. Propiedad photo.", tags: ["portada"] },
+  { event: "landscape.propose", description: "Tocó «Proponé tu foto» bajo una foto de paisaje. Propiedad photo.", tags: ["portada"] },
 ];

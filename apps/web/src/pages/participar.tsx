@@ -10,6 +10,7 @@ import { cx } from "@mt/ui/lib/cx";
 import {
   type RemixiconComponentType,
   RiBugLine,
+  RiCameraLine,
   RiCheckboxCircleLine,
   RiContractLine,
   RiFileAddLine,
@@ -26,19 +27,20 @@ import { useUrlOption } from "@/url-state.ts";
 
 const route = getRouteApi("/participar");
 
-type Form = "pedido" | "respuesta" | "error" | "dato";
+type Form = "pedido" | "respuesta" | "error" | "dato" | "foto";
 const FORMS: { value: Form; label: string }[] = [
   { value: "pedido", label: "Registrar mi pedido" },
   { value: "respuesta", label: "Contar la respuesta" },
   { value: "error", label: "Reportar un error" },
   { value: "dato", label: "Sugerir un dato" },
+  { value: "foto", label: "Proponer una foto" },
 ];
 
 export function ParticiparPage() {
   const items = route.useLoaderData();
   const search = route.useSearch();
   // The open form lives in the URL (?tipo=…), so links from other pages land on the right one.
-  const [form, setForm] = useUrlOption<Form>("tipo", ["pedido", "respuesta", "error", "dato"], "pedido");
+  const [form, setForm] = useUrlOption<Form>("tipo", ["pedido", "respuesta", "error", "dato", "foto"], "pedido");
   const stats = useRequestStats();
 
   return (
@@ -62,6 +64,7 @@ export function ParticiparPage() {
       {form === "respuesta" && <AnswerForm />}
       {form === "error" && <FeedbackForm kind="error" defaultPage={search.pagina ?? null} />}
       {form === "dato" && <FeedbackForm kind="dato" defaultPage={null} />}
+      {form === "foto" && <PhotoForm />}
 
       <Alert variant="note" title="Qué hacemos con lo que nos mandás">
         Publicamos solo números agregados: cuántos pedidos hay por dato y cuántos tuvieron respuesta. Tu correo es opcional, no se publica y
@@ -336,6 +339,49 @@ function Done({ children, onAgain, again }: { children: ReactNode; onAgain: () =
         </Link>
       </div>
     </div>
+  );
+}
+
+/**
+ * Proposes a landscape for the top of the pages (`LandscapePhoto`). Arrives as feedback with
+ * kind `otro` and page `foto`, so it needs no change in the database.
+ */
+function PhotoForm() {
+  const { state, submit, reset } = useSubmit("/api/feedback", "participation.photo");
+  const [token, setToken] = useState<string | null>(null);
+  if (state.status === "done")
+    return (
+      <Done onAgain={reset} again="Proponer otra">
+        Gracias. Si la elegimos, la publicamos con tu nombre y te avisamos si dejaste tu correo.
+      </Done>
+    );
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const f = new FormData(e.currentTarget);
+    const message = `${String(f.get("link") ?? "")}\n\n${String(f.get("message") ?? "")}`;
+    void submit({ kind: "otro", page: "foto", message, email: f.get("email"), website: f.get("website") }, token);
+  };
+  return (
+    <form onSubmit={onSubmit} className="flex flex-col gap-5" id="form-foto">
+      <Intro icon={RiCameraLine}>
+        ¿Sacaste una foto que muestre Mendoza: la cordillera, los viñedos, un dique, tu departamento? La usamos arriba de las páginas, en
+        puntos de colores y con tu nombre. Tiene que ser tuya o tener licencia libre: lo más simple es subirla a Wikimedia Commons con
+        licencia CC BY-SA y pegar acá el link.
+      </Intro>
+      <Input
+        label="Link a la foto"
+        name="link"
+        type="url"
+        isRequired
+        maxLength={500}
+        placeholder="https://commons.wikimedia.org/wiki/File:…"
+      />
+      <Textarea label="Dónde es y con qué nombre te citamos" name="message" isRequired minLength={10} rows={3} maxLength={1000} />
+      <EmailField />
+      <Honeypot />
+      <Turnstile onToken={setToken} />
+      <SubmitRow state={state} label="Enviar foto" id="foto-enviar" />
+    </form>
   );
 }
 

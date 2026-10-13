@@ -28,6 +28,7 @@ import { MapaMendoza } from "@/charts/mapa.tsx";
 import { Sparkline } from "@/charts/sparkline.tsx";
 import { CountUp } from "@/components/count-up.tsx";
 import { DepartmentPicker, EcosystemMap, ReadingRules, StartingQuestions, WhatsNew } from "@/components/home-guide.tsx";
+import { LandscapePhoto } from "@/components/landscape-photo.tsx";
 import { SearchTrigger } from "@/components/search-dialog.tsx";
 import { formatDate, formatNumber } from "@/lib.ts";
 import type { SourceMeta } from "@/types.ts";
@@ -51,7 +52,8 @@ export function HomePage() {
   return (
     <div className="flex flex-col gap-20">
       {/* Portada */}
-      <section className="flex flex-col gap-8 pt-6">
+      <section className="flex flex-col gap-8">
+        <LandscapePhoto id="cordon-del-plata" className="h-52 sm:h-80" />
         <p className="flex items-center gap-2 text-body-medium text-text-secondary">
           <span className="size-1.5 shrink-0 rounded-full bg-highlight" aria-hidden />
           Rumbo a las elecciones provinciales 2027

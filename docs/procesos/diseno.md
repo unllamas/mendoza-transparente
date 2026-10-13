@@ -158,6 +158,17 @@ Es un sitio público: tiene que funcionar con teclado, con lector de pantalla y 
 - **Zoom y letra grande:** la página tiene que aguantar la letra al 200 % y un ancho de 320 px sin scroll horizontal (`verificar` controla el ancho). Los contenedores de texto usan `min-h-*`, no `h-*` fijo.
 - **Cambios que aparecen solos** (cantidad de resultados de un buscador): `role="status"` para que el lector de pantalla los anuncie.
 
+## Fotos de paisaje
+
+Para las páginas que piden un poco más de carácter (la portada), un paisaje de Mendoza en puntos de colores: cada punto toma el color de la foto que tiene debajo.
+
+- **Componentes:** `DotImage` (`@mt/ui/components/dot-image`) es el efecto, en CSS puro: una máscara de puntos repetida sobre la imagen, sin JavaScript ni dependencias, así que sale en el HTML prerenderizado. `LandscapePhoto` (`apps/web/src/components/landscape-photo.tsx`) lo usa con una foto del registro, el crédito y el link «Proponé tu foto». Se usa `LandscapePhoto` con su `id` y una altura: `<LandscapePhoto id="cordon-del-plata" className="h-52 sm:h-80" />`. Va al tope de la página y ocupa el ancho del contenido hasta los bordes.
+- **Registro:** `apps/web/src/photos.ts`, con título, autor, licencia, link y `focus` (qué parte queda a la vista al recortar). Los archivos van en `apps/web/public/fotos/<id>.jpg`.
+- **Solo fotos con licencia libre** (CC0, CC BY, CC BY-SA o dominio público), y siempre con su crédito visible: título, autor, licencia y link a la página de la foto. Nunca fotos sacadas de sitios de turismo o de diarios.
+- **Agregar una:** se busca en [Wikimedia Commons](https://commons.wikimedia.org) (horizontal, que se reconozca Mendoza: cordillera, viñedos, diques, ciudad) y se corre `bun scripts/photo.ts "<archivo de Commons>" <id>` desde `apps/web`. Baja una copia de 500 px (los puntos no necesitan más; pesa entre 30 y 50 KB) e imprime la entrada para `photos.ts` con el autor y la licencia. Antes de usarla, verificar que sea de Mendoza: muchas fotos de «los Andes» son de Santiago de Chile.
+- **Fotos propuestas por la gente:** llegan desde Participar («Proponer una foto», `?tipo=foto`) como `feedback` con `kind = 'otro'` y `page = 'foto'` (ver [Participación](participacion.md)). Lo más simple es que la persona la suba a Commons con licencia CC BY-SA; si manda otro link, se le pide permiso por correo antes de publicarla.
+- **Es decorativa:** `alt=""` y nada de texto encima. El fundido hacia el fondo es una máscara, no un gradiente de color, y funciona igual en claro y en oscuro.
+
 ## Movimiento
 
 El sitio casi no tiene animaciones, y está bien así: la gente viene a leer datos.

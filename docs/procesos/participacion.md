@@ -5,6 +5,7 @@ Página `/participar`. Ahí la gente puede:
 - Contar qué le respondió el Estado.
 - Reportar errores del sitio.
 - Sugerir datos.
+- Proponer una foto de paisaje para el sitio (ver [Fotos de paisaje](diseno.md#fotos-de-paisaje)).
 
 Con eso publicamos cuántos pedidos hay por dato y cuánto responde el Estado. Se ve en la página y en cada hoja de "Lo que no se publica".
 
@@ -18,7 +19,7 @@ Con eso publicamos cuántos pedidos hay por dato y cuánto responde el Estado. S
 |---|---|
 | `POST /api/pedidos` | Registra un pedido: `itemId` (id de `no-publicado.yaml` u `otro`), `agency`, `filedOn`, `filingNumber`, `detail`, `email`. Rechaza el mismo trámite repetido para el mismo dato. |
 | `POST /api/pedidos/respuesta` | Actualiza los pedidos con ese número de trámite: `status` puede ser `respondido`, `parcial`, `denegado` o `sin_respuesta`. Lleva además fecha, resumen y link. |
-| `POST /api/feedback` | Error o sugerencia: `kind` (`error`, `dato` u `otro`), `message`, `page` y `email`. |
+| `POST /api/feedback` | Error o sugerencia: `kind` (`error`, `dato` u `otro`), `message`, `page` y `email`. Las fotos propuestas llegan con `kind = 'otro'` y `page = 'foto'`, con el link en la primera línea del mensaje. |
 | `GET /api/pedidos/stats` | Totales por dato: pedidos, respondidos, negados y vencidos. Un pedido vence a los 21 días corridos sin respuesta, que equivalen aproximadamente a los 15 hábiles de la ley. Cache de 60 segundos. |
 
 ## Protección

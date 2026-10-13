@@ -74,8 +74,9 @@ Resumen de los eventos:
 | `missing_data.request.where_we_looked`, `missing_data.law.open` | Enlaces de la hoja | `item` |
 | `law.official_pdf.open`, `law.full_text.toggle` | Página de una ley | `law` |
 | `participation.form.change` | Participá: pestaña | `value` |
-| `participation.{request,answer,bug,data_suggestion}.{success,error}` | Participá: envíos | `status` |
+| `participation.{request,answer,bug,data_suggestion,photo}.{success,error}` | Participá: envíos | `status` |
 | `<id>.click` (`pedido-registrar.click`, etc.) | Participá: botones de envío | — |
+| `landscape.credit`, `landscape.propose` | Foto de paisaje: crédito y «Proponé tu foto» | `photo` |
 
 **Embudos sugeridos en PostHog:**
 - `missing_data.request.open` → `.copy` → `.official_form` → `participation.request.success`: de leer un dato que falta a presentar el pedido.

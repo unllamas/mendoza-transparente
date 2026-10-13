@@ -44,6 +44,10 @@ Los componentes base y los tokens están en `packages/ui` (`@mt/ui`). **La base 
 - **Nombre accesible** en todo lo que se toca; el color nunca va solo; contraste 4,5:1 en texto.
 - **Movimiento mínimo:** 200 ms o menos, `motion-safe:` para desplazamientos y escalas, propiedades con nombre (nunca `transition-all`) y nunca como única señal.
 
+## Fotos de paisaje
+
+- Para darle carácter a una página (la portada): `LandscapePhoto` con un `id` de `apps/web/src/photos.ts` (efecto `DotImage` de `@mt/ui`, CSS puro). Solo fotos con licencia libre y crédito visible; se suman con `bun scripts/photo.ts` desde `apps/web`. Detalle en `diseno.md`, «Fotos de paisaje».
+
 ## Lo que no hacemos
 
 Tarjetas dentro de tarjetas, etiquetitas sobre los títulos, secciones numeradas, gradientes y brillos, íconos en cuadraditos de colores, botones genéricos («Saber más») y títulos vagos. Parecen plantilla y le quitan seriedad al dato.
