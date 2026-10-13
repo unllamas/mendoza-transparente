@@ -217,16 +217,17 @@ export function SearchDialog() {
     input.current?.focus();
   };
 
+  // Opening the search puts the cursor in the field (React Aria keeps focus that is already inside the dialog).
+  useEffect(() => {
+    if (open) input.current?.focus();
+  }, [open]);
+
   if (!open) return null;
   return (
     <Dialog
       label="Buscar"
       onClose={close}
-      overlayClassName="fixed inset-0 z-[60] hidden bg-black/60 backdrop-blur-[2px] sm:block"
-      onOpenAutoFocus={(e) => {
-        e.preventDefault();
-        input.current?.focus();
-      }}
+      overlayClassName="z-[60] sm:bg-black/60 sm:backdrop-blur-[2px]"
       className="inset-0 z-[60] flex flex-col overflow-hidden bg-page sm:inset-auto sm:top-[10vh] sm:left-1/2 sm:max-h-[80vh] sm:w-[calc(100%-3rem)] sm:max-w-2xl sm:-translate-x-1/2 sm:rounded-2xl sm:border sm:border-line sm:bg-surface sm:shadow-2xl"
     >
       {/* Search box */}

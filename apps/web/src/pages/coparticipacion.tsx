@@ -3,7 +3,7 @@ import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { tileVariants } from "@mt/ui/components/card";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
-import { cn } from "@mt/ui/lib/utils";
+import { cx } from "@mt/ui/lib/cx";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Coins, MapPin, UserRound } from "lucide-react";
 import { formatMoneda } from "@/celdas.ts";
@@ -95,7 +95,7 @@ export function CoparticipacionPage() {
       </Section>
 
       <Section title={`Total repartido por año, en millones de pesos de ${tema.referencia}`}>
-        <div className={cn(tileVariants())}>
+        <div className={cx(tileVariants())}>
           <LineChart
             data={tema.provincia.filter((p) => !p.parcial).map((p) => ({ fecha: `${p.anio}-01-01`, valor: p.real / 1e6 }))}
             bands={GOBIERNOS.map((g) => ({ desde: g.desde, hasta: g.hasta, label: g.nombre }))}

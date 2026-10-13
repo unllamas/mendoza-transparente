@@ -2,7 +2,7 @@ import { Alert } from "@mt/ui/components/alert";
 import { tileVariants } from "@mt/ui/components/card";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
-import { cn } from "@mt/ui/lib/utils";
+import { cx } from "@mt/ui/lib/cx";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Landmark, TrendingUp, UserRound } from "lucide-react";
 
@@ -46,7 +46,7 @@ export function DeudaPage() {
       </div>
 
       <Section title="Evolución de la deuda, en millones de dólares">
-        <div className={cn(tileVariants())}>
+        <div className={cx(tileVariants())}>
           <LineChart
             data={deuda.serie.map((p) => ({ fecha: p.fecha, valor: p.usd }))}
             bands={GOBIERNOS.map((g) => ({ desde: g.desde, hasta: g.hasta, label: g.nombre }))}
@@ -70,7 +70,7 @@ export function DeudaPage() {
           {deuda.mandatos.map((m) => {
             const delta = m.fin.usd - m.inicio.usd;
             return (
-              <div key={m.desde} className={cn(tileVariants(), "flex flex-col gap-1")}>
+              <div key={m.desde} className={cx(tileVariants(), "flex flex-col gap-1")}>
                 <span className="text-sm text-ink-2">
                   {m.gobierno} {m.desde.slice(0, 4)}–{m.hasta ? m.hasta.slice(0, 4) : "hoy"}
                 </span>

@@ -2,7 +2,7 @@ import { PersonAvatar } from "@mt/ui/components/avatar";
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { tileVariants } from "@mt/ui/components/card";
 import { PageHeader } from "@mt/ui/components/section";
-import { cn } from "@mt/ui/lib/utils";
+import { cx } from "@mt/ui/lib/cx";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { BadgeCheck, ChevronDown, ChevronRight, CircleHelp, ExternalLink, FileText, MapPin, Scale, Sparkles, Users } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -120,7 +120,7 @@ export function LeyPage() {
         </div>
       </header>
 
-      <section aria-labelledby="pocas-palabras" className={cn(tileVariants({ size: "lg" }), "flex flex-col gap-4 sm:p-6")}>
+      <section aria-labelledby="pocas-palabras" className={cx(tileVariants({ size: "lg" }), "flex flex-col gap-4 sm:p-6")}>
         <h2 id="pocas-palabras" className="text-sm font-medium text-ink-muted">
           En pocas palabras
         </h2>

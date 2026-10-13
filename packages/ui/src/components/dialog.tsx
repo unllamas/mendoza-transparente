@@ -1,12 +1,14 @@
-import * as DialogPrimitive from "@radix-ui/react-dialog";
-import type { ComponentProps, ReactNode } from "react";
+import { cx } from "@mt/ui/lib/cx";
+import type { ReactNode } from "react";
+import { Dialog as AriaDialog, Modal, ModalOverlay } from "react-aria-components";
 
 import { useScrollLock } from "../hooks/use-scroll-lock.ts";
-import { cn } from "../lib/utils.ts";
 
 /**
- * Full-screen or centered window (the search, the mobile menu): focus stays inside, Escape closes it and the
- * page behind does not scroll. Mount it to open it. For detail panels use `Sheet`.
+ * Full-screen or centered window (the search, the mobile menu), on React Aria: focus stays inside, Escape closes
+ * it and the page behind does not scroll. Mount it to open it. For detail panels use `Sheet`.
+ * To focus a field when it opens, focus it from an effect of the content (React Aria keeps focus that is
+ * already inside).
  */
 export function Dialog({
   label,
@@ -14,31 +16,24 @@ export function Dialog({
   children,
   className,
   overlayClassName,
-  onOpenAutoFocus,
 }: {
   /** Accessible name ("Buscar", "Menú"). */
   label: string;
   onClose: () => void;
   children: ReactNode;
   className?: string;
-  /** Classes of the dark layer behind; omit it to have none (full-screen windows). */
+  /** Classes of the layer behind (z-index, dark backdrop). It always covers the screen. */
   overlayClassName?: string;
-  onOpenAutoFocus?: ComponentProps<typeof DialogPrimitive.Content>["onOpenAutoFocus"];
 }) {
   useScrollLock(true);
   return (
-    <DialogPrimitive.Root open onOpenChange={(open) => !open && onClose()}>
-      <DialogPrimitive.Portal>
-        {overlayClassName && <DialogPrimitive.Overlay className={overlayClassName} />}
-        <DialogPrimitive.Content
-          aria-describedby={undefined}
-          onOpenAutoFocus={onOpenAutoFocus}
-          className={cn("fixed outline-none", className)}
-        >
-          <DialogPrimitive.Title className="sr-only">{label}</DialogPrimitive.Title>
+    <ModalOverlay isOpen isDismissable onOpenChange={(open) => !open && onClose()} className={cx("fixed inset-0", overlayClassName)}>
+      {/* The dialog element is the window itself (it has to be a box: React Aria focuses it on open). */}
+      <Modal className="contents">
+        <AriaDialog aria-label={label} className={cx("fixed outline-none", className)}>
           {children}
-        </DialogPrimitive.Content>
-      </DialogPrimitive.Portal>
-    </DialogPrimitive.Root>
+        </AriaDialog>
+      </Modal>
+    </ModalOverlay>
   );
 }

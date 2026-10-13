@@ -4,7 +4,7 @@ import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { cardVariants, tileVariants } from "@mt/ui/components/card";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
-import { cn } from "@mt/ui/lib/utils";
+import { cx } from "@mt/ui/lib/cx";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import {
   Building2,
@@ -410,11 +410,11 @@ function HeadCard({ head }: { head: NonNullable<AgencyDetail["head"]> }) {
     </>
   );
   return head.path ? (
-    <Link to={head.path} className={cn(cardVariants(), "flex items-center gap-4")}>
+    <Link to={head.path} className={cx(cardVariants(), "flex items-center gap-4")}>
       {content}
     </Link>
   ) : (
-    <div className={cn(tileVariants(), "flex items-center gap-4")}>{content}</div>
+    <div className={cx(tileVariants(), "flex items-center gap-4")}>{content}</div>
   );
 }
 

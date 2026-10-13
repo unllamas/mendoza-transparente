@@ -12,7 +12,8 @@ import type { HTMLAttributes, Ref } from "react";
  * In dark mode only the halo drops to 40% opacity; the center dot stays solid.
  */
 
-type StatusDotColor = "green" | "yellow" | "indigo";
+/** Mendoza Transparente adds `red` and `gray` for the state of a source. */
+type StatusDotColor = "green" | "yellow" | "indigo" | "red" | "gray";
 
 export interface StatusDotProps extends HTMLAttributes<HTMLSpanElement> {
   color?: StatusDotColor;
@@ -25,11 +26,15 @@ const styles = sortCx({
     green: "bg-status-dot-green-halo",
     yellow: "bg-status-dot-yellow-halo",
     indigo: "bg-status-dot-indigo-halo",
+    red: "bg-red-500/15",
+    gray: "bg-neutral-400/20",
   },
   dot: {
     green: "bg-green-500",
     yellow: "bg-yellow-500",
     indigo: "bg-indigo-500",
+    red: "bg-red-500",
+    gray: "bg-neutral-400",
   },
 });
 

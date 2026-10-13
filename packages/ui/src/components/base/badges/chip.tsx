@@ -27,7 +27,8 @@ import type { HTMLAttributes, Ref } from "react";
  */
 
 type ChipVariant = "bold" | "subtle" | "caption";
-type ChipColor = "orange" | "lime" | "rose" | "yellow" | "cyan" | "blue" | "purple" | "neutral" | "gray" | "soft";
+/** Mendoza Transparente adds `brand` (borravino tint) and `warning` (the amber of signals, always with an icon). */
+type ChipColor = "orange" | "lime" | "rose" | "yellow" | "cyan" | "blue" | "purple" | "neutral" | "gray" | "soft" | "brand" | "warning";
 
 export interface ChipProps extends HTMLAttributes<HTMLSpanElement> {
   variant?: ChipVariant;
@@ -36,7 +37,7 @@ export interface ChipProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 const styles = sortCx({
-  base: "inline-flex items-center justify-center rounded-md px-1.5 whitespace-nowrap transition-[padding,font-size] duration-200 ease",
+  base: "inline-flex items-center justify-center gap-1 rounded-md px-1.5 whitespace-nowrap transition-[padding,font-size] duration-200 ease [&_svg]:size-3.5 [&_svg]:shrink-0",
   variant: {
     bold: "py-0.5 text-body-medium",
     subtle: "py-1 text-body-medium",
@@ -53,6 +54,8 @@ const styles = sortCx({
     neutral: "bg-background-tertiary-default text-text-secondary",
     gray: "bg-background-secondary-default text-text-primary",
     soft: "bg-background-secondary-default text-text-secondary",
+    brand: "bg-button-ghost-background text-button-ghost-foreground",
+    warning: "bg-aviso-fondo text-text-primary [&_svg]:text-aviso",
   },
 });
 

@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { cx, sortCx } from "@mt/ui/lib/cx";
-import type { HTMLAttributes, Ref } from "react";
+import { type HTMLAttributes, type Ref, useState } from "react";
 
 /**
  * Figma source: Board UI → Avatar (styles Avatar/1…Avatar/26; used throughout
@@ -52,9 +52,16 @@ const styles = sortCx({
 });
 
 export function Avatar({ size = "md", color = "neutral", src, alt, initials, className, ref, ...props }: AvatarProps) {
+  // Mendoza Transparente: a photo that fails to load falls back to the initials instead of a broken image.
+  const [failed, setFailed] = useState<string | null>(null);
+  const showImage = src && failed !== src;
   return (
     <span ref={ref} className={cx(styles.base, styles.size[size], styles.color[color], className)} {...props}>
-      {src ? <img src={src} alt={alt ?? ""} loading="lazy" decoding="async" className="size-full object-cover" /> : initials}
+      {showImage ? (
+        <img src={src} alt={alt ?? ""} loading="lazy" decoding="async" onError={() => setFailed(src)} className="size-full object-cover" />
+      ) : (
+        initials
+      )}
     </span>
   );
 }

@@ -3,7 +3,7 @@ import { PersonAvatar } from "@mt/ui/components/avatar";
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { tileVariants } from "@mt/ui/components/card";
 import { PageHeader } from "@mt/ui/components/section";
-import { cn } from "@mt/ui/lib/utils";
+import { cx } from "@mt/ui/lib/cx";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Building2, ChevronRight, ExternalLink, FileText, Landmark, Mail, MapPin, Vote } from "lucide-react";
 import { useMemo } from "react";
@@ -109,7 +109,7 @@ function Bloques({ personas }: { personas: Funcionario[] }) {
   for (const p of personas) conteo.set(p.bloque ?? "Sin bloque", (conteo.get(p.bloque ?? "Sin bloque") ?? 0) + 1);
   const items = [...conteo].sort((a, b) => b[1] - a[1]).map(([nombre, valor]) => ({ nombre, valor }));
   return (
-    <details className={cn(tileVariants(), "group")}>
+    <details className={cx(tileVariants(), "group")}>
       <summary className="cursor-pointer list-none text-sm font-medium [&::-webkit-details-marker]:hidden">
         <span className="inline-flex items-center gap-1.5">
           <ChevronRight className="size-4 transition-transform group-open:rotate-90" aria-hidden />
@@ -251,7 +251,7 @@ function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: Fun
 
       <Territorio persona={p} />
 
-      <dl className={cn(tileVariants(), "grid grid-cols-2 gap-x-3 gap-y-4 text-sm")}>
+      <dl className={cx(tileVariants(), "grid grid-cols-2 gap-x-3 gap-y-4 text-sm")}>
         <Campo label="Organismo" value={p.organismo} wide />
         {p.bloque && <Campo label="Bloque" value={p.bloque} />}
         <Campo label="Partido o frente" value={p.partido ?? "No lo informa la fuente oficial"} muted={!p.partido} />
@@ -393,7 +393,7 @@ function Declaracion({ persona: p, usd }: { persona: Funcionario; usd?: Funciona
       {d ? (
         <>
           <div className="grid grid-cols-2 gap-2">
-            <div className={cn(tileVariants({ size: "sm" }), "col-span-2 flex flex-col gap-0.5")}>
+            <div className={cx(tileVariants({ size: "sm" }), "col-span-2 flex flex-col gap-0.5")}>
               <span className="text-xs text-ink-muted">Inmuebles y vehículos a su nombre, en pesos a valor fiscal</span>
               <span className="text-lg font-semibold whitespace-nowrap tabular-nums">{millonesDePesos(d.totalBienes)}</span>
               {usd && d.totalBienes > 0 && (
@@ -402,11 +402,11 @@ function Declaracion({ persona: p, usd }: { persona: Funcionario; usd?: Funciona
                 </span>
               )}
             </div>
-            <div className={cn(tileVariants({ size: "sm" }), "flex flex-col gap-0.5")}>
+            <div className={cx(tileVariants({ size: "sm" }), "flex flex-col gap-0.5")}>
               <span className="text-xs text-ink-muted">Inmuebles</span>
               <span className="font-medium tabular-nums">{d.inmuebles}</span>
             </div>
-            <div className={cn(tileVariants({ size: "sm" }), "flex flex-col gap-0.5")}>
+            <div className={cx(tileVariants({ size: "sm" }), "flex flex-col gap-0.5")}>
               <span className="text-xs text-ink-muted">Vehículos</span>
               <span className="font-medium tabular-nums">{d.rodados}</span>
             </div>

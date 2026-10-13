@@ -21,10 +21,8 @@ Los componentes base y los tokens viven en el paquete `@mt/ui`. Lo usa la web y 
   - `mt.css` es la capa del sitio, encima de BoardUI: la escala `accent` en borravino, las fuentes del sistema, los tokens propios (`ink`, `tile`, `brand`, `link`, `aviso`, la rampa del mapa) y la base mínima. Es lo que importa la app desde `apps/web/src/styles.css`, que no agrega estilos.
 - **Tema claro por defecto.** Un sitio de transparencia se lee de día: el oscuro solo se activa si la persona lo elige con el `ThemeToggle` del footer. Se guarda en `localStorage` (`boardui:theme`) y un script en `apps/web/index.html` lo aplica antes de pintar, sin parpadeo. El oscuro es la clase `.dark` en `<html>`; los tokens cambian solos, nunca se escribe `dark:` a mano.
 - **Piezas:**
-  - `cx()` (`@mt/ui/lib/cx`, de BoardUI) junta clases y entiende la tipografía compuesta de BoardUI; `cn()` (`@mt/ui/lib/utils`) queda para los componentes propios mientras se migran.
+  - `cx()` (`@mt/ui/lib/cx`, de BoardUI) junta clases, resuelve conflictos de Tailwind y entiende la tipografía compuesta de BoardUI (`text-body-medium`, `text-title-3-semibold`…). No hay `cva` ni Radix: las variantes son objetos de clases (`sortCx`) y las piezas interactivas son de React Aria.
   - Íconos: `@remixicon/react` (los de BoardUI) en todo lo nuevo; `lucide-react` se va reemplazando al tocar cada pantalla.
-  - Las variantes se definen con `cva`.
-  - `asChild` (Radix Slot) aplica el estilo a un `Link` del router o a un `<a>`.
 - **Componentes:**
 
 | Componente | Para qué |
@@ -36,14 +34,16 @@ Los componentes base y los tokens viven en el paquete `@mt/ui`. Lo usa la web y 
 | `Select`, `SelectItem` (`base/select`) | Lista de opciones de React Aria (`value`/`onChange` con el `id` de cada `SelectItem`, o `name` + `defaultValue` en un formulario). Disparador y filas de 44 px. Con `label` visible arriba, o `aria-labelledby` si la etiqueta va al costado. |
 | `SegmentedControl` (`base/segmented-control`) | Opciones excluyentes. `Segmented` (`@mt/ui/components/segmented`) lo arma desde una lista de opciones y lo hace desplazable en el celular. |
 | `SearchInput` | `Input` de BoardUI con lupa, para filtrar listas. |
-| **Propios (en migración)** | |
-| `Badge` | Etiquetas de una línea: `neutral`, `brand`, `warning`. Sin borde (no son clickeables). |
-| `Tile` / `CardLink` | Bloque informativo (solo fondo; tamaños `sm`, `default`, `lg`) y tarjeta clickeable (borde, se marca en hover). Para otro elemento (`<li>`, `<details>`, un `Link`): `tileVariants()` y `cardVariants()`. |
-| `Sheet` | Hoja modal (Radix Dialog): foco adentro, Escape y la X cierran. Con dos apiladas se muestra solo la de arriba; al cerrarla vuelve la de abajo. |
-| `Popover` | Nota flotante (Radix Popover) que se reacomoda sola para no salirse de la pantalla. |
-| `Dialog` | Ventana a pantalla completa o centrada (Radix Dialog): el buscador y el menú del celular. Foco adentro, Escape cierra. |
-| `Alert` | Aviso `warning` o `note`. |
-| `StatTile`, `Section`, `PageHeader`, `PersonAvatar` | Cifra con etiqueta, bloque con título, encabezado de página y cara de una persona. |
+| `Chip` (`base/badges/chip`) | Etiquetas de una línea, sin borde (no son clickeables). Colores de BoardUI más `brand` (borravino) y `warning` (ámbar, siempre con ícono). |
+| `StatusDot` (`base/badges/status-dot`) | Punto de estado; `StatusBadge` lo acompaña con su texto (nunca el color solo). |
+| `Avatar` (`base/avatar`) | Foto redonda o iniciales; si la foto no carga, muestra las iniciales. `PersonAvatar` lo usa para toda persona. |
+| **Propios, armados con BoardUI** | |
+| `tileVariants()` / `cardVariants()` (`card`) | Bloque informativo (solo fondo; tamaños `sm`, `default`, `lg`) y tarjeta clickeable (borde, se marca en hover). Se aplican al elemento que corresponda (`<li>`, `<details>`, un `Link`). |
+| `Sheet` | Hoja modal (React Aria `Modal` + `Dialog`): foco adentro, Escape, la X y tocar afuera cierran. Con dos apiladas se muestra solo la de arriba; al cerrarla vuelve la de abajo. |
+| `Popover` | Nota flotante (React Aria `DialogTrigger` + `Popover`): `PopoverTrigger` es el botón (abierto, lleva `aria-expanded`) y `PopoverContent` la nota, que se reacomoda sola para no salirse de la pantalla. |
+| `Dialog` | Ventana a pantalla completa o centrada (React Aria): el buscador y el menú del celular. Foco adentro, Escape cierra. Para enfocar un campo al abrir, se enfoca desde un efecto del contenido. |
+| `Alert` | Aviso `warning` (ámbar) o `note`, con íconos Remix. |
+| `StatTile`, `Section`, `PageHeader`, `PersonAvatar`, `SearchInput`, `Segmented` | Cifra con etiqueta, bloque con título, encabezado de página, cara de una persona, buscador de listas y selector de opciones. |
 
 - **Nada a mano.** Un botón, un bloque, una tarjeta, una etiqueta o un campo no se arman con clases sueltas: se usa el componente o sus clases (`buttonClassName`, `tileVariants`, `cardVariants`). Si falta una variante, se agrega al paquete. Las únicas excepciones son el campo del buscador (va sin borde dentro de su barra) y el campo trampa contra spam de Participar.
 - **Sin código muerto:** `noUnusedLocals` está activado en la web y en el paquete, así que `bunx tsc --noEmit` falla con imports o variables sin usar.

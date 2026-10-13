@@ -2,7 +2,7 @@ import { Alert } from "@mt/ui/components/alert";
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { cardVariants } from "@mt/ui/components/card";
 import { PageHeader } from "@mt/ui/components/section";
-import { cn } from "@mt/ui/lib/utils";
+import { cx } from "@mt/ui/lib/cx";
 import { getRouteApi, Link, useRouter, useRouterState } from "@tanstack/react-router";
 import { Building2, ChevronRight, FileText, Scale } from "lucide-react";
 
@@ -45,7 +45,7 @@ export function SenalesPage() {
             <button
               type="button"
               onClick={() => setAbierta(s)}
-              className={cn(cardVariants({ size: "lg" }), "flex h-full w-full flex-col gap-3")}
+              className={cx(cardVariants({ size: "lg" }), "flex h-full w-full flex-col gap-3")}
             >
               <span className="text-xs font-medium tracking-wide text-ink-muted uppercase">{s.tema}</span>
               <span className="text-4xl font-semibold tracking-tight whitespace-nowrap tabular-nums">{s.cifra}</span>

@@ -1,43 +1,24 @@
-import { Slot } from "@radix-ui/react-slot";
-import { cva, type VariantProps } from "class-variance-authority";
-import type { ComponentProps } from "react";
-
-import { cn } from "../lib/utils.ts";
+import { cx } from "@mt/ui/lib/cx";
 
 /**
  * Informative block: background only, no border (the border is reserved for what can be tapped).
  * Sizes: `sm` for a figure inside a grid, `default` for a block, `lg` for a section of a page.
  */
-export const tileVariants = cva("bg-tile", {
-  variants: { size: { sm: "rounded-lg p-3", default: "rounded-xl p-4", lg: "rounded-2xl p-5" } },
-  defaultVariants: { size: "default" },
-});
+const TILE_SIZE = { sm: "rounded-lg p-3", default: "rounded-xl p-4", lg: "rounded-2xl p-5" } as const;
 
-export function Tile({
-  className,
-  size,
-  asChild = false,
-  ...props
-}: ComponentProps<"div"> & VariantProps<typeof tileVariants> & { asChild?: boolean }) {
-  const Comp = asChild ? Slot : "div";
-  return <Comp className={cn(tileVariants({ size }), className)} {...props} />;
+export function tileVariants({ size = "default" }: { size?: keyof typeof TILE_SIZE } = {}) {
+  return cx("bg-background-secondary-default", TILE_SIZE[size]);
 }
 
 /**
  * Clickable card: border + surface, border in link color on hover. Apply it to the link or button itself
- * (`className={cardVariants()}` or `<CardLink asChild><Link …/></CardLink>`) so the whole card is the target.
+ * (`className={cardVariants()}`) so the whole card is the target.
  */
-export const cardVariants = cva("group min-h-11 border border-line bg-surface text-left transition-colors hover:border-link", {
-  variants: { size: { default: "rounded-xl p-4", lg: "rounded-2xl p-5" } },
-  defaultVariants: { size: "default" },
-});
+const CARD_SIZE = { default: "rounded-xl p-4", lg: "rounded-2xl p-5" } as const;
 
-export function CardLink({
-  className,
-  size,
-  asChild = false,
-  ...props
-}: ComponentProps<"a"> & VariantProps<typeof cardVariants> & { asChild?: boolean }) {
-  const Comp = asChild ? Slot : "a";
-  return <Comp className={cn(cardVariants({ size }), className)} {...props} />;
+export function cardVariants({ size = "default" }: { size?: keyof typeof CARD_SIZE } = {}) {
+  return cx(
+    "group min-h-11 border border-border-button-default bg-background-primary-default text-left shadow-xs transition-colors hover:border-link",
+    CARD_SIZE[size],
+  );
 }

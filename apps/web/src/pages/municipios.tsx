@@ -3,7 +3,7 @@ import { PersonAvatar } from "@mt/ui/components/avatar";
 import { cardVariants } from "@mt/ui/components/card";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
-import { cn } from "@mt/ui/lib/utils";
+import { cx } from "@mt/ui/lib/cx";
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { Briefcase, ChevronRight, Coins, MapPin, Users, Vote } from "lucide-react";
 import { useMemo } from "react";
@@ -170,7 +170,7 @@ export function MunicipioPage() {
             <Link
               to="/funcionarios/$role/$slug"
               params={{ role: i.role, slug: i.slug }}
-              className={cn(cardVariants(), "flex items-center gap-4")}
+              className={cx(cardVariants(), "flex items-center gap-4")}
             >
               <PersonAvatar name={i.nombre} photo={i.foto} className="size-14 text-base" />
               <span className="flex min-w-0 flex-1 flex-col gap-0.5">

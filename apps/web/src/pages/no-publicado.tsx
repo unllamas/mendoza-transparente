@@ -3,7 +3,7 @@ import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { Textarea } from "@mt/ui/components/base/textarea/textarea";
 import { tileVariants } from "@mt/ui/components/card";
 import { PageHeader } from "@mt/ui/components/section";
-import { cn } from "@mt/ui/lib/utils";
+import { cx } from "@mt/ui/lib/cx";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Check, ChevronRight, Copy, ExternalLink, EyeOff, Search } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -242,7 +242,7 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
         </p>
       </div>
 
-      <div className={cn(tileVariants(), "flex flex-col gap-2 text-sm")}>
+      <div className={cx(tileVariants(), "flex flex-col gap-2 text-sm")}>
         <span className="font-medium">¿Ya lo presentaste?</span>
         <span className="text-ink-2 text-pretty">
           {stats && stats.requests > 0

@@ -1,26 +1,14 @@
-import { Badge } from "@mt/ui/components/badge";
+import { Chip } from "@mt/ui/components/base/badges/chip";
 import { cardVariants, tileVariants } from "@mt/ui/components/card";
-import { cn } from "@mt/ui/lib/utils";
+import { cx } from "@mt/ui/lib/cx";
 /** Panel lateral con el detalle de una fila y, en compras, los datos relacionados. */
 
 import { Alert } from "@mt/ui/components/alert";
 import { Button } from "@mt/ui/components/base/buttons/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@mt/ui/components/popover";
-import { RiArrowLeftLine } from "@remixicon/react";
+import { RiArrowLeftLine, RiCalendarLine } from "@remixicon/react";
 import { Link } from "@tanstack/react-router";
-import {
-  Archive,
-  Building2,
-  CalendarDays,
-  ChevronRight,
-  ExternalLink,
-  FileText,
-  Info,
-  Landmark,
-  Search,
-  TriangleAlert,
-  UserRound,
-} from "lucide-react";
+import { Archive, Building2, ChevronRight, ExternalLink, FileText, Info, Landmark, Search, TriangleAlert, UserRound } from "lucide-react";
 import { type ReactNode, useEffect, useState } from "react";
 
 import { type ColumnaVista, formatMoneda } from "@/celdas.ts";
@@ -87,7 +75,7 @@ function OrigenDato({ dataset, fila, ocid }: { dataset: DatasetMeta; fila: strin
   const esCompra = dataset.source === "compras-ocds";
 
   return (
-    <section className={cn(tileVariants(), "flex flex-col gap-2 text-sm")}>
+    <section className={cx(tileVariants(), "flex flex-col gap-2 text-sm")}>
       <h4 className="flex items-center gap-1.5 font-semibold">
         <Landmark className="size-4 text-ink-muted" aria-hidden /> De dónde sale este dato
       </h4>
@@ -272,9 +260,9 @@ export function Proveedor({ cuit, onProceso, sinTitulo }: { cuit: string; onProc
                   <span className="line-clamp-2 text-sm text-pretty group-hover:text-link">{r.titulo || "Sin título"}</span>
                   <span className="flex flex-wrap items-center gap-1.5 text-xs text-ink-muted">
                     {r.fecha && (
-                      <Badge className="gap-1 rounded-md px-1.5 font-normal text-ink-muted tabular-nums group-hover:bg-grid">
-                        <CalendarDays aria-hidden /> {formatDate(r.fecha)}
-                      </Badge>
+                      <Chip variant="caption" color="soft" className="tabular-nums">
+                        <RiCalendarLine aria-hidden /> {formatDate(r.fecha)}
+                      </Chip>
                     )}
                     <span>{r.metodo}</span>
                   </span>
@@ -406,7 +394,7 @@ export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cui
             type="button"
             onClick={() => onProveedor(p.adjudicaciones[0]!.cuit)}
             data-track="purchase.winner.open"
-            className={cn(cardVariants(), "flex items-center gap-3")}
+            className={cx(cardVariants(), "flex items-center gap-3")}
           >
             <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-tile text-ink-muted">
               <Building2 className="size-5" aria-hidden />
@@ -510,17 +498,14 @@ function Flags({ flags }: { flags: Flag[] }) {
       {flags.map((f) => (
         <li key={f.id}>
           <Popover>
-            <PopoverTrigger asChild>
-              <button
-                type="button"
-                data-track="purchase.flag.toggle"
-                data-track-flag={f.id}
-                className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-aviso-borde bg-aviso-fondo/60 px-3.5 text-sm font-medium whitespace-nowrap hover:border-aviso data-[state=open]:border-aviso data-[state=open]:bg-aviso-fondo"
-              >
-                <TriangleAlert className="size-4 text-aviso" aria-hidden />
-                {f.label}
-                <Info className="size-3.5 text-ink-muted" aria-hidden />
-              </button>
+            <PopoverTrigger
+              data-track="purchase.flag.toggle"
+              data-track-flag={f.id}
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-aviso-borde bg-aviso-fondo/60 px-3.5 text-sm font-medium whitespace-nowrap hover:border-aviso aria-expanded:border-aviso aria-expanded:bg-aviso-fondo"
+            >
+              <TriangleAlert className="size-4 text-aviso" aria-hidden />
+              {f.label}
+              <Info className="size-3.5 text-ink-muted" aria-hidden />
             </PopoverTrigger>
             <PopoverContent className="border-aviso-borde">{f.text}</PopoverContent>
           </Popover>
@@ -580,7 +565,7 @@ function Desvio({ estimado, adjudicado }: { estimado: number; adjudicado: number
 
 function Dato({ label, value }: { label: string; value: string }) {
   return (
-    <div className={cn(tileVariants({ size: "sm" }), "flex flex-col gap-0.5")}>
+    <div className={cx(tileVariants({ size: "sm" }), "flex flex-col gap-0.5")}>
       <span className="text-xs text-ink-muted">{label}</span>
       <span className="text-sm font-medium tabular-nums">{value}</span>
     </div>

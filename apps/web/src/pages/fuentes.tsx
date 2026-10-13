@@ -2,7 +2,7 @@ import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { tileVariants } from "@mt/ui/components/card";
 import { Section } from "@mt/ui/components/section";
 import { StatusBadge } from "@mt/ui/components/status-badge";
-import { cn } from "@mt/ui/lib/utils";
+import { cx } from "@mt/ui/lib/cx";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { ExternalLink, Table2 } from "lucide-react";
 
@@ -56,7 +56,7 @@ export function FuentesPage() {
 
 function FuenteItem({ source: s, tables }: { source: SourceMeta; tables: number }) {
   return (
-    <li className={cn(tileVariants(), "flex flex-col gap-3 md:flex-row md:items-start md:justify-between")}>
+    <li className={cx(tileVariants(), "flex flex-col gap-3 md:flex-row md:items-start md:justify-between")}>
       <div className="flex max-w-2xl flex-col gap-1">
         <span className="font-medium">{s.nombre}</span>
         {s.descripcion && <span className="text-sm text-ink-2 text-pretty">{s.descripcion}</span>}

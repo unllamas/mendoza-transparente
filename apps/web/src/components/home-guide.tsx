@@ -1,6 +1,6 @@
 import { Select, SelectItem } from "@mt/ui/components/base/select/select";
 import { cardVariants, tileVariants } from "@mt/ui/components/card";
-import { cn } from "@mt/ui/lib/utils";
+import { cx } from "@mt/ui/lib/cx";
 /**
  * Home guide: the pieces that help people find their way in the site. Global search, department picker,
  * starting questions, the map of everything there is, how to read the data and what is new.
@@ -118,7 +118,7 @@ export function StartingQuestions({ guide }: { guide: HomeGuide }) {
             id={`pregunta-${id}`}
             data-track="home.question.open"
             data-track-question={id}
-            className={cn(cardVariants({ size: "lg" }), "flex h-full flex-col gap-3")}
+            className={cx(cardVariants({ size: "lg" }), "flex h-full flex-col gap-3")}
           >
             <Icon className="size-6 text-ink-muted group-hover:text-link" aria-hidden />
             <span className="text-lg font-semibold tracking-tight text-balance group-hover:text-link">{question}</span>
@@ -238,7 +238,7 @@ export const READING_RULES: { icon: LucideIcon; title: string; text: string }[] 
 export function ReadingRules() {
   return (
     <div className="flex flex-col gap-4">
-      <ul className={cn(tileVariants({ size: "lg" }), "grid gap-4 sm:grid-cols-2")}>
+      <ul className={cx(tileVariants({ size: "lg" }), "grid gap-4 sm:grid-cols-2")}>
         {READING_RULES.map(({ icon: Icon, title, text }) => (
           <li key={title} className="flex items-start gap-3">
             <Icon className="mt-0.5 size-5 shrink-0 text-ink-2" aria-hidden />

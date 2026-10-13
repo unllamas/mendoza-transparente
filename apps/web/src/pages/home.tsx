@@ -1,7 +1,7 @@
-import { Badge } from "@mt/ui/components/badge";
+import { Chip } from "@mt/ui/components/base/badges/chip";
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { cardVariants, tileVariants } from "@mt/ui/components/card";
-import { cn } from "@mt/ui/lib/utils";
+import { cx } from "@mt/ui/lib/cx";
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import {
   ArrowRight,
@@ -53,10 +53,10 @@ export function HomePage() {
     <div className="flex flex-col gap-20">
       {/* Portada */}
       <section className="flex flex-col gap-8 pt-6">
-        <Badge size="lg" className="w-fit font-normal">
+        <Chip variant="subtle" color="soft" className="w-fit gap-2 rounded-full px-3">
           <span className="size-1.5 rounded-full bg-accent" aria-hidden />
           Rumbo a las elecciones provinciales 2027
-        </Badge>
+        </Chip>
         <div className="flex max-w-3xl flex-col gap-5">
           <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-6xl">Mendoza, con los números sobre la mesa.</h1>
           <p className="max-w-2xl text-lg text-ink-2 text-pretty sm:text-xl">
@@ -345,7 +345,7 @@ function Cifra({ icon: Icon, titulo, valor, unidad, detalle, serie, fuente, to, 
       </Link>
     );
   return (
-    <div className={cn(cardVariants({ size: "lg" }), "relative flex min-w-0 flex-col gap-4")}>
+    <div className={cx(cardVariants({ size: "lg" }), "relative flex min-w-0 flex-col gap-4")}>
       <div className="flex items-center justify-between gap-3">
         <span className="flex min-w-0 items-center gap-2 text-sm text-ink-2">
           <Icon className="size-4 shrink-0 text-ink-muted" aria-hidden />
@@ -382,7 +382,7 @@ function Cifra({ icon: Icon, titulo, valor, unidad, detalle, serie, fuente, to, 
 
 function Senal({ valor, texto, matiz }: { valor: string; texto: string; matiz: string }) {
   return (
-    <div className={cn(tileVariants({ size: "lg" }), "flex flex-col gap-2")}>
+    <div className={cx(tileVariants({ size: "lg" }), "flex flex-col gap-2")}>
       <span className="text-3xl font-semibold tracking-tight tabular-nums">{valor}</span>
       <span className="text-ink text-pretty">{texto}</span>
       <span className="text-sm text-ink-muted text-pretty">{matiz}</span>

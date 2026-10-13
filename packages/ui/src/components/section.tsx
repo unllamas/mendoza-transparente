@@ -1,11 +1,12 @@
-import type { LucideIcon } from "lucide-react";
-import type { ReactNode } from "react";
+import type { ComponentType, ReactNode } from "react";
+
+type IconComponent = ComponentType<{ className?: string; "aria-hidden"?: boolean | "true" | "false" }>;
 
 /** Block of a page with its title. */
 export function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="flex flex-col gap-4">
-      <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
+      <h2 className="text-title-3-semibold tracking-tight text-text-primary">{title}</h2>
       {children}
     </section>
   );
@@ -18,19 +19,19 @@ export function PageHeader({
   title,
   children,
 }: {
-  icon: LucideIcon;
+  icon: IconComponent;
   topic: string;
   title: string;
   children: ReactNode;
 }) {
   return (
     <div className="flex max-w-2xl flex-col gap-3">
-      <span className="flex items-center gap-2 text-sm text-ink-muted">
-        <Icon className="size-4 text-ink-muted" aria-hidden />
+      <span className="flex items-center gap-2 text-body-regular text-text-secondary">
+        <Icon className="size-4 text-foreground-icon-secondary" aria-hidden />
         {topic}
       </span>
-      <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">{title}</h1>
-      <p className="text-ink-2 text-pretty">{children}</p>
+      <h1 className="text-display-4-semibold tracking-tight text-balance text-text-primary sm:text-display-3-semibold">{title}</h1>
+      <p className="text-headline-regular text-text-secondary text-pretty">{children}</p>
     </div>
   );
 }

@@ -170,8 +170,15 @@ try {
       if (!ocid) break;
       const p = await browser.newPage({ viewport: { width, height: 800 } });
       await p.goto(`${BASE}/senales?proceso=${ocid}`, { waitUntil: "networkidle" });
-      const sheet = p.locator('aside[role="dialog"]');
-      for (const chip of await sheet.locator("[data-flag] button").all()) {
+      const sheet = p.getByRole("dialog").last();
+      await sheet
+        .locator('[data-track="purchase.flag.toggle"]')
+        .first()
+        .waitFor({ timeout: 5000 })
+        .catch(() => {});
+      const chips = await sheet.locator('[data-track="purchase.flag.toggle"]').all();
+      if (!chips.length) problemas.push(`Hoja de proceso a ${width} px: no aparecieron las notas flotantes para probar`);
+      for (const chip of chips) {
         await chip.click();
         await p.waitForTimeout(150);
         const overflow = await sheet.evaluate(
@@ -181,6 +188,10 @@ try {
         );
         if (overflow)
           problemas.push(`Hoja de proceso a ${width} px: abrir «${(await chip.textContent())?.trim()}» genera scroll horizontal`);
+        if (!(await p.locator(".react-aria-Popover, [data-rac][data-placement]").count()))
+          problemas.push(`Hoja de proceso a ${width} px: «${(await chip.textContent())?.trim()}» no abre su nota`);
+        await p.keyboard.press("Escape");
+        await p.waitForTimeout(100);
       }
       await p.close();
     }
@@ -190,12 +201,16 @@ try {
   for (const boton of await page.locator("main ul button").all()) {
     await boton.click();
     await page.waitForTimeout(400);
-    const caso = page.locator("aside li button").first();
+    const caso = page.getByRole("dialog").last().locator("li button").first();
     if (await caso.count()) {
       await caso.click();
       await page.waitForTimeout(800);
     }
-    await page.keyboard.press("Escape");
+    // Escape closes the top sheet and the one below comes back: close them all.
+    for (let i = 0; i < 3 && (await page.getByRole("dialog").count()); i++) {
+      await page.keyboard.press("Escape");
+      await page.waitForTimeout(200);
+    }
   }
   await page.goto(`${BASE}/funcionarios`, { waitUntil: "networkidle" });
   for (const radio of await page.getByRole("radio").all()) await radio.click();

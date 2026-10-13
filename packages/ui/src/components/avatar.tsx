@@ -1,29 +1,12 @@
-import { useState } from "react";
-
-import { cn } from "../lib/utils.ts";
+import { Avatar } from "@mt/ui/components/base/avatar/avatar";
+import { cx } from "@mt/ui/lib/cx";
 
 /**
- * Face of a person: their official photo, or their initials until there is one. Every mention of a person
- * uses it, so people can be recognized at a glance. Size it with `className` ("size-10 text-xs").
+ * Face of a person (BoardUI `Avatar`): their official photo, or their initials until there is one or if it fails.
+ * Every mention of a person uses it, so people can be recognized at a glance. Size it with `className` ("size-10 text-xs").
  */
 export function PersonAvatar({ name, photo, className }: { name: string; photo: string | null | undefined; className?: string }) {
-  const [error, setError] = useState(false);
-  if (photo && !error) {
-    return (
-      <img
-        src={photo}
-        alt=""
-        loading="lazy"
-        onError={() => setError(true)}
-        className={cn("shrink-0 rounded-full bg-grid object-cover", className)}
-      />
-    );
-  }
-  return (
-    <span className={cn("flex shrink-0 items-center justify-center rounded-full bg-grid font-medium text-ink-2", className)} aria-hidden>
-      {initials(name)}
-    </span>
-  );
+  return <Avatar src={photo ?? undefined} initials={initials(name)} aria-hidden className={cx("font-medium", className)} />;
 }
 
 /** "María de los Ángeles Pérez" → "MÁ": first letters of the first two words that are not connectors. */

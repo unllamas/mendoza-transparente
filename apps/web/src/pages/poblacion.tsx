@@ -3,7 +3,7 @@ import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { tileVariants } from "@mt/ui/components/card";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
-import { cn } from "@mt/ui/lib/utils";
+import { cx } from "@mt/ui/lib/cx";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { MapPin, TrendingUp, Users } from "lucide-react";
 import { LineChart } from "@/charts/line-chart.tsx";
@@ -52,7 +52,7 @@ export function PoblacionPage() {
       </div>
 
       <Section title="Habitantes por año">
-        <div className={cn(tileVariants())}>
+        <div className={cx(tileVariants())}>
           <LineChart
             data={tema.serie.map((p) => ({ fecha: `${p.anio}-01-01`, valor: p.poblacion }))}
             bands={[

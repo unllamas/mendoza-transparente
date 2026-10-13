@@ -135,7 +135,12 @@ export function Layout() {
         {abierto && (
           // Full-screen panel with its own top bar: it never depends on the page header, which can scroll away on
           // phones while the page is scroll-locked (sticky stops working when <html> has overflow: hidden).
-          <Dialog label="Menú" onClose={() => setAbierto(false)} className="inset-0 z-50 flex flex-col bg-page lg:hidden">
+          <Dialog
+            label="Menú"
+            onClose={() => setAbierto(false)}
+            overlayClassName="z-50 lg:hidden"
+            className="inset-0 flex flex-col bg-page"
+          >
             <div className="flex h-14 shrink-0 items-center gap-6 border-b border-line px-4 sm:px-5">
               <Link to="/" className="mr-auto text-base font-semibold tracking-tight whitespace-nowrap">
                 Mendoza Transparente

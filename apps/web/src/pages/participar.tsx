@@ -6,7 +6,7 @@ import { Select, SelectItem } from "@mt/ui/components/base/select/select";
 import { Textarea } from "@mt/ui/components/base/textarea/textarea";
 import { tileVariants } from "@mt/ui/components/card";
 import { PageHeader } from "@mt/ui/components/section";
-import { cn } from "@mt/ui/lib/utils";
+import { cx } from "@mt/ui/lib/cx";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Bug, CheckCircle2, FilePlus2, MessageSquareReply, Send, Stamp } from "lucide-react";
 import { type FormEvent, type ReactNode, useEffect, useRef, useState } from "react";
@@ -313,7 +313,7 @@ function SubmitRow({ state, label, id }: { state: SubmitState; label: string; id
 
 function Done({ children, onAgain, again }: { children: ReactNode; onAgain: () => void; again: string }) {
   return (
-    <div className={cn(tileVariants({ size: "lg" }), "flex flex-col gap-4")}>
+    <div className={cx(tileVariants({ size: "lg" }), "flex flex-col gap-4")}>
       <p className="flex items-start gap-3 text-ink">
         <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-good" aria-hidden />
         <span className="text-pretty">{children}</span>
