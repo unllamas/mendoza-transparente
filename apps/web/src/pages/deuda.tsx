@@ -1,3 +1,5 @@
+import { cn } from "@mt/ui/lib/utils";
+import { tileVariants } from "@mt/ui/components/card";
 import { Alert } from "@mt/ui/components/alert";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
@@ -45,7 +47,7 @@ export function DeudaPage() {
       </div>
 
       <Section title="Evolución de la deuda, en millones de dólares">
-        <div className="rounded-xl bg-tile p-4">
+        <div className={cn(tileVariants())}>
           <LineChart
             data={deuda.serie.map((p) => ({ fecha: p.fecha, valor: p.usd }))}
             bands={GOBIERNOS.map((g) => ({ desde: g.desde, hasta: g.hasta, label: g.nombre }))}
@@ -69,7 +71,7 @@ export function DeudaPage() {
           {deuda.mandatos.map((m) => {
             const delta = m.fin.usd - m.inicio.usd;
             return (
-              <div key={m.desde} className="flex flex-col gap-1 rounded-xl bg-tile p-4">
+              <div key={m.desde} className={cn(tileVariants(), "flex flex-col gap-1")}>
                 <span className="text-sm text-ink-2">
                   {m.gobierno} {m.desde.slice(0, 4)}–{m.hasta ? m.hasta.slice(0, 4) : "hoy"}
                 </span>

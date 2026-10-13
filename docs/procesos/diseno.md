@@ -18,12 +18,16 @@ Los componentes base y los tokens viven en el paquete `@mt/ui`, armado con la co
 | `Button` | Variantes `primary` (relleno de marca, la acción principal), `secondary` (borde y fondo gris), `ghost` (dentro de otro control) y `link`. Tamaños de 44 px. |
 | `IconButton` | Solo ícono: 44 × 44, estilo secundario, `label` obligatorio. |
 | `Badge` | Etiquetas de una línea: `neutral`, `brand`, `warning`. Sin borde (no son clickeables). |
-| `Tile` / `CardLink` | Bloque informativo (solo fondo) y tarjeta clickeable (borde, se marca en hover). |
+| `Tile` / `CardLink` | Bloque informativo (solo fondo; tamaños `sm`, `default`, `lg`) y tarjeta clickeable (borde, se marca en hover). Para otro elemento (`<li>`, `<details>`, un `Link`): `tileVariants()` y `cardVariants()`. |
 | `Sheet` | Hoja modal (Radix Dialog): foco adentro, Escape y la X cierran. Con dos apiladas se muestra solo la de arriba; al cerrarla vuelve la de abajo. |
 | `Popover` | Nota flotante (Radix Popover) que se reacomoda sola para no salirse de la pantalla. |
+| `Dialog` | Ventana a pantalla completa o centrada (Radix Dialog): el buscador y el menú del celular. Foco adentro, Escape cierra. |
+| `Input`, `Textarea`, `Select`, `Field` | Controles de formulario de 44 px con el mismo borde y foco, y el campo con su etiqueta y ayuda. |
 | `Alert` | Aviso `warning` o `note`. |
 | `Segmented`, `SearchInput`, `StatTile`, `Section`, `PageHeader`, `PersonAvatar` | Selector de opciones, buscador, cifra con etiqueta, bloque con título, encabezado de página y cara de una persona. |
 
+- **Nada a mano.** Un botón, un bloque, una tarjeta, una etiqueta o un campo no se arman con clases sueltas: se usa el componente o sus variantes (`buttonVariants`, `tileVariants`, `cardVariants`). Si falta una variante, se agrega al paquete. Las únicas excepciones son el campo del buscador (va sin borde dentro de su barra) y el campo trampa contra spam de Participar.
+- **Sin código muerto:** `noUnusedLocals` está activado en la web y en el paquete, así que `bunx tsc --noEmit` falla con imports o variables sin usar.
 - **Lo propio de la web** (analítica y links del router) queda en `apps/web/src/pages/components.tsx`: `Sheet` y `Segmented` que envían eventos, `Buscador`, `Migas` y `EstadoBadge`.
 - **Componentes nuevos:** si sirven para más de una pantalla, van al paquete. Se pueden sumar de shadcn con `bunx shadcn@latest add <componente>` desde `packages/ui`, y después se adaptan a los tokens y a las reglas de esta página.
 

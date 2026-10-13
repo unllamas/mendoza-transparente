@@ -1,3 +1,6 @@
+import { Badge } from "@mt/ui/components/badge";
+import { cn } from "@mt/ui/lib/utils";
+import { cardVariants, tileVariants } from "@mt/ui/components/card";
 /** Panel lateral con el detalle de una fila y, en compras, los datos relacionados. */
 
 import { Alert } from "@mt/ui/components/alert";
@@ -85,7 +88,7 @@ function OrigenDato({ dataset, fila, ocid }: { dataset: DatasetMeta; fila: strin
   const esCompra = dataset.source === "compras-ocds";
 
   return (
-    <section className="flex flex-col gap-2 rounded-xl bg-tile p-4 text-sm">
+    <section className={cn(tileVariants(), "flex flex-col gap-2 text-sm")}>
       <h4 className="flex items-center gap-1.5 font-semibold">
         <Landmark className="size-4 text-ink-muted" aria-hidden /> De dónde sale este dato
       </h4>
@@ -269,9 +272,9 @@ export function Proveedor({ cuit, onProceso, sinTitulo }: { cuit: string; onProc
                   <span className="line-clamp-2 text-sm text-pretty group-hover:text-link">{r.titulo || "Sin título"}</span>
                   <span className="flex flex-wrap items-center gap-1.5 text-xs text-ink-muted">
                     {r.fecha && (
-                      <span className="inline-flex items-center gap-1 rounded-md bg-tile px-1.5 py-0.5 tabular-nums group-hover:bg-grid">
-                        <CalendarDays className="size-3" aria-hidden /> {formatDate(r.fecha)}
-                      </span>
+                      <Badge className="gap-1 rounded-md px-1.5 font-normal text-ink-muted tabular-nums group-hover:bg-grid">
+                        <CalendarDays aria-hidden /> {formatDate(r.fecha)}
+                      </Badge>
                     )}
                     <span>{r.metodo}</span>
                   </span>
@@ -402,7 +405,7 @@ export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cui
             type="button"
             onClick={() => onProveedor(p.adjudicaciones[0]!.cuit)}
             data-track="purchase.winner.open"
-            className="group flex min-h-11 items-center gap-3 rounded-xl border border-line bg-surface p-4 text-left hover:border-link"
+            className={cn(cardVariants(), "flex items-center gap-3")}
           >
             <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-tile text-ink-muted">
               <Building2 className="size-5" aria-hidden />
@@ -570,7 +573,7 @@ function Desvio({ estimado, adjudicado }: { estimado: number; adjudicado: number
 
 function Dato({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex flex-col gap-0.5 rounded-lg bg-tile p-3">
+    <div className={cn(tileVariants({ size: "sm" }), "flex flex-col gap-0.5")}>
       <span className="text-xs text-ink-muted">{label}</span>
       <span className="text-sm font-medium tabular-nums">{value}</span>
     </div>

@@ -1,3 +1,4 @@
+import { cardVariants, tileVariants } from "@mt/ui/components/card";
 import { cn } from "@mt/ui/lib/utils";
 import { buttonVariants } from "@mt/ui/components/button";
 import { Alert } from "@mt/ui/components/alert";
@@ -350,11 +351,11 @@ function HeadCard({ head }: { head: NonNullable<AgencyDetail["head"]> }) {
     </>
   );
   return head.path ? (
-    <Link to={head.path} className="group flex items-center gap-4 rounded-xl border border-line bg-surface p-4 hover:border-link">
+    <Link to={head.path} className={cn(cardVariants(), "flex items-center gap-4")}>
       {content}
     </Link>
   ) : (
-    <div className="flex items-center gap-4 rounded-xl bg-tile p-4">{content}</div>
+    <div className={cn(tileVariants(), "flex items-center gap-4")}>{content}</div>
   );
 }
 

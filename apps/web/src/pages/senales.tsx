@@ -1,3 +1,4 @@
+import { cardVariants } from "@mt/ui/components/card";
 import { cn } from "@mt/ui/lib/utils";
 import { buttonVariants } from "@mt/ui/components/button";
 import { Alert } from "@mt/ui/components/alert";
@@ -46,7 +47,7 @@ export function SenalesPage() {
             <button
               type="button"
               onClick={() => setAbierta(s)}
-              className="group flex h-full w-full flex-col gap-3 rounded-2xl border border-line bg-surface p-5 text-left transition-colors hover:border-link"
+              className={cn(cardVariants({ size: "lg" }), "flex h-full w-full flex-col gap-3")}
             >
               <span className="text-xs font-medium tracking-wide text-ink-muted uppercase">{s.tema}</span>
               <span className="text-4xl font-semibold tracking-tight whitespace-nowrap tabular-nums">{s.cifra}</span>

@@ -1,5 +1,5 @@
 import { IconButton } from "@mt/ui/components/icon-button";
-import { useScrollLock } from "@mt/ui/hooks/use-scroll-lock";
+import { Dialog } from "@mt/ui/components/dialog";
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import {
   Archive,
@@ -89,13 +89,6 @@ export function Layout() {
 
   // El menú se cierra al navegar y la página no se desplaza detrás mientras está abierto.
   useEffect(() => setAbierto(false), [pathname]);
-  useScrollLock(abierto);
-  useEffect(() => {
-    if (!abierto) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setAbierto(false);
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [abierto]);
 
   return (
     <div className="flex min-h-dvh flex-col">
@@ -137,12 +130,7 @@ export function Layout() {
       {abierto && (
         // Full-screen panel with its own top bar: it never depends on the page header, which can scroll away on
         // phones while the page is scroll-locked (sticky stops working when <html> has overflow: hidden).
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label="Menú"
-          className="fixed inset-0 z-50 flex flex-col bg-page lg:hidden"
-        >
+        <Dialog label="Menú" onClose={() => setAbierto(false)} className="inset-0 z-50 flex flex-col bg-page lg:hidden">
           <div className="flex h-14 shrink-0 items-center gap-6 border-b border-line px-4 sm:px-5">
             <Link to="/" className="mr-auto text-base font-semibold tracking-tight whitespace-nowrap">
               Mendoza Transparente
@@ -170,7 +158,7 @@ export function Layout() {
                 className="flex items-center justify-between border-b border-line py-4 text-lg text-ink [&.active]:font-medium [&.active]:text-link"
               >
                 {item.label}
-                <ChevronRight className="size-4 text-ink-muted" aria-hidden />
+                <ChevronRight className="size-4 text-link" aria-hidden />
               </Link>
             ))}
           </div>
@@ -193,7 +181,7 @@ export function Layout() {
             </div>
           ))}
         </nav>
-        </div>
+        </Dialog>
       )}
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-5 sm:py-10">

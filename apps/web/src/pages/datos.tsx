@@ -1,3 +1,4 @@
+import { Select } from "@mt/ui/components/input";
 import { Button } from "@mt/ui/components/button";
 import { StatTile } from "@mt/ui/components/stat-tile";
 import { getRouteApi, Link } from "@tanstack/react-router";
@@ -115,17 +116,17 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
           {groups && groups.length > 1 && (
             <label className="flex items-center gap-2 text-sm text-ink-2">
               <span>{columnaEtiqueta(dict, dict?.agruparPor)}</span>
-              <select
+              <Select
                 value={groupSlug}
                 onChange={(e) => setGroupSlug(e.target.value)}
-                className="min-h-11 rounded-lg border border-line bg-surface px-3 text-sm text-ink hover:border-link"
+                className="w-auto"
               >
                 {groups.map((g) => (
                   <option key={g.slug} value={g.slug}>
                     {formatGrupo(g.value)}
                   </option>
                 ))}
-              </select>
+              </Select>
             </label>
           )}
           <Button asChild>

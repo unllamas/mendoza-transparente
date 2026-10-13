@@ -1,11 +1,12 @@
+import { tileVariants } from "@mt/ui/components/card";
 import { cn } from "@mt/ui/lib/utils";
 import { buttonVariants } from "@mt/ui/components/button";
 import { Alert } from "@mt/ui/components/alert";
 import { PersonAvatar } from "@mt/ui/components/avatar";
 import { PageHeader } from "@mt/ui/components/section";
 import { getRouteApi, Link } from "@tanstack/react-router";
-import { Building2, ChevronRight, ExternalLink, FileText, Landmark, Mail, MapPin, Search, Vote } from "lucide-react";
-import { useMemo, useState } from "react";
+import { Building2, ChevronRight, ExternalLink, FileText, Landmark, Mail, MapPin, Vote } from "lucide-react";
+import { useMemo } from "react";
 
 import { useSetUrlParams, useUrlOption, useUrlText } from "../url-state.ts";
 import { BarList } from "../charts/bar-list.tsx";
@@ -14,7 +15,7 @@ import { formatDate, formatNumber } from "../lib.ts";
 import { FuentesOficiales } from "../fuente.tsx";
 import { ROLES, roleBySlug } from "../slug.ts";
 import type { Funcionario, FuncionariosTema, GrupoFuncionario } from "../types.ts";
-import { Migas, Segmented } from "./components.tsx";
+import { Buscador, Migas, Segmented } from "./components.tsx";
 
 const route = getRouteApi("/funcionarios");
 const routeFicha = getRouteApi("/funcionarios/$role/$slug");
@@ -50,7 +51,7 @@ const normalizar = (s: string) => s.normalize("NFD").replace(/\p{Diacritic}/gu, 
 
 export function FuncionariosPage() {
   const { personas } = route.useLoaderData();
-  const [pestana, setPestana] = useUrlOption<Pestana>("grupo", ["ejecutivo", "legislatura", "intendentes", "nacion"], "ejecutivo");
+  const [pestana] = useUrlOption<Pestana>("grupo", ["ejecutivo", "legislatura", "intendentes", "nacion"], "ejecutivo");
   const [busqueda, setBusqueda] = useUrlText("q");
   const setParams = useSetUrlParams();
 
@@ -72,17 +73,7 @@ export function FuncionariosPage() {
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <Segmented label="Grupo" options={PESTANAS} value={pestana} onChange={(v) => setParams({ grupo: v === "ejecutivo" ? null : v, q: null })} />
-        <label className="relative flex items-center sm:w-72">
-          <Search className="pointer-events-none absolute left-3 size-4 text-ink-muted" aria-hidden />
-          <input
-            type="search"
-            value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
-            placeholder="Buscar por nombre, bloque o municipio"
-            aria-label="Buscar funcionario"
-            className="w-full rounded-lg border border-line bg-surface py-2 pr-3 pl-9 text-sm outline-none placeholder:text-ink-muted focus:border-link"
-          />
-        </label>
+        <Buscador value={busqueda} onChange={setBusqueda} placeholder="Buscar por nombre, bloque o municipio" label="Buscar funcionario" />
       </div>
 
       {busqueda ? (
@@ -107,7 +98,7 @@ function Bloques({ personas }: { personas: Funcionario[] }) {
   for (const p of personas) conteo.set(p.bloque ?? "Sin bloque", (conteo.get(p.bloque ?? "Sin bloque") ?? 0) + 1);
   const items = [...conteo].sort((a, b) => b[1] - a[1]).map(([nombre, valor]) => ({ nombre, valor }));
   return (
-    <details className="group rounded-xl bg-tile p-4">
+    <details className={cn(tileVariants(), "group")}>
       <summary className="cursor-pointer list-none text-sm font-medium [&::-webkit-details-marker]:hidden">
         <span className="inline-flex items-center gap-1.5">
           <ChevronRight className="size-4 transition-transform group-open:rotate-90" aria-hidden />
@@ -146,7 +137,7 @@ function Lista({ titulo, personas, role }: { titulo: string; personas: Funcionar
               params={{ role: p.role, slug: p.slug }}
               className="group flex w-full items-center gap-4 px-4 py-3 text-left hover:bg-grid/50 sm:px-5"
             >
-              <Avatar persona={p} className="size-10 text-xs" />
+              <PersonAvatar name={p.nombre} photo={p.foto} className="size-10 text-xs" />
               <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                 <span className="truncate font-medium group-hover:text-link">{p.nombre}</span>
                 <span className="truncate text-sm text-ink-muted">{subtitulo(p)}</span>
@@ -164,10 +155,6 @@ function Lista({ titulo, personas, role }: { titulo: string; personas: Funcionar
 }
 
 /** Foto oficial si existe; si no, las iniciales. */
-export function Avatar({ persona: p, className }: { persona: Pick<Funcionario, "nombre" | "foto">; className: string }) {
-  return <PersonAvatar name={p.nombre} photo={p.foto} className={className} />;
-}
-
 /** Página de un cargo: `/funcionarios/diputados-provinciales`. */
 export function RolePage() {
   const { personas } = roleApi.useLoaderData();
@@ -233,12 +220,12 @@ export function FuncionarioPage() {
 }
 
 /** Contenido de la ficha: foto, cargo, mandato, sueldo publicado y declaración jurada. */
-export function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: FuncionariosTema["usd"] }) {
+function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: FuncionariosTema["usd"] }) {
   const pedido = PEDIDO_SUELDO[p.grupo];
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center gap-3">
-        <Avatar persona={p} className="size-16 text-base" />
+        <PersonAvatar name={p.nombre} photo={p.foto} className="size-16 text-base" />
         <div className="flex min-w-0 flex-col gap-0.5">
           <h1 className="text-xl font-semibold tracking-tight text-balance sm:text-2xl">{p.nombre}</h1>
           <span className="text-sm text-ink-2">{p.cargo}</span>
@@ -250,7 +237,7 @@ export function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; us
 
       <Territorio persona={p} />
 
-      <dl className="grid grid-cols-2 gap-x-3 gap-y-4 rounded-xl bg-tile p-4 text-sm">
+      <dl className={cn(tileVariants(), "grid grid-cols-2 gap-x-3 gap-y-4 text-sm")}>
         <Campo label="Organismo" value={p.organismo} wide />
         {p.bloque && <Campo label="Bloque" value={p.bloque} />}
         <Campo label="Partido o frente" value={p.partido ?? "No lo informa la fuente oficial"} muted={!p.partido} />
@@ -389,7 +376,7 @@ function Declaracion({ persona: p, usd }: { persona: Funcionario; usd?: Funciona
       {d ? (
         <>
           <div className="grid grid-cols-2 gap-2">
-            <div className="col-span-2 flex flex-col gap-0.5 rounded-lg bg-tile p-3">
+            <div className={cn(tileVariants({ size: "sm" }), "col-span-2 flex flex-col gap-0.5")}>
               <span className="text-xs text-ink-muted">Inmuebles y vehículos a su nombre, en pesos a valor fiscal</span>
               <span className="text-lg font-semibold whitespace-nowrap tabular-nums">{millonesDePesos(d.totalBienes)}</span>
               {usd && d.totalBienes > 0 && (
@@ -398,11 +385,11 @@ function Declaracion({ persona: p, usd }: { persona: Funcionario; usd?: Funciona
                 </span>
               )}
             </div>
-            <div className="flex flex-col gap-0.5 rounded-lg bg-tile p-3">
+            <div className={cn(tileVariants({ size: "sm" }), "flex flex-col gap-0.5")}>
               <span className="text-xs text-ink-muted">Inmuebles</span>
               <span className="font-medium tabular-nums">{d.inmuebles}</span>
             </div>
-            <div className="flex flex-col gap-0.5 rounded-lg bg-tile p-3">
+            <div className={cn(tileVariants({ size: "sm" }), "flex flex-col gap-0.5")}>
               <span className="text-xs text-ink-muted">Vehículos</span>
               <span className="font-medium tabular-nums">{d.rodados}</span>
             </div>

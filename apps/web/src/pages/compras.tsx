@@ -13,7 +13,7 @@ import { ColumnChart } from "../charts/column-chart.tsx";
 import { FuentesOficiales } from "../fuente.tsx";
 import { formatDate, formatNumber, limpiarOrganismo } from "../lib.ts";
 import { slugProveedor } from "../slug.ts";
-import { Buscador, Migas, normalizar, Sheet } from "./components.tsx";
+import { Buscador, Migas, normalizar } from "./components.tsx";
 import { useDetail } from "../detail-sheet.tsx";
 import { Proveedor } from "./detalle.tsx";
 

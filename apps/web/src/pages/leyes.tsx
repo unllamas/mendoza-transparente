@@ -1,3 +1,4 @@
+import { tileVariants } from "@mt/ui/components/card";
 import { cn } from "@mt/ui/lib/utils";
 import { buttonVariants } from "@mt/ui/components/button";
 import { PersonAvatar } from "@mt/ui/components/avatar";
@@ -99,7 +100,7 @@ export function LeyPage() {
         </div>
       </header>
 
-      <section aria-labelledby="pocas-palabras" className="flex flex-col gap-4 rounded-2xl bg-tile p-5 sm:p-6">
+      <section aria-labelledby="pocas-palabras" className={cn(tileVariants({ size: "lg" }), "flex flex-col gap-4 sm:p-6")}>
         <h2 id="pocas-palabras" className="text-sm font-medium text-ink-muted">
           En pocas palabras
         </h2>

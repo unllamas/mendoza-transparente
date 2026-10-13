@@ -1,8 +1,9 @@
+import { cn } from "@mt/ui/lib/utils";
+import { tileVariants } from "@mt/ui/components/card";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { BriefcaseBusiness, Trophy, UsersRound } from "lucide-react";
-import { useState } from "react";
 
 import { useUrlOption } from "../url-state.ts";
 import { BarList } from "../charts/bar-list.tsx";
@@ -71,7 +72,7 @@ export function EmpleoPage() {
 
       <Section title="Evolución en Mendoza, empleados cada mil habitantes">
         <Segmented label="Período" options={PERIODOS} value={periodo} onChange={setPeriodo} />
-        <div className="rounded-xl bg-tile p-4">
+        <div className={cn(tileVariants())}>
           <LineChart
             data={serie.map((p) => ({ fecha: `${p.anio}-01-01`, valor: p.cadaMil }))}
             bands={gobiernos.map((g) => ({ desde: g.desde, hasta: g.hasta, label: g.nombre }))}

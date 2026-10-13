@@ -1,10 +1,12 @@
+import { cn } from "@mt/ui/lib/utils";
+import { cardVariants } from "@mt/ui/components/card";
 import { Alert } from "@mt/ui/components/alert";
 import { PersonAvatar } from "@mt/ui/components/avatar";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { Briefcase, ChevronRight, Coins, MapPin, Users, Vote } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { useUrlOption } from "../url-state.ts";
 import { ColumnChart } from "../charts/column-chart.tsx";
@@ -153,7 +155,7 @@ export function MunicipioPage() {
             <Link
               to="/funcionarios/$role/$slug"
               params={{ role: i.role, slug: i.slug }}
-              className="group flex items-center gap-4 rounded-xl border border-line bg-surface p-4 hover:border-link"
+              className={cn(cardVariants(), "flex items-center gap-4")}
             >
               <PersonAvatar name={i.nombre} photo={i.foto} className="size-14 text-base" />
               <span className="flex min-w-0 flex-1 flex-col gap-0.5">

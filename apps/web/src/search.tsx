@@ -9,7 +9,7 @@ import { buttonVariants } from "@mt/ui/components/button";
 
 import { PersonAvatar } from "@mt/ui/components/avatar";
 import { IconButton } from "@mt/ui/components/icon-button";
-import { useScrollLock } from "@mt/ui/hooks/use-scroll-lock";
+import { Dialog } from "@mt/ui/components/dialog";
 import { Link, useNavigate } from "@tanstack/react-router";
 import {
   ArrowRight,
@@ -145,7 +145,6 @@ export function SearchDialog() {
   const [kind, setKind] = useState<string | null>(null);
   const [entries, setEntries] = useState<SearchEntry[] | null>(null);
   const [active, setActive] = useState(0);
-  useScrollLock(open);
 
   // Open from the custom event and with "/" or Ctrl/⌘+K (not while typing in a field).
   useEffect(() => {
@@ -215,9 +214,16 @@ export function SearchDialog() {
 
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-[60] flex justify-center sm:items-start sm:p-6 sm:pt-[10vh]" role="dialog" aria-modal="true" aria-label="Buscar">
-      <div aria-hidden onClick={close} className="absolute inset-0 hidden bg-black/60 backdrop-blur-[2px] sm:block" />
-      <div className="relative flex h-full w-full flex-col overflow-hidden bg-page sm:h-auto sm:max-h-[80vh] sm:max-w-2xl sm:rounded-2xl sm:border sm:border-line sm:bg-surface sm:shadow-2xl">
+    <Dialog
+      label="Buscar"
+      onClose={close}
+      overlayClassName="fixed inset-0 z-[60] hidden bg-black/60 backdrop-blur-[2px] sm:block"
+      onOpenAutoFocus={(e) => {
+        e.preventDefault();
+        input.current?.focus();
+      }}
+      className="inset-0 z-[60] flex flex-col overflow-hidden bg-page sm:inset-auto sm:top-[10vh] sm:left-1/2 sm:max-h-[80vh] sm:w-[calc(100%-3rem)] sm:max-w-2xl sm:-translate-x-1/2 sm:rounded-2xl sm:border sm:border-line sm:bg-surface sm:shadow-2xl"
+    >
         {/* Search box */}
         <div className="flex min-h-14 shrink-0 items-center gap-2 border-b border-line pr-1.5 pl-3 sm:pl-4">
           <Search className="size-5 shrink-0 text-ink-muted" aria-hidden />
@@ -243,7 +249,7 @@ export function SearchDialog() {
               } else if (e.key === "Enter" && results[active]) {
                 e.preventDefault();
                 go(results[active], active);
-              } else if (e.key === "Escape") close();
+              }
             }}
             className="min-w-0 flex-1 bg-transparent py-2 text-base text-ink !outline-none placeholder:text-ink-muted [&::-webkit-search-cancel-button]:hidden"
           />
@@ -355,8 +361,7 @@ export function SearchDialog() {
             <kbd className="rounded border border-line px-1">esc</kbd> cerrar
           </span>
         </div>
-      </div>
-    </div>
+    </Dialog>
   );
 }
 

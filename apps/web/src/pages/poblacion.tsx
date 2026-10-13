@@ -1,3 +1,4 @@
+import { tileVariants } from "@mt/ui/components/card";
 import { cn } from "@mt/ui/lib/utils";
 import { buttonVariants } from "@mt/ui/components/button";
 import { Alert } from "@mt/ui/components/alert";
@@ -5,7 +6,6 @@ import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { MapPin, TrendingUp, Users } from "lucide-react";
-import { useState } from "react";
 
 import { useUrlOption, useUrlText } from "../url-state.ts";
 import { LineChart } from "../charts/line-chart.tsx";
@@ -53,7 +53,7 @@ export function PoblacionPage() {
       </div>
 
       <Section title="Habitantes por año">
-        <div className="rounded-xl bg-tile p-4">
+        <div className={cn(tileVariants())}>
           <LineChart
             data={tema.serie.map((p) => ({ fecha: `${p.anio}-01-01`, valor: p.poblacion }))}
             bands={[

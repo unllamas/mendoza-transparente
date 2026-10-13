@@ -60,6 +60,11 @@ export function Sheet({
         <Dialog.Overlay className="fixed inset-0 z-30 bg-black/50 backdrop-blur-[1px]" />
         <Dialog.Content
           aria-describedby={undefined}
+          // Focus the panel itself, not the close button: the button would show its focus ring on every open.
+          onOpenAutoFocus={(e) => {
+            e.preventDefault();
+            (e.currentTarget as HTMLElement).focus();
+          }}
           className={cn(
             "fixed inset-y-0 right-0 z-40 flex w-full flex-col overflow-hidden border-l border-line bg-surface shadow-2xl outline-none sm:w-[32rem]",
             className,

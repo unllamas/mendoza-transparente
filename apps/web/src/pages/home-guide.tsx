@@ -1,18 +1,17 @@
+import { cn } from "@mt/ui/lib/utils";
+import { cardVariants, tileVariants } from "@mt/ui/components/card";
+import { Select } from "@mt/ui/components/input";
 /**
  * Home guide: the pieces that help people find their way in the site. Global search, department picker,
  * starting questions, the map of everything there is, how to read the data and what is new.
  * Data: temas/guia.json and data/search.json (scripts/temas/guide.ts).
  */
 
-import { PersonAvatar } from "@mt/ui/components/avatar";
 import { Link, useNavigate } from "@tanstack/react-router";
 import {
   ArrowRight,
   BookOpen,
   Building2,
-  Database,
-  LayoutGrid,
-  Store,
   ChevronRight,
   Coins,
   EyeOff,
@@ -20,17 +19,15 @@ import {
   type LucideIcon,
   MapPin,
   Scale,
-  Search,
   ShieldCheck,
   ShoppingCart,
   UsersRound,
 } from "lucide-react";
-import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 import { track } from "../analytics.ts";
 import { formatNumber } from "../lib.ts";
 import { SECCION_ELECTORAL, slug } from "../slug.ts";
-import type { HomeGuide, SearchEntry } from "../types.ts";
+import type { HomeGuide } from "../types.ts";
 
 /** "¿Dónde vivís?" → the municipality page. */
 export function DepartmentPicker() {
@@ -40,7 +37,7 @@ export function DepartmentPicker() {
     <label className="flex min-w-0 items-center gap-2 text-sm text-ink-2">
       <MapPin className="size-4 shrink-0 text-ink-muted" aria-hidden />
       <span className="whitespace-nowrap">¿Dónde vivís?</span>
-      <select
+      <Select
         id="selector-departamento"
         defaultValue=""
         onChange={(e) => {
@@ -48,7 +45,7 @@ export function DepartmentPicker() {
           track("home.department.select", { municipality: e.target.value });
           void navigate({ to: "/municipios/$slug", params: { slug: e.target.value } });
         }}
-        className="min-h-11 min-w-0 rounded-lg border border-line bg-surface px-3 text-sm text-ink outline-none hover:border-link focus:border-link"
+        className="w-auto min-w-0"
       >
         <option value="">Elegí tu departamento</option>
         {names.map((n) => (
@@ -56,7 +53,7 @@ export function DepartmentPicker() {
             {n}
           </option>
         ))}
-      </select>
+      </Select>
     </label>
   );
 }
@@ -82,7 +79,7 @@ export function StartingQuestions({ guide }: { guide: HomeGuide }) {
             id={`pregunta-${id}`}
             data-track="home.question.open"
             data-track-question={id}
-            className="group flex h-full flex-col gap-3 rounded-2xl border border-line bg-surface p-5 hover:border-link"
+            className={cn(cardVariants({ size: "lg" }), "flex h-full flex-col gap-3")}
           >
             <Icon className="size-6 text-ink-muted group-hover:text-link" aria-hidden />
             <span className="text-lg font-semibold tracking-tight text-balance group-hover:text-link">{question}</span>
@@ -190,7 +187,7 @@ export const READING_RULES: { icon: LucideIcon; title: string; text: string }[] 
 export function ReadingRules() {
   return (
     <div className="flex flex-col gap-4">
-      <ul className="grid gap-4 rounded-2xl bg-tile p-5 sm:grid-cols-2">
+      <ul className={cn(tileVariants({ size: "lg" }), "grid gap-4 sm:grid-cols-2")}>
         {READING_RULES.map(({ icon: Icon, title, text }) => (
           <li key={title} className="flex items-start gap-3">
             <Icon className="mt-0.5 size-5 shrink-0 text-ink-2" aria-hidden />

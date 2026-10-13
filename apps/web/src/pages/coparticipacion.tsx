@@ -1,3 +1,4 @@
+import { tileVariants } from "@mt/ui/components/card";
 import { cn } from "@mt/ui/lib/utils";
 import { buttonVariants } from "@mt/ui/components/button";
 import { Alert } from "@mt/ui/components/alert";
@@ -5,7 +6,6 @@ import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Coins, MapPin, UserRound } from "lucide-react";
-import { useState } from "react";
 
 import { useUrlText } from "../url-state.ts";
 import { formatMoneda } from "../celdas.ts";
@@ -96,7 +96,7 @@ export function CoparticipacionPage() {
       </Section>
 
       <Section title={`Total repartido por año, en millones de pesos de ${tema.referencia}`}>
-        <div className="rounded-xl bg-tile p-4">
+        <div className={cn(tileVariants())}>
           <LineChart
             data={tema.provincia.filter((p) => !p.parcial).map((p) => ({ fecha: `${p.anio}-01-01`, valor: p.real / 1e6 }))}
             bands={GOBIERNOS.map((g) => ({ desde: g.desde, hasta: g.hasta, label: g.nombre }))}

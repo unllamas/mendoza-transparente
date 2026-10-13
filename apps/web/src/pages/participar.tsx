@@ -1,3 +1,5 @@
+import { tileVariants } from "@mt/ui/components/card";
+import { Field, Input, Select, Textarea } from "@mt/ui/components/input";
 import { cn } from "@mt/ui/lib/utils";
 import { buttonVariants } from "@mt/ui/components/button";
 import { Alert } from "@mt/ui/components/alert";
@@ -45,7 +47,6 @@ export function useRequestStats(): RequestStats | null {
 export function ParticiparPage() {
   const items = route.useLoaderData();
   const search = route.useSearch();
-  const navigate = route.useNavigate();
   // The open form lives in the URL (?tipo=…), so links from other pages land on the right one.
   const [form, setForm] = useUrlOption<Form>("tipo", ["pedido", "respuesta", "error", "dato"], "pedido");
   const stats = useRequestStats();
@@ -150,29 +151,29 @@ function RequestForm({ items, defaultItem }: { items: NoPublicado[]; defaultItem
         No publicamos tu número: lo usamos para contar los pedidos y para que después puedas contarnos la respuesta.
       </Intro>
       <Field label="Qué dato pediste">
-        <select value={itemId} onChange={(e) => setItemId(e.target.value)} className={INPUT} id="pedido-dato">
+        <Select value={itemId} onChange={(e) => setItemId(e.target.value)} id="pedido-dato">
           {items.map((i) => (
             <option key={i.id} value={i.id}>
               {i.titulo}
             </option>
           ))}
           <option value="otro">Otro dato</option>
-        </select>
+        </Select>
       </Field>
       <Field label="A qué organismo" hint={item ? `Sugerido: ${item.organismo}` : undefined}>
-        <input name="agency" defaultValue={item?.organismo ?? ""} key={itemId} className={INPUT} maxLength={200} />
+        <Input name="agency" defaultValue={item?.organismo ?? ""} key={itemId} maxLength={200} />
       </Field>
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Fecha en que lo presentaste">
-          <input name="filedOn" type="date" required max={new Date().toISOString().slice(0, 10)} className={INPUT} />
+          <Input name="filedOn" type="date" required max={new Date().toISOString().slice(0, 10)} />
         </Field>
         <Field label="Número de trámite">
-          <input name="filingNumber" required placeholder="EX-2026-…" className={INPUT} maxLength={60} autoComplete="off" />
+          <Input name="filingNumber" required placeholder="EX-2026-…" maxLength={60} autoComplete="off" />
         </Field>
       </div>
       {itemId === "otro" && (
         <Field label="Qué pediste">
-          <textarea name="detail" required rows={3} className={INPUT} maxLength={1000} />
+          <Textarea name="detail" required rows={3} maxLength={1000} />
         </Field>
       )}
       <EmailField />
@@ -204,24 +205,24 @@ function AnswerForm() {
     <form onSubmit={onSubmit} className="flex flex-col gap-5" id="form-respuesta">
       <Intro icon={MessageSquareReply}>Contanos qué pasó con un pedido que registraste antes, con el mismo número de trámite.</Intro>
       <Field label="Número de trámite">
-        <input name="filingNumber" required className={INPUT} maxLength={60} autoComplete="off" />
+        <Input name="filingNumber" required maxLength={60} autoComplete="off" />
       </Field>
       <Field label="Qué pasó">
-        <select name="status" required className={INPUT} defaultValue="respondido">
+        <Select name="status" required defaultValue="respondido">
           <option value="respondido">Me respondieron con lo que pedí</option>
           <option value="parcial">Me respondieron en parte</option>
           <option value="denegado">Me lo negaron</option>
           <option value="sin_respuesta">Pasó el plazo y no me respondieron</option>
-        </select>
+        </Select>
       </Field>
       <Field label="Fecha de la respuesta (si hubo)">
-        <input name="answeredOn" type="date" max={new Date().toISOString().slice(0, 10)} className={INPUT} />
+        <Input name="answeredOn" type="date" max={new Date().toISOString().slice(0, 10)} />
       </Field>
       <Field label="Qué te respondieron, en pocas palabras (opcional)">
-        <textarea name="summary" rows={3} className={INPUT} maxLength={2000} />
+        <Textarea name="summary" rows={3} maxLength={2000} />
       </Field>
       <Field label="Link a la respuesta, si la subiste a algún lado (opcional)">
-        <input name="url" type="url" className={INPUT} maxLength={500} placeholder="https://" />
+        <Input name="url" type="url" maxLength={500} placeholder="https://" />
       </Field>
       <Honeypot />
       <Turnstile onToken={setToken} />
@@ -253,11 +254,11 @@ function FeedbackForm({ kind, defaultPage }: { kind: "error" | "dato"; defaultPa
       </Intro>
       {kind === "error" && (
         <Field label="En qué página">
-          <input name="page" defaultValue={defaultPage ?? ""} placeholder="/deuda" className={INPUT} maxLength={300} />
+          <Input name="page" defaultValue={defaultPage ?? ""} placeholder="/deuda" maxLength={300} />
         </Field>
       )}
       <Field label={kind === "error" ? "Qué encontraste" : "Qué dato y por qué te interesa"}>
-        <textarea name="message" required minLength={10} rows={5} className={INPUT} maxLength={2000} />
+        <Textarea name="message" required minLength={10} rows={5} maxLength={2000} />
       </Field>
       <EmailField />
       <Honeypot />
@@ -268,19 +269,6 @@ function FeedbackForm({ kind, defaultPage }: { kind: "error" | "dato"; defaultPa
 }
 
 // ------------------------------------------------------------------ pieces
-
-const INPUT =
-  "w-full rounded-lg border border-line bg-surface px-3 py-2 text-sm text-ink outline-none placeholder:text-ink-muted focus:border-link";
-
-function Field({ label, hint, children }: { label: string; hint?: string; children: ReactNode }) {
-  return (
-    <label className="flex min-w-0 flex-col gap-1.5 text-sm">
-      <span className="font-medium">{label}</span>
-      {children}
-      {hint && <span className="text-xs text-ink-muted">{hint}</span>}
-    </label>
-  );
-}
 
 function Intro({ icon: Icon, children }: { icon: typeof Bug; children: ReactNode }) {
   return (
@@ -294,7 +282,7 @@ function Intro({ icon: Icon, children }: { icon: typeof Bug; children: ReactNode
 function EmailField() {
   return (
     <Field label="Tu correo (opcional)" hint="Solo para escribirte sobre este envío. No se publica.">
-      <input name="email" type="email" className={INPUT} maxLength={200} autoComplete="email" />
+      <Input name="email" type="email" maxLength={200} autoComplete="email" />
     </Field>
   );
 }
@@ -325,7 +313,7 @@ function SubmitRow({ state, label, id }: { state: SubmitState; label: string; id
 
 function Done({ children, onAgain, again }: { children: ReactNode; onAgain: () => void; again: string }) {
   return (
-    <div className="flex flex-col gap-4 rounded-2xl bg-tile p-5">
+    <div className={cn(tileVariants({ size: "lg" }), "flex flex-col gap-4")}>
       <p className="flex items-start gap-3 text-ink">
         <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-good" aria-hidden />
         <span className="text-pretty">{children}</span>

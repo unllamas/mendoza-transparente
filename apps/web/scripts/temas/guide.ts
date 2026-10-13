@@ -111,7 +111,6 @@ const KIND_BY_PREFIX: [RegExp, string][] = [
 
 const unescape = (s: string) => s.replace(/&quot;/g, '"').replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
 const short = (s: string) => (s.length > 140 ? `${s.slice(0, 139).replace(/\s+\S*$/, "")}…` : s);
-const pesos = (v: number) => (v >= 1e9 ? `$ ${nf1.format(v / 1e9)} mil millones` : `$ ${nf1.format(v / 1e6)} millones`);
 
 /** "I F E L S R L" → "IFELSRL": some supplier names come letter by letter from the source. */
 const tidyName = (n: string) => n.replace(/\b(?:\p{L} ){2,}\p{L}\b/gu, (m) => m.replace(/ /g, "")).replace(/\s+/g, " ").trim();

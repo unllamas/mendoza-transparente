@@ -9,10 +9,11 @@ Fuente completa: `docs/procesos/diseno.md`. Público: cualquier persona de Mendo
 
 ## Sistema de diseño
 
-Los componentes base y los tokens están en `packages/ui` (`@mt/ui`, configuración de shadcn): `Button`, `IconButton`, `Badge`, `Tile`, `CardLink`, `Sheet`, `Popover`, `Alert`, `Segmented`, `SearchInput`, `StatTile`, `Section`, `PageHeader` y `PersonAvatar`.
+Los componentes base y los tokens están en `packages/ui` (`@mt/ui`, configuración de shadcn): `Button`, `IconButton`, `Badge`, `Tile`, `CardLink`, `Sheet`, `Dialog`, `Popover`, `Alert`, `Input`, `Textarea`, `Select`, `Field`, `Segmented`, `SearchInput`, `StatTile`, `Section`, `PageHeader` y `PersonAvatar`. Para estilizar otro elemento: `buttonVariants`, `tileVariants` y `cardVariants`.
 
 - **Solo Tailwind:** no se escribe CSS propio. Los tokens viven en `packages/ui/src/styles/globals.css`.
-- **Antes de armar un botón, una etiqueta o una tarjeta a mano,** usar el componente del paquete. Si falta uno, se agrega al paquete, no a la página.
+- **Antes de armar un botón, una etiqueta, una tarjeta o un campo a mano,** usar el componente del paquete. Si falta uno, se agrega al paquete, no a la página.
+- **Lo que alguien querría compartir va en la URL** (pestañas, búsquedas, hojas abiertas): `useUrlOption` y `useUrlText` de `apps/web/src/url-state.ts`, nunca `useState`.
 
 ## Reglas que no se negocian
 

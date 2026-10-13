@@ -1,3 +1,5 @@
+import { tileVariants } from "@mt/ui/components/card";
+import { Textarea } from "@mt/ui/components/input";
 import { cn } from "@mt/ui/lib/utils";
 import { buttonVariants } from "@mt/ui/components/button";
 import { Alert } from "@mt/ui/components/alert";
@@ -211,13 +213,7 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
           <span className="font-medium">Tu pedido</span>
           <span className="text-xs text-ink-muted">Completá tus datos al final</span>
         </div>
-        <textarea
-          value={texto}
-          onChange={(e) => setTexto(e.target.value)}
-          rows={13}
-          aria-label="Texto del pedido"
-          className="w-full resize-y rounded-lg border border-line bg-page p-3 font-sans text-sm leading-relaxed text-ink outline-none focus:border-link"
-        />
+        <Textarea value={texto} onChange={(e) => setTexto(e.target.value)} rows={13} aria-label="Texto del pedido" className="bg-page" />
         <div className="flex flex-wrap gap-2">
           <button
             type="button"
@@ -249,7 +245,7 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
         </p>
       </div>
 
-      <div className="flex flex-col gap-2 rounded-xl bg-tile p-4 text-sm">
+      <div className={cn(tileVariants(), "flex flex-col gap-2 text-sm")}>
         <span className="font-medium">¿Ya lo presentaste?</span>
         <span className="text-ink-2 text-pretty">
           {stats && stats.requests > 0

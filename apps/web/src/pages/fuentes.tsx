@@ -1,3 +1,4 @@
+import { tileVariants } from "@mt/ui/components/card";
 import { cn } from "@mt/ui/lib/utils";
 import { buttonVariants } from "@mt/ui/components/button";
 import { Section } from "@mt/ui/components/section";
@@ -48,7 +49,7 @@ export function FuentesPage() {
 
 function FuenteItem({ source: s, tables }: { source: SourceMeta; tables: number }) {
   return (
-    <li className="flex flex-col gap-3 rounded-xl bg-tile p-4 md:flex-row md:items-start md:justify-between">
+    <li className={cn(tileVariants(), "flex flex-col gap-3 md:flex-row md:items-start md:justify-between")}>
       <div className="flex max-w-2xl flex-col gap-1">
         <span className="font-medium">{s.nombre}</span>
         {s.descripcion && <span className="text-sm text-ink-2 text-pretty">{s.descripcion}</span>}
