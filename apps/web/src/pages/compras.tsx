@@ -1,3 +1,5 @@
+import { cn } from "@mt/ui/lib/utils";
+import { buttonVariants } from "@mt/ui/components/button";
 import { Alert } from "@mt/ui/components/alert";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
@@ -5,6 +7,7 @@ import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { Building2, ChevronRight, FileText, Landmark, Percent, Receipt, Users2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
+import { useUrlText } from "../url-state.ts";
 import { formatMoneda } from "../celdas.ts";
 import { ColumnChart } from "../charts/column-chart.tsx";
 import { FuentesOficiales } from "../fuente.tsx";
@@ -24,14 +27,14 @@ const organismosRoute = getRouteApi("/organismos");
 const organismoRoute = getRouteApi("/organismos/$slug");
 
 const VerMas = ({ onClick }: { onClick: () => void }) => (
-  <button type="button" onClick={onClick} className="w-fit rounded-lg bg-brand px-4 py-2 text-sm font-medium text-on-brand hover:bg-brand-hover">
+  <button type="button" onClick={onClick} className={cn(buttonVariants({ variant: "secondary" }), "w-fit")}>
     Ver más
   </button>
 );
 
 export function ProveedoresPage() {
   const proveedores = proveedoresRoute.useLoaderData();
-  const [q, setQ] = useState("");
+  const [q, setQ] = useUrlText("q");
   const [mostrar, setMostrar] = useState(PAGINA);
   const visibles = useMemo(() => {
     const n = normalizar(q.trim());
@@ -109,7 +112,7 @@ export function ProveedorPage() {
 
 export function OrganismosPage() {
   const organismos = organismosRoute.useLoaderData();
-  const [q, setQ] = useState("");
+  const [q, setQ] = useUrlText("q");
   const [mostrar, setMostrar] = useState(PAGINA);
   const visibles = useMemo(() => {
     const n = normalizar(q.trim());

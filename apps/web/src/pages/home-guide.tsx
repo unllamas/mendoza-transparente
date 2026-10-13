@@ -48,7 +48,7 @@ export function DepartmentPicker() {
           track("home.department.select", { municipality: e.target.value });
           void navigate({ to: "/municipios/$slug", params: { slug: e.target.value } });
         }}
-        className="min-w-0 rounded-lg border border-line bg-surface px-2 py-1.5 text-sm text-ink outline-none focus:border-link"
+        className="min-h-11 min-w-0 rounded-lg border border-line bg-surface px-3 text-sm text-ink outline-none hover:border-link focus:border-link"
       >
         <option value="">Elegí tu departamento</option>
         {names.map((n) => (

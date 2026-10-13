@@ -6,6 +6,7 @@ import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { Briefcase, ChevronRight, Coins, MapPin, Users, Vote } from "lucide-react";
 import { useMemo, useState } from "react";
 
+import { useUrlOption } from "../url-state.ts";
 import { ColumnChart } from "../charts/column-chart.tsx";
 import { MapaMendoza, MunicipalityLocator } from "../charts/mapa.tsx";
 import { FuentesOficiales } from "../fuente.tsx";
@@ -17,6 +18,13 @@ import { Migas, Segmented } from "./components.tsx";
 const SOURCES = ["hacienda-participacion-municipal", "poblacion", "autoridades", "legislatura", "municipios-personal"];
 const pesos = (v: number) => `$ ${formatNumber(Math.round(v))}`;
 const listApi = getRouteApi("/municipios");
+/** Entry of data/curado/no-publicado.yaml that explains why each municipality has no staff data. */
+const MISSING_STAFF: Record<string, string> = {
+  "San Martín": "municipios-sin-datos",
+  Lavalle: "municipios-sin-datos",
+  "Godoy Cruz": "personal-godoy-cruz-las-heras",
+  "Las Heras": "personal-godoy-cruz-las-heras",
+};
 const detailApi = getRouteApi("/municipios/$slug");
 
 type Metric = "poblacion" | "coparticipacion" | "personal";
@@ -36,7 +44,7 @@ const METRIC_UNIT: Record<Metric, string> = { poblacion: "habitantes", copartici
 export function MunicipiosPage() {
   const { municipios, mapa } = listApi.useLoaderData();
   const navigate = useNavigate();
-  const [metric, setMetric] = useState<Metric>("poblacion");
+  const [metric, setMetric] = useUrlOption<Metric>("ver", ["poblacion", "coparticipacion", "personal"], "poblacion");
   const sorted = useMemo(() => [...municipios].sort((a, b) => (metricValue(b, metric) ?? -1) - (metricValue(a, metric) ?? -1)), [municipios, metric]);
   const values = Object.fromEntries(municipios.flatMap((m) => (metricValue(m, metric) === undefined ? [] : [[m.nombre, metricValue(m, metric)!]])));
   const anio = municipios.find((m) => m.coparticipacion)?.coparticipacion;
@@ -220,7 +228,7 @@ export function MunicipioPage() {
         ) : (
           <Alert variant="warning" title="No publica su planta de personal">
             No encontramos el anexo de personal que exige la Ley de Responsabilidad Fiscal en un formato que se pueda leer.{" "}
-            <Link to="/no-publicado" className="text-link hover:underline">
+            <Link to="/no-publicado" search={{ dato: MISSING_STAFF[m.nombre] ?? undefined } as never} className="text-link hover:underline">
               Ver qué falta y cómo pedirlo
             </Link>
             .

@@ -1,3 +1,5 @@
+import { cn } from "@mt/ui/lib/utils";
+import { buttonVariants } from "@mt/ui/components/button";
 import { Alert } from "@mt/ui/components/alert";
 import { PersonAvatar } from "@mt/ui/components/avatar";
 import { PageHeader } from "@mt/ui/components/section";
@@ -5,6 +7,7 @@ import { getRouteApi, Link } from "@tanstack/react-router";
 import { Building2, ChevronRight, ExternalLink, FileText, Landmark, Mail, MapPin, Search, Vote } from "lucide-react";
 import { useMemo, useState } from "react";
 
+import { useSetUrlParams, useUrlOption, useUrlText } from "../url-state.ts";
 import { BarList } from "../charts/bar-list.tsx";
 import { formatMoneda } from "../celdas.ts";
 import { formatDate, formatNumber } from "../lib.ts";
@@ -47,8 +50,9 @@ const normalizar = (s: string) => s.normalize("NFD").replace(/\p{Diacritic}/gu, 
 
 export function FuncionariosPage() {
   const { personas } = route.useLoaderData();
-  const [pestana, setPestana] = useState<Pestana>("ejecutivo");
-  const [busqueda, setBusqueda] = useState("");
+  const [pestana, setPestana] = useUrlOption<Pestana>("grupo", ["ejecutivo", "legislatura", "intendentes", "nacion"], "ejecutivo");
+  const [busqueda, setBusqueda] = useUrlText("q");
+  const setParams = useSetUrlParams();
 
   const grupos = PESTANAS.find((p) => p.value === pestana)!.grupos;
   const visibles = useMemo(() => {
@@ -67,7 +71,7 @@ export function FuncionariosPage() {
       <FuentesOficiales ids={["autoridades", "legislatura"]} />
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <Segmented label="Grupo" options={PESTANAS} value={pestana} onChange={(v) => { setPestana(v); setBusqueda(""); }} />
+        <Segmented label="Grupo" options={PESTANAS} value={pestana} onChange={(v) => setParams({ grupo: v === "ejecutivo" ? null : v, q: null })} />
         <label className="relative flex items-center sm:w-72">
           <Search className="pointer-events-none absolute left-3 size-4 text-ink-muted" aria-hidden />
           <input
@@ -279,7 +283,7 @@ export function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; us
           <Alert title="No está publicado">
             El sueldo de este cargo no figura en ningún sitio oficial.{" "}
             {pedido && (
-              <Link to="/no-publicado" hash={pedido} className="font-medium text-link hover:underline">
+              <Link to="/no-publicado" search={{ dato: pedido } as never} className="font-medium text-link hover:underline">
                 Pedilo con la Ley 9070 ›
               </Link>
             )}
@@ -358,7 +362,7 @@ function Territorio({ persona: p }: { persona: Funcionario }) {
             <Link
               to="/municipios/$slug"
               params={{ slug: m.slug }}
-              className="inline-flex items-center gap-1 rounded-full border border-line px-3 py-1.5 text-sm whitespace-nowrap hover:border-link hover:text-link"
+              className={cn(buttonVariants({ variant: "secondary" }), "rounded-full font-normal")}
             >
               {m.name} <ChevronRight className="size-3.5" aria-hidden />
             </Link>
@@ -416,7 +420,7 @@ function Declaracion({ persona: p, usd }: { persona: Funcionario; usd?: Funciona
             El valor fiscal es el que usa el Estado para cobrar impuestos y suele estar muy por debajo del precio de mercado. Además,
             el total no incluye cuentas bancarias, efectivo, inversiones ni participaciones en empresas: la Oficina de Ética Pública
             muestra que se declaran, pero no cuánto.{" "}
-            <Link to="/no-publicado" hash="ddjj-montos" className="font-medium text-link hover:underline">
+            <Link to="/no-publicado" search={{ dato: "ddjj-montos" } as never} className="font-medium text-link hover:underline">
               Pedí los montos ›
             </Link>
           </Alert>

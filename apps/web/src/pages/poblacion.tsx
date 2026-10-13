@@ -1,3 +1,5 @@
+import { cn } from "@mt/ui/lib/utils";
+import { buttonVariants } from "@mt/ui/components/button";
 import { Alert } from "@mt/ui/components/alert";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
@@ -5,6 +7,7 @@ import { getRouteApi, Link } from "@tanstack/react-router";
 import { MapPin, TrendingUp, Users } from "lucide-react";
 import { useState } from "react";
 
+import { useUrlOption, useUrlText } from "../url-state.ts";
 import { LineChart } from "../charts/line-chart.tsx";
 import { MapaMendoza } from "../charts/mapa.tsx";
 import { formatNumber } from "../lib.ts";
@@ -21,8 +24,10 @@ const personas = (v: number) => formatNumber(Math.round(v));
 
 export function PoblacionPage() {
   const { tema, mapa } = route.useLoaderData();
-  const [sel, setSel] = useState<string | null>(null);
-  const [medida, setMedida] = useState<"habitantes" | "crecimiento">("habitantes");
+  const [selSlug, setSelSlug] = useUrlText("departamento");
+  const sel = tema.departamentos.find((d) => slug(d.municipio) === selSlug)?.municipio ?? null;
+  const setSel = (name: string | null) => setSelSlug(name && slug(name));
+  const [medida, setMedida] = useUrlOption<"habitantes" | "crecimiento">("medida", ["habitantes", "crecimiento"], "habitantes");
   const porCrecimiento = [...tema.departamentos].sort((a, b) => b.variacion - a.variacion);
   const ranking = medida === "habitantes" ? [...tema.departamentos].sort((a, b) => b.actual - a.actual) : porCrecimiento;
   const depto = ranking.find((d) => d.municipio === sel);
@@ -150,7 +155,7 @@ function Detalle({ depto: d, onClose }: { depto: PoblacionTema["departamentos"][
         <button
           type="button"
           onClick={onClose}
-          className="rounded-lg border border-line px-3 py-1 text-sm text-ink-2 hover:border-link/50 hover:text-ink"
+          className={cn(buttonVariants({ variant: "secondary" }))}
         >
           Ver ranking
         </button>

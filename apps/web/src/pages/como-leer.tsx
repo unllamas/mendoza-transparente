@@ -1,3 +1,5 @@
+import { cn } from "@mt/ui/lib/utils";
+import { buttonVariants } from "@mt/ui/components/button";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, BookOpen, Bug, Compass, MousePointerClick, Search, ShieldCheck } from "lucide-react";
@@ -59,7 +61,7 @@ export function ComoLeerPage() {
         <button
           type="button"
           onClick={() => openSearch("guide")}
-          className="inline-flex w-fit items-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-medium text-on-brand hover:bg-brand-hover"
+          className={cn(buttonVariants({ variant: "primary" }), "w-fit")}
         >
           Abrir el buscador <ArrowRight className="size-4" aria-hidden />
         </button>

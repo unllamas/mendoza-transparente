@@ -1,9 +1,12 @@
+import { cn } from "@mt/ui/lib/utils";
+import { buttonVariants } from "@mt/ui/components/button";
 import { Alert } from "@mt/ui/components/alert";
 import { PageHeader } from "@mt/ui/components/section";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Check, ChevronRight, Copy, ExternalLink, EyeOff, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import { useUrlText } from "../url-state.ts";
 import { NO_PUBLICADO_CATEGORIES, NO_PUBLICADO_THEMES, type NoPublicadoTheme } from "../no-publicado-categories.ts";
 import type { NoPublicado } from "../types.ts";
 import { Sheet } from "./components.tsx";
@@ -30,22 +33,23 @@ const PLURAL: Record<NoPublicado["estado"], string> = {
 
 export function NoPublicadoPage() {
   const items = route.useLoaderData();
-  const [abierto, setAbierto] = useState<NoPublicado | null>(null);
-  const [theme, setTheme] = useState<NoPublicadoTheme | null>(null);
+  // The open item (?dato=nomina-sueldos) and the theme (?tema=plata) live in the URL, like ?senal= in /senales.
+  const [openId, setOpenId] = useUrlText("dato");
+  const abierto = items.find((i) => i.id === openId) ?? null;
+  const setAbierto = (item: NoPublicado | null) => setOpenId(item?.id ?? null);
+  const [themeId, setThemeId] = useUrlText("tema");
+  const theme = (NO_PUBLICADO_THEMES.find((t) => t.id === themeId)?.id ?? null) as NoPublicadoTheme | null;
+  const setTheme = (t: NoPublicadoTheme | null) => setThemeId(t);
   const stats = useRequestStats();
 
-  // Direct links (/no-publicado#nomina-sueldos) open that request.
+  // Old links with a hash (/no-publicado#nomina-sueldos) still open their item.
   useEffect(() => {
     const id = decodeURIComponent(window.location.hash.slice(1));
-    const item = items.find((i) => i.id === id);
-    if (item) setAbierto(item);
-  }, [items]);
-
-  // The open request lives in the URL (#id): shareable, and the back button closes it.
-  useEffect(() => {
-    const url = `${window.location.pathname}${window.location.search}${abierto ? `#${abierto.id}` : ""}`;
-    if (url !== `${window.location.pathname}${window.location.search}${window.location.hash}`) window.history.replaceState(window.history.state, "", url);
-  }, [abierto]);
+    if (!id || !items.some((i) => i.id === id)) return;
+    // Drop the hash first, so closing the sheet leaves a clean URL.
+    window.history.replaceState(window.history.state, "", `${window.location.pathname}${window.location.search}`);
+    setOpenId(id);
+  }, [items, setOpenId]);
 
   const inTheme = (t: (typeof NO_PUBLICADO_THEMES)[number]) => items.filter((i) => (t.categories as readonly string[]).includes(i.categoria));
   const themes = NO_PUBLICADO_THEMES.filter((t) => inTheme(t).length > 0);
@@ -222,7 +226,7 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
             data-track="missing_data.request.copy"
             data-track-item={item.id}
             data-track-edited={String(texto !== armarPedido(item))}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-line px-3 py-2 text-sm hover:border-link/50"
+            className={cn(buttonVariants({ variant: "secondary" }))}
           >
             {copiado ? <Check className="size-4 text-good" aria-hidden /> : <Copy className="size-4" aria-hidden />}
             {copiado ? "Copiado" : "1. Copiar pedido"}
@@ -234,7 +238,7 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
             data-track-item={item.id}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-lg bg-brand px-3 py-2 text-sm font-medium text-on-brand hover:bg-brand-hover"
+            className={cn(buttonVariants({ variant: "primary" }))}
           >
             2. Presentarlo en el formulario oficial <ExternalLink className="size-4" aria-hidden />
           </a>

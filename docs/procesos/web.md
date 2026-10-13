@@ -41,6 +41,29 @@ La portada está pensada para quien llega sin saber por dónde empezar. Los comp
 
 Al sumar una sección, conviene ubicarla en el mapa (`EcosystemMap`) y, si responde una pregunta frecuente, en `StartingQuestions`.
 
+## Todo se puede compartir: el estado va en la URL
+
+Cualquier vista se puede pasar por link tal como está: la pestaña de una página, una búsqueda, el departamento elegido en un mapa y la hoja abierta.
+
+| Página | Parámetros |
+|---|---|
+| Municipios | `?ver=coparticipacion` o `?ver=personal` |
+| Empleo público | `?periodo=8` o `?periodo=todo` |
+| Población | `?medida=crecimiento`, `?departamento=<slug>` |
+| Coparticipación | `?departamento=<slug>` |
+| Funcionarios | `?grupo=legislatura`, `?q=<búsqueda>` |
+| Leyes, proveedores, organismos | `?q=<búsqueda>` |
+| Lo que no se publica | `?tema=<id>`, `?dato=<id>` (los links viejos con `#id` siguen andando) |
+| Participar | `?tipo=error` |
+| Datos | `?<tabla>=<grupo>` (por ejemplo, `?personal=2025`) |
+| Señales y compras | `?senal=`, `?proceso=`, `?proveedor=` (ver abajo) |
+
+- **Cómo se hace:** con `useUrlOption` (opciones fijas) y `useUrlText` (texto o un id), de `src/url-state.ts`. Para cambiar varios parámetros juntos, `useSetUrlParams`. Nunca con `useState` para algo que alguien querría compartir.
+- **Cómo se comporta:** cambiar una pestaña reemplaza la entrada del historial (no suma pasos al botón "atrás"), no mueve el scroll y conserva los demás parámetros. El valor por defecto no se escribe.
+- **El router no vuelve a pedir los datos** cuando cambian los parámetros (`defaultStaleTime: Infinity`): los datos solo cambian con cada publicación.
+- **Links internos:** a una hoja, con `search` (`<Link to="/no-publicado" search={{ dato: id }}>`), nunca con `hash`.
+- **Buscador:** también encuentra las señales (`/senales?senal=…`) y los datos que no se publican (`/no-publicado?dato=…`).
+
 ## Hojas con el id en la URL
 
 Las hojas de detalle se abren con parámetros en la URL, así cada caso se puede compartir y abrir directo:

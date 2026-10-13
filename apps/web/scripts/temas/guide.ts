@@ -20,6 +20,7 @@ import type {
   OrganismoResumen,
   ProveedorResumen,
   SearchEntry,
+  SenalesTema,
 } from "../../src/types.ts";
 import type { Pagina } from "../paginas.ts";
 
@@ -155,6 +156,8 @@ export function writeSearchIndex(paginas: Pagina[], outDir: string) {
   const buyers = read<OrganismoResumen[]>("temas/organismos.json", []);
   const agencies = read<AgencySummary[]>("temas/gobierno.json", []);
   const index = read<DataIndex>("index.json", { generatedAt: "", sources: [], datasets: [] });
+  const signals = read<SenalesTema>("temas/senales.json", { senales: [] } as unknown as SenalesTema).senales;
+  const missing = read<NoPublicado[]>("temas/no-publicado.json", []);
 
   const byPath = new Map<string, Omit<SearchEntry, "p" | "k">>();
   for (const o of officials) {
@@ -206,6 +209,9 @@ export function writeSearchIndex(paginas: Pagina[], outDir: string) {
       q: p.description,
     };
   });
+  // Items that open in a sheet over their page: each one has its own URL, so it can be found and shared.
+  for (const s of signals) entries.push({ p: `/senales?senal=${s.id}`, k: "Señal", t: `${s.cifra} ${s.titulo}`, s: `Para mirar de cerca · ${s.tema}`, q: `${s.matiz} ${s.casosTitulo}` });
+  for (const m of missing) entries.push({ p: `/no-publicado?dato=${m.id}`, k: "No se publica", t: m.titulo, s: m.organismo, q: `${m.que_es} ${m.categoria}` });
   const paths = new Set(entries.map((e) => e.p));
   for (const [path, e] of byPath) if (path.startsWith("/proveedores/") && !paths.has(path)) entries.push({ p: path, k: "Proveedor", ...e });
   writeFileSync(join(outDir, "search.json"), JSON.stringify(entries));

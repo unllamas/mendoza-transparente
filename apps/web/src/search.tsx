@@ -1,3 +1,5 @@
+import { cn } from "@mt/ui/lib/utils";
+import { buttonVariants } from "@mt/ui/components/button";
 /**
  * Advanced search: a dialog over everything (full screen on phones, a centered panel on desktop) with results
  * grouped by kind and filters by kind. Opened from the home page, the header search button, or "/" and
@@ -14,6 +16,7 @@ import {
   Building2,
   CornerDownLeft,
   Database,
+  EyeOff,
   Landmark,
   LayoutGrid,
   type LucideIcon,
@@ -22,6 +25,7 @@ import {
   Search,
   ShoppingCart,
   Store,
+  TriangleAlert,
   UsersRound,
   X,
 } from "lucide-react";
@@ -50,7 +54,7 @@ const fold = (s: string) =>
     .replace(/(\d)\.(?=\d)/g, "$1");
 
 /** People, places and laws first: they are what most searches are about. */
-const KIND_WEIGHT: Record<string, number> = { Municipio: 6, Funcionario: 5, Ley: 4, Organismo: 4, Proveedor: 3, Sección: 3 };
+const KIND_WEIGHT: Record<string, number> = { Municipio: 6, Funcionario: 5, Ley: 4, Organismo: 4, Señal: 4, "No se publica": 3, Proveedor: 3, Sección: 3 };
 
 /** Result groups, in the order the filters show them: plural label and icon. */
 const GROUPS: { kind: string; label: string; icon: LucideIcon }[] = [
@@ -61,6 +65,8 @@ const GROUPS: { kind: string; label: string; icon: LucideIcon }[] = [
   { kind: "Proveedor", label: "Proveedores", icon: Store },
   { kind: "Área que compra", label: "Áreas que compran", icon: ShoppingCart },
   { kind: "Cargo", label: "Cargos", icon: Landmark },
+  { kind: "Señal", label: "Para mirar de cerca", icon: TriangleAlert },
+  { kind: "No se publica", label: "Lo que no se publica", icon: EyeOff },
   { kind: "Datos abiertos", label: "Datos abiertos", icon: Database },
   { kind: "Sección", label: "Secciones", icon: LayoutGrid },
 ];
@@ -198,7 +204,8 @@ export function SearchDialog() {
   const go = (e: SearchEntry, position: number) => {
     track("search.select", { query: q.slice(0, 80), kind: e.k, path: e.p, position, filter: kind ?? "todo" });
     close();
-    void navigate({ to: e.p });
+    // `href`, not `to`: some results carry parameters (/senales?senal=…, /no-publicado?dato=…).
+    void navigate({ href: e.p });
   };
   const choose = (k: string | null) => {
     setKind(k);
@@ -288,9 +295,9 @@ export function SearchDialog() {
                     {g.items.map((e) => {
                       const i = results.indexOf(e);
                       return (
-                        <Link
+                        <a
                           key={e.p}
-                          to={e.p}
+                          href={e.p}
                           role="option"
                           aria-selected={i === active}
                           onClick={(ev) => {
@@ -305,7 +312,7 @@ export function SearchDialog() {
                             <span className={`truncate font-medium ${i === active ? "text-link" : ""}`}>{e.t}</span>
                             <span className="truncate text-sm text-ink-muted">{e.s}</span>
                           </span>
-                        </Link>
+                        </a>
                       );
                     })}
                     {!kind && total > g.items.length && (
@@ -383,7 +390,7 @@ function EmptyState({ onExample, onNavigate }: { onExample: (q: string) => void;
                 track("search.example", { query: ex });
                 onExample(ex);
               }}
-              className="rounded-full border border-line px-3 py-1 text-sm text-ink-2 hover:border-link hover:text-ink"
+              className={cn(buttonVariants({ variant: "secondary" }), "rounded-full font-normal")}
             >
               {ex}
             </button>

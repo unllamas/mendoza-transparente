@@ -1,3 +1,5 @@
+import { cn } from "@mt/ui/lib/utils";
+import { buttonVariants } from "@mt/ui/components/button";
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import {
   Archive,
@@ -221,8 +223,8 @@ export function HomePage() {
               <li key={item.id}>
                 <Link
                   to="/no-publicado"
-                  hash={item.id}
-                  className="flex h-full items-start gap-3 rounded-xl border border-line px-4 py-3 text-sm hover:border-link/50"
+                  search={{ dato: item.id } as never}
+                  className="flex h-full items-start gap-3 rounded-xl border border-line px-4 py-3 text-sm hover:border-link"
                 >
                   <EyeOff className="mt-0.5 size-4 shrink-0 text-ink-muted" aria-hidden />
                   <span className="flex flex-col gap-0.5">
@@ -235,7 +237,7 @@ export function HomePage() {
           </ul>
           <Link
             to="/no-publicado"
-            className="inline-flex w-fit items-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-medium text-on-brand hover:bg-brand-hover"
+            className={cn(buttonVariants({ variant: "primary" }), "w-fit")}
           >
             Ver todos y cómo pedirlos <ArrowRight className="size-4" aria-hidden />
           </Link>
@@ -292,7 +294,7 @@ export function HomePage() {
           </div>
           <Link
             to="/senales"
-            className="inline-flex w-fit items-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-medium text-on-brand hover:bg-brand-hover"
+            className={cn(buttonVariants({ variant: "primary" }), "w-fit")}
           >
             Ver todas las señales y sus casos <ArrowRight className="size-4" aria-hidden />
           </Link>
@@ -346,7 +348,7 @@ function Cifra({ icon: Icon, titulo, valor, unidad, detalle, serie, fuente, to, 
       </Link>
     );
   return (
-    <div className="group relative flex min-w-0 flex-col gap-4 rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-link/50">
+    <div className="group relative flex min-w-0 flex-col gap-4 rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-link">
       <div className="flex items-center justify-between gap-3">
         <span className="flex min-w-0 items-center gap-2 text-sm text-ink-2">
           <Icon className="size-4 shrink-0 text-ink-muted" aria-hidden />

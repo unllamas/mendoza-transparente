@@ -4,6 +4,7 @@ import { getRouteApi, Link } from "@tanstack/react-router";
 import { BriefcaseBusiness, Trophy, UsersRound } from "lucide-react";
 import { useState } from "react";
 
+import { useUrlOption } from "../url-state.ts";
 import { BarList } from "../charts/bar-list.tsx";
 import { LineChart } from "../charts/line-chart.tsx";
 import { GOBIERNOS } from "../gobiernos.ts";
@@ -27,7 +28,7 @@ const FUENTE =
 export function EmpleoPage() {
   const empleo = route.useLoaderData();
   const pico = empleo.serie.reduce((max, p) => (p.cadaMil > max.cadaMil ? p : max));
-  const [periodo, setPeriodo] = useState<Periodo>("4");
+  const [periodo, setPeriodo] = useUrlOption<Periodo>("periodo", ["4", "8", "todo"], "4");
   const gobiernos = periodo === "todo" ? GOBIERNOS : GOBIERNOS.slice(-Number(periodo));
   const desde = Number(gobiernos[0]!.desde.slice(0, 4));
   const serie = empleo.serie.filter((p) => p.anio >= desde);

@@ -1,3 +1,5 @@
+import { cn } from "@mt/ui/lib/utils";
+import { buttonVariants } from "@mt/ui/components/button";
 import { Section } from "@mt/ui/components/section";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { ExternalLink, Table2 } from "lucide-react";
@@ -68,7 +70,7 @@ function FuenteItem({ source: s, tables }: { source: SourceMeta; tables: number 
             <Link
               to="/datos/$fuente"
               params={{ fuente: s.id }}
-              className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-line px-3 py-1.5 text-sm hover:border-link/50"
+              className={cn(buttonVariants({ variant: "secondary" }))}
             >
               <Table2 className="size-4" aria-hidden /> Ver datos
             </Link>
@@ -76,7 +78,7 @@ function FuenteItem({ source: s, tables }: { source: SourceMeta; tables: number 
           {s.url && (
             <a
               href={s.url}
-              className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-line px-3 py-1.5 text-sm text-ink-2 hover:border-link/50 hover:text-ink"
+              className={cn(buttonVariants({ variant: "secondary" }))}
             >
               Fuente oficial <ExternalLink className="size-3.5" aria-hidden />
             </a>

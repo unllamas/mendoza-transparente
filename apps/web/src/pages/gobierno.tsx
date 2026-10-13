@@ -1,3 +1,5 @@
+import { cn } from "@mt/ui/lib/utils";
+import { buttonVariants } from "@mt/ui/components/button";
 import { Alert } from "@mt/ui/components/alert";
 import { PersonAvatar } from "@mt/ui/components/avatar";
 import { PageHeader, Section } from "@mt/ui/components/section";
@@ -53,7 +55,7 @@ export function GobiernoPage() {
       <Alert variant="note">
         Son cargos, no personas: una persona puede ocupar más de un cargo y los docentes suman además horas cátedra. Mendoza no
         publica la nómina con nombres.{" "}
-        <Link to="/no-publicado" hash="nomina-sueldos" className="font-medium text-link hover:underline">
+        <Link to="/no-publicado" search={{ dato: "nomina-sueldos" } as never} className="font-medium text-link hover:underline">
           Pedila ›
         </Link>
       </Alert>
@@ -300,7 +302,7 @@ export function AgencyPage() {
                 <Link
                   to="/gobierno/$slug"
                   params={{ slug: c.slug }}
-                  className="inline-flex items-center gap-1 rounded-full border border-line px-3 py-1.5 text-sm hover:border-link hover:text-link"
+                  className={cn(buttonVariants({ variant: "secondary" }), "rounded-full font-normal")}
                 >
                   {c.name} <ChevronRight className="size-3.5" aria-hidden />
                 </Link>
@@ -398,7 +400,7 @@ function Purchases({ agency: a }: { agency: AgencyDetail }) {
                 <Link
                   to="/organismos/$slug"
                   params={{ slug: b.slug }}
-                  className="inline-flex items-center gap-1 rounded-full border border-line px-3 py-1.5 text-sm hover:border-link hover:text-link"
+                  className={cn(buttonVariants({ variant: "secondary" }), "rounded-full font-normal")}
                 >
                   {b.name} <ChevronRight className="size-3.5" aria-hidden />
                 </Link>

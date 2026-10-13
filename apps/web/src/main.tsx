@@ -224,6 +224,9 @@ const senalesRoute = createRoute({
 const router = createRouter({
   routeTree: rootRoute.addChildren([homeRoute, deudaRoute, coparticipacionRoute, empleoRoute, poblacionRoute, funcionariosRoute, roleRoute, funcionarioRoute, gobiernoRoute, agencyRoute, municipiosRoute, municipioRoute, proveedoresRoute, proveedorRoute, organismosRoute, organismoRoute, leyesRoute, leyRoute, senalesRoute, noPublicadoRoute, participarRoute, comoLeerRoute, fuentesRoute, datosRoute]),
   defaultPreload: "intent",
+  // The data only changes with each deploy: once loaded, a page does not fetch it again when its URL
+  // parameters change (a tab, a search typed letter by letter).
+  defaultStaleTime: Infinity,
   scrollRestoration: true,
 });
 

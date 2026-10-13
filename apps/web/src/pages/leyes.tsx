@@ -1,9 +1,12 @@
+import { cn } from "@mt/ui/lib/utils";
+import { buttonVariants } from "@mt/ui/components/button";
 import { PersonAvatar } from "@mt/ui/components/avatar";
 import { PageHeader } from "@mt/ui/components/section";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { BadgeCheck, ChevronDown, ChevronRight, CircleHelp, ExternalLink, FileText, MapPin, Scale, Sparkles, Users } from "lucide-react";
 import { useMemo, useState } from "react";
 
+import { useUrlText } from "../url-state.ts";
 import { FuentesOficiales } from "../fuente.tsx";
 import { formatDate } from "../lib.ts";
 import type { LeyDetalle } from "../types.ts";
@@ -15,7 +18,7 @@ const PAGINA = 40;
 
 export function LeyesPage() {
   const leyes = listaRoute.useLoaderData();
-  const [q, setQ] = useState("");
+  const [q, setQ] = useUrlText("q");
   const [mostrar, setMostrar] = useState(PAGINA);
   const visibles = useMemo(() => {
     const n = normalizar(q.trim());
@@ -48,7 +51,7 @@ export function LeyesPage() {
           ))}
         </ul>
         {mostrar < visibles.length && (
-          <button type="button" onClick={() => setMostrar((n) => n + PAGINA)} className="w-fit rounded-lg bg-brand px-4 py-2 text-sm font-medium text-on-brand hover:bg-brand-hover">
+          <button type="button" onClick={() => setMostrar((n) => n + PAGINA)} className={cn(buttonVariants({ variant: "secondary" }), "w-fit")}>
             Ver más
           </button>
         )}
@@ -181,7 +184,7 @@ export function LeyPage() {
           id="ley-texto-oficial"
           data-track="law.official_pdf.open"
           data-track-law={ley.numero}
-          className="inline-flex w-fit items-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-medium whitespace-nowrap text-on-brand hover:bg-brand-hover"
+          className={cn(buttonVariants({ variant: "primary" }), "w-fit")}
         >
           <FileText className="size-4" aria-hidden /> Leer el texto oficial (PDF) <ExternalLink className="size-3.5" aria-hidden />
         </a>

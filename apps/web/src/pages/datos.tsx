@@ -1,8 +1,10 @@
+import { Button } from "@mt/ui/components/button";
 import { StatTile } from "@mt/ui/components/stat-tile";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { ArrowLeft, Download, ExternalLink, MousePointerClick } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
+import { useUrlText } from "../url-state.ts";
 import { columnasVisibles, type ColumnaVista } from "../celdas.ts";
 import { formatBytes, formatDate, formatNumber, humanize, loadPreview } from "../lib.ts";
 import type { DatasetMeta, Preview } from "../types.ts";
@@ -66,7 +68,10 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
   const dict = dataset.dict;
   const groups = dataset.groups;
   const inicial = groups?.find((g) => g.value === dict?.grupoInicial) ?? groups?.[0];
-  const [groupSlug, setGroupSlug] = useState(inicial?.slug);
+  // The group shown (a year, an agency) lives in the URL with the table's name: /datos/lrf-personal?personal=2025.
+  const [groupParam, setGroupParam] = useUrlText(dataset.file.replace(/\.csv$/, ""));
+  const groupSlug = groups?.some((g) => g.slug === groupParam) ? groupParam : inicial?.slug;
+  const setGroupSlug = (s: string) => setGroupParam(s === inicial?.slug ? null : s);
   const group = groups?.find((g) => g.slug === groupSlug);
   const [preview, setPreview] = useState<Preview | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -113,7 +118,7 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
               <select
                 value={groupSlug}
                 onChange={(e) => setGroupSlug(e.target.value)}
-                className="rounded-lg border border-line bg-surface px-2 py-1.5 text-sm text-ink hover:border-link/50"
+                className="min-h-11 rounded-lg border border-line bg-surface px-3 text-sm text-ink hover:border-link"
               >
                 {groups.map((g) => (
                   <option key={g.slug} value={g.slug}>
@@ -123,13 +128,11 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
               </select>
             </label>
           )}
-          <a
-            href={`/data/${dataset.source}/${dataset.file}`}
-            download
-            className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-line px-3 py-1.5 text-sm hover:border-link/50"
-          >
-            <Download className="size-4" aria-hidden /> Descargar CSV
-          </a>
+          <Button asChild>
+            <a href={`/data/${dataset.source}/${dataset.file}`} download>
+              <Download className="size-4" aria-hidden /> Descargar CSV
+            </a>
+          </Button>
         </div>
       </div>
 

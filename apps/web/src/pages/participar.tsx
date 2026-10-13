@@ -1,9 +1,12 @@
+import { cn } from "@mt/ui/lib/utils";
+import { buttonVariants } from "@mt/ui/components/button";
 import { Alert } from "@mt/ui/components/alert";
 import { PageHeader } from "@mt/ui/components/section";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Bug, CheckCircle2, FilePlus2, MessageSquareReply, Send, Stamp } from "lucide-react";
 import { type FormEvent, type ReactNode, useEffect, useRef, useState } from "react";
 
+import { useUrlOption } from "../url-state.ts";
 import { track } from "../analytics.ts";
 import type { NoPublicado } from "../types.ts";
 import { Segmented } from "./components.tsx";
@@ -44,8 +47,7 @@ export function ParticiparPage() {
   const search = route.useSearch();
   const navigate = route.useNavigate();
   // The open form lives in the URL (?tipo=…), so links from other pages land on the right one.
-  const form = FORMS.find((f) => f.value === search.tipo)?.value ?? "pedido";
-  const setForm = (tipo: Form) => void navigate({ search: (s) => ({ ...s, tipo }), replace: true });
+  const [form, setForm] = useUrlOption<Form>("tipo", ["pedido", "respuesta", "error", "dato"], "pedido");
   const stats = useRequestStats();
 
   return (
@@ -313,7 +315,7 @@ function SubmitRow({ state, label, id }: { state: SubmitState; label: string; id
         id={id}
         data-track={`${id}.click`}
         disabled={state.status === "sending"}
-        className="inline-flex w-fit items-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-medium text-on-brand hover:bg-brand-hover disabled:opacity-60"
+        className={cn(buttonVariants({ variant: "primary" }), "w-fit")}
       >
         <Send className="size-4" aria-hidden /> {state.status === "sending" ? "Enviando…" : label}
       </button>

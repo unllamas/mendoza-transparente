@@ -1,3 +1,5 @@
+import { cn } from "@mt/ui/lib/utils";
+import { buttonVariants } from "@mt/ui/components/button";
 import { Alert } from "@mt/ui/components/alert";
 import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
@@ -5,6 +7,7 @@ import { getRouteApi, Link } from "@tanstack/react-router";
 import { Coins, MapPin, UserRound } from "lucide-react";
 import { useState } from "react";
 
+import { useUrlText } from "../url-state.ts";
 import { formatMoneda } from "../celdas.ts";
 import { LineChart } from "../charts/line-chart.tsx";
 import { MapaMendoza } from "../charts/mapa.tsx";
@@ -21,7 +24,9 @@ const FUENTE = "https://sitios.mendoza.gob.ar/haciendayfinanzas/participacion-mu
 
 export function CoparticipacionPage() {
   const { tema, mapa } = route.useLoaderData();
-  const [sel, setSel] = useState<string | null>(null);
+  const [selSlug, setSelSlug] = useUrlText("departamento");
+  const sel = tema.municipios.find((m) => slug(m.municipio) === selSlug)?.municipio ?? null;
+  const setSel = (name: string | null) => setSelSlug(name && slug(name));
   const ranking = [...tema.municipios].sort((a, b) => b.perCapita - a.perCapita);
   const provincial = tema.provincia.find((p) => p.anio === tema.anioCompleto)!;
   const municipio = ranking.find((m) => m.municipio === sel);
@@ -144,7 +149,7 @@ function DetalleMunicipio({
         <button
           type="button"
           onClick={onClose}
-          className="rounded-lg border border-line px-3 py-1 text-sm text-ink-2 hover:border-link/50 hover:text-ink"
+          className={cn(buttonVariants({ variant: "secondary" }))}
         >
           Ver ranking
         </button>
