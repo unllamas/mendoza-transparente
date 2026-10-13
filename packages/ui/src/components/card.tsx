@@ -7,7 +7,7 @@ import { cx } from "@mt/ui/lib/cx";
  * docs/procesos/diseno.md), and on hover its border takes the link color.
  */
 const SHAPE = "rounded-xl border border-border-button-default shadow-xs";
-const SURFACE = `${SHAPE} bg-background-primary-default`;
+const SURFACE = `${SHAPE} bg-background-surface`;
 const INTERACTIVE = `${SHAPE} bg-background-interactive`;
 const PADDING = { sm: "p-3", default: "p-4", lg: "p-5" } as const;
 
@@ -38,8 +38,6 @@ export function listVariants() {
 export function listRowVariants({ interactive = true }: { interactive?: boolean } = {}) {
   return cx(
     "flex min-h-11 w-full items-center gap-3 px-4 py-3 text-left",
-    interactive
-      ? "group bg-background-interactive transition-colors hover:bg-background-interactive-hover"
-      : "bg-background-primary-default",
+    interactive ? "group bg-background-interactive transition-colors hover:bg-background-interactive-hover" : "bg-background-surface",
   );
 }

@@ -69,7 +69,7 @@ export function Sheet({
     >
       <Modal
         className={cx(
-          "fixed inset-y-0 right-0 z-40 flex w-full flex-col overflow-hidden border-l border-separator-border bg-background-primary-default shadow-2xl outline-none sm:w-[32rem]",
+          "fixed inset-y-0 right-0 z-40 flex w-full flex-col overflow-hidden border-l border-separator-border bg-background-surface shadow-2xl outline-none sm:w-[32rem]",
           className,
         )}
       >

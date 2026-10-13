@@ -143,7 +143,7 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
         <>
           <div className={cx(tileVariants(), "max-h-[32rem] overflow-auto p-0")}>
             <table className="w-full text-left text-body-regular tabular-nums">
-              <thead className="sticky top-0 bg-background-primary-default text-text-tertiary shadow-[0_1px_0_var(--color-separator-border)]">
+              <thead className="sticky top-0 bg-background-surface text-text-tertiary shadow-[0_1px_0_var(--color-separator-border)]">
                 <tr>
                   {columnas.map((c) => (
                     <th
