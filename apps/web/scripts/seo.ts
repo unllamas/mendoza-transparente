@@ -6,11 +6,13 @@
  * - una imagen para compartir por página;
  * - sitemap.xml con la fecha real de cada página, robots.txt y llms.txt.
  */
+import { readFileSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
 import { Resvg } from "@resvg/resvg-js";
 
+import { DEFAULT_PHOTO, PHOTOS, type Photo, type PhotoId } from "../src/photos.ts";
 import { canonicalUrl, OG_SIZE, ogImageUrl, SITE_NAME, SITE_URL } from "../src/seo.ts";
 import { construirPaginas, type Pagina } from "./paginas.ts";
 
@@ -20,6 +22,8 @@ const DATA = join(WEB, "public", "data");
 const FONTS = join(import.meta.dirname, "fonts");
 
 const ACCENT = "#74acdf";
+/** Goes into the image hash: bump it when the design of the share images changes, so networks fetch them again. */
+const OG_DESIGN = 2;
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const jsonLd = (o: unknown) => JSON.stringify(o).replace(/</g, "\\u003c");
@@ -30,7 +34,10 @@ function headTags(p: Pagina): string {
   const { path, title, description } = p;
   const url = canonicalUrl(path);
   // Social networks cache images by URL: a hash of the image content makes them fetch it again when it changes.
-  const image = `${ogImageUrl(p.og.slug)}?v=${new Bun.CryptoHasher("sha1").update(JSON.stringify(p.og)).digest("hex").slice(0, 8)}`;
+  const image = `${ogImageUrl(p.og.slug)}?v=${new Bun.CryptoHasher("sha1")
+    .update(JSON.stringify({ ...p.og, photo: p.og.photo ?? DEFAULT_PHOTO, design: OG_DESIGN }))
+    .digest("hex")
+    .slice(0, 8)}`;
   const lines = [
     `<title>${esc(title)}</title>`,
     `<meta name="description" content="${esc(description)}" />`,
@@ -93,6 +100,58 @@ function wrap(text: string, maxChars: number, maxLines: number): string[] {
 
 type OgData = Pagina["og"];
 
+/**
+ * The page's landscape in dots, like `DotImage` on the site: dim behind the text, brighter toward the top
+ * right corner. Each dot is a flat circle with the color of its cell (resvg renders the photo at one pixel per
+ * dot to read them), which keeps the PNG under the 300 KB WhatsApp accepts. Drawn once per photo, as a PNG layer.
+ */
+const photoLayers = new Map<PhotoId, string>();
+const NO_SYSTEM_FONTS = { font: { loadSystemFonts: false } }; // loading them takes ~3 s per render
+
+function photoLayer(id: PhotoId): string {
+  const cached = photoLayers.get(id);
+  if (cached) return cached;
+  const { width: W, height: H } = OG_SIZE;
+  const photo: Photo = PHOTOS[id];
+  const jpg = readFileSync(join(WEB, "public", photo.src));
+  // object-position → preserveAspectRatio, which only takes start/middle/end: the closest one is enough here.
+  const align = (v = "50%") => {
+    const n = Number.parseFloat(v);
+    return n < 34 ? "Min" : n > 66 ? "Max" : "Mid";
+  };
+  const [fx, fy] = (photo.focus ?? "").split(" ");
+  const dot = 12;
+  const cols = W / dot;
+  const rows = Math.ceil(H / dot);
+  const grid = new Resvg(
+    `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${cols}" height="${rows}">
+      <image xlink:href="data:image/jpeg;base64,${jpg.toString("base64")}" width="${cols}" height="${rows}" preserveAspectRatio="x${align(fx)}Y${align(fy)} slice"/>
+    </svg>`,
+    NO_SYSTEM_FONTS,
+  ).render().pixels;
+  const BG = 13; // #0d0d0d
+  const circles: string[] = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const x = c / (cols - 1);
+      const y = r / (rows - 1);
+      // How much of the photo shows: 14 % on the left half, up to 85 % in the top right corner.
+      const k = 0.14 + 0.71 * Math.max(0, (x - 0.35) / 0.65) ** 1.2 * (1 - 0.5 * y);
+      const i = (r * cols + c) * 4;
+      // Quantized to steps of 16: fewer distinct colors make a much smaller PNG, with no visible difference.
+      const [cr = 0, cg = 0, cb = 0] = [0, 1, 2].map((o) => Math.round((BG + ((grid[i + o] ?? 0) - BG) * k) / 16) * 16);
+      if (Math.max(cr, cg, cb) < BG + 6) continue;
+      circles.push(`<circle cx="${c * dot + dot / 2}" cy="${r * dot + dot / 2}" r="${dot * 0.42}" fill="rgb(${cr},${cg},${cb})"/>`);
+    }
+  }
+  const png = new Resvg(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">${circles.join("")}</svg>`, NO_SYSTEM_FONTS)
+    .render()
+    .asPng();
+  const uri = `data:image/png;base64,${Buffer.from(png).toString("base64")}`;
+  photoLayers.set(id, uri);
+  return uri;
+}
+
 function ogSvg(d: OgData): string {
   const { width: W, height: H } = OG_SIZE;
   const titleLines = wrap(d.titulo, 30, 2);
@@ -102,19 +161,20 @@ function ogSvg(d: OgData): string {
     .join("");
   const figSize = Math.round(Math.min(titleLines.length > 1 ? 100 : 150, 1040 / (d.figura.length * 0.64)));
   const bajada = wrap(d.bajada, 62, 2)
-    .map((l, i) => `<text x="80" y="${487 + i * 40}" font-size="30" fill="#a3a3a3">${esc(l)}</text>`)
+    .map((l, i) => `<text x="80" y="${487 + i * 40}" font-size="30" fill="#d4d4d4">${esc(l)}</text>`)
     .join("");
   const host = SITE_URL.replace(/^https?:\/\//, "");
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="Inter">
+  return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="Inter">
   <rect width="${W}" height="${H}" fill="#0d0d0d"/>
+  <image xlink:href="${photoLayer(d.photo ?? DEFAULT_PHOTO)}" width="${W}" height="${H}"/>
   <rect x="80" y="72" width="56" height="6" rx="3" fill="${ACCENT}"/>
-  <text x="152" y="82" font-size="22" font-weight="700" letter-spacing="3" fill="#8a8a8a">${esc(d.eyebrow)}</text>
+  <text x="152" y="82" font-size="22" font-weight="700" letter-spacing="3" fill="#a3a3a3">${esc(d.eyebrow)}</text>
   ${title}
   <text x="76" y="${titleLines.length > 1 ? 430 : 380}" font-size="${figSize}" font-weight="700" letter-spacing="-3" fill="#ffffff">${esc(d.figura)}</text>
   ${bajada}
   <line x1="80" y1="548" x2="${W - 80}" y2="548" stroke="#262626" stroke-width="2"/>
   <text x="80" y="590" font-size="26" font-weight="700" fill="#ffffff">${SITE_NAME}</text>
-  <text x="${W - 80}" y="590" font-size="24" text-anchor="end" fill="#8a8a8a">${esc(host)}</text>
+  <text x="${W - 80}" y="590" font-size="24" text-anchor="end" fill="#a3a3a3">${esc(host)}</text>
 </svg>`;
 }
 

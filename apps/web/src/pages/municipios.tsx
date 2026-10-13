@@ -10,9 +10,11 @@ import { useMemo } from "react";
 import { ColumnChart } from "@/charts/column-chart.tsx";
 import { MapaMendoza, MunicipalityLocator } from "@/charts/mapa.tsx";
 import { Breadcrumbs } from "@/components/breadcrumbs.tsx";
+import { LandscapePhoto } from "@/components/landscape-photo.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
 import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
 import { formatDate, formatNumber } from "@/lib.ts";
+import { municipalityPhoto } from "@/photos.ts";
 import { slug } from "@/slug.ts";
 import type { MunicipioPagina } from "@/types.ts";
 import { useUrlOption } from "@/url-state.ts";
@@ -152,7 +154,10 @@ export function MunicipioPage() {
   const yearly = st ? [...new Map(st.series.map((s) => [s.cutoff.slice(0, 4), s])).values()] : [];
   return (
     <div className="flex flex-col gap-10">
-      <Breadcrumbs items={[{ label: "Municipios", to: "/municipios" }, { label: m.nombre }]} />
+      <div className="flex flex-col gap-6">
+        <LandscapePhoto id={municipalityPhoto(m.slug)} className="h-44 sm:h-64" />
+        <Breadcrumbs items={[{ label: "Municipios", to: "/municipios" }, { label: m.nombre }]} />
+      </div>
       <PageHeader icon={RiMapPinLine} topic="Municipio" title={m.nombre}>
         Quién lo gobierna, cuántos habitantes tiene, cuánta coparticipación recibe y quiénes lo representan en la Legislatura.
       </PageHeader>

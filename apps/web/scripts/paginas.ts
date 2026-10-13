@@ -14,6 +14,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { GLOSSARY } from "../src/glossary.ts";
 import { NO_PUBLICADO_CATEGORIES } from "../src/no-publicado-categories.ts";
+import { municipalityPhoto, type PhotoId } from "../src/photos.ts";
 import { datosMeta, PAGES, SITE_NAME, SITE_URL, TITLE_SUFFIX } from "../src/seo.ts";
 import { ROLES } from "../src/slug.ts";
 import type {
@@ -39,7 +40,7 @@ export interface Pagina {
   title: string;
   description: string;
   /** Imagen para compartir. */
-  og: { slug: string; eyebrow: string; titulo: string; figura: string; bajada: string };
+  og: { slug: string; eyebrow: string; titulo: string; figura: string; bajada: string; photo?: PhotoId };
   /** Datos estructurados (sin @context: se agrega al escribir). */
   ld: Record<string, unknown>[];
   /** Contenido principal en HTML semántico (h1, resumen, datos, enlaces). */
@@ -892,6 +893,7 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
       og: {
         slug: `municipio-${m.slug}`,
         eyebrow: "MUNICIPIO",
+        photo: municipalityPhoto(m.slug),
         titulo: `${m.nombre}, Mendoza`,
         figura: `${nf.format(m.poblacion.actual)} hab.`,
         bajada: c

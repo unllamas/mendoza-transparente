@@ -23,7 +23,7 @@ Fuente completa: `docs/procesos/web.md` (sección "SEO y GEO" y "La portada como
 
 - **Un HTML por ruta:** `dist/<ruta>.html`, con meta, canonical, hreflang, OG, Twitter, JSON-LD y el contenido dentro de `#root` (lo leen los robots sin ejecutar JS).
 - **`404.html`** con `noindex`: devuelve código 404 y React igual resuelve la ruta.
-- **Imágenes para compartir:** `og/*.png`, con `?v=<hash>` en la URL para que WhatsApp y Facebook vuelvan a pedirlas cuando cambian.
+- **Imágenes para compartir:** `og/*.png`, con `?v=<hash>` en la URL para que WhatsApp y Facebook vuelvan a pedirlas cuando cambian. De fondo, el paisaje de la página en puntos (`og.photo`, por defecto el del sitio); cada una debe pesar menos de 300 KB, el límite de WhatsApp.
 - **Archivos para robots:**
   - `sitemap.xml`, con las fechas reales.
   - `robots.txt`, que permite los robots de IA.

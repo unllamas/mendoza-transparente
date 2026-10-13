@@ -114,7 +114,7 @@ Objetivo: que la gente encuentre el sitio cuando busca "intendente de Maipú", "
 - `scripts/seo.ts` (después de `vite build`) escribe:
   - `404.html`, la app sin contenido y con `noindex`: Cloudflare la sirve con código 404 para las rutas sin HTML propio, y React igual resuelve la ruta.
   - Un HTML por ruta (`dist/leyes/9735.html`, `dist/municipios/capital.html`…) con meta tags, Open Graph, Twitter, canonical, hreflang y JSON-LD, y el `html` de la página dentro de `#root`. Así buscadores, redes y motores de IA leen el contenido sin ejecutar JavaScript; React lo reemplaza al cargar. Van como `ruta.html` (no `ruta/index.html`) para que Cloudflare Pages las sirva sin barra final.
-  - Una imagen para compartir por página (`dist/og/*.png`), en Inter (incluida en `scripts/fonts/`).
+  - Una imagen para compartir por página (`dist/og/*.png`), en Inter (incluida en `scripts/fonts/`). De fondo lleva el paisaje de la página en puntos (`og.photo`; si no tiene, el del sitio, `DEFAULT_PHOTO`), tenue detrás del texto. Cada punto es un círculo de color plano y la capa se dibuja una vez por foto: así cada imagen pesa menos de 250 KB (WhatsApp no muestra las de más de 300 KB) y las 749 se generan en un minuto. Si cambia el diseño, subir `OG_DESIGN` en `scripts/seo.ts` para que las redes las vuelvan a pedir.
   - `sitemap.xml` con la fecha real de cada página.
   - `robots.txt` que permite explícitamente a los buscadores y a los robots de IA: los datos son públicos y queremos que nos citen.
   - `llms.txt` ([llmstxt.org](https://llmstxt.org)), un índice del sitio pensado para modelos de lenguaje.
