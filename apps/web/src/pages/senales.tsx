@@ -7,11 +7,11 @@ import { getRouteApi, Link, useRouter, useRouterState } from "@tanstack/react-ro
 import { Building2, ChevronRight, FileText, Scale } from "lucide-react";
 
 import { formatMoneda } from "../celdas.ts";
-import { FuentesOficiales } from "../fuente.tsx";
+import { FuentesOficiales } from "../components/official-sources.tsx";
 import { formatDate } from "../lib.ts";
 import type { Senal } from "../types.ts";
-import { Sheet } from "./components.tsx";
-import { useDetail } from "../detail-sheet.tsx";
+import { TrackedSheet } from "../components/tracked-sheet.tsx";
+import { useDetail } from "../components/detail-sheet.tsx";
 
 const route = getRouteApi("/senales");
 
@@ -73,7 +73,7 @@ function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }
   const detail = useDetail();
 
   return (
-    <Sheet titulo={s.tema} onClose={onClose}>
+    <TrackedSheet title={s.tema} onClose={onClose}>
       {(
         <>
           <div className="flex flex-col gap-2">
@@ -134,6 +134,6 @@ function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }
           <p className="border-t border-line pt-4 text-xs text-ink-muted text-pretty">Cómo lo calculamos: {s.metodo}</p>
         </>
       )}
-    </Sheet>
+    </TrackedSheet>
   );
 }

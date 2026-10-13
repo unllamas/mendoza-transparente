@@ -31,8 +31,8 @@ import {
 } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 
-import { track } from "./analytics.ts";
-import type { SearchEntry } from "./types.ts";
+import { track } from "../analytics.ts";
+import type { SearchEntry } from "../types.ts";
 
 // ------------------------------------------------------------------ index and matching
 

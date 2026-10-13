@@ -20,7 +20,7 @@ description: Convenciones de código de Mendoza Transparente. Cubre idioma (cód
 | Utilidades compartidas (fetch, archivo, CSV, municipios) | `packages/core/src/` |
 | Cálculos que arman los datos de la web | `apps/web/scripts/temas/*.ts`, llamados desde `apps/web/scripts/build-data.ts` |
 | Registro de páginas, SEO y JSON-LD | `apps/web/scripts/paginas.ts` y `scripts/seo.ts` (ver la skill `seo-y-geo`) |
-| Páginas y componentes | `apps/web/src/pages/*.tsx`, compartidos en `components.tsx`, gráficos en `src/charts/` |
+| Páginas y componentes | Solo páginas de ruta en `apps/web/src/pages/`; componentes de la web en `src/components/`; gráficos en `src/charts/`; lo genérico en `packages/ui` (`@mt/ui`) |
 | Tipos de los datos de la web | `apps/web/src/types.ts` |
 | Contenido editorial | `data/curado/*.yaml` (ver la skill `contenido-y-metodologia`) |
 | API de participación | `apps/web/server/participation.ts` (lógica), `functions/api/` (Cloudflare), `vite.config.ts` (desarrollo) |
@@ -32,7 +32,7 @@ description: Convenciones de código de Mendoza Transparente. Cubre idioma (cód
 2. **Reutilizar antes de crear:**
    - Para mostrar personas: `PersonAvatar`.
    - Para montos por año: `ColumnChart`.
-   - Para elementos visuales: `Aviso`, `StatTile`, `Section`, `Migas` y `Sheet`.
+   - Para elementos visuales: los de `@mt/ui` (`Alert`, `StatTile`, `Section`, `Sheet`…) y, con router o analítica, `Breadcrumbs`, `TrackedSheet`, `TrackedSegmented` y `ListSearch` de `src/components/`.
    - Para comparar personas entre fuentes: `samePerson` (en `scripts/temas/gobierno.ts` y `entidades.ts`).
    - Para URLs: `slug` y `ROLES` (`src/slug.ts`).
 3. **Datos derivados:** se calculan en `build-data`, nunca en el navegador. La web lee JSON chico ya armado.

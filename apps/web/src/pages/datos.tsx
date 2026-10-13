@@ -9,8 +9,8 @@ import { useUrlText } from "../url-state.ts";
 import { columnasVisibles, type ColumnaVista } from "../celdas.ts";
 import { formatBytes, formatDate, formatNumber, humanize, loadPreview } from "../lib.ts";
 import type { DatasetMeta, Preview } from "../types.ts";
-import { useDetail } from "../detail-sheet.tsx";
-import { PanelDetalle } from "./detalle.tsx";
+import { useDetail } from "../components/detail-sheet.tsx";
+import { PanelDetalle } from "../components/purchase-detail.tsx";
 
 const route = getRouteApi("/datos/$fuente");
 

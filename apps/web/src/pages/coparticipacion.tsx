@@ -15,7 +15,7 @@ import { GOBIERNOS } from "../gobiernos.ts";
 import { formatNumber } from "../lib.ts";
 import { slug } from "../slug.ts";
 import type { CoparticipacionTema } from "../types.ts";
-import { FuentesOficiales } from "../fuente.tsx";
+import { FuentesOficiales } from "../components/official-sources.tsx";
 
 const route = getRouteApi("/coparticipacion");
 

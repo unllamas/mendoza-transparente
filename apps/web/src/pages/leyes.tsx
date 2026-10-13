@@ -8,10 +8,11 @@ import { BadgeCheck, ChevronDown, ChevronRight, CircleHelp, ExternalLink, FileTe
 import { useMemo, useState } from "react";
 
 import { useUrlText } from "../url-state.ts";
-import { FuentesOficiales } from "../fuente.tsx";
-import { formatDate } from "../lib.ts";
+import { FuentesOficiales } from "../components/official-sources.tsx";
+import { formatDate, normalizeText } from "../lib.ts";
 import type { LeyDetalle } from "../types.ts";
-import { Buscador, Migas, normalizar } from "./components.tsx";
+import { ListSearch } from "../components/list-search.tsx";
+import { Breadcrumbs } from "../components/breadcrumbs.tsx";
 
 const listaRoute = getRouteApi("/leyes");
 const detalleRoute = getRouteApi("/leyes/$numero");
@@ -22,8 +23,8 @@ export function LeyesPage() {
   const [q, setQ] = useUrlText("q");
   const [mostrar, setMostrar] = useState(PAGINA);
   const visibles = useMemo(() => {
-    const n = normalizar(q.trim());
-    return n ? leyes.filter((l) => normalizar(`${l.numero} ${l.titulo} ${l.tema ?? ""}`).includes(n)) : leyes;
+    const n = normalizeText(q.trim());
+    return n ? leyes.filter((l) => normalizeText(`${l.numero} ${l.titulo} ${l.tema ?? ""}`).includes(n)) : leyes;
   }, [leyes, q]);
 
   return (
@@ -33,7 +34,7 @@ export function LeyesPage() {
       </PageHeader>
       <FuentesOficiales ids={["boletin-oficial"]} />
       <div className="flex flex-col gap-4">
-        <Buscador value={q} onChange={(v) => { setQ(v); setMostrar(PAGINA); }} placeholder="Buscar por número o palabra" label="Buscar ley" />
+        <ListSearch value={q} onChange={(v) => { setQ(v); setMostrar(PAGINA); }} placeholder="Buscar por número o palabra" label="Buscar ley" />
         <p className="text-sm text-ink-muted">{visibles.length} {visibles.length === 1 ? "ley" : "leyes"}</p>
         <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
           {visibles.slice(0, mostrar).map((l) => (
@@ -67,7 +68,7 @@ export function LeyPage() {
   if (!ley) {
     return (
       <div className="flex flex-col gap-4">
-        <Migas items={[{ label: "Leyes", to: "/leyes" }, { label: `Ley ${numero}` }]} />
+        <Breadcrumbs items={[{ label: "Leyes", to: "/leyes" }, { label: `Ley ${numero}` }]} />
         <h1 className="text-2xl font-semibold tracking-tight">No encontramos la ley {numero}</h1>
         <Link to="/leyes" className="w-fit text-link hover:underline">
           Ver todas las leyes ›
@@ -78,7 +79,7 @@ export function LeyPage() {
   const primerArticulo = ley.bloques.find((b) => b.tipo === "articulo");
   return (
     <div className="flex max-w-2xl flex-col gap-8">
-      <Migas items={[{ label: "Leyes", to: "/leyes" }, { label: `Ley ${ley.numero}` }]} />
+      <Breadcrumbs items={[{ label: "Leyes", to: "/leyes" }, { label: `Ley ${ley.numero}` }]} />
 
       <header className="flex flex-col gap-3">
         <span className="flex min-w-0 items-center gap-2 text-sm whitespace-nowrap text-ink-muted">

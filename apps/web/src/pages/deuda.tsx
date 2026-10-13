@@ -10,7 +10,7 @@ import { BarList } from "../charts/bar-list.tsx";
 import { LineChart } from "../charts/line-chart.tsx";
 import { GOBIERNOS } from "../gobiernos.ts";
 import { formatDate, formatNumber } from "../lib.ts";
-import { FuentesOficiales } from "../fuente.tsx";
+import { FuentesOficiales } from "../components/official-sources.tsx";
 
 const route = getRouteApi("/deuda");
 

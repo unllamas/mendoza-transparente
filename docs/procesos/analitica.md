@@ -30,7 +30,7 @@ Para entender cómo se usa el sitio: qué páginas se visitan, qué se busca y q
 4. **Desde componentes:**
    - `Sheet` manda `sheet.open` y `sheet.close` (con los segundos que estuvo abierta).
    - `Segmented` manda `<trackId>.change`.
-   - `Buscador` manda `search.query` cuando la persona deja de escribir.
+   - `ListSearch` (`src/components/list-search.tsx`) manda `search.query` cuando la persona deja de escribir.
 
 **Nombres:** `área.elemento.acción`, en inglés y snake_case. No se mandan datos personales: ni correos ni números de trámite.
 

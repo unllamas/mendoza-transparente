@@ -11,11 +11,13 @@ import { useMemo } from "react";
 import { useSetUrlParams, useUrlOption, useUrlText } from "../url-state.ts";
 import { BarList } from "../charts/bar-list.tsx";
 import { formatMoneda } from "../celdas.ts";
-import { formatDate, formatNumber } from "../lib.ts";
-import { FuentesOficiales } from "../fuente.tsx";
+import { formatDate, formatNumber, normalizeText } from "../lib.ts";
+import { FuentesOficiales } from "../components/official-sources.tsx";
 import { ROLES, roleBySlug } from "../slug.ts";
 import type { Funcionario, FuncionariosTema, GrupoFuncionario } from "../types.ts";
-import { Buscador, Migas, Segmented } from "./components.tsx";
+import { ListSearch } from "../components/list-search.tsx";
+import { Breadcrumbs } from "../components/breadcrumbs.tsx";
+import { TrackedSegmented } from "../components/tracked-segmented.tsx";
 
 const route = getRouteApi("/funcionarios");
 const routeFicha = getRouteApi("/funcionarios/$role/$slug");
@@ -47,7 +49,6 @@ const PEDIDO_SUELDO: Partial<Record<GrupoFuncionario, string>> = {
   senado_provincial: "dieta-legisladores",
 };
 
-const normalizar = (s: string) => s.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
 
 export function FuncionariosPage() {
   const { personas } = route.useLoaderData();
@@ -57,9 +58,9 @@ export function FuncionariosPage() {
 
   const grupos = PESTANAS.find((p) => p.value === pestana)!.grupos;
   const visibles = useMemo(() => {
-    const q = normalizar(busqueda.trim());
+    const q = normalizeText(busqueda.trim());
     return personas.filter((p) =>
-      q ? normalizar(`${p.nombre} ${p.cargo} ${p.organismo} ${p.bloque ?? ""} ${p.partido ?? ""}`).includes(q) : grupos.includes(p.grupo),
+      q ? normalizeText(`${p.nombre} ${p.cargo} ${p.organismo} ${p.bloque ?? ""} ${p.partido ?? ""}`).includes(q) : grupos.includes(p.grupo),
     );
   }, [personas, grupos, busqueda]);
 
@@ -72,8 +73,8 @@ export function FuncionariosPage() {
       <FuentesOficiales ids={["autoridades", "legislatura"]} />
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <Segmented label="Grupo" options={PESTANAS} value={pestana} onChange={(v) => setParams({ grupo: v === "ejecutivo" ? null : v, q: null })} />
-        <Buscador value={busqueda} onChange={setBusqueda} placeholder="Buscar por nombre, bloque o municipio" label="Buscar funcionario" />
+        <TrackedSegmented label="Grupo" options={PESTANAS} value={pestana} onChange={(v) => setParams({ grupo: v === "ejecutivo" ? null : v, q: null })} />
+        <ListSearch value={busqueda} onChange={setBusqueda} placeholder="Buscar por nombre, bloque o municipio" label="Buscar funcionario" />
       </div>
 
       {busqueda ? (
@@ -168,7 +169,7 @@ export function RolePage() {
   const sections = legislature ? [...new Set(people.map((p) => p.seccion ?? "Sin sección"))].sort(sectionOrder) : [null];
   return (
     <div className="flex flex-col gap-10">
-      <Migas items={[{ label: "Funcionarios", to: "/funcionarios" }, { label: r.title }]} />
+      <Breadcrumbs items={[{ label: "Funcionarios", to: "/funcionarios" }, { label: r.title }]} />
       <PageHeader icon={Landmark} topic="Funcionarios" title={r.title}>
         {r.description}
       </PageHeader>
@@ -189,7 +190,7 @@ const sectionOrder = (a: string, b: string) =>
 function NotFound() {
   return (
     <div className="flex flex-col gap-3">
-      <Migas items={[{ label: "Funcionarios", to: "/funcionarios" }, { label: "No encontrada" }]} />
+      <Breadcrumbs items={[{ label: "Funcionarios", to: "/funcionarios" }, { label: "No encontrada" }]} />
       <h1 className="text-2xl font-semibold tracking-tight">No encontramos a esa persona</h1>
       <p className="text-ink-2">Puede que haya dejado el cargo o que el enlace esté mal escrito.</p>
       <Link to="/funcionarios" className="w-fit text-link hover:underline">
@@ -207,7 +208,7 @@ export function FuncionarioPage() {
   if (!p) return <NotFound />;
   return (
     <div className="flex max-w-2xl flex-col gap-6">
-      <Migas
+      <Breadcrumbs
         items={[
           { label: "Funcionarios", to: "/funcionarios" },
           { label: ROLES[p.grupo].title, to: `/funcionarios/${p.role}` },

@@ -26,11 +26,11 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-import { REPO } from "../fuente.tsx";
+import { REPO } from "./official-sources.tsx";
 import { trackPageview } from "../analytics.ts";
 import { usePageMeta } from "../seo.ts";
-import { DetailSheet } from "../detail-sheet.tsx";
-import { HeaderSearchButton, SearchDialog } from "../search.tsx";
+import { DetailSheet } from "./detail-sheet.tsx";
+import { HeaderSearchButton, SearchDialog } from "./search-dialog.tsx";
 
 type Item = { to: string; label: string; descripcion: string; icon: LucideIcon };
 type Grupo = { label: string; items: Item[] };

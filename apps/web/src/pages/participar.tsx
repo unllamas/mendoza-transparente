@@ -11,7 +11,7 @@ import { type FormEvent, type ReactNode, useEffect, useRef, useState } from "rea
 import { useUrlOption } from "../url-state.ts";
 import { track } from "../analytics.ts";
 import type { NoPublicado } from "../types.ts";
-import { Segmented } from "./components.tsx";
+import { TrackedSegmented } from "../components/tracked-segmented.tsx";
 
 const route = getRouteApi("/participar");
 
@@ -66,7 +66,7 @@ export function ParticiparPage() {
         </div>
       )}
 
-      <Segmented label="Qué querés hacer" options={FORMS} value={form} onChange={setForm} trackId="participation.form" />
+      <TrackedSegmented label="Qué querés hacer" options={FORMS} value={form} onChange={setForm} trackId="participation.form" />
 
       {form === "pedido" && <RequestForm items={items} defaultItem={search.dato ?? null} />}
       {form === "respuesta" && <AnswerForm />}

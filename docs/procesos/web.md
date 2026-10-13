@@ -18,9 +18,9 @@ En desarrollo (`bun run dev`), el plugin de `vite.config.ts` regenera todo y rec
 
 ## La portada como guía
 
-La portada está pensada para quien llega sin saber por dónde empezar. Los componentes están en `src/pages/home-guide.tsx` y los datos en `temas/guia.json` y `data/search.json` (`scripts/temas/guide.ts`):
+La portada está pensada para quien llega sin saber por dónde empezar. Los componentes están en `src/components/home-guide.tsx` y los datos en `temas/guia.json` y `data/search.json` (`scripts/temas/guide.ts`):
 
-1. **Buscador avanzado** (`src/search.tsx`):
+1. **Buscador avanzado** (`src/components/search-dialog.tsx`):
    - **Formato:** un panel por encima de todo. En el celular ocupa la pantalla completa; en escritorio es un panel centrado.
    - **Cómo se abre:** desde el campo de la portada, desde la lupa del header (en todas las páginas) o con `/` y Ctrl/⌘+K.
    - **Qué busca:** todas las páginas y también los proveedores sin página propia.
@@ -68,7 +68,7 @@ Cualquier vista se puede pasar por link tal como está: la pestaña de una pági
 
 Las hojas de detalle se abren con parámetros en la URL, así cada caso se puede compartir y abrir directo:
 
-- `?proceso=<ocid>` y `?proveedor=<cuit>`: los maneja `DetailSheet` (`src/detail-sheet.tsx`), montado una sola vez en el layout, así que funcionan sobre cualquier página. Desde código: `useDetail().open("proceso", ocid)`.
+- `?proceso=<ocid>` y `?proveedor=<cuit>`: los maneja `DetailSheet` (`src/components/detail-sheet.tsx`), montado una sola vez en el layout, así que funcionan sobre cualquier página. Desde código: `useDetail().open("proceso", ocid)`.
 - `?senal=<id>`: la señal abierta en `/senales`. Sus casos abren la hoja del proceso o del proveedor encima (`/senales?senal=adjudicado-sobre-estimado&proceso=ocds-…`).
 
 Pasar de un proceso a un proveedor agrega un paso al historial: el botón "atrás" vuelve a la hoja anterior y la X la cierra.
@@ -81,11 +81,20 @@ Pasar de un proceso a un proveedor agrega un paso al historial: el botón "atrá
 1. **Cálculo**: un script en `scripts/temas/<tema>.ts` que recibe las tablas y devuelve el JSON del tema; su tipo va en `src/types.ts`. Llamarlo desde `build-data.ts`.
 2. **Página**: `src/pages/<tema>.tsx` con `PageHeader`, `FuentesOficiales` (fuente, sitio oficial y copia archivada), tarjetas `StatTile` y los gráficos de `src/charts/`.
 3. **Ruta**: `createRoute` en `src/main.tsx` con su `loader`.
-4. **Menú**: agregarla al grupo que corresponda en `src/pages/layout.tsx` (con ícono y descripción).
+4. **Menú**: agregarla al grupo que corresponda en `src/components/layout.tsx` (con ícono y descripción).
 5. **SEO**: entrada en `PAGES` de `src/seo.ts` (título de hasta 60 caracteres con la palabra clave, descripción de 140 a 160) y su página en `scripts/paginas.ts` (cifra para la imagen, JSON-LD y contenido escrito). Ver [SEO y GEO](#seo-y-geo).
 6. Verificar (ver abajo).
 
-Componentes disponibles: los del design system (`@mt/ui`, ver `docs/procesos/diseno.md`) y los propios de la web (`Sheet` y `Segmented` con analítica, `Buscador`, `Migas`, `EstadoBadge`, en `src/pages/components.tsx`); `LineChart`, `ColumnChart` (montos por año), `BarList` (rankings), `Sparkline`, `MapaMendoza` (`src/charts/`); `PanelDetalle`, `Proveedor`, `Proceso` (`src/pages/detalle.tsx`).
+Estructura de `apps/web/src`:
+
+| Carpeta | Qué va | Ejemplos |
+|---|---|---|
+| `pages/` | Solo las páginas de cada ruta (las que carga `src/main.tsx`). | `municipios.tsx`, `leyes.tsx` |
+| `components/` | Componentes de la web: los que usan el router, la analítica o los datos del sitio. | `layout.tsx`, `search-dialog.tsx`, `detail-sheet.tsx`, `purchase-detail.tsx` (`Proceso`, `Proveedor`, `PanelDetalle`), `home-guide.tsx`, `official-sources.tsx`, `tracked-sheet.tsx`, `tracked-segmented.tsx`, `list-search.tsx`, `breadcrumbs.tsx` |
+| `charts/` | Gráficos. | `LineChart`, `ColumnChart`, `BarList`, `Sparkline`, `MapaMendoza` |
+| raíz | Lógica sin interfaz. | `lib.ts`, `url-state.ts`, `analytics.ts`, `types.ts` |
+
+Lo genérico (botones, hojas, bloques, campos) no va en la web: está en el design system (`@mt/ui`, ver `docs/procesos/diseno.md`). Si un componente de la web deja de depender del router o de la analítica, se pasa al paquete.
 
 ## SEO y GEO
 
@@ -140,7 +149,7 @@ El dominio sale de `VITE_SITE_URL` (por defecto `https://mendoza-transparente.co
 
 ## Velocidad de carga
 
-- **Cada página es su propio archivo de JavaScript** (`lazyRouteComponent` en `src/main.tsx`): la primera visita baja el layout y la página donde entra. La hoja de detalle de compras se descarga la primera vez que se abre (`React.lazy` en `src/detail-sheet.tsx`).
+- **Cada página es su propio archivo de JavaScript** (`lazyRouteComponent` en `src/main.tsx`): la primera visita baja el layout y la página donde entra. La hoja de detalle de compras se descarga la primera vez que se abre (`React.lazy` en `src/components/detail-sheet.tsx`).
 - **El CSS va dentro del HTML:** `scripts/seo.ts` lo inserta en cada página después del build. Es un viaje menos antes de la primera pintura.
 - **PostHog se carga cuando la página terminó y el navegador está libre** (`whenIdle` en `src/analytics.ts`). Los eventos de antes quedan en cola y se envían después.
 - **Source maps publicados** (`build.sourcemap`): el repo es público.

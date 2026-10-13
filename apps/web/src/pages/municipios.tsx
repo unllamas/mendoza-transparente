@@ -11,11 +11,12 @@ import { useMemo } from "react";
 import { useUrlOption } from "../url-state.ts";
 import { ColumnChart } from "../charts/column-chart.tsx";
 import { MapaMendoza, MunicipalityLocator } from "../charts/mapa.tsx";
-import { FuentesOficiales } from "../fuente.tsx";
+import { FuentesOficiales } from "../components/official-sources.tsx";
 import { formatDate, formatNumber } from "../lib.ts";
 import { slug } from "../slug.ts";
 import type { MunicipioPagina } from "../types.ts";
-import { Migas, Segmented } from "./components.tsx";
+import { Breadcrumbs } from "../components/breadcrumbs.tsx";
+import { TrackedSegmented } from "../components/tracked-segmented.tsx";
 
 const SOURCES = ["hacienda-participacion-municipal", "poblacion", "autoridades", "legislatura", "municipios-personal"];
 const pesos = (v: number) => `$ ${formatNumber(Math.round(v))}`;
@@ -56,7 +57,7 @@ export function MunicipiosPage() {
       <PageHeader icon={MapPin} topic="Municipios" title="Los 18 municipios de Mendoza">
         Quién gobierna cada uno, cuántos habitantes tiene, cuánta coparticipación recibe y cuánto personal tiene.
       </PageHeader>
-      <Segmented label="Ver en el mapa" options={METRICS} value={metric} onChange={setMetric} />
+      <TrackedSegmented label="Ver en el mapa" options={METRICS} value={metric} onChange={setMetric} />
 
       <div className="grid gap-8 lg:grid-cols-[2fr_3fr] lg:items-start">
         {mapa && (
@@ -121,7 +122,7 @@ export function MunicipioPage() {
   if (!m) {
     return (
       <div className="flex flex-col gap-4">
-        <Migas items={[{ label: "Municipios", to: "/municipios" }, { label: "No encontrado" }]} />
+        <Breadcrumbs items={[{ label: "Municipios", to: "/municipios" }, { label: "No encontrado" }]} />
         <h1 className="text-2xl font-semibold tracking-tight">No encontramos ese municipio</h1>
         <Link to="/municipios" className="w-fit text-link hover:underline">
           Ver los 18 municipios ›
@@ -137,7 +138,7 @@ export function MunicipioPage() {
   const yearly = st ? [...new Map(st.series.map((s) => [s.cutoff.slice(0, 4), s])).values()] : [];
   return (
     <div className="flex flex-col gap-10">
-      <Migas items={[{ label: "Municipios", to: "/municipios" }, { label: m.nombre }]} />
+      <Breadcrumbs items={[{ label: "Municipios", to: "/municipios" }, { label: m.nombre }]} />
       <PageHeader icon={MapPin} topic="Municipio" title={m.nombre}>
         Quién lo gobierna, cuántos habitantes tiene, cuánta coparticipación recibe y quiénes lo representan en la Legislatura.
       </PageHeader>

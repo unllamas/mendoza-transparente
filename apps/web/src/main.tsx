@@ -5,7 +5,7 @@ import { createRoot } from "react-dom/client";
 import { installClickTracking } from "./analytics.ts";
 import { loadIndex, loadJson, loadTema } from "./lib.ts";
 import { cuitDeSlug } from "./slug.ts";
-import { Layout } from "./pages/layout.tsx";
+import { Layout } from "./components/layout.tsx";
 import "./styles.css";
 import type { AgencyDetail, AgencySummary, GobiernoOverview, HomeGuide, CoparticipacionTema, DeudaTema, EmpleoTema, FuncionariosTema, HomeTema, LeyDetalle, LeyResumen, MapaMendoza, MunicipioPagina, NoPublicado, OrganismoDetalle, OrganismoResumen, PoblacionTema, ProveedorDetalle, ProveedorResumen, SenalesTema } from "./types.ts";
 

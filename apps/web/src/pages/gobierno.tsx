@@ -11,10 +11,10 @@ import { Building2, ChevronRight, Search, Coins, ExternalLink, FileSignature, Sc
 import { ColumnChart } from "../charts/column-chart.tsx";
 import { LineChart } from "../charts/line-chart.tsx";
 import { GOBIERNOS } from "../gobiernos.ts";
-import { FuentesOficiales } from "../fuente.tsx";
+import { FuentesOficiales } from "../components/official-sources.tsx";
 import { formatDate, formatNumber } from "../lib.ts";
 import type { AgencyDetail, AgencySummary, GobiernoOverview } from "../types.ts";
-import { Migas } from "./components.tsx";
+import { Breadcrumbs } from "../components/breadcrumbs.tsx";
 
 const SOURCES = ["lrf-personal", "etica-publica", "compras-ocds", "designaciones"];
 const listApi = getRouteApi("/gobierno");
@@ -116,7 +116,7 @@ export function AgencyPage() {
   if (!a) {
     return (
       <div className="flex flex-col gap-4">
-        <Migas items={[{ label: "Gobierno por dentro", to: "/gobierno" }, { label: "No encontrado" }]} />
+        <Breadcrumbs items={[{ label: "Gobierno por dentro", to: "/gobierno" }, { label: "No encontrado" }]} />
         <h1 className="text-2xl font-semibold tracking-tight">No encontramos el organismo «{slug}»</h1>
         <Link to="/gobierno" className="w-fit text-link hover:underline">
           Ver todos los organismos ›
@@ -128,7 +128,7 @@ export function AgencyPage() {
   const yearly = a.staffSeries.filter((p, i, all) => p.period.endsWith("-T4") || i === all.length - 1);
   return (
     <div className="flex flex-col gap-10">
-      <Migas
+      <Breadcrumbs
         items={[
           { label: "Gobierno por dentro", to: "/gobierno" },
           ...(a.parent ? [{ label: a.parent.name, to: `/gobierno/${a.parent.slug}` }] : []),

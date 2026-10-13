@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { useUrlText } from "../url-state.ts";
 import { NO_PUBLICADO_CATEGORIES, NO_PUBLICADO_THEMES, type NoPublicadoTheme } from "../no-publicado-categories.ts";
 import type { NoPublicado } from "../types.ts";
-import { Sheet } from "./components.tsx";
+import { TrackedSheet } from "../components/tracked-sheet.tsx";
 import { type RequestStats, useRequestStats } from "./participar.tsx";
 
 const route = getRouteApi("/no-publicado");
@@ -193,7 +193,7 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
   }
 
   return (
-    <Sheet titulo="Pedir este dato" onClose={onClose} trackId="missing_data.request">
+    <TrackedSheet title="Pedir este dato" onClose={onClose} trackId="missing_data.request">
       <div className="flex flex-col gap-2">
         <span className="inline-flex w-fit items-center gap-1.5 text-xs text-ink-muted">
           <span className={`size-2 rounded-full ${ESTADOS[item.estado].dot}`} aria-hidden />
@@ -283,6 +283,6 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
           ))}
         </div>
       </div>
-    </Sheet>
+    </TrackedSheet>
   );
 }

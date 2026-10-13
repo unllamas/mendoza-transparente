@@ -1,3 +1,4 @@
+import { StatusBadge } from "@mt/ui/components/status-badge";
 import { tileVariants } from "@mt/ui/components/card";
 import { cn } from "@mt/ui/lib/utils";
 import { buttonVariants } from "@mt/ui/components/button";
@@ -7,9 +8,15 @@ import { ExternalLink, Table2 } from "lucide-react";
 
 import { formatBytes, formatDate } from "../lib.ts";
 import type { SourceMeta } from "../types.ts";
-import { EstadoBadge } from "./components.tsx";
 
 const route = getRouteApi("/fuentes");
+
+/** State of a source in sources.yaml, as shown on the page. */
+const SOURCE_STATUS: Record<string, { status: "good" | "warning" | "critical"; label: string }> = {
+  activo: { status: "good", label: "Activa" },
+  pendiente: { status: "warning", label: "Pendiente" },
+  roto: { status: "critical", label: "Con errores" },
+};
 
 export function FuentesPage() {
   const { sources, datasets } = route.useLoaderData();
@@ -65,7 +72,7 @@ function FuenteItem({ source: s, tables }: { source: SourceMeta; tables: number 
       </div>
 
       <div className="flex shrink-0 flex-wrap items-center gap-2 md:flex-col md:items-end">
-        <EstadoBadge estado={s.estado} />
+        <StatusBadge {...(SOURCE_STATUS[s.estado] ?? { status: "neutral", label: s.estado })} />
         <div className="flex gap-2">
           {tables > 0 && (
             <Link

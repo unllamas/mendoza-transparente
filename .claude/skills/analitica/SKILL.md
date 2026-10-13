@@ -15,7 +15,7 @@ Fuente completa: `docs/procesos/analitica.md`. Código: `apps/web/src/analytics.
    ```
 2. **Evento que no es un clic** (un envío que salió bien o mal, una búsqueda): `track("area.thing.action", { … })` desde `analytics.ts`.
 3. **Componentes que ya miden solos** (no repetir):
-   - `Sheet` (`sheet.open` y `sheet.close`), `Segmented` (`<trackId>.change`) y `Buscador` (`search.query`).
+   - `TrackedSheet` (`sheet.open` y `sheet.close`), `TrackedSegmented` (`<trackId>.change`) y `ListSearch` (`search.query`), en `apps/web/src/components/`.
    - El buscador global (`search.*`), los links externos (`link.outbound`) y las descargas (`data.download`).
 4. **Catálogo:** sumar el evento a `apps/web/src/analytics-catalog.ts` con su descripción en español (qué hizo la persona y qué propiedades lleva).
 5. **Sincronizar:** `bun run posthog-sync` desde la raíz (necesita `.env.posthog`). Crea la definición del evento con su descripción y actualiza el tablero "Uso de Mendoza Transparente".

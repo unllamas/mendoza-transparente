@@ -10,8 +10,8 @@ import { BarList } from "../charts/bar-list.tsx";
 import { LineChart } from "../charts/line-chart.tsx";
 import { GOBIERNOS } from "../gobiernos.ts";
 import { formatNumber } from "../lib.ts";
-import { FuentesOficiales } from "../fuente.tsx";
-import { Segmented } from "./components.tsx";
+import { FuentesOficiales } from "../components/official-sources.tsx";
+import { TrackedSegmented } from "../components/tracked-segmented.tsx";
 
 const route = getRouteApi("/empleo-publico");
 
@@ -71,7 +71,7 @@ export function EmpleoPage() {
       </Section>
 
       <Section title="Evolución en Mendoza, empleados cada mil habitantes">
-        <Segmented label="Período" options={PERIODOS} value={periodo} onChange={setPeriodo} />
+        <TrackedSegmented label="Período" options={PERIODOS} value={periodo} onChange={setPeriodo} />
         <div className={cn(tileVariants())}>
           <LineChart
             data={serie.map((p) => ({ fecha: `${p.anio}-01-01`, valor: p.cadaMil }))}

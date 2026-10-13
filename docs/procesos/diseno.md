@@ -28,7 +28,7 @@ Los componentes base y los tokens viven en el paquete `@mt/ui`, armado con la co
 
 - **Nada a mano.** Un botón, un bloque, una tarjeta, una etiqueta o un campo no se arman con clases sueltas: se usa el componente o sus variantes (`buttonVariants`, `tileVariants`, `cardVariants`). Si falta una variante, se agrega al paquete. Las únicas excepciones son el campo del buscador (va sin borde dentro de su barra) y el campo trampa contra spam de Participar.
 - **Sin código muerto:** `noUnusedLocals` está activado en la web y en el paquete, así que `bunx tsc --noEmit` falla con imports o variables sin usar.
-- **Lo propio de la web** (analítica y links del router) queda en `apps/web/src/pages/components.tsx`: `Sheet` y `Segmented` que envían eventos, `Buscador`, `Migas` y `EstadoBadge`.
+- **Lo propio de la web** (analítica y links del router) va en `apps/web/src/components/`: `TrackedSheet` y `TrackedSegmented` (envían eventos), `ListSearch` (buscador de listas, con evento) y `Breadcrumbs` (usa el router).
 - **Componentes nuevos:** si sirven para más de una pantalla, van al paquete. Se pueden sumar de shadcn con `bunx shadcn@latest add <componente>` desde `packages/ui`, y después se adaptan a los tokens y a las reglas de esta página.
 
 ## Color
@@ -65,8 +65,8 @@ Los componentes base y los tokens viven en el paquete `@mt/ui`, armado con la co
 
 ## Avisos
 
-- **Varias alertas sobre lo mismo** (un proceso de compra con desvío, una sola oferta y contratación directa): **etiquetas ámbar compactas** arriba. Al tocar una se abre su explicación como nota flotante, sin empujar el contenido (`Flags` en `detalle.tsx`). Se cierra al tocar afuera o con Escape. No apilar cajas de aviso: generan scroll y nadie las lee.
-- **Montos grandes:** en millones con la palabra entera ("$ 1.673 millones"), nunca "M" ni "mil M". En las tarjetas destacadas, la unidad va aparte y en chico (`Amount` en `detalle.tsx`). Los desvíos van en porcentaje ("+526.069 % sobre lo estimado").
+- **Varias alertas sobre lo mismo** (un proceso de compra con desvío, una sola oferta y contratación directa): **etiquetas ámbar compactas** arriba. Al tocar una se abre su explicación como nota flotante, sin empujar el contenido (`Flags` en `src/components/purchase-detail.tsx`). Se cierra al tocar afuera o con Escape. No apilar cajas de aviso: generan scroll y nadie las lee.
+- **Montos grandes:** en millones con la palabra entera ("$ 1.673 millones"), nunca "M" ni "mil M". En las tarjetas destacadas, la unidad va aparte y en chico (`Amount` en `src/components/purchase-detail.tsx`). Los desvíos van en porcentaje ("+526.069 % sobre lo estimado").
 - **Lo que define el caso va con protagonismo,** no al fondo. Por ejemplo, con una sola oferta adjudicada, la sección dice "Ganó sin competencia" y destaca al ganador con su monto.
 
 Componente `Alert` (`@mt/ui/components/alert`) para lo que hay que leer sí o sí. Dos variantes:

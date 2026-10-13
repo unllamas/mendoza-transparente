@@ -5,9 +5,9 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight, BookOpen, Bug, Compass, MousePointerClick, Search, ShieldCheck } from "lucide-react";
 
 import { GLOSSARY } from "../glossary.ts";
-import { openSearch } from "../search.tsx";
-import { Migas } from "./components.tsx";
-import { READING_RULES } from "./home-guide.tsx";
+import { openSearch } from "../components/search-dialog.tsx";
+import { Breadcrumbs } from "../components/breadcrumbs.tsx";
+import { READING_RULES } from "../components/home-guide.tsx";
 
 const STEPS = [
   {
@@ -35,7 +35,7 @@ const STEPS = [
 export function ComoLeerPage() {
   return (
     <div className="flex max-w-3xl flex-col gap-12">
-      <Migas items={[{ label: "Cómo leer estos datos" }]} />
+      <Breadcrumbs items={[{ label: "Cómo leer estos datos" }]} />
       <PageHeader icon={BookOpen} topic="Guía" title="Para qué sirve Mendoza Transparente y cómo usarlo">
         Reunimos los datos públicos de la provincia de Mendoza, que están dispersos en decenas de sitios oficiales, PDF y
         planillas, y los ordenamos para que cualquier persona pueda entender en qué se gasta la plata, quién decide y qué falta

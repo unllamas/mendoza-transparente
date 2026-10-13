@@ -10,12 +10,13 @@ import { useEffect, useMemo, useState } from "react";
 import { useUrlText } from "../url-state.ts";
 import { formatMoneda } from "../celdas.ts";
 import { ColumnChart } from "../charts/column-chart.tsx";
-import { FuentesOficiales } from "../fuente.tsx";
-import { formatDate, formatNumber, limpiarOrganismo } from "../lib.ts";
+import { FuentesOficiales } from "../components/official-sources.tsx";
+import { formatDate, formatNumber, limpiarOrganismo, normalizeText } from "../lib.ts";
 import { slugProveedor } from "../slug.ts";
-import { Buscador, Migas, normalizar } from "./components.tsx";
-import { useDetail } from "../detail-sheet.tsx";
-import { Proveedor } from "./detalle.tsx";
+import { ListSearch } from "../components/list-search.tsx";
+import { Breadcrumbs } from "../components/breadcrumbs.tsx";
+import { useDetail } from "../components/detail-sheet.tsx";
+import { Proveedor } from "../components/purchase-detail.tsx";
 
 const FUENTES = ["compras-ocds", "proveedores"];
 const PAGINA = 40;
@@ -37,8 +38,8 @@ export function ProveedoresPage() {
   const [q, setQ] = useUrlText("q");
   const [mostrar, setMostrar] = useState(PAGINA);
   const visibles = useMemo(() => {
-    const n = normalizar(q.trim());
-    return n ? proveedores.filter((p) => normalizar(`${p.nombre} ${p.cuit}`).includes(n)) : proveedores;
+    const n = normalizeText(q.trim());
+    return n ? proveedores.filter((p) => normalizeText(`${p.nombre} ${p.cuit}`).includes(n)) : proveedores;
   }, [proveedores, q]);
 
   return (
@@ -48,7 +49,7 @@ export function ProveedoresPage() {
       </PageHeader>
       <FuentesOficiales ids={FUENTES} />
       <div className="flex flex-col gap-4">
-        <Buscador value={q} onChange={(v) => { setQ(v); setMostrar(PAGINA); }} placeholder="Buscar por nombre o CUIT" label="Buscar proveedor" />
+        <ListSearch value={q} onChange={(v) => { setQ(v); setMostrar(PAGINA); }} placeholder="Buscar por nombre o CUIT" label="Buscar proveedor" />
         <p className="text-sm text-ink-muted">{formatNumber(visibles.length)} proveedores</p>
         <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
           {visibles.slice(0, mostrar).map((p) => (
@@ -86,7 +87,7 @@ export function ProveedorPage() {
   if (!cuit || !ficha) {
     return (
       <div className="flex flex-col gap-4">
-        <Migas items={[{ label: "Proveedores", to: "/proveedores" }, { label: "No encontrado" }]} />
+        <Breadcrumbs items={[{ label: "Proveedores", to: "/proveedores" }, { label: "No encontrado" }]} />
         <h1 className="text-2xl font-semibold tracking-tight">No encontramos a ese proveedor</h1>
         <Link to="/proveedores" className="w-fit text-link hover:underline">
           Ver todos los proveedores ›
@@ -97,7 +98,7 @@ export function ProveedorPage() {
   const nombre = ficha.empresa?.razonSocial ?? ficha.nombre;
   return (
     <div className="flex max-w-2xl flex-col gap-8">
-      <Migas items={[{ label: "Proveedores", to: "/proveedores" }, { label: nombre }]} />
+      <Breadcrumbs items={[{ label: "Proveedores", to: "/proveedores" }, { label: nombre }]} />
       <div className="flex flex-col gap-2">
         <span className="flex items-center gap-2 text-sm text-ink-muted">
           <Building2 className="size-4" aria-hidden /> Proveedor · CUIT {cuit}
@@ -115,8 +116,8 @@ export function OrganismosPage() {
   const [q, setQ] = useUrlText("q");
   const [mostrar, setMostrar] = useState(PAGINA);
   const visibles = useMemo(() => {
-    const n = normalizar(q.trim());
-    return n ? organismos.filter((o) => normalizar(o.nombre).includes(n)) : organismos;
+    const n = normalizeText(q.trim());
+    return n ? organismos.filter((o) => normalizeText(o.nombre).includes(n)) : organismos;
   }, [organismos, q]);
   return (
     <div className="flex flex-col gap-10">
@@ -125,7 +126,7 @@ export function OrganismosPage() {
       </PageHeader>
       <FuentesOficiales ids={FUENTES} />
       <div className="flex flex-col gap-4">
-        <Buscador value={q} onChange={(v) => { setQ(v); setMostrar(PAGINA); }} placeholder="Buscar organismo" label="Buscar organismo" />
+        <ListSearch value={q} onChange={(v) => { setQ(v); setMostrar(PAGINA); }} placeholder="Buscar organismo" label="Buscar organismo" />
         <ul className="flex flex-col divide-y divide-line overflow-hidden rounded-2xl bg-tile">
           {visibles.slice(0, mostrar).map((o) => (
             <li key={o.slug}>
@@ -155,7 +156,7 @@ export function OrganismoPage() {
   if (!o) {
     return (
       <div className="flex flex-col gap-4">
-        <Migas items={[{ label: "Organismos", to: "/organismos" }, { label: "No encontrado" }]} />
+        <Breadcrumbs items={[{ label: "Organismos", to: "/organismos" }, { label: "No encontrado" }]} />
         <h1 className="text-2xl font-semibold tracking-tight">No encontramos a ese organismo</h1>
         <p className="text-sm text-ink-muted">{slug}</p>
         <Link to="/organismos" className="w-fit text-link hover:underline">
@@ -168,7 +169,7 @@ export function OrganismoPage() {
   const maxProv = o.proveedores[0]?.monto ?? 1;
   return (
     <div className="flex flex-col gap-10">
-      <Migas items={[{ label: "Organismos", to: "/organismos" }, { label: nombre }]} />
+      <Breadcrumbs items={[{ label: "Organismos", to: "/organismos" }, { label: nombre }]} />
       <PageHeader icon={Landmark} topic="Organismo" title={nombre}>
         Cuánto compró, a quiénes y con qué modalidad.
       </PageHeader>

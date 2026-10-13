@@ -3,8 +3,8 @@
 import { Archive, ExternalLink, Landmark } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { formatDate, loadIndex } from "./lib.ts";
-import type { DataIndex, SourceMeta } from "./types.ts";
+import { formatDate, loadIndex } from "../lib.ts";
+import type { DataIndex, SourceMeta } from "../types.ts";
 
 export const REPO = "https://github.com/unllamas/mendoza-transparente";
 export const archivoUrl = (sourceId: string) => `${REPO}/tree/main/data/raw/${sourceId}`;

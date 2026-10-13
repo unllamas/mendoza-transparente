@@ -13,8 +13,8 @@ import { MapaMendoza } from "../charts/mapa.tsx";
 import { formatNumber } from "../lib.ts";
 import { slug } from "../slug.ts";
 import type { PoblacionTema } from "../types.ts";
-import { FuentesOficiales } from "../fuente.tsx";
-import { Segmented } from "./components.tsx";
+import { FuentesOficiales } from "../components/official-sources.tsx";
+import { TrackedSegmented } from "../components/tracked-segmented.tsx";
 
 const route = getRouteApi("/poblacion");
 
@@ -73,7 +73,7 @@ export function PoblacionPage() {
       </Section>
 
       <Section title="Por departamento">
-        <Segmented
+        <TrackedSegmented
           label="Qué mostrar"
           value={medida}
           onChange={setMedida}

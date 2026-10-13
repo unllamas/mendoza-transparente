@@ -8,11 +8,11 @@
 import { useRouter, useRouterState } from "@tanstack/react-router";
 import { lazy, Suspense } from "react";
 
-import { Sheet } from "./pages/components.tsx";
+import { TrackedSheet } from "./tracked-sheet.tsx";
 
 // The detail code (charts, tables) loads the first time a sheet opens, not with every page.
-const Proceso = lazy(() => import("./pages/detalle.tsx").then((m) => ({ default: m.Proceso })));
-const Proveedor = lazy(() => import("./pages/detalle.tsx").then((m) => ({ default: m.Proveedor })));
+const Proceso = lazy(() => import("./purchase-detail.tsx").then((m) => ({ default: m.Proceso })));
+const Proveedor = lazy(() => import("./purchase-detail.tsx").then((m) => ({ default: m.Proveedor })));
 
 type DetailParam = "proceso" | "proveedor";
 const PARAMS: DetailParam[] = ["proceso", "proveedor"];
@@ -43,7 +43,7 @@ export function DetailSheet() {
   const proveedor = asId(search.proveedor);
   if (!proceso && !proveedor) return null;
   return (
-    <Sheet titulo={proceso ? "Proceso de compra" : "Proveedor"} onClose={close} trackId={proceso ? "purchase.process" : "purchase.supplier"}>
+    <TrackedSheet title={proceso ? "Proceso de compra" : "Proveedor"} onClose={close} trackId={proceso ? "purchase.process" : "purchase.supplier"}>
       <Suspense fallback={<p className="text-sm text-ink-muted">Cargando…</p>}>
         {proceso ? (
           <Proceso key={proceso} ocid={proceso} onProveedor={(cuit) => open("proveedor", cuit)} />
@@ -51,6 +51,6 @@ export function DetailSheet() {
           <Proveedor key={proveedor!} cuit={proveedor!} onProceso={(ocid) => open("proceso", ocid)} />
         )}
       </Suspense>
-    </Sheet>
+    </TrackedSheet>
   );
 }

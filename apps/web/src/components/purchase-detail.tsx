@@ -25,11 +25,12 @@ import { useEffect, useState, type ReactNode } from "react";
 
 import { formatMoneda, type ColumnaVista } from "../celdas.ts";
 import { ColumnChart } from "../charts/column-chart.tsx";
-import { archivoUrl, useFuentes } from "../fuente.tsx";
+import { archivoUrl, useFuentes } from "./official-sources.tsx";
 import { formatDate, formatNumber, limpiarOrganismo, loadJson } from "../lib.ts";
 import { procesoShard } from "../shard.ts";
 import type { DatasetMeta, OrganismoResumen, ProcesoDetalle, ProveedorDetalle } from "../types.ts";
-import { Segmented, Sheet } from "./components.tsx";
+import { TrackedSegmented } from "./tracked-segmented.tsx";
+import { TrackedSheet } from "./tracked-sheet.tsx";
 
 type Vista = { tipo: "fila" } | { tipo: "proveedor"; cuit: string } | { tipo: "proceso"; ocid: string };
 
@@ -58,8 +59,8 @@ export function PanelDetalle({
   useEffect(() => setHistorial([inicial]), [fila]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Sheet
-      titulo="Detalle"
+    <TrackedSheet
+      title="Detalle"
       onClose={onClose}
       trackId="data.row"
       header={
@@ -75,7 +76,7 @@ export function PanelDetalle({
       {vista.tipo === "proceso" && <Proceso ocid={vista.ocid} onProveedor={(cuit) => ir({ tipo: "proveedor", cuit })} />}
       {historial.length === 1 && <CamposFila columnas={columnas} fila={fila} titulo={vista.tipo === "fila" ? undefined : "Esta fila"} />}
       <OrigenDato dataset={dataset} fila={fila} ocid={vista.tipo === "proceso" ? vista.ocid : undefined} />
-    </Sheet>
+    </TrackedSheet>
   );
 }
 
@@ -427,7 +428,7 @@ export function Proceso({ ocid, onProveedor }: { ocid: string; onProveedor: (cui
             <span className="text-sm text-ink-2 tabular-nums">
               {formatNumber(p.adjudicaciones.length)} adjudicaciones · {formatMoneda(total, "ARS")}
             </span>
-            <Segmented label="Ordenar" options={ORDENES} value={orden} onChange={setOrden} trackId="purchase.awards_sort" />
+            <TrackedSegmented label="Ordenar" options={ORDENES} value={orden} onChange={setOrden} trackId="purchase.awards_sort" />
           </div>
         )}
         <ul className="flex flex-col divide-y divide-line">

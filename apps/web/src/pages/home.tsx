@@ -26,10 +26,10 @@ import {
 import type { ReactNode } from "react";
 
 import { MapaMendoza } from "../charts/mapa.tsx";
-import { SearchTrigger } from "../search.tsx";
-import { DepartmentPicker, EcosystemMap, ReadingRules, StartingQuestions, WhatsNew } from "./home-guide.tsx";
+import { SearchTrigger } from "../components/search-dialog.tsx";
+import { DepartmentPicker, EcosystemMap, ReadingRules, StartingQuestions, WhatsNew } from "../components/home-guide.tsx";
 import { Sparkline } from "../charts/sparkline.tsx";
-import { CountUp } from "../count-up.tsx";
+import { CountUp } from "../components/count-up.tsx";
 import { formatDate, formatNumber } from "../lib.ts";
 import type { SourceMeta } from "../types.ts";
 
