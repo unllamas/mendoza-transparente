@@ -2,6 +2,7 @@ import { createRootRoute, createRoute, createRouter, lazyRouteComponent, RouterP
 import { type ReactNode, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { installClickTracking } from "./analytics.ts";
+import { DevFeedback } from "./components/dev-feedback.tsx";
 import { Layout } from "./components/layout.tsx";
 import { RouteError, RouteNotFound } from "./components/route-states.tsx";
 import { loadIndex, loadJson, loadTema } from "./lib.ts";
@@ -293,5 +294,6 @@ installClickTracking();
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RouterProvider router={router} />
+    <DevFeedback />
   </StrictMode>,
 );

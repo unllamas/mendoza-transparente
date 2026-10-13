@@ -51,6 +51,18 @@ Los componentes base y los tokens viven en el paquete `@mt/ui`, armado con la co
 - **Nunca scroll horizontal**, en ningún ancho. Hay una red de seguridad global (`overflow-x: clip`), pero la causa se corrige igual.
 - **Mobile first**: menú hamburguesa por debajo de 1024 px, pestañas desplazables, hojas a pantalla completa en celular.
 
+## Celular
+
+La mayoría entra desde el teléfono. Estos detalles separan «una página web en el celular» de algo cómodo:
+
+- **Campos de formulario con letra de 16 px** en el celular (`text-base sm:text-sm`, ya incluido en `Input`, `Textarea`, `Select` y `SearchInput`). Con menos, iOS agranda la página al tocar el campo y no la vuelve a achicar. Nunca se arregla bloqueando el zoom (`maximum-scale=1` o `user-scalable=no`): es un problema de accesibilidad. `bun run verificar` lo controla.
+- **Teclado correcto:** `type="email"`, `type="tel"`, `inputMode="numeric"` para números y `enterKeyHint="search"` en los buscadores.
+- **El hover no existe en el celular.** En Tailwind 4, `hover:` ya se aplica solo en dispositivos con mouse. Por eso nada importante puede depender del hover (ver Forma).
+- **Respuesta al tocar:** lo que se toca cambia algo en el momento (`active:`), no recién al soltar.
+- **Las hojas y los menús contienen su scroll** (`overscroll-contain`): al llegar al final no se mueve la página de atrás. La `Sheet` y el menú móvil ya lo hacen.
+- **Alto de pantalla con `dvh`**, no con `vh`: en el celular, `100vh` incluye la barra del navegador y deja botones tapados.
+- **Probar en un teléfono de verdad** cuando el cambio toca teclado, zoom o gestos: la emulación de Chrome no los reproduce. Con `bunx vite --host`, se abre desde el celular con la IP de la computadora.
+
 ## Contenido
 
 - **La gente no lee**: primero una lista corta, una fila por ítem; el detalle se abre en una **hoja modal** a la derecha con el fondo oscurecido. Nunca un panel al costado de la tabla.
@@ -85,3 +97,57 @@ El ámbar es un color de estado, como el verde y el rojo: va siempre con ícono 
 - Franjas por gobernador, neutras, en las series temporales; comparación por mandato con el dato inicial y final.
 - Mapas con escala por cuantiles (cada tono agrupa una cantidad parecida de departamentos) y más = más intenso en ambos modos.
 - Montos en valores reales (pesos de hoy) y por habitante cuando se comparan años o lugares.
+
+## Textos de la interfaz
+
+Complementa a Contenido: cómo se escriben los botones, los errores y las pantallas vacías.
+
+- **Un nombre por cosa.** Si en un lugar es «proceso de compra», no es «licitación» en otro. Antes de escribir, buscar cómo se llama en el resto del sitio y en el glosario.
+- **Los botones empiezan con un verbo:** «Ver la ley», «Enviar pedido», «Descargar CSV». Nunca «OK» ni «Aceptar».
+- **Los links dicen adónde llevan** y se entienden fuera de contexto: «Ver todos los proveedores», nunca «acá» ni «ver más» sueltos. Si hay varios «Ver más» en la misma página, cada uno dice de qué.
+- **Los botones de solo ícono nombran la acción**, no el dibujo: `label="Cerrar"`, no «X» ni «ícono de cruz».
+- **Los errores dicen cómo seguir** y van al lado de lo que falló: «No pudimos enviar el pedido. Revisá la conexión y probá de nuevo», no «Algo salió mal». Sin «¡Ups!» ni signos de exclamación.
+- **Pantallas vacías que orientan:** qué es este lugar y qué se puede hacer. Con un filtro: «No hay leyes que digan "riego". Borrar la búsqueda». Si el vacío es que el Estado no publica el dato, se dice así y se enlaza a `/no-publicado`.
+- **El ejemplo del campo es un ejemplo,** no una instrucción: `nombre@correo.com`, no «Ingrese su correo». La instrucción va en la ayuda de `Field`.
+- **Sin «por favor» ni «exitosamente»** en mensajes de rutina: «Pedido enviado».
+- **Un aviso al lado de lo que se tocó:** al copiar, un tilde en el mismo botón; no una notificación lejos.
+
+## Accesibilidad
+
+Es un sitio público: tiene que funcionar con teclado, con lector de pantalla y con la letra agrandada. La referencia es WCAG 2.2, nivel AA.
+
+- **Elementos nativos primero:** `<button>` para acciones y `<a href>` (o `Link`) para navegar. Nunca `<div onClick>`. Un link de verdad se puede abrir en otra pestaña.
+- **Foco visible.** El estilo global (`:focus-visible` con el color de link) no se apaga: `outline-none` solo si el elemento tiene otro indicador visible, como el borde de color de los campos.
+- **Todo se puede hacer con teclado:** Tab para moverse, Enter o Espacio para activar, Escape para cerrar hojas, menús y notas. Sin `tabIndex` positivos.
+- **Nombre accesible en todo lo que se toca:** `IconButton` lo exige (`label`); los gráficos y el mapa llevan `aria-label` con lo que muestran.
+- **El color nunca va solo** (también en Color): un estado lleva ícono o texto.
+- **Contraste:** 4,5:1 para texto y 3:1 para bordes de controles y marcas de gráficos, en claro y en oscuro.
+- **Imágenes:** `PersonAvatar` usa `alt=""` porque el nombre siempre está escrito al lado; si una foto aparece sin el nombre, el `alt` es el nombre. Las imágenes decorativas, `alt=""`.
+- **Encabezados en orden** (un `h1` por página, después `h2`…) y un solo `<main>`.
+- **Zoom y letra grande:** la página tiene que aguantar la letra al 200 % y un ancho de 320 px sin scroll horizontal (`verificar` controla el ancho). Los contenedores de texto usan `min-h-*`, no `h-*` fijo.
+- **Cambios que aparecen solos** (cantidad de resultados de un buscador): `role="status"` para que el lector de pantalla los anuncie.
+
+## Movimiento
+
+El sitio casi no tiene animaciones, y está bien así: la gente viene a leer datos.
+
+- **Solo cuando explica algo** (una hoja que entra, una nota que se abre). Lo que se hace muchas veces (pasar por filas, cambiar de pestaña, escribir) no se anima o dura 150 ms como mucho.
+- **Rápido:** 200 ms o menos en interacciones. **Proporcionado:** una ventana entra desde ~0,95 de tamaño con opacidad, nunca desde 0; un botón al apretarse baja a 0,96, no a 0,8.
+- **Respetar «reducir movimiento»:** desplazamientos y escalas con `motion-safe:`; con la preferencia activa, como mucho un cambio de opacidad.
+- **Nombrar lo que cambia:** `transition-colors`, `transition-opacity`, `transition-transform`; nunca `transition-all`.
+- **El movimiento nunca es la única señal:** además cambia un color, un ícono o un texto.
+
+## Lo que no hacemos
+
+Cosas típicas de las interfaces armadas con IA o con plantillas. Hacen que el sitio parezca genérico y le quitan seriedad:
+
+- Tarjetas dentro de tarjetas.
+- Etiquetitas o «chips» encima de los títulos, y secciones numeradas («01 / Deuda»).
+- Gradientes, brillos, vidrio esmerilado y sombras grandes con bordes finos.
+- Pilas de íconos en cuadraditos de colores, uno por tarjeta.
+- Todas las tarjetas con el mismo peso: lo que define el caso va con protagonismo (ver Avisos).
+- Botones genéricos («Saber más», «Comenzar») y títulos vagos («Transparencia para todos»). El título dice qué dato hay: «¿Cuánto debe Mendoza?».
+- Animaciones de «pensando» o de carga decorativas.
+- Colores fuera de la paleta (ver Color), incluidos los azules.
+
+Más sobre cómo se piden, se revisan y se estresan los cambios: [Mejoras de interfaz](mejoras-de-interfaz.md).

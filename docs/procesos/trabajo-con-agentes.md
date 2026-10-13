@@ -1,6 +1,6 @@
 # Trabajo con agentes
 
-El proyecto se construye con Claude Code. La sesión principal orquesta y delega las tareas acotadas en subagentes que trabajan en paralelo.
+El proyecto se construye con Claude Code. La guía para agentes es `AGENTS.md`, el formato común que leen Codex, Cursor y otros agentes; `CLAUDE.md` solo tiene `@AGENTS.md`, que lo importa, porque Claude Code lee ese nombre. Las reglas se editan siempre en `AGENTS.md`. La sesión principal orquesta y delega las tareas acotadas en subagentes que trabajan en paralelo.
 
 ## Roles
 
@@ -11,11 +11,12 @@ El proyecto se construye con Claude Code. La sesión principal orquesta y delega
 
 El repo trae la configuración de Claude Code en `.claude/`. Funciona cuando Claude Code se abre en la carpeta del repo:
 
-- **`skills/<nombre>/SKILL.md`:** una skill por proceso: `codigo`, `diseno`, `analitica`, `datos-y-fuentes`, `contenido-y-metodologia`, `seo-y-geo`, `produccion` y `delegar-en-agentes`.
+- **`skills/<nombre>/SKILL.md`:** una skill por proceso: `codigo`, `arquitectura`, `diseno`, `mejoras`, `revisar-interfaz`, `estresar-interfaz`, `analitica`, `datos-y-fuentes`, `contenido-y-metodologia`, `seo-y-geo`, `produccion` y `delegar-en-agentes`.
   - Cada una tiene una descripción que dice cuándo cargarla y una checklist corta.
   - El detalle sigue en `docs/procesos/`. Si algo cambia, se actualizan los dos en el mismo commit.
-  - El índice de qué cargar según la tarea está en `CLAUDE.md`.
+  - El índice de qué cargar según la tarea está en `AGENTS.md`.
 - **`hooks/protect-secrets.ts`:** se ejecuta antes de cada comando o lectura de archivos y bloquea cualquier intento de mostrar `.env.cloudflare` o `.env.posthog` (`cat`, `grep`, `Read`…). Cargarlos en el shell sí se permite.
+- **`.mcp.json`** (en la raíz): servidor MCP de Agentation, para que las notas que se marcan en la pantalla lleguen al agente. Ver [Mejoras de interfaz](mejoras-de-interfaz.md).
 - **`settings.json`:**
   - Activa el hook.
   - Permite sin preguntar los comandos de verificación (`typecheck`, `verificar`, `data`, `git status`/`diff`/`log`).
@@ -24,7 +25,7 @@ El repo trae la configuración de Claude Code en `.claude/`. Funciona cuando Cla
 **Sumar un proceso:**
 1. Escribir su documento en `docs/procesos/`.
 2. Crear la skill: `.claude/skills/<nombre>/SKILL.md`, con `name`, una `description` que diga cuándo cargarla, y la checklist.
-3. Agregarla a la tabla de `CLAUDE.md`.
+3. Agregarla a la tabla de `AGENTS.md`.
 
 Todo en el mismo commit.
 
@@ -32,7 +33,7 @@ Todo en el mismo commit.
 
 Cada pedido a un subagente incluye:
 
-1. Qué leer primero: `CLAUDE.md`, la skill del proceso (`.claude/skills/…`) y, si es una fuente, `packages/core/src/*.ts` y la sección del relevamiento.
+1. Qué leer primero: `AGENTS.md`, la skill del proceso (`.claude/skills/…`) y, si es una fuente, `packages/core/src/*.ts` y la sección del relevamiento.
 2. El objetivo concreto y el formato de salida (archivos, columnas, ids).
 3. Qué archivos le pertenecen (solo los de su fuente) y qué **no** tocar: `sources.yaml`, `packages/core`, `package.json`, otras fuentes. Varios agentes editando `bun.lock` a la vez se pisan; las dependencias las instala la sesión principal antes de lanzarlos.
 4. **Nunca hacer commit**: lo hace la sesión principal después de revisar.

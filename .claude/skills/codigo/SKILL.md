@@ -8,7 +8,7 @@ description: Convenciones de código de Mendoza Transparente. Cubre idioma (cód
 ## Idioma
 
 - **En inglés:** el código. Variables, funciones, tipos, nombres de archivos de código, ids de eventos y comentarios técnicos breves.
-- **En español:** la documentación (`docs/`, README, `CLAUDE.md`, skills), los textos que ve la gente, las rutas públicas (`/leyes`, `/municipios`) y los mensajes de commit.
+- **En español:** la documentación (`docs/`, README, `AGENTS.md`, skills), los textos que ve la gente, las rutas públicas (`/leyes`, `/municipios`) y los mensajes de commit.
 - **Columnas de CSV publicados:** snake_case en español. Son un contrato público y **no se renombran** sin un plan de migración.
 - **Código viejo en español:** lo que se toca, se pasa al inglés, sin refactors masivos de pasada.
 

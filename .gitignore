@@ -3,6 +3,8 @@ node_modules/
 .next/
 dist/
 .env
+# Configuración local de cada máquina (por ejemplo, VITE_AGENTATION_ENDPOINT)
+.env.local
 .DS_Store
 /tmp/
 

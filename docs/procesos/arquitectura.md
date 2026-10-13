@@ -4,7 +4,7 @@ Cómo está organizado el código, qué reglas se controlan solas y con qué her
 
 ## Idioma
 
-Todo el código va en inglés y toda la documentación en español. La tabla completa está en `CLAUDE.md`.
+Todo el código va en inglés y toda la documentación en español. La tabla completa está en `AGENTS.md`.
 
 ## El monorepo
 

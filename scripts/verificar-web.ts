@@ -6,6 +6,7 @@
  *      aparecen en desarrollo), también al abrir hojas de detalle.
  *   3. Que con el menú móvil abierto haya un solo scroll (el del menú, no el de la página).
  *   4. Que los botones de solo ícono midan al menos 44×44 px y el header entre 48 y 60 px.
+ *      En celulares, además, que los campos de formulario tengan letra de 16 px o más (si no, iOS hace zoom).
  *   5. Que abrir las alertas de un proceso de compra (notas flotantes) no genere scroll horizontal en la hoja.
  *
  * Uso: bun run verificar     (CHROME_PATH para otro navegador; por defecto, Google Chrome de macOS)
@@ -106,6 +107,15 @@ try {
       if (touch.small.length) problemas.push(`Botones de ícono chicos en ${ruta} a ${ancho} px: ${[...new Set(touch.small)].join(", ")}`);
       if (touch.header < 48 || touch.header > 60)
         problemas.push(`Header de ${Math.round(touch.header)} px en ${ruta} a ${ancho} px (debe medir entre 48 y 60)`);
+      // Form fields on phones: under 16 px, iOS zooms the page when the field gets focus.
+      if (ancho < 700) {
+        const tiny = await page.evaluate(() =>
+          [...document.querySelectorAll<HTMLElement>("input:not([type=hidden]):not([type=checkbox]):not([type=radio]), textarea, select")]
+            .filter((el) => el.offsetParent !== null && Number.parseFloat(getComputedStyle(el).fontSize) < 16)
+            .map((el) => el.getAttribute("name") ?? el.getAttribute("aria-label") ?? el.tagName.toLowerCase()),
+        );
+        if (tiny.length) problemas.push(`Campos con letra de menos de 16 px en ${ruta} a ${ancho} px: ${[...new Set(tiny)].join(", ")}`);
+      }
     }
     await page.close();
   }

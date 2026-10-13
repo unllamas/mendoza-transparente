@@ -2,9 +2,10 @@ import type { ComponentProps, ReactNode } from "react";
 
 import { cn } from "../lib/utils.ts";
 
-/** Shared look of every form control: 44 px high, border, link-colored border on hover and focus. */
+/** Shared look of every form control: 44 px high, border, link-colored border on hover and focus.
+ *  16 px text on phones: below that, iOS zooms the page when the field gets focus. */
 const control =
-  "w-full rounded-lg border border-line bg-surface px-3 text-sm text-ink outline-none placeholder:text-ink-muted hover:border-link focus:border-link disabled:opacity-50";
+  "w-full rounded-lg border border-line bg-surface px-3 text-base text-ink outline-none sm:text-sm placeholder:text-ink-muted hover:border-link focus:border-link disabled:opacity-50";
 
 export function Input({ className, ...props }: ComponentProps<"input">) {
   return <input className={cn(control, "min-h-11", className)} {...props} />;

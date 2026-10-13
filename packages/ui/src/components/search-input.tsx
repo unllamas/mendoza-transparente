@@ -11,7 +11,7 @@ export function SearchInput({ label, className, ...props }: Omit<ComponentProps<
       <input
         type="search"
         aria-label={label}
-        className="min-h-11 w-full rounded-lg border border-line bg-surface pr-3 pl-9 text-sm outline-none placeholder:text-ink-muted focus:border-link"
+        className="min-h-11 w-full rounded-lg border border-line bg-surface pr-3 pl-9 text-base outline-none sm:text-sm placeholder:text-ink-muted focus:border-link"
         {...props}
       />
     </label>

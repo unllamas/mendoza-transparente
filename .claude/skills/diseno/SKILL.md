@@ -1,6 +1,6 @@
 ---
 name: diseno
-description: Principios de diseño, UI y UX de Mendoza Transparente. Cubre color borravino, borde igual a clickeable, acción visible sin hover, 44 px para tocar, una línea, cara de cada persona, hojas modales, avisos, gráficos y mobile first. Cargar antes de crear o retocar cualquier pantalla, componente, gráfico o texto visible, y al revisar capturas.
+description: Principios de diseño, UI y UX de Mendoza Transparente. Cubre color borravino, borde igual a clickeable, acción visible sin hover, 44 px para tocar, una línea, cara de cada persona, hojas modales, avisos, gráficos, mobile first, detalles del celular (campos de 16 px), textos de la interfaz, accesibilidad, movimiento y lo que no hacemos. Cargar antes de crear o retocar cualquier pantalla, componente, gráfico o texto visible, y al revisar capturas.
 ---
 
 # Diseño de Mendoza Transparente
@@ -35,12 +35,25 @@ Los componentes base y los tokens están en `packages/ui` (`@mt/ui`, configuraci
 9. **Lo informativo antes que lo crudo:** primero tarjetas y gráficos, después las tablas. El detalle se abre en una hoja.
 10. **Fuente visible** en cada página y cifra: el sitio oficial y la copia archivada (`FuentesOficiales`).
 
+## Celular, accesibilidad y movimiento (detalle en `diseno.md`)
+
+- **Campos de 16 px en el celular** (`text-base sm:text-sm`, ya en los controles de `@mt/ui`): con menos, iOS agranda la página. Nunca bloquear el zoom.
+- **Teclado correcto** (`type`, `inputMode`, `enterKeyHint`) y **respuesta al tocar** (`active:`).
+- **Elementos nativos:** `<button>` para acciones, `<a>`/`Link` para navegar; nunca `<div onClick>`. Foco visible siempre; Escape cierra; todo se hace con teclado.
+- **Nombre accesible** en todo lo que se toca; el color nunca va solo; contraste 4,5:1 en texto.
+- **Movimiento mínimo:** 200 ms o menos, `motion-safe:` para desplazamientos y escalas, propiedades con nombre (nunca `transition-all`) y nunca como única señal.
+
+## Lo que no hacemos
+
+Tarjetas dentro de tarjetas, etiquetitas sobre los títulos, secciones numeradas, gradientes y brillos, íconos en cuadraditos de colores, botones genéricos («Saber más») y títulos vagos. Parecen plantilla y le quitan seriedad al dato.
+
 ## Textos
 
 - **Lenguaje simple** y oraciones cortas. Nada de jerga sin explicar; si hace falta un término, va al glosario (`src/glossary.ts`).
 - **Neutralidad:** señales, no acusaciones (ver la skill `contenido-y-metodologia`).
 - **Concordancia:** cuidar singular y plural ("1 dato", "2 datos") y género sin barras: "Senado de Mendoza" en lugar de "Senador/a".
 - **Fechas** en formato corto ("9 oct 2026") y montos en pesos de hoy cuando se comparan años.
+- **Interfaz:** un nombre por cosa en todo el sitio; botones que empiezan con verbo; links que dicen adónde llevan (nunca "acá" ni "ver más" sueltos); errores que dicen cómo seguir, sin "¡Ups!"; pantallas vacías que orientan y ofrecen el paso siguiente.
 
 ## Gráficos
 
@@ -52,4 +65,8 @@ Los componentes base y los tokens están en `packages/ui` (`@mt/ui`, configuraci
 
 1. Captura en 375 px y en 1280 px, en modo oscuro (`playwright-core`, ver `scripts/verificar-web.ts`).
 2. Recorrer la lista de arriba, sobre todo una línea, acción visible, caras y 44 px.
-3. `bun run verificar` antes de commitear.
+3. Si muestra datos que cambian (nombres, montos, listas): skill `estresar-interfaz`.
+4. Cambio grande o de un subagente: skill `revisar-interfaz`.
+5. `bun run verificar` antes de commitear.
+
+Pedidos de mejora sobre algo existente: skill `mejoras`.

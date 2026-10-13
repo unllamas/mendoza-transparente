@@ -15,7 +15,7 @@ Fuente completa: `docs/procesos/trabajo-con-agentes.md`.
 ## Plantilla del pedido (autocontenido: el agente no ve la conversación)
 
 1. **Repo y copia:** `/Users/macbook/Documents/Testing/mendoza-transparente`. No usar otras copias.
-2. **Qué leer primero:** `CLAUDE.md` y la skill o el documento de `docs/procesos/` que corresponda.
+2. **Qué leer primero:** `AGENTS.md` y la skill o el documento de `docs/procesos/` que corresponda.
 3. **Reglas:**
    - **NO commit.**
    - Código en inglés y textos en español.
@@ -27,7 +27,7 @@ Fuente completa: `docs/procesos/trabajo-con-agentes.md`.
 
 ## Al integrar
 
-1. **Revisar el código y los datos:** conteos, totales y una muestra contra el original. Las dudas que marcó el agente se resuelven, no se ignoran.
+1. **Revisar el código y los datos:** conteos, totales y una muestra contra el original. Las dudas que marcó el agente se resuelven, no se ignoran. Si tocó la interfaz, skill `revisar-interfaz`.
 2. **Correr lo que el agente no pudo** (por ejemplo `bun test`, si se lo bloquearon).
 3. **Si son fotos,** mirarlas una por una: que sea la persona y que esté sola.
 4. **Sumar lo que no se publica** a `data/curado/no-publicado.yaml`.
