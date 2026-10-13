@@ -60,8 +60,9 @@
   --color-text-tertiary: var(--color-neutral-500);
   /* Fondo de lo que se toca (botón secundario, campos, selects, tarjetas y filas clickeables): un gris entre el
      fondo y el borde, para que se distinga de lo informativo (que va en la superficie) y se lea como "acá se hace clic". */
-  /* Superficie de lo informativo (bloques, tarjetas sin acción, hojas): en claro, blanco. */
-  --color-background-surface: var(--color-white);
+  /* Superficie de lo informativo (bloques, tarjetas sin acción, hojas): el mismo color del fondo, en los dos modos.
+     Solo lo que se toca se despega del fondo; lo informativo se marca apenas con su borde. */
+  --color-background-surface: var(--color-background-full);
   --color-background-interactive: #f2f2f2;
   --color-background-interactive-hover: var(--color-neutral-200);
   /* Links y lo que lleva a otra página: azul de la marca. */
@@ -90,9 +91,7 @@
 }
 
 .dark {
-  /* En oscuro, lo informativo queda apenas por encima del fondo (#121212) y lo que se toca, dos pasos más claro:
-     con la superficie de BoardUI (#262626) los dos grises casi no se distinguían. */
-  --color-background-surface: #181818;
+  /* En oscuro, lo que se toca va dos pasos por encima del fondo (#121212); lo informativo, igual que el fondo. */
   --color-background-interactive: #2c2c2c;
   --color-background-interactive-hover: #363636;
   --color-text-secondary: var(--color-neutral-300);
