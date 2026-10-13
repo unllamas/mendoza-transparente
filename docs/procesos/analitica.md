@@ -16,6 +16,17 @@ Para entender cómo se usa el sitio: qué páginas se visitan, qué se busca y q
 - **En el proyecto de PostHog:** activar "Discard client IP data" y desactivar la grabación de sesiones.
 - Para depurar en desarrollo: `VITE_TRACK_DEBUG=1 bun run dev` imprime cada evento en la consola.
 
+
+## Errores
+
+Todo error del sitio llega a PostHog como `$exception` y se ve agrupado en **Error tracking**.
+
+- **Automáticos:** la captura de excepciones de PostHog (`capture_exceptions: true` en `src/analytics.ts`, y `autocapture_exceptions_opt_in` en el proyecto) toma los errores no capturados y las promesas rechazadas.
+- **Antes de que cargue PostHog** (se carga diferido): `src/analytics.ts` los guarda en cola y los envía al cargar, con `early: true`.
+- **Los que ataja React:** si una página falla al cargar o al mostrarse, el router muestra `RouteError` (`src/components/route-states.tsx`), que la reporta con `captureError(error, { path, boundary: "route" })`. El resto del sitio sigue andando, y la persona puede reintentar o reportarlo.
+- **Para reportar uno a mano:** `captureError(error, props)` de `src/analytics.ts`. Nunca `console.error` solo: en producción nadie lo ve.
+- **Source maps:** se publican con el build, así que el error se ve con la línea exacta del código.
+- **Direcciones sin página:** el router muestra `RouteNotFound`, con el camino de vuelta.
 ## Cómo se mandan los eventos
 
 1. **Páginas vistas:** `$pageview` en cada cambio de ruta (`layout.tsx`).

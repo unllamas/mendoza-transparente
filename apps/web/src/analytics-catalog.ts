@@ -14,6 +14,12 @@ export const EVENT_CATALOG: EventDoc[] = [
   { event: "$pageview", description: "Vio una página del sitio.", tags: ["navegación"] },
   { event: "$pageleave", description: "Salió de una página (cerró la pestaña o fue a otra).", tags: ["navegación"] },
   { event: "$web_vitals", description: "Medición de velocidad de carga de la página (Core Web Vitals).", tags: ["rendimiento"] },
+  {
+    event: "$exception",
+    description:
+      "Un error del sitio (Error tracking): uno no capturado, o el de una página que no pudo mostrarse (boundary: route). Propiedad path.",
+    tags: ["errores"],
+  },
   { event: "nav.mobile_menu.toggle", description: "Abrió el menú en el celular.", tags: ["navegación"] },
   { event: "nav.mobile_menu.close", description: "Cerró el menú del celular con la X (sin elegir ninguna página).", tags: ["navegación"] },
   {

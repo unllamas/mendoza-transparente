@@ -1,9 +1,9 @@
 import { createRootRoute, createRoute, createRouter, lazyRouteComponent, RouterProvider } from "@tanstack/react-router";
 import { type ReactNode, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-
 import { installClickTracking } from "./analytics.ts";
 import { Layout } from "./components/layout.tsx";
+import { RouteError, RouteNotFound } from "./components/route-states.tsx";
 import { loadIndex, loadJson, loadTema } from "./lib.ts";
 import { cuitDeSlug } from "./slug.ts";
 import "./styles.css";
@@ -273,6 +273,9 @@ const router = createRouter({
     datosRoute,
   ]),
   defaultPreload: "intent",
+  // A page that fails shows RouteError (and reports it to PostHog) inside the layout; the rest keeps working.
+  defaultErrorComponent: RouteError,
+  defaultNotFoundComponent: RouteNotFound,
   // The data only changes with each deploy: once loaded, a page does not fetch it again when its URL
   // parameters change (a tab, a search typed letter by letter).
   defaultStaleTime: Infinity,

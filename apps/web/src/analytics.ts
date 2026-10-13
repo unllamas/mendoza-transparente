@@ -8,6 +8,8 @@
  *   changes every day, without storing the IP. Requires "cookieless server hash mode" on in the project
  *   (cookieless_server_hash_mode = 2); otherwise PostHog drops the events. Before this, `persistence: "memory"`
  *   counted every page load as a new visitor.
+ * - Errors: PostHog's exception autocapture, plus `captureError` for the ones React catches (error boundaries
+ *   do not reach window.onerror). Errors that happen before PostHog loads are queued and sent once it does.
  * - Events are named `area.element.action`, in English snake_case (catalog in the docs). Clicks on any
  *   element with `data-track="…"` are sent automatically, with every `data-track-*` attribute as a property.
  */
@@ -16,6 +18,7 @@ type Props = Record<string, string | number | boolean | null | undefined>;
 
 interface Provider {
   capture: (event: string, props?: Props) => void;
+  captureException: (error: unknown, props?: Props) => void;
 }
 
 const KEY = import.meta.env.VITE_POSTHOG_KEY as string | undefined;
@@ -23,6 +26,7 @@ const HOST = (import.meta.env.VITE_POSTHOG_HOST as string | undefined) ?? "https
 
 let provider: Provider | null = null;
 const queue: [string, Props | undefined][] = [];
+const errorQueue: [unknown, Props | undefined][] = [];
 
 /** PostHog loads after the page has loaded and the browser is idle, so it never competes with the content. */
 function whenIdle(run: () => void) {
@@ -32,6 +36,10 @@ function whenIdle(run: () => void) {
 }
 
 if (KEY && typeof window !== "undefined") {
+  // Until PostHog loads (it is deferred), uncaught errors are queued here so they are not lost.
+  const early = (error: unknown) => !provider && errorQueue.push([error, { early: true }]);
+  window.addEventListener("error", (e) => early(e.error ?? e.message));
+  window.addEventListener("unhandledrejection", (e) => early(e.reason));
   whenIdle(
     () =>
       void import("posthog-js").then(({ default: posthog }) => {
@@ -43,11 +51,17 @@ if (KEY && typeof window !== "undefined") {
           capture_pageleave: true,
           disable_session_recording: true,
           capture_dead_clicks: false,
+          // Uncaught errors and rejected promises become `$exception` events (Error tracking in PostHog).
+          capture_exceptions: true,
           // No `ip: false`: the cookieless hash needs the IP at ingestion (events without it are dropped).
           // PostHog deletes it right after hashing, and the project also anonymizes IPs.
         });
-        provider = { capture: (event, props) => posthog.capture(event, props) };
+        provider = {
+          capture: (event, props) => posthog.capture(event, props),
+          captureException: (error, props) => posthog.captureException(error, props),
+        };
         for (const [event, props] of queue.splice(0)) provider.capture(event, props);
+        for (const [error, props] of errorQueue.splice(0)) provider.captureException(error, props);
       }),
   );
 }
@@ -58,6 +72,14 @@ export function track(event: string, props?: Props) {
   if (!KEY) return;
   if (provider) provider.capture(event, props);
   else queue.push([event, props]);
+}
+
+/** Reports an error to PostHog (Error tracking). Use it where React catches errors: the router's error component. */
+export function captureError(error: unknown, props?: Props) {
+  if (import.meta.env.DEV) console.error("[captureError]", error, props);
+  if (!KEY) return;
+  if (provider) provider.captureException(error, props);
+  else errorQueue.push([error, props]);
 }
 
 export function trackPageview(path: string) {
