@@ -370,7 +370,7 @@ export async function inbox(db: Db, f: InboxFilter, now = new Date()) {
     db
       .prepare(`SELECT * FROM ${INBOX_UNION}${clause(listWhere)} ORDER BY createdAt DESC LIMIT 500`)
       .bind(...listParams)
-      .all<Omit<InboxItem, "isPublic" | "overdue"> & { isPublic: number }>(),
+      .all<Omit<InboxItem, "isPublic" | "overdue"> & { isPublic: number; haystack: string }>(),
     db
       .prepare(`SELECT reviewStatus, COUNT(*) AS n FROM ${INBOX_UNION}${clause(where)} GROUP BY reviewStatus`)
       .bind(...params)
@@ -385,7 +385,8 @@ export async function inbox(db: Db, f: InboxFilter, now = new Date()) {
   }
   return {
     items: list.results.map(
-      ({ isPublic, ...i }): InboxItem => ({
+      // The search text carries emails and filing numbers: it is only for the WHERE, never sent back.
+      ({ isPublic, haystack: _, ...i }): InboxItem => ({
         ...i,
         isPublic: isPublic === 1,
         pendingAnswers: Number(i.pendingAnswers),

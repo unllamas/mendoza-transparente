@@ -1,0 +1,16 @@
+# Cloudflare Pages: panel interno (dist) + la API del panel en functions/. Todo el dominio va detrás de
+# Cloudflare Access; la función verifica además el token de Access. Ver docs/procesos/panel.md.
+name = "mendoza-transparente-panel"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-10-01"
+
+# La misma base que el sitio. Las migraciones se aplican desde apps/web.
+[[d1_databases]]
+binding = "DB"
+database_name = "mendoza-transparente"
+database_id = "2ad5ebf5-df14-4843-b453-c9e8cb436ed5"
+
+# Secretos en el panel de Pages (no van acá): ACCESS_TEAM_DOMAIN, ACCESS_AUD y PANEL_EMAILS.
+[vars]
+BUN_VERSION = "1.4.2"
+SKIP_DEPENDENCY_INSTALL = "1"

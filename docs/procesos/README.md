@@ -14,6 +14,7 @@ Cómo se trabaja en Mendoza Transparente, para poder replicarlo, retomarlo o sum
 | [Metodología y criterios](metodologia.md) | Cómo se calculan los números y cómo se presentan los hallazgos |
 | [Analítica](analitica.md) | Qué se mide del uso del sitio, cómo se nombran los eventos y cómo se suma uno |
 | [Participación](participacion.md) | Pedidos de información, respuestas, errores y sugerencias: API, base y moderación |
+| [Panel interno](panel.md) | La app del equipo para revisar y publicar lo que llega: login, publicación, seguridad y casos límite |
 | [Trabajo con agentes](trabajo-con-agentes.md) | Cómo se orquesta el trabajo con Claude y subagentes |
 
 Comandos de todos los días (desde la raíz):
@@ -21,6 +22,7 @@ Comandos de todos los días (desde la raíz):
 ```bash
 bun install                      # dependencias
 bun run dev                      # web en desarrollo, se recarga sola con los datos nuevos
+bun run panel                    # panel interno en desarrollo (misma base local que la web)
 bun run scrape <fuente> [args]   # correr un scraper
 bun run actualizar               # actualización manual de las fuentes bloqueadas en la nube
 bun run verificar                # controles de la web (scroll horizontal y consola)

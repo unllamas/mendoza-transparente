@@ -48,8 +48,9 @@ export function RequestList({
             >
               <span className="flex min-w-0 flex-1 flex-col gap-1">
                 <span className="truncate font-medium group-hover:text-text-link">{requestTitle(r, titles)}</span>
-                <span className="truncate text-body-regular text-text-tertiary">
-                  {r.agency ?? "Organismo sin informar"} · {formatDate(r.filedOn)}
+                <span className="flex min-w-0 text-body-regular text-text-tertiary">
+                  <span className="truncate">{r.agency ?? "Organismo sin informar"}</span>
+                  <span className="shrink-0 whitespace-nowrap">&nbsp;· {formatDate(r.filedOn)}</span>
                 </span>
                 <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
                   <StatusBadge status={s.status} label={s.label} />

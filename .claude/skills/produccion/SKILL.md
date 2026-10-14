@@ -24,7 +24,7 @@ Fuentes completas: `docs/procesos/web.md` (Publicar), `participacion.md` y `anal
 ## Base D1 y participación
 
 - **Base:** `mendoza-transparente` (`wrangler.toml`). Migraciones en `packages/participation/migrations/` (las dos apps las comparten); se aplican desde `apps/web` con `wrangler d1 migrations apply mendoza-transparente --remote`.
-- **Moderación:** las consultas para revisar lo que llega están en `docs/procesos/participacion.md`.
+- **Moderación:** desde el panel interno (`apps/panel`, proyecto de Pages `mendoza-transparente-panel` detrás de Cloudflare Access, secretos `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD` y `PANEL_EMAILS`). Puesta en marcha y seguridad en `docs/procesos/panel.md`; las consultas a mano siguen en `participacion.md`.
 
 ## Protección
 

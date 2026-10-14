@@ -16,10 +16,11 @@
     "resumir-leyes": "cd apps/web && bun scripts/resumir-leyes.ts",
     "posthog-sync": "cd apps/web && bun scripts/posthog-sync.ts",
     "lint": "biome check . && bun run lint:arch",
-    "lint:arch": "depcruise apps/web/src apps/web/scripts packages --config .dependency-cruiser.cjs",
+    "lint:arch": "depcruise apps/web/src apps/web/scripts apps/panel/src packages --config .dependency-cruiser.cjs",
     "format": "biome check --write .",
     "test": "bun test",
-    "hooks": "lefthook install"
+    "hooks": "lefthook install",
+    "panel": "turbo run dev --filter=@mt/panel"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",

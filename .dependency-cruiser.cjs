@@ -20,6 +20,28 @@ module.exports = {
       to: { path: "(@tanstack/react-router|posthog-js|packages/core|packages/scrapers)" },
     },
     {
+      name: "panel-is-not-the-site",
+      severity: "error",
+      comment: "El panel interno y el sitio no se importan entre sí: lo que comparten va en un paquete (@mt/participation, @mt/ui).",
+      from: { path: "^apps/panel/" },
+      to: { path: "^apps/web/" },
+    },
+    {
+      name: "site-does-not-import-the-panel",
+      severity: "error",
+      comment: "El sitio público no carga nada del panel interno.",
+      from: { path: "^apps/web/" },
+      to: { path: "^apps/panel/" },
+    },
+    {
+      name: "browser-code-does-not-open-databases",
+      severity: "error",
+      comment:
+        "La base local (local-db, con node:fs y SQLite) es solo para desarrollo y pruebas, nunca para el navegador ni las funciones.",
+      from: { path: "^apps/(web|panel)/(src|functions)/" },
+      to: { path: "packages/participation/src/local-db\\.ts$" },
+    },
+    {
       name: "pages-do-not-import-pages",
       severity: "error",
       comment: "Cada página se arma con componentes; una página no importa otra.",

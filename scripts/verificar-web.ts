@@ -17,7 +17,8 @@ import { join } from "node:path";
 import { chromium } from "playwright-core";
 
 const WEB = join(import.meta.dir, "..", "apps", "web");
-const PUERTO = 5199;
+// MT_VERIFY_PORT si el 5199 está ocupado (por ejemplo, por otro worktree con el sitio levantado).
+const PUERTO = Number(process.env.MT_VERIFY_PORT ?? 5199);
 const BASE = `http://localhost:${PUERTO}`;
 const CHROME = process.env.CHROME_PATH ?? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 
@@ -31,6 +32,7 @@ const RUTAS = [
   "/poblacion",
   "/no-publicado",
   "/participar",
+  "/registro",
   "/como-leer",
   "/fuentes",
   "/datos/compras-ocds",
