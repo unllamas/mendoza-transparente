@@ -23,7 +23,7 @@ Fuentes completas: `docs/procesos/agregar-una-fuente.md`, `datos-y-archivo.md` y
 1. **Relevar:** qué trae cada fuente candidata, cobertura y formato. Elegir la mejor y contar por qué.
 2. **Scraper:** `packages/scrapers/src/sources/<id>.ts`, que exporta `run(args)`. Se corre con `bun run scrape <id>`.
 3. **Catálogo:** su bloque en `sources.yaml`, con nombre, organismo, URL, descripción, frecuencia y estado.
-4. **Actualización automática:** sumarla a `DIARIO`, `SEMANAL` o `MENSUAL` en `.github/workflows/actualizar-datos.yml` y a `TODAS` en `scripts/actualizar.ts`. Las fuentes derivadas (por ejemplo `designaciones`) corren en el job `commit`.
+4. **Actualización automática:** sumarla a `SEMANAL` o `MENSUAL` en `.github/workflows/actualizar-datos.yml` y a `TODAS` en `scripts/actualizar.ts`. Las fuentes derivadas (por ejemplo `designaciones`) corren en el job `commit`.
 5. **Web:** cálculo en `apps/web/scripts/temas/`, tipo en `src/types.ts`, página o sección (skills `diseno` y `seo-y-geo`).
 6. **Lo que no se encuentra** va a `data/curado/no-publicado.yaml` **en el mismo commit**, con categoría, organismo, marco legal, dónde se buscó y el texto del pedido.
 

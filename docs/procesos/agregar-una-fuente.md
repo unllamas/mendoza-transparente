@@ -51,7 +51,7 @@ Agregar la entrada en `sources.yaml` (`id`, `nombre`, `organismo`, `url`, `descr
 
 ## 6. Sumarla a la actualización automática
 
-En `.github/workflows/actualizar-datos.yml`, agregar el id a `DIARIO`, `SEMANAL` o `MENSUAL`, con sus argumentos si los necesita. Replicar lo mismo en `TODAS` y `ARGS` de `scripts/actualizar.ts`. Si el sitio bloquea a la nube, agregar su host a `HOSTS_CON_PROXY` en `packages/core/src/fetch.ts`.
+En `.github/workflows/actualizar-datos.yml`, agregar el id a `SEMANAL` o `MENSUAL`, con sus argumentos si los necesita. Replicar lo mismo en `TODAS` y `ARGS` de `scripts/actualizar.ts`. Si el sitio bloquea a la nube, agregar su host a `HOSTS_CON_PROXY` en `packages/core/src/fetch.ts`.
 
 ## 7. Llevarla a la web
 

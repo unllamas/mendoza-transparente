@@ -40,8 +40,7 @@ Los datos se actualizan solos con GitHub Actions (`.github/workflows/actualizar-
 
 | Frecuencia | Fuentes |
 |---|---|
-| Diaria | Boletín Oficial |
-| Semanal (lunes) | Compras, transferencias de Nación, Ética Pública, índices e IPC |
+| Semanal (lunes) | Boletín Oficial, compras, transferencias de Nación, Ética Pública, índices e IPC |
 | Mensual (día 3) | Hacienda, energía, población, Legislatura, autoridades y proveedores |
 
 Cada fuente corre por separado y al final se hace un único commit, después de comprobar que la web compila. Si una fuente falla, se abre un issue con la etiqueta `scraper-roto`, que se cierra solo cuando vuelve a funcionar. Para correrlo a mano: pestaña Actions → «Actualizar datos» → «Run workflow».
