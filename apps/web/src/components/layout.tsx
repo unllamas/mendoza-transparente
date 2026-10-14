@@ -89,6 +89,21 @@ const AUTOR = {
   x: "https://x.com/unllamas",
 };
 
+/** Friend sites listed in the footer. To add one, append it here: the UTM parameters and tracking are added automatically. */
+const FRIEND_SITES = [
+  { name: "Municipios Argentinos", url: "https://municipiosargentinos.net/" },
+  { name: "Datos Hoy", url: "https://www.datoshoy.com/" },
+  { name: "Pensiómetro", url: "https://pensiometro.net/" },
+];
+
+function withUtm(url: string) {
+  const u = new URL(url);
+  u.searchParams.set("utm_source", "mendoza-transparente.com");
+  u.searchParams.set("utm_medium", "referral");
+  u.searchParams.set("utm_campaign", "sitios_amigos");
+  return u.href;
+}
+
 export function Layout() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   usePageMeta(pathname);
@@ -220,6 +235,25 @@ export function Layout() {
                 <span className="text-text-tertiary">Tema</span>
                 <ThemeToggle appearance="segmented" size="compact" />
               </div>
+              <nav aria-label="Sitios amigos" className="flex flex-col gap-1 pt-4">
+                <span className="text-text-tertiary">Sitios amigos</span>
+                <ul className="flex flex-wrap gap-x-4 gap-y-1">
+                  {FRIEND_SITES.map((site) => (
+                    <li key={site.url}>
+                      <a
+                        href={withUtm(site.url)}
+                        target="_blank"
+                        rel="noopener"
+                        data-track="footer.friend_site.open"
+                        data-track-site={new URL(site.url).host}
+                        className="text-text-link hover:underline"
+                      >
+                        {site.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
             </div>
 
             <div className="flex max-w-sm flex-col gap-2 text-body-regular">

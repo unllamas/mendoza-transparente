@@ -33,6 +33,11 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["participación"],
   },
   {
+    event: "footer.friend_site.open",
+    description: "Tocó un sitio amigo en el pie. Propiedades site (el dominio) y href (con los UTM).",
+    tags: ["navegación"],
+  },
+  {
     event: "sheet.open",
     description: "Abrió una hoja de detalle (un pedido, un proceso de compra, un proveedor, una fila de datos). Propiedad sheet: cuál.",
     tags: ["interacción"],

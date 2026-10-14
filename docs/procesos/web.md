@@ -147,6 +147,14 @@ Al sumar una entidad, pensar qué la conecta con las otras y enlazarlo, también
 
 El dominio sale de `VITE_SITE_URL` (por defecto `https://mendoza-transparente.com`).
 
+## Sitios amigos
+
+El pie lista, debajo del selector de tema, otros proyectos cívicos y de datos abiertos. Para sumar uno se agrega una línea con `name` y `url` en `FRIEND_SITES` (`apps/web/src/components/layout.tsx`). Todo lo demás sale solo:
+
+- **UTM:** `utm_source=mendoza-transparente.com`, `utm_medium=referral` y `utm_campaign=sitios_amigos`, para que el otro sitio vea de dónde llegan las visitas.
+- **Atributos:** `target="_blank"` y `rel="noopener"`. Sin `noreferrer`, así el sitio amigo también recibe el referer; sin `nofollow`, porque es una recomendación editorial.
+- **Analítica:** cada clic manda `footer.friend_site.open` con el dominio en `site`.
+
 ## Velocidad de carga
 
 - **Cada página es su propio archivo de JavaScript** (`lazyRouteComponent` en `src/main.tsx`): la primera visita baja el layout y la página donde entra. La hoja de detalle de compras se descarga la primera vez que se abre (`React.lazy` en `src/components/detail-sheet.tsx`).
