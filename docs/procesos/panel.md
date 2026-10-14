@@ -27,7 +27,7 @@ Con **Cloudflare Access** (Zero Trust, gratis hasta 50 personas). La persona abr
 
 ## Puesta en marcha (una vez)
 
-Ya hecha en parte: ver el estado en la sección siguiente. Para rehacerla en otra cuenta:
+Ya hecha: ver el estado en la sección siguiente. Para rehacerla en otra cuenta:
 
 1. **Proyecto de Pages:** `mendoza-transparente-panel`, conectado al repositorio, con directorio `apps/panel`, comando de build `cd ../.. && bun install --frozen-lockfile && cd apps/panel && bunx vite build` y salida `dist`. Vincular la base D1 `mendoza-transparente` como `DB`.
 2. **Dominio:** `panel.mendoza-transparente.com` como dominio propio del proyecto.
@@ -36,6 +36,7 @@ Ya hecha en parte: ver el estado en la sección siguiente. Para rehacerla en otr
    - Duración de la sesión: 24 horas.
    - Política «Equipo»: *Allow*, *Emails* con la lista del equipo.
    - Métodos de login: *One-time PIN* (código al correo). Opcional: Google.
+   - Una segunda aplicación con política *Bypass* para `panel.mendoza-transparente.com/.well-known/acme-challenge/*`, para que Pages pueda validar el dominio.
    - Copiar el **Application Audience (AUD) Tag**.
 4. **Secretos del proyecto del panel** (Settings → Variables, como *secret*):
    - `ACCESS_TEAM_DOMAIN`: `<equipo>.cloudflareaccess.com`.
@@ -51,31 +52,30 @@ Ya hecha en parte: ver el estado en la sección siguiente. Para rehacerla en otr
 
 ## El proyecto en Cloudflare: estado y cómo consultarlo
 
-**Estado al 14/10/2026** (cuenta personal de Cloudflare, configurado por API con el token de `.env.cloudflare`):
+**Estado al 14/10/2026** (cuenta personal de Cloudflare, configurado por API con el token de `.env.cloudflare`): **andando**.
 
-| Qué | Valor | Estado |
-|---|---|---|
-| Proyecto de Pages | `mendoza-transparente-panel`, separado del sitio (`mendoza-transparente`) | Creado |
-| Repositorio | `unllamas/mendoza-transparente`, directorio `apps/panel`, producción desde `main`, vistas previas de todas las ramas | Conectado |
-| Build | `cd ../.. && bun install --frozen-lockfile && cd apps/panel && bunx vite build`, salida `dist`. Las variables de build y el binding `DB` salen de `apps/panel/wrangler.toml` | Andando |
-| Direcciones | `panel.mendoza-transparente.com` (propia) y `mendoza-transparente-panel.pages.dev` | El dominio está agregado; falta el registro DNS |
-| Base | La misma D1 que el sitio (`mendoza-transparente`, binding `DB`) | Migración `0002` aplicada al mergear |
-| Login | Cloudflare Access | **Pendiente:** activar Zero Trust y darle permisos al token |
-| Secretos | `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD`, `PANEL_EMAILS` | **Pendiente** (dependen de Access) |
+| Qué | Valor |
+|---|---|
+| Proyecto de Pages | `mendoza-transparente-panel`, separado del sitio (`mendoza-transparente`) |
+| Repositorio | `unllamas/mendoza-transparente`, directorio `apps/panel`, producción desde `main`, vistas previas de todas las ramas |
+| Build | `cd ../.. && bun install --frozen-lockfile && cd apps/panel && bunx vite build`, salida `dist`. Las variables de build y el binding `DB` salen de `apps/panel/wrangler.toml` |
+| Direcciones | `panel.mendoza-transparente.com` (propia, CNAME con proxy a `mendoza-transparente-panel.pages.dev`) y `mendoza-transparente-panel.pages.dev` |
+| Base | La misma D1 que el sitio (`mendoza-transparente`, binding `DB`), con la migración `0002` aplicada |
+| Equipo de Zero Trust | `flat-bush-923e.cloudflareaccess.com`, plan Free |
+| Login | Access con *One-time PIN* (código al correo). El login con cuenta de Cloudflare también está activo, pero solo sirve a quien es miembro de la cuenta |
+| Aplicación de Access | «Panel Mendoza Transparente», con los tres dominios, sesión de 24 h y política «Equipo» (*Allow* por correo) |
+| Ruta sin login | Aplicación aparte «Panel: validación del certificado» con política *Bypass* para `panel.mendoza-transparente.com/.well-known/acme-challenge/*`. Sin ella, Access bloquea la validación HTTP del dominio en Pages y el dominio queda pendiente. No sirve nada del panel |
+| Secretos | `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD` y `PANEL_EMAILS`, en producción y en vistas previas |
+| Quién entra | El dueño de la cuenta. La lista está en la política «Equipo» y en `PANEL_EMAILS`, no en el repositorio |
 
-Mientras falte el login, la API del panel responde 401 a todo: el HTML se puede abrir, pero no muestra ningún dato.
+El token de `.env.cloudflare` tiene, además de Pages y D1:
+- *Account → Access: Apps and Policies → Edit*;
+- *Account → Access: Organizations, Identity Providers, and Groups → Edit*;
+- *Zone → DNS → Edit*, para `mendoza-transparente.com`.
 
-**Lo que falta, en orden:**
-1. **Activar Zero Trust** (lo hace la persona, desde el dashboard): menú Zero Trust, elegir el nombre del equipo (`<equipo>.cloudflareaccess.com`) y el plan Free.
-2. **Ampliar el token de `.env.cloudflare`** con:
-   - *Account → Access: Apps and Policies → Edit*;
-   - *Account → Access: Organizations, Identity Providers, and Groups → Read*;
-   - *Zone → DNS → Edit*, para `mendoza-transparente.com`.
-3. **Con eso, por API:**
-   - el registro DNS `panel` (CNAME a `mendoza-transparente-panel.pages.dev`, con proxy);
-   - la aplicación de Access y su política;
-   - los tres secretos;
-   - las pruebas del paso 6 de la puesta en marcha.
+**Indexación:** el panel no aparece en buscadores. Access manda a su login a cualquiera sin sesión, robots incluidos, y además el panel tiene `noindex` (cabecera y meta) y un `robots.txt` que bloquea todo.
+
+**Si cambian los secretos**, hay que volver a publicar (`POST $B/deployments`): Pages los toma al desplegar.
 
 **Consultas útiles** (desde la raíz de la copia de trabajo, sin imprimir el token):
 
