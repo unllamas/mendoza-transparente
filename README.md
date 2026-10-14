@@ -17,7 +17,10 @@ El Estado provincial publica mucha información: presupuesto, deuda, compras, Bo
 Monorepo con Bun workspaces y Turborepo, en TypeScript.
 
 ```
-apps/                   aplicaciones (por ejemplo, el sitio web)
+apps/web/               el sitio (mendoza-transparente.com) y su API pública de participación
+apps/panel/             panel interno del equipo, detrás de Cloudflare Access (docs/procesos/panel.md)
+packages/ui/            @mt/ui: componentes y tokens de diseño
+packages/participation/ @mt/participation: API de participación y del panel, migraciones de D1
 packages/core/          @mt/core: descarga, archivado, CSV, municipios
 packages/scrapers/      @mt/scrapers: un recolector por fuente en src/sources/<id>.ts
 docs/                   relevamiento de fuentes y documentación

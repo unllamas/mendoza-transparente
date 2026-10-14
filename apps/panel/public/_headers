@@ -1,0 +1,10 @@
+# Cabeceras del panel en Cloudflare Pages (docs/procesos/panel.md). Sin scripts de terceros, sin iframes,
+# sin indexar y sin mandar la dirección del panel a los sitios que se abren desde acá. El HTML y los assets no
+# tienen datos: los datos solo salen de /api, que responde con no-store.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  X-Robots-Tag: noindex, nofollow
+  Permissions-Policy: camera=(), microphone=(), geolocation=()

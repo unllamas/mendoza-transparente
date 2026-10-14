@@ -128,6 +128,14 @@ const funcionarioRoute = createRoute({
   component: page(() => import("./pages/funcionarios.tsx"), "FuncionarioPage"),
 });
 
+const registroRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/registro",
+  // The submissions themselves come live from /api/registro; the build only gives the titles of the items.
+  loader: () => loadTema<NoPublicado[]>("no-publicado").catch(() => [] as NoPublicado[]),
+  component: page(() => import("./pages/registro.tsx"), "RegistroPage"),
+});
+
 const comoLeerRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/como-leer",
@@ -271,6 +279,7 @@ const router = createRouter({
     senalesRoute,
     noPublicadoRoute,
     participarRoute,
+    registroRoute,
     comoLeerRoute,
     fuentesRoute,
     datosRoute,

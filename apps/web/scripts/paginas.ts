@@ -100,6 +100,7 @@ const NAV = [
   ["/poblacion", "Población"],
   ["/no-publicado", "Lo que no se publica"],
   ["/participar", "Participá"],
+  ["/registro", "Registro de pedidos"],
   ["/como-leer", "Cómo leer estos datos"],
   ["/fuentes", "Fuentes"],
 ] as const;
@@ -505,6 +506,30 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
       h1: "Sumate a Mendoza Transparente",
       resumen:
         "Registrá los pedidos de acceso a la información pública que presentaste en Mendoza (Ley 9070) con su número de trámite, contanos qué te respondieron, reportá errores o sugerí datos. Publicamos cuántos pedidos hay y cuánto responde el Estado.",
+    }),
+    lastmod: hoy,
+    prioridad: 0.6,
+  });
+
+  estatica("/registro", {
+    figura: "Registro",
+    bajada: "Qué se le pidió al Estado de Mendoza, cuánto tardó en responder y qué corregimos.",
+    ld: [
+      breadcrumb([
+        ["/", "Inicio"],
+        ["/participar", "Participá"],
+        ["/registro", "Registro de pedidos"],
+      ]),
+    ],
+    html: cuerpo({
+      migas: [
+        ["/", "Inicio"],
+        ["/participar", "Participá"],
+        ["/registro", "Registro de pedidos"],
+      ],
+      h1: "Registro de pedidos y correcciones",
+      resumen:
+        "Los pedidos de acceso a la información pública (Ley 9070) que la gente presentó en Mendoza: qué dato se pidió, a qué organismo, cuándo, y si el Estado respondió, lo negó o dejó vencer el plazo. También los errores del sitio que nos avisaron y corregimos. Cada envío se publica después de revisarlo y sin datos personales.",
     }),
     lastmod: hoy,
     prioridad: 0.6,

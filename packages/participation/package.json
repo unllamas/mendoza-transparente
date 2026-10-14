@@ -1,0 +1,13 @@
+{
+  "name": "@mt/participation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts",
+    "./migrations/*": "./migrations/*"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
+}

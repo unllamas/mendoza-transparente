@@ -9,7 +9,8 @@ binding = "DB"
 database_name = "mendoza-transparente"
 # Base creada el 12/10/2026 (no es secreto: identifica la base, no da acceso).
 database_id = "2ad5ebf5-df14-4843-b453-c9e8cb436ed5"
-migrations_dir = "migrations"
+# Las migraciones viven en el paquete compartido con el panel.
+migrations_dir = "../../packages/participation/migrations"
 
 # Con wrangler.toml, Pages toma las variables de acá (no del panel). Los secretos (TURNSTILE_SECRET, IP_SALT)
 # siguen en el panel. Las variables públicas del sitio están en .env.production.

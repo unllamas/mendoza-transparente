@@ -55,6 +55,7 @@ Cualquier vista se puede pasar por link tal como está: la pestaña de una pági
 | Leyes, proveedores, organismos | `?q=<búsqueda>` |
 | Lo que no se publica | `?tema=<id>`, `?dato=<id>` (los links viejos con `#id` siguen andando) |
 | Participar | `?tipo=error` |
+| Registro | `?ver=correcciones`, `?codigo=<P-… o R-…>` |
 | Datos | `?<tabla>=<grupo>` (por ejemplo, `?personal=2025`) |
 | Señales y compras | `?senal=`, `?proceso=`, `?proveedor=` (ver abajo) |
 
@@ -176,6 +177,8 @@ La barra de Agentation (`src/components/dev-feedback.tsx`) solo existe en desarr
 
 El menú móvil ocupa toda la pantalla y tiene su propia barra con el botón de cerrar: no depende del header, que en el celular puede quedar fuera de la pantalla mientras la página está bloqueada (con `overflow: hidden` en `<html>`, `position: sticky` deja de funcionar). Paneles sobre la página (menú móvil, hojas modales): usar `useScrollLock(abierto)` de `@mt/ui/hooks/use-scroll-lock` (la `Sheet` ya lo hace). Bloquea el scroll en `<html>` y `<body>`: con `overflow-x: clip` en `html`, el que desplaza la página es `<html>`, y bloquear solo `<body>` deja dos scrolls en el celular. El panel lleva `overflow-y-auto overscroll-contain`. Para revisar cómo se ve, sacar capturas con `playwright-core` (ver el mismo script como ejemplo).
 
+Si el puerto 5199 está ocupado (otro worktree con el sitio levantado), `MT_VERIFY_PORT=5299 bun run verificar`: si no, la prueba recorre el servidor que ya estaba.
+
 Errores de consola del tipo «Could not establish connection. Receiving end does not exist» vienen de extensiones del navegador, no del sitio: verificar siempre con `bun run verificar`, que usa un Chrome limpio.
 
 ## Publicar
@@ -192,7 +195,7 @@ Errores de consola del tipo «Could not establish connection. Receiving end does
 - Variables: `VITE_SITE_URL`, `VITE_POSTHOG_KEY` (ver [Analítica](analitica.md)) y `VITE_TURNSTILE_SITE_KEY`.
 - Base D1 vinculada como `DB` y secretos `TURNSTILE_SECRET` e `IP_SALT` (ver [Participación](participacion.md)).
 
-Cada push a `main` publica solo, incluidos los commits automáticos de datos.
+Cada push a `main` publica solo, incluidos los commits automáticos de datos. El panel interno se publica en otro proyecto de Pages (`mendoza-transparente-panel`), con la misma base D1: ver [Panel interno](panel.md).
 
 **Estado al 12/10/2026 (cuenta personal de Cloudflare, configurado por API con el token de `.env.cloudflare`):**
 - Proyecto `mendoza-transparente` (`mendoza-transparente.pages.dev`), con root directory `apps/web`.

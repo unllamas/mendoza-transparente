@@ -1,12 +1,14 @@
 import { spawn } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import { join, normalize } from "node:path";
-
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig, type Plugin } from "vite";
-
-import { handle, memoryStore } from "./server/participation.ts";
+// Relative paths, not "@mt/participation": Vite leaves workspace packages out of the config bundle, and the Node
+// of Cloudflare's build (22.16) cannot load .ts files from node_modules.
+import type { Db } from "../../packages/participation/src/db.ts";
+import { openDevDb } from "../../packages/participation/src/local-db.ts";
+import { handlePublic } from "../../packages/participation/src/public-api.ts";
 
 const ROOT = join(import.meta.dirname, "..", "..");
 
@@ -76,13 +78,18 @@ function liveData(): Plugin {
   };
 }
 
-/** In development, the participation API (/api/*) runs here with an in-memory store (lost on restart). */
+/**
+ * In development, the participation API (/api/*) runs here over a local SQLite in `.dev/`, shared with the
+ * panel (apps/panel), with example submissions. Delete the file to start over.
+ */
 function devApi(): Plugin {
-  const store = memoryStore();
+  // Opened when the dev server starts, never during the build.
+  let db: Promise<Db> | null = null;
   return {
     name: "mt-dev-api",
     apply: "serve",
     configureServer(server) {
+      db = openDevDb(join(ROOT, ".dev", "participation.sqlite"));
       server.middlewares.use("/api", async (req, res, next) => {
         const chunks: Buffer[] = [];
         for await (const c of req) chunks.push(c as Buffer);
@@ -91,7 +98,7 @@ function devApi(): Plugin {
           headers: { "content-type": req.headers["content-type"] ?? "application/json" },
           body: req.method === "GET" || req.method === "HEAD" ? undefined : Buffer.concat(chunks),
         });
-        const response = await handle(request, store, { ipSalt: "dev" }, req.socket.remoteAddress ?? "127.0.0.1");
+        const response = await handlePublic(request, await db!, { development: true }, req.socket.remoteAddress ?? "127.0.0.1");
         if (!response) return next();
         res.statusCode = response.status;
         response.headers.forEach((v, k) => res.setHeader(k, v));

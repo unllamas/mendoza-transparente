@@ -34,6 +34,7 @@ Las skills del proyecto (`.claude/skills/<nombre>/SKILL.md`) son la puerta de en
 | Escribir un texto que interpreta datos, calcular una cifra o una señal, editar `data/curado` | `contenido-y-metodologia` |
 | Crear una página o un tipo de entidad; títulos, rutas, buscador o previsualizaciones | `seo-y-geo` |
 | Publicar o tocar Cloudflare, D1 o PostHog; diagnosticar el sitio en vivo | `produccion` |
+| Tocar el panel interno (`apps/panel`), el registro público (`/registro`), la API de participación o el acceso del equipo | `panel` |
 | Lanzar un subagente o integrar lo que devolvió | `delegar-en-agentes` |
 
 **Proceso nuevo = documento en `docs/procesos/` + skill (o sección en una existente) + fila en esta tabla, en el mismo commit.**

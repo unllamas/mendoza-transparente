@@ -4,7 +4,7 @@ import { Input, InputBase, TextField } from "@mt/ui/components/base/input/input"
 import { Label } from "@mt/ui/components/base/input/label";
 import { Select, SelectItem } from "@mt/ui/components/base/select/select";
 import { Textarea } from "@mt/ui/components/base/textarea/textarea";
-import { tileVariants } from "@mt/ui/components/card";
+import { listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
 import { PageHeader } from "@mt/ui/components/section";
 import { cx } from "@mt/ui/lib/cx";
 import {
@@ -12,8 +12,10 @@ import {
   RiBugLine,
   RiCameraLine,
   RiCheckboxCircleLine,
+  RiCheckLine,
   RiContractLine,
   RiFileAddLine,
+  RiFileCopyLine,
   RiReplyLine,
   RiSendPlaneLine,
 } from "@remixicon/react";
@@ -67,8 +69,9 @@ export function ParticiparPage() {
       {form === "foto" && <PhotoForm />}
 
       <Alert variant="note" title="Qué hacemos con lo que nos mandás">
-        Publicamos solo números agregados: cuántos pedidos hay por dato y cuántos tuvieron respuesta. Tu correo es opcional, no se publica y
-        solo lo usamos para escribirte sobre tu envío. No pedimos tu DNI.
+        Después de revisarlo, lo sumamos al <Link to="/registro">registro público</Link>: qué dato se pidió, a qué organismo, las fechas y
+        si hubo respuesta, o qué error se corrigió, con un resumen escrito por nosotros. Nunca publicamos tu correo, tu número de trámite ni
+        lo que escribiste tal cual. Tu correo es opcional y solo lo usamos para escribirte sobre tu envío. No pedimos tu DNI.
       </Alert>
     </div>
   );
@@ -85,7 +88,9 @@ function Counter({ value, label }: { value: number; label: string }) {
 
 // ------------------------------------------------------------------ forms
 
-type SubmitState = { status: "idle" | "sending" | "done" } | { status: "error"; message: string };
+/** What the API answers to a submission that went through. */
+type Receipt = { code?: string; key?: string; applied?: boolean };
+type SubmitState = { status: "idle" | "sending" } | { status: "done"; receipt: Receipt } | { status: "error"; message: string };
 
 function useSubmit(endpoint: string, trackEvent: string) {
   const [state, setState] = useState<SubmitState>({ status: "idle" });
@@ -97,14 +102,14 @@ function useSubmit(endpoint: string, trackEvent: string) {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ ...body, token }),
       });
-      const data = (await r.json().catch(() => ({}))) as { error?: string };
+      const data = (await r.json().catch(() => ({}))) as Receipt & { error?: string };
       if (!r.ok) {
         track(`${trackEvent}.error`, { status: r.status });
         setState({ status: "error", message: data.error ?? "No pudimos guardar tu envío. Probá de nuevo en un rato." });
         return;
       }
       track(`${trackEvent}.success`, props);
-      setState({ status: "done" });
+      setState({ status: "done", receipt: data });
     } catch {
       track(`${trackEvent}.error`, { status: 0 });
       setState({ status: "error", message: "No hay conexión con el servidor. Probá de nuevo en un rato." });
@@ -120,8 +125,16 @@ function RequestForm({ items, defaultItem }: { items: NoPublicado[]; defaultItem
   if (state.status === "done")
     return (
       <Done onAgain={reset} again="Registrar otro pedido">
-        Registramos tu pedido. Cuando te respondan (o si pasan 15 días hábiles sin respuesta), contanos qué pasó con el mismo número de
-        trámite.
+        Registramos tu pedido. Guardá el código y la clave: con los dos nos contás la respuesta cuando llegue (o si pasan 15 días hábiles
+        sin respuesta). La clave no se vuelve a mostrar.
+        {state.receipt.code && state.receipt.key && (
+          <Credentials
+            items={[
+              { label: "Código del pedido", value: state.receipt.code, id: "pedido-codigo" },
+              { label: "Clave", value: state.receipt.key, id: "pedido-clave" },
+            ]}
+          />
+        )}
       </Done>
     );
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -145,7 +158,7 @@ function RequestForm({ items, defaultItem }: { items: NoPublicado[]; defaultItem
     <form onSubmit={onSubmit} className="flex flex-col gap-5" id="form-pedido" data-track-form="request">
       <Intro icon={RiFileAddLine}>
         ¿Presentaste un pedido de acceso a la información? Registralo con el número de trámite que te dio el formulario oficial. No
-        publicamos tu número: lo usamos para contar los pedidos y para que después puedas contarnos la respuesta.
+        publicamos tu número: lo usamos para contar los pedidos y para revisar que el pedido exista.
       </Intro>
       <Select label="Qué dato pediste" value={itemId} onChange={(key) => setItemId(String(key))} id="pedido-dato">
         {items.map((i) => (
@@ -179,10 +192,14 @@ function RequestForm({ items, defaultItem }: { items: NoPublicado[]; defaultItem
 function AnswerForm() {
   const { state, submit, reset } = useSubmit("/api/pedidos/respuesta", "participation.answer");
   const [token, setToken] = useState<string | null>(null);
+  // With the code and key the answer counts right away; with only the filing number, the team checks it first.
+  const [withKey, setWithKey] = useState(true);
   if (state.status === "done")
     return (
       <Done onAgain={reset} again="Contar otra respuesta">
-        Gracias. Con tu respuesta sabemos cuánto cumple el Estado con la Ley 9070.
+        {state.receipt.applied === false
+          ? "Gracias. Como llegó sin la clave, la revisamos antes de sumarla. Con tu respuesta sabemos cuánto cumple el Estado con la Ley 9070."
+          : "Gracias. Ya la sumamos: con tu respuesta sabemos cuánto cumple el Estado con la Ley 9070."}
       </Done>
     );
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -190,7 +207,7 @@ function AnswerForm() {
     const f = new FormData(e.currentTarget);
     void submit(
       {
-        filingNumber: f.get("filingNumber"),
+        ...(withKey ? { code: f.get("code"), key: f.get("key") } : { filingNumber: f.get("filingNumber") }),
         status: f.get("status"),
         answeredOn: f.get("answeredOn"),
         summary: f.get("summary"),
@@ -202,8 +219,31 @@ function AnswerForm() {
   };
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-5" id="form-respuesta">
-      <Intro icon={RiReplyLine}>Contanos qué pasó con un pedido que registraste antes, con el mismo número de trámite.</Intro>
-      <Input label="Número de trámite" name="filingNumber" isRequired maxLength={60} autoComplete="off" />
+      <Intro icon={RiReplyLine}>Contanos qué pasó con un pedido que registraste antes, con el código y la clave que te dimos.</Intro>
+      {withKey ? (
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Input label="Código del pedido" name="code" isRequired placeholder="P-…" maxLength={12} autoComplete="off" />
+          <Input label="Clave" name="key" isRequired maxLength={30} autoComplete="off" />
+        </div>
+      ) : (
+        <Input
+          label="Número de trámite"
+          hint="Sin la clave, revisamos la respuesta antes de sumarla."
+          name="filingNumber"
+          isRequired
+          maxLength={60}
+          autoComplete="off"
+        />
+      )}
+      <Button
+        variant="tertiary"
+        className="w-fit"
+        onClick={() => setWithKey(!withKey)}
+        id="respuesta-sin-clave"
+        data-track="participation.answer.toggle_key"
+      >
+        {withKey ? "No tengo la clave (o registré el pedido antes de que existiera)" : "Tengo el código y la clave"}
+      </Button>
       <Select label="Qué pasó" name="status" isRequired defaultValue="respondido">
         <SelectItem id="respondido">Me respondieron con lo que pedí</SelectItem>
         <SelectItem id="parcial">Me respondieron en parte</SelectItem>
@@ -248,6 +288,7 @@ function FeedbackForm({ kind, context }: { kind: "error" | "dato"; context: Repo
     return (
       <Done onAgain={reset} again="Enviar otro">
         {kind === "error" ? "Gracias por avisarnos. Lo revisamos y lo corregimos." : "Gracias. Lo sumamos a la lista de datos para buscar."}
+        {state.receipt.code && <Credentials items={[{ label: "Código de tu envío", value: state.receipt.code, id: "envio-codigo" }]} />}
       </Done>
     );
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -383,10 +424,10 @@ function SubmitRow({ state, label, id }: { state: SubmitState; label: string; id
 function Done({ children, onAgain, again }: { children: ReactNode; onAgain: () => void; again: string }) {
   return (
     <div className={cx(tileVariants({ size: "lg" }), "flex flex-col gap-4")}>
-      <p className="flex items-start gap-3 text-text-primary">
+      <div className="flex items-start gap-3 text-text-primary">
         <RiCheckboxCircleLine className="mt-0.5 size-5 shrink-0 text-good" aria-hidden />
-        <span className="text-pretty">{children}</span>
-      </p>
+        <div className="flex min-w-0 flex-col gap-4 text-pretty">{children}</div>
+      </div>
       <div className="flex flex-wrap gap-2">
         <Button variant="secondary" onClick={onAgain}>
           {again}
@@ -396,6 +437,34 @@ function Done({ children, onAgain, again }: { children: ReactNode; onAgain: () =
         </Link>
       </div>
     </div>
+  );
+}
+
+/** Codes the person has to keep, each with a button to copy it. */
+function Credentials({ items }: { items: { label: string; value: string; id: string }[] }) {
+  const [copied, setCopied] = useState<string | null>(null);
+  return (
+    <dl className={cx(listVariants(), "w-full")}>
+      {items.map((i) => (
+        <div key={i.id} className={cx(listRowVariants({ interactive: false }), "flex min-h-11 items-center gap-3")}>
+          <div className="flex min-w-0 flex-1 flex-col">
+            <dt className="text-caption-1-regular text-text-tertiary">{i.label}</dt>
+            <dd className="truncate font-mono text-body-1-semibold select-all">{i.value}</dd>
+          </div>
+          <Button
+            variant="secondary"
+            id={`${i.id}-copiar`}
+            data-track="participation.credentials.copy"
+            leadingIcon={copied === i.id ? RiCheckLine : RiFileCopyLine}
+            onClick={() => {
+              void navigator.clipboard?.writeText(i.value).then(() => setCopied(i.id));
+            }}
+          >
+            {copied === i.id ? "Copiado" : "Copiar"}
+          </Button>
+        </div>
+      ))}
+    </dl>
   );
 }
 
