@@ -16,7 +16,7 @@ import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { formatMoneda } from "@/celdas.ts";
 import { ColumnChart } from "@/charts/column-chart.tsx";
-import { Breadcrumbs } from "@/components/breadcrumbs.tsx";
+import { Breadcrumbs, WithBreadcrumbs } from "@/components/breadcrumbs.tsx";
 import { useDetail } from "@/components/detail-sheet.tsx";
 import { ListSearch } from "@/components/list-search.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
@@ -115,13 +115,14 @@ export function ProveedorPage() {
   const nombre = ficha.empresa?.razonSocial ?? ficha.nombre;
   return (
     <div className="flex max-w-2xl flex-col gap-8">
-      <Breadcrumbs items={[{ label: "Proveedores", to: "/proveedores" }, { label: nombre }]} />
-      <div className="flex flex-col gap-2">
-        <span className="flex items-center gap-2 text-body-regular text-text-tertiary">
-          <RiBuilding2Line className="size-4" aria-hidden /> Proveedor · CUIT {cuit}
-        </span>
-        <h1 className="text-title-1-semibold tracking-tight text-balance break-words sm:text-display-4-semibold">{nombre}</h1>
-      </div>
+      <WithBreadcrumbs items={[{ label: "Proveedores", to: "/proveedores" }, { label: nombre }]}>
+        <div className="flex flex-col gap-2">
+          <span className="flex items-center gap-2 text-body-regular text-text-tertiary">
+            <RiBuilding2Line className="size-4" aria-hidden /> Proveedor · CUIT {cuit}
+          </span>
+          <h1 className="text-title-1-semibold tracking-tight text-balance break-words sm:text-display-4-semibold">{nombre}</h1>
+        </div>
+      </WithBreadcrumbs>
       <FuentesOficiales ids={FUENTES} />
       <Proveedor cuit={cuit} sinTitulo onProceso={(ocid) => detail.open("proceso", ocid)} />
     </div>
@@ -196,10 +197,11 @@ export function OrganismoPage() {
   const maxProv = o.proveedores[0]?.monto ?? 1;
   return (
     <div className="flex flex-col gap-10">
-      <Breadcrumbs items={[{ label: "Organismos", to: "/organismos" }, { label: nombre }]} />
-      <PageHeader icon={RiBankLine} topic="Organismo" title={nombre}>
-        Cuánto compró, a quiénes y con qué modalidad.
-      </PageHeader>
+      <WithBreadcrumbs items={[{ label: "Organismos", to: "/organismos" }, { label: nombre }]}>
+        <PageHeader icon={RiBankLine} topic="Organismo" title={nombre}>
+          Cuánto compró, a quiénes y con qué modalidad.
+        </PageHeader>
+      </WithBreadcrumbs>
       <FuentesOficiales ids={FUENTES} />
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">

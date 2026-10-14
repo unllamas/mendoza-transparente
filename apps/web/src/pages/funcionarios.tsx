@@ -18,7 +18,7 @@ import { getRouteApi, Link } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { formatMoneda } from "@/celdas.ts";
 import { BarList } from "@/charts/bar-list.tsx";
-import { Breadcrumbs } from "@/components/breadcrumbs.tsx";
+import { Breadcrumbs, WithBreadcrumbs } from "@/components/breadcrumbs.tsx";
 import { ListSearch } from "@/components/list-search.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
 import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
@@ -190,10 +190,11 @@ export function RolePage() {
   const sections = legislature ? [...new Set(people.map((p) => p.seccion ?? "Sin sección"))].sort(sectionOrder) : [null];
   return (
     <div className="flex flex-col gap-10">
-      <Breadcrumbs items={[{ label: "Funcionarios", to: "/funcionarios" }, { label: r.title }]} />
-      <PageHeader icon={RiBankLine} topic="Funcionarios" title={r.title}>
-        {r.description}
-      </PageHeader>
+      <WithBreadcrumbs items={[{ label: "Funcionarios", to: "/funcionarios" }, { label: r.title }]}>
+        <PageHeader icon={RiBankLine} topic="Funcionarios" title={r.title}>
+          {r.description}
+        </PageHeader>
+      </WithBreadcrumbs>
       <FuentesOficiales ids={["autoridades", "legislatura"]} />
       {legislature && <Bloques personas={people} />}
       {sections.map((sec) => {
@@ -228,16 +229,17 @@ export function FuncionarioPage() {
   const p = personas.find((x) => x.role === role && x.slug === slug);
   if (!p) return <NotFound />;
   return (
-    <div className="flex max-w-2xl flex-col gap-6">
-      <Breadcrumbs
-        items={[
-          { label: "Funcionarios", to: "/funcionarios" },
-          { label: ROLES[p.grupo].title, to: `/funcionarios/${p.role}` },
-          { label: p.nombre },
-        ]}
-      />
-      <FichaFuncionario persona={p} usd={usd} />
-    </div>
+    <WithBreadcrumbs
+      items={[
+        { label: "Funcionarios", to: "/funcionarios" },
+        { label: ROLES[p.grupo].title, to: `/funcionarios/${p.role}` },
+        { label: p.nombre },
+      ]}
+    >
+      <div className="max-w-2xl">
+        <FichaFuncionario persona={p} usd={usd} />
+      </div>
+    </WithBreadcrumbs>
   );
 }
 

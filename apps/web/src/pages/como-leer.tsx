@@ -12,7 +12,7 @@ import {
   RiShieldCheckLine,
 } from "@remixicon/react";
 import { Link } from "@tanstack/react-router";
-import { Breadcrumbs } from "@/components/breadcrumbs.tsx";
+import { WithBreadcrumbs } from "@/components/breadcrumbs.tsx";
 import { READING_RULES } from "@/components/home-guide.tsx";
 import { openSearch } from "@/components/search-dialog.tsx";
 import { GLOSSARY } from "@/glossary.ts";
@@ -43,12 +43,13 @@ const STEPS = [
 export function ComoLeerPage() {
   return (
     <div className="flex max-w-3xl flex-col gap-12">
-      <Breadcrumbs items={[{ label: "Cómo leer estos datos" }]} />
-      <PageHeader icon={RiBookOpenLine} topic="Guía" title="Para qué sirve Mendoza Transparente y cómo usarlo">
-        Reunimos los datos públicos de la provincia de Mendoza, que están dispersos en decenas de sitios oficiales, PDF y planillas, y los
-        ordenamos para que cualquier persona pueda entender en qué se gasta la plata, quién decide y qué falta publicar. Es un proyecto
-        ciudadano, independiente y apartidario.
-      </PageHeader>
+      <WithBreadcrumbs items={[{ label: "Cómo leer estos datos" }]}>
+        <PageHeader icon={RiBookOpenLine} topic="Guía" title="Para qué sirve Mendoza Transparente y cómo usarlo">
+          Reunimos los datos públicos de la provincia de Mendoza, que están dispersos en decenas de sitios oficiales, PDF y planillas, y los
+          ordenamos para que cualquier persona pueda entender en qué se gasta la plata, quién decide y qué falta publicar. Es un proyecto
+          ciudadano, independiente y apartidario.
+        </PageHeader>
+      </WithBreadcrumbs>
 
       <Section title="Cómo empezar">
         <ol className="grid gap-3 sm:grid-cols-2">

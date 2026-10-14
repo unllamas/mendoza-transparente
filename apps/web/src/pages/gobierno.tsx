@@ -21,7 +21,7 @@ import { getRouteApi, Link } from "@tanstack/react-router";
 
 import { ColumnChart } from "@/charts/column-chart.tsx";
 import { LineChart } from "@/charts/line-chart.tsx";
-import { Breadcrumbs } from "@/components/breadcrumbs.tsx";
+import { Breadcrumbs, WithBreadcrumbs } from "@/components/breadcrumbs.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
 import { GOBIERNOS } from "@/gobiernos.ts";
 import { formatDate, formatNumber } from "@/lib.ts";
@@ -165,16 +165,17 @@ export function AgencyPage() {
   const yearly = a.staffSeries.filter((p, i, all) => p.period.endsWith("-T4") || i === all.length - 1);
   return (
     <div className="flex flex-col gap-10">
-      <Breadcrumbs
+      <WithBreadcrumbs
         items={[
           { label: "Gobierno por dentro", to: "/gobierno" },
           ...(a.parent ? [{ label: a.parent.name, to: `/gobierno/${a.parent.slug}` }] : []),
           { label: a.name },
         ]}
-      />
-      <PageHeader icon={RiBuilding2Line} topic={a.parent ? `Depende de ${a.parent.name}` : "Gobierno de Mendoza"} title={a.name}>
-        {a.whatItDoes ?? "Quién lo conduce, cuántos cargos tiene, cuánto cuesta su personal y qué compra."}
-      </PageHeader>
+      >
+        <PageHeader icon={RiBuilding2Line} topic={a.parent ? `Depende de ${a.parent.name}` : "Gobierno de Mendoza"} title={a.name}>
+          {a.whatItDoes ?? "Quién lo conduce, cuántos cargos tiene, cuánto cuesta su personal y qué compra."}
+        </PageHeader>
+      </WithBreadcrumbs>
 
       {a.head && <HeadCard head={a.head} />}
 

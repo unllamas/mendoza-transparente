@@ -81,6 +81,7 @@ Los componentes base y los tokens viven en el paquete `@mt/ui`. Lo usa la web y 
 - **Nunca scroll horizontal**, en ningún ancho. Hay una red de seguridad global (`overflow-x: clip`), pero la causa se corrige igual.
 - **Las barras de scroll van pegadas al borde derecho**, sin hueco entre la barra y el contenedor. El estilo es global (finas, sin carril, en `packages/ui/src/styles/mt.css`): no se estilan barras por componente ni se agrega `padding` a la derecha de un contenedor que scrollea.
 - **Mobile first**: menú hamburguesa por debajo de 1024 px, pestañas desplazables, hojas a pantalla completa en celular.
+- **El link para atrás va pegado al encabezado que presenta.** En el celular, «‹ Municipios» ya mide 44 px de alto: si además lleva el `gap` de la página (8 a 12), queda un hueco entre el link y el tema del título. Se usa `WithBreadcrumbs` (`apps/web/src/components/breadcrumbs.tsx`) envolviendo el `PageHeader` o el `<header>` propio: sin espacio extra en el celular y 8 px en escritorio. Nunca `Breadcrumbs` suelto como hijo de la columna de la página.
 
 ## Celular
 

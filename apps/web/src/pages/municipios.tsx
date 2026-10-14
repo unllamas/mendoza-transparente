@@ -9,7 +9,7 @@ import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { ColumnChart } from "@/charts/column-chart.tsx";
 import { MapaMendoza, MunicipalityLocator } from "@/charts/mapa.tsx";
-import { Breadcrumbs } from "@/components/breadcrumbs.tsx";
+import { Breadcrumbs, WithBreadcrumbs } from "@/components/breadcrumbs.tsx";
 import { LandscapePhoto } from "@/components/landscape-photo.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
 import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
@@ -69,11 +69,12 @@ export function MunicipiosPage() {
     <div className="flex flex-col gap-10">
       <div className="flex flex-col gap-6">
         <LandscapePhoto id={DEFAULT_PHOTO} className={LANDSCAPE_HEIGHT} />
-        <Breadcrumbs items={[{ label: "Municipios" }]} />
+        <WithBreadcrumbs items={[{ label: "Municipios" }]}>
+          <PageHeader icon={RiMapPinLine} topic="Municipios" title="Los 18 municipios de Mendoza">
+            Quién gobierna cada uno, cuántos habitantes tiene, cuánta coparticipación recibe y cuánto personal tiene.
+          </PageHeader>
+        </WithBreadcrumbs>
       </div>
-      <PageHeader icon={RiMapPinLine} topic="Municipios" title="Los 18 municipios de Mendoza">
-        Quién gobierna cada uno, cuántos habitantes tiene, cuánta coparticipación recibe y cuánto personal tiene.
-      </PageHeader>
       <TrackedSegmented label="Ver en el mapa" options={METRICS} value={metric} onChange={setMetric} />
 
       <div className="grid gap-8 lg:grid-cols-[2fr_3fr] lg:items-start">
@@ -163,11 +164,12 @@ export function MunicipioPage() {
     <div className="flex flex-col gap-10">
       <div className="flex flex-col gap-6">
         <LandscapePhoto id={municipalityPhoto(m.slug)} className={LANDSCAPE_HEIGHT} />
-        <Breadcrumbs items={[{ label: "Municipios", to: "/municipios" }, { label: m.nombre }]} />
+        <WithBreadcrumbs items={[{ label: "Municipios", to: "/municipios" }, { label: m.nombre }]}>
+          <PageHeader icon={RiMapPinLine} topic="Municipio" title={m.nombre}>
+            Quién lo gobierna, cuántos habitantes tiene, cuánta coparticipación recibe y quiénes lo representan en la Legislatura.
+          </PageHeader>
+        </WithBreadcrumbs>
       </div>
-      <PageHeader icon={RiMapPinLine} topic="Municipio" title={m.nombre}>
-        Quién lo gobierna, cuántos habitantes tiene, cuánta coparticipación recibe y quiénes lo representan en la Legislatura.
-      </PageHeader>
 
       <div className="grid gap-6 md:grid-cols-[2fr_3fr] md:items-start">
         {mapa && (

@@ -17,7 +17,7 @@ import {
 } from "@remixicon/react";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Breadcrumbs } from "@/components/breadcrumbs.tsx";
+import { Breadcrumbs, WithBreadcrumbs } from "@/components/breadcrumbs.tsx";
 import { ListSearch } from "@/components/list-search.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
 import { formatDate, normalizeText } from "@/lib.ts";
@@ -101,28 +101,28 @@ export function LeyPage() {
   const primerArticulo = ley.bloques.find((b) => b.tipo === "articulo");
   return (
     <div className="flex max-w-2xl flex-col gap-8">
-      <Breadcrumbs items={[{ label: "Leyes", to: "/leyes" }, { label: `Ley ${ley.numero}` }]} />
-
-      <header className="flex flex-col gap-3">
-        <span className="flex min-w-0 items-center gap-2 text-body-regular whitespace-nowrap text-text-tertiary">
-          <RiScalesLine className="size-4 shrink-0" aria-hidden />
-          <span className="truncate">
-            Ley {ley.numero}
-            {ley.tema && ` · ${ley.tema}`}
-          </span>
-        </span>
-        <h1 className="text-title-1-semibold tracking-tight text-balance sm:text-display-4-regular">{ley.titulo}</h1>
-        <div className="flex flex-col gap-0.5 text-body-regular text-text-tertiary sm:flex-row sm:gap-4">
-          {ley.fecha && <span className="whitespace-nowrap">Sancionada el {formatDate(ley.fecha)}</span>}
-          {ley.publicada && (
-            <span className="whitespace-nowrap">
-              Publicada el {formatDate(ley.publicada)}
-              {ley.boletin && ` · Boletín N.º ${ley.boletin}`}
+      <WithBreadcrumbs items={[{ label: "Leyes", to: "/leyes" }, { label: `Ley ${ley.numero}` }]}>
+        <header className="flex flex-col gap-3">
+          <span className="flex min-w-0 items-center gap-2 text-body-regular whitespace-nowrap text-text-tertiary">
+            <RiScalesLine className="size-4 shrink-0" aria-hidden />
+            <span className="truncate">
+              Ley {ley.numero}
+              {ley.tema && ` · ${ley.tema}`}
             </span>
-          )}
-        </div>
-        {ley.signers.length > 0 && <Firmantes law={ley.numero} signers={ley.signers} />}
-      </header>
+          </span>
+          <h1 className="text-title-1-semibold tracking-tight text-balance sm:text-display-4-regular">{ley.titulo}</h1>
+          <div className="flex flex-col gap-0.5 text-body-regular text-text-tertiary sm:flex-row sm:gap-4">
+            {ley.fecha && <span className="whitespace-nowrap">Sancionada el {formatDate(ley.fecha)}</span>}
+            {ley.publicada && (
+              <span className="whitespace-nowrap">
+                Publicada el {formatDate(ley.publicada)}
+                {ley.boletin && ` · Boletín N.º ${ley.boletin}`}
+              </span>
+            )}
+          </div>
+          {ley.signers.length > 0 && <Firmantes law={ley.numero} signers={ley.signers} />}
+        </header>
+      </WithBreadcrumbs>
 
       <section aria-labelledby="pocas-palabras" className={cx(tileVariants({ size: "lg" }), "flex flex-col gap-4 sm:p-6")}>
         <h2 id="pocas-palabras" className="text-body-medium text-text-tertiary">
