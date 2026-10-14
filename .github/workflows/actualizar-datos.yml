@@ -1,7 +1,7 @@
 # Actualización automática de los datos.
 #
-# - Diario: Boletín Oficial (últimos 3 días, por si algún día falló).
-# - Semanal (lunes): compras, transferencias de Nación (DNAP), Ética Pública, índices e IPC.
+# - Semanal (lunes): Boletín Oficial (últimos 10 días, para solaparse con la semana anterior si una
+#   corrida falló), compras, transferencias de Nación (DNAP), Ética Pública, índices e IPC.
 # - Mensual (día 3): Hacienda, energía, población, Legislatura, autoridades y proveedores.
 #
 # El Boletín Oficial no responde a la red de GitHub y el Senado de Mendoza solo responde a IPs de
@@ -19,7 +19,6 @@ name: Actualizar datos
 
 on:
   schedule:
-    - cron: "0 10 * * *" # todos los días, 07:00 en Mendoza
     - cron: "0 11 * * 1" # lunes, 08:00 en Mendoza
     - cron: "0 12 3 * *" # día 3 de cada mes, 09:00 en Mendoza
   workflow_dispatch:
@@ -38,8 +37,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  DIARIO: "boletin-oficial"
-  SEMANAL: "compras-ocds,dnap,etica-publica,indices,deie-ipc"
+  SEMANAL: "boletin-oficial,compras-ocds,dnap,etica-publica,indices,deie-ipc"
   MENSUAL: "hacienda-deuda-stock,hacienda-participacion-municipal,energia-regalias,poblacion,legislatura,autoridades,proveedores,lrf-personal,presupuesto-planta,municipios-personal"
 
 jobs:
@@ -54,10 +52,9 @@ jobs:
           CRON: ${{ github.event.schedule }}
         run: |
           case "$CRON" in
-            "0 10 * * *") F="$DIARIO" ;;
             "0 11 * * 1") F="$SEMANAL" ;;
             "0 12 3 * *") F="$MENSUAL" ;;
-            *) F="${ENTRADA:-$DIARIO,$SEMANAL,$MENSUAL}" ;;
+            *) F="${ENTRADA:-$SEMANAL,$MENSUAL}" ;;
           esac
           echo "Fuentes: $F"
           echo "fuentes=$(echo "$F" | tr -d ' ' | jq -R -c 'split(",") | map(select(length > 0))')" >> "$GITHUB_OUTPUT"
@@ -78,7 +75,7 @@ jobs:
           titulo="Datos sin actualizar: boletin-oficial"
           n=$(gh issue list --state open --label datos-viejos --json number,title -q ".[] | select(.title == \"$titulo\") | .number" | head -1)
           echo "Boletín Oficial: última descarga $ultima ($dias días)"
-          if (( dias > 4 )); then
+          if (( dias > 10 )); then
             [ -n "$n" ] || gh issue create --label datos-viejos --title "$titulo" --body "La última descarga del Boletín Oficial es del $ultima ($dias días). Revisá el registro de «Actualizar datos» y que el proxy (secreto PROXY_AR) siga activo y con saldo."
           elif [ -n "$n" ]; then
             gh issue close "$n" --comment "Actualizado: última descarga $ultima."
@@ -111,7 +108,7 @@ jobs:
             exit 0
           fi
           case "$FUENTE" in
-            boletin-oficial) ARGS="--desde $(date -u -d '3 days ago' +%F) --hasta $(date -u +%F)" ;;
+            boletin-oficial) ARGS="--desde $(date -u -d '10 days ago' +%F) --hasta $(date -u +%F)" ;;
             dnap) ARGS="--refresh" ;;
             etica-publica) ARGS="--refresh" ;;
             *) ARGS="" ;;
