@@ -27,6 +27,8 @@ Con **Cloudflare Access** (Zero Trust, gratis hasta 50 personas). La persona abr
 
 ## Puesta en marcha (una vez)
 
+Ya hecha en parte: ver el estado en la sección siguiente. Para rehacerla en otra cuenta:
+
 1. **Proyecto de Pages:** `mendoza-transparente-panel`, conectado al repositorio, con directorio `apps/panel`, comando de build `cd ../.. && bun install --frozen-lockfile && cd apps/panel && bunx vite build` y salida `dist`. Vincular la base D1 `mendoza-transparente` como `DB`.
 2. **Dominio:** `panel.mendoza-transparente.com` como dominio propio del proyecto.
 3. **Zero Trust → Access → Applications → Add → Self-hosted:**
@@ -39,13 +41,57 @@ Con **Cloudflare Access** (Zero Trust, gratis hasta 50 personas). La persona abr
    - `ACCESS_TEAM_DOMAIN`: `<equipo>.cloudflareaccess.com`.
    - `ACCESS_AUD`: el AUD del paso 3.
    - `PANEL_EMAILS`: los mismos correos de la política, separados por comas.
-5. **Migración:** `cd apps/web && wrangler d1 migrations apply mendoza-transparente --remote` (la `0002` agrega lo que usa el panel).
+5. **Migración:** `cd apps/web && wrangler d1 migrations apply mendoza-transparente --remote`. La `0002` agrega lo que usa el panel. Se aplica **justo antes de publicar** el código que la usa: después, la API pública vieja guardaría envíos sin código público; antes, la nueva se rompe.
 6. **Probar:**
    - en una ventana privada, `panel.mendoza-transparente.com` pide el correo;
    - `curl https://mendoza-transparente-panel.pages.dev/api/panel/me` responde 401;
    - con un correo que no está en `PANEL_EMAILS`, Access deja pasar pero la API responde 401.
 
 **Sumar o sacar a alguien:** cambiar la política de Access **y** `PANEL_EMAILS`. Para cortar el acceso en el momento, además: Zero Trust → My Team → Users → *Revoke*.
+
+## El proyecto en Cloudflare: estado y cómo consultarlo
+
+**Estado al 14/10/2026** (cuenta personal de Cloudflare, configurado por API con el token de `.env.cloudflare`):
+
+| Qué | Valor | Estado |
+|---|---|---|
+| Proyecto de Pages | `mendoza-transparente-panel`, separado del sitio (`mendoza-transparente`) | Creado |
+| Repositorio | `unllamas/mendoza-transparente`, directorio `apps/panel`, producción desde `main`, vistas previas de todas las ramas | Conectado |
+| Build | `cd ../.. && bun install --frozen-lockfile && cd apps/panel && bunx vite build`, salida `dist`. Las variables de build y el binding `DB` salen de `apps/panel/wrangler.toml` | Andando |
+| Direcciones | `panel.mendoza-transparente.com` (propia) y `mendoza-transparente-panel.pages.dev` | El dominio está agregado; falta el registro DNS |
+| Base | La misma D1 que el sitio (`mendoza-transparente`, binding `DB`) | Migración `0002` aplicada al mergear |
+| Login | Cloudflare Access | **Pendiente:** activar Zero Trust y darle permisos al token |
+| Secretos | `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD`, `PANEL_EMAILS` | **Pendiente** (dependen de Access) |
+
+Mientras falte el login, la API del panel responde 401 a todo: el HTML se puede abrir, pero no muestra ningún dato.
+
+**Lo que falta, en orden:**
+1. **Activar Zero Trust** (lo hace la persona, desde el dashboard): menú Zero Trust, elegir el nombre del equipo (`<equipo>.cloudflareaccess.com`) y el plan Free.
+2. **Ampliar el token de `.env.cloudflare`** con:
+   - *Account → Access: Apps and Policies → Edit*;
+   - *Account → Access: Organizations, Identity Providers, and Groups → Read*;
+   - *Zone → DNS → Edit*, para `mendoza-transparente.com`.
+3. **Con eso, por API:**
+   - el registro DNS `panel` (CNAME a `mendoza-transparente-panel.pages.dev`, con proxy);
+   - la aplicación de Access y su política;
+   - los tres secretos;
+   - las pruebas del paso 6 de la puesta en marcha.
+
+**Consultas útiles** (desde la raíz de la copia de trabajo, sin imprimir el token):
+
+```bash
+set -a && . ./.env.cloudflare && set +a
+B="https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects/mendoza-transparente-panel"
+H="Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+curl -s -H "$H" "$B" | jq '.result | {domains, build_config, source: .source.config}'   # configuración
+curl -s -H "$H" "$B/deployments?per_page=3" | jq '.result[] | {id, branch: .deployment_trigger.metadata.branch, stage: .latest_stage}'
+curl -s -H "$H" "$B/deployments/<id>/history/logs" | jq -r '.result.data[].line'          # logs de un build
+curl -s -X POST -H "$H" "$B/deployments" -F branch=main                                  # volver a publicar
+curl -s -H "$H" "$B/domains" | jq '.result[] | {name, status}'                           # estado del dominio
+```
+
+- Para cambiar el build o las ramas: `PATCH $B` con `build_config` o `source.config`.
+- Para las variables de build y el binding `DB`: editar `apps/panel/wrangler.toml`. Con ese archivo, Pages ignora lo que se cargue en el dashboard, salvo los secretos.
 
 ## Cómo se revisa un envío
 
