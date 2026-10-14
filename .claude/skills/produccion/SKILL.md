@@ -23,7 +23,7 @@ Fuentes completas: `docs/procesos/web.md` (Publicar), `participacion.md` y `anal
 
 ## Base D1 y participación
 
-- **Base:** `mendoza-transparente` (`wrangler.toml`). Migraciones en `apps/web/migrations/`; se aplican con `wrangler d1 migrations apply mendoza-transparente --remote`.
+- **Base:** `mendoza-transparente` (`wrangler.toml`). Migraciones en `packages/participation/migrations/` (las dos apps las comparten); se aplican desde `apps/web` con `wrangler d1 migrations apply mendoza-transparente --remote`.
 - **Moderación:** las consultas para revisar lo que llega están en `docs/procesos/participacion.md`.
 
 ## Protección

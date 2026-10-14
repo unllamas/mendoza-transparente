@@ -18,6 +18,7 @@
       "name": "@mt/web",
       "version": "0.1.0",
       "dependencies": {
+        "@mt/participation": "workspace:*",
         "@mt/ui": "workspace:*",
         "@remixicon/react": "^4.9.0",
         "@tanstack/react-router": "^1.170.42",
@@ -43,6 +44,10 @@
     },
     "packages/core": {
       "name": "@mt/core",
+      "version": "0.1.0",
+    },
+    "packages/participation": {
+      "name": "@mt/participation",
       "version": "0.1.0",
     },
     "packages/scrapers": {
@@ -116,6 +121,8 @@
     "@jridgewell/trace-mapping": ["@jridgewell/trace-mapping@0.3.31", "", { "dependencies": { "@jridgewell/resolve-uri": "^3.1.0", "@jridgewell/sourcemap-codec": "^1.4.14" } }, "sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw=="],
 
     "@mt/core": ["@mt/core@workspace:packages/core"],
+
+    "@mt/participation": ["@mt/participation@workspace:packages/participation"],
 
     "@mt/scrapers": ["@mt/scrapers@workspace:packages/scrapers"],
 

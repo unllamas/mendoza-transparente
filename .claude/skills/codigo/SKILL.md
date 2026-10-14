@@ -23,7 +23,7 @@ description: Convenciones de código de Mendoza Transparente. Cubre idioma (cód
 | Páginas y componentes | Solo páginas de ruta en `apps/web/src/pages/`; componentes de la web en `src/components/`; gráficos en `src/charts/`; lo genérico en `packages/ui` (`@mt/ui`) |
 | Tipos de los datos de la web | `apps/web/src/types.ts` |
 | Contenido editorial | `data/curado/*.yaml` (ver la skill `contenido-y-metodologia`) |
-| API de participación | `apps/web/server/participation.ts` (lógica), `functions/api/` (Cloudflare), `vite.config.ts` (desarrollo) |
+| API de participación y panel | `packages/participation` (lógica, consultas, migraciones), `apps/web/functions/api/` y `apps/panel/functions/api/` (Cloudflare), `vite.config.ts` de cada app (desarrollo) |
 | Analítica | `apps/web/src/analytics.ts` y `src/analytics-catalog.ts` (ver la skill `analitica`) |
 
 ## Cómo trabajar

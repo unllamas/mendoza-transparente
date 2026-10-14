@@ -195,6 +195,25 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["participación"],
   },
   {
+    event: "participation.answer.toggle_key",
+    description: "En «Contar la respuesta», cambió entre usar el código y la clave o el número de trámite.",
+    tags: ["participación"],
+  },
+  {
+    event: "participation.credentials.copy",
+    description: "Copió el código o la clave que recibió al registrar un pedido o enviar un reporte.",
+    tags: ["participación"],
+  },
+  {
+    event: "registry.view.change",
+    description: "Cambió entre pedidos y correcciones en el registro. Propiedad value.",
+    tags: ["participación"],
+  },
+  { event: "registry.request.open", description: "Abrió un pedido del registro público. Propiedad item.", tags: ["participación"] },
+  { event: "registry.correction.open", description: "Abrió una corrección del registro público.", tags: ["participación"] },
+  { event: "registry.answer.open", description: "Abrió el documento con la respuesta del Estado a un pedido.", tags: ["participación"] },
+  { event: "registry.correction.page", description: "Fue a la página que se corrigió desde el registro.", tags: ["participación"] },
+  {
     event: "search.open",
     description: "Abrió el buscador. Propiedad source: desde dónde (portada, lupa del header, teclado, guía).",
     tags: ["búsqueda"],

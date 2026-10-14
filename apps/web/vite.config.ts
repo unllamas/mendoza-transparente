@@ -1,12 +1,11 @@
 import { spawn } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import { join, normalize } from "node:path";
-
+import { openDevDb } from "@mt/participation/local-db";
+import { handlePublic } from "@mt/participation/public-api";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig, type Plugin } from "vite";
-
-import { handle, memoryStore } from "./server/participation.ts";
 
 const ROOT = join(import.meta.dirname, "..", "..");
 
@@ -76,9 +75,12 @@ function liveData(): Plugin {
   };
 }
 
-/** In development, the participation API (/api/*) runs here with an in-memory store (lost on restart). */
+/**
+ * In development, the participation API (/api/*) runs here over a local SQLite in `.dev/`, shared with the
+ * panel (apps/panel), with example submissions. Delete the file to start over.
+ */
 function devApi(): Plugin {
-  const store = memoryStore();
+  const db = openDevDb(join(ROOT, ".dev", "participation.sqlite"));
   return {
     name: "mt-dev-api",
     apply: "serve",
@@ -91,7 +93,7 @@ function devApi(): Plugin {
           headers: { "content-type": req.headers["content-type"] ?? "application/json" },
           body: req.method === "GET" || req.method === "HEAD" ? undefined : Buffer.concat(chunks),
         });
-        const response = await handle(request, store, { ipSalt: "dev" }, req.socket.remoteAddress ?? "127.0.0.1");
+        const response = await handlePublic(request, await db, { development: true }, req.socket.remoteAddress ?? "127.0.0.1");
         if (!response) return next();
         res.statusCode = response.status;
         response.headers.forEach((v, k) => res.setHeader(k, v));
