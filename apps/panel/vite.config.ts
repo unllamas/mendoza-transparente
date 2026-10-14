@@ -1,11 +1,14 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { openDevDb } from "@mt/participation/local-db";
-import { handlePanel } from "@mt/participation/panel-api";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig, type Plugin } from "vite";
 import { parse } from "yaml";
+// Relative paths, not "@mt/participation": Vite leaves workspace packages out of the config bundle, and the Node
+// of Cloudflare's build (22.16) cannot load .ts files from node_modules.
+import type { Db } from "../../packages/participation/src/db.ts";
+import { openDevDb } from "../../packages/participation/src/local-db.ts";
+import { handlePanel } from "../../packages/participation/src/panel-api.ts";
 
 const ROOT = join(import.meta.dirname, "..", "..");
 
@@ -31,11 +34,13 @@ function itemTitles(): Plugin {
  * exist in the build.
  */
 function devApi(): Plugin {
-  const db = openDevDb(join(ROOT, ".dev", "participation.sqlite"));
+  // Opened when the dev server starts, never during the build.
+  let db: Promise<Db> | null = null;
   return {
     name: "mt-panel-dev-api",
     apply: "serve",
     configureServer(server) {
+      db = openDevDb(join(ROOT, ".dev", "participation.sqlite"));
       server.middlewares.use("/api", async (req, res, next) => {
         const chunks: Buffer[] = [];
         for await (const c of req) chunks.push(c as Buffer);
@@ -45,7 +50,7 @@ function devApi(): Plugin {
           headers: { "content-type": req.headers["content-type"] ?? "", origin: req.headers.origin ?? "" },
           body: req.method === "GET" || req.method === "HEAD" ? undefined : Buffer.concat(chunks),
         });
-        const response = await handlePanel(request, await db, { email: "equipo@localhost" });
+        const response = await handlePanel(request, await db!, { email: "equipo@localhost" });
         if (!response) return next();
         res.statusCode = response.status;
         response.headers.forEach((v, k) => res.setHeader(k, v));

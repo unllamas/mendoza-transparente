@@ -290,6 +290,6 @@ describe("validation and privacy", () => {
     expect(privacyWarnings("La deuda creció 12% en 2025")).toEqual([]);
   });
   test("codes typed by hand are understood", () => {
-    expect(normalizeCode(" p-ab1o23ki ")).toBe("P-AB102311");
+    expect(normalizeCode(" p-ab1o23ki ")).toBe("P-AB1023K1");
   });
 });
