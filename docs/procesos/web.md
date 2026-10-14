@@ -55,6 +55,7 @@ Cualquier vista se puede pasar por link tal como está: la pestaña de una pági
 | Leyes, proveedores, organismos | `?q=<búsqueda>` |
 | Lo que no se publica | `?tema=<id>`, `?dato=<id>` (los links viejos con `#id` siguen andando) |
 | Participar | `?tipo=error` |
+| Registro | `?ver=correcciones`, `?codigo=<P-… o R-…>` |
 | Datos | `?<tabla>=<grupo>` (por ejemplo, `?personal=2025`) |
 | Señales y compras | `?senal=`, `?proceso=`, `?proveedor=` (ver abajo) |
 
@@ -194,7 +195,7 @@ Errores de consola del tipo «Could not establish connection. Receiving end does
 - Variables: `VITE_SITE_URL`, `VITE_POSTHOG_KEY` (ver [Analítica](analitica.md)) y `VITE_TURNSTILE_SITE_KEY`.
 - Base D1 vinculada como `DB` y secretos `TURNSTILE_SECRET` e `IP_SALT` (ver [Participación](participacion.md)).
 
-Cada push a `main` publica solo, incluidos los commits automáticos de datos.
+Cada push a `main` publica solo, incluidos los commits automáticos de datos. El panel interno se publica en otro proyecto de Pages (`mendoza-transparente-panel`), con la misma base D1: ver [Panel interno](panel.md).
 
 **Estado al 12/10/2026 (cuenta personal de Cloudflare, configurado por API con el token de `.env.cloudflare`):**
 - Proyecto `mendoza-transparente` (`mendoza-transparente.pages.dev`), con root directory `apps/web`.

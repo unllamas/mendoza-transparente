@@ -27,7 +27,7 @@ Todo el código va en inglés y toda la documentación en español. La tabla com
 | `charts/` | Gráficos |
 | raíz | Lógica sin interfaz: `lib.ts`, `url-state.ts`, `analytics.ts`, `types.ts` |
 
-**Imports absolutos:** dentro de `src`, todo lo que no es del mismo directorio se importa con `@/` (`@/components/breadcrumbs.tsx`), así un archivo se puede mover sin romper imports. Los archivos se importan directo, sin barrels (`index.ts` que reexportan), que empeoran el tree shaking.
+**Imports absolutos:** dentro de `src`, todo lo que no es del mismo directorio se importa con `@/` (`@/components/breadcrumbs.tsx`), así un archivo se puede mover sin romper imports. Los archivos se importan directo, sin barrels (`index.ts` que reexportan), que empeoran el tree shaking. El panel interno (`apps/panel`) es chico y usa imports relativos, porque `dependency-cruiser` resuelve `@/` con la configuración del sitio.
 
 ## Reglas que se controlan solas
 
@@ -48,6 +48,8 @@ Todo el código va en inglés y toda la documentación en español. La tabla com
 | `components-do-not-import-pages` | Que un componente o un gráfico importe una página |
 | `logic-has-no-ui` | Que la lógica sin interfaz importe componentes o páginas |
 | `build-scripts-do-not-import-ui` | Que los scripts de build importen componentes |
+| `panel-is-not-the-site` / `site-does-not-import-the-panel` | Que el sitio y el panel interno se importen entre sí (lo compartido va en `@mt/participation` o `@mt/ui`) |
+| `browser-code-does-not-open-databases` | Que el código del navegador o de las funciones importe la base local de desarrollo (`local-db.ts`) |
 
 **Tipos:** TypeScript estricto con `noUncheckedIndexedAccess` y, en la web y en `@mt/ui`, `noUnusedLocals` (sin código muerto).
 

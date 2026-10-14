@@ -77,11 +77,18 @@ Resumen de los eventos:
 | `participation.form.change` | Participá: pestaña | `value` |
 | `participation.{request,answer,bug,data_suggestion,photo}.{success,error}` | Participá: envíos | `status` |
 | `<id>.click` (`pedido-registrar.click`, etc.) | Participá: botones de envío | — |
+| `participation.credentials.copy` | Participá: copiar el código o la clave recibidos | — |
+| `participation.answer.toggle_key` | Contar la respuesta: con clave o con número de trámite | — |
+| `registry.view.change` | Registro: pedidos o correcciones | `value` |
+| `registry.request.open`, `registry.correction.open` | Registro: abrir un envío publicado | `item` |
+| `registry.answer.open`, `registry.correction.page` | Registro: ver la respuesta del Estado o la página corregida | — |
 | `landscape.credit`, `landscape.propose` | Foto de paisaje: crédito y «Proponé tu foto» | `photo` |
 
 **Embudos sugeridos en PostHog:**
 - `missing_data.request.open` → `.copy` → `.official_form` → `participation.request.success`: de leer un dato que falta a presentar el pedido.
 - `participation.request.success` → `participation.answer.success`: cuántos vuelven a contar la respuesta.
+
+El panel interno (`apps/panel`) no manda eventos a PostHog: lo que hace el equipo queda en su propia auditoría (ver [Panel interno](panel.md)).
 
 ## Mostrar números en el sitio
 

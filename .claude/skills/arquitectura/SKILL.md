@@ -13,9 +13,10 @@ Fuente completa: `docs/procesos/arquitectura.md`.
 2. **¿Es genérico** (no usa router, analítica ni datos del sitio)? Va a `packages/ui`.
 3. **¿Es de una sola feature** (compras, funcionarios, leyes, participación…)? Va a `apps/web/src/features/<feature>/{api,components,hooks,utils}`.
 4. **¿Lo comparten varias features** de la web? Va a `apps/web/src/components/`.
-5. **¿Es lógica sin interfaz?** Va a la raíz de `src` (`lib.ts`, `url-state.ts`…).
-6. **`pages/`** solo tiene páginas de ruta: archivos cortos que arman componentes.
-7. **Nombres de archivo en kebab-case.** Imports con `@/` y sin barrels.
+5. **¿Es del panel interno o de la API de participación?** El panel va en `apps/panel` (imports relativos, sin `@/`); la lógica y las consultas que comparte con el sitio, en `packages/participation`. Ver la skill `panel`.
+6. **¿Es lógica sin interfaz?** Va a la raíz de `src` (`lib.ts`, `url-state.ts`…).
+7. **`pages/`** solo tiene páginas de ruta: archivos cortos que arman componentes.
+8. **Nombres de archivo en kebab-case.** Imports con `@/` y sin barrels.
 
 ## Antes de commitear
 
