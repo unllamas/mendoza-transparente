@@ -89,6 +89,8 @@ try {
     const page = await browser.newPage({ viewport: { width: ancho, height: 800 }, isMobile: ancho < 700, hasTouch: ancho < 700 });
     for (const ruta of RUTAS) {
       await page.goto(BASE + ruta, { waitUntil: "networkidle" });
+      // The first visit can land while the dev server is still compiling: wait for the app to render.
+      await page.waitForSelector("header", { timeout: 30_000 }).catch(() => {});
       await page.waitForTimeout(800);
       const { vw, sw } = await page.evaluate(() => ({
         vw: document.documentElement.clientWidth,
