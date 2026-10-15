@@ -19647,6 +19647,8 @@ anio,trimestre,provincia,concepto,valor,unidad
 2025,2,Jujuy,deuda_consolidada,8358.4059,millones_pesos
 2025,2,Jujuy,bonos,118667.9897,millones_pesos
 2025,2,Jujuy,organismos_internacionales,123141.6466,millones_pesos
+2025,2,La Pampa,total_sin_deuda_flotante,500,millones_pesos
+2025,2,La Pampa,gobierno_nacional,500,millones_pesos
 2025,2,La Rioja,total_sin_deuda_flotante,548792.2249,millones_pesos
 2025,2,La Rioja,gobierno_nacional,961.8549,millones_pesos
 2025,2,La Rioja,fffir,16318.55,millones_pesos
@@ -19671,6 +19673,14 @@ anio,trimestre,provincia,concepto,valor,unidad
 2025,2,Misiones,deuda_consolidada,30.7072,millones_pesos
 2025,2,Misiones,bonos,64209.6747,millones_pesos
 2025,2,Misiones,organismos_internacionales,11959.232,millones_pesos
+2025,2,Neuquén,total_sin_deuda_flotante,1133317.1511,millones_pesos
+2025,2,Neuquén,gobierno_nacional,714.5724,millones_pesos
+2025,2,Neuquén,fffir,52500.733,millones_pesos
+2025,2,Neuquén,ffdp,0,millones_pesos
+2025,2,Neuquén,bancos,93646.4724,millones_pesos
+2025,2,Neuquén,deuda_consolidada,0,millones_pesos
+2025,2,Neuquén,bonos,754675.6109,millones_pesos
+2025,2,Neuquén,organismos_internacionales,231779.7625,millones_pesos
 2025,2,Río Negro,total_sin_deuda_flotante,341713.7963,millones_pesos
 2025,2,Río Negro,gobierno_nacional,0,millones_pesos
 2025,2,Río Negro,fffir,3439.03,millones_pesos
@@ -20279,3 +20289,188 @@ anio,trimestre,provincia,concepto,valor,unidad
 2026,1,Tucumán,deuda_consolidada,12.7567,millones_pesos
 2026,1,Tucumán,bonos,18135.7606,millones_pesos
 2026,1,Tucumán,organismos_internacionales,0,millones_pesos
+2026,2,Buenos Aires,total_sin_deuda_flotante,17950807.4582,millones_pesos
+2026,2,Buenos Aires,gobierno_nacional,0,millones_pesos
+2026,2,Buenos Aires,fffir,3025.2592,millones_pesos
+2026,2,Buenos Aires,ffdp,0,millones_pesos
+2026,2,Buenos Aires,bancos,80849.3319,millones_pesos
+2026,2,Buenos Aires,deuda_consolidada,0,millones_pesos
+2026,2,Buenos Aires,bonos,14409370.1116,millones_pesos
+2026,2,Buenos Aires,organismos_internacionales,3457562.7554,millones_pesos
+2026,2,Catamarca,total_sin_deuda_flotante,78616.8831,millones_pesos
+2026,2,Catamarca,gobierno_nacional,10856.5468,millones_pesos
+2026,2,Catamarca,fffir,705.3229,millones_pesos
+2026,2,Catamarca,ffdp,0,millones_pesos
+2026,2,Catamarca,bancos,45000,millones_pesos
+2026,2,Catamarca,deuda_consolidada,0,millones_pesos
+2026,2,Catamarca,bonos,1693.5962,millones_pesos
+2026,2,Catamarca,organismos_internacionales,20361.4173,millones_pesos
+2026,2,Córdoba,total_sin_deuda_flotante,4483369.4533,millones_pesos
+2026,2,Córdoba,gobierno_nacional,701.696,millones_pesos
+2026,2,Córdoba,fffir,1361.9138,millones_pesos
+2026,2,Córdoba,ffdp,0,millones_pesos
+2026,2,Córdoba,bancos,117869.3354,millones_pesos
+2026,2,Córdoba,deuda_consolidada,0,millones_pesos
+2026,2,Córdoba,bonos,3709991.1303,millones_pesos
+2026,2,Córdoba,organismos_internacionales,653445.3777,millones_pesos
+2026,2,Corrientes,total_sin_deuda_flotante,71601.5351,millones_pesos
+2026,2,Corrientes,gobierno_nacional,7906.4209,millones_pesos
+2026,2,Corrientes,fffir,992.8309,millones_pesos
+2026,2,Corrientes,ffdp,0,millones_pesos
+2026,2,Corrientes,bancos,0,millones_pesos
+2026,2,Corrientes,deuda_consolidada,20.2589,millones_pesos
+2026,2,Corrientes,bonos,2285.3814,millones_pesos
+2026,2,Corrientes,organismos_internacionales,60396.6431,millones_pesos
+2026,2,Chaco,total_sin_deuda_flotante,610194.8363,millones_pesos
+2026,2,Chaco,gobierno_nacional,76010.6154,millones_pesos
+2026,2,Chaco,fffir,15662.1036,millones_pesos
+2026,2,Chaco,ffdp,0,millones_pesos
+2026,2,Chaco,bancos,47632.9946,millones_pesos
+2026,2,Chaco,deuda_consolidada,0,millones_pesos
+2026,2,Chaco,bonos,295683.9854,millones_pesos
+2026,2,Chaco,organismos_internacionales,175205.1373,millones_pesos
+2026,2,Chubut,total_sin_deuda_flotante,1500343.9423,millones_pesos
+2026,2,Chubut,gobierno_nacional,25449.9398,millones_pesos
+2026,2,Chubut,fffir,441.9385,millones_pesos
+2026,2,Chubut,ffdp,0,millones_pesos
+2026,2,Chubut,bancos,0,millones_pesos
+2026,2,Chubut,deuda_consolidada,0,millones_pesos
+2026,2,Chubut,bonos,1444364.3236,millones_pesos
+2026,2,Chubut,organismos_internacionales,30087.7405,millones_pesos
+2026,2,Entre Ríos,total_sin_deuda_flotante,1015016.1125,millones_pesos
+2026,2,Entre Ríos,gobierno_nacional,400,millones_pesos
+2026,2,Entre Ríos,fffir,17353.2831,millones_pesos
+2026,2,Entre Ríos,ffdp,0,millones_pesos
+2026,2,Entre Ríos,bancos,43039.7066,millones_pesos
+2026,2,Entre Ríos,deuda_consolidada,26.7785,millones_pesos
+2026,2,Entre Ríos,bonos,624615.8677,millones_pesos
+2026,2,Entre Ríos,organismos_internacionales,329580.4767,millones_pesos
+2026,2,Formosa,total_sin_deuda_flotante,30869.3875,millones_pesos
+2026,2,Formosa,gobierno_nacional,4653.6992,millones_pesos
+2026,2,Formosa,fffir,12912.1942,millones_pesos
+2026,2,Formosa,ffdp,0,millones_pesos
+2026,2,Formosa,bancos,0,millones_pesos
+2026,2,Formosa,deuda_consolidada,9.3894,millones_pesos
+2026,2,Formosa,bonos,40.5767,millones_pesos
+2026,2,Formosa,organismos_internacionales,13253.5281,millones_pesos
+2026,2,CABA,total_sin_deuda_flotante,2943867.1098,millones_pesos
+2026,2,CABA,gobierno_nacional,0,millones_pesos
+2026,2,CABA,fffir,0,millones_pesos
+2026,2,CABA,ffdp,0,millones_pesos
+2026,2,CABA,bancos,105322.8,millones_pesos
+2026,2,CABA,deuda_consolidada,0,millones_pesos
+2026,2,CABA,bonos,2129960.8698,millones_pesos
+2026,2,CABA,organismos_internacionales,708583.44,millones_pesos
+2026,2,Jujuy,total_sin_deuda_flotante,700257.2772,millones_pesos
+2026,2,Jujuy,gobierno_nacional,351048.0831,millones_pesos
+2026,2,Jujuy,fffir,0,millones_pesos
+2026,2,Jujuy,ffdp,0,millones_pesos
+2026,2,Jujuy,bancos,124261.3465,millones_pesos
+2026,2,Jujuy,deuda_consolidada,3249.6774,millones_pesos
+2026,2,Jujuy,bonos,73969.8617,millones_pesos
+2026,2,Jujuy,organismos_internacionales,147728.3085,millones_pesos
+2026,2,La Pampa,total_sin_deuda_flotante,0,millones_pesos
+2026,2,La Rioja,total_sin_deuda_flotante,593669.5498,millones_pesos
+2026,2,La Rioja,gobierno_nacional,880.0047,millones_pesos
+2026,2,La Rioja,fffir,16906.33,millones_pesos
+2026,2,La Rioja,ffdp,0,millones_pesos
+2026,2,La Rioja,bancos,18.56,millones_pesos
+2026,2,La Rioja,deuda_consolidada,84.47,millones_pesos
+2026,2,La Rioja,bonos,541639.4211,millones_pesos
+2026,2,La Rioja,organismos_internacionales,34140.764,millones_pesos
+2026,2,Mendoza,total_sin_deuda_flotante,1260310.9003,millones_pesos
+2026,2,Mendoza,gobierno_nacional,0,millones_pesos
+2026,2,Mendoza,fffir,2325.48,millones_pesos
+2026,2,Mendoza,ffdp,0,millones_pesos
+2026,2,Mendoza,bancos,53533.05,millones_pesos
+2026,2,Mendoza,deuda_consolidada,0,millones_pesos
+2026,2,Mendoza,bonos,944049.09,millones_pesos
+2026,2,Mendoza,organismos_internacionales,260403.2803,millones_pesos
+2026,2,Misiones,total_sin_deuda_flotante,115622.3477,millones_pesos
+2026,2,Misiones,gobierno_nacional,38.9359,millones_pesos
+2026,2,Misiones,fffir,1530.3,millones_pesos
+2026,2,Misiones,ffdp,0,millones_pesos
+2026,2,Misiones,bancos,18333.33,millones_pesos
+2026,2,Misiones,deuda_consolidada,31.0103,millones_pesos
+2026,2,Misiones,bonos,77425.0836,millones_pesos
+2026,2,Misiones,organismos_internacionales,18263.688,millones_pesos
+2026,2,Neuquén,total_sin_deuda_flotante,1030356.9679,millones_pesos
+2026,2,Neuquén,gobierno_nacional,587.5214,millones_pesos
+2026,2,Neuquén,fffir,87760.902,millones_pesos
+2026,2,Neuquén,ffdp,0,millones_pesos
+2026,2,Neuquén,bancos,65355.2764,millones_pesos
+2026,2,Neuquén,deuda_consolidada,16.7989,millones_pesos
+2026,2,Neuquén,bonos,576468.4595,millones_pesos
+2026,2,Neuquén,organismos_internacionales,300168.0097,millones_pesos
+2026,2,Río Negro,total_sin_deuda_flotante,417879.562,millones_pesos
+2026,2,Río Negro,gobierno_nacional,0,millones_pesos
+2026,2,Río Negro,fffir,30532.114,millones_pesos
+2026,2,Río Negro,ffdp,0,millones_pesos
+2026,2,Río Negro,bancos,23226.774,millones_pesos
+2026,2,Río Negro,deuda_consolidada,0,millones_pesos
+2026,2,Río Negro,bonos,264382.5,millones_pesos
+2026,2,Río Negro,organismos_internacionales,99738.174,millones_pesos
+2026,2,Salta,total_sin_deuda_flotante,438313.4103,millones_pesos
+2026,2,Salta,gobierno_nacional,0,millones_pesos
+2026,2,Salta,fffir,4854.3288,millones_pesos
+2026,2,Salta,ffdp,0,millones_pesos
+2026,2,Salta,bancos,92349.6667,millones_pesos
+2026,2,Salta,deuda_consolidada,38851.2447,millones_pesos
+2026,2,Salta,bonos,200843.0809,millones_pesos
+2026,2,Salta,organismos_internacionales,101415.0892,millones_pesos
+2026,2,San Juan,total_sin_deuda_flotante,293237.6065,millones_pesos
+2026,2,San Juan,gobierno_nacional,879.9856,millones_pesos
+2026,2,San Juan,fffir,25927.5645,millones_pesos
+2026,2,San Juan,ffdp,0,millones_pesos
+2026,2,San Juan,bancos,0,millones_pesos
+2026,2,San Juan,deuda_consolidada,0,millones_pesos
+2026,2,San Juan,bonos,2087.5982,millones_pesos
+2026,2,San Juan,organismos_internacionales,264342.4583,millones_pesos
+2026,2,San Luis,total_sin_deuda_flotante,211.0947,millones_pesos
+2026,2,San Luis,gobierno_nacional,211.0947,millones_pesos
+2026,2,San Luis,fffir,0,millones_pesos
+2026,2,San Luis,ffdp,0,millones_pesos
+2026,2,San Luis,bancos,0,millones_pesos
+2026,2,San Luis,deuda_consolidada,0,millones_pesos
+2026,2,San Luis,bonos,0,millones_pesos
+2026,2,San Luis,organismos_internacionales,0,millones_pesos
+2026,2,Santa Cruz,total_sin_deuda_flotante,42863.4424,millones_pesos
+2026,2,Santa Cruz,gobierno_nacional,41056.4332,millones_pesos
+2026,2,Santa Cruz,fffir,263.1893,millones_pesos
+2026,2,Santa Cruz,ffdp,0,millones_pesos
+2026,2,Santa Cruz,bancos,0,millones_pesos
+2026,2,Santa Cruz,deuda_consolidada,0,millones_pesos
+2026,2,Santa Cruz,bonos,1543.8199,millones_pesos
+2026,2,Santa Cruz,organismos_internacionales,0,millones_pesos
+2026,2,Santa Fe,total_sin_deuda_flotante,1959565.1,millones_pesos
+2026,2,Santa Fe,gobierno_nacional,0,millones_pesos
+2026,2,Santa Fe,fffir,450.8,millones_pesos
+2026,2,Santa Fe,ffdp,0,millones_pesos
+2026,2,Santa Fe,bancos,7250,millones_pesos
+2026,2,Santa Fe,deuda_consolidada,0,millones_pesos
+2026,2,Santa Fe,bonos,1482612.4,millones_pesos
+2026,2,Santa Fe,organismos_internacionales,469251.9,millones_pesos
+2026,2,Santiago del Estero,total_sin_deuda_flotante,19223.0176,millones_pesos
+2026,2,Santiago del Estero,gobierno_nacional,0,millones_pesos
+2026,2,Santiago del Estero,fffir,0,millones_pesos
+2026,2,Santiago del Estero,ffdp,0,millones_pesos
+2026,2,Santiago del Estero,bancos,0,millones_pesos
+2026,2,Santiago del Estero,deuda_consolidada,0,millones_pesos
+2026,2,Santiago del Estero,bonos,19223.0176,millones_pesos
+2026,2,Santiago del Estero,organismos_internacionales,0,millones_pesos
+2026,2,Tierra del Fuego,total_sin_deuda_flotante,240941.4432,millones_pesos
+2026,2,Tierra del Fuego,gobierno_nacional,640.688,millones_pesos
+2026,2,Tierra del Fuego,fffir,2489.45,millones_pesos
+2026,2,Tierra del Fuego,ffdp,0,millones_pesos
+2026,2,Tierra del Fuego,bancos,0,millones_pesos
+2026,2,Tierra del Fuego,deuda_consolidada,121862.92,millones_pesos
+2026,2,Tierra del Fuego,bonos,115948.3852,millones_pesos
+2026,2,Tierra del Fuego,organismos_internacionales,0,millones_pesos
+2026,2,Tucumán,total_sin_deuda_flotante,154499.9225,millones_pesos
+2026,2,Tucumán,gobierno_nacional,0,millones_pesos
+2026,2,Tucumán,fffir,0,millones_pesos
+2026,2,Tucumán,ffdp,0,millones_pesos
+2026,2,Tucumán,bancos,135190.5,millones_pesos
+2026,2,Tucumán,deuda_consolidada,12.7567,millones_pesos
+2026,2,Tucumán,bonos,19296.6658,millones_pesos
+2026,2,Tucumán,organismos_internacionales,0,millones_pesos

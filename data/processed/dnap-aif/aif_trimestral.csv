@@ -69455,3 +69455,992 @@ anio,trimestre,provincia,concepto,valor,unidad
 2026,1,Tucumán,gastos primarios,1161195.575,millones_pesos
 2026,1,Tucumán,resultado financiero,-100536.2564,millones_pesos
 2026,1,Tucumán,resultado primario,-78532.1841,millones_pesos
+2026,2,Buenos Aires,ingresos corrientes,20713504.7653,millones_pesos
+2026,2,Buenos Aires,ingresos corrientes > tributarios,16834814.3127,millones_pesos
+2026,2,Buenos Aires,ingresos corrientes > tributarios > de origen provincial,8362280.7547,millones_pesos
+2026,2,Buenos Aires,ingresos corrientes > tributarios > de origen nacional,8472533.558,millones_pesos
+2026,2,Buenos Aires,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,5130631.2201,millones_pesos
+2026,2,Buenos Aires,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,1825199.5335,millones_pesos
+2026,2,Buenos Aires,ingresos corrientes > tributarios > sub - total,6955830.7536,millones_pesos
+2026,2,Buenos Aires,ingresos corrientes > tributarios > otros de origen nacional,1516702.8044,millones_pesos
+2026,2,Buenos Aires,ingresos corrientes > contribuciones a la seguridad social,3257350.1569,millones_pesos
+2026,2,Buenos Aires,ingresos corrientes > no tributarios,199184.2185,millones_pesos
+2026,2,Buenos Aires,ingresos corrientes > no tributarios > regalias,0,millones_pesos
+2026,2,Buenos Aires,ingresos corrientes > no tributarios > otros no tributarios,199184.2185,millones_pesos
+2026,2,Buenos Aires,ingresos corrientes > vta.bienes y serv.de la adm.publ.,16736.5346,millones_pesos
+2026,2,Buenos Aires,ingresos corrientes > rentas de la propiedad,9210.1672,millones_pesos
+2026,2,Buenos Aires,ingresos corrientes > transferencias corrientes,396209.3754,millones_pesos
+2026,2,Buenos Aires,gastos corrientes,20696596.6196,millones_pesos
+2026,2,Buenos Aires,gastos corrientes > gastos de consumo,10155023.7232,millones_pesos
+2026,2,Buenos Aires,gastos corrientes > gastos de consumo > personal,9069150.3128,millones_pesos
+2026,2,Buenos Aires,gastos corrientes > gastos de consumo > bienes de consumo,316447.6544,millones_pesos
+2026,2,Buenos Aires,gastos corrientes > gastos de consumo > servicios,769425.7559,millones_pesos
+2026,2,Buenos Aires,gastos corrientes > rentas de la propiedad,774864.8923,millones_pesos
+2026,2,Buenos Aires,gastos corrientes > prestaciones de la seguridad social,4204316.1951,millones_pesos
+2026,2,Buenos Aires,gastos corrientes > transferencias corrientes,5562391.809,millones_pesos
+2026,2,Buenos Aires,gastos corrientes > transferencias corrientes > al sector privado,1859720.9624,millones_pesos
+2026,2,Buenos Aires,gastos corrientes > transferencias corrientes > al sector publico,3600670.8466,millones_pesos
+2026,2,Buenos Aires,gastos corrientes > transferencias corrientes > al sector externo,102000,millones_pesos
+2026,2,Buenos Aires,resultado economico,16908.1457,millones_pesos
+2026,2,Buenos Aires,ingresos de capital,36615.4026,millones_pesos
+2026,2,Buenos Aires,ingresos de capital > recursos propios de capital,0,millones_pesos
+2026,2,Buenos Aires,ingresos de capital > transferencias de capital,34236.4534,millones_pesos
+2026,2,Buenos Aires,ingresos de capital > disminucion de la inversion financiera,2378.9492,millones_pesos
+2026,2,Buenos Aires,gastos de capital,971007.7852,millones_pesos
+2026,2,Buenos Aires,gastos de capital > inversion real directa,443120.3143,millones_pesos
+2026,2,Buenos Aires,gastos de capital > transferencias de capital,266238.3097,millones_pesos
+2026,2,Buenos Aires,gastos de capital > transferencias de capital > al sector privado,5668.4515,millones_pesos
+2026,2,Buenos Aires,gastos de capital > transferencias de capital > al sector publico,259069.8582,millones_pesos
+2026,2,Buenos Aires,gastos de capital > transferencias de capital > al sector externo,1500,millones_pesos
+2026,2,Buenos Aires,gastos de capital > inversion financiera,261649.1611,millones_pesos
+2026,2,Buenos Aires,ingresos totales,20750120.1678,millones_pesos
+2026,2,Buenos Aires,gastos totales,21667604.4048,millones_pesos
+2026,2,Buenos Aires,gastos primarios,20892739.5125,millones_pesos
+2026,2,Buenos Aires,resultado financiero,-917484.237,millones_pesos
+2026,2,Buenos Aires,resultado primario,-142619.3447,millones_pesos
+2026,2,CABA,ingresos corrientes,7693646.375,millones_pesos
+2026,2,CABA,ingresos corrientes > tributarios,6627835.9292,millones_pesos
+2026,2,CABA,ingresos corrientes > tributarios > de origen provincial,5840896.0112,millones_pesos
+2026,2,CABA,ingresos corrientes > tributarios > de origen nacional,786939.9181,millones_pesos
+2026,2,CABA,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,490253.4186,millones_pesos
+2026,2,CABA,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,291075.6512,millones_pesos
+2026,2,CABA,ingresos corrientes > tributarios > sub - total,781329.0698,millones_pesos
+2026,2,CABA,ingresos corrientes > tributarios > otros de origen nacional,5610.8483,millones_pesos
+2026,2,CABA,ingresos corrientes > contribuciones a la seguridad social,0,millones_pesos
+2026,2,CABA,ingresos corrientes > no tributarios,239429.1637,millones_pesos
+2026,2,CABA,ingresos corrientes > no tributarios > regalias,0,millones_pesos
+2026,2,CABA,ingresos corrientes > no tributarios > otros no tributarios,239429.1637,millones_pesos
+2026,2,CABA,ingresos corrientes > vta.bienes y serv.de la adm.publ.,135874.1879,millones_pesos
+2026,2,CABA,ingresos corrientes > rentas de la propiedad,261827.6837,millones_pesos
+2026,2,CABA,ingresos corrientes > transferencias corrientes,428679.4105,millones_pesos
+2026,2,CABA,gastos corrientes,6115075.6242,millones_pesos
+2026,2,CABA,gastos corrientes > gastos de consumo,5112562.2404,millones_pesos
+2026,2,CABA,gastos corrientes > gastos de consumo > personal,3509818.0101,millones_pesos
+2026,2,CABA,gastos corrientes > gastos de consumo > bienes de consumo,127105.1887,millones_pesos
+2026,2,CABA,gastos corrientes > gastos de consumo > servicios,1475639.0416,millones_pesos
+2026,2,CABA,gastos corrientes > rentas de la propiedad,90814.7717,millones_pesos
+2026,2,CABA,gastos corrientes > prestaciones de la seguridad social,0,millones_pesos
+2026,2,CABA,gastos corrientes > transferencias corrientes,911698.612,millones_pesos
+2026,2,CABA,gastos corrientes > transferencias corrientes > al sector privado,752803.1491,millones_pesos
+2026,2,CABA,gastos corrientes > transferencias corrientes > al sector publico,158867.2288,millones_pesos
+2026,2,CABA,gastos corrientes > transferencias corrientes > al sector externo,28.2342,millones_pesos
+2026,2,CABA,resultado economico,1578570.7508,millones_pesos
+2026,2,CABA,ingresos de capital,2396.5923,millones_pesos
+2026,2,CABA,ingresos de capital > recursos propios de capital,290.7589,millones_pesos
+2026,2,CABA,ingresos de capital > transferencias de capital,1029.0291,millones_pesos
+2026,2,CABA,ingresos de capital > disminucion de la inversion financiera,1076.8042,millones_pesos
+2026,2,CABA,gastos de capital,989030.2773,millones_pesos
+2026,2,CABA,gastos de capital > inversion real directa,981762.8397,millones_pesos
+2026,2,CABA,gastos de capital > transferencias de capital,5724.3542,millones_pesos
+2026,2,CABA,gastos de capital > transferencias de capital > al sector privado,0,millones_pesos
+2026,2,CABA,gastos de capital > transferencias de capital > al sector publico,5724.3542,millones_pesos
+2026,2,CABA,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,CABA,gastos de capital > inversion financiera,1543.0834,millones_pesos
+2026,2,CABA,ingresos totales,7696042.9673,millones_pesos
+2026,2,CABA,gastos totales,7104105.9015,millones_pesos
+2026,2,CABA,gastos primarios,7013291.1298,millones_pesos
+2026,2,CABA,resultado financiero,591937.0658,millones_pesos
+2026,2,CABA,resultado primario,682751.8375,millones_pesos
+2026,2,Catamarca,ingresos corrientes,1184007.2594,millones_pesos
+2026,2,Catamarca,ingresos corrientes > tributarios,1092028.1462,millones_pesos
+2026,2,Catamarca,ingresos corrientes > tributarios > de origen provincial,139332.3497,millones_pesos
+2026,2,Catamarca,ingresos corrientes > tributarios > de origen nacional,952695.7965,millones_pesos
+2026,2,Catamarca,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,787361.7208,millones_pesos
+2026,2,Catamarca,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,85072.8596,millones_pesos
+2026,2,Catamarca,ingresos corrientes > tributarios > sub - total,872434.5804,millones_pesos
+2026,2,Catamarca,ingresos corrientes > tributarios > otros de origen nacional,80261.2161,millones_pesos
+2026,2,Catamarca,ingresos corrientes > contribuciones a la seguridad social,0,millones_pesos
+2026,2,Catamarca,ingresos corrientes > no tributarios,65626.4617,millones_pesos
+2026,2,Catamarca,ingresos corrientes > no tributarios > regalias,11127.116,millones_pesos
+2026,2,Catamarca,ingresos corrientes > no tributarios > otros no tributarios,54499.3456,millones_pesos
+2026,2,Catamarca,ingresos corrientes > vta.bienes y serv.de la adm.publ.,652.6697,millones_pesos
+2026,2,Catamarca,ingresos corrientes > rentas de la propiedad,11874.5209,millones_pesos
+2026,2,Catamarca,ingresos corrientes > transferencias corrientes,13825.461,millones_pesos
+2026,2,Catamarca,gastos corrientes,1059748.3294,millones_pesos
+2026,2,Catamarca,gastos corrientes > gastos de consumo,693389.9698,millones_pesos
+2026,2,Catamarca,gastos corrientes > gastos de consumo > personal,621617.8324,millones_pesos
+2026,2,Catamarca,gastos corrientes > gastos de consumo > bienes de consumo,17843.5303,millones_pesos
+2026,2,Catamarca,gastos corrientes > gastos de consumo > servicios,53928.6071,millones_pesos
+2026,2,Catamarca,gastos corrientes > rentas de la propiedad,6640.5045,millones_pesos
+2026,2,Catamarca,gastos corrientes > prestaciones de la seguridad social,0,millones_pesos
+2026,2,Catamarca,gastos corrientes > transferencias corrientes,359717.8552,millones_pesos
+2026,2,Catamarca,gastos corrientes > transferencias corrientes > al sector privado,104939.1415,millones_pesos
+2026,2,Catamarca,gastos corrientes > transferencias corrientes > al sector publico,254778.7137,millones_pesos
+2026,2,Catamarca,gastos corrientes > transferencias corrientes > al sector externo,0,millones_pesos
+2026,2,Catamarca,resultado economico,124258.93,millones_pesos
+2026,2,Catamarca,ingresos de capital,24878.3019,millones_pesos
+2026,2,Catamarca,ingresos de capital > recursos propios de capital,0,millones_pesos
+2026,2,Catamarca,ingresos de capital > transferencias de capital,18941.4641,millones_pesos
+2026,2,Catamarca,ingresos de capital > disminucion de la inversion financiera,5936.8379,millones_pesos
+2026,2,Catamarca,gastos de capital,174517.351,millones_pesos
+2026,2,Catamarca,gastos de capital > inversion real directa,87957.4334,millones_pesos
+2026,2,Catamarca,gastos de capital > transferencias de capital,37403.0668,millones_pesos
+2026,2,Catamarca,gastos de capital > transferencias de capital > al sector privado,4991.9337,millones_pesos
+2026,2,Catamarca,gastos de capital > transferencias de capital > al sector publico,32411.1331,millones_pesos
+2026,2,Catamarca,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,Catamarca,gastos de capital > inversion financiera,49156.8508,millones_pesos
+2026,2,Catamarca,ingresos totales,1208885.5613,millones_pesos
+2026,2,Catamarca,gastos totales,1234265.6805,millones_pesos
+2026,2,Catamarca,gastos primarios,1227625.176,millones_pesos
+2026,2,Catamarca,resultado financiero,-25380.1191,millones_pesos
+2026,2,Catamarca,resultado primario,-18739.6146,millones_pesos
+2026,2,Chaco,ingresos corrientes,2406528.7785,millones_pesos
+2026,2,Chaco,ingresos corrientes > tributarios,1989959.5552,millones_pesos
+2026,2,Chaco,ingresos corrientes > tributarios > de origen provincial,245683.7751,millones_pesos
+2026,2,Chaco,ingresos corrientes > tributarios > de origen nacional,1744275.7801,millones_pesos
+2026,2,Chaco,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,1375747.9193,millones_pesos
+2026,2,Chaco,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,204395.8315,millones_pesos
+2026,2,Chaco,ingresos corrientes > tributarios > sub - total,1580143.7508,millones_pesos
+2026,2,Chaco,ingresos corrientes > tributarios > otros de origen nacional,164132.0292,millones_pesos
+2026,2,Chaco,ingresos corrientes > contribuciones a la seguridad social,313089.3609,millones_pesos
+2026,2,Chaco,ingresos corrientes > no tributarios,26742.1392,millones_pesos
+2026,2,Chaco,ingresos corrientes > no tributarios > regalias,0,millones_pesos
+2026,2,Chaco,ingresos corrientes > no tributarios > otros no tributarios,26742.1392,millones_pesos
+2026,2,Chaco,ingresos corrientes > vta.bienes y serv.de la adm.publ.,13.8418,millones_pesos
+2026,2,Chaco,ingresos corrientes > rentas de la propiedad,16274.7981,millones_pesos
+2026,2,Chaco,ingresos corrientes > transferencias corrientes,60449.0833,millones_pesos
+2026,2,Chaco,gastos corrientes,2236116.8002,millones_pesos
+2026,2,Chaco,gastos corrientes > gastos de consumo,1223970.8181,millones_pesos
+2026,2,Chaco,gastos corrientes > gastos de consumo > personal,1104286.8657,millones_pesos
+2026,2,Chaco,gastos corrientes > gastos de consumo > bienes de consumo,55276.18,millones_pesos
+2026,2,Chaco,gastos corrientes > gastos de consumo > servicios,64407.7724,millones_pesos
+2026,2,Chaco,gastos corrientes > rentas de la propiedad,94005.1769,millones_pesos
+2026,2,Chaco,gastos corrientes > prestaciones de la seguridad social,510576.2337,millones_pesos
+2026,2,Chaco,gastos corrientes > transferencias corrientes,407564.5714,millones_pesos
+2026,2,Chaco,gastos corrientes > transferencias corrientes > al sector privado,131826.1657,millones_pesos
+2026,2,Chaco,gastos corrientes > transferencias corrientes > al sector publico,275738.4057,millones_pesos
+2026,2,Chaco,gastos corrientes > transferencias corrientes > al sector externo,0,millones_pesos
+2026,2,Chaco,resultado economico,170411.9784,millones_pesos
+2026,2,Chaco,ingresos de capital,6041.6008,millones_pesos
+2026,2,Chaco,ingresos de capital > recursos propios de capital,2947.6805,millones_pesos
+2026,2,Chaco,ingresos de capital > transferencias de capital,2170.2414,millones_pesos
+2026,2,Chaco,ingresos de capital > disminucion de la inversion financiera,923.6789,millones_pesos
+2026,2,Chaco,gastos de capital,91045.1378,millones_pesos
+2026,2,Chaco,gastos de capital > inversion real directa,87447.2628,millones_pesos
+2026,2,Chaco,gastos de capital > transferencias de capital,2264.8327,millones_pesos
+2026,2,Chaco,gastos de capital > transferencias de capital > al sector privado,1219.0974,millones_pesos
+2026,2,Chaco,gastos de capital > transferencias de capital > al sector publico,1045.7353,millones_pesos
+2026,2,Chaco,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,Chaco,gastos de capital > inversion financiera,1333.0422,millones_pesos
+2026,2,Chaco,ingresos totales,2412570.3793,millones_pesos
+2026,2,Chaco,gastos totales,2327161.938,millones_pesos
+2026,2,Chaco,gastos primarios,2233156.761,millones_pesos
+2026,2,Chaco,resultado financiero,85408.4413,millones_pesos
+2026,2,Chaco,resultado primario,179413.6183,millones_pesos
+2026,2,Chubut,ingresos corrientes,1795460.29,millones_pesos
+2026,2,Chubut,ingresos corrientes > tributarios,925083.8946,millones_pesos
+2026,2,Chubut,ingresos corrientes > tributarios > de origen provincial,362735.052,millones_pesos
+2026,2,Chubut,ingresos corrientes > tributarios > de origen nacional,562348.8426,millones_pesos
+2026,2,Chubut,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,418074.765,millones_pesos
+2026,2,Chubut,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,82863.1749,millones_pesos
+2026,2,Chubut,ingresos corrientes > tributarios > sub - total,500937.9399,millones_pesos
+2026,2,Chubut,ingresos corrientes > tributarios > otros de origen nacional,61410.9027,millones_pesos
+2026,2,Chubut,ingresos corrientes > contribuciones a la seguridad social,293166.7697,millones_pesos
+2026,2,Chubut,ingresos corrientes > no tributarios,538660.8554,millones_pesos
+2026,2,Chubut,ingresos corrientes > no tributarios > regalias,283281.9408,millones_pesos
+2026,2,Chubut,ingresos corrientes > no tributarios > otros no tributarios,255378.9147,millones_pesos
+2026,2,Chubut,ingresos corrientes > vta.bienes y serv.de la adm.publ.,7621.2406,millones_pesos
+2026,2,Chubut,ingresos corrientes > rentas de la propiedad,13467.2176,millones_pesos
+2026,2,Chubut,ingresos corrientes > transferencias corrientes,17460.3121,millones_pesos
+2026,2,Chubut,gastos corrientes,1633384.9247,millones_pesos
+2026,2,Chubut,gastos corrientes > gastos de consumo,1099110.6338,millones_pesos
+2026,2,Chubut,gastos corrientes > gastos de consumo > personal,952418.078,millones_pesos
+2026,2,Chubut,gastos corrientes > gastos de consumo > bienes de consumo,49899.3233,millones_pesos
+2026,2,Chubut,gastos corrientes > gastos de consumo > servicios,96793.2325,millones_pesos
+2026,2,Chubut,gastos corrientes > rentas de la propiedad,56624.7797,millones_pesos
+2026,2,Chubut,gastos corrientes > prestaciones de la seguridad social,362141.3333,millones_pesos
+2026,2,Chubut,gastos corrientes > transferencias corrientes,115508.1779,millones_pesos
+2026,2,Chubut,gastos corrientes > transferencias corrientes > al sector privado,48058.3649,millones_pesos
+2026,2,Chubut,gastos corrientes > transferencias corrientes > al sector publico,67449.8131,millones_pesos
+2026,2,Chubut,gastos corrientes > transferencias corrientes > al sector externo,0,millones_pesos
+2026,2,Chubut,resultado economico,162075.3653,millones_pesos
+2026,2,Chubut,ingresos de capital,4229.7197,millones_pesos
+2026,2,Chubut,ingresos de capital > recursos propios de capital,680.9071,millones_pesos
+2026,2,Chubut,ingresos de capital > transferencias de capital,0.2687,millones_pesos
+2026,2,Chubut,ingresos de capital > disminucion de la inversion financiera,3548.5439,millones_pesos
+2026,2,Chubut,gastos de capital,152949.0427,millones_pesos
+2026,2,Chubut,gastos de capital > inversion real directa,60063.5319,millones_pesos
+2026,2,Chubut,gastos de capital > transferencias de capital,88669.3997,millones_pesos
+2026,2,Chubut,gastos de capital > transferencias de capital > al sector privado,6100.9047,millones_pesos
+2026,2,Chubut,gastos de capital > transferencias de capital > al sector publico,82568.495,millones_pesos
+2026,2,Chubut,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,Chubut,gastos de capital > inversion financiera,4216.1111,millones_pesos
+2026,2,Chubut,ingresos totales,1799690.0097,millones_pesos
+2026,2,Chubut,gastos totales,1786333.9674,millones_pesos
+2026,2,Chubut,gastos primarios,1729709.1878,millones_pesos
+2026,2,Chubut,resultado financiero,13356.0422,millones_pesos
+2026,2,Chubut,resultado primario,69980.8219,millones_pesos
+2026,2,Córdoba,ingresos corrientes,7255308.1296,millones_pesos
+2026,2,Córdoba,ingresos corrientes > tributarios,5016253.1187,millones_pesos
+2026,2,Córdoba,ingresos corrientes > tributarios > de origen provincial,1939353.52,millones_pesos
+2026,2,Córdoba,ingresos corrientes > tributarios > de origen nacional,3076899.5986,millones_pesos
+2026,2,Córdoba,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,2421419.6716,millones_pesos
+2026,2,Córdoba,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,391114.1857,millones_pesos
+2026,2,Córdoba,ingresos corrientes > tributarios > sub - total,2812533.8573,millones_pesos
+2026,2,Córdoba,ingresos corrientes > tributarios > otros de origen nacional,264365.7413,millones_pesos
+2026,2,Córdoba,ingresos corrientes > contribuciones a la seguridad social,1132636.5428,millones_pesos
+2026,2,Córdoba,ingresos corrientes > no tributarios,581586.3476,millones_pesos
+2026,2,Córdoba,ingresos corrientes > no tributarios > regalias,0,millones_pesos
+2026,2,Córdoba,ingresos corrientes > no tributarios > otros no tributarios,581586.3476,millones_pesos
+2026,2,Córdoba,ingresos corrientes > vta.bienes y serv.de la adm.publ.,9180.7025,millones_pesos
+2026,2,Córdoba,ingresos corrientes > rentas de la propiedad,343133.677,millones_pesos
+2026,2,Córdoba,ingresos corrientes > transferencias corrientes,172517.7411,millones_pesos
+2026,2,Córdoba,gastos corrientes,6315970.4947,millones_pesos
+2026,2,Córdoba,gastos corrientes > gastos de consumo,3376845.4243,millones_pesos
+2026,2,Córdoba,gastos corrientes > gastos de consumo > personal,2578174.8482,millones_pesos
+2026,2,Córdoba,gastos corrientes > gastos de consumo > bienes de consumo,128869.0932,millones_pesos
+2026,2,Córdoba,gastos corrientes > gastos de consumo > servicios,669801.483,millones_pesos
+2026,2,Córdoba,gastos corrientes > rentas de la propiedad,84428.0117,millones_pesos
+2026,2,Córdoba,gastos corrientes > prestaciones de la seguridad social,1405680.0829,millones_pesos
+2026,2,Córdoba,gastos corrientes > transferencias corrientes,1449016.9758,millones_pesos
+2026,2,Córdoba,gastos corrientes > transferencias corrientes > al sector privado,472517.4923,millones_pesos
+2026,2,Córdoba,gastos corrientes > transferencias corrientes > al sector publico,976499.4834,millones_pesos
+2026,2,Córdoba,gastos corrientes > transferencias corrientes > al sector externo,0,millones_pesos
+2026,2,Córdoba,resultado economico,939337.635,millones_pesos
+2026,2,Córdoba,ingresos de capital,105010.5037,millones_pesos
+2026,2,Córdoba,ingresos de capital > recursos propios de capital,0,millones_pesos
+2026,2,Córdoba,ingresos de capital > transferencias de capital,90304.5862,millones_pesos
+2026,2,Córdoba,ingresos de capital > disminucion de la inversion financiera,14705.9175,millones_pesos
+2026,2,Córdoba,gastos de capital,730891.2271,millones_pesos
+2026,2,Córdoba,gastos de capital > inversion real directa,616709.3455,millones_pesos
+2026,2,Córdoba,gastos de capital > transferencias de capital,52911.1624,millones_pesos
+2026,2,Córdoba,gastos de capital > transferencias de capital > al sector privado,14743.9026,millones_pesos
+2026,2,Córdoba,gastos de capital > transferencias de capital > al sector publico,38167.2598,millones_pesos
+2026,2,Córdoba,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,Córdoba,gastos de capital > inversion financiera,61270.7192,millones_pesos
+2026,2,Córdoba,ingresos totales,7360318.6333,millones_pesos
+2026,2,Córdoba,gastos totales,7046861.7218,millones_pesos
+2026,2,Córdoba,gastos primarios,6962433.7101,millones_pesos
+2026,2,Córdoba,resultado financiero,313456.9116,millones_pesos
+2026,2,Córdoba,resultado primario,397884.9233,millones_pesos
+2026,2,Corrientes,ingresos corrientes,1916604.1469,millones_pesos
+2026,2,Corrientes,ingresos corrientes > tributarios,1547214.5569,millones_pesos
+2026,2,Corrientes,ingresos corrientes > tributarios > de origen provincial,226780.67,millones_pesos
+2026,2,Corrientes,ingresos corrientes > tributarios > de origen nacional,1320433.8869,millones_pesos
+2026,2,Corrientes,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,999602.021,millones_pesos
+2026,2,Corrientes,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,177879.6156,millones_pesos
+2026,2,Corrientes,ingresos corrientes > tributarios > sub - total,1177481.6366,millones_pesos
+2026,2,Corrientes,ingresos corrientes > tributarios > otros de origen nacional,142952.2503,millones_pesos
+2026,2,Corrientes,ingresos corrientes > contribuciones a la seguridad social,278216.1,millones_pesos
+2026,2,Corrientes,ingresos corrientes > no tributarios,26357.25,millones_pesos
+2026,2,Corrientes,ingresos corrientes > no tributarios > regalias,15571.03,millones_pesos
+2026,2,Corrientes,ingresos corrientes > no tributarios > otros no tributarios,10786.22,millones_pesos
+2026,2,Corrientes,ingresos corrientes > vta.bienes y serv.de la adm.publ.,12667.45,millones_pesos
+2026,2,Corrientes,ingresos corrientes > rentas de la propiedad,9403,millones_pesos
+2026,2,Corrientes,ingresos corrientes > transferencias corrientes,42745.79,millones_pesos
+2026,2,Corrientes,gastos corrientes,1773777.8301,millones_pesos
+2026,2,Corrientes,gastos corrientes > gastos de consumo,1146293.85,millones_pesos
+2026,2,Corrientes,gastos corrientes > gastos de consumo > personal,954974.44,millones_pesos
+2026,2,Corrientes,gastos corrientes > gastos de consumo > bienes de consumo,41990.49,millones_pesos
+2026,2,Corrientes,gastos corrientes > gastos de consumo > servicios,149328.92,millones_pesos
+2026,2,Corrientes,gastos corrientes > rentas de la propiedad,2210.4601,millones_pesos
+2026,2,Corrientes,gastos corrientes > prestaciones de la seguridad social,356467.56,millones_pesos
+2026,2,Corrientes,gastos corrientes > transferencias corrientes,268805.96,millones_pesos
+2026,2,Corrientes,gastos corrientes > transferencias corrientes > al sector privado,67789.2,millones_pesos
+2026,2,Corrientes,gastos corrientes > transferencias corrientes > al sector publico,201016.76,millones_pesos
+2026,2,Corrientes,gastos corrientes > transferencias corrientes > al sector externo,0,millones_pesos
+2026,2,Corrientes,resultado economico,142826.3168,millones_pesos
+2026,2,Corrientes,ingresos de capital,2177.36,millones_pesos
+2026,2,Corrientes,ingresos de capital > recursos propios de capital,35.63,millones_pesos
+2026,2,Corrientes,ingresos de capital > transferencias de capital,118.07,millones_pesos
+2026,2,Corrientes,ingresos de capital > disminucion de la inversion financiera,2023.66,millones_pesos
+2026,2,Corrientes,gastos de capital,113675.6,millones_pesos
+2026,2,Corrientes,gastos de capital > inversion real directa,80595.25,millones_pesos
+2026,2,Corrientes,gastos de capital > transferencias de capital,30853.05,millones_pesos
+2026,2,Corrientes,gastos de capital > transferencias de capital > al sector privado,3904.58,millones_pesos
+2026,2,Corrientes,gastos de capital > transferencias de capital > al sector publico,26948.47,millones_pesos
+2026,2,Corrientes,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,Corrientes,gastos de capital > inversion financiera,2227.3,millones_pesos
+2026,2,Corrientes,ingresos totales,1918781.5069,millones_pesos
+2026,2,Corrientes,gastos totales,1887453.4301,millones_pesos
+2026,2,Corrientes,gastos primarios,1885242.97,millones_pesos
+2026,2,Corrientes,resultado financiero,31328.0768,millones_pesos
+2026,2,Corrientes,resultado primario,33538.5369,millones_pesos
+2026,2,Entre Ríos,ingresos corrientes,2890663.7921,millones_pesos
+2026,2,Entre Ríos,ingresos corrientes > tributarios,2296755.1056,millones_pesos
+2026,2,Entre Ríos,ingresos corrientes > tributarios > de origen provincial,609011.6051,millones_pesos
+2026,2,Entre Ríos,ingresos corrientes > tributarios > de origen nacional,1687743.5005,millones_pesos
+2026,2,Entre Ríos,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,1373680.7494,millones_pesos
+2026,2,Entre Ríos,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,172907.8251,millones_pesos
+2026,2,Entre Ríos,ingresos corrientes > tributarios > sub - total,1546588.5745,millones_pesos
+2026,2,Entre Ríos,ingresos corrientes > tributarios > otros de origen nacional,141154.9261,millones_pesos
+2026,2,Entre Ríos,ingresos corrientes > contribuciones a la seguridad social,425252.056,millones_pesos
+2026,2,Entre Ríos,ingresos corrientes > no tributarios,64101.5121,millones_pesos
+2026,2,Entre Ríos,ingresos corrientes > no tributarios > regalias,16149.5004,millones_pesos
+2026,2,Entre Ríos,ingresos corrientes > no tributarios > otros no tributarios,47952.0117,millones_pesos
+2026,2,Entre Ríos,ingresos corrientes > vta.bienes y serv.de la adm.publ.,9813.8882,millones_pesos
+2026,2,Entre Ríos,ingresos corrientes > rentas de la propiedad,25507.2929,millones_pesos
+2026,2,Entre Ríos,ingresos corrientes > transferencias corrientes,69233.9373,millones_pesos
+2026,2,Entre Ríos,gastos corrientes,2707017.0867,millones_pesos
+2026,2,Entre Ríos,gastos corrientes > gastos de consumo,1441230.2204,millones_pesos
+2026,2,Entre Ríos,gastos corrientes > gastos de consumo > personal,1260539.8195,millones_pesos
+2026,2,Entre Ríos,gastos corrientes > gastos de consumo > bienes de consumo,62424.9999,millones_pesos
+2026,2,Entre Ríos,gastos corrientes > gastos de consumo > servicios,118265.401,millones_pesos
+2026,2,Entre Ríos,gastos corrientes > rentas de la propiedad,69604.4996,millones_pesos
+2026,2,Entre Ríos,gastos corrientes > prestaciones de la seguridad social,738657.9066,millones_pesos
+2026,2,Entre Ríos,gastos corrientes > transferencias corrientes,457524.4601,millones_pesos
+2026,2,Entre Ríos,gastos corrientes > transferencias corrientes > al sector privado,129325.7285,millones_pesos
+2026,2,Entre Ríos,gastos corrientes > transferencias corrientes > al sector publico,328198.7316,millones_pesos
+2026,2,Entre Ríos,gastos corrientes > transferencias corrientes > al sector externo,0,millones_pesos
+2026,2,Entre Ríos,resultado economico,183646.7054,millones_pesos
+2026,2,Entre Ríos,ingresos de capital,8618.7478,millones_pesos
+2026,2,Entre Ríos,ingresos de capital > recursos propios de capital,0,millones_pesos
+2026,2,Entre Ríos,ingresos de capital > transferencias de capital,241.4833,millones_pesos
+2026,2,Entre Ríos,ingresos de capital > disminucion de la inversion financiera,8377.2644,millones_pesos
+2026,2,Entre Ríos,gastos de capital,111827.9123,millones_pesos
+2026,2,Entre Ríos,gastos de capital > inversion real directa,107528.6129,millones_pesos
+2026,2,Entre Ríos,gastos de capital > transferencias de capital,4096.5937,millones_pesos
+2026,2,Entre Ríos,gastos de capital > transferencias de capital > al sector privado,1898.9276,millones_pesos
+2026,2,Entre Ríos,gastos de capital > transferencias de capital > al sector publico,2197.6661,millones_pesos
+2026,2,Entre Ríos,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,Entre Ríos,gastos de capital > inversion financiera,202.7057,millones_pesos
+2026,2,Entre Ríos,ingresos totales,2899282.5399,millones_pesos
+2026,2,Entre Ríos,gastos totales,2818844.999,millones_pesos
+2026,2,Entre Ríos,gastos primarios,2749240.4994,millones_pesos
+2026,2,Entre Ríos,resultado financiero,80437.5409,millones_pesos
+2026,2,Entre Ríos,resultado primario,150042.0405,millones_pesos
+2026,2,Formosa,ingresos corrientes,1580407.6671,millones_pesos
+2026,2,Formosa,ingresos corrientes > tributarios,1357699.7444,millones_pesos
+2026,2,Formosa,ingresos corrientes > tributarios > de origen provincial,97498.8119,millones_pesos
+2026,2,Formosa,ingresos corrientes > tributarios > de origen nacional,1260200.9325,millones_pesos
+2026,2,Formosa,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,1036517.0061,millones_pesos
+2026,2,Formosa,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,116560.8661,millones_pesos
+2026,2,Formosa,ingresos corrientes > tributarios > sub - total,1153077.8722,millones_pesos
+2026,2,Formosa,ingresos corrientes > tributarios > otros de origen nacional,107123.0603,millones_pesos
+2026,2,Formosa,ingresos corrientes > contribuciones a la seguridad social,193991.3278,millones_pesos
+2026,2,Formosa,ingresos corrientes > no tributarios,8117.846,millones_pesos
+2026,2,Formosa,ingresos corrientes > no tributarios > regalias,688.841,millones_pesos
+2026,2,Formosa,ingresos corrientes > no tributarios > otros no tributarios,7429.0051,millones_pesos
+2026,2,Formosa,ingresos corrientes > vta.bienes y serv.de la adm.publ.,6204.6955,millones_pesos
+2026,2,Formosa,ingresos corrientes > rentas de la propiedad,7859.6546,millones_pesos
+2026,2,Formosa,ingresos corrientes > transferencias corrientes,6534.3987,millones_pesos
+2026,2,Formosa,gastos corrientes,1373681.5706,millones_pesos
+2026,2,Formosa,gastos corrientes > gastos de consumo,873007.8471,millones_pesos
+2026,2,Formosa,gastos corrientes > gastos de consumo > personal,683330.312,millones_pesos
+2026,2,Formosa,gastos corrientes > gastos de consumo > bienes de consumo,108056.4614,millones_pesos
+2026,2,Formosa,gastos corrientes > gastos de consumo > servicios,81621.0736,millones_pesos
+2026,2,Formosa,gastos corrientes > rentas de la propiedad,849.8015,millones_pesos
+2026,2,Formosa,gastos corrientes > prestaciones de la seguridad social,270992.3031,millones_pesos
+2026,2,Formosa,gastos corrientes > transferencias corrientes,228831.6189,millones_pesos
+2026,2,Formosa,gastos corrientes > transferencias corrientes > al sector privado,71826.3948,millones_pesos
+2026,2,Formosa,gastos corrientes > transferencias corrientes > al sector publico,157005.2241,millones_pesos
+2026,2,Formosa,gastos corrientes > transferencias corrientes > al sector externo,0,millones_pesos
+2026,2,Formosa,resultado economico,206726.0965,millones_pesos
+2026,2,Formosa,ingresos de capital,817.822,millones_pesos
+2026,2,Formosa,ingresos de capital > recursos propios de capital,47.8141,millones_pesos
+2026,2,Formosa,ingresos de capital > transferencias de capital,0,millones_pesos
+2026,2,Formosa,ingresos de capital > disminucion de la inversion financiera,770.0079,millones_pesos
+2026,2,Formosa,gastos de capital,167441.4199,millones_pesos
+2026,2,Formosa,gastos de capital > inversion real directa,144012.7819,millones_pesos
+2026,2,Formosa,gastos de capital > transferencias de capital,23291.8323,millones_pesos
+2026,2,Formosa,gastos de capital > transferencias de capital > al sector privado,6413.845,millones_pesos
+2026,2,Formosa,gastos de capital > transferencias de capital > al sector publico,16877.9873,millones_pesos
+2026,2,Formosa,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,Formosa,gastos de capital > inversion financiera,136.8057,millones_pesos
+2026,2,Formosa,ingresos totales,1581225.489,millones_pesos
+2026,2,Formosa,gastos totales,1541122.9905,millones_pesos
+2026,2,Formosa,gastos primarios,1540273.1889,millones_pesos
+2026,2,Formosa,resultado financiero,40102.4986,millones_pesos
+2026,2,Formosa,resultado primario,40952.3001,millones_pesos
+2026,2,Jujuy,ingresos corrientes,1311299.2231,millones_pesos
+2026,2,Jujuy,ingresos corrientes > tributarios,1163088.2989,millones_pesos
+2026,2,Jujuy,ingresos corrientes > tributarios > de origen provincial,177744.4104,millones_pesos
+2026,2,Jujuy,ingresos corrientes > tributarios > de origen nacional,985343.8885,millones_pesos
+2026,2,Jujuy,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,787747.3189,millones_pesos
+2026,2,Jujuy,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,112141.4968,millones_pesos
+2026,2,Jujuy,ingresos corrientes > tributarios > sub - total,899888.8157,millones_pesos
+2026,2,Jujuy,ingresos corrientes > tributarios > otros de origen nacional,85455.0729,millones_pesos
+2026,2,Jujuy,ingresos corrientes > contribuciones a la seguridad social,0,millones_pesos
+2026,2,Jujuy,ingresos corrientes > no tributarios,52117.8374,millones_pesos
+2026,2,Jujuy,ingresos corrientes > no tributarios > regalias,24268.8395,millones_pesos
+2026,2,Jujuy,ingresos corrientes > no tributarios > otros no tributarios,27848.9979,millones_pesos
+2026,2,Jujuy,ingresos corrientes > vta.bienes y serv.de la adm.publ.,2415.3544,millones_pesos
+2026,2,Jujuy,ingresos corrientes > rentas de la propiedad,36813.4135,millones_pesos
+2026,2,Jujuy,ingresos corrientes > transferencias corrientes,56864.3189,millones_pesos
+2026,2,Jujuy,gastos corrientes,1142943.4898,millones_pesos
+2026,2,Jujuy,gastos corrientes > gastos de consumo,804017.2162,millones_pesos
+2026,2,Jujuy,gastos corrientes > gastos de consumo > personal,741063.1496,millones_pesos
+2026,2,Jujuy,gastos corrientes > gastos de consumo > bienes de consumo,21170.0656,millones_pesos
+2026,2,Jujuy,gastos corrientes > gastos de consumo > servicios,41784.001,millones_pesos
+2026,2,Jujuy,gastos corrientes > rentas de la propiedad,17747.9982,millones_pesos
+2026,2,Jujuy,gastos corrientes > prestaciones de la seguridad social,0,millones_pesos
+2026,2,Jujuy,gastos corrientes > transferencias corrientes,321178.2753,millones_pesos
+2026,2,Jujuy,gastos corrientes > transferencias corrientes > al sector privado,72754.547,millones_pesos
+2026,2,Jujuy,gastos corrientes > transferencias corrientes > al sector publico,248423.7283,millones_pesos
+2026,2,Jujuy,gastos corrientes > transferencias corrientes > al sector externo,0,millones_pesos
+2026,2,Jujuy,resultado economico,168355.7333,millones_pesos
+2026,2,Jujuy,ingresos de capital,45079.9133,millones_pesos
+2026,2,Jujuy,ingresos de capital > recursos propios de capital,2653.7745,millones_pesos
+2026,2,Jujuy,ingresos de capital > transferencias de capital,88.2336,millones_pesos
+2026,2,Jujuy,ingresos de capital > disminucion de la inversion financiera,42337.9051,millones_pesos
+2026,2,Jujuy,gastos de capital,66278.3115,millones_pesos
+2026,2,Jujuy,gastos de capital > inversion real directa,58072.066,millones_pesos
+2026,2,Jujuy,gastos de capital > transferencias de capital,5906.2455,millones_pesos
+2026,2,Jujuy,gastos de capital > transferencias de capital > al sector privado,2818.1721,millones_pesos
+2026,2,Jujuy,gastos de capital > transferencias de capital > al sector publico,3088.0733,millones_pesos
+2026,2,Jujuy,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,Jujuy,gastos de capital > inversion financiera,2300,millones_pesos
+2026,2,Jujuy,ingresos totales,1356379.1363,millones_pesos
+2026,2,Jujuy,gastos totales,1209221.8012,millones_pesos
+2026,2,Jujuy,gastos primarios,1191473.803,millones_pesos
+2026,2,Jujuy,resultado financiero,147157.3351,millones_pesos
+2026,2,Jujuy,resultado primario,164905.3333,millones_pesos
+2026,2,La Rioja,ingresos corrientes,810429.6257,millones_pesos
+2026,2,La Rioja,ingresos corrientes > tributarios,793144.2586,millones_pesos
+2026,2,La Rioja,ingresos corrientes > tributarios > de origen provincial,84810.1376,millones_pesos
+2026,2,La Rioja,ingresos corrientes > tributarios > de origen nacional,708334.121,millones_pesos
+2026,2,La Rioja,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,589560.6308,millones_pesos
+2026,2,La Rioja,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,66290.54,millones_pesos
+2026,2,La Rioja,ingresos corrientes > tributarios > sub - total,655851.1708,millones_pesos
+2026,2,La Rioja,ingresos corrientes > tributarios > otros de origen nacional,52482.9502,millones_pesos
+2026,2,La Rioja,ingresos corrientes > contribuciones a la seguridad social,0,millones_pesos
+2026,2,La Rioja,ingresos corrientes > no tributarios,796.2411,millones_pesos
+2026,2,La Rioja,ingresos corrientes > no tributarios > regalias,0,millones_pesos
+2026,2,La Rioja,ingresos corrientes > no tributarios > otros no tributarios,796.2411,millones_pesos
+2026,2,La Rioja,ingresos corrientes > vta.bienes y serv.de la adm.publ.,4058.688,millones_pesos
+2026,2,La Rioja,ingresos corrientes > rentas de la propiedad,8282.7998,millones_pesos
+2026,2,La Rioja,ingresos corrientes > transferencias corrientes,4147.6383,millones_pesos
+2026,2,La Rioja,gastos corrientes,763065.8043,millones_pesos
+2026,2,La Rioja,gastos corrientes > gastos de consumo,524759.0771,millones_pesos
+2026,2,La Rioja,gastos corrientes > gastos de consumo > personal,416760.262,millones_pesos
+2026,2,La Rioja,gastos corrientes > gastos de consumo > bienes de consumo,50289.9303,millones_pesos
+2026,2,La Rioja,gastos corrientes > gastos de consumo > servicios,57708.8848,millones_pesos
+2026,2,La Rioja,gastos corrientes > rentas de la propiedad,4302.0327,millones_pesos
+2026,2,La Rioja,gastos corrientes > prestaciones de la seguridad social,0,millones_pesos
+2026,2,La Rioja,gastos corrientes > transferencias corrientes,234004.6945,millones_pesos
+2026,2,La Rioja,gastos corrientes > transferencias corrientes > al sector privado,56716.8734,millones_pesos
+2026,2,La Rioja,gastos corrientes > transferencias corrientes > al sector publico,177287.8211,millones_pesos
+2026,2,La Rioja,gastos corrientes > transferencias corrientes > al sector externo,0,millones_pesos
+2026,2,La Rioja,resultado economico,47363.8214,millones_pesos
+2026,2,La Rioja,ingresos de capital,22896.3336,millones_pesos
+2026,2,La Rioja,ingresos de capital > recursos propios de capital,0,millones_pesos
+2026,2,La Rioja,ingresos de capital > transferencias de capital,13480.2643,millones_pesos
+2026,2,La Rioja,ingresos de capital > disminucion de la inversion financiera,9416.0693,millones_pesos
+2026,2,La Rioja,gastos de capital,30206.6294,millones_pesos
+2026,2,La Rioja,gastos de capital > inversion real directa,27365.3407,millones_pesos
+2026,2,La Rioja,gastos de capital > transferencias de capital,750,millones_pesos
+2026,2,La Rioja,gastos de capital > transferencias de capital > al sector privado,241,millones_pesos
+2026,2,La Rioja,gastos de capital > transferencias de capital > al sector publico,509,millones_pesos
+2026,2,La Rioja,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,La Rioja,gastos de capital > inversion financiera,2091.2887,millones_pesos
+2026,2,La Rioja,ingresos totales,833325.9594,millones_pesos
+2026,2,La Rioja,gastos totales,793272.4337,millones_pesos
+2026,2,La Rioja,gastos primarios,788970.4009,millones_pesos
+2026,2,La Rioja,resultado financiero,40053.5257,millones_pesos
+2026,2,La Rioja,resultado primario,44355.5584,millones_pesos
+2026,2,Mendoza,ingresos corrientes,2721829.8048,millones_pesos
+2026,2,Mendoza,ingresos corrientes > tributarios,2291573.1324,millones_pesos
+2026,2,Mendoza,ingresos corrientes > tributarios > de origen provincial,849318.2912,millones_pesos
+2026,2,Mendoza,ingresos corrientes > tributarios > de origen nacional,1442254.8412,millones_pesos
+2026,2,Mendoza,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,1067844.8589,millones_pesos
+2026,2,Mendoza,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,253008.8942,millones_pesos
+2026,2,Mendoza,ingresos corrientes > tributarios > sub - total,1320853.7531,millones_pesos
+2026,2,Mendoza,ingresos corrientes > tributarios > otros de origen nacional,121401.0881,millones_pesos
+2026,2,Mendoza,ingresos corrientes > contribuciones a la seguridad social,0,millones_pesos
+2026,2,Mendoza,ingresos corrientes > no tributarios,239047.8105,millones_pesos
+2026,2,Mendoza,ingresos corrientes > no tributarios > regalias,107121.24,millones_pesos
+2026,2,Mendoza,ingresos corrientes > no tributarios > otros no tributarios,131926.5706,millones_pesos
+2026,2,Mendoza,ingresos corrientes > vta.bienes y serv.de la adm.publ.,59421.0986,millones_pesos
+2026,2,Mendoza,ingresos corrientes > rentas de la propiedad,90866.624,millones_pesos
+2026,2,Mendoza,ingresos corrientes > transferencias corrientes,40921.1393,millones_pesos
+2026,2,Mendoza,gastos corrientes,2272658.0891,millones_pesos
+2026,2,Mendoza,gastos corrientes > gastos de consumo,1535353.8733,millones_pesos
+2026,2,Mendoza,gastos corrientes > gastos de consumo > personal,1163827.2996,millones_pesos
+2026,2,Mendoza,gastos corrientes > gastos de consumo > bienes de consumo,104319.9331,millones_pesos
+2026,2,Mendoza,gastos corrientes > gastos de consumo > servicios,267206.6406,millones_pesos
+2026,2,Mendoza,gastos corrientes > rentas de la propiedad,59720.55,millones_pesos
+2026,2,Mendoza,gastos corrientes > prestaciones de la seguridad social,0,millones_pesos
+2026,2,Mendoza,gastos corrientes > transferencias corrientes,677583.6658,millones_pesos
+2026,2,Mendoza,gastos corrientes > transferencias corrientes > al sector privado,305290.9118,millones_pesos
+2026,2,Mendoza,gastos corrientes > transferencias corrientes > al sector publico,372292.7539,millones_pesos
+2026,2,Mendoza,gastos corrientes > transferencias corrientes > al sector externo,0,millones_pesos
+2026,2,Mendoza,resultado economico,449171.7157,millones_pesos
+2026,2,Mendoza,ingresos de capital,14138.3629,millones_pesos
+2026,2,Mendoza,ingresos de capital > recursos propios de capital,0,millones_pesos
+2026,2,Mendoza,ingresos de capital > transferencias de capital,0.0118,millones_pesos
+2026,2,Mendoza,ingresos de capital > disminucion de la inversion financiera,14138.3511,millones_pesos
+2026,2,Mendoza,gastos de capital,280465.3113,millones_pesos
+2026,2,Mendoza,gastos de capital > inversion real directa,234809.0656,millones_pesos
+2026,2,Mendoza,gastos de capital > transferencias de capital,3409.7035,millones_pesos
+2026,2,Mendoza,gastos de capital > transferencias de capital > al sector privado,0,millones_pesos
+2026,2,Mendoza,gastos de capital > transferencias de capital > al sector publico,3409.7035,millones_pesos
+2026,2,Mendoza,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,Mendoza,gastos de capital > inversion financiera,42246.5422,millones_pesos
+2026,2,Mendoza,ingresos totales,2735968.1677,millones_pesos
+2026,2,Mendoza,gastos totales,2553123.4004,millones_pesos
+2026,2,Mendoza,gastos primarios,2493402.8504,millones_pesos
+2026,2,Mendoza,resultado financiero,182844.7673,millones_pesos
+2026,2,Mendoza,resultado primario,242565.3173,millones_pesos
+2026,2,Misiones,ingresos corrientes,2146191.1812,millones_pesos
+2026,2,Misiones,ingresos corrientes > tributarios,1715982.5412,millones_pesos
+2026,2,Misiones,ingresos corrientes > tributarios > de origen provincial,533581.25,millones_pesos
+2026,2,Misiones,ingresos corrientes > tributarios > de origen nacional,1182401.2912,millones_pesos
+2026,2,Misiones,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,829209.8841,millones_pesos
+2026,2,Misiones,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,217101.5184,millones_pesos
+2026,2,Misiones,ingresos corrientes > tributarios > sub - total,1046311.4025,millones_pesos
+2026,2,Misiones,ingresos corrientes > tributarios > otros de origen nacional,136089.8888,millones_pesos
+2026,2,Misiones,ingresos corrientes > contribuciones a la seguridad social,294374.07,millones_pesos
+2026,2,Misiones,ingresos corrientes > no tributarios,41638.17,millones_pesos
+2026,2,Misiones,ingresos corrientes > no tributarios > regalias,16808.38,millones_pesos
+2026,2,Misiones,ingresos corrientes > no tributarios > otros no tributarios,24829.79,millones_pesos
+2026,2,Misiones,ingresos corrientes > vta.bienes y serv.de la adm.publ.,0,millones_pesos
+2026,2,Misiones,ingresos corrientes > rentas de la propiedad,3028.13,millones_pesos
+2026,2,Misiones,ingresos corrientes > transferencias corrientes,91168.27,millones_pesos
+2026,2,Misiones,gastos corrientes,2035317.1454,millones_pesos
+2026,2,Misiones,gastos corrientes > gastos de consumo,905227.58,millones_pesos
+2026,2,Misiones,gastos corrientes > gastos de consumo > personal,806668.17,millones_pesos
+2026,2,Misiones,gastos corrientes > gastos de consumo > bienes de consumo,13143.88,millones_pesos
+2026,2,Misiones,gastos corrientes > gastos de consumo > servicios,85415.53,millones_pesos
+2026,2,Misiones,gastos corrientes > rentas de la propiedad,2976.66,millones_pesos
+2026,2,Misiones,gastos corrientes > prestaciones de la seguridad social,248668.24,millones_pesos
+2026,2,Misiones,gastos corrientes > transferencias corrientes,878444.6654,millones_pesos
+2026,2,Misiones,gastos corrientes > transferencias corrientes > al sector privado,369747.24,millones_pesos
+2026,2,Misiones,gastos corrientes > transferencias corrientes > al sector publico,508697.4254,millones_pesos
+2026,2,Misiones,gastos corrientes > transferencias corrientes > al sector externo,0,millones_pesos
+2026,2,Misiones,resultado economico,110874.0358,millones_pesos
+2026,2,Misiones,ingresos de capital,10121.78,millones_pesos
+2026,2,Misiones,ingresos de capital > recursos propios de capital,209.83,millones_pesos
+2026,2,Misiones,ingresos de capital > transferencias de capital,2794.09,millones_pesos
+2026,2,Misiones,ingresos de capital > disminucion de la inversion financiera,7117.86,millones_pesos
+2026,2,Misiones,gastos de capital,118270.6796,millones_pesos
+2026,2,Misiones,gastos de capital > inversion real directa,85136.3296,millones_pesos
+2026,2,Misiones,gastos de capital > transferencias de capital,9997.13,millones_pesos
+2026,2,Misiones,gastos de capital > transferencias de capital > al sector privado,5538.76,millones_pesos
+2026,2,Misiones,gastos de capital > transferencias de capital > al sector publico,4458.37,millones_pesos
+2026,2,Misiones,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,Misiones,gastos de capital > inversion financiera,23137.22,millones_pesos
+2026,2,Misiones,ingresos totales,2156312.9612,millones_pesos
+2026,2,Misiones,gastos totales,2153587.825,millones_pesos
+2026,2,Misiones,gastos primarios,2150611.165,millones_pesos
+2026,2,Misiones,resultado financiero,2725.1362,millones_pesos
+2026,2,Misiones,resultado primario,5701.7962,millones_pesos
+2026,2,Neuquén,ingresos corrientes,4900925.1843,millones_pesos
+2026,2,Neuquén,ingresos corrientes > tributarios,1723874.8639,millones_pesos
+2026,2,Neuquén,ingresos corrientes > tributarios > de origen provincial,1103837.5381,millones_pesos
+2026,2,Neuquén,ingresos corrientes > tributarios > de origen nacional,620037.3258,millones_pesos
+2026,2,Neuquén,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,455833.8705,millones_pesos
+2026,2,Neuquén,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,93911.5983,millones_pesos
+2026,2,Neuquén,ingresos corrientes > tributarios > sub - total,549745.4688,millones_pesos
+2026,2,Neuquén,ingresos corrientes > tributarios > otros de origen nacional,70291.857,millones_pesos
+2026,2,Neuquén,ingresos corrientes > contribuciones a la seguridad social,898174.2964,millones_pesos
+2026,2,Neuquén,ingresos corrientes > no tributarios,1972390.0088,millones_pesos
+2026,2,Neuquén,ingresos corrientes > no tributarios > regalias,1717354.7134,millones_pesos
+2026,2,Neuquén,ingresos corrientes > no tributarios > otros no tributarios,255035.2954,millones_pesos
+2026,2,Neuquén,ingresos corrientes > vta.bienes y serv.de la adm.publ.,253194.1446,millones_pesos
+2026,2,Neuquén,ingresos corrientes > rentas de la propiedad,23491.7134,millones_pesos
+2026,2,Neuquén,ingresos corrientes > transferencias corrientes,29800.1572,millones_pesos
+2026,2,Neuquén,gastos corrientes,4333633.9716,millones_pesos
+2026,2,Neuquén,gastos corrientes > gastos de consumo,2762488.6601,millones_pesos
+2026,2,Neuquén,gastos corrientes > gastos de consumo > personal,2406334.772,millones_pesos
+2026,2,Neuquén,gastos corrientes > gastos de consumo > bienes de consumo,99135.3348,millones_pesos
+2026,2,Neuquén,gastos corrientes > gastos de consumo > servicios,257018.5533,millones_pesos
+2026,2,Neuquén,gastos corrientes > rentas de la propiedad,40402.643,millones_pesos
+2026,2,Neuquén,gastos corrientes > prestaciones de la seguridad social,908289.7749,millones_pesos
+2026,2,Neuquén,gastos corrientes > transferencias corrientes,622452.8934,millones_pesos
+2026,2,Neuquén,gastos corrientes > transferencias corrientes > al sector privado,81896.5673,millones_pesos
+2026,2,Neuquén,gastos corrientes > transferencias corrientes > al sector publico,540556.3262,millones_pesos
+2026,2,Neuquén,gastos corrientes > transferencias corrientes > al sector externo,0,millones_pesos
+2026,2,Neuquén,resultado economico,567291.2127,millones_pesos
+2026,2,Neuquén,ingresos de capital,8836.0515,millones_pesos
+2026,2,Neuquén,ingresos de capital > recursos propios de capital,3451.5622,millones_pesos
+2026,2,Neuquén,ingresos de capital > transferencias de capital,222.7569,millones_pesos
+2026,2,Neuquén,ingresos de capital > disminucion de la inversion financiera,5161.7324,millones_pesos
+2026,2,Neuquén,gastos de capital,449051.9516,millones_pesos
+2026,2,Neuquén,gastos de capital > inversion real directa,396079.5965,millones_pesos
+2026,2,Neuquén,gastos de capital > transferencias de capital,23230.7384,millones_pesos
+2026,2,Neuquén,gastos de capital > transferencias de capital > al sector privado,2251.1649,millones_pesos
+2026,2,Neuquén,gastos de capital > transferencias de capital > al sector publico,20979.5734,millones_pesos
+2026,2,Neuquén,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,Neuquén,gastos de capital > inversion financiera,29741.6168,millones_pesos
+2026,2,Neuquén,ingresos totales,4909761.2358,millones_pesos
+2026,2,Neuquén,gastos totales,4782685.9232,millones_pesos
+2026,2,Neuquén,gastos primarios,4742283.2802,millones_pesos
+2026,2,Neuquén,resultado financiero,127075.3126,millones_pesos
+2026,2,Neuquén,resultado primario,167477.9556,millones_pesos
+2026,2,Río Negro,ingresos corrientes,1537992.0287,millones_pesos
+2026,2,Río Negro,ingresos corrientes > tributarios,1335476.2442,millones_pesos
+2026,2,Río Negro,ingresos corrientes > tributarios > de origen provincial,461760.3316,millones_pesos
+2026,2,Río Negro,ingresos corrientes > tributarios > de origen nacional,873715.9125,millones_pesos
+2026,2,Río Negro,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,698130.2136,millones_pesos
+2026,2,Río Negro,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,101093.0734,millones_pesos
+2026,2,Río Negro,ingresos corrientes > tributarios > sub - total,799223.287,millones_pesos
+2026,2,Río Negro,ingresos corrientes > tributarios > otros de origen nacional,74492.6255,millones_pesos
+2026,2,Río Negro,ingresos corrientes > contribuciones a la seguridad social,0,millones_pesos
+2026,2,Río Negro,ingresos corrientes > no tributarios,184527.4684,millones_pesos
+2026,2,Río Negro,ingresos corrientes > no tributarios > regalias,68014.9445,millones_pesos
+2026,2,Río Negro,ingresos corrientes > no tributarios > otros no tributarios,116512.5239,millones_pesos
+2026,2,Río Negro,ingresos corrientes > vta.bienes y serv.de la adm.publ.,3873.8588,millones_pesos
+2026,2,Río Negro,ingresos corrientes > rentas de la propiedad,4346.3961,millones_pesos
+2026,2,Río Negro,ingresos corrientes > transferencias corrientes,9768.0611,millones_pesos
+2026,2,Río Negro,gastos corrientes,1443169.0091,millones_pesos
+2026,2,Río Negro,gastos corrientes > gastos de consumo,1113997.43,millones_pesos
+2026,2,Río Negro,gastos corrientes > gastos de consumo > personal,981586.54,millones_pesos
+2026,2,Río Negro,gastos corrientes > gastos de consumo > bienes de consumo,39789.08,millones_pesos
+2026,2,Río Negro,gastos corrientes > gastos de consumo > servicios,92621.81,millones_pesos
+2026,2,Río Negro,gastos corrientes > rentas de la propiedad,29461.5378,millones_pesos
+2026,2,Río Negro,gastos corrientes > prestaciones de la seguridad social,0,millones_pesos
+2026,2,Río Negro,gastos corrientes > transferencias corrientes,299710.0413,millones_pesos
+2026,2,Río Negro,gastos corrientes > transferencias corrientes > al sector privado,68020.66,millones_pesos
+2026,2,Río Negro,gastos corrientes > transferencias corrientes > al sector publico,230326.9513,millones_pesos
+2026,2,Río Negro,gastos corrientes > transferencias corrientes > al sector externo,1362.43,millones_pesos
+2026,2,Río Negro,resultado economico,94823.0196,millones_pesos
+2026,2,Río Negro,ingresos de capital,4195.1911,millones_pesos
+2026,2,Río Negro,ingresos de capital > recursos propios de capital,1426.7305,millones_pesos
+2026,2,Río Negro,ingresos de capital > transferencias de capital,0,millones_pesos
+2026,2,Río Negro,ingresos de capital > disminucion de la inversion financiera,2768.4606,millones_pesos
+2026,2,Río Negro,gastos de capital,98250.1208,millones_pesos
+2026,2,Río Negro,gastos de capital > inversion real directa,85684.82,millones_pesos
+2026,2,Río Negro,gastos de capital > transferencias de capital,11610.7208,millones_pesos
+2026,2,Río Negro,gastos de capital > transferencias de capital > al sector privado,1162.7,millones_pesos
+2026,2,Río Negro,gastos de capital > transferencias de capital > al sector publico,10448.0208,millones_pesos
+2026,2,Río Negro,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,Río Negro,gastos de capital > inversion financiera,954.58,millones_pesos
+2026,2,Río Negro,ingresos totales,1542187.2198,millones_pesos
+2026,2,Río Negro,gastos totales,1541419.1299,millones_pesos
+2026,2,Río Negro,gastos primarios,1511957.5921,millones_pesos
+2026,2,Río Negro,resultado financiero,768.0899,millones_pesos
+2026,2,Río Negro,resultado primario,30229.6277,millones_pesos
+2026,2,Salta,ingresos corrientes,1939161.0411,millones_pesos
+2026,2,Salta,ingresos corrientes > tributarios,1841517.8291,millones_pesos
+2026,2,Salta,ingresos corrientes > tributarios > de origen provincial,429955.6268,millones_pesos
+2026,2,Salta,ingresos corrientes > tributarios > de origen nacional,1411562.2024,millones_pesos
+2026,2,Salta,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,1004167.2401,millones_pesos
+2026,2,Salta,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,209920.0432,millones_pesos
+2026,2,Salta,ingresos corrientes > tributarios > sub - total,1214087.2833,millones_pesos
+2026,2,Salta,ingresos corrientes > tributarios > otros de origen nacional,197474.9191,millones_pesos
+2026,2,Salta,ingresos corrientes > contribuciones a la seguridad social,0,millones_pesos
+2026,2,Salta,ingresos corrientes > no tributarios,50187.9431,millones_pesos
+2026,2,Salta,ingresos corrientes > no tributarios > regalias,23057.8194,millones_pesos
+2026,2,Salta,ingresos corrientes > no tributarios > otros no tributarios,27130.1237,millones_pesos
+2026,2,Salta,ingresos corrientes > vta.bienes y serv.de la adm.publ.,1935.899,millones_pesos
+2026,2,Salta,ingresos corrientes > rentas de la propiedad,28298.1201,millones_pesos
+2026,2,Salta,ingresos corrientes > transferencias corrientes,17221.2497,millones_pesos
+2026,2,Salta,gastos corrientes,1739815.368,millones_pesos
+2026,2,Salta,gastos corrientes > gastos de consumo,1215271.675,millones_pesos
+2026,2,Salta,gastos corrientes > gastos de consumo > personal,1058891.3461,millones_pesos
+2026,2,Salta,gastos corrientes > gastos de consumo > bienes de consumo,36219.0157,millones_pesos
+2026,2,Salta,gastos corrientes > gastos de consumo > servicios,120161.3132,millones_pesos
+2026,2,Salta,gastos corrientes > rentas de la propiedad,34493.8072,millones_pesos
+2026,2,Salta,gastos corrientes > prestaciones de la seguridad social,0,millones_pesos
+2026,2,Salta,gastos corrientes > transferencias corrientes,490049.8859,millones_pesos
+2026,2,Salta,gastos corrientes > transferencias corrientes > al sector privado,79053.4671,millones_pesos
+2026,2,Salta,gastos corrientes > transferencias corrientes > al sector publico,410996.4188,millones_pesos
+2026,2,Salta,gastos corrientes > transferencias corrientes > al sector externo,0,millones_pesos
+2026,2,Salta,resultado economico,199345.673,millones_pesos
+2026,2,Salta,ingresos de capital,7917.3568,millones_pesos
+2026,2,Salta,ingresos de capital > recursos propios de capital,137.6042,millones_pesos
+2026,2,Salta,ingresos de capital > transferencias de capital,3126.7823,millones_pesos
+2026,2,Salta,ingresos de capital > disminucion de la inversion financiera,4652.9703,millones_pesos
+2026,2,Salta,gastos de capital,105925.7657,millones_pesos
+2026,2,Salta,gastos de capital > inversion real directa,96519.0037,millones_pesos
+2026,2,Salta,gastos de capital > transferencias de capital,9386.6119,millones_pesos
+2026,2,Salta,gastos de capital > transferencias de capital > al sector privado,31.9231,millones_pesos
+2026,2,Salta,gastos de capital > transferencias de capital > al sector publico,9354.6889,millones_pesos
+2026,2,Salta,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,Salta,gastos de capital > inversion financiera,20.15,millones_pesos
+2026,2,Salta,ingresos totales,1947078.3979,millones_pesos
+2026,2,Salta,gastos totales,1845741.1337,millones_pesos
+2026,2,Salta,gastos primarios,1811247.3265,millones_pesos
+2026,2,Salta,resultado financiero,101337.2642,millones_pesos
+2026,2,Salta,resultado primario,135831.0714,millones_pesos
+2026,2,San Juan,ingresos corrientes,1544189.3293,millones_pesos
+2026,2,San Juan,ingresos corrientes > tributarios,1356394.7381,millones_pesos
+2026,2,San Juan,ingresos corrientes > tributarios > de origen provincial,201745.1626,millones_pesos
+2026,2,San Juan,ingresos corrientes > tributarios > de origen nacional,1154649.5755,millones_pesos
+2026,2,San Juan,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,933162.2966,millones_pesos
+2026,2,San Juan,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,137552.8704,millones_pesos
+2026,2,San Juan,ingresos corrientes > tributarios > sub - total,1070715.167,millones_pesos
+2026,2,San Juan,ingresos corrientes > tributarios > otros de origen nacional,83934.4085,millones_pesos
+2026,2,San Juan,ingresos corrientes > contribuciones a la seguridad social,0,millones_pesos
+2026,2,San Juan,ingresos corrientes > no tributarios,111555.0785,millones_pesos
+2026,2,San Juan,ingresos corrientes > no tributarios > regalias,46870.8968,millones_pesos
+2026,2,San Juan,ingresos corrientes > no tributarios > otros no tributarios,64684.1817,millones_pesos
+2026,2,San Juan,ingresos corrientes > vta.bienes y serv.de la adm.publ.,5923.7131,millones_pesos
+2026,2,San Juan,ingresos corrientes > rentas de la propiedad,48264.3383,millones_pesos
+2026,2,San Juan,ingresos corrientes > transferencias corrientes,22051.4612,millones_pesos
+2026,2,San Juan,gastos corrientes,1329999.6024,millones_pesos
+2026,2,San Juan,gastos corrientes > gastos de consumo,992032.1607,millones_pesos
+2026,2,San Juan,gastos corrientes > gastos de consumo > personal,800180.3613,millones_pesos
+2026,2,San Juan,gastos corrientes > gastos de consumo > bienes de consumo,57110.3144,millones_pesos
+2026,2,San Juan,gastos corrientes > gastos de consumo > servicios,134741.485,millones_pesos
+2026,2,San Juan,gastos corrientes > rentas de la propiedad,7991.3845,millones_pesos
+2026,2,San Juan,gastos corrientes > prestaciones de la seguridad social,0,millones_pesos
+2026,2,San Juan,gastos corrientes > transferencias corrientes,329976.0571,millones_pesos
+2026,2,San Juan,gastos corrientes > transferencias corrientes > al sector privado,138743.8365,millones_pesos
+2026,2,San Juan,gastos corrientes > transferencias corrientes > al sector publico,191232.2206,millones_pesos
+2026,2,San Juan,gastos corrientes > transferencias corrientes > al sector externo,0,millones_pesos
+2026,2,San Juan,resultado economico,214189.7269,millones_pesos
+2026,2,San Juan,ingresos de capital,6683.6071,millones_pesos
+2026,2,San Juan,ingresos de capital > recursos propios de capital,0,millones_pesos
+2026,2,San Juan,ingresos de capital > transferencias de capital,372.2031,millones_pesos
+2026,2,San Juan,ingresos de capital > disminucion de la inversion financiera,6311.404,millones_pesos
+2026,2,San Juan,gastos de capital,193222.5405,millones_pesos
+2026,2,San Juan,gastos de capital > inversion real directa,147665.4287,millones_pesos
+2026,2,San Juan,gastos de capital > transferencias de capital,44013.332,millones_pesos
+2026,2,San Juan,gastos de capital > transferencias de capital > al sector privado,9295.9837,millones_pesos
+2026,2,San Juan,gastos de capital > transferencias de capital > al sector publico,34717.3483,millones_pesos
+2026,2,San Juan,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,San Juan,gastos de capital > inversion financiera,1543.7798,millones_pesos
+2026,2,San Juan,ingresos totales,1550872.9364,millones_pesos
+2026,2,San Juan,gastos totales,1523222.1428,millones_pesos
+2026,2,San Juan,gastos primarios,1515230.7583,millones_pesos
+2026,2,San Juan,resultado financiero,27650.7935,millones_pesos
+2026,2,San Juan,resultado primario,35642.1781,millones_pesos
+2026,2,San Luis,ingresos corrientes,1038617.18,millones_pesos
+2026,2,San Luis,ingresos corrientes > tributarios,989038.5818,millones_pesos
+2026,2,San Luis,ingresos corrientes > tributarios > de origen provincial,211888.7262,millones_pesos
+2026,2,San Luis,ingresos corrientes > tributarios > de origen nacional,777149.8556,millones_pesos
+2026,2,San Luis,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,642860.4539,millones_pesos
+2026,2,San Luis,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,80101.0691,millones_pesos
+2026,2,San Luis,ingresos corrientes > tributarios > sub - total,722961.523,millones_pesos
+2026,2,San Luis,ingresos corrientes > tributarios > otros de origen nacional,54188.3326,millones_pesos
+2026,2,San Luis,ingresos corrientes > contribuciones a la seguridad social,0,millones_pesos
+2026,2,San Luis,ingresos corrientes > no tributarios,7646.9242,millones_pesos
+2026,2,San Luis,ingresos corrientes > no tributarios > regalias,0,millones_pesos
+2026,2,San Luis,ingresos corrientes > no tributarios > otros no tributarios,7646.9242,millones_pesos
+2026,2,San Luis,ingresos corrientes > vta.bienes y serv.de la adm.publ.,1981.2231,millones_pesos
+2026,2,San Luis,ingresos corrientes > rentas de la propiedad,34134.1068,millones_pesos
+2026,2,San Luis,ingresos corrientes > transferencias corrientes,5816.3442,millones_pesos
+2026,2,San Luis,gastos corrientes,827274.6753,millones_pesos
+2026,2,San Luis,gastos corrientes > gastos de consumo,504327.4849,millones_pesos
+2026,2,San Luis,gastos corrientes > gastos de consumo > personal,397750.2059,millones_pesos
+2026,2,San Luis,gastos corrientes > gastos de consumo > bienes de consumo,26109.0135,millones_pesos
+2026,2,San Luis,gastos corrientes > gastos de consumo > servicios,80468.2655,millones_pesos
+2026,2,San Luis,gastos corrientes > rentas de la propiedad,0,millones_pesos
+2026,2,San Luis,gastos corrientes > prestaciones de la seguridad social,0,millones_pesos
+2026,2,San Luis,gastos corrientes > transferencias corrientes,322947.1903,millones_pesos
+2026,2,San Luis,gastos corrientes > transferencias corrientes > al sector privado,129763.5646,millones_pesos
+2026,2,San Luis,gastos corrientes > transferencias corrientes > al sector publico,193183.6257,millones_pesos
+2026,2,San Luis,gastos corrientes > transferencias corrientes > al sector externo,0,millones_pesos
+2026,2,San Luis,resultado economico,211342.5048,millones_pesos
+2026,2,San Luis,ingresos de capital,10372.3393,millones_pesos
+2026,2,San Luis,ingresos de capital > recursos propios de capital,24.5066,millones_pesos
+2026,2,San Luis,ingresos de capital > transferencias de capital,0,millones_pesos
+2026,2,San Luis,ingresos de capital > disminucion de la inversion financiera,10347.8327,millones_pesos
+2026,2,San Luis,gastos de capital,97285.3702,millones_pesos
+2026,2,San Luis,gastos de capital > inversion real directa,73864.2753,millones_pesos
+2026,2,San Luis,gastos de capital > transferencias de capital,19283.7338,millones_pesos
+2026,2,San Luis,gastos de capital > transferencias de capital > al sector privado,19001.7338,millones_pesos
+2026,2,San Luis,gastos de capital > transferencias de capital > al sector publico,282,millones_pesos
+2026,2,San Luis,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,San Luis,gastos de capital > inversion financiera,4137.3611,millones_pesos
+2026,2,San Luis,ingresos totales,1048989.5194,millones_pesos
+2026,2,San Luis,gastos totales,924560.0454,millones_pesos
+2026,2,San Luis,gastos primarios,924560.0454,millones_pesos
+2026,2,San Luis,resultado financiero,124429.474,millones_pesos
+2026,2,San Luis,resultado primario,124429.474,millones_pesos
+2026,2,Santa Cruz,ingresos corrientes,1369277.3135,millones_pesos
+2026,2,Santa Cruz,ingresos corrientes > tributarios,787757.9197,millones_pesos
+2026,2,Santa Cruz,ingresos corrientes > tributarios > de origen provincial,234615.9881,millones_pesos
+2026,2,Santa Cruz,ingresos corrientes > tributarios > de origen nacional,553141.9316,millones_pesos
+2026,2,Santa Cruz,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,458953.9313,millones_pesos
+2026,2,Santa Cruz,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,41984.0086,millones_pesos
+2026,2,Santa Cruz,ingresos corrientes > tributarios > sub - total,500937.9399,millones_pesos
+2026,2,Santa Cruz,ingresos corrientes > tributarios > otros de origen nacional,52203.9916,millones_pesos
+2026,2,Santa Cruz,ingresos corrientes > contribuciones a la seguridad social,194975.8374,millones_pesos
+2026,2,Santa Cruz,ingresos corrientes > no tributarios,344593.0134,millones_pesos
+2026,2,Santa Cruz,ingresos corrientes > no tributarios > regalias,248960.4984,millones_pesos
+2026,2,Santa Cruz,ingresos corrientes > no tributarios > otros no tributarios,95632.515,millones_pesos
+2026,2,Santa Cruz,ingresos corrientes > vta.bienes y serv.de la adm.publ.,25703.394,millones_pesos
+2026,2,Santa Cruz,ingresos corrientes > rentas de la propiedad,10189.9129,millones_pesos
+2026,2,Santa Cruz,ingresos corrientes > transferencias corrientes,6057.2362,millones_pesos
+2026,2,Santa Cruz,gastos corrientes,1502250.9976,millones_pesos
+2026,2,Santa Cruz,gastos corrientes > gastos de consumo,784519.4948,millones_pesos
+2026,2,Santa Cruz,gastos corrientes > gastos de consumo > personal,726003.891,millones_pesos
+2026,2,Santa Cruz,gastos corrientes > gastos de consumo > bienes de consumo,8013.1608,millones_pesos
+2026,2,Santa Cruz,gastos corrientes > gastos de consumo > servicios,50502.4429,millones_pesos
+2026,2,Santa Cruz,gastos corrientes > rentas de la propiedad,11234.1903,millones_pesos
+2026,2,Santa Cruz,gastos corrientes > prestaciones de la seguridad social,415916.8513,millones_pesos
+2026,2,Santa Cruz,gastos corrientes > transferencias corrientes,290580.4613,millones_pesos
+2026,2,Santa Cruz,gastos corrientes > transferencias corrientes > al sector privado,48342.9828,millones_pesos
+2026,2,Santa Cruz,gastos corrientes > transferencias corrientes > al sector publico,242237.4784,millones_pesos
+2026,2,Santa Cruz,gastos corrientes > transferencias corrientes > al sector externo,0,millones_pesos
+2026,2,Santa Cruz,resultado economico,-132973.6841,millones_pesos
+2026,2,Santa Cruz,ingresos de capital,2873.7619,millones_pesos
+2026,2,Santa Cruz,ingresos de capital > recursos propios de capital,0,millones_pesos
+2026,2,Santa Cruz,ingresos de capital > transferencias de capital,2241.2031,millones_pesos
+2026,2,Santa Cruz,ingresos de capital > disminucion de la inversion financiera,632.5588,millones_pesos
+2026,2,Santa Cruz,gastos de capital,11268.523,millones_pesos
+2026,2,Santa Cruz,gastos de capital > inversion real directa,7531.9648,millones_pesos
+2026,2,Santa Cruz,gastos de capital > transferencias de capital,3736.5583,millones_pesos
+2026,2,Santa Cruz,gastos de capital > transferencias de capital > al sector privado,0,millones_pesos
+2026,2,Santa Cruz,gastos de capital > transferencias de capital > al sector publico,3736.5583,millones_pesos
+2026,2,Santa Cruz,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,Santa Cruz,gastos de capital > inversion financiera,0,millones_pesos
+2026,2,Santa Cruz,ingresos totales,1372151.0754,millones_pesos
+2026,2,Santa Cruz,gastos totales,1513519.5207,millones_pesos
+2026,2,Santa Cruz,gastos primarios,1502285.3304,millones_pesos
+2026,2,Santa Cruz,resultado financiero,-141368.4452,millones_pesos
+2026,2,Santa Cruz,resultado primario,-130134.255,millones_pesos
+2026,2,Santa Fe,ingresos corrientes,6258606.8576,millones_pesos
+2026,2,Santa Fe,ingresos corrientes > tributarios,4886763.0776,millones_pesos
+2026,2,Santa Fe,ingresos corrientes > tributarios > de origen provincial,1739218.4,millones_pesos
+2026,2,Santa Fe,ingresos corrientes > tributarios > de origen nacional,3147544.6776,millones_pesos
+2026,2,Santa Fe,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,2515866.3409,millones_pesos
+2026,2,Santa Fe,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,370122.1814,millones_pesos
+2026,2,Santa Fe,ingresos corrientes > tributarios > sub - total,2885988.5223,millones_pesos
+2026,2,Santa Fe,ingresos corrientes > tributarios > otros de origen nacional,261556.1552,millones_pesos
+2026,2,Santa Fe,ingresos corrientes > contribuciones a la seguridad social,1080493.33,millones_pesos
+2026,2,Santa Fe,ingresos corrientes > no tributarios,63934.76,millones_pesos
+2026,2,Santa Fe,ingresos corrientes > no tributarios > regalias,0,millones_pesos
+2026,2,Santa Fe,ingresos corrientes > no tributarios > otros no tributarios,63934.76,millones_pesos
+2026,2,Santa Fe,ingresos corrientes > vta.bienes y serv.de la adm.publ.,58553.32,millones_pesos
+2026,2,Santa Fe,ingresos corrientes > rentas de la propiedad,63253.4,millones_pesos
+2026,2,Santa Fe,ingresos corrientes > transferencias corrientes,105608.97,millones_pesos
+2026,2,Santa Fe,gastos corrientes,6271703.66,millones_pesos
+2026,2,Santa Fe,gastos corrientes > gastos de consumo,3544265.81,millones_pesos
+2026,2,Santa Fe,gastos corrientes > gastos de consumo > personal,3089408.39,millones_pesos
+2026,2,Santa Fe,gastos corrientes > gastos de consumo > bienes de consumo,134905.63,millones_pesos
+2026,2,Santa Fe,gastos corrientes > gastos de consumo > servicios,319951.79,millones_pesos
+2026,2,Santa Fe,gastos corrientes > rentas de la propiedad,75176.3,millones_pesos
+2026,2,Santa Fe,gastos corrientes > prestaciones de la seguridad social,1332514.73,millones_pesos
+2026,2,Santa Fe,gastos corrientes > transferencias corrientes,1319746.82,millones_pesos
+2026,2,Santa Fe,gastos corrientes > transferencias corrientes > al sector privado,609825.44,millones_pesos
+2026,2,Santa Fe,gastos corrientes > transferencias corrientes > al sector publico,709921.38,millones_pesos
+2026,2,Santa Fe,gastos corrientes > transferencias corrientes > al sector externo,0,millones_pesos
+2026,2,Santa Fe,resultado economico,-13096.8024,millones_pesos
+2026,2,Santa Fe,ingresos de capital,38793.1538,millones_pesos
+2026,2,Santa Fe,ingresos de capital > recursos propios de capital,15.57,millones_pesos
+2026,2,Santa Fe,ingresos de capital > transferencias de capital,4546.1338,millones_pesos
+2026,2,Santa Fe,ingresos de capital > disminucion de la inversion financiera,34231.45,millones_pesos
+2026,2,Santa Fe,gastos de capital,811747.7,millones_pesos
+2026,2,Santa Fe,gastos de capital > inversion real directa,698665.09,millones_pesos
+2026,2,Santa Fe,gastos de capital > transferencias de capital,106139.95,millones_pesos
+2026,2,Santa Fe,gastos de capital > transferencias de capital > al sector privado,18586.08,millones_pesos
+2026,2,Santa Fe,gastos de capital > transferencias de capital > al sector publico,87553.87,millones_pesos
+2026,2,Santa Fe,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,Santa Fe,gastos de capital > inversion financiera,6942.66,millones_pesos
+2026,2,Santa Fe,ingresos totales,6297400.0113,millones_pesos
+2026,2,Santa Fe,gastos totales,7083451.36,millones_pesos
+2026,2,Santa Fe,gastos primarios,7008275.06,millones_pesos
+2026,2,Santa Fe,resultado financiero,-786051.3487,millones_pesos
+2026,2,Santa Fe,resultado primario,-710875.0487,millones_pesos
+2026,2,Santiago del Estero,ingresos corrientes,1710519.3161,millones_pesos
+2026,2,Santiago del Estero,ingresos corrientes > tributarios,1596523.5161,millones_pesos
+2026,2,Santiago del Estero,ingresos corrientes > tributarios > de origen provincial,159212.3674,millones_pesos
+2026,2,Santiago del Estero,ingresos corrientes > tributarios > de origen nacional,1437311.1488,millones_pesos
+2026,2,Santiago del Estero,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,1124143.2012,millones_pesos
+2026,2,Santiago del Estero,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,184508.6695,millones_pesos
+2026,2,Santiago del Estero,ingresos corrientes > tributarios > sub - total,1308651.8707,millones_pesos
+2026,2,Santiago del Estero,ingresos corrientes > tributarios > otros de origen nacional,128659.278,millones_pesos
+2026,2,Santiago del Estero,ingresos corrientes > contribuciones a la seguridad social,0,millones_pesos
+2026,2,Santiago del Estero,ingresos corrientes > no tributarios,8081.3,millones_pesos
+2026,2,Santiago del Estero,ingresos corrientes > no tributarios > regalias,405.9,millones_pesos
+2026,2,Santiago del Estero,ingresos corrientes > no tributarios > otros no tributarios,7675.4,millones_pesos
+2026,2,Santiago del Estero,ingresos corrientes > vta.bienes y serv.de la adm.publ.,804.1,millones_pesos
+2026,2,Santiago del Estero,ingresos corrientes > rentas de la propiedad,96508,millones_pesos
+2026,2,Santiago del Estero,ingresos corrientes > transferencias corrientes,8602.4,millones_pesos
+2026,2,Santiago del Estero,gastos corrientes,1226406.3571,millones_pesos
+2026,2,Santiago del Estero,gastos corrientes > gastos de consumo,846261.85,millones_pesos
+2026,2,Santiago del Estero,gastos corrientes > gastos de consumo > personal,692129.6,millones_pesos
+2026,2,Santiago del Estero,gastos corrientes > gastos de consumo > bienes de consumo,58919.33,millones_pesos
+2026,2,Santiago del Estero,gastos corrientes > gastos de consumo > servicios,95212.92,millones_pesos
+2026,2,Santiago del Estero,gastos corrientes > rentas de la propiedad,579.3071,millones_pesos
+2026,2,Santiago del Estero,gastos corrientes > prestaciones de la seguridad social,0,millones_pesos
+2026,2,Santiago del Estero,gastos corrientes > transferencias corrientes,379565.2,millones_pesos
+2026,2,Santiago del Estero,gastos corrientes > transferencias corrientes > al sector privado,158635.3,millones_pesos
+2026,2,Santiago del Estero,gastos corrientes > transferencias corrientes > al sector publico,220929.9,millones_pesos
+2026,2,Santiago del Estero,gastos corrientes > transferencias corrientes > al sector externo,0,millones_pesos
+2026,2,Santiago del Estero,resultado economico,484112.9591,millones_pesos
+2026,2,Santiago del Estero,ingresos de capital,9987.16,millones_pesos
+2026,2,Santiago del Estero,ingresos de capital > recursos propios de capital,0,millones_pesos
+2026,2,Santiago del Estero,ingresos de capital > transferencias de capital,9987.16,millones_pesos
+2026,2,Santiago del Estero,ingresos de capital > disminucion de la inversion financiera,0,millones_pesos
+2026,2,Santiago del Estero,gastos de capital,319959.32,millones_pesos
+2026,2,Santiago del Estero,gastos de capital > inversion real directa,253154.72,millones_pesos
+2026,2,Santiago del Estero,gastos de capital > transferencias de capital,47325.6,millones_pesos
+2026,2,Santiago del Estero,gastos de capital > transferencias de capital > al sector privado,8882.8,millones_pesos
+2026,2,Santiago del Estero,gastos de capital > transferencias de capital > al sector publico,38442.8,millones_pesos
+2026,2,Santiago del Estero,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,Santiago del Estero,gastos de capital > inversion financiera,19479,millones_pesos
+2026,2,Santiago del Estero,ingresos totales,1720506.4761,millones_pesos
+2026,2,Santiago del Estero,gastos totales,1546365.6771,millones_pesos
+2026,2,Santiago del Estero,gastos primarios,1545786.37,millones_pesos
+2026,2,Santiago del Estero,resultado financiero,174140.7991,millones_pesos
+2026,2,Santiago del Estero,resultado primario,174720.1061,millones_pesos
+2026,2,Tierra del Fuego,ingresos corrientes,808602.5929,millones_pesos
+2026,2,Tierra del Fuego,ingresos corrientes > tributarios,605302.1489,millones_pesos
+2026,2,Tierra del Fuego,ingresos corrientes > tributarios > de origen provincial,178668.0512,millones_pesos
+2026,2,Tierra del Fuego,ingresos corrientes > tributarios > de origen nacional,426634.0977,millones_pesos
+2026,2,Tierra del Fuego,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,369666.5307,millones_pesos
+2026,2,Tierra del Fuego,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,20992.0043,millones_pesos
+2026,2,Tierra del Fuego,ingresos corrientes > tributarios > sub - total,390658.535,millones_pesos
+2026,2,Tierra del Fuego,ingresos corrientes > tributarios > otros de origen nacional,35975.5627,millones_pesos
+2026,2,Tierra del Fuego,ingresos corrientes > contribuciones a la seguridad social,110524.9272,millones_pesos
+2026,2,Tierra del Fuego,ingresos corrientes > no tributarios,80249.4344,millones_pesos
+2026,2,Tierra del Fuego,ingresos corrientes > no tributarios > regalias,23124.6361,millones_pesos
+2026,2,Tierra del Fuego,ingresos corrientes > no tributarios > otros no tributarios,57124.7982,millones_pesos
+2026,2,Tierra del Fuego,ingresos corrientes > vta.bienes y serv.de la adm.publ.,3990.7374,millones_pesos
+2026,2,Tierra del Fuego,ingresos corrientes > rentas de la propiedad,621.3354,millones_pesos
+2026,2,Tierra del Fuego,ingresos corrientes > transferencias corrientes,7914.0096,millones_pesos
+2026,2,Tierra del Fuego,gastos corrientes,906319.8491,millones_pesos
+2026,2,Tierra del Fuego,gastos corrientes > gastos de consumo,542575.9338,millones_pesos
+2026,2,Tierra del Fuego,gastos corrientes > gastos de consumo > personal,504526.9593,millones_pesos
+2026,2,Tierra del Fuego,gastos corrientes > gastos de consumo > bienes de consumo,13359.5741,millones_pesos
+2026,2,Tierra del Fuego,gastos corrientes > gastos de consumo > servicios,24689.4004,millones_pesos
+2026,2,Tierra del Fuego,gastos corrientes > rentas de la propiedad,9297.3559,millones_pesos
+2026,2,Tierra del Fuego,gastos corrientes > prestaciones de la seguridad social,163528.143,millones_pesos
+2026,2,Tierra del Fuego,gastos corrientes > transferencias corrientes,190918.4164,millones_pesos
+2026,2,Tierra del Fuego,gastos corrientes > transferencias corrientes > al sector privado,63588.4941,millones_pesos
+2026,2,Tierra del Fuego,gastos corrientes > transferencias corrientes > al sector publico,127329.9223,millones_pesos
+2026,2,Tierra del Fuego,gastos corrientes > transferencias corrientes > al sector externo,0,millones_pesos
+2026,2,Tierra del Fuego,resultado economico,-97717.2562,millones_pesos
+2026,2,Tierra del Fuego,ingresos de capital,1447.3677,millones_pesos
+2026,2,Tierra del Fuego,ingresos de capital > recursos propios de capital,227.0276,millones_pesos
+2026,2,Tierra del Fuego,ingresos de capital > transferencias de capital,618.3132,millones_pesos
+2026,2,Tierra del Fuego,ingresos de capital > disminucion de la inversion financiera,602.0268,millones_pesos
+2026,2,Tierra del Fuego,gastos de capital,21266.3264,millones_pesos
+2026,2,Tierra del Fuego,gastos de capital > inversion real directa,10306.3198,millones_pesos
+2026,2,Tierra del Fuego,gastos de capital > transferencias de capital,10741.5783,millones_pesos
+2026,2,Tierra del Fuego,gastos de capital > transferencias de capital > al sector privado,4.2264,millones_pesos
+2026,2,Tierra del Fuego,gastos de capital > transferencias de capital > al sector publico,10737.3518,millones_pesos
+2026,2,Tierra del Fuego,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,Tierra del Fuego,gastos de capital > inversion financiera,218.4284,millones_pesos
+2026,2,Tierra del Fuego,ingresos totales,810049.9606,millones_pesos
+2026,2,Tierra del Fuego,gastos totales,927586.1755,millones_pesos
+2026,2,Tierra del Fuego,gastos primarios,918288.8196,millones_pesos
+2026,2,Tierra del Fuego,resultado financiero,-117536.215,millones_pesos
+2026,2,Tierra del Fuego,resultado primario,-108238.859,millones_pesos
+2026,2,Tucumán,ingresos corrientes,2394956.8499,millones_pesos
+2026,2,Tucumán,ingresos corrientes > tributarios,2323247.69,millones_pesos
+2026,2,Tucumán,ingresos corrientes > tributarios > de origen provincial,640576.164,millones_pesos
+2026,2,Tucumán,ingresos corrientes > tributarios > de origen nacional,1682671.526,millones_pesos
+2026,2,Tucumán,ingresos corrientes > tributarios > distribucion secundaria neta de la ley 26075,1277677.6732,millones_pesos
+2026,2,Tucumán,ingresos corrientes > tributarios > ley de financiamiento educativo nº 26075,229254.784,millones_pesos
+2026,2,Tucumán,ingresos corrientes > tributarios > sub - total,1506932.4572,millones_pesos
+2026,2,Tucumán,ingresos corrientes > tributarios > otros de origen nacional,175739.0688,millones_pesos
+2026,2,Tucumán,ingresos corrientes > contribuciones a la seguridad social,0,millones_pesos
+2026,2,Tucumán,ingresos corrientes > no tributarios,57610.8,millones_pesos
+2026,2,Tucumán,ingresos corrientes > no tributarios > regalias,0,millones_pesos
+2026,2,Tucumán,ingresos corrientes > no tributarios > otros no tributarios,57610.8,millones_pesos
+2026,2,Tucumán,ingresos corrientes > vta.bienes y serv.de la adm.publ.,0,millones_pesos
+2026,2,Tucumán,ingresos corrientes > rentas de la propiedad,415.944,millones_pesos
+2026,2,Tucumán,ingresos corrientes > transferencias corrientes,13682.4159,millones_pesos
+2026,2,Tucumán,gastos corrientes,2519686.1844,millones_pesos
+2026,2,Tucumán,gastos corrientes > gastos de consumo,1655617.718,millones_pesos
+2026,2,Tucumán,gastos corrientes > gastos de consumo > personal,1513208.326,millones_pesos
+2026,2,Tucumán,gastos corrientes > gastos de consumo > bienes de consumo,57396.874,millones_pesos
+2026,2,Tucumán,gastos corrientes > gastos de consumo > servicios,85012.518,millones_pesos
+2026,2,Tucumán,gastos corrientes > rentas de la propiedad,33764.1074,millones_pesos
+2026,2,Tucumán,gastos corrientes > prestaciones de la seguridad social,0,millones_pesos
+2026,2,Tucumán,gastos corrientes > transferencias corrientes,830304.359,millones_pesos
+2026,2,Tucumán,gastos corrientes > transferencias corrientes > al sector privado,225013.122,millones_pesos
+2026,2,Tucumán,gastos corrientes > transferencias corrientes > al sector publico,605291.237,millones_pesos
+2026,2,Tucumán,gastos corrientes > transferencias corrientes > al sector externo,0,millones_pesos
+2026,2,Tucumán,resultado economico,-124729.3345,millones_pesos
+2026,2,Tucumán,ingresos de capital,16174.0451,millones_pesos
+2026,2,Tucumán,ingresos de capital > recursos propios de capital,0,millones_pesos
+2026,2,Tucumán,ingresos de capital > transferencias de capital,13442.1761,millones_pesos
+2026,2,Tucumán,ingresos de capital > disminucion de la inversion financiera,2731.869,millones_pesos
+2026,2,Tucumán,gastos de capital,67825.841,millones_pesos
+2026,2,Tucumán,gastos de capital > inversion real directa,65924.585,millones_pesos
+2026,2,Tucumán,gastos de capital > transferencias de capital,1816.816,millones_pesos
+2026,2,Tucumán,gastos de capital > transferencias de capital > al sector privado,444.583,millones_pesos
+2026,2,Tucumán,gastos de capital > transferencias de capital > al sector publico,1372.233,millones_pesos
+2026,2,Tucumán,gastos de capital > transferencias de capital > al sector externo,0,millones_pesos
+2026,2,Tucumán,gastos de capital > inversion financiera,84.44,millones_pesos
+2026,2,Tucumán,ingresos totales,2411130.895,millones_pesos
+2026,2,Tucumán,gastos totales,2587512.0254,millones_pesos
+2026,2,Tucumán,gastos primarios,2553747.918,millones_pesos
+2026,2,Tucumán,resultado financiero,-176381.1304,millones_pesos
+2026,2,Tucumán,resultado primario,-142617.023,millones_pesos

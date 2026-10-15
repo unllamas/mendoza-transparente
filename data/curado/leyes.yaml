@@ -1,6 +1,37 @@
 # Resúmenes en lenguaje simple de las leyes, hechos con IA a partir del texto oficial (scripts/resumir-leyes.ts).
 # Se pueden corregir a mano: al revisar uno, agregar "revisado: AAAA-MM-DD". Criterios en docs/procesos/metodologia.md.
 
+- numero: "9736"
+  titulo: Irrigación expropia un terreno en Corralitos para tratar efluentes
+  tema: Ambiente y agua
+  resumen: Declara de utilidad pública, es decir, expropiable, un terreno rural cultivado de unas 9 hectáreas en Los Corralitos, Guaymallén. Ahí se armarán humedales artificiales para tratar los efluentes industriales del Colector Pescara. Expropia el Departamento General de Irrigación, que paga los gastos.
+  a_quien: Vecinos de Los Corralitos, industrias que vuelcan al Colector Pescara y el dueño del terreno
+  municipios:
+    - Guaymallén
+  puntos:
+    - El terreno está sobre calle Godoy Cruz, en Los Corralitos, y mide 9,56 ha según el título y 9,30 ha según la mensura.
+    - Se usará para humedales artificiales, es decir, lagunas con plantas que limpian el agua, para tratar los efluentes de las industrias que administra la Inspección Desagües Industriales Colector Pescara.
+    - Quien expropia es el Departamento General de Irrigación, que también paga todos los gastos.
+  no_dice:
+    - Cuánto se pagará al dueño por el terreno.
+    - Cuándo empiezan las obras y cuánto costarán.
+  hecho_con: claude-opus
+  fecha: 2026-10-15
+- numero: "9732"
+  titulo: Las empresas de turismo aventura podrán usar vehículos de apoyo
+  tema: Producción
+  resumen: Las empresas de turismo aventura inscriptas en el registro provincial podrán usar vehículos de apoyo para llevar a sus clientes, el equipo y la logística, pero solo dentro de las zonas habilitadas por el Ente de Turismo (EMETUR).
+  a_quien: Empresas de turismo aventura y quienes contratan sus excursiones
+  municipios: []
+  puntos:
+    - Los vehículos pueden llevar a los clientes, transportar equipos, hacer abastecimiento, asistencia y otras tareas de la actividad.
+    - Solo pueden circular en las zonas o circuitos que habilite el EMETUR; fuera de ellos está prohibido usarlos para la actividad.
+    - Tienen que estar registrados ante la autoridad, con cédula, seguro y revisión técnica al día, y no pueden tener más de 20 años de antigüedad.
+  no_dice:
+    - Qué zonas o circuitos quedan habilitados.
+    - Qué requisitos extra fijará la autoridad para cada tipo de turismo aventura.
+  hecho_con: claude-opus
+  fecha: 2026-10-15
 - numero: "9735"
   titulo: Nuevas reglas para juzgar a adolescentes acusados de delitos
   tema: Seguridad y justicia

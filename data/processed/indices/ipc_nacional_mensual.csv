@@ -355,6 +355,7 @@ anio,mes,indice,variacion_mensual,region,fuente
 2026,6,11826.4103,1.8869,nacional,INDEC IPC nacional (base dic-2016)
 2026,7,12076.3937,2.1138,nacional,INDEC IPC nacional (base dic-2016)
 2026,8,12276.766,1.6592,nacional,INDEC IPC nacional (base dic-2016)
+2026,9,12514.1508,1.9336,nacional,INDEC IPC nacional (base dic-2016)
 2016,12,100,,cuyo,INDEC IPC región Cuyo (base dic-2016)
 2017,1,101.7074,1.7074,cuyo,INDEC IPC región Cuyo (base dic-2016)
 2017,2,103.2652,1.5316,cuyo,INDEC IPC región Cuyo (base dic-2016)
@@ -472,3 +473,4 @@ anio,mes,indice,variacion_mensual,region,fuente
 2026,6,11937.3726,1.5939,cuyo,INDEC IPC región Cuyo (base dic-2016)
 2026,7,12160.2347,1.8669,cuyo,INDEC IPC región Cuyo (base dic-2016)
 2026,8,12360.9149,1.6503,cuyo,INDEC IPC región Cuyo (base dic-2016)
+2026,9,12591.9359,1.869,cuyo,INDEC IPC región Cuyo (base dic-2016)
