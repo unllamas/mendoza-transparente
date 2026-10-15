@@ -555,12 +555,22 @@ async function ocupacion(refresh: boolean, soloParsear: boolean): Promise<void> 
   const source = ID.ocupacion;
   const links = await listFiles(PAGES.ocupacion, /\.(xlsx?|csv)$/i);
   if (!soloParsear) await download(source, links, refresh);
-  const name = links.map(baseName).sort().pop();
-  const wb = name ? await readWorkbook(source, name) : null;
-  if (!wb || !name) {
-    console.warn(`[${source}] no hay libro archivado`);
+  // Since October 2026 the series comes split by period (ocupacion_salarios_2017_2025.xlsx, …), one sheet
+  // per year; before that it was a single workbook. The same page also lists other tables (planta_ocupada,
+  // escalafon_apnf_<year>, …) that this parser does not read.
+  const names = links.map(baseName);
+  const split = names.filter((n) => /^ocupacion_salarios_\d{4}_\d{4}\.xlsx?$/i.test(n)).sort();
+  const single = names
+    .filter((n) => /ocupacion_salarios/i.test(n))
+    .sort()
+    .pop();
+  const books = split.length ? split : single ? [single] : [];
+  const workbooks = (await Promise.all(books.map((n) => readWorkbook(source, n)))).filter((wb) => wb !== null);
+  if (!workbooks.length || workbooks.length !== books.length) {
+    console.warn(`[${source}] faltan libros archivados: ${books.join(", ") || "ninguno en la página"}`);
     return;
   }
+  const sheets = workbooks.flatMap((wb) => wb.SheetNames.map((sheet) => ({ sheet, ws: wb.Sheets[sheet] as XLSX.WorkSheet })));
   const rows: Row[] = [];
   const advertencias: string[] = [];
   const columnas: [RegExp, string, string][] = [
@@ -570,10 +580,10 @@ async function ocupacion(refresh: boolean, soloParsear: boolean): Promise<void> 
     [/cada mil/, "empleados_cada_mil_habitantes", "por_mil_habitantes"],
     [/habitantes/, "habitantes", "personas"],
   ];
-  for (const sheet of wb.SheetNames) {
+  for (const { sheet, ws } of sheets) {
     const anio = Number(sheet);
     if (!Number.isInteger(anio)) continue;
-    const g = grid(wb.Sheets[sheet] as XLSX.WorkSheet);
+    const g = grid(ws);
     const h = g.findIndex((r) => r.some((c) => typeof c === "string" && /^(jurisdicciones|provincias)$/i.test(c.trim())));
     if (h < 0) {
       advertencias.push(`${sheet}: sin encabezado`);
