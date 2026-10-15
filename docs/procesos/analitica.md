@@ -56,6 +56,22 @@ La descripción en español de cada evento vive en `apps/web/src/analytics-catal
 
 Proyecto de PostHog: "Mendoza Transparente" (cuenta propia, separada de cualquier otra organización), con zona horaria de Mendoza, IP descartadas, sin grabación de sesiones y con el tráfico de `localhost` excluido de los gráficos.
 
+## MCP de PostHog
+
+Para consultar PostHog desde el agente se usa el servidor MCP **`posthog-mendoza`**, que se configura en la máquina de cada persona y no en el repo, porque lleva la clave:
+
+```sh
+set -a && . ./.env.posthog && set +a
+claude mcp add --transport http -s user posthog-mendoza https://mcp.posthog.com/mcp \
+  --header "Authorization: Bearer $POSTHOG_PERSONAL_API_KEY" \
+  --header "x-posthog-project-id: $POSTHOG_PROJECT_ID"
+```
+
+- Usa la misma clave personal de `.env.posthog` y queda fijo en el proyecto "Mendoza Transparente": no puede cambiar de proyecto.
+- Va con alcance `user` para que funcione también en los worktrees, que tienen otra ruta. El nombre lo distingue de otros conectores de PostHog que tenga la persona.
+- Cualquier otro conector de PostHog (por ejemplo, uno llamado `posthog` a secas) puede ser de otra organización: **no se usa** para este proyecto. Ante la duda, `project-get` tiene que devolver "Mendoza Transparente".
+- Se aplica al abrir una sesión nueva de Claude Code. Para verificarlo: `claude mcp list | grep posthog-mendoza`.
+
 Resumen de los eventos:
 
 | Evento | Dónde | Propiedades |

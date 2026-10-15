@@ -12,7 +12,7 @@ Fuentes completas: `docs/procesos/web.md` (Publicar), `participacion.md` y `anal
 - **Cloudflare:** token y account id en `.env.cloudflare` (raíz del repo, en `.gitignore`). Se usan con `set -a && . ./.env.cloudflare && set +a` y `curl`/`bun` contra `api.cloudflare.com`, o con `bunx wrangler@4` desde `apps/web`.
 - **PostHog:** clave personal e id del proyecto en `.env.posthog`; `bun run posthog-sync`.
 - **Nunca** imprimir, leer con `cat`/`grep`/`Read` ni commitear esos archivos (un hook lo bloquea). Para verificarlos, contar caracteres.
-- Los conectores (MCP) de la sesión pueden ser de otras organizaciones: **no usarlos** para este proyecto.
+- Los conectores (MCP) de la sesión pueden ser de otras organizaciones: **no usarlos** para este proyecto. La única excepción es `posthog-mendoza`, fijo en el proyecto de PostHog de Mendoza Transparente (ver `docs/procesos/analitica.md`).
 
 ## Publicar
 

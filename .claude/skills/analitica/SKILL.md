@@ -30,7 +30,7 @@ Fuente completa: `docs/procesos/analitica.md`. Código: `apps/web/src/analytics.
 
 - **Configuración de PostHog:** sin cookies (`persistence: "memory"`), sin IP, sin grabación de sesiones. Así no hace falta banner.
 - **Nunca mandar datos personales:** ni correos, ni números de trámite, ni nombres escritos en formularios. Las búsquedas sí (`query`), recortadas a 80 caracteres.
-- **Proyecto propio:** "Mendoza Transparente" (id en `.env.posthog`). El conector de PostHog de la sesión puede ser de otra organización: **no usarlo** para este proyecto.
+- **Proyecto propio:** "Mendoza Transparente" (id en `.env.posthog`). Para consultarlo desde el agente, usar solo el MCP **`posthog-mendoza`** (fijo en este proyecto; cómo se configura en `docs/procesos/analitica.md`). Cualquier otro conector de PostHog puede ser de otra organización: **no usarlo**.
 
 ## Probar
 
