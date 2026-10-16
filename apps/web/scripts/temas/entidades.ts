@@ -22,13 +22,7 @@ import type {
 } from "../../src/types.ts";
 import type { Deflactor } from "./inflacion.ts";
 import { estructurarLey, type ResumenLey, tituloLey } from "./leyes.ts";
-import {
-  buildMunicipalTransparency,
-  bulletinByMunicipality,
-  declarationsByMunicipality,
-  type ExternalIndex,
-  type TransparencySurvey,
-} from "./transparency.ts";
+import { buildMunicipalTransparency, bulletinByMunicipality, declarationsByMunicipality, type TransparencySurvey } from "./transparency.ts";
 
 type CsvRow = Record<string, string>;
 
@@ -95,7 +89,6 @@ export function buildMunicipios(
   funcionarios: FuncionariosTema,
   staffRows: CsvRow[] = [],
   surveys: TransparencySurvey[] = [],
-  indices: ExternalIndex[] = [],
   ethicsOfficials: CsvRow[] = [],
   bulletinNorms: CsvRow[] = [],
 ): MunicipioPagina[] {
@@ -105,7 +98,6 @@ export function buildMunicipios(
   const transparency = buildMunicipalTransparency(
     surveys,
     staff,
-    indices,
     declarationsByMunicipality(ethicsOfficials, names),
     // The survey's day minus a year: every municipality is checked the same day.
     bulletinByMunicipality(bulletinNorms, names, yearBefore(surveys[0]?.fecha_verificacion)),

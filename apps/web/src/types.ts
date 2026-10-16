@@ -389,26 +389,6 @@ export interface MunicipalTransparency {
   average: number;
   searched: string[];
   note: string | null;
-  /** What external indices say about this municipality. */
-  indices: ExternalIndexScore[];
-}
-
-/** A municipality's result in an index made by someone else (data/curado/indices-transparencia.yaml). */
-export interface ExternalIndexScore {
-  id: string;
-  name: string;
-  organization: string;
-  edition: string;
-  /** "sobre 100", "puesto sobre 82"… */
-  scale: string;
-  measures: string;
-  score: number | null;
-  provinceRank: number | null;
-  countryRank: number | null;
-  /** Short clarification shown under it ("Transparencia: 45 de 100"). */
-  detail: string | null;
-  url: string;
-  methodologyUrl: string | null;
 }
 
 export interface MunicipalStaff {

@@ -26,7 +26,7 @@ import { deflactor } from "./temas/inflacion.ts";
 import type { ResumenLey } from "./temas/leyes.ts";
 import { buildPoblacion } from "./temas/poblacion.ts";
 import { buildSenales } from "./temas/senales.ts";
-import type { ExternalIndex, TransparencySurvey } from "./temas/transparency.ts";
+import type { TransparencySurvey } from "./temas/transparency.ts";
 
 const ROOT = join(import.meta.dir, "..", "..", "..");
 const RAW_DIR = join(ROOT, "data", "raw");
@@ -325,7 +325,6 @@ if (copaTema && poblacionTema && funcionariosTema) {
         funcionariosTema,
         readTable("municipios-personal", "personal.csv") ?? [],
         leerCurado<TransparencySurvey>("transparencia-municipal.yaml"),
-        leerCurado<ExternalIndex>("indices-transparencia.yaml"),
         readTable("etica-publica", "funcionarios.csv") ?? [],
         readTable("boletin-oficial", "normas.csv") ?? [],
       ),

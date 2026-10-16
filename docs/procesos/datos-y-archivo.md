@@ -28,7 +28,6 @@ Esto permite que la web enlace a la «copia archivada» de cada fuente y que nad
 |---|---|
 | `no-publicado.yaml` | Datos que el Estado debería publicar y no publica, con organismo responsable, marco legal, dónde se buscó y el texto del pedido por Ley 9070. Tiene lugar para registrar los pedidos presentados y sus respuestas. Cada entrada lleva una `categoria` (personal, estructura, presupuesto, etc., definidas en `apps/web/src/no-publicado-categories.ts`); el build falla si falta o no existe. **Regla:** todo dato que se busca y no se encuentra publicado se registra acá, en el mismo commit en que se descubre. |
 | `transparencia-municipal.yaml` | Qué publica cada municipio de las 9 cosas que le piden las leyes: estado, período del último dato, formato, link y dónde se buscó, con la fecha de verificación. El build falla si a un municipio le falta alguna de las 9. Criterios en [metodología](metodologia.md#transparencia-municipal). |
-| `indices-transparencia.yaml` | Índices de transparencia municipal hechos por otros (Municipios Argentinos, IERAL), copiados de la tabla original con su link. Se muestran al lado del relevamiento propio. |
 | `correcciones.yaml` | Correcciones a funcionarios cuando dos fuentes oficiales no coinciden (por ejemplo, el intendente que figura en el acta de proclamación y el que informa hoy el municipio). Cada corrección explica la diferencia, cita la fuente y lleva fecha de revisión. |
 
 Reglas para editarlos: citar siempre la fuente oficial, no inferir lo que no está publicado y anotar la fecha de revisión.

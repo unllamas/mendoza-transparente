@@ -138,47 +138,6 @@ export function MunicipalTransparencySection({ name, data }: { name: string; dat
         ))}
       </ul>
 
-      {data.indices.length > 0 && (
-        <div className="flex flex-col gap-3">
-          <h3 className="text-headline-semibold">Lo que dicen otros índices</h3>
-          <p className="-mt-1 text-body-regular text-text-tertiary">
-            Miden cosas distintas: los índices suelen mirar si la información aparece en el sitio; esta lista mira si el dato existe, está
-            al día y se puede abrir.
-          </p>
-          <ul className={listVariants()}>
-            {data.indices.map((ix) => (
-              <li key={ix.id}>
-                <a
-                  href={ix.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  data-track="municipality.index.open"
-                  data-track-index={ix.id}
-                  className={cx(listRowVariants(), "gap-4")}
-                >
-                  <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                    <span className="font-medium text-pretty text-text-link">{ix.name}</span>
-                    <span className="text-body-regular text-pretty text-text-tertiary">
-                      {[ix.detail, ix.provinceRank && `puesto ${ix.provinceRank} de 18 en Mendoza`].filter(Boolean).join(" · ")}
-                    </span>
-                    <span className="text-caption-1-regular text-pretty text-text-tertiary">
-                      {ix.organization} · {ix.edition}
-                    </span>
-                  </span>
-                  <span className="flex shrink-0 flex-col items-end gap-0.5">
-                    <span className="font-medium whitespace-nowrap tabular-nums">
-                      {ix.score !== null ? formatNumber(ix.score) : `${ix.countryRank}.º`}
-                    </span>
-                    <span className="text-caption-1-regular whitespace-nowrap text-text-tertiary">{ix.scale}</span>
-                  </span>
-                  <RiArrowRightUpLine className="size-4 shrink-0 text-text-link" aria-hidden />
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
       {open && <ItemSheet item={open} name={name} searched={data.searched} site={data.site} onClose={() => setOpenId(null)} />}
     </Section>
   );

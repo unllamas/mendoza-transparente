@@ -1,17 +1,10 @@
 /**
  * Qué publica cada municipio: el relevamiento a mano de data/curado/transparencia-municipal.yaml,
- * con el anexo de personal que ya bajamos y los índices de data/curado/indices-transparencia.yaml.
+ * con el anexo de personal que ya bajamos y lo que publica la provincia.
  * Criterios (qué cuenta como "al día"): docs/procesos/metodologia.md#transparencia-municipal.
  */
 
-import type {
-  ExternalIndexScore,
-  MunicipalStaff,
-  MunicipalTransparency,
-  TransparencyItem,
-  TransparencyItemId,
-  TransparencyStatus,
-} from "../../src/types.ts";
+import type { MunicipalStaff, MunicipalTransparency, TransparencyItem, TransparencyItemId, TransparencyStatus } from "../../src/types.ts";
 
 export const TRANSPARENCY_ITEMS: TransparencyItemId[] = [
   "presupuesto",
@@ -41,26 +34,6 @@ interface SurveyItem {
   formato?: TransparencyItem["format"] | "";
   url?: string | null;
   nota?: string | null;
-}
-
-/** One index in data/curado/indices-transparencia.yaml. */
-export interface ExternalIndex {
-  id: string;
-  nombre: string;
-  organizacion: string;
-  url: string;
-  metodologia_url?: string | null;
-  edicion: string;
-  escala: string;
-  mide: string;
-  resultados: {
-    municipio: string;
-    puntaje?: number | null;
-    puesto_provincia?: number | null;
-    puesto_pais?: number | null;
-    detalle?: string | null;
-    url?: string | null;
-  }[];
 }
 
 /** What a provincial office publishes for a municipality: how many records and the latest date. */
@@ -182,7 +155,6 @@ function fromProvince(item: TransparencyItem, latest: string, checked: string, u
 export function buildMunicipalTransparency(
   surveys: TransparencySurvey[],
   staff: Map<string, MunicipalStaff>,
-  indices: ExternalIndex[],
   declarations: Map<string, ProvincialRecord> = new Map(),
   bulletin: Map<string, ProvincialRecord> = new Map(),
 ): Map<string, MunicipalTransparency> {
@@ -248,26 +220,6 @@ export function buildMunicipalTransparency(
         average: Math.round(average * 10) / 10,
         searched: s.donde_buscamos ?? [],
         note: s.nota || null,
-        indices: indices.flatMap((ix): ExternalIndexScore[] => {
-          const r = ix.resultados.find((x) => x.municipio === s.municipio);
-          if (!r) return [];
-          return [
-            {
-              id: ix.id,
-              name: ix.nombre,
-              organization: ix.organizacion,
-              edition: String(ix.edicion),
-              scale: ix.escala,
-              measures: ix.mide,
-              score: r.puntaje ?? null,
-              provinceRank: r.puesto_provincia ?? null,
-              countryRank: r.puesto_pais ?? null,
-              detail: r.detalle || null,
-              url: r.url || ix.url,
-              methodologyUrl: ix.metodologia_url || null,
-            },
-          ];
-        }),
       },
     ]),
   );

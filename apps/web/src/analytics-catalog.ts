@@ -158,11 +158,6 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["municipios", "transparencia"],
   },
   {
-    event: "municipality.index.open",
-    description: "Abrió un índice de transparencia hecho por otros (Municipios Argentinos, IERAL) desde un departamento. Propiedad index.",
-    tags: ["municipios", "transparencia"],
-  },
-  {
     event: "municipality.staff_source.open",
     description: "Abrió el anexo de personal publicado por un municipio (Ley de Responsabilidad Fiscal).",
     tags: ["municipios"],
