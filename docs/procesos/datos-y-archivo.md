@@ -32,6 +32,8 @@ El archivo crudo no puede depender de un solo lugar: si el organismo borra un do
 
 **Cómo corre.** El job `archivo-externo` de `.github/workflows/actualizar-datos.yml`, después de cada actualización, con los secretos `IA_ACCESS_KEY` e `IA_SECRET_KEY` (las claves S3 de la cuenta de archive.org, en https://archive.org/account/s3.php). Sin los secretos se saltea. A mano: `bun run archivar`, con las mismas variables en el entorno.
 
+Para cargar o cambiar las claves: se pegan en `.env.archive-org`, en la raíz de la copia de trabajo (no se commitea), y se suben como secretos con `gh secret set -f .env.archive-org`. A mano: `bun --env-file=.env.archive-org run archivar`.
+
 ```bash
 bun run archivar                      # todas las fuentes
 bun run archivar boletin-oficial      # una fuente
