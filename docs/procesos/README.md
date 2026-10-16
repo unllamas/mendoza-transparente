@@ -11,6 +11,7 @@ Cómo se trabaja en Mendoza Transparente, para poder replicarlo, retomarlo o sum
 | [La web](web.md) | Cómo está armada `apps/web`, cómo se suma una página y cómo se verifica |
 | [Diseño](diseno.md) | Reglas de interfaz que no se negocian |
 | [Mejoras de interfaz](mejoras-de-interfaz.md) | Cómo se pide, se entiende, se revisa y se estresa un cambio sobre algo existente |
+| [Relevamiento municipal](relevamiento-municipal.md) | Cómo se revisa cada trimestre qué publica cada uno de los 18 municipios |
 | [Metodología y criterios](metodologia.md) | Cómo se calculan los números y cómo se presentan los hallazgos |
 | [Analítica](analitica.md) | Qué se mide del uso del sitio, cómo se nombran los eventos y cómo se suma uno |
 | [Participación](participacion.md) | Pedidos de información, respuestas, errores y sugerencias: API, base y moderación |

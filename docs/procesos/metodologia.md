@@ -72,8 +72,32 @@ Fuente: el anexo 19 de la Ley de Responsabilidad Fiscal que cada municipio publi
 - **Cada 1.000 habitantes:** (cargos de planta + contratos) ÷ población estimada del departamento × 1.000. El puesto se calcula solo entre los municipios con datos.
 - **Evolución:** una columna por año, con el último trimestre publicado de ese año.
 - **Validación:** permanente más temporaria debe dar el total de planta. Si no cuadra por mucho, el documento se descarta; si no cuadra por poco, entra con una aclaración. Las aclaraciones sobre importes no se muestran, porque la web no publica importes.
-- **Huecos:** cada municipio publica en su formato (PDF, ZIP, planillas, Drive) y varios solo los últimos trimestres. San Martín y Lavalle no lo publican; Godoy Cruz y Las Heras lo cargan en aplicaciones sin archivo descargable. Los cuatro figuran en «Lo que no se publica».
+- **Huecos:** cada municipio publica en su formato (PDF, ZIP, planillas, Drive) y varios solo los últimos trimestres. Godoy Cruz no lo tiene en su listado de anexos (figura en «Lo que no se publica») y Las Heras lo deja bajar desde una aplicación con links que vencen, así que no se puede archivar solo: su página dice que lo publica y que todavía no lo sumamos. Lavalle y San Martín se sumaron en octubre de 2026; de San Martín se archiva solo la hoja del anexo 19, porque su Excel trae todos los anexos y los 22 y 23 tienen datos de contribuyentes.
 - **Ciudad de Mendoza:** además publica una serie mensual (`personal_capital_mensual.csv`), con otra definición. Va aparte y no se mezcla con la trimestral.
+
+## Transparencia municipal
+
+Qué publica cada municipio de lo que las leyes le piden publicar. Relevamiento a mano en `data/curado/transparencia-municipal.yaml`, índices de otros en `data/curado/indices-transparencia.yaml` y cálculo en `apps/web/scripts/temas/transparency.ts`. Se muestra en la página de cada municipio («Qué publica el municipio») y en el mapa de `/municipios` («Qué publica»).
+
+- **Una lista verificable, no un puntaje propio.** Un índice da un número que no dice qué falta. La lista dice, para cada cosa, si la encontramos, de qué período es el último dato y dónde está, y cualquiera puede comprobarlo. No es una nota al municipio: es lo que encontramos el día que lo revisamos.
+- **Las 9 cosas** (marco: Ley 7314 de Responsabilidad Fiscal y Acuerdo 3949 del Tribunal de Cuentas, Ley 9070 de Acceso a la Información Pública y Ley 8993 de Ética Pública): presupuesto del año, ejecución del gasto (anexos 2 a 5), personal y contratos (anexo 19), deuda, compras y licitaciones, decretos y ordenanzas, sueldos de las autoridades, declaraciones juradas y un canal para pedir información.
+- **Estados:** *al día*, *atrasado* (lo publica, pero el último dato es viejo), *lo publica* (sin fecha a la vista), *no se puede leer* (existe pero no se puede descargar ni leer: una aplicación sin archivo, un link roto, un PDF escaneado ilegible) y *no lo publica*. «Publica» cuenta al día, atrasado y lo publica.
+- **Cuándo está al día**, contado desde la fecha de verificación:
+  - Presupuesto: el del año en curso.
+  - Ejecución, personal y deuda: el último trimestre cerrado hace más de 75 días (los anexos salen unos dos meses después del cierre). El 16 de octubre, el 2.º trimestre.
+  - Compras y decretos u ordenanzas: lo más reciente, de los últimos 90 días.
+  - Sueldos de las autoridades: de los últimos 120 días.
+  - Declaraciones juradas: del año en curso o del anterior.
+- **Lo que ya bajamos manda sobre el relevamiento:** el personal sale del anexo 19 que archiva `municipios-personal` (último trimestre y archivo).
+- **Lo que publica la provincia también cuenta, con la aclaración.** Si el municipio no lo tiene al día en su sitio:
+  - Declaraciones juradas: las de la Oficina de Ética Pública (`etica-publica`), que por la Ley 8993 las publica para los funcionarios municipales.
+  - Decretos y ordenanzas: las normas del municipio en el Boletín Oficial (`boletin-oficial`) del último año, con la fecha de la más reciente.
+  - Presupuesto: la ordenanza de presupuesto del año publicada en el Boletín Oficial, si su sumario lo dice explícitamente (se carga a mano en el relevamiento). Un decreto que solo promulga «la ordenanza presupuestaria» sin decir el año no alcanza.
+- **Compras:** cuentan si el municipio muestra la lista de sus compras, en su sitio o con un link directo a su búsqueda en el portal provincial. Remitir al portal de compras de la Provincia en general no alcanza. Si solo publica llamados, sin a quién se adjudicó y por cuánto, cuenta igual, con la aclaración en la nota.
+- **Sin fecha a la vista:** si lo publica en una aplicación con buscador donde no se ve la fecha del último dato, el estado es *lo publica* (cuenta como publicado, no como al día).
+- **Puesto y promedio:** por cantidad de cosas publicadas; los empates comparten puesto.
+- **Índices de otros:** se muestran al lado, con su fecha y su link, y se aclara que miden otra cosa. Cada cifra se copia de la fuente y se verifica a mano. El de Municipios Argentinos mezcla transparencia (50 %) con servicios y seguridad (35 %) y control (15 %): por eso se muestra además su pilar de transparencia. Solo se cargan índices con la tabla original a la vista; los datos que solo aparecen en prensa (por ejemplo, el Índice de Datos Abiertos de Ciudades) quedan afuera hasta conseguirla.
+- **Revisión:** cada municipio lleva su `fecha_verificacion`. Se vuelve a revisar al menos cada trimestre, cuando salen los anexos, y cada vez que un municipio cambia de sitio. Lo que no se encuentra se suma a «Lo que no se publica» si todavía no está.
 
 ## Personal y costo de cada organismo
 

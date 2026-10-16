@@ -22,6 +22,13 @@ import type {
 } from "../../src/types.ts";
 import type { Deflactor } from "./inflacion.ts";
 import { estructurarLey, type ResumenLey, tituloLey } from "./leyes.ts";
+import {
+  buildMunicipalTransparency,
+  bulletinByMunicipality,
+  declarationsByMunicipality,
+  type ExternalIndex,
+  type TransparencySurvey,
+} from "./transparency.ts";
 
 type CsvRow = Record<string, string>;
 
@@ -87,8 +94,22 @@ export function buildMunicipios(
   poblacion: PoblacionTema,
   funcionarios: FuncionariosTema,
   staffRows: CsvRow[] = [],
+  surveys: TransparencySurvey[] = [],
+  indices: ExternalIndex[] = [],
+  ethicsOfficials: CsvRow[] = [],
+  bulletinNorms: CsvRow[] = [],
 ): MunicipioPagina[] {
   const staff = buildMunicipalStaff(staffRows, new Map(poblacion.departamentos.map((d) => [d.municipio, d.actual])));
+  const names = poblacion.departamentos.map((d) => d.municipio);
+  const yearBefore = (d?: string) => (d ? `${Number(String(d).slice(0, 4)) - 1}${String(d).slice(4, 10)}` : "");
+  const transparency = buildMunicipalTransparency(
+    surveys,
+    staff,
+    indices,
+    declarationsByMunicipality(ethicsOfficials, names),
+    // The survey's day minus a year: every municipality is checked the same day.
+    bulletinByMunicipality(bulletinNorms, names, yearBefore(surveys[0]?.fecha_verificacion)),
+  );
   const ranking = [...copa.municipios].sort((a, b) => b.perCapita - a.perCapita);
   const porPoblacion = [...poblacion.departamentos].sort((a, b) => b.actual - a.actual);
   return poblacion.departamentos.map((d) => {
@@ -131,6 +152,7 @@ export function buildMunicipios(
       seccion,
       legisladores,
       staff: staff.get(d.municipio) ?? null,
+      transparency: transparency.get(d.municipio) ?? null,
     };
   });
 }

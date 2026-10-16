@@ -344,6 +344,71 @@ export interface MunicipioPagina {
   legisladores: { id: string; role: string; slug: string; nombre: string; cargo: string; bloque: string | null; foto: string | null }[];
   /** Municipal staff from the Fiscal Responsibility Law, Annex 19 (null when the municipality does not publish it). */
   staff: MunicipalStaff | null;
+  /** What the municipality publishes, checked by hand on its site (data/curado/transparencia-municipal.yaml). */
+  transparency: MunicipalTransparency | null;
+}
+
+/** Key of each thing the law asks a municipality to publish (docs/procesos/metodologia.md#transparencia-municipal). */
+export type TransparencyItemId =
+  | "presupuesto"
+  | "ejecucion"
+  | "personal"
+  | "deuda"
+  | "compras"
+  | "normas"
+  | "sueldos"
+  | "declaraciones_juradas"
+  | "acceso_informacion";
+
+/**
+ * current: published and up to date; late: published but behind; undated: published, but its latest date cannot be
+ * seen (a search app); unreadable: exists but cannot be downloaded or read.
+ */
+export type TransparencyStatus = "current" | "late" | "undated" | "unreadable" | "missing";
+
+export interface TransparencyItem {
+  id: TransparencyItemId;
+  status: TransparencyStatus;
+  /** Period of the latest data (ISO date): a quarter's cut-off, a budget's year, the date of the latest tender. */
+  latest: string | null;
+  format: "planilla" | "pdf" | "pdf_escaneado" | "web" | "zip" | null;
+  url: string | null;
+  note: string | null;
+}
+
+export interface MunicipalTransparency {
+  /** Day the site was checked. */
+  checked: string;
+  site: string | null;
+  items: TransparencyItem[];
+  /** Items published (current, late or undated) and items up to date, out of items.length. */
+  published: number;
+  current: number;
+  /** Place among the 18 by items published (1 = most; ties share it) and the average of the 18. */
+  rank: number;
+  average: number;
+  searched: string[];
+  note: string | null;
+  /** What external indices say about this municipality. */
+  indices: ExternalIndexScore[];
+}
+
+/** A municipality's result in an index made by someone else (data/curado/indices-transparencia.yaml). */
+export interface ExternalIndexScore {
+  id: string;
+  name: string;
+  organization: string;
+  edition: string;
+  /** "sobre 100", "puesto sobre 82"… */
+  scale: string;
+  measures: string;
+  score: number | null;
+  provinceRank: number | null;
+  countryRank: number | null;
+  /** Short clarification shown under it ("Transparencia: 45 de 100"). */
+  detail: string | null;
+  url: string;
+  methodologyUrl: string | null;
 }
 
 export interface MunicipalStaff {

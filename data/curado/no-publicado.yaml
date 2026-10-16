@@ -163,34 +163,71 @@
   pedidos: []
 
 - id: municipios-sin-datos
-  titulo: Las cuentas de San Martín y Lavalle
+  titulo: El presupuesto 2026 de cinco municipios
   categoria: municipios
-  que_es: Presupuesto, ejecución, sueldos y compras de los dos municipios que no publican información fiscal propia.
-  por_que_importa: Son los únicos 2 de los 18 municipios sin un sitio con sus cuentas, como exige la Ley de Responsabilidad Fiscal.
-  organismo: Municipalidades de San Martín y de Lavalle
+  que_es: La ordenanza de presupuesto del año, con cuánto piensa gastar cada municipio y en qué.
+  por_que_importa: Maipú, San Martín, San Carlos, General Alvear y La Paz no lo tienen en su sitio ni encontramos la ordenanza en el Boletín Oficial (de San Martín solo salió el decreto que promulga su ordenanza presupuestaria). Sin el presupuesto no se puede comparar lo que se planeó con lo que se gastó.
+  organismo: Municipalidades de Maipú, San Martín, San Carlos, General Alvear y La Paz
   marco_legal: Ley 7314 de Responsabilidad Fiscal y Ley 9070 de Acceso a la Información Pública
   estado: sin_publicar
   donde_buscamos:
+    - https://www.maipu.gob.ar/responsabilidad-fiscal/
     - https://sanmartinmza.gob.ar
-    - https://lavallemendoza.gob.ar/public/
-  detalle_estado: Tampoco publican el anexo de personal (cargos de planta y contratos), que los otros 14 municipios con datos sí suben a su sitio.
-  pedido: Presupuesto 2026, ejecución presupuestaria de 2024 a la fecha y anexos trimestrales de la Ley de Responsabilidad Fiscal del municipio, incluido el Anexo 19 de personal.
+    - https://sancarlos.gob.ar/responsabilidad-fiscal/
+    - https://alvearmendoza.gob.ar/ley-de-responsabilidad-fiscal/
+    - https://lapazmendoza.gob.ar
+    - https://boe.mendoza.gov.ar/
+  detalle_estado: Revisado el 16 oct 2026. Todos publican la ejecución del gasto (anexos de Responsabilidad Fiscal), pero no el presupuesto aprobado. San Martín y Lavalle, que antes no publicaban nada, hoy suben sus anexos.
+  pedido: La ordenanza de presupuesto 2026 del municipio, con sus planillas de cálculo de recursos y presupuesto de gastos por partida, en formato digital (PDF con texto o planilla).
   pedidos: []
 
 - id: personal-godoy-cruz-las-heras
-  titulo: El personal de Godoy Cruz y Las Heras, en un formato que se pueda leer
+  titulo: El personal de Godoy Cruz, en un archivo que se pueda leer
   categoria: municipios
   que_es: El anexo trimestral con la cantidad de cargos de planta permanente, temporaria y contratos de locación de cada municipio (Anexo 19 de la Ley de Responsabilidad Fiscal).
-  por_que_importa: Sin él no se puede saber cuánta gente trabaja en estos dos municipios ni compararlos con los otros 14 que sí lo publican.
-  organismo: Municipalidades de Godoy Cruz y de Las Heras
+  por_que_importa: Sin él no se puede saber cuánta gente trabaja en el municipio ni compararlo con los otros 17, que sí lo publican.
+  organismo: Municipalidad de Godoy Cruz
   marco_legal: Ley 7314 de Responsabilidad Fiscal y Ley 9070 de Acceso a la Información Pública
   estado: parcial
   donde_buscamos:
     - https://webapps.godoycruz.gob.ar/responsabilidadfiscal
     - https://datos.godoycruz.gob.ar/
-    - https://web6.lasheras.gob.ar/apex
-  detalle_estado: Los dos los cargan en aplicaciones con formularios que no ofrecen un archivo para descargar, así que no se pueden leer ni archivar automáticamente.
+  detalle_estado: Revisado el 16 oct 2026. En el listado de anexos de 2025 y 2026 no está el 19, aunque sí los de ejecución y deuda. Las Heras, que antes lo tenía en una aplicación sin descarga, hoy lo deja bajar en PDF (con links que vencen).
   pedido: Los anexos 19 de personal de 2018 a la fecha en un archivo descargable (PDF o planilla), publicado en el sitio del municipio.
+  pedidos: []
+
+- id: sueldos-autoridades-municipales
+  titulo: Cuánto cobran los intendentes y sus secretarios
+  categoria: municipios
+  que_es: El sueldo bruto mensual del intendente, los secretarios y los directores de cada municipio.
+  por_que_importa: Solo Rivadavia lo publica al día; Capital y Godoy Cruz tienen planillas viejas. Los otros 15 municipios no publican cuánto cobran sus autoridades.
+  organismo: Los 18 municipios de Mendoza
+  marco_legal: Ley 9070 de Acceso a la Información Pública
+  estado: parcial
+  donde_buscamos:
+    - https://rivadaviamendoza.gob.ar/transparencia/
+    - https://datos.ciudaddemendoza.gob.ar/dataset/nomina
+    - https://datos.godoycruz.gob.ar/funcionarios-publicos/
+    - https://www.malargue.gov.ar/gobierno/
+  detalle_estado: Revisado el 16 oct 2026 en los sitios de los 18 municipios (ver «Qué publica» en la página de cada uno).
+  pedido: El sueldo bruto mensual, por cargo, del intendente, los secretarios, subsecretarios y directores del municipio, de enero de 2024 a la fecha, en formato CSV o XLSX.
+  pedidos: []
+
+- id: acceso-informacion-municipal
+  titulo: Un canal para pedir información en cada municipio
+  categoria: municipios
+  que_es: Un formulario, un correo o un área donde cualquier vecino pueda presentar un pedido de acceso a la información pública.
+  por_que_importa: La Ley 9070 obliga a cada municipio a responder, pero San Martín, La Paz, Malargüe, Tupungato, Tunuyán, San Carlos, San Rafael y General Alvear no dicen en su sitio dónde presentar el pedido.
+  organismo: Municipalidades de San Martín, La Paz, Malargüe, Tupungato, Tunuyán, San Carlos, San Rafael y General Alvear
+  marco_legal: Ley 9070 de Acceso a la Información Pública
+  estado: sin_publicar
+  donde_buscamos:
+    - https://www.malargue.gov.ar
+    - https://www.sanrafael.gov.ar/informacion-publica/
+    - https://www.tunuyan.gov.ar
+    - https://tupungato.gov.ar
+  detalle_estado: Revisado el 16 oct 2026.
+  pedido: Que el municipio informe en qué área, por qué medio y con qué plazo se reciben y responden los pedidos de acceso a la información pública, y que lo publique en su sitio.
   pedidos: []
 
 - id: organigrama-completo

@@ -1,6 +1,6 @@
 ---
 name: contenido-y-metodologia
-description: Criterios editoriales y de cálculo de Mendoza Transparente. Cubre señales y no acusaciones, neutralidad, pesos de hoy, cargos y personas, datos personales, contenido curado (no-publicado, correcciones, leyes, jurisdicciones) y resúmenes con IA. Cargar antes de escribir un texto que interprete datos, calcular una cifra, armar una señal o cruce, o editar data/curado.
+description: Criterios editoriales y de cálculo de Mendoza Transparente. Cubre señales y no acusaciones, neutralidad, pesos de hoy, cargos y personas, datos personales, contenido curado (no-publicado, correcciones, leyes, jurisdicciones, qué publica cada municipio) y resúmenes con IA. Cargar antes de escribir un texto que interprete datos, calcular una cifra, armar una señal o cruce, o editar data/curado.
 ---
 
 # Contenido y metodología
@@ -35,6 +35,8 @@ Fuente completa: `docs/procesos/metodologia.md`. Glosario público: `apps/web/sr
 | `no-publicado.yaml` | Datos que el Estado debería publicar | Cada entrada lleva `categoria` (el build falla sin ella), organismo, marco legal, dónde se buscó y el pedido. Todo dato que no se encuentra se suma acá. |
 | `correcciones.yaml` | Cuando dos fuentes oficiales no coinciden | Se explica la diferencia y se cita la fuente. Se muestra como nota visible. |
 | `leyes.yaml` | Resúmenes de leyes en lenguaje simple | Hechos con IA a partir del texto oficial (criterios en `resumir-leyes.ts`). Siempre se presentan como hechos con IA, y revisados (`revisado:`) cuando corresponde. |
+| `transparencia-municipal.yaml` | Qué publica cada municipio (9 cosas) | Una lista verificable, no un puntaje: estado, último dato, link y `fecha_verificacion`. Lo que ya bajamos (anexo 19, declaraciones juradas) manda sobre el relevamiento. Se revisa cada trimestre con el proceso de `docs/procesos/relevamiento-municipal.md`; criterios en `metodologia.md#transparencia-municipal`. |
+| `indices-transparencia.yaml` | Índices de otros (Municipios Argentinos, IERAL) | Copiados de la tabla original con su link; se aclara que miden otra cosa. Nada que solo esté en prensa. |
 | `jurisdicciones.yaml` | Organismos, competencias y equivalencias | Basado en la Ley 9501; las dudas quedan en `nota`. |
 
 ## Resúmenes con IA

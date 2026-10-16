@@ -137,6 +137,32 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["municipios", "leyes"],
   },
   {
+    event: "municipality.transparency.jump",
+    description: "Tocó la tarjeta «Qué publica» de un departamento para bajar a la lista de lo que publica.",
+    tags: ["municipios", "transparencia"],
+  },
+  {
+    event: "municipality.transparency_item.open",
+    description:
+      "Abrió el detalle de una de las cosas que un municipio debería publicar (presupuesto, deuda, compras…). Propiedades item y status.",
+    tags: ["municipios", "transparencia"],
+  },
+  {
+    event: "municipality.transparency_source.open",
+    description: "Abrió en el sitio del municipio el documento de una de las cosas que publica. Propiedad item.",
+    tags: ["municipios", "transparencia"],
+  },
+  {
+    event: "municipality.transparency_request.open",
+    description: "Desde el detalle de algo que un municipio no publica, fue a pedirlo a «Lo que no se publica». Propiedad item.",
+    tags: ["municipios", "transparencia"],
+  },
+  {
+    event: "municipality.index.open",
+    description: "Abrió un índice de transparencia hecho por otros (Municipios Argentinos, IERAL) desde un departamento. Propiedad index.",
+    tags: ["municipios", "transparencia"],
+  },
+  {
     event: "municipality.staff_source.open",
     description: "Abrió el anexo de personal publicado por un municipio (Ley de Responsabilidad Fiscal).",
     tags: ["municipios"],

@@ -91,3 +91,4 @@ Recorre todas las ediciones del rango y archiva sus índices, pero solo baja el 
 - **Mapa** (`bun run scrape geo`): los límites de los departamentos no cambian.
 - **Resúmenes de leyes sin la clave de la API:** `bun run resumir-leyes` con `ANTHROPIC_API_KEY` en el entorno.
 - **Contenido curado** (`data/curado/`): se edita a mano (ver [Datos y archivo](datos-y-archivo.md#contenido-curado)).
+- **Qué publica cada municipio** (`data/curado/transparencia-municipal.yaml`): se vuelve a recorrer el sitio de los 18 municipios cada trimestre, cuando salen los anexos de Responsabilidad Fiscal, con un subagente por grupo de municipios (ver [Relevamiento municipal](relevamiento-municipal.md)). Se actualizan `fecha_verificacion`, estado, último dato y link. El personal y las declaraciones juradas se actualizan solos con sus fuentes.

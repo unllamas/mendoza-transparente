@@ -31,6 +31,7 @@ Las skills del proyecto (`.claude/skills/<nombre>/SKILL.md`) son la puerta de en
 | Probar un componente con datos extremos (nombres largos, listas vacías, sin foto) | `estresar-interfaz` |
 | Agregar un botón, un link, un formulario o una interacción; tocar PostHog | `analitica` |
 | Crear o tocar un scraper; relevar o procesar una fuente | `datos-y-fuentes` |
+| Revisar qué publica cada municipio (`data/curado/transparencia-municipal.yaml`) o sumar un índice de otros | `contenido-y-metodologia` |
 | Escribir un texto que interpreta datos, calcular una cifra o una señal, editar `data/curado` | `contenido-y-metodologia` |
 | Crear una página o un tipo de entidad; títulos, rutas, buscador o previsualizaciones | `seo-y-geo` |
 | Publicar o tocar Cloudflare, D1 o PostHog; diagnosticar el sitio en vivo | `produccion` |

@@ -1,0 +1,155 @@
+# Índices de transparencia municipal hechos por otros, para mostrarlos al lado de lo que relevamos nosotros
+# (data/curado/transparencia-municipal.yaml). Contenido editorial: cada cifra se copia de la fuente y se verifica a mano.
+# Criterios: docs/procesos/metodologia.md#transparencia-municipal.
+#
+# escala: lo que acompaña a la cifra ("sobre 100", "de 82 municipios").
+# resultados[].puntaje: la cifra que se muestra; si el índice se lee por puesto (menor es mejor), va vacío y se muestra puesto_pais.
+# resultados[].detalle: una aclaración corta que se muestra debajo (el pilar de transparencia, el índice crudo).
+
+- id: municipios-argentinos
+  nombre: Municipios Argentinos
+  organizacion: municipiosargentinos.net
+  url: https://municipiosargentinos.net/
+  metodologia_url: https://municipiosargentinos.net/metodologia/
+  edicion: consultado el 16 oct 2026
+  escala: sobre 100
+  mide: >-
+    Junta en un número de 0 a 100 si el municipio publica sus cuentas en su sitio (50 %, con 10 criterios),
+    los servicios y la seguridad del departamento (35 %: agua, cloacas, delitos) y el control externo (15 %).
+    Se recalcula a diario y el sitio no dice qué organización lo hace.
+  resultados:
+    - municipio: Luján de Cuyo
+      puntaje: 59.1
+      puesto_provincia: 1
+      puesto_pais: 48
+      detalle: "Transparencia: 70 de 100"
+      url: https://municipiosargentinos.net/m/mendoza--lujan-de-cuyo/
+    - municipio: Rivadavia
+      puntaje: 54.3
+      puesto_provincia: 2
+      puesto_pais: 70
+      detalle: "Transparencia: 65 de 100"
+      url: https://municipiosargentinos.net/m/mendoza--rivadavia/
+    - municipio: Malargüe
+      puntaje: 50.3
+      puesto_provincia: 3
+      puesto_pais: 95
+      detalle: "Transparencia: 45 de 100"
+      url: https://municipiosargentinos.net/m/mendoza--malargue/
+    - municipio: San Rafael
+      puntaje: 47.6
+      puesto_provincia: 4
+      puesto_pais: 119
+      detalle: "Transparencia: 45 de 100"
+      url: https://municipiosargentinos.net/m/mendoza--san-rafael/
+    - municipio: Lavalle
+      puntaje: 45.7
+      puesto_provincia: 5
+      puesto_pais: 133
+      detalle: "Transparencia: 55 de 100"
+      url: https://municipiosargentinos.net/m/mendoza--lavalle/
+    - municipio: Godoy Cruz
+      puntaje: 45.4
+      puesto_provincia: 6
+      puesto_pais: 135
+      detalle: "Transparencia: 65 de 100"
+      url: https://municipiosargentinos.net/m/mendoza--godoy-cruz/
+    - municipio: Tupungato
+      puntaje: 39.9
+      puesto_provincia: 7
+      puesto_pais: 169
+      detalle: "Transparencia: 40 de 100"
+      url: https://municipiosargentinos.net/m/mendoza--tupungato/
+    - municipio: General Alvear
+      puntaje: 38.8
+      puesto_provincia: 8
+      puesto_pais: 234
+      detalle: "Transparencia: 30 de 100"
+      url: https://municipiosargentinos.net/m/mendoza--general-alvear/
+    - municipio: San Martín
+      puntaje: 38.2
+      puesto_provincia: 9
+      puesto_pais: 253
+      detalle: "Transparencia: 30 de 100"
+      url: https://municipiosargentinos.net/m/mendoza--san-martin/
+    - municipio: San Carlos
+      puntaje: 37.1
+      puesto_provincia: 10
+      puesto_pais: 297
+      detalle: "Transparencia: 30 de 100"
+      url: https://municipiosargentinos.net/m/mendoza--san-carlos/
+    - municipio: Junín
+      puntaje: 36.8
+      puesto_provincia: 11
+      puesto_pais: 321
+      detalle: "Transparencia: 30 de 100"
+      url: https://municipiosargentinos.net/m/mendoza--junin/
+    - municipio: La Paz
+      puntaje: 35.5
+      puesto_provincia: 12
+      puesto_pais: 358
+      detalle: "Transparencia: 20 de 100"
+      url: https://municipiosargentinos.net/m/mendoza--la-paz/
+    - municipio: Santa Rosa
+      puntaje: 34.8
+      puesto_provincia: 13
+      puesto_pais: 392
+      detalle: "Transparencia: 30 de 100"
+      url: https://municipiosargentinos.net/m/mendoza--santa-rosa/
+    - municipio: Maipú
+      puntaje: 34.7
+      puesto_provincia: 14
+      puesto_pais: 394
+      detalle: "Transparencia: 30 de 100"
+      url: https://municipiosargentinos.net/m/mendoza--maipu/
+    - municipio: Capital
+      puntaje: 34.3
+      puesto_provincia: 15
+      puesto_pais: 400
+      detalle: "Transparencia: 50 de 100"
+      url: https://municipiosargentinos.net/m/mendoza--mendoza/
+    - municipio: Tunuyán
+      puntaje: 33.3
+      puesto_provincia: 16
+      puesto_pais: 427
+      detalle: "Transparencia: 35 de 100"
+      url: https://municipiosargentinos.net/m/mendoza--tunuyan/
+    - municipio: Guaymallén
+      puntaje: 27.8
+      puesto_provincia: 17
+      puesto_pais: 712
+      detalle: "Transparencia: 25 de 100"
+      url: https://municipiosargentinos.net/m/mendoza--guaymallen/
+    - municipio: Las Heras
+      puntaje: 7.7
+      puesto_provincia: 18
+      puesto_pais: 1884
+      detalle: "Transparencia: 0 de 100"
+      url: https://municipiosargentinos.net/m/mendoza--las-heras/
+
+- id: ieral-transparencia
+  nombre: Transparencia en municipios de Argentina 2024
+  organizacion: IERAL (Fundación Mediterránea)
+  url: https://www.ieral.org/images_db/noticias_archivos/4841-Transparencia%202024.pdf
+  metodologia_url: https://www.ieral.org/images_db/noticias_archivos/4841-Transparencia%202024.pdf
+  edicion: "2024"
+  escala: de 82 municipios
+  mide: >-
+    Cuánta información publican en su sitio los 82 municipios más poblados del país, con 52 indicadores
+    (autoridades, presupuesto, compras, rendición de cuentas, participación). Solo mide 5 municipios de Mendoza.
+  resultados:
+    - municipio: Capital
+      puesto_pais: 7
+      detalle: "Índice 33 (0 es el mejor)"
+    - municipio: Godoy Cruz
+      puesto_pais: 8
+      detalle: "Índice 36 (0 es el mejor)"
+    - municipio: Guaymallén
+      puesto_pais: 9
+      detalle: "Índice 37 (0 es el mejor)"
+    - municipio: Las Heras
+      puesto_pais: 62
+      detalle: "Índice 75 (0 es el mejor)"
+    - municipio: Maipú
+      puesto_pais: 67
+      detalle: "Índice 78 (0 es el mejor)"

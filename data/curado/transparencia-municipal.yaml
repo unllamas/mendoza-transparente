@@ -1,0 +1,1042 @@
+# Qué publica cada municipio de las 9 cosas que le piden las leyes. Contenido editorial, revisado a mano.
+# Criterios: docs/procesos/metodologia.md#transparencia-municipal. Cómo se actualiza: docs/procesos/relevamiento-municipal.md.
+#
+# estado: publica | no_accesible (existe pero no se puede descargar ni leer) | no_publica
+# ultimo_dato: período del dato más reciente (fin del trimestre, 1 de enero del año del presupuesto, fecha de la última licitación)
+# formato: planilla | pdf | pdf_escaneado | web | zip
+# El personal y las declaraciones juradas se completan solos con municipios-personal y etica-publica.
+
+- municipio: Capital
+  fecha_verificacion: 2026-10-16
+  sitio: https://ciudaddemendoza.gob.ar
+  items:
+    presupuesto:
+      estado: publica
+      ultimo_dato: 2026-01-01
+      formato: pdf
+      url: https://ciudaddemendoza.gob.ar/presupuestaria-tarifaria/
+      nota: Ordenanza de Presupuesto 4223, subida en diciembre de 2025.
+    ejecucion:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://ciudaddemendoza.gob.ar/responsabilidad-fiscal/
+      nota: Anexos 2, 2 bis, 3 y 4 del 2.º trimestre 2026. También hay ejecución de gastos y recursos 2025 en planilla en el portal de datos.
+    personal:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/12-ANEXO-19-DETALLE-DE-LA-PLANTA-DE-PERSONAL-Y-CONTRATOS-DE-LOCACION.pdf
+    deuda:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/6-ANEXO-5-EVOLUCION-DE-LA-DEUDA-PUBLICA-CONSOLIDADA-ACUMULADA-AL-FIN-DEL-TRIMESTRE.pdf
+      nota: También publica el anexo 6 (deuda flotante).
+    compras:
+      estado: publica
+      ultimo_dato: 2026-08-31
+      formato: web
+      url: https://ciudaddemendoza.gob.ar/licitaciones-publicas/
+      nota: "La página lista llamados con pliegos y circulares, sin adjudicación. Las compras con proveedor y monto están en planilla en el portal de datos, pero solo hasta junio de 2024: https://datos.ciudaddemendoza.gob.ar/dataset/compras"
+    normas:
+      estado: publica
+      formato: web
+      url: http://apex.ciudaddemendoza.gov.ar/apex/produccion/f?p=204:3005
+      nota: Digesto municipal con buscador (aplicación APEX). No se pudo ver la norma más reciente sin usar el buscador.
+    sueldos:
+      estado: publica
+      ultimo_dato: 2023-06-30
+      formato: planilla
+      url: https://datos.ciudaddemendoza.gob.ar/dataset/nomina
+      nota: La última planilla con montos es de junio de 2023. La nómina de julio de 2025 no trae sueldos y la escala salarial va en porcentajes del sueldo del intendente.
+    declaraciones_juradas:
+      estado: publica
+      ultimo_dato: 2024-12-31
+      formato: planilla
+      url: https://datos.ciudaddemendoza.gob.ar/dataset/ddjj-funcionarios-ejecutivo-2019-2023
+      nota: Planilla de funcionarios del Ejecutivo y del Concejo llamada 2024, más enlace al buscador provincial de Ética Pública. El año de la última declaración se tomó del nombre del archivo.
+    acceso_informacion:
+      estado: publica
+      formato: web
+      url: https://gobiernoabierto.ciudaddemendoza.gob.ar/informacion-publica.html
+      nota: Formulario en línea, versión impresa y funcionario garante de la Ley 9070.
+  donde_buscamos:
+    - https://ciudaddemendoza.gob.ar/responsabilidad-fiscal/
+    - https://ciudaddemendoza.gob.ar/presupuestaria-tarifaria/
+    - https://ciudaddemendoza.gob.ar/licitaciones-publicas/
+    - https://ciudaddemendoza.gob.ar/area-municipal/informacion-fiscal/
+    - https://ciudaddemendoza.gob.ar/honorable-concejo-deliberante/
+    - https://gobiernoabierto.ciudaddemendoza.gob.ar/index.html
+    - https://datos.ciudaddemendoza.gob.ar
+  nota: El portal de datos CKAN tiene 180 conjuntos; los de sueldos, DDJJ y compras no tienen datos posteriores a 2025.
+- municipio: General Alvear
+  fecha_verificacion: 2026-10-16
+  sitio: https://alvearmendoza.gob.ar
+  items:
+    presupuesto:
+      estado: no_publica
+      nota: No hay ordenanza ni planillas de presupuesto; solo la programación financiera 2025 dentro de la LRF (https://alvearmendoza.gob.ar/resp-fiscal/archivos-4t-2024/anexo1-programacion-financiera-2025.pdf). Sí hay ordenanza tarifaria.
+    ejecucion:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://alvearmendoza.gob.ar/ley-de-responsabilidad-fiscal/
+      nota: Anexos 2, 2 bis, 3 y 4 en PDF del 2.º trimestre 2026 (ej. https://alvearmendoza.gob.ar/resp-fiscal/archivos2t-2026/anexo2.pdf). Hay trimestres desde 2016.
+    personal:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://alvearmendoza.gob.ar/resp-fiscal/archivos2t-2026/anexo19.pdf
+      nota: PDF con texto del 2.º trimestre 2026.
+    deuda:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://alvearmendoza.gob.ar/resp-fiscal/archivos2t-2026/anexo5.pdf
+      nota: PDF con texto del 2.º trimestre 2026.
+    compras:
+      estado: no_publica
+      url: https://sitios.mendoza.gob.ar/haciendayfinanzas/contrataciones-publicas/
+      nota: El menú LICITACIONES manda al portal de contrataciones de la Provincia, no a llamados propios del municipio.
+    normas:
+      estado: no_publica
+      nota: No encontramos ordenanzas, decretos, boletín ni enlace al Concejo Deliberante; solo la ordenanza tarifaria.
+    sueldos:
+      estado: no_publica
+      url: https://alvearmendoza.gob.ar/funcionarios/
+      nota: Lista funcionarios y contactos, sin sueldos.
+    declaraciones_juradas:
+      estado: no_publica
+    acceso_informacion:
+      estado: no_publica
+      nota: Hay una página de contacto general, sin canal específico para pedidos de información pública.
+  donde_buscamos:
+    - https://alvearmendoza.gob.ar/
+    - https://alvearmendoza.gob.ar/ley-de-responsabilidad-fiscal/
+    - https://alvearmendoza.gob.ar/ordenanza-tarifaria/
+    - https://alvearmendoza.gob.ar/funcionarios/
+    - https://alvearmendoza.gob.ar/contacto/
+    - https://munidigital.com/citizenv2/generalalvear/informacion
+  nota: No pudimos leer la página de munidigital (aplicación sin contenido sin JavaScript). La búsqueda web no encontró presupuesto municipal en el sitio.
+- municipio: Godoy Cruz
+  fecha_verificacion: 2026-10-16
+  sitio: https://www.godoycruz.gob.ar
+  items:
+    presupuesto:
+      estado: publica
+      ultimo_dato: 2026-01-01
+      formato: web
+      url: https://boe.mendoza.gov.ar/
+      nota: Salió en el Boletín Oficial de la provincia (Ordenanza 7498, Boletín 32.481 del 20 nov 2025). En el sitio del municipio el último es el de 2025.
+    ejecucion:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://webapps.godoycruz.gob.ar/responsabilidadfiscal/servlet/com.responsabilidadfiscalnuevo.veranexos
+      nota: "Aplicación con filtro por año y trimestre. El 2.º trimestre 2026 trae los anexos 2, 2 bis, 3 y 4 (cargados el 24/08/2026). El gasto público detallado en planilla llega a 2025: https://datos.godoycruz.gob.ar/gasto-publico/"
+    personal:
+      estado: no_publica
+      url: https://webapps.godoycruz.gob.ar/responsabilidadfiscal/servlet/com.responsabilidadfiscalnuevo.veranexos
+      nota: En el listado de anexos de Responsabilidad Fiscal de 2025 y 2026 no está el anexo 19.
+    deuda:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://webapps.godoycruz.gob.ar/responsabilidadfiscal/servlet/com.responsabilidadfiscalnuevo.veranexos
+      nota: Anexos 5 (deuda consolidada) y 6 (deuda flotante) del 2.º trimestre 2026. Se bajan con el botón Descargar de la aplicación; no hay enlace directo al archivo.
+    compras:
+      estado: publica
+      formato: web
+      url: https://datos.godoycruz.gob.ar/compras-y-contrataciones/
+      nota: Tablero de Tableau con todas las licitaciones y compras, actualización mensual (última 15/10/2026). No se pudo leer el tablero ni confirmar si muestra adjudicatario y monto. La consulta de compras vigentes (https://webapps.godoycruz.gob.ar/consultacompras/index) no mostraba publicaciones el 16/10/2026.
+    normas:
+      estado: publica
+      formato: web
+      url: https://webapps.godoycruz.gob.ar/leyes/index
+      nota: Digesto con buscador, y listado de ordenanzas por año hasta 2025 en https://datos.godoycruz.gob.ar/ordenanzas/. No se pudo ver la norma más reciente.
+    sueldos:
+      estado: publica
+      ultimo_dato: 2025-06-30
+      formato: planilla
+      url: https://datos.godoycruz.gob.ar/funcionarios-publicos/
+      nota: Planilla de sueldos netos de funcionarios, de junio de 2025. Se publica cada seis meses.
+    declaraciones_juradas:
+      estado: publica
+      formato: web
+      url: https://www.godoycruz.gob.ar/transparencia-godoy-cruz/declaraciones-juradas-patrimoniales/
+      nota: La página municipal muestra declaraciones de 2016 a 2018 y remite al buscador provincial de Ética Pública (https://eticapublica.mendoza.gov.ar/welcome/declaraciones) para las actuales; no se consultó ese buscador.
+    acceso_informacion:
+      estado: publica
+      formato: web
+      url: https://www.godoycruz.gob.ar/transparencia-godoy-cruz/acceso-la-informacion-publica/
+      nota: Formulario en línea o presencial en el CAU, con funcionario garante. Además hay estadísticas de pedidos en https://datos.godoycruz.gob.ar/aip/
+  donde_buscamos:
+    - https://datos.godoycruz.gob.ar
+    - https://www.godoycruz.gob.ar/transparencia-godoy-cruz/
+    - https://www.godoycruz.gob.ar/transparencia-godoy-cruz/presupuestos-godoy-cruz/
+    - https://webapps.godoycruz.gob.ar/responsabilidadfiscal/servlet/com.responsabilidadfiscalnuevo.veranexos
+    - https://webapps.godoycruz.gob.ar/consultacompras/index
+    - https://www.godoycruz.gob.ar/compras-y-licitaciones/
+  nota: Los datos están repartidos en un portal de datos, aplicaciones y la web principal. El servidor de webapps tiene un certificado que algunos clientes no reconocen.
+- municipio: Guaymallén
+  fecha_verificacion: 2026-10-16
+  sitio: https://www.guaymallen.gob.ar
+  items:
+    presupuesto:
+      estado: publica
+      ultimo_dato: 2026-01-01
+      formato: pdf
+      url: https://www.guaymallen.gob.ar/wp-content/uploads/2026/02/ORDENANZA-PRESUPUESTO-2026.pdf
+    ejecucion:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://www.guaymallen.gob.ar/segundo-trimestre-2026/
+      nota: Anexos 2, 2 bis, 3 y 4 del 2.º trimestre 2026.
+    personal:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo19.pdf
+      nota: Es un cuadro resumen de cargos e importes por tipo de planta; no lista personas.
+    deuda:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo5.pdf
+      nota: También publica el anexo 6.
+    compras:
+      estado: no_publica
+      url: https://www.guaymallen.gob.ar/registro-de-proveedores-compras/
+      nota: Remite al portal de compras de la Provincia; el municipio no tiene un listado propio de sus compras.
+    normas:
+      estado: publica
+      formato: web
+      url: https://cdguaymallen.gob.ar/digesto
+      nota: Digesto del Concejo Deliberante con buscador. No se pudo ver la norma más reciente sin usar el buscador.
+    sueldos:
+      estado: no_publica
+      url: https://www.guaymallen.gob.ar/wp-content/uploads/2024/10/NOMINA-DE-FUNCIONARIOS-2024-Municipalidad-de-Guaymallen.pdf
+      nota: La nómina de funcionarios (agosto de 2024) trae cargo, perfil y contacto, sin sueldos.
+    declaraciones_juradas:
+      estado: publica
+      formato: web
+      url: https://www.guaymallen.gob.ar/category/transparencia/
+      nota: La sección Transparencia solo enlaza al buscador provincial de Ética Pública (https://eticapublica.mendoza.gov.ar/). No se consultó ese buscador.
+    acceso_informacion:
+      estado: publica
+      formato: web
+      url: https://ticketsform.mendoza.gov.ar/ticketsform/servlet/com.tickets.responderformulario?AIP_SOLICITUDINFORMACIONPUBLICA
+      nota: Formulario provincial enlazado desde la sección Transparencia, junto con el texto de la Ley 9070.
+  donde_buscamos:
+    - https://www.guaymallen.gob.ar/category/transparencia/
+    - https://www.guaymallen.gob.ar/ley-de-responsabilidad-fiscal/
+    - https://www.guaymallen.gob.ar/segundo-trimestre-2026/
+    - https://www.guaymallen.gob.ar/registro-de-proveedores-compras/
+    - https://cdguaymallen.gob.ar/digesto
+    - https://www.guaymallen.gob.ar/
+  nota: La sección Transparencia es sobre todo informes anuales de gestión por área.
+- municipio: Junín
+  fecha_verificacion: 2026-10-16
+  sitio: https://www.juninmendoza.gov.ar
+  items:
+    presupuesto:
+      estado: publica
+      ultimo_dato: 2026-01-01
+      formato: pdf
+      url: https://hcdjunin.gob.ar/digesto/pdfs/ordenanzas/2025/Ord251021_Presupuesto_26.pdf
+      nota: Ordenanza 1021/2025 del Concejo (26/12/2025) con el cálculo de recursos y presupuesto de gastos 2026. Está en el digesto del Concejo, no en la sección de transparencia del municipio.
+    ejecucion:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://www.juninmendoza.gov.ar/?page_id=425
+      nota: Anexos 1 a 30 en PDF. La página no rotula el trimestre; se deduce que es el 2.º de 2026 porque el 1.º ya figura en 'Trimestres anteriores' y el Concejo aprobó el 2.º el 20/08/2026.
+    personal:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://www.juninmendoza.gov.ar/fiscal011/Anexo_19.pdf
+      nota: Trimestre deducido igual que en ejecución.
+    deuda:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://www.juninmendoza.gov.ar/fiscal011/Anexo_5.pdf
+      nota: Anexo 5 (deuda consolidada) y anexo 6 (flotante). Trimestre deducido igual que en ejecución.
+    compras:
+      estado: publica
+      ultimo_dato: 2026-10-27
+      formato: zip
+      url: https://www.juninmendoza.gov.ar/licitaciones-2026/
+      nota: Tabla con fecha de apertura, detalle y ZIP por expediente; la fecha más reciente es una apertura futura. No se abrieron los ZIP, así que no se verificó si incluyen adjudicación.
+    normas:
+      estado: publica
+      ultimo_dato: 2026-09-03
+      formato: pdf
+      url: https://hcdjunin.gob.ar/digesto/
+      nota: Digesto del Concejo con ordenanzas, resoluciones y declaraciones en PDF (6.222 documentos); la última ordenanza listada es la 1052 del 03/09/2026.
+    sueldos:
+      estado: no_publica
+      url: https://www.juninmendoza.gov.ar/?page_id=47
+      nota: La página de autoridades lista nombres y cargos, sin sueldos.
+    declaraciones_juradas:
+      estado: no_publica
+      nota: No se encontró sección en el sitio municipal.
+    acceso_informacion:
+      estado: publica
+      formato: web
+      url: https://www.juninmendoza.gov.ar/acceso-a-la-informacion-publica/
+      nota: Formulario web, atención presencial y funcionario garante nombrado.
+  donde_buscamos:
+    - https://www.juninmendoza.gov.ar/transparencia/
+    - https://www.juninmendoza.gov.ar/?page_id=425
+    - https://www.juninmendoza.gov.ar/?page_id=212273
+    - https://www.juninmendoza.gov.ar/licitaciones-2026/
+    - https://www.juninmendoza.gov.ar/?page_id=47
+    - https://hcdjunin.gob.ar/digesto/
+  nota: No hay una sección de presupuesto ni de sueldos en el sitio del Ejecutivo; el presupuesto 2026 se encontró buscando en el digesto del Concejo.
+- municipio: La Paz
+  fecha_verificacion: 2026-10-16
+  sitio: https://lapazmendoza.gob.ar
+  items:
+    presupuesto:
+      estado: no_publica
+      nota: El sitio es una sola página con la información legal (LRF) y las licitaciones; no hay presupuesto.
+    ejecucion:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://lapazmendoza.gob.ar
+      nota: Anexos II a VI del 2.º trimestre 2026 en PDF, en la sección 'Información legal' de la portada.
+    personal:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://lapazmendoza.gob.ar/Documentos/Informaci%C3%B3n%20publica/2026/02_SEGUNDO%20TRIMESTRE/anexo%2019%20%20acuerdo%203949%20%282do%20trimestre%202026%29.pdf
+    deuda:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://lapazmendoza.gob.ar/Documentos/Informaci%C3%B3n%20publica/2026/02_SEGUNDO%20TRIMESTRE/Anexo%20V%20-%20Evolucion%20de%20la%20deuda%20publica%20consolidada%20acumulada%20al%20fin%20del%20trimestre.pdf
+      nota: Anexo V y anexo VI (deuda flotante).
+    compras:
+      estado: publica
+      ultimo_dato: 2026-07-17
+      formato: pdf
+      url: https://lapazmendoza.gob.ar
+      nota: Pliegos de licitación pública numerados 1 a 21 (sin el 20); la 21 (combustible, apertura 17/07/2026) es la última. Solo pliegos, sin adjudicación ni compras directas.
+    normas:
+      estado: no_publica
+      nota: No se encontró boletín, digesto ni ordenanzas.
+    sueldos:
+      estado: no_publica
+    declaraciones_juradas:
+      estado: no_publica
+    acceso_informacion:
+      estado: no_publica
+      nota: No se vio formulario, mail ni área de acceso a la información en la portada.
+  donde_buscamos:
+    - https://lapazmendoza.gob.ar
+  nota: El sitio es una página única; no tiene menú ni secciones separadas. Búsquedas web (presupuesto, ordenanzas) no devolvieron nada del sitio oficial.
+- municipio: Las Heras
+  fecha_verificacion: 2026-10-16
+  sitio: https://lasheras.gob.ar
+  items:
+    presupuesto:
+      estado: publica
+      ultimo_dato: 2026-01-01
+      formato: pdf
+      url: https://lasheras.gob.ar/wp-content/uploads/2026/03/Anteproyecto-Presupuesto-2026.pdf
+      nota: El archivo se llama Anteproyecto de Presupuesto 2026; no se encontró la ordenanza sancionada en esa página.
+    ejecucion:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://web6.lasheras.gob.ar/apex/f?p=127:32
+      nota: "Anexos 2, 2 bis, 3 y 4 hasta el 2.º trimestre 2026. Además hay ejecución mensual en PDF hasta 06/2026: https://web6.lasheras.gob.ar/apex/f?p=127:42"
+    personal:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://web6.lasheras.gob.ar/apex/f?p=127:32
+      nota: "Se descarga como PDF desde la lista de anexos. Los links de descarga vencen: hay que entrar por la página de la lista."
+    deuda:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://web6.lasheras.gob.ar/apex/f?p=127:32
+      nota: "Anexo 5 del 2.º trimestre 2026. Además hay un informe de deuda mensual a 06/2026: https://web6.lasheras.gob.ar/apex/f?p=127:41"
+    compras:
+      estado: publica
+      ultimo_dato: 2026-10-23
+      formato: web
+      url: https://web6.lasheras.gob.ar/apex/f?p=105:22
+      nota: Buscador de licitaciones; por defecto muestra solo las vigentes (la más lejana abre el 23/10/2026). Solo se vieron llamados con pliego, sin adjudicación.
+    normas:
+      estado: publica
+      ultimo_dato: 2026-08-20
+      formato: web
+      url: https://web6.lasheras.gob.ar/apex/f?p=109:32
+      nota: Digesto con ordenanzas; la más reciente a la vista fue sancionada el 20/08/2026 (cargada el 09/10/2026).
+    sueldos:
+      estado: no_publica
+      url: https://lasheras.gob.ar/autoridades/
+      nota: La página de autoridades tiene la biografía del intendente y no muestra sueldos.
+    declaraciones_juradas:
+      estado: publica
+      formato: web
+      url: https://eticapublica.mendoza.gov.ar/welcome/declaraciones
+      nota: El portal de transparencia solo enlaza al buscador provincial de Ética Pública; no se consultó.
+    acceso_informacion:
+      estado: publica
+      formato: web
+      url: https://ticketsform.mendoza.gov.ar/ticketsform/servlet/responderformulario?AIP_SOLICITUDINFORMACIONPUBLICA
+      nota: Formulario en línea enlazado desde https://lasheras.gob.ar/transparencia/
+  donde_buscamos:
+    - https://lasheras.gob.ar/transparencia/
+    - https://web6.lasheras.gob.ar/apex/f?p=127:32
+    - https://web6.lasheras.gob.ar/apex/f?p=127:42
+    - https://web6.lasheras.gob.ar/apex/f?p=127:41
+    - https://web6.lasheras.gob.ar/apex/f?p=105:22
+    - https://web6.lasheras.gob.ar/apex/f?p=109:32
+    - https://lasheras.gob.ar/autoridades/
+    - https://lasheras.gob.ar/portal-de-proveedores/
+  nota: "Las listas están en Oracle APEX y se cargan con JavaScript: no se ven con una descarga simple de la página."
+- municipio: Lavalle
+  fecha_verificacion: 2026-10-16
+  sitio: https://lavallemendoza.gob.ar/public/
+  items:
+    presupuesto:
+      estado: publica
+      ultimo_dato: 2026-01-01
+      formato: planilla
+      url: https://lavallemendoza.gob.ar/public/transparencia/presupuesto/presupuesto-listado/
+      nota: Presupuesto 2026 en CSV y PDF (Ordenanza 1283/2026), más ejecución mensual hasta mayo 2026.
+    ejecucion:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://lavallemendoza.gob.ar/old/acuerdo3949
+      nota: Anexos 2 a 6 del 2.º trimestre 2026. Hay que elegir el período en un menú; los PDF están en /old/pdf/acuerdo3949/.
+    personal:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://lavallemendoza.gob.ar/old/pdf/acuerdo3949/Anexo%2019(2026-2).pdf
+    deuda:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://lavallemendoza.gob.ar/old/pdf/acuerdo3949/Anexo%205(2026-2).pdf
+      nota: Anexo 5 (deuda pública consolidada) y anexo 6 (deuda flotante).
+    compras:
+      estado: publica
+      ultimo_dato: 2026-10-15
+      formato: web
+      url: https://lavallemendoza.gob.ar/public/transparencia/licitaciones/
+      nota: Solo llamados con pliego en ZIP (fecha de apertura más reciente listada); no se vio adjudicación. La tabla se carga desde https://lavallemendoza.gob.ar/public/licitaciones.php.
+    normas:
+      estado: publica
+      ultimo_dato: 2026-04-21
+      formato: zip
+      url: https://lavallemendoza.gob.ar/public/transparencia/presupuesto/digesto-municipal/
+      nota: Ordenanzas por año en ZIP de PDF; la última del ZIP 2026 (N.º 1291) es del 21/04/2026. El ZIP se subió en mayo de 2026.
+    sueldos:
+      estado: no_publica
+      url: https://lavallemendoza.gob.ar/public/transparencia/equipo-de-gestion/
+      nota: El equipo de gestión muestra cargos y biografías, sin sueldos.
+    declaraciones_juradas:
+      estado: no_publica
+      nota: No se encontró sección en el sitio municipal.
+    acceso_informacion:
+      estado: publica
+      formato: web
+      url: https://lavallemendoza.gob.ar/public/transparencia/informacion-publica/
+      nota: Trámite presencial en Ventanilla Única con formulario descargable (Ordenanza 1129/20); no hay formulario en línea.
+  donde_buscamos:
+    - https://lavallemendoza.gob.ar/public/
+    - https://lavallemendoza.gob.ar/public/transparencia-4/
+    - https://lavallemendoza.gob.ar/public/transparencia/presupuesto/
+    - https://lavallemendoza.gob.ar/public/transparencia/equipo-de-gestion/
+    - https://lavallemendoza.gob.ar/public/concejo-deliberante/
+  nota: El sitio nuevo funciona en /public/ (el dominio raíz redirige ahí). La sección de ejecución sigue en una aplicación vieja (/old/).
+- municipio: Luján de Cuyo
+  fecha_verificacion: 2026-10-16
+  sitio: https://lujandecuyo.gob.ar
+  items:
+    presupuesto:
+      estado: publica
+      ultimo_dato: 2026-01-01
+      formato: web
+      url: https://boe.mendoza.gov.ar/
+      nota: Salió en el Boletín Oficial de la provincia (Ordenanza 15094, Boletín 32.499 del 19 dic 2025). En el sitio del municipio el último es el de 2025.
+    ejecucion:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://lujandecuyo.gob.ar/responsabilidad-fiscal/
+      nota: Anexos 2, 2 bis, 3 y 4 en Google Drive. La página no rotula el trimestre; el anexo 5 y el 19 que se abrieron dicen ejercicio 2026, trimestre 2.
+    personal:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://lujandecuyo.gob.ar/responsabilidad-fiscal/
+      nota: Anexo 19 en Google Drive, ejercicio 2026, trimestre 2 (se abrió el archivo).
+    deuda:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://lujandecuyo.gob.ar/responsabilidad-fiscal/
+      nota: Anexos 5 y 6 en Google Drive; el 5 dice ejercicio 2026, trimestre 2.
+    compras:
+      estado: publica
+      ultimo_dato: 2026-10-30
+      formato: web
+      url: https://lujandecuyo.gob.ar/compras_licitaciones/
+      nota: Tablero de procesos con pestañas de próximos e históricos; el llamado más lejano abre el 30/10/2026. Dice adoptar el estándar de datos de contrataciones abiertas (OCDS), pero no se verificó que muestre adjudicatario y monto.
+    normas:
+      estado: publica
+      formato: web
+      url: https://lujandecuyo.gob.ar/ordenanzas-municipales/
+      nota: Digesto municipal. En el portal de datos hay listados de ordenanzas de 2016 a 2025. No se pudo ver la norma más reciente.
+    sueldos:
+      estado: no_publica
+      url: https://lujandecuyo.gob.ar/equipogestion/
+      nota: El equipo de gestión lista nombres y mails, sin sueldos.
+    declaraciones_juradas:
+      estado: publica
+      formato: web
+      url: https://eticapublica.mendoza.gov.ar/
+      nota: La sección Transparencia solo enlaza a la Oficina de Ética Pública de la Provincia; no se consultó.
+    acceso_informacion:
+      estado: publica
+      formato: web
+      url: https://lujandecuyo.gob.ar/informacionpublica/
+      nota: Formulario en línea para pedir información y otro para recursos por incumplimiento.
+  donde_buscamos:
+    - https://datos.lujandecuyo.gob.ar
+    - https://lujandecuyo.gob.ar/transparencia/
+    - https://lujandecuyo.gob.ar/presupuestoyrendiciondecuentas/
+    - https://lujandecuyo.gob.ar/responsabilidad-fiscal/
+    - https://lujandecuyo.gob.ar/compras_licitaciones/
+    - https://licitaciones.lujandecuyo.gob.ar/index.php/licitaciones-compras
+    - https://lujandecuyo.gob.ar/equipogestion/
+    - https://lujandecuyo.gob.ar/concejo-deliberante/
+  nota: El portal de datos es una aplicación que carga con JavaScript.
+- municipio: Maipú
+  fecha_verificacion: 2026-10-16
+  sitio: https://www.maipu.gob.ar
+  items:
+    presupuesto:
+      estado: no_publica
+      url: https://www.maipu.gob.ar/responsabilidad-fiscal/
+      nota: No se encontró la ordenanza de presupuesto ni planillas en el sitio. La prensa dice que el presupuesto 2026 se envió al Concejo. Los anexos I y II de la LRF son programación y ejecución, no el presupuesto.
+    ejecucion:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://www.maipu.gob.ar/responsabilidad-fiscal/
+      nota: Anexos I, II, II bis, III y IV subidos en agosto de 2026 (2.º trimestre), enlazados desde la tabla de la página.
+    personal:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://www.maipu.gob.ar/wp-content/uploads/2026/08/Anexo-XIX-Acuerdo-3949.pdf
+      nota: El PDF dice ejercicio 2026 pero el número de trimestre no se lee en el texto; se deduce del mes de subida.
+    deuda:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://www.maipu.gob.ar/wp-content/uploads/2026/08/Anexo-V-Acuerdo-3949.pdf
+      nota: También publica el anexo VI. Trimestre deducido del mes de subida (agosto de 2026).
+    compras:
+      estado: publica
+      ultimo_dato: 2026-10-30
+      formato: web
+      url: https://www.maipu.gob.ar/compras-y-licitaciones/
+      nota: Listas de licitaciones públicas, privadas y compras directas con pliegos y aclaratorias. La más lejana abre el 30/10/2026. No aparece ninguna adjudicación.
+    normas:
+      estado: no_publica
+      url: https://www.hcdmaipu.gob.ar/digesto.php
+      nota: El digesto del Concejo dice que estaba en preparación para ponerse en línea durante 2025 y no muestra normas. El sitio municipal tiene algunos PDF de ordenanzas viejas.
+    sueldos:
+      estado: no_publica
+      url: https://www.maipu.gob.ar/transparencia/institucional/intendente-y-gabinete/
+      nota: La página de intendente y gabinete no muestra sueldos.
+    declaraciones_juradas:
+      estado: publica
+      formato: web
+      url: https://eticapublica.mendoza.gov.ar/welcome/declaraciones
+      nota: El sitio municipal solo enlaza al buscador provincial de Ética Pública (desde Transparencia Activa); no se consultó.
+    acceso_informacion:
+      estado: publica
+      formato: web
+      url: https://www.maipu.gob.ar/datos-abiertos/
+      nota: Oficina de Acceso a la Información Pública (Ordenanza 7439), con horario, dirección y mail; funcionarios garantes en la página de responsabilidad fiscal.
+  donde_buscamos:
+    - https://www.maipu.gob.ar/transparencia/
+    - https://www.maipu.gob.ar/responsabilidad-fiscal/
+    - https://www.maipu.gob.ar/compras-y-licitaciones/
+    - https://www.maipu.gob.ar/datos-abiertos/
+    - https://www.maipu.gob.ar/datos-abiertos-2/
+    - https://www.maipu.gob.ar/transparencia/institucional/intendente-y-gabinete/
+    - https://www.hcdmaipu.gob.ar/digesto.php
+    - https://www.hcdmaipu.gob.ar/diario-sesiones.php
+  nota: Los anexos de informes escritos y de morosidad están en responsabilidadfiscal.maipu.gob.ar, cuya raíz devuelve 403; no se abrieron los archivos.
+- municipio: Malargüe
+  fecha_verificacion: 2026-10-16
+  sitio: https://www.malargue.gov.ar
+  items:
+    presupuesto:
+      estado: publica
+      ultimo_dato: 2026-01-01
+      formato: pdf
+      url: https://www.malargue.gov.ar/presupuesto-anual/
+      nota: "Presupuesto 2026 aprobado (PDF subido en junio de 2026: https://www.malargue.gov.ar/wp-content/uploads/2026/06/Presupuesto-2026-aprobado-Municipalidad-de-Malargüe-2.pdf), más el de 2025 con ordenanza 2319/2025 y presentación."
+    ejecucion:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://www.malargue.gov.ar/responsabilidad-fiscal-2-trimestre-2026/
+      nota: Anexos 2, 2 bis, 3 y 4 en PDF del 2.º trimestre 2026; hay una página por trimestre desde el 2.º de 2024, listadas en https://www.malargue.gov.ar/legales/.
+    personal:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://www.malargue.gov.ar/wp-content/uploads/2026/08/Anexo-19-Detalle-de-la-planta-de-personal-y-contratos-de-locacion.-Importes-liquidados-acumulados-al-fin-del-trimestre.pdf
+      nota: "PDF con texto legible: 2.º trimestre 2026, municipio más SEOS."
+    deuda:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://www.malargue.gov.ar/wp-content/uploads/2026/08/Anexo-5-Evolucion-de-la-deuda-publica-consolidada-acumulada-al-fin-del-trimestre-1.pdf
+      nota: Anexo 5 (deuda consolidada) del 2.º trimestre 2026; también publican el anexo 6 de deuda flotante. Confirmamos que el archivo responde, pero no leímos su contenido.
+    compras:
+      estado: publica
+      ultimo_dato: 2026-10-09
+      formato: web
+      url: https://www.malargue.gov.ar/licitaciones/
+      nota: Solo llamados (objeto, expediente y fecha de apertura, con pliegos); no vimos adjudicaciones. La fecha es la publicación del llamado más reciente (expediente 4922/2026, apertura 16 de octubre de 2026). Los convenios marco están aparte en https://www.malargue.gov.ar/convenio-marco/ (últimos del 7 de octubre de 2026).
+    normas:
+      estado: publica
+      ultimo_dato: 2026-09-25
+      formato: web
+      url: https://hcd.malargue.gov.ar/?cat=48
+      nota: Las ordenanzas las publica el Concejo Deliberante en su sitio (la última, la 2.399/2026). No encontramos un boletín con los decretos del intendente.
+    sueldos:
+      estado: no_publica
+      url: https://www.malargue.gov.ar/gobierno/
+      nota: La página de gobierno nombra al intendente (Celso Jaque, período 2023-2027) y tres secretarios, sin sueldos. El sistema de bono de sueldo es solo para empleados.
+    declaraciones_juradas:
+      estado: no_publica
+      nota: El buscador interno del sitio no devolvió nada sobre declaraciones juradas.
+    acceso_informacion:
+      estado: no_publica
+      nota: No hay formulario ni área de acceso a la información pública; solo teléfono y domicilio de la municipalidad.
+  donde_buscamos:
+    - https://www.malargue.gov.ar/
+    - https://www.malargue.gov.ar/presupuesto-anual/
+    - https://www.malargue.gov.ar/legales/
+    - https://www.malargue.gov.ar/responsabilidad-fiscal-2-trimestre-2026/
+    - https://www.malargue.gov.ar/licitaciones/
+    - https://www.malargue.gov.ar/convenio-marco/
+    - https://www.malargue.gov.ar/gobierno/
+    - https://www.malargue.gov.ar/comunicados-municipales/
+    - https://www.malargue.gov.ar/transparencia/
+    - https://www.malargue.gov.ar/sueldos/
+    - https://hcd.malargue.gov.ar/
+  nota: Los dos últimos enlaces dan 404. El sistema Infogov que enlaza el sitio es para tasas y bonos de sueldo, no para compras.
+- municipio: Rivadavia
+  fecha_verificacion: 2026-10-16
+  sitio: https://rivadaviamendoza.gob.ar/transparencia/
+  items:
+    presupuesto:
+      estado: publica
+      ultimo_dato: 2025-01-01
+      formato: pdf
+      url: https://rivadaviamendoza.gob.ar/transparencia/?page_id=8567
+      nota: El más reciente es 'Presupuesto2025-2028'; no hay uno rotulado 2026.
+    ejecucion:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://rivadaviamendoza.gob.ar/transparencia/?p=11219
+      nota: Anexos 1 a 34 del 2.º trimestre 2026 (publicado el 01/09/2026). También hay balance anual (2025) y balance mensual.
+    personal:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://rivadaviamendoza.gob.ar/transparencia/descargas/descargas_Municipio/2026-LRF/2026-2Trimestre-Anexo19.pdf
+      nota: Además hay una nómina mensual de personal hasta agosto 2026.
+    deuda:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://rivadaviamendoza.gob.ar/transparencia/descargas/descargas_Municipio/2026-LRF/2026-2Trimestre-Anexo05.pdf
+      nota: Anexo 5 y anexo 6 del 2.º trimestre 2026.
+    compras:
+      estado: publica
+      ultimo_dato: 2026-10-14
+      formato: web
+      url: https://rivadaviamendoza.gob.ar/transparencia/?page_id=9949
+      nota: Solo llamados (licitaciones y compras directas) con pliego en ZIP del portal provincial; fecha de publicación de la más reciente. No se vio adjudicación.
+    normas:
+      estado: publica
+      ultimo_dato: 2026-07-31
+      formato: pdf
+      url: https://rivadaviamendoza.gob.ar/transparencia/?page_id=8594
+      nota: Son resoluciones mensuales (julio 2026 la última); no se encontró digesto de ordenanzas ni boletín.
+    sueldos:
+      estado: publica
+      ultimo_dato: 2026-08-31
+      formato: pdf
+      url: https://rivadaviamendoza.gob.ar/transparencia/?page_id=8744
+      nota: Escalas salariales de autoridades, una por mes, hasta agosto 2026.
+    declaraciones_juradas:
+      estado: no_accesible
+      formato: web
+      url: https://eticapublica.mendoza.gov.ar/welcome/declaraciones
+      nota: El sitio solo enlaza al portal provincial de Ética Pública (aplicación web); no se pudo verificar si incluye a los funcionarios municipales.
+    acceso_informacion:
+      estado: publica
+      formato: web
+      url: https://ticketsform.mendoza.gov.ar/ticketsform/servlet/responderformulario?AIP_SOLICITUDINFORMACIONPUBLICA
+      nota: Formulario en línea de la provincia, enlazado desde la sección de transparencia del municipio, que también enlaza al formulario de recurso por incumplimiento.
+  donde_buscamos:
+    - https://rivadaviamendoza.gob.ar/transparencia/
+    - https://rivadaviamendoza.gob.ar/transparencia/?page_id=8440
+    - https://rivadaviamendoza.gob.ar/transparencia/?page_id=8567
+    - https://rivadaviamendoza.gob.ar/transparencia/?page_id=8621
+    - https://rivadaviamendoza.gob.ar/transparencia/?page_id=8698
+    - https://rivadaviamendoza.gob.ar/transparencia/?page_id=8744
+    - https://rivadaviamendoza.gob.ar/transparencia/?page_id=9949
+    - https://rivadaviamendoza.gob.ar/transparencia/?page_id=8594
+- municipio: San Carlos
+  fecha_verificacion: 2026-10-16
+  sitio: https://sancarlos.gob.ar
+  items:
+    presupuesto:
+      estado: no_publica
+      nota: No hay sección de presupuesto ni ordenanza de presupuesto en el sitio; el menú solo tiene noticias, mapas, trámites, licitaciones y responsabilidad fiscal.
+    ejecucion:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: zip
+      url: https://sancarlos.gob.ar/responsabilidad-fiscal/
+      nota: ZIP del 2.º trimestre 2026 con anexos 2, 2 bis, 3 y 4 como páginas HTML guardadas, más PDF y XLS. Hay trimestres desde 2016.
+    personal:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: zip
+      url: https://sancarlos.gob.ar/wp-content/uploads/2026/08/Responsabilidad-Fiscal-2°-Trimestre-2026.zip
+      nota: Anexo 19 en XLS dentro del ZIP del 2.º trimestre 2026.
+    deuda:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: zip
+      url: https://sancarlos.gob.ar/wp-content/uploads/2026/08/Responsabilidad-Fiscal-2°-Trimestre-2026.zip
+      nota: Anexo 5 en XLS dentro del ZIP del 2.º trimestre 2026.
+    compras:
+      estado: publica
+      ultimo_dato: 2026-10-20
+      formato: web
+      url: https://sancarlos.gob.ar/licitaciones-msc/
+      nota: Solo llamados con objeto, apertura, expediente y estado; todos figuran como Vigente y no vimos adjudicaciones. La fecha es la apertura más próxima cargada (licitación 59/26). Hay años 2023 a 2026.
+    normas:
+      estado: no_publica
+      nota: No encontramos ordenanzas, decretos ni boletín ni enlace al Concejo Deliberante.
+    sueldos:
+      estado: no_publica
+    declaraciones_juradas:
+      estado: no_publica
+    acceso_informacion:
+      estado: no_publica
+      nota: Hay un sistema de trámites (SayGes) pero no un canal declarado para pedidos de información pública.
+  donde_buscamos:
+    - https://sancarlos.gob.ar/
+    - https://sancarlos.gob.ar/responsabilidad-fiscal/
+    - https://sancarlos.gob.ar/licitaciones-msc/
+    - https://sancarlos.gob.ar/tramites/
+    - https://sancarlos.gob.ar/wp-json/wp/v2/search?search=presupuesto
+  nota: El buscador interno del sitio no devolvió nada sobre sueldos, declaraciones juradas ni ordenanzas.
+- municipio: San Martín
+  fecha_verificacion: 2026-10-16
+  sitio: https://sanmartinmza.gob.ar
+  items:
+    presupuesto:
+      estado: no_publica
+      nota: La sección Transparencia no lista ordenanza ni planillas de presupuesto; solo hay un PDF de ejecución de 2021 y la tarifaria.
+    ejecucion:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: planilla
+      url: https://web.sanmartinmza.gob.ar/hacienda/ley_resp_26_2.xlsx
+      nota: Un Excel por trimestre con todos los anexos de la LRF (hojas ANEXO 1 a 30); listado en https://web.sanmartinmza.gob.ar/hacienda/responsabilidad.html.
+    personal:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: planilla
+      url: https://web.sanmartinmza.gob.ar/hacienda/ley_resp_26_2.xlsx
+      nota: Hoja ANEXO 19 del Excel del 2.º trimestre 2026.
+    deuda:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: planilla
+      url: https://web.sanmartinmza.gob.ar/hacienda/ley_resp_26_2.xlsx
+      nota: Hojas ANEXO 5 y ANEXO 6 del mismo Excel.
+    compras:
+      estado: publica
+      formato: web
+      url: https://sanmartinmza.gob.ar/licitaciones/
+      nota: Remite al buscador provincial de licitaciones (comprasapps.mendoza.gov.ar) con el CUC 614; el buscador permite filtrar por estado adjudicada, pero no se pudo consultar la fecha de la más reciente.
+    normas:
+      estado: no_publica
+      url: https://sanmartinmza.gob.ar/concejo-deliberante.html
+      nota: La página del Concejo solo lista concejales y mails; hay una lista corta de ordenanzas de uso frecuente (tarifaria, código tributario, código de edificación), sin digesto ni boletín.
+    sueldos:
+      estado: no_publica
+      nota: Las páginas de autoridades no muestran sueldos.
+    declaraciones_juradas:
+      estado: no_accesible
+      formato: web
+      url: https://eticapublica.mendoza.gov.ar/
+      nota: La sección Transparencia solo enlaza al portal provincial de Ética Pública (aplicación web); no se pudo verificar si incluye a los funcionarios municipales.
+    acceso_informacion:
+      estado: no_publica
+      url: https://sanmartinmza.gob.ar/index.html%3Fp=6239.html
+      nota: La sección 'Solicitud de información' solo contiene el texto de la Ley 9070, sin formulario, mail ni área responsable.
+  donde_buscamos:
+    - https://sanmartinmza.gob.ar/
+    - https://sanmartinmza.gob.ar/index.html%3Fp=6294.html
+    - https://web.sanmartinmza.gob.ar/hacienda/responsabilidad.html
+    - https://sanmartinmza.gob.ar/index.html%3Fp=6795.html
+    - https://sanmartinmza.gob.ar/concejo-deliberante.html
+    - https://sanmartinmza.gob.ar/index.html%3Fp=6239.html
+  nota: El pie de la portada tiene enlaces de spam de casinos (Chicken Road, casinos noruegos) con URL vacía; no se siguieron. Los datos de LRF vienen de un subdominio aparte (web.sanmartinmza.gob.ar), sin señales de spam.
+- municipio: San Rafael
+  fecha_verificacion: 2026-10-16
+  sitio: https://www.sanrafael.gov.ar
+  items:
+    presupuesto:
+      estado: publica
+      ultimo_dato: 2026-01-01
+      formato: pdf
+      url: https://www.sanrafael.gov.ar/presupuestos
+      nota: PDF de 2026 en https://www.sanrafael.gov.ar/archivos-muni/presupuesto/presupuesto2026.pdf; pesa unos 137 MB. Hay años de 2014 a 2026.
+    ejecucion:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://www.sanrafael.gov.ar/ley-resp-fiscal/ley-de-responsabilidad-fiscal-2026
+      nota: Anexos 2, 2 bis, 3 y 4 en PDF, y algunos en XLS, del 2.º trimestre 2026. Hay páginas por año desde 2013.
+    personal:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://www.sanrafael.gov.ar/archivos-muni/fiscal/2026_2t/anexo19.pdf
+      nota: PDF con texto del 2.º trimestre 2026.
+    deuda:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://www.sanrafael.gov.ar/archivos-muni/fiscal/2026_2t/anexo5.pdf
+      nota: PDF con texto del 2.º trimestre 2026; el anexo 6 (deuda flotante) también está.
+    compras:
+      estado: no_publica
+      url: https://www.sanrafael.gov.ar/informacion-publica/licitaciones-2/
+      nota: La página de licitaciones solo manda al portal provincial Mendoza Compra (https://www.mendoza.gov.ar/compras/mendoza-compra/); el municipio no lista llamados ni adjudicaciones propios.
+    normas:
+      estado: publica
+      formato: web
+      url: http://138.97.177.58:8082/InvitadoDigesto/Queries/Documents
+      nota: Digesto del Concejo Deliberante, enlazado desde el inicio, en una dirección IP sin https; es una consulta que no pudimos recorrer, así que no sabemos la fecha de la norma más reciente.
+    sueldos:
+      estado: no_publica
+      nota: Las páginas de intendencia y secretarías no muestran sueldos.
+    declaraciones_juradas:
+      estado: publica
+      formato: web
+      url: https://eticapublica.mendoza.gov.ar/welcome/declaraciones?buscar_nombre=&buscar_apellido=&distribution_id=66
+      nota: El sitio enlaza al portal provincial Ética Pública filtrado por San Rafael. El listado carga con JavaScript y no pudimos leerlo, así que no sabemos el año más reciente ni qué cargos incluye.
+    acceso_informacion:
+      estado: no_publica
+      nota: Hay una opción Consultar Expediente, que es de trámites, no un canal de pedido de información pública.
+  donde_buscamos:
+    - https://www.sanrafael.gov.ar/informacion-publica/
+    - https://www.sanrafael.gov.ar/presupuestos
+    - https://www.sanrafael.gov.ar/ley-resp-fiscal
+    - https://www.sanrafael.gov.ar/informacion-publica/licitaciones-2/
+    - https://www.sanrafael.gov.ar/intendencia/
+    - https://www.sanrafael.gov.ar/secretarias/
+    - https://www.sanrafael.gov.ar/
+  nota: El enlace de LRF usa XLS, DOC y PDF; los anexos principales están en PDF.
+- municipio: Santa Rosa
+  fecha_verificacion: 2026-10-16
+  sitio: https://santarosamendoza.gob.ar
+  items:
+    presupuesto:
+      estado: publica
+      ultimo_dato: 2026-01-01
+      formato: web
+      url: https://boe.mendoza.gov.ar/
+      nota: Salió en el Boletín Oficial de la provincia (Ordenanza 35, Boletín 32.510 del 7 ene 2026). En el sitio del municipio no está.
+    ejecucion:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://sites.google.com/site/municipalidadsantarosamendoza/segundo-2026
+      nota: Anexos 2 a 6 del 2.º trimestre 2026 como PDF en Google Drive, listados en un Google Site.
+    personal:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://drive.google.com/file/d/1OWJXS0wvGutPPVpd5dcKndSx972NBpIt/view?usp=sharing
+      nota: Anexo 19 del 2.º trimestre 2026 (la descarga directa funciona).
+    deuda:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://drive.google.com/file/d/1b3QDyo6iwsEj1rd1w86cBpeRK2n7Ikmc/view?usp=sharing
+      nota: Anexo 5 (y anexo 6 de deuda flotante) del 2.º trimestre 2026.
+    compras:
+      estado: publica
+      ultimo_dato: 2026-10-14
+      formato: web
+      url: https://santarosamendoza.gob.ar/informacionpublica/
+      nota: Solo llamados (licitaciones y contrataciones directas) con presupuesto oficial y fecha de apertura; no hay adjudicaciones. La más reciente es la licitación 10/2026 (apertura el 19/10/2026), publicada el 14/10/2026.
+    normas:
+      estado: no_publica
+      nota: No se encontró boletín, digesto ni sitio del Concejo Deliberante.
+    sueldos:
+      estado: no_publica
+      url: https://santarosamendoza.gob.ar/autoridades/
+      nota: La página de autoridades no muestra sueldos.
+    declaraciones_juradas:
+      estado: no_publica
+      nota: No se encontró sección en el sitio municipal.
+    acceso_informacion:
+      estado: publica
+      formato: web
+      url: https://santarosamendoza.gob.ar/informacionpublica/
+      nota: Enlaza al formulario provincial de solicitud y nombra al funcionario garante (Decreto 1.712/2022).
+  donde_buscamos:
+    - https://santarosamendoza.gob.ar/informacionpublica/
+    - https://santarosamendoza.gob.ar/autoridades/
+    - https://santarosamendoza.gob.ar/page-sitemap.xml
+    - https://sites.google.com/site/municipalidadsantarosamendoza/
+    - https://santarosamendoza.gob.ar/municipalidad-de-santa-rosa-llama-a-licitacion-13/
+  nota: La página de información pública mostraba licitaciones hasta 2025 en su copia vista, pero la portada y las entradas nuevas llegan hasta el 14/10/2026.
+- municipio: Tunuyán
+  fecha_verificacion: 2026-10-16
+  sitio: https://www.tunuyan.gov.ar
+  items:
+    presupuesto:
+      estado: publica
+      ultimo_dato: 2026-01-01
+      formato: pdf
+      url: https://www.tunuyan.gov.ar/site/ordenanzas/
+      nota: Está como Ordenanza 3352 (2 de enero de 2026), PDF https://www.tunuyan.gov.ar/site/wp-content/uploads/2026/01/3352.pdf; no tiene una sección propia de presupuesto.
+    ejecucion:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: zip
+      url: https://www.tunuyan.gov.ar/site/resp-fiscal/
+      nota: ZIP con los anexos 2, 2 bis, 3, 4 en PDF del 2.º trimestre 2026 (https://www.tunuyan.gov.ar/site/wp-content/uploads/2026/08/SEGUNDO-TRIMESTRE-2026.zip). Disponibles desde el 1.er trimestre 2025.
+    personal:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: zip
+      url: https://www.tunuyan.gov.ar/site/resp-fiscal/
+      nota: Anexo 19 en PDF con texto dentro del ZIP del 2.º trimestre 2026.
+    deuda:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: zip
+      url: https://www.tunuyan.gov.ar/site/resp-fiscal/
+      nota: Anexos 5 y 6 en PDF con texto dentro del ZIP del 2.º trimestre 2026.
+    compras:
+      estado: no_accesible
+      formato: web
+      url: https://vps.infogov.com.ar/proveedores/compras/?cm=TDnq4
+      nota: Hay un Portal de Proveedores en Infogov enlazado desde el sitio, pero es una aplicación que no se puede leer sin ejecutar JavaScript; no pudimos confirmar si lista licitaciones ni adjudicaciones.
+    normas:
+      estado: publica
+      ultimo_dato: 2026-08-27
+      formato: web
+      url: https://www.tunuyan.gov.ar/site/ordenanzas/
+      nota: Tabla de ordenanzas del Concejo Deliberante con PDF por cada una; la más reciente es la 3380 (27 de agosto de 2026). No vimos boletín ni decretos del ejecutivo.
+    sueldos:
+      estado: no_publica
+      url: https://www.tunuyan.gov.ar/site/empleados/nomina_empleados.pdf
+      nota: Hay una nómina de empleados y funcionarios (nombre y cargo) en PDF, pero sin sueldos. El gabinete figura en https://www.tunuyan.gov.ar/site/gabinete-municipal/.
+    declaraciones_juradas:
+      estado: no_publica
+    acceso_informacion:
+      estado: no_publica
+      nota: Hay un chatbot de WhatsApp y una Oficina Virtual de expedientes, pero no un canal declarado para pedidos de información pública.
+  donde_buscamos:
+    - https://www.tunuyan.gov.ar/site/resp-fiscal/
+    - https://www.tunuyan.gov.ar/site/ordenanzas/
+    - https://www.tunuyan.gov.ar/site/gabinete-municipal/
+    - https://www.tunuyan.gov.ar/site/empleados/nomina_empleados.pdf
+    - https://vps.infogov.com.ar/proveedores/compras/?cm=TDnq4
+    - https://www.tunuyan.gov.ar/site/ordenanzas-hcd/proyecto-de-erogaciones-y-calculo-de-recursos-del-presupuesto-para-el-ejercicio-2026/
+- municipio: Tupungato
+  fecha_verificacion: 2026-10-16
+  sitio: https://tupungato.gov.ar
+  items:
+    presupuesto:
+      estado: publica
+      ultimo_dato: 2026-01-01
+      formato: pdf
+      url: https://tupungato.gov.ar/?page_id=3075
+      nota: Lista presupuestos de 2018 a 2026; el de 2026 es https://tupungato.gov.ar/wp-content/uploads/2026/08/Presupuesto-2026.pdf.
+    ejecucion:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://tupungato.gov.ar/?page_id=3094
+      nota: Un solo PDF por trimestre con los anexos 2, 2 bis, 3 y 4 de la LRF (2.º trimestre 2026, subido en septiembre de 2026).
+    personal:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://tupungato.gov.ar/wp-content/uploads/2026/09/Ley-de-Responsabilidad-Fiscal-2-Trimestre.pdf
+      nota: El anexo 19 está dentro del PDF único del 2.º trimestre 2026 (página 90 de 114); tiene texto legible.
+    deuda:
+      estado: publica
+      ultimo_dato: 2026-06-30
+      formato: pdf
+      url: https://tupungato.gov.ar/wp-content/uploads/2026/09/Ley-de-Responsabilidad-Fiscal-2-Trimestre.pdf
+      nota: Anexo 5 (deuda pública consolidada) y anexo 6 (deuda flotante) dentro del mismo PDF del 2.º trimestre 2026.
+    compras:
+      estado: publica
+      ultimo_dato: 2026-10-23
+      formato: pdf
+      url: https://tupungato.gov.ar/?page_id=51127
+      nota: Licitaciones 2026 con pliegos y circulares en PDF; no vimos actas de adjudicación (a quién y por cuánto), solo llamados. La fecha es la apertura más próxima cargada. Hay páginas por año desde 2008 en https://tupungato.gov.ar/?page_id=2281.
+    normas:
+      estado: publica
+      formato: web
+      url: https://tupungato.gov.ar/?page_id=2285
+      nota: El digesto del Concejo Deliberante es una aplicación de Google Apps Script que no pudimos leer desde afuera, así que no sabemos la fecha de la norma más reciente.
+    sueldos:
+      estado: no_publica
+      nota: En el sitio solo hay un acceso al sistema de bonos de sueldo para empleados, sin nómina de autoridades con sueldos.
+    declaraciones_juradas:
+      estado: no_publica
+    acceso_informacion:
+      estado: no_publica
+      nota: Solo hay un correo general (info@tupungato.gov.ar) y un mail de licitaciones; no hay un canal específico para pedidos de información pública.
+  donde_buscamos:
+    - https://tupungato.gov.ar/?page_id=3094
+    - https://tupungato.gov.ar/?page_id=49396
+    - https://tupungato.gov.ar/?page_id=3075
+    - https://tupungato.gov.ar/?page_id=2281
+    - https://tupungato.gov.ar/?page_id=51127
+    - https://tupungato.gov.ar/?page_id=2285
+    - https://tupungato.gov.ar/?page_id=3604
+    - https://tupungato.gov.ar/?page_id=2278
+    - https://tupungato.gov.ar/?page_id=2279

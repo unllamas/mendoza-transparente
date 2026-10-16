@@ -26,6 +26,7 @@ import { deflactor } from "./temas/inflacion.ts";
 import type { ResumenLey } from "./temas/leyes.ts";
 import { buildPoblacion } from "./temas/poblacion.ts";
 import { buildSenales } from "./temas/senales.ts";
+import type { ExternalIndex, TransparencySurvey } from "./temas/transparency.ts";
 
 const ROOT = join(import.meta.dir, "..", "..", "..");
 const RAW_DIR = join(ROOT, "data", "raw");
@@ -317,7 +318,18 @@ writeFileSync(
 if (copaTema && poblacionTema && funcionariosTema) {
   writeFileSync(
     join(OUT, "temas", "municipios.json"),
-    JSON.stringify(buildMunicipios(copaTema, poblacionTema, funcionariosTema, readTable("municipios-personal", "personal.csv") ?? [])),
+    JSON.stringify(
+      buildMunicipios(
+        copaTema,
+        poblacionTema,
+        funcionariosTema,
+        readTable("municipios-personal", "personal.csv") ?? [],
+        leerCurado<TransparencySurvey>("transparencia-municipal.yaml"),
+        leerCurado<ExternalIndex>("indices-transparencia.yaml"),
+        readTable("etica-publica", "funcionarios.csv") ?? [],
+        readTable("boletin-oficial", "normas.csv") ?? [],
+      ),
+    ),
   );
 }
 if (procesos && adjudicaciones) {
