@@ -158,6 +158,21 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["municipios", "transparencia"],
   },
   {
+    event: "municipality.budget.open",
+    description: "Desde la página de un municipio, abrió su presupuesto (en qué se gasta). Propiedad municipality.",
+    tags: ["municipios", "presupuesto"],
+  },
+  {
+    event: "municipality.budget.year.change",
+    description: "En el presupuesto de un municipio, cambió de año. Propiedades value (el año) y label.",
+    tags: ["municipios", "presupuesto"],
+  },
+  {
+    event: "municipality.budget_source.open",
+    description: "En el presupuesto de un municipio, abrió un anexo original de la Ley de Responsabilidad Fiscal. Propiedad municipality.",
+    tags: ["municipios", "presupuesto"],
+  },
+  {
     event: "municipality.staff_source.open",
     description: "Abrió el anexo de personal publicado por un municipio (Ley de Responsabilidad Fiscal).",
     tags: ["municipios"],

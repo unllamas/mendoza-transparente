@@ -346,6 +346,68 @@ export interface MunicipioPagina {
   staff: MunicipalStaff | null;
   /** What the municipality publishes, checked by hand on its site (data/curado/transparencia-municipal.yaml). */
   transparency: MunicipalTransparency | null;
+  /** Budget from the Fiscal Responsibility Law annexes; absent while the municipality is not read yet. */
+  budget?: MunicipalBudgetSummary;
+}
+
+/** Short budget summary for the municipality's main page (scripts/temas/municipal-budget.ts). */
+export interface MunicipalBudgetSummary {
+  year: number;
+  partial: boolean;
+  /** "diciembre de 2025": the end of the last quarter published for the year. */
+  cutoff: string;
+  accrued: number;
+  current: number;
+  perCapitaReal: number | null;
+  /** Month the "pesos de hoy" refer to ("ago 2026"). */
+  reference: string | null;
+  /** Years with a budget page, latest first. */
+  years: number[];
+}
+
+/** Budget of a municipality, every year (temas/municipios/<slug>/presupuesto.json). Nominal pesos unless it says real. */
+export interface MunicipalBudget {
+  slug: string;
+  name: string;
+  reference: string | null;
+  /** Latest first. */
+  years: MunicipalBudgetYear[];
+}
+
+export interface MunicipalBudgetYear {
+  year: number;
+  /** Last quarter published for the year; the figures accumulate from January to its end. */
+  quarter: number;
+  partial: boolean;
+  cutoff: string;
+  /** Approved in the original budget (crédito votado). */
+  voted: number;
+  /** Authorized after changes (crédito vigente). */
+  current: number;
+  /** Spent: goods and services received (devengado). */
+  accrued: number;
+  paid: number;
+  accruedReal: number;
+  perCapitaReal: number | null;
+  /** By object of expenditure, common to every municipality; largest spending first. */
+  byObject: { name: string; accrued: number; current: number; voted: number }[];
+  /** By area of government, only when the municipality breaks spending down (San Rafael). */
+  byArea: { name: string; accrued: number; current: number }[] | null;
+  revenue: {
+    estimated: number;
+    collected: number;
+    byKind: { kind: string; collected: number; estimated: number }[];
+    /** Largest revenue items collected, without financing. */
+    top: { name: string; collected: number }[];
+  } | null;
+  debt: {
+    quarter: number;
+    balance: number;
+    paidInYear: number;
+    newInYear: number;
+    loans: { name: string; balance: number }[];
+  } | null;
+  sources: { spending: string | null; revenue: string | null; debt: string | null };
 }
 
 /** Key of each thing the law asks a municipality to publish (docs/procesos/metodologia.md#transparencia-municipal). */

@@ -27,6 +27,7 @@ import type {
   FuncionariosTema,
   LeyDetalle,
   LeyResumen,
+  MunicipalBudget,
   MunicipioPagina,
   NoPublicado,
   OrganismoResumen,
@@ -1004,6 +1005,97 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
       lastmod: hoy,
       prioridad: 0.8,
     });
+  }
+
+  // Budget of each municipality, one page per year (only those whose annexes are already read).
+  for (const m of municipios.filter((x) => x.budget)) {
+    const budget = await json<MunicipalBudget | null>(`temas/municipios/${m.slug}/presupuesto.json`, null);
+    for (const y of budget?.years ?? []) {
+      const path = `/municipios/${m.slug}/presupuesto/${y.year}`;
+      const hasta = y.partial ? ` hasta ${y.cutoff.split(" ")[0]}` : "";
+      const top = y.byObject[0];
+      const resumen = `En ${y.year}${hasta}, la Municipalidad de ${m.nombre} gastó ${pesos(y.accrued)} de los ${pesos(y.current)} que tenía autorizados (el presupuesto aprobado era de ${pesos(y.voted)}).${
+        top ? ` Lo que más pesa es ${top.name.toLowerCase()}: ${pesos(top.accrued)}.` : ""
+      }${y.perCapitaReal && budget?.reference ? ` Son ${pesos(y.perCapitaReal)} por habitante en pesos de ${budget.reference}.` : ""}`;
+      const migas: Miga[] = [
+        ["/", "Inicio"],
+        ["/municipios", "Municipios"],
+        [`/municipios/${m.slug}`, m.nombre],
+        [path, `Presupuesto ${y.year}`],
+      ];
+      paginas.push({
+        path,
+        title: titulo(`Presupuesto ${y.year} de ${m.nombre}: en qué se gasta`),
+        description: descripcion(resumen),
+        og: {
+          slug: `municipio-${m.slug}-presupuesto-${y.year}`,
+          eyebrow: "PRESUPUESTO MUNICIPAL",
+          photo: municipalityPhoto(m.slug),
+          titulo: `${m.nombre}, ${y.year}${y.partial ? ` (hasta ${y.cutoff.split(" ")[0]})` : ""}`,
+          figura: pesosCorto(y.accrued),
+          bajada: `Gastado de ${pesos(y.current)} autorizados.`,
+        },
+        ld: [
+          {
+            "@type": "Dataset",
+            name: `Ejecución del presupuesto de ${m.nombre}, ${y.year}`,
+            description: resumen,
+            url: url(path),
+            creator: { "@type": "GovernmentOrganization", name: `Municipalidad de ${m.nombre}` },
+            publisher,
+            temporalCoverage: `${y.year}`,
+            spatialCoverage: { "@type": "AdministrativeArea", name: m.nombre, containedInPlace: MENDOZA },
+            isBasedOn: y.sources.spending ?? undefined,
+          },
+          breadcrumb(migas),
+          faq([
+            [`¿Cuánto gastó la Municipalidad de ${m.nombre} en ${y.year}?`, resumen],
+            ...(y.revenue?.top[0]
+              ? ([
+                  [
+                    `¿De dónde sale la plata de ${m.nombre}?`,
+                    `Su principal ingreso en ${y.year} fue ${y.revenue.top[0].name.toLowerCase()} (${pesos(y.revenue.top[0].collected)}). En total ingresaron ${pesos(y.revenue.collected)}.`,
+                  ],
+                ] as [string, string][])
+              : []),
+          ]),
+        ],
+        html: cuerpo({
+          migas,
+          h1: `Presupuesto ${y.year} de la Municipalidad de ${m.nombre}`,
+          resumen,
+          datos: [
+            ["Presupuesto aprobado", pesos(y.voted)],
+            ["Autorizado con los cambios del año", pesos(y.current)],
+            ["Gastado (devengado)", pesos(y.accrued)],
+            ["Pagado", pesos(y.paid)],
+            ...(y.debt ? ([["Deuda al cierre", pesos(y.debt.balance)]] as [string, string][]) : []),
+          ],
+          secciones: [
+            { titulo: "En qué se gasta", items: y.byObject.map((o) => ({ texto: `${o.name}: ${pesos(o.accrued)}` })) },
+            ...(y.byArea
+              ? [{ titulo: "Por área de gobierno", items: y.byArea.map((a) => ({ texto: `${a.name}: ${pesos(a.accrued)}` })) }]
+              : []),
+            ...(y.revenue
+              ? [{ titulo: "De dónde sale la plata", items: y.revenue.top.map((r) => ({ texto: `${r.name}: ${pesos(r.collected)}` })) }]
+              : []),
+            {
+              titulo: "Otros años",
+              items: (budget?.years ?? [])
+                .filter((o) => o.year !== y.year)
+                .map((o) => ({ texto: `Presupuesto ${o.year}`, href: `/municipios/${m.slug}/presupuesto/${o.year}` })),
+            },
+          ],
+          fuente: {
+            nombre: "Anexos de la Ley de Responsabilidad Fiscal publicados por el municipio",
+            url: y.sources.spending ?? undefined,
+          },
+          actualizado: lastFetch("municipios-lrf"),
+        }),
+        lastmod: lastFetch("municipios-lrf"),
+        prioridad: y.partial ? 0.6 : 0.7,
+      });
+    }
   }
 
   // ---------------------------------------------------------------- proveedores y organismos

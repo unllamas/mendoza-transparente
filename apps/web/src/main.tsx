@@ -1,4 +1,4 @@
-import { createRootRoute, createRoute, createRouter, lazyRouteComponent, RouterProvider } from "@tanstack/react-router";
+import { createRootRoute, createRoute, createRouter, lazyRouteComponent, notFound, RouterProvider, redirect } from "@tanstack/react-router";
 import { type ReactNode, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { installClickTracking } from "./analytics.ts";
@@ -21,6 +21,7 @@ import type {
   LeyDetalle,
   LeyResumen,
   MapaMendoza,
+  MunicipalBudget,
   MunicipioPagina,
   NoPublicado,
   OrganismoDetalle,
@@ -203,6 +204,25 @@ const municipioRoute = createRoute({
   component: page(() => import("./pages/municipios.tsx"), "MunicipioPage"),
 });
 
+const municipalBudgetRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/municipios/$slug/presupuesto/$anio",
+  loader: ({ params }) => loadTema<MunicipalBudget>(`municipios/${params.slug}/presupuesto`).catch(() => null),
+  component: page(() => import("./pages/municipal-budget.tsx"), "MunicipalBudgetPage"),
+});
+
+/** Without a year, the budget opens on the last full year (or the latest, if none is full yet). */
+const municipalBudgetLatestRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/municipios/$slug/presupuesto",
+  beforeLoad: async ({ params }) => {
+    const budget = await loadTema<MunicipalBudget>(`municipios/${params.slug}/presupuesto`).catch(() => null);
+    const year = budget?.years.find((y) => !y.partial) ?? budget?.years[0];
+    if (!year) throw notFound();
+    throw redirect({ to: "/municipios/$slug/presupuesto/$anio", params: { slug: params.slug, anio: String(year.year) }, replace: true });
+  },
+});
+
 const proveedoresRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/proveedores",
@@ -270,6 +290,8 @@ const router = createRouter({
     agencyRoute,
     municipiosRoute,
     municipioRoute,
+    municipalBudgetRoute,
+    municipalBudgetLatestRoute,
     proveedoresRoute,
     proveedorRoute,
     organismosRoute,

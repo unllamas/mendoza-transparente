@@ -16,10 +16,13 @@ export function BarList({
       {items.map((item) => (
         <li key={item.nombre} className="group flex flex-col gap-1.5">
           <div className="flex items-baseline justify-between gap-3 text-body-regular">
-            <span className={item.destacado ? "font-semibold text-text-primary" : "text-text-secondary group-hover:text-text-primary"}>
+            <span
+              className={`min-w-0 truncate ${item.destacado ? "font-semibold text-text-primary" : "text-text-secondary group-hover:text-text-primary"}`}
+              title={item.nombre}
+            >
               {item.nombre}
             </span>
-            <span className="font-medium tabular-nums">
+            <span className="shrink-0 font-medium whitespace-nowrap tabular-nums">
               {formatValue(item.valor)}
               {item.detalle && <span className="ml-2 font-normal text-text-tertiary">{item.detalle}</span>}
             </span>

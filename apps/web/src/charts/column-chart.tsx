@@ -39,14 +39,18 @@ export function ColumnChart({
   formatValue,
   alto = 128,
   ariaLabel,
+  inicial,
 }: {
   columnas: Columna[];
   formatValue: (v: number) => string;
   alto?: number;
   ariaLabel: string;
+  /** Column read out when nothing is pointed at (the last one by default): the year the page is about. */
+  inicial?: number;
 }) {
   const last = columnas.length - 1;
-  const [active, setActive] = useState(last);
+  const rest = inicial !== undefined && inicial >= 0 && inicial <= last ? inicial : last;
+  const [active, setActive] = useState(rest);
   const reducedMotion = useReducedMotion();
   const max = Math.max(...columnas.map((c) => c.valor), 1);
   const c = columnas[active] ?? columnas[last];
@@ -75,7 +79,7 @@ export function ColumnChart({
             barCategoryGap={columnas.length > 8 ? "18%" : "28%"}
             onMouseMove={select}
             onClick={select}
-            onMouseLeave={() => setActive(last)}
+            onMouseLeave={() => setActive(rest)}
           >
             <YAxis hide domain={[0, max]} />
             <XAxis

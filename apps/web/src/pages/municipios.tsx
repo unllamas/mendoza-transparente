@@ -9,12 +9,14 @@ import {
   RiAuctionLine,
   RiBriefcaseLine,
   RiCoinsLine,
+  RiFileList3Line,
   RiFileSearchLine,
   RiGroupLine,
   RiMapPinLine,
 } from "@remixicon/react";
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { useMemo } from "react";
+import { formatMoneda } from "@/celdas.ts";
 import { ColumnChart } from "@/charts/column-chart.tsx";
 import { MapaMendoza, MunicipalityLocator } from "@/charts/mapa.tsx";
 import { Breadcrumbs, WithBreadcrumbs } from "@/components/breadcrumbs.tsx";
@@ -253,6 +255,34 @@ export function MunicipioPage() {
                   : "No publica su planta de personal"
             }
           />
+          {m.budget && (
+            <Link
+              to="/municipios/$slug/presupuesto/$anio"
+              params={{ slug: m.slug, anio: String(m.budget.year) }}
+              className={cx(cardVariants(), "flex flex-col gap-1")}
+              data-track="municipality.budget.open"
+              data-track-municipality={m.nombre}
+            >
+              <span className="flex min-w-0 items-center gap-2 text-body-regular text-text-secondary">
+                <RiFileList3Line className="size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
+                <span className="truncate">
+                  Gastado en {m.budget.year}
+                  {m.budget.partial ? ` (hasta ${m.budget.cutoff.split(" ")[0]})` : ""}
+                </span>
+              </span>
+              <span className="truncate text-title-1-semibold tracking-tight whitespace-nowrap sm:text-display-4-semibold">
+                {formatMoneda(m.budget.accrued, "ARS")}
+              </span>
+              <span className="flex items-center justify-between gap-2 text-caption-1-regular text-text-secondary">
+                <span className="min-w-0">
+                  {m.budget.perCapitaReal && m.budget.reference
+                    ? `${pesos(m.budget.perCapitaReal)} por habitante, en pesos de ${m.budget.reference} · en qué se gasta`
+                    : "En qué se gasta y de dónde sale la plata"}
+                </span>
+                <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
+              </span>
+            </Link>
+          )}
           {tr && (
             <a href="#que-publica" className={cx(cardVariants(), "flex flex-col gap-1")} data-track="municipality.transparency.jump">
               <span className="flex min-w-0 items-center gap-2 text-body-regular text-text-secondary">

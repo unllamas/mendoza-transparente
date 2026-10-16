@@ -24,6 +24,7 @@ import { buildGuide, writeSearchIndex } from "./temas/guide.ts";
 import { buildHome } from "./temas/home.ts";
 import { deflactor } from "./temas/inflacion.ts";
 import type { ResumenLey } from "./temas/leyes.ts";
+import { budgetSummary, buildMunicipalBudgets } from "./temas/municipal-budget.ts";
 import { buildPoblacion } from "./temas/poblacion.ts";
 import { buildSenales } from "./temas/senales.ts";
 import type { TransparencySurvey } from "./temas/transparency.ts";
@@ -316,20 +317,30 @@ writeFileSync(
 
 // Entidades con página propia
 if (copaTema && poblacionTema && funcionariosTema) {
-  writeFileSync(
-    join(OUT, "temas", "municipios.json"),
-    JSON.stringify(
-      buildMunicipios(
-        copaTema,
-        poblacionTema,
-        funcionariosTema,
-        readTable("municipios-personal", "personal.csv") ?? [],
-        leerCurado<TransparencySurvey>("transparencia-municipal.yaml"),
-        readTable("etica-publica", "funcionarios.csv") ?? [],
-        readTable("boletin-oficial", "normas.csv") ?? [],
-      ),
-    ),
+  const municipios = buildMunicipios(
+    copaTema,
+    poblacionTema,
+    funcionariosTema,
+    readTable("municipios-personal", "personal.csv") ?? [],
+    leerCurado<TransparencySurvey>("transparencia-municipal.yaml"),
+    readTable("etica-publica", "funcionarios.csv") ?? [],
+    readTable("boletin-oficial", "normas.csv") ?? [],
   );
+  // Budget pages (/municipios/<slug>/presupuesto/<year>) for the municipalities whose annexes are already read.
+  const budgets = buildMunicipalBudgets(
+    readTable("municipios-lrf", "ejecucion_gastos.csv") ?? [],
+    readTable("municipios-lrf", "ejecucion_recursos.csv") ?? [],
+    readTable("municipios-lrf", "deuda.csv") ?? [],
+    new Map(municipios.map((m) => [m.nombre, m.poblacion.serie])),
+    deflactor(ipcNacional ?? []),
+  );
+  for (const b of budgets) {
+    mkdirSync(join(OUT, "temas", "municipios", b.slug), { recursive: true });
+    writeFileSync(join(OUT, "temas", "municipios", b.slug, "presupuesto.json"), JSON.stringify(b));
+    const m = municipios.find((x) => x.slug === b.slug);
+    if (m) m.budget = budgetSummary(b);
+  }
+  writeFileSync(join(OUT, "temas", "municipios.json"), JSON.stringify(municipios));
 }
 if (procesos && adjudicaciones) {
   const { organismos, proveedores } = buildOrganismosYProveedores(

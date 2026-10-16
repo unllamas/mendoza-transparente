@@ -110,6 +110,15 @@ Fuente: los anexos de la Ley de Responsabilidad Fiscal (Ley 7314) que cada munic
 
 **Datos personales:** los anexos 22 y 23 traen deudores con nombre y nunca se bajan. De una planilla con todos los anexos (San Martín) se archivan solo las hojas de los anexos 1 a 5.
 
+**En la web** (`/municipios/<slug>/presupuesto/<año>`; sin año, abre el último año completo). Cálculo en `apps/web/scripts/temas/municipal-budget.ts`:
+
+- **Cada año** se muestra con su último trimestre publicado. Si no es el cuarto, la página avisa hasta qué mes llegan las cifras y el gráfico lo marca con asterisco.
+- **Aprobado, autorizado, gastado y pagado** son las sumas del crédito votado, el crédito vigente, el devengado y el pagado del anexo 2. "Gastado" es lo devengado, y la página lo explica (glosario: `devengado`, `credito-vigente`).
+- **En qué se gasta** suma por `objeto`, igual para todos los municipios. **Por área** solo aparece si el municipio abre el gasto por jurisdicción (San Rafael).
+- **De dónde sale la plata:** lo ingresado sin préstamos ni remanentes (tipo `financiamiento`), que van en un renglón aparte. Los rubros llevan el nombre que usa cada municipio, porque los códigos no coinciden.
+- **Deuda:** el saldo final del último trimestre del año, y los pagos y la deuda nueva sumados en los trimestres del año.
+- **Comparación entre años y por habitante:** en pesos de hoy, con el deflactor del sitio y la población estimada del año.
+
 **Cómo debería publicarse:** una planilla por trimestre con las columnas del Acuerdo, como hace San Martín, se lee sin errores y la puede reusar cualquiera. Un PDF se puede leer, pero cada sistema contable lo arma distinto.
 
 ## Transparencia municipal

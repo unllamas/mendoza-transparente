@@ -20,6 +20,18 @@ export const GLOSSARY: GlossaryTerm[] = [
     seeAlso: { label: "Coparticipación por municipio", to: "/coparticipacion" },
   },
   {
+    id: "devengado",
+    term: "Gastado (devengado)",
+    definition:
+      "Un gasto ya hecho: el bien se entregó o el servicio se prestó, aunque todavía no se haya pagado. Es la forma habitual de medir cuánto gastó un municipio o la provincia en un período.",
+  },
+  {
+    id: "credito-vigente",
+    term: "Presupuesto aprobado y autorizado (crédito votado y vigente)",
+    definition:
+      "El aprobado (crédito votado) es lo que fijó el presupuesto al empezar el año. Durante el año se le suman o restan partidas y queda el autorizado (crédito vigente): el máximo que se puede gastar.",
+  },
+  {
     id: "pesos-de-hoy",
     term: "Pesos de hoy (valores reales)",
     definition:
