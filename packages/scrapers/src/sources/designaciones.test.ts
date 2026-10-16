@@ -105,6 +105,13 @@ BUSTOS GOMEZ, BRISA NAIR
     expect(acts[0]).toMatchObject({ accion: "otro", modalidad: "encargo_cartera", persona: "VICTOR FAYAD", desde: "2026-08-27" });
   });
 
+  test("encargo del despacho con hora de inicio (decreto 1758 de Energía y Ambiente)", () => {
+    const { acts } = parse(
+      "Artículo 1º - Encárguese la atención y firma del despacho del Ministerio de Energía y Ambiente, a partir de las 19:00 hs. del día 26 de agosto de 2026 y mientras dure la ausencia de sutitular, al Ministro de Hacienda y Finanzas, LIC. VÍCTOR FAYAD.",
+    );
+    expect(acts[0]).toMatchObject({ modalidad: "encargo_cartera", persona: "VÍCTOR FAYAD", desde: "2026-08-26" });
+  });
+
   test("lo que no es un acto de personal no genera filas", () => {
     expect(classifyArticle("Téngase por aceptada la donación efectuada por la UNIVERSIDAD DE MENDOZA")).toBeNull();
     expect(classifyArticle("Acéptese formalmente y rechácese sustancialmente el Recurso Jerárquico interpuesto por el Dr. X")).toBeNull();

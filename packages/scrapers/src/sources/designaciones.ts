@@ -163,7 +163,7 @@ export function findStartDate(text: string, fallbackYear: string, allowDesde = t
   const t = squash(text);
   const lead = allowDesde ? "(?:a partir|desde)" : "a partir";
   const wordy = new RegExp(
-    `${lead}\\s+(?:(?:del?|el)\\s+)?(?:d[ií]a\\s+)?(\\d{1,2})\\s*(?:º|°)?\\s+de\\s+([A-Za-zÁÉÍÓÚáéíóú]+)(?:\\s+de\\s+(\\d{4}))?`,
+    `${lead}\\s+(?:de\\s+las\\s+\\d{1,2}(?:[:.]\\d{2})?\\s*(?:hs?\\.?|horas)\\s+)?(?:(?:del?|el)\\s+)?(?:d[ií]a\\s+)?(\\d{1,2})\\s*(?:º|°)?\\s+de\\s+([A-Za-zÁÉÍÓÚáéíóú]+)(?:\\s+de\\s+(\\d{4}))?`,
     "i",
   );
   let m = wordy.exec(t);
