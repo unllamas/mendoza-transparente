@@ -20,6 +20,7 @@ import { useMemo, useState } from "react";
 import { Breadcrumbs, WithBreadcrumbs } from "@/components/breadcrumbs.tsx";
 import { ListSearch } from "@/components/list-search.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
+import { ShareButton } from "@/components/share-button.tsx";
 import { formatDate, normalizeText } from "@/lib.ts";
 import type { LeyDetalle } from "@/types.ts";
 import { useUrlText } from "@/url-state.ts";
@@ -39,7 +40,7 @@ export function LeyesPage() {
 
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={RiScalesLine} topic="Leyes" title="Las leyes que sanciona Mendoza">
+      <PageHeader action={<ShareButton />} icon={RiScalesLine} topic="Leyes" title="Las leyes que sanciona Mendoza">
         Qué dice cada ley provincial, explicado en pocas palabras, con el enlace al documento oficial.
       </PageHeader>
       <FuentesOficiales ids={["boletin-oficial"]} />

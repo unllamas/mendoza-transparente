@@ -24,7 +24,7 @@ Fuente completa: `docs/procesos/analitica.md`. Código: `apps/web/src/analytics.
 ## Nombres
 
 - **Formato:** `área.elemento.acción`, en inglés y snake_case. Por ejemplo `missing_data.request.official_form`, `search.no_results` o `home.question.open`.
-- **Áreas actuales:** `nav`, `footer`, `sheet`, `search`, `home`, `missing_data`, `law`, `participation`, `registry`, `link` y `data`.
+- **Áreas actuales:** `nav`, `footer`, `sheet`, `search`, `home`, `missing_data`, `law`, `participation`, `registry`, `share`, `link` y `data`.
 
 ## Privacidad (no se negocia)
 

@@ -7,6 +7,7 @@ import { cx } from "@mt/ui/lib/cx";
 import { RiArrowRightSLine, RiCheckLine, RiExternalLinkLine, RiEyeOffLine, RiFileCopyLine, RiSearchLine } from "@remixicon/react";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { ShareButton } from "@/components/share-button.tsx";
 import { TrackedSheet } from "@/components/tracked-sheet.tsx";
 import { type RequestStats, useRequestStats } from "@/features/participation/api/request-stats.ts";
 import { NO_PUBLICADO_CATEGORIES, NO_PUBLICADO_THEMES, type NoPublicadoTheme } from "@/no-publicado-categories.ts";
@@ -60,7 +61,7 @@ export function NoPublicadoPage() {
 
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={RiEyeOffLine} topic="Acceso a la información" title="Lo que el Estado no publica">
+      <PageHeader action={<ShareButton />} icon={RiEyeOffLine} topic="Acceso a la información" title="Lo que el Estado no publica">
         {items.length} datos que deberían ser públicos y no lo son. Cualquier persona puede pedirlos y el Estado está obligado a responder.
       </PageHeader>
 
@@ -181,6 +182,14 @@ Saludos cordiales,
 [Tu correo electrónico]`;
 }
 
+/** The post when someone shares a request: what is asked, who has to publish it, and how many asked already. */
+function shareText(item: NoPublicado, stats: RequestStats["items"][string] | null) {
+  const what = item.titulo.charAt(0).toLowerCase() + item.titulo.slice(1);
+  const count = stats && stats.requests > 1 ? ` Ya hay ${stats.requests} pedidos registrados.` : "";
+  const verb = /^(las|los|todas|todos) /i.test(item.titulo) ? "publiquen" : "publique";
+  return `Pido que se ${verb} ${what} (${item.organismo}). Cualquier persona puede pedirlo por la Ley 9070.${count}`;
+}
+
 function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: RequestStats["items"][string] | null; onClose: () => void }) {
   const [texto, setTexto] = useState(() => armarPedido(item));
   const [copiado, setCopiado] = useState(false);
@@ -200,6 +209,7 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
         </span>
         <h3 className="text-title-2-semibold tracking-tight text-balance">{item.titulo}</h3>
         <p className="text-text-secondary text-pretty">{item.que_es}</p>
+        <ShareButton id="pedido-compartir" context="missing_data" text={shareText(item, stats)} />
       </div>
 
       <Alert title="Por qué importa">

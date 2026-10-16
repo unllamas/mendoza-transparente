@@ -23,6 +23,7 @@ import { Breadcrumbs, WithBreadcrumbs } from "@/components/breadcrumbs.tsx";
 import { LandscapePhoto } from "@/components/landscape-photo.tsx";
 import { MunicipalTransparencySection } from "@/components/municipal-transparency.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
+import { ShareButton } from "@/components/share-button.tsx";
 import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
 import { formatDate, formatNumber } from "@/lib.ts";
 import { DEFAULT_PHOTO, municipalityPhoto } from "@/photos.ts";
@@ -94,7 +95,7 @@ export function MunicipiosPage() {
       <div className="flex flex-col gap-6">
         <LandscapePhoto id={DEFAULT_PHOTO} className={LANDSCAPE_HEIGHT} />
         <WithBreadcrumbs items={[]} current={{ label: "Municipios", icon: RiMapPinLine }}>
-          <PageHeader title="Los 18 municipios de Mendoza">
+          <PageHeader action={<ShareButton />} title="Los 18 municipios de Mendoza">
             Quién gobierna cada uno, cuántos habitantes tiene, cuánta coparticipación recibe, cuánto personal tiene y qué publica.
           </PageHeader>
         </WithBreadcrumbs>
@@ -199,7 +200,7 @@ export function MunicipioPage() {
       <div className="flex flex-col gap-6">
         <LandscapePhoto id={municipalityPhoto(m.slug)} className={LANDSCAPE_HEIGHT} />
         <WithBreadcrumbs items={[{ label: "Municipios", to: "/municipios" }]} current={{ label: m.nombre, icon: RiMapPinLine }}>
-          <PageHeader title={m.nombre}>
+          <PageHeader action={<ShareButton />} title={m.nombre}>
             Quién lo gobierna, qué publica, cuánta coparticipación recibe y quiénes lo representan en la Legislatura.
           </PageHeader>
         </WithBreadcrumbs>

@@ -23,6 +23,7 @@ import { ColumnChart } from "@/charts/column-chart.tsx";
 import { LineChart } from "@/charts/line-chart.tsx";
 import { Breadcrumbs, WithBreadcrumbs } from "@/components/breadcrumbs.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
+import { ShareButton } from "@/components/share-button.tsx";
 import { GOBIERNOS } from "@/gobiernos.ts";
 import { formatDate, formatNumber } from "@/lib.ts";
 import type { AgencyDetail, AgencySummary, GobiernoOverview } from "@/types.ts";
@@ -70,7 +71,12 @@ export function GobiernoPage() {
   const period = agencies.find((a) => a.staffPeriod)?.staffPeriod;
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={RiBuilding2Line} topic="Gobierno por dentro" title="Cómo está organizado el Estado de Mendoza">
+      <PageHeader
+        action={<ShareButton />}
+        icon={RiBuilding2Line}
+        topic="Gobierno por dentro"
+        title="Cómo está organizado el Estado de Mendoza"
+      >
         Cada ministerio y organismo: quién lo conduce, cuántos cargos tiene, cuánto cuesta su personal, qué hace y qué compra.
       </PageHeader>
 
@@ -172,7 +178,7 @@ export function AgencyPage() {
         ]}
         current={{ label: a.name, icon: RiBuilding2Line }}
       >
-        <PageHeader title={a.name}>
+        <PageHeader action={<ShareButton />} title={a.name}>
           {a.whatItDoes ?? "Quién lo conduce, cuántos cargos tiene, cuánto cuesta su personal y qué compra."}
         </PageHeader>
       </WithBreadcrumbs>

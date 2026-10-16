@@ -9,6 +9,7 @@ import { getRouteApi, Link, useRouter, useRouterState } from "@tanstack/react-ro
 import { formatMoneda } from "@/celdas.ts";
 import { useDetail } from "@/components/detail-sheet.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
+import { ShareButton } from "@/components/share-button.tsx";
 import { TrackedSheet } from "@/components/tracked-sheet.tsx";
 import { formatDate } from "@/lib.ts";
 import type { Senal } from "@/types.ts";
@@ -34,7 +35,12 @@ export function SenalesPage() {
 
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={RiScalesLine} topic="Para mirar de cerca" title="Lo que los datos muestran y nadie explica">
+      <PageHeader
+        action={<ShareButton />}
+        icon={RiScalesLine}
+        topic="Para mirar de cerca"
+        title="Lo que los datos muestran y nadie explica"
+      >
         Patrones en los datos oficiales que merecen una explicación. No son acusaciones: son preguntas que cualquier ciudadano puede hacerle
         al Estado, con los casos concretos para revisar.
       </PageHeader>

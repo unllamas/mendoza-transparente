@@ -22,6 +22,7 @@ import {
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { type FormEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import { track } from "@/analytics.ts";
+import { ShareButton } from "@/components/share-button.tsx";
 import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
 import { useRequestStats } from "@/features/participation/api/request-stats.ts";
 import type { NoPublicado } from "@/types.ts";
@@ -47,7 +48,7 @@ export function ParticiparPage() {
 
   return (
     <div className="flex max-w-2xl flex-col gap-10">
-      <PageHeader icon={RiContractLine} topic="Participá" title="Sumate a Mendoza Transparente">
+      <PageHeader action={<ShareButton />} icon={RiContractLine} topic="Participá" title="Sumate a Mendoza Transparente">
         Registrá los pedidos de información que presentaste y lo que te respondieron, avisanos si encontrás un error o sugerinos datos que
         falten. Así medimos cuánto se pide y cuánto responde el Estado.
       </PageHeader>

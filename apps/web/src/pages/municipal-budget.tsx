@@ -3,6 +3,7 @@ import { RiFileList3Line } from "@remixicon/react";
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { WithBreadcrumbs } from "@/components/breadcrumbs.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
+import { ShareButton } from "@/components/share-button.tsx";
 import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
 import { BudgetYear } from "@/features/municipal-budget/components/budget-year.tsx";
 
@@ -39,7 +40,7 @@ export function MunicipalBudgetPage() {
         ]}
         current={{ label: `Presupuesto ${year.year}`, icon: RiFileList3Line }}
       >
-        <PageHeader title={`Presupuesto ${year.year}`}>
+        <PageHeader action={<ShareButton />} title={`Presupuesto ${year.year}`}>
           Cuánto aprobó el municipio, cuánto gastó y en qué, según los informes que publica cada trimestre por la Ley de Responsabilidad
           Fiscal.
         </PageHeader>

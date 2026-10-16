@@ -21,6 +21,7 @@ import { BarList } from "@/charts/bar-list.tsx";
 import { Breadcrumbs, WithBreadcrumbs } from "@/components/breadcrumbs.tsx";
 import { ListSearch } from "@/components/list-search.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
+import { ShareButton } from "@/components/share-button.tsx";
 import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
 import { formatDate, formatNumber, normalizeText } from "@/lib.ts";
 import { ROLES, roleBySlug } from "@/slug.ts";
@@ -75,7 +76,7 @@ export function FuncionariosPage() {
 
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={RiBankLine} topic="Funcionarios" title="¿Quiénes nos representan?">
+      <PageHeader action={<ShareButton />} icon={RiBankLine} topic="Funcionarios" title="¿Quiénes nos representan?">
         Gobernador, ministros, legisladores, intendentes y quienes representan a Mendoza en el Congreso: su cargo, su partido o bloque,
         hasta cuándo dura su mandato y cuánto cobran cuando el dato es público.
       </PageHeader>
@@ -191,7 +192,9 @@ export function RolePage() {
   return (
     <div className="flex flex-col gap-10">
       <WithBreadcrumbs items={[{ label: "Funcionarios", to: "/funcionarios" }]} current={{ label: r.title, icon: RiBankLine }}>
-        <PageHeader title={r.title}>{r.description}</PageHeader>
+        <PageHeader action={<ShareButton />} title={r.title}>
+          {r.description}
+        </PageHeader>
       </WithBreadcrumbs>
       <FuentesOficiales ids={["autoridades", "legislatura"]} />
       {legislature && <Bloques personas={people} />}

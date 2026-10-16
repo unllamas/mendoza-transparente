@@ -9,6 +9,7 @@ import { getRouteApi, Link } from "@tanstack/react-router";
 import { LineChart } from "@/charts/line-chart.tsx";
 import { MapaMendoza } from "@/charts/mapa.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
+import { ShareButton } from "@/components/share-button.tsx";
 import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
 import { formatNumber } from "@/lib.ts";
 import { slug } from "@/slug.ts";
@@ -34,7 +35,7 @@ export function PoblacionPage() {
 
   return (
     <div className="flex flex-col gap-12">
-      <PageHeader icon={RiGroupLine} topic="Población" title="¿Cuántos somos en Mendoza?">
+      <PageHeader action={<ShareButton />} icon={RiGroupLine} topic="Población" title="¿Cuántos somos en Mendoza?">
         Población de la provincia y de cada departamento según los censos 2010 y 2022, y las proyecciones oficiales de INDEC para los años
         sin censo.
       </PageHeader>

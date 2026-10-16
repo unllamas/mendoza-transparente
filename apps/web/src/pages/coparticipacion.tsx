@@ -10,6 +10,7 @@ import { formatMoneda } from "@/celdas.ts";
 import { LineChart } from "@/charts/line-chart.tsx";
 import { MapaMendoza } from "@/charts/mapa.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
+import { ShareButton } from "@/components/share-button.tsx";
 import { GOBIERNOS } from "@/gobiernos.ts";
 import { formatNumber } from "@/lib.ts";
 import { slug } from "@/slug.ts";
@@ -32,7 +33,7 @@ export function CoparticipacionPage() {
 
   return (
     <div className="flex flex-col gap-12">
-      <PageHeader icon={RiCoinsLine} topic="Coparticipación" title="¿Cuánta plata reciben los municipios?">
+      <PageHeader action={<ShareButton />} icon={RiCoinsLine} topic="Coparticipación" title="¿Cuánta plata reciben los municipios?">
         La provincia reparte entre los 18 municipios una parte de lo que recauda y de lo que le manda Nación (coparticipación). Todo está en
         pesos de {tema.referencia}, para que se pueda comparar entre años.
       </PageHeader>

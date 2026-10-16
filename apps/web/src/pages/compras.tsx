@@ -21,6 +21,7 @@ import { useDetail } from "@/components/detail-sheet.tsx";
 import { ListSearch } from "@/components/list-search.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
 import { Proveedor } from "@/components/purchase-detail.tsx";
+import { ShareButton } from "@/components/share-button.tsx";
 import { formatDate, formatNumber, limpiarOrganismo, normalizeText } from "@/lib.ts";
 import { slugProveedor } from "@/slug.ts";
 import { useUrlText } from "@/url-state.ts";
@@ -51,7 +52,7 @@ export function ProveedoresPage() {
 
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={RiBuilding2Line} topic="Proveedores" title="¿A quiénes les compra el Estado?">
+      <PageHeader action={<ShareButton />} icon={RiBuilding2Line} topic="Proveedores" title="¿A quiénes les compra el Estado?">
         Las empresas que más le vendieron al Gobierno de Mendoza, ordenadas por lo que se les adjudicó.
       </PageHeader>
       <FuentesOficiales ids={FUENTES} />
@@ -136,7 +137,7 @@ export function OrganismosPage() {
   }, [organismos, q]);
   return (
     <div className="flex flex-col gap-10">
-      <PageHeader icon={RiBankLine} topic="Organismos" title="¿Quién compra y cómo?">
+      <PageHeader action={<ShareButton />} icon={RiBankLine} topic="Organismos" title="¿Quién compra y cómo?">
         Los organismos del Estado provincial que más compran, cuánto gastan y qué parte lo hace por contratación directa.
       </PageHeader>
       <FuentesOficiales ids={FUENTES} />
@@ -195,7 +196,9 @@ export function OrganismoPage() {
   return (
     <div className="flex flex-col gap-10">
       <WithBreadcrumbs items={[{ label: "Organismos", to: "/organismos" }]} current={{ label: nombre, icon: RiBankLine }}>
-        <PageHeader title={nombre}>Cuánto compró, a quiénes y con qué modalidad.</PageHeader>
+        <PageHeader action={<ShareButton />} title={nombre}>
+          Cuánto compró, a quiénes y con qué modalidad.
+        </PageHeader>
       </WithBreadcrumbs>
       <FuentesOficiales ids={FUENTES} />
 

@@ -65,6 +65,17 @@ Cualquier vista se puede pasar por link tal como está: la pestaña de una pági
 - **Links internos:** a una hoja, con `search` (`<Link to="/no-publicado" search={{ dato: id }}>`), nunca con `hash`.
 - **Buscador:** también encuentra las señales (`/senales?senal=…`) y los datos que no se publican (`/no-publicado?dato=…`).
 
+## Botón «Compartir»
+
+Cada página con encabezado (`PageHeader`) lleva abajo de la bajada el botón **Compartir** (`src/components/share-button.tsx`). Arma la publicación sola, para que nadie tenga que escribirla:
+
+- **Texto:** la descripción de la página (la misma que muestran buscadores y vistas previas; en las páginas de detalle ya trae sus cifras principales) seguida de `#MendozaTransparente`. Se recorta en una palabra para que entre en X con el link.
+- **Link:** la dirección completa, con sus parámetros: si había una hoja abierta (`?dato=`, `?proceso=`) se comparte abierta.
+- **En el celular** abre el menú de compartir del teléfono; en la computadora, un menú con «Publicar en X», «Enviar por WhatsApp» y «Copiar texto y link».
+- **Texto propio:** se le pasa `text`. La hoja de cada dato de «Lo que no se publica» comparte el pedido: «Pido que se publique <dato> (<organismo>). Cualquier persona puede pedirlo por la Ley 9070.», y suma «Ya hay N pedidos registrados» cuando hay más de uno.
+- **Página nueva:** `<PageHeader action={<ShareButton />} …>`.
+- **Eventos:** `share.x`, `share.whatsapp`, `share.copy` y `share.native`, con `context` (`page` o `missing_data`).
+
 ## Hojas con el id en la URL
 
 Las hojas de detalle se abren con parámetros en la URL, así cada caso se puede compartir y abrir directo:

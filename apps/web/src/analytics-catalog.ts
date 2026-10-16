@@ -44,6 +44,28 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["participación"],
   },
   {
+    event: "share.x",
+    description:
+      "Tocó «Publicar en X» en el botón Compartir: se abre X con el texto, el link y #MendozaTransparente. Propiedades path y context (page o missing_data).",
+    tags: ["compartir"],
+  },
+  {
+    event: "share.whatsapp",
+    description: "Tocó «Enviar por WhatsApp» en el botón Compartir. Propiedades path y context (page o missing_data).",
+    tags: ["compartir"],
+  },
+  {
+    event: "share.copy",
+    description: "Copió el texto y el link desde el botón Compartir. Propiedades path y context (page o missing_data).",
+    tags: ["compartir"],
+  },
+  {
+    event: "share.native",
+    description:
+      "Tocó Compartir en el celular, que abre el menú de compartir del teléfono (no sabemos qué app eligió). Propiedades path y context.",
+    tags: ["compartir"],
+  },
+  {
     event: "footer.friend_site.open",
     description: "Tocó un sitio amigo en el pie. Propiedades site (el dominio) y href (con los UTM).",
     tags: ["navegación"],

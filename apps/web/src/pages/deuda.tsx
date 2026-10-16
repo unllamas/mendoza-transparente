@@ -9,6 +9,7 @@ import { getRouteApi, Link } from "@tanstack/react-router";
 import { BarList } from "@/charts/bar-list.tsx";
 import { LineChart } from "@/charts/line-chart.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
+import { ShareButton } from "@/components/share-button.tsx";
 import { GOBIERNOS } from "@/gobiernos.ts";
 import { formatDate, formatNumber } from "@/lib.ts";
 
@@ -28,7 +29,7 @@ export function DeudaPage() {
 
   return (
     <div className="flex flex-col gap-12">
-      <PageHeader icon={RiBankLine} topic="Deuda pública" title="¿Cuánto debe Mendoza?">
+      <PageHeader action={<ShareButton />} icon={RiBankLine} topic="Deuda pública" title="¿Cuánto debe Mendoza?">
         La deuda pública consolidada de la provincia: bonos, préstamos de organismos internacionales y de bancos. Los montos están en
         dólares para poder comparar años con distinta inflación.
       </PageHeader>

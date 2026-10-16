@@ -5,6 +5,7 @@ import { PageHeader } from "@mt/ui/components/section";
 import { cx } from "@mt/ui/lib/cx";
 import { RiArchiveStackLine } from "@remixicon/react";
 import { getRouteApi, Link } from "@tanstack/react-router";
+import { ShareButton } from "@/components/share-button.tsx";
 import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
 import { useRegistry } from "@/features/participation/api/registry.ts";
 import { CorrectionList, CorrectionSheet, RequestList, RequestSheet } from "@/features/participation/components/registry.tsx";
@@ -32,7 +33,7 @@ export function RegistroPage() {
 
   return (
     <div className="flex max-w-3xl flex-col gap-10">
-      <PageHeader icon={RiArchiveStackLine} topic="Participá" title="Registro de pedidos y correcciones">
+      <PageHeader action={<ShareButton />} icon={RiArchiveStackLine} topic="Participá" title="Registro de pedidos y correcciones">
         Los pedidos de acceso a la información que presentó la gente y qué respondió el Estado, y los errores que nos avisaron y corregimos.
         Publicamos cada uno después de revisarlo, sin datos personales.
       </PageHeader>

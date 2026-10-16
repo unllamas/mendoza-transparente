@@ -13,18 +13,21 @@ export function Section({ title, children }: { title: string; children: ReactNod
 }
 
 /**
- * Header of the topic pages: icon and topic name above the title, then a short plain-language intro.
+ * Header of the topic pages: icon and topic name above the title, then a short plain-language intro and, below
+ * it, the page's action (the share button).
  * Pages with breadcrumbs leave out `icon` and `topic`: the last breadcrumb carries them, so there is one line above the title.
  */
 export function PageHeader({
   icon: Icon,
   topic,
   title,
+  action,
   children,
 }: {
   icon?: IconComponent;
   topic?: string;
   title: string;
+  action?: ReactNode;
   children: ReactNode;
 }) {
   return (
@@ -37,6 +40,7 @@ export function PageHeader({
       )}
       <h1 className="text-display-4-semibold tracking-tight text-balance text-text-primary sm:text-display-3-semibold">{title}</h1>
       <p className="text-headline-regular text-text-secondary text-pretty">{children}</p>
+      {action && <div className="pt-1">{action}</div>}
     </div>
   );
 }
