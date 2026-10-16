@@ -42,3 +42,18 @@ export function spendingObjectCode(raw: string): string | null {
   const code = fiveDigits ? fiveDigits.slice(1, 4).join(".") : sixDigits ? sixDigits.slice(1, 4).map(Number).join(".") : null;
   return code ? (EQUIVALENT_CODES[code] ?? code) : null;
 }
+
+/**
+ * Kind of revenue from the first digit of its code, the only level that matches across municipalities so far
+ * (San Martín "1110101000" and San Rafael "110001010001" are both current revenue). Below that level each one
+ * groups items differently: see docs/procesos/metodologia.md.
+ */
+const REVENUE_KINDS: Record<string, string> = {
+  "1": "corriente",
+  "2": "capital",
+  "7": "financiamiento",
+};
+
+export function revenueKind(code: string): string | null {
+  return REVENUE_KINDS[code[0] ?? ""] ?? null;
+}

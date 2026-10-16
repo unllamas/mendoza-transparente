@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 
-import { headerPeriod, parseSpendingAnnex, splitRow } from "./annexes.ts";
+import { headerPeriod, parseDebtAnnex, parseRevenueAnnex, parseSpendingAnnex, splitRow } from "./annexes.ts";
 import { spendingObjectCode } from "./classify.ts";
 import { type Table, type Tok, tokenize } from "./read.ts";
 
@@ -80,5 +80,44 @@ describe("lrf: classification", () => {
     expect(spendingObjectCode("72100")).toBe("7.2.1");
     expect(spendingObjectCode("060201")).toBe("7.2.1");
     expect(spendingObjectCode("PERSONAL")).toBeNull();
+  });
+});
+
+describe("lrf: interpretation of Annexes 3 and 5", () => {
+  test("revenue labels wrapped onto the next lines are joined (San Rafael PDF)", () => {
+    const parsed = parseRevenueAnnex([
+      table(
+        "1. RECURSOS CORRIENTES 100,00 0,00 0,00 100,00 40,00 60,00 10,00",
+        "120001020000 FINANCIA. EDUC. 100,00 0,00 0,00 100,00 40,00 60,00 10,00",
+        "LEY 26075",
+        "Totales: 100,00 0,00 0,00 100,00 40,00 60,00 10,00",
+        "RCTC_ANEXO_03 SRF - RR",
+      ),
+    ]);
+    if ("error" in parsed) throw new Error(parsed.error);
+    expect(parsed.lines.map((l) => [l.code, l.label, l.collected])).toEqual([["120001020000", "FINANCIA. EDUC. LEY 26075", 40]]);
+  });
+
+  test("a row with the collected amount in the wrong column is rejected (San Martín 2025-T1)", () => {
+    const parsed = parseRevenueAnnex([table("1110605010 Coparticipación 0 1603 -1603 0 0 1603 1603", "total 0 1603 -1603 0 0 1603 1603")]);
+    expect("error" in parsed && parsed.error).toContain("1110605010");
+  });
+
+  test("debts: the label can end in a number and balances printed as negative become positive", () => {
+    const parsed = parseDebtAnnex([
+      table(
+        "1 2 3 4 5 6=2-o+3+4+o-5 7 8",
+        "En Moneda Nacional",
+        "ALUMBRADO PUBLICO LEY 9033 -100,00 25,00 0,00 0,00 -75,00 CONTRAT 0 PROVINCIA",
+        "PRESTAMO SALDADO 0,00 0,00 0,00 0,00 0,00",
+        "Moneda Extranjera 0 0 0 0 0",
+        "TOTALES -100,00 25,00 0,00 0,00 -75,00",
+      ),
+    ]);
+    if ("error" in parsed) throw new Error(parsed.error);
+    expect(parsed.lines.map((l) => [l.label, l.openingBalance, l.payments, l.closingBalance])).toEqual([
+      ["ALUMBRADO PUBLICO LEY 9033", 100, 25, 75],
+    ]);
+    expect(parsed.notes.join()).toContain("valor absoluto");
   });
 });

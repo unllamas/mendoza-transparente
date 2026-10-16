@@ -14,6 +14,8 @@
  * Outputs (data/processed/municipios-lrf/):
  *   - ejecucion_gastos.csv: one row per (municipality, year, quarter, item) from Annex 2. Amounts are nominal pesos
  *     ACCUMULATED from January to the end of the quarter; the fourth quarter is the whole year.
+ *   - ejecucion_recursos.csv: one row per revenue item from Annex 3, accumulated the same way.
+ *   - deuda.csv: one row per debt from Annex 5, with the movements of the quarter (not accumulated).
  *   - documentos.csv: every document found, whether it was read and, if not, why. It is the coverage record.
  *
  * Decisions:
@@ -31,8 +33,17 @@ import { existsSync } from "node:fs";
 import { archive, get, latestRaw, type Municipio, normalizeMunicipio, type Row, readRaw, USER_AGENT, writeProcessed } from "@mt/core";
 import * as cheerio from "cheerio";
 import * as XLSX from "xlsx";
-import { headerPeriod, type Period, parseSpendingAnnex, type SpendingAnnex } from "../lrf/annexes.ts";
-import { SPENDING_OBJECTS } from "../lrf/classify.ts";
+import {
+  type DebtAnnex,
+  headerPeriod,
+  type Period,
+  parseDebtAnnex,
+  parseRevenueAnnex,
+  parseSpendingAnnex,
+  type RevenueAnnex,
+  type SpendingAnnex,
+} from "../lrf/annexes.ts";
+import { revenueKind, SPENDING_OBJECTS } from "../lrf/classify.ts";
 import { pdfTables, sheetTables, type Table } from "../lrf/read.ts";
 
 const SOURCE = "municipios-lrf";
@@ -172,7 +183,7 @@ async function annexTables(r: Release, annex: Annex): Promise<Table[] | null> {
   if (r.workbook) {
     const path = await latestRaw(SOURCE, workbookName(r));
     if (!path || !existsSync(path)) return null;
-    const sheet = sheetTables(new Uint8Array(await readRaw(path))).find((s) => sheetMatches(s.name, annex));
+    const sheet = sheetTables(new Uint8Array(await readRaw(path)), { blankAsZero: true }).find((s) => sheetMatches(s.name, annex));
     return sheet ? [sheet.rows] : null;
   }
   const path = await latestRaw(SOURCE, fileName(r, annex));
@@ -181,36 +192,129 @@ async function annexTables(r: Release, annex: Annex): Promise<Table[] | null> {
 
 // ---------------------------------------------------------------- 3 and 4. interpret and classify
 
-function spendingRows(r: Release, annex: SpendingAnnex, url: string): Row[] {
-  return annex.lines.map((l) => ({
-    municipio: r.municipality,
-    anio: r.year,
-    trimestre: r.quarter,
-    fecha_corte: quarterEnd(r),
-    jurisdiccion: l.jurisdiction,
-    unidad: l.unit,
-    partida_codigo: l.code,
-    partida: l.label,
-    objeto_codigo: l.objectCode,
-    objeto: SPENDING_OBJECTS[l.objectCode] ?? l.label,
-    credito_votado: cents(l.votedCredit),
-    aumentos: cents(l.increases),
-    disminuciones: cents(l.decreases),
-    credito_vigente: cents(l.currentCredit),
-    comprometido: cents(l.committed),
-    devengado: cents(l.accrued),
-    mandado_a_pagar: cents(l.ordered),
-    pagado: cents(l.paid),
-    fuente_url: url,
-  }));
+const cents = (n: number) => Math.round(n * 100) / 100;
+
+/** One output table per interpreted annex: how to read it, its rows and its columns. */
+interface Reader {
+  file: string;
+  noun: string;
+  parse: (tables: Table[]) => { lines: unknown[]; notes: string[] } | { error: string };
+  rows: (r: Release, parsed: never, url: string) => Row[];
+  columns: string[];
 }
 
-const cents = (n: number) => Math.round(n * 100) / 100;
+const period = (r: Release) => ({ municipio: r.municipality, anio: r.year, trimestre: r.quarter, fecha_corte: quarterEnd(r) });
+const PERIOD_COLUMNS = ["municipio", "anio", "trimestre", "fecha_corte"];
+
+const READERS: Partial<Record<Annex, Reader>> = {
+  "2": {
+    file: "ejecucion_gastos.csv",
+    noun: "partidas",
+    parse: parseSpendingAnnex,
+    rows: (r: Release, parsed: SpendingAnnex, url: string) =>
+      parsed.lines.map((l) => ({
+        ...period(r),
+        jurisdiccion: l.jurisdiction,
+        unidad: l.unit,
+        partida_codigo: l.code,
+        partida: l.label,
+        objeto_codigo: l.objectCode,
+        objeto: SPENDING_OBJECTS[l.objectCode] ?? l.label,
+        credito_votado: cents(l.votedCredit),
+        aumentos: cents(l.increases),
+        disminuciones: cents(l.decreases),
+        credito_vigente: cents(l.currentCredit),
+        comprometido: cents(l.committed),
+        devengado: cents(l.accrued),
+        mandado_a_pagar: cents(l.ordered),
+        pagado: cents(l.paid),
+        fuente_url: url,
+      })),
+    columns: [
+      ...PERIOD_COLUMNS,
+      "jurisdiccion",
+      "unidad",
+      "partida_codigo",
+      "partida",
+      "objeto_codigo",
+      "objeto",
+      "credito_votado",
+      "aumentos",
+      "disminuciones",
+      "credito_vigente",
+      "comprometido",
+      "devengado",
+      "mandado_a_pagar",
+      "pagado",
+      "fuente_url",
+    ],
+  },
+  "3": {
+    file: "ejecucion_recursos.csv",
+    noun: "recursos",
+    parse: parseRevenueAnnex,
+    rows: (r: Release, parsed: RevenueAnnex, url: string) =>
+      parsed.lines.map((l) => ({
+        ...period(r),
+        recurso_codigo: l.code,
+        recurso: l.label,
+        tipo: revenueKind(l.code) ?? "",
+        calculo_original: cents(l.originalEstimate),
+        aumentos: cents(l.increases),
+        disminuciones: cents(l.decreases),
+        calculo_vigente: cents(l.finalEstimate),
+        ingresado: cents(l.collected),
+        ingresado_trimestre: cents(l.collectedInQuarter),
+        fuente_url: url,
+      })),
+    columns: [
+      ...PERIOD_COLUMNS,
+      "recurso_codigo",
+      "recurso",
+      "tipo",
+      "calculo_original",
+      "aumentos",
+      "disminuciones",
+      "calculo_vigente",
+      "ingresado",
+      "ingresado_trimestre",
+      "fuente_url",
+    ],
+  },
+  "5": {
+    file: "deuda.csv",
+    noun: "deudas",
+    parse: parseDebtAnnex,
+    rows: (r: Release, parsed: DebtAnnex, url: string) =>
+      parsed.lines.map((l) => ({
+        ...period(r),
+        deuda: l.label,
+        moneda: l.currency,
+        saldo_inicio: cents(l.openingBalance),
+        pagos: cents(l.payments),
+        deuda_contraida: cents(l.newDebt),
+        renegociacion: cents(l.renegotiation),
+        saldo_final: cents(l.closingBalance),
+        fuente_url: url,
+      })),
+    columns: [
+      ...PERIOD_COLUMNS,
+      "deuda",
+      "moneda",
+      "saldo_inicio",
+      "pagos",
+      "deuda_contraida",
+      "renegociacion",
+      "saldo_final",
+      "fuente_url",
+    ],
+  },
+};
 
 // ---------------------------------------------------------------- run
 
 export async function run(_args: string[]): Promise<void> {
-  const spending: Row[] = [];
+  const outputs = new Map<Annex, Row[]>();
   const documents: Row[] = [];
   const record = (r: Release, annex: Annex, estado: string, detalle: string) =>
     documents.push({
@@ -251,46 +355,30 @@ export async function run(_args: string[]): Promise<void> {
           warn(`${name} ${periodKey(r)} anexo ${annexName(annex)}: el documento dice ${periodKey(printed)}`);
           continue;
         }
-        if (annex !== "2") {
+        const reader = READERS[annex];
+        if (!reader) {
           record(r, annex, "archivado", "Archivado; todavía no se interpreta.");
           continue;
         }
-        const parsed = parseSpendingAnnex(tables);
+        const parsed = reader.parse(tables);
         if ("error" in parsed) {
           record(r, annex, "error", parsed.error);
-          warn(`${name} ${periodKey(r)} anexo 2: ${parsed.error}`);
+          warn(`${name} ${periodKey(r)} anexo ${annexName(annex)}: ${parsed.error}`);
           continue;
         }
         const url = r.workbook ?? r.files[annex]!;
-        spending.push(...spendingRows(r, parsed, url));
+        outputs.set(annex, [...(outputs.get(annex) ?? []), ...reader.rows(r, parsed as never, url)]);
         const notes = parsed.notes.length ? ` Observaciones: ${parsed.notes.join(". ")}.` : "";
-        record(r, annex, "leido", `${parsed.lines.length} partidas; cierran con la fila TOTALES.${notes}`);
+        record(r, annex, "leido", `${parsed.lines.length} ${reader.noun}; cierran con la fila TOTALES.${notes}`);
       }
     }
   }
 
-  await writeProcessed(SOURCE, "ejecucion_gastos.csv", spending, [
-    "municipio",
-    "anio",
-    "trimestre",
-    "fecha_corte",
-    "jurisdiccion",
-    "unidad",
-    "partida_codigo",
-    "partida",
-    "objeto_codigo",
-    "objeto",
-    "credito_votado",
-    "aumentos",
-    "disminuciones",
-    "credito_vigente",
-    "comprometido",
-    "devengado",
-    "mandado_a_pagar",
-    "pagado",
-    "fuente_url",
-  ]);
+  for (const [annex, reader] of Object.entries(READERS) as [Annex, Reader][]) {
+    const rows = outputs.get(annex) ?? [];
+    await writeProcessed(SOURCE, reader.file, rows, reader.columns);
+    const read = documents.filter((d) => d.anexo === annexName(annex) && d.estado === "leido").length;
+    console.log(`${reader.file}: ${rows.length} filas, anexo ${annexName(annex)} leído en ${read} trimestres`);
+  }
   await writeProcessed(SOURCE, "documentos.csv", documents, ["municipio", "anio", "trimestre", "anexo", "estado", "detalle", "fuente_url"]);
-  const read = documents.filter((d) => d.estado === "leido").length;
-  console.log(`ejecucion_gastos.csv: ${spending.length} filas; anexo 2 leído en ${read} trimestres`);
 }

@@ -77,7 +77,7 @@ Fuente: el anexo 19 de la Ley de Responsabilidad Fiscal que cada municipio publi
 
 ## Presupuesto y gasto de cada municipio
 
-Fuente: los anexos de la Ley de Responsabilidad Fiscal (Ley 7314) que cada municipio publica cada trimestre en su sitio (`municipios-lrf`, scraper en `packages/scrapers/src/sources/municipios-lrf.ts`). Por ahora se interpreta el anexo 2 (gasto contra el presupuesto) de San Rafael y San Martín, desde 2023. Los anexos 1, 2 bis, 3, 4 y 5 se archivan y todavía no se interpretan.
+Fuente: los anexos de la Ley de Responsabilidad Fiscal (Ley 7314) que cada municipio publica cada trimestre en su sitio (`municipios-lrf`, scraper en `packages/scrapers/src/sources/municipios-lrf.ts`). Por ahora se interpretan, de San Rafael y San Martín desde 2023, el anexo 2 (gasto contra el presupuesto, `ejecucion_gastos.csv`), el 3 (recursos, `ejecucion_recursos.csv`) y el 5 (deuda, `deuda.csv`). Los anexos 1, 2 bis y 4 se archivan y todavía no se interpretan.
 
 **Por qué los anexos:** el Tribunal de Cuentas fija qué columnas lleva cada anexo y qué cuentas hay entre ellas (Acuerdo 3949, texto ordenado por el Acuerdo 6644/25). Los 18 municipios publican el mismo contenido en envases distintos (un PDF por anexo, un ZIP, una planilla con todos los anexos) y con distinto detalle. El anexo 2 trae el crédito votado, así que da el presupuesto aprobado aunque el municipio no publique la ordenanza.
 
@@ -96,12 +96,17 @@ Fuente: los anexos de la Ley de Responsabilidad Fiscal (Ley 7314) que cada munic
 - **Detalle:** el que publica cada municipio. San Rafael abre cada partida por jurisdicción y unidad; San Martín da un total por partida. Para comparar municipios se suma por `objeto_codigo`.
 - **Acumulados:** los importes van desde enero hasta el fin del trimestre. El cuarto trimestre es el año completo; el año en curso se muestra con su último trimestre y la aclaración ("hasta junio").
 - **Pesos nominales,** como todos los datos; la conversión a pesos de hoy se hace en la web.
+- **Celdas vacías:** las planillas dejan en blanco los montos en cero (San Martín). Una celda vacía entre dos cifras de la misma fila se lee como cero (`blankAsZero` en `lrf/read.ts`); si no, todas las cifras siguientes se correrían una columna.
+- **Recursos:** los códigos solo coinciden entre municipios en el primer dígito, que da el `tipo` (corriente, capital o financiamiento). Debajo, cada municipio agrupa distinto: San Martín registra casi toda la coparticipación en un rubro "a clasificar" y San Rafael la abre por impuesto. La tabla de equivalencias de recursos se arma cuando estén relevados todos los municipios.
+- **Deuda:** los movimientos del anexo 5 son del trimestre, no acumulados, y el saldo final del cuarto trimestre es la deuda al cierre del año. Un saldo adeudado nunca es negativo: San Martín y San Rafael anotan a veces los saldos en negativo, como pasivo, y se toman en valor absoluto (queda la observación en `documentos.csv`). Se omiten las deudas con todas sus cifras en cero. La norma legal y el acreedor todavía no se leen, porque en los PDF vienen partidos en varias líneas.
 
 **Validación** (`parseSpendingAnnex`):
 
 - Se rechaza el documento si una partida no cumple crédito vigente = votado + aumentos − disminuciones, o si las partidas no suman la fila TOTALES en una columna publicada (2 a 9). Queda en `documentos.csv` con el motivo y un aviso en la corrida.
 - Si fallan solo las columnas 10 a 12, que se derivan de las otras y no se publican, el documento entra y la falla queda como observación en `documentos.csv`. Pasa en San Martín 2025-T2: la planilla corre una cifra de la columna 12 a la fila de abajo.
 - El período impreso en el anexo debe coincidir con el del listado. El anexo 1 es anual: solo se controla el año.
+- En el anexo 3 se aplican las mismas reglas: cálculo vigente = original + aumentos − disminuciones y la suma contra la fila de totales. Se rechazó San Martín 2025-T1, donde dos rubros tienen lo ingresado cargado en la columna de aumentos.
+- Control entre anexos: el cálculo de recursos vigente (anexo 3) es igual al crédito vigente de gastos (anexo 2), porque el presupuesto se aprueba equilibrado. Se cumple en San Martín en todos los cortes y en San Rafael desde 2025; en 2023 y 2024 San Rafael no incluye el financiamiento en el anexo 3.
 
 **Datos personales:** los anexos 22 y 23 traen deudores con nombre y nunca se bajan. De una planilla con todos los anexos (San Martín) se archivan solo las hojas de los anexos 1 a 5.
 

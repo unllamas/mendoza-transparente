@@ -120,7 +120,7 @@ const FLAT_ITEM = /^(\d{5})\s+(.+)$/;
 const AREA_ITEM = /(?:^|\s)(\d+)\.(\d{2})\.(\d{6})\.?\s*(.*)$/;
 const UNIT_ROW = /(?:^|\s)(\d+)\.(\d{2})\.\s*(\D.*)$/;
 const JURISDICTION_ROW = /(?:^|\s)(\d+)\.\s*(\D.*)$/;
-const TOTALS_ROW = /(?:^|\s)totales?\s*:?$/i;
+const TOTALS_ROW = /(?:^|\s)total(?:es)?\s*:?$/i;
 
 /**
  * Reads Annex 2 ("De la ejecución del presupuesto con relación a los créditos acumulada al fin del trimestre"). Keeps
@@ -203,5 +203,195 @@ export function parseSpendingAnnex(tables: Table[]): SpendingAnnex | { error: st
     .filter((x) => x.broken.length)
     .map((x) => `${x.code} ${x.broken.join(", ")}`);
   if (derived.length) notes.push(`el documento no cumple sus cuentas en columnas que no se publican: ${derived.join("; ")}`);
+  return { lines, totals, notes };
+}
+
+// ---------------------------------------------------------------- Annex 3: revenue against estimates
+
+/** Annex 3 columns 2 to 8, in order. Column 1 is the revenue item. */
+export const REVENUE_COLUMNS = [
+  "originalEstimate", // (2) cálculo original
+  "increases", // (3) modificaciones: aumentos
+  "decreases", // (4) modificaciones: disminuciones
+  "finalEstimate", // (5) = 2 + 3 - 4: cálculo definitivo
+  "collected", // (6) ingresado acumulado al fin del trimestre
+  "difference", // (7) = 5 - 6: diferencia
+  "collectedInQuarter", // (8) ingresado en el trimestre
+] as const;
+
+export type RevenueFigures = Record<(typeof REVENUE_COLUMNS)[number], number>;
+
+export interface RevenueLine extends RevenueFigures {
+  /** Revenue code and label as printed. */
+  code: string;
+  label: string;
+}
+
+export interface RevenueAnnex {
+  lines: RevenueLine[];
+  totals: RevenueFigures;
+  notes: string[];
+}
+
+const revenueFigures = (values: number[]) => Object.fromEntries(REVENUE_COLUMNS.map((c, i) => [c, values[i]!])) as RevenueFigures;
+
+/** Revenue item: a code of 9 to 12 digits and its label ("1110101000 Impuesto sobre los ingresos brutos"). */
+const REVENUE_ITEM = /(?:^|\s)(\d{9,12})\s*(.*)$/;
+/** Group subtotal: "1. RECURSOS CORRIENTES". */
+const REVENUE_GROUP = /^(\d)\.\s*(\D.*)$/;
+
+/**
+ * Reads Annex 3 ("De la ejecución del presupuesto con relación al cálculo de recursos y financiamiento"). Keeps the
+ * revenue items and checks them like Annex 2: (5) = (2)+(3)-(4) on every row and the items adding up to TOTALES in
+ * the published columns; the derived column (7) = (5)-(6) is only noted. Labels that the PDF wraps onto the next lines
+ * (San Rafael: "110001010001 IMPUESTO" + "SOBRE LOS INGRESOS" + "BRUTOS") are joined back.
+ */
+export function parseRevenueAnnex(tables: Table[]): RevenueAnnex | { error: string } {
+  const lines: RevenueLine[] = [];
+  let totals: RevenueFigures | null = null;
+  const unknown: string[] = [];
+
+  for (const table of tables) {
+    let last: RevenueLine | null = null;
+    for (const row of table) {
+      const split = splitRow(row, REVENUE_COLUMNS.length);
+      if (!split) {
+        // A wrapped label: a row with words and at most a number inside the label ("LEY 26075").
+        if (last && row.length && row.filter((t) => t.num !== null).length <= 1) last.label = `${last.label} ${rowText(row)}`;
+        else last = null;
+        continue;
+      }
+      const { label, values } = split;
+      last = null;
+      if (TOTALS_ROW.test(label)) {
+        totals = revenueFigures(values);
+        continue;
+      }
+      const item = REVENUE_ITEM.exec(label);
+      if (item) {
+        last = { code: item[1]!, label: item[2]!.trim(), ...revenueFigures(values) };
+        lines.push(last);
+        continue;
+      }
+      if (!REVENUE_GROUP.test(label)) unknown.push(label);
+    }
+  }
+  for (const l of lines) l.label = l.label.replace(/[.\s]+$/, "").replace(/\s+/g, " ");
+
+  if (!totals) return { error: "no se encontró la fila TOTALES" };
+  if (!lines.length) return { error: "no se encontraron recursos" };
+  if (unknown.length) return { error: `filas sin reconocer: ${unknown.slice(0, 3).join(" | ")}` };
+  const broken = lines.filter((l) => !close(l.originalEstimate + l.increases - l.decreases, l.finalEstimate)).map((l) => l.code);
+  if (broken.length) return { error: `recursos donde (5) no da (2)+(3)-(4): ${broken.slice(0, 3).join(", ")}` };
+  const notes: string[] = [];
+  for (const column of REVENUE_COLUMNS) {
+    const sum = lines.reduce((acc, l) => acc + l[column], 0);
+    if (close(sum, totals[column], lines.length)) continue;
+    const problem = `la suma de los recursos en ${column} (${Math.round(sum)}) no da el total (${Math.round(totals[column])})`;
+    if (column !== "difference") return { error: problem };
+    notes.push(problem);
+  }
+  const derived = lines.filter((l) => !close(l.finalEstimate - l.collected, l.difference)).map((l) => l.code);
+  if (derived.length) notes.push(`el documento no cumple (7) = (5)-(6) en: ${derived.join(", ")}`);
+  return { lines, totals, notes };
+}
+
+// ---------------------------------------------------------------- Annex 5: public debt
+
+/** Annex 5 columns 2 to 6, in order. Column 1 is the debt; 7 and 8 (legal norm and creditor) are text. */
+export const DEBT_COLUMNS = [
+  "openingBalance", // (2) saldo al inicio del trimestre
+  "payments", // (3) pagos realizados en el trimestre
+  "newDebt", // (4) deuda contraída en el trimestre
+  "renegotiation", // (5) variación en el trimestre por renegociación
+  "closingBalance", // (6) = 2 - 3 + 4 ± 5: saldo al final del trimestre
+] as const;
+
+export type DebtFigures = Record<(typeof DEBT_COLUMNS)[number], number>;
+
+export interface DebtLine extends DebtFigures {
+  /** Debt as printed ("Préstamo IPV para Compra de Terreno"). */
+  label: string;
+  currency: "nacional" | "extranjera";
+}
+
+export interface DebtAnnex {
+  lines: DebtLine[];
+  totals: DebtFigures;
+  notes: string[];
+}
+
+/**
+ * The figures of a debt row: the last 5 of the longest run of consecutive figures. The label can end in a number
+ * ("ALUMBRADO PUBLICO LEY 9033") and the legal norm comes after the figures, sometimes with a lone "0".
+ */
+function debtSplit(row: Tok[]): { label: string; values: number[] } | null {
+  let best: [number, number] | null = null;
+  for (let i = 0; i < row.length; ) {
+    if (row[i]!.num === null) {
+      i++;
+      continue;
+    }
+    let j = i;
+    while (j < row.length && row[j]!.num !== null) j++;
+    if (j - i >= DEBT_COLUMNS.length && (!best || j - i > best[1] - best[0])) best = [i, j];
+    i = j;
+  }
+  if (!best) return null;
+  const start = best[1] - DEBT_COLUMNS.length;
+  return { label: rowText(row.slice(0, start)).trim(), values: row.slice(start, best[1]).map((t) => t.num!) };
+}
+
+/**
+ * Reads Annex 5 ("Evolución de la deuda pública consolidada acumulada al fin del trimestre"). One line per debt with a
+ * non-zero figure, checked against (6) = (2)-(3)+(4)±(5) and against TOTALES. The legal norm and creditor are not
+ * read yet: PDFs wrap them over several lines.
+ */
+export function parseDebtAnnex(tables: Table[]): DebtAnnex | { error: string } {
+  const lines: DebtLine[] = [];
+  let totals: DebtFigures | null = null;
+  let currency: DebtLine["currency"] = "nacional";
+  for (const row of tables.flat().map(withSigns)) {
+    const text = rowText(row);
+    if (/moneda\s+extranjera/i.test(text)) currency = "extranjera";
+    else if (/moneda\s+nacional/i.test(text)) currency = "nacional";
+    const split = debtSplit(row);
+    if (!split) continue;
+    const values = Object.fromEntries(DEBT_COLUMNS.map((c, i) => [c, split.values[i]!])) as DebtFigures;
+    if (TOTALS_ROW.test(split.label)) {
+      totals = values;
+      continue;
+    }
+    // Section rows ("Moneda Extranjera 0 0 0 0 0") carry the currency, not a debt.
+    if (/^(en\s+)?moneda\s+(nacional|extranjera)$/i.test(split.label)) continue;
+    // Rows without words are the column numbers ("1 2 3 4 5 6=2-o+3+4+o-5 7 8"), not a debt.
+    if (!/\p{L}/u.test(split.label)) continue;
+    if (DEBT_COLUMNS.every((c) => values[c] === 0)) continue;
+    lines.push({ label: split.label.replace(/\s+/g, " "), currency, ...values });
+  }
+
+  if (!totals) return { error: "no se encontró la fila TOTALES" };
+  // The sums are checked on the figures as printed, before any normalization.
+  for (const column of DEBT_COLUMNS) {
+    const sum = lines.reduce((acc, l) => acc + l[column], 0);
+    if (!close(sum, totals[column], lines.length + 1))
+      return { error: `la suma de las deudas en ${column} (${Math.round(sum)}) no da el total (${Math.round(totals[column])})` };
+  }
+  const notes: string[] = [];
+  // A balance owed is never negative: San Martín (2024) prints balances with the sign of a liability, and in 2024-T1
+  // mixes a negative opening with a positive closing balance in the same row. Balances are taken in absolute value.
+  if (lines.some((l) => l.openingBalance < 0 || l.closingBalance < 0)) {
+    notes.push("el documento anota saldos en negativo (como pasivo): se toman en valor absoluto");
+    for (const l of lines) {
+      l.openingBalance = Math.abs(l.openingBalance);
+      l.closingBalance = Math.abs(l.closingBalance);
+    }
+  }
+  // (5) can add or subtract: the closing balance has to match one of both.
+  const off = lines.filter((l) => {
+    const base = l.openingBalance - l.payments + l.newDebt;
+    return !close(base + l.renegotiation, l.closingBalance) && !close(base - l.renegotiation, l.closingBalance);
+  });
+  if (off.length) notes.push(`deudas donde el saldo final no da (2)-(3)+(4)±(5): ${off.map((l) => l.label).join(" | ")}`);
   return { lines, totals, notes };
 }

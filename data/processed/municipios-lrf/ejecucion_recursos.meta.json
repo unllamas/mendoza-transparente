@@ -1,0 +1,108 @@
+{
+  "titulo": "Recursos de cada municipio: lo calculado y lo ingresado, por trimestre",
+  "descripcion": "Cada fila es un recurso (un impuesto coparticipado, una tasa, un aporte, un préstamo) de un municipio al cierre de un trimestre: cuánto calculó cobrar el presupuesto, cómo se modificó y cuánto ingresó. Sale del Anexo 3 de la Ley de Responsabilidad Fiscal (Acuerdo 3949 del Tribunal de Cuentas), que cada municipio publica en su sitio. Los importes son pesos nominales ACUMULADOS desde enero hasta el fin del trimestre, salvo ingresado_trimestre. Cada documento se controla con sus propias cuentas (cálculo vigente = original + aumentos − disminuciones) y con su fila de totales; el que no cierra no entra. Los códigos de recurso no coinciden entre municipios más allá del primer dígito (tipo); cada municipio agrupa distinto, por ejemplo San Martín registra la coparticipación en un solo rubro «a clasificar». Por ahora están San Rafael y San Martín, desde 2023.",
+  "agruparPor": "municipio",
+  "columnas": {
+    "municipio": {
+      "etiqueta": "Municipio",
+      "tipo": "texto"
+    },
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio"
+    },
+    "trimestre": {
+      "etiqueta": "Trimestre",
+      "tipo": "numero",
+      "descripcion": "1 a 4. Los importes se acumulan desde enero hasta el fin de este trimestre."
+    },
+    "fecha_corte": {
+      "etiqueta": "Fecha de corte",
+      "tipo": "fecha",
+      "descripcion": "Último día del trimestre."
+    },
+    "recurso_codigo": {
+      "etiqueta": "Código del recurso",
+      "tipo": "texto",
+      "descripcion": "Código tal como figura en el documento (por ejemplo, 1110101000 en San Martín o 110001010001 en San Rafael)."
+    },
+    "recurso": {
+      "etiqueta": "Recurso",
+      "tipo": "texto",
+      "descripcion": "Nombre del recurso tal como figura en el documento."
+    },
+    "tipo": {
+      "etiqueta": "Tipo",
+      "tipo": "texto",
+      "descripcion": "Sale del primer dígito del código, el único nivel que coincide entre municipios.",
+      "valores": {
+        "corriente": "Recurso corriente (impuestos coparticipados, tasas, aportes)",
+        "capital": "Recurso de capital (reembolsos de obras, recupero de préstamos)",
+        "financiamiento": "Fuente de financiamiento (préstamos tomados, remanentes de años anteriores)"
+      }
+    },
+    "calculo_original": {
+      "etiqueta": "Cálculo original",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Lo que el presupuesto original calculó cobrar en el año (columna 2 del anexo)."
+    },
+    "aumentos": {
+      "etiqueta": "Aumentos",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Modificaciones que suben el cálculo, acumuladas en el año (columna 3)."
+    },
+    "disminuciones": {
+      "etiqueta": "Disminuciones",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Modificaciones que bajan el cálculo, acumuladas en el año (columna 4)."
+    },
+    "calculo_vigente": {
+      "etiqueta": "Cálculo vigente",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Cálculo después de las modificaciones: original + aumentos − disminuciones (columna 5)."
+    },
+    "ingresado": {
+      "etiqueta": "Ingresado",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Lo que ingresó desde enero hasta el fin del trimestre (columna 6)."
+    },
+    "ingresado_trimestre": {
+      "etiqueta": "Ingresado en el trimestre",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Lo que ingresó solo en este trimestre (columna 8)."
+    },
+    "fuente_url": {
+      "etiqueta": "Documento",
+      "tipo": "url",
+      "descripcion": "Enlace al documento oficial en el sitio del municipio (en San Martín, la planilla con todos los anexos del trimestre)."
+    }
+  },
+  "orden": [
+    "municipio",
+    "anio",
+    "trimestre",
+    "recurso",
+    "tipo",
+    "calculo_original",
+    "calculo_vigente",
+    "ingresado",
+    "ingresado_trimestre",
+    "aumentos",
+    "disminuciones",
+    "recurso_codigo",
+    "fuente_url",
+    "fecha_corte"
+  ]
+}

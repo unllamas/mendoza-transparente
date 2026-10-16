@@ -1,0 +1,90 @@
+{
+  "titulo": "Deuda de cada municipio, préstamo por préstamo y trimestre a trimestre",
+  "descripcion": "Cada fila es una deuda de un municipio (un préstamo de la Provincia, del IPV, un empréstito) en un trimestre: el saldo al inicio, lo que se pagó, la deuda nueva y el saldo al final. Sale del Anexo 5 de la Ley de Responsabilidad Fiscal (Acuerdo 3949 del Tribunal de Cuentas), que cada municipio publica en su sitio. A diferencia de los anexos 2 y 3, los movimientos son del trimestre, no acumulados; el saldo final del cuarto trimestre es la deuda al cierre del año. Los saldos van en valor absoluto: algunos documentos los anotan en negativo, como pasivo, y queda la observación en documentos.csv. Se omiten las deudas con todas sus cifras en cero. Todavía no se leen la norma legal ni el acreedor. Por ahora están San Rafael y San Martín, desde 2023.",
+  "agruparPor": "municipio",
+  "columnas": {
+    "municipio": {
+      "etiqueta": "Municipio",
+      "tipo": "texto"
+    },
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio"
+    },
+    "trimestre": {
+      "etiqueta": "Trimestre",
+      "tipo": "numero"
+    },
+    "fecha_corte": {
+      "etiqueta": "Fecha de corte",
+      "tipo": "fecha",
+      "descripcion": "Último día del trimestre."
+    },
+    "deuda": {
+      "etiqueta": "Deuda",
+      "tipo": "texto",
+      "descripcion": "Nombre de la deuda tal como figura en el documento."
+    },
+    "moneda": {
+      "etiqueta": "Moneda",
+      "tipo": "texto",
+      "valores": {
+        "nacional": "En pesos",
+        "extranjera": "En moneda extranjera"
+      }
+    },
+    "saldo_inicio": {
+      "etiqueta": "Saldo al inicio",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Lo que se debía al empezar el trimestre (columna 2 del anexo)."
+    },
+    "pagos": {
+      "etiqueta": "Pagos",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Lo que se pagó en el trimestre (columna 3)."
+    },
+    "deuda_contraida": {
+      "etiqueta": "Deuda nueva",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Deuda tomada en el trimestre (columna 4)."
+    },
+    "renegociacion": {
+      "etiqueta": "Renegociación",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Variación por renegociación en el trimestre (columna 5); puede sumar o restar."
+    },
+    "saldo_final": {
+      "etiqueta": "Saldo al final",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Lo que se debe al terminar el trimestre: inicio − pagos + deuda nueva ± renegociación (columna 6)."
+    },
+    "fuente_url": {
+      "etiqueta": "Documento",
+      "tipo": "url"
+    }
+  },
+  "orden": [
+    "municipio",
+    "anio",
+    "trimestre",
+    "deuda",
+    "saldo_final",
+    "saldo_inicio",
+    "pagos",
+    "deuda_contraida",
+    "renegociacion",
+    "moneda",
+    "fuente_url",
+    "fecha_corte"
+  ]
+}

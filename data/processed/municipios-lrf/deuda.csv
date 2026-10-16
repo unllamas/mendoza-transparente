@@ -1,0 +1,112 @@
+municipio,anio,trimestre,fecha_corte,deuda,moneda,saldo_inicio,pagos,deuda_contraida,renegociacion,saldo_final,fuente_url
+San Rafael,2023,1,2023-03-31,ALUMBRADO PUBLICO LEY 9033,nacional,20018707.9,0,0,0,20018707.9,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2023_1t/anexo5.pdf
+San Rafael,2023,1,2023-03-31,PRESTAMO GBO MZA LEY 8873,nacional,34852482.47,0,0,0,34852482.47,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2023_1t/anexo5.pdf
+San Rafael,2023,1,2023-03-31,PRESTAMO GBO MZA LEY9243,extranjera,12466180.59,2878889.65,0,0,9587290.94,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2023_1t/anexo5.pdf
+San Rafael,2023,2,2023-06-30,ALUMBRADO PUBLICO LEY 9033,nacional,20018707.9,2859815.41,0,0,17158892.49,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2023_2t/anexo5.pdf
+San Rafael,2023,2,2023-06-30,PRESTAMO GBO MZA LEY 8873,nacional,34852482.47,34852482.47,0,0,0,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2023_2t/anexo5.pdf
+San Rafael,2023,2,2023-06-30,PRESTAMO GBO MZA LEY9243,extranjera,9587290.95,2878889.67,0,0,6708401.28,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2023_2t/anexo5.pdf
+San Rafael,2023,3,2023-09-30,ALUMBRADO PUBLICO LEY 9033,nacional,17158882.49,0,0,0,17158882.49,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2023_3t/anexo5.pdf
+San Rafael,2023,3,2023-09-30,PRESTAMO GBO MZA LEY9243,extranjera,6708401.28,2878889.67,0,0,3829511.61,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2023_3t/anexo5.pdf
+San Rafael,2023,4,2023-12-31,ALUMBRADO PUBLICO LEY 9033,nacional,17158892.49,2859815.41,0,0,14299077.08,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2023_4t/anexo5.pdf
+San Rafael,2023,4,2023-12-31,PRESTAMO GBO MZA LEY9243,extranjera,3829511.59,2878889.67,0,0,950621.92,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2023_4t/anexo5.pdf
+San Rafael,2024,1,2024-03-31,ALUMBRADO PUBLICO LEY 9033,nacional,14299077.08,0,0,0,14299077.08,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2024_1t/anexo5.pdf
+San Rafael,2024,1,2024-03-31,PRESTAMO GBO MZA LEY9243,extranjera,950621.92,959629.89,0,0,9007.97,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2024_1t/anexo5.pdf
+San Rafael,2024,2,2024-06-30,PRESTAMO GBO MZA LEY9243,nacional,9007.97,0,9007.97,0,0,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2024_2t/anexo5.pdf
+San Rafael,2024,2,2024-06-30,ALUMBRADO PUBLICO LEY 9033,nacional,14299077.08,2859815.41,0,0,11439261.67,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2024_2t/anexo5.pdf
+San Rafael,2024,4,2024-12-31,ALUMBRADO PUBLICO LEY 9033,nacional,11439261.67,2859815.44,0,0,8579446.23,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2024_4t/anexo5.pdf
+San Rafael,2025,1,2025-03-31,ALUMBRADO PUBLICO LEY 9033,nacional,8579446.26,0,0,0,8579446.26,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2025_1t/anexo5.pdf
+San Rafael,2025,2,2025-06-30,ALUMBRADO PUBLICO LEY 9033,nacional,8579446.23,2859815.41,0,0,5719630.82,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2025_2t/anexo5.pdf
+San Rafael,2025,3,2025-09-30,ALUMBRADO PUBLICO LEY 9033,nacional,8579446.23,2859815.41,0,0,5719630.82,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2025_3t/anexo5.pdf
+San Rafael,2025,4,2025-12-31,ALUMBRADO PUBLICO LEY 9033,nacional,5719630.82,2859815.41,0,0,2859815.41,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2025_4t/anexo5.pdf
+San Rafael,2026,1,2026-03-31,ALUMBRADO PUBLICO LEY 9033,nacional,2859815.41,0,0,0,2859815.41,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2026_1t/anexo5.pdf
+San Rafael,2026,2,2026-06-30,ALUMBRADO PUBLICO LEY 9033,nacional,2859815.41,2859815.41,0,0,0,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2026_2t/anexo5.pdf
+San Martín,2023,1,2023-03-31,Préstamo IPV Viv. Deleg. Chapanay,nacional,12460.33,0,0,0,12460.33,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_1.xlsx
+San Martín,2023,1,2023-03-31,Préstamo IPV Redes de Agua Uniones Vecinales,nacional,112095.73,0,0,0,112095.73,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_1.xlsx
+San Martín,2023,1,2023-03-31,Préstamo Expropiación Terreno calle Alem,nacional,109018.29,0,0,0,109018.29,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_1.xlsx
+San Martín,2023,1,2023-03-31,Préstamo I.P.V. para Compra de Terreno,nacional,8571869.74,0,0,0,8571869.74,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_1.xlsx
+San Martín,2023,1,2023-03-31,Conv.Dpto.Gral.Irrig-Aguas Subt.y Superf.,nacional,2199407.89,0,0,0,2199407.89,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_1.xlsx
+San Martín,2023,1,2023-03-31,Préstamo Ley Nº8873/2016 Fondos Anses,nacional,22560501.56,0,0,0,22560501.56,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_1.xlsx
+San Martín,2023,1,2023-03-31,Prest. Ley 8930 Art.42 Inc.d Equipamiento Vial,nacional,1393868.06,0,0,0,1393868.06,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_1.xlsx
+San Martín,2023,1,2023-03-31,Prest. Ley 9033 Art.44 Mejoram. Alumbrado Pco.,nacional,16757121.97,0,0,0,16757121.97,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_1.xlsx
+San Martín,2023,2,2023-06-30,Préstamo IPV Viv. Deleg. Chapanay,nacional,12460.33,0,0,0,12460.33,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_2.xlsx
+San Martín,2023,2,2023-06-30,Préstamo IPV Redes de Agua Uniones Vecinales,nacional,112095.73,0,0,0,112095.73,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_2.xlsx
+San Martín,2023,2,2023-06-30,Préstamo Expropiación Terreno calle Alem,nacional,109018.29,0,0,0,109018.29,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_2.xlsx
+San Martín,2023,2,2023-06-30,Préstamo I.P.V. para Compra de Terreno,nacional,8571869.74,301635.18,0,0,8270234.56,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_2.xlsx
+San Martín,2023,2,2023-06-30,Préstamo Ley Nº8873/2016 Fondos Anses,nacional,22560501.56,22560501.56,0,0,0,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_2.xlsx
+San Martín,2023,2,2023-06-30,Prest. Ley 8930 Art.42 Inc.d Equipamiento Vial,nacional,1393868.06,1393868.06,0,0,0,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_2.xlsx
+San Martín,2023,2,2023-06-30,Prest. Ley 9033 Art.44 Mejoram. Alumbrado Pco.,nacional,16757121.97,2355371.07,0,0,14401750.9,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_2.xlsx
+San Martín,2023,2,2023-06-30,Prestamo Proyecto Ciclovia Camino Rural Urbano,nacional,0,0,754300,0,754300,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_2.xlsx
+San Martín,2023,3,2023-09-30,Préstamo IPV Viv. Deleg. Chapanay,nacional,12460.33,0,0,0,12460.33,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_3.xlsx
+San Martín,2023,3,2023-09-30,Préstamo IPV Redes de Agua Uniones Vecinales,nacional,112095.73,0,0,0,112095.73,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_3.xlsx
+San Martín,2023,3,2023-09-30,Préstamo Expropiación Terreno calle Alem,nacional,109018.29,0,0,0,109018.29,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_3.xlsx
+San Martín,2023,3,2023-09-30,Préstamo I.P.V. para Compra de Terreno,nacional,8571869.74,301635.18,0,0,8270234.56,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_3.xlsx
+San Martín,2023,3,2023-09-30,Préstamo Ley Nº8873/2016 Fondos Anses,nacional,22560501.56,22560501.56,0,0,0,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_3.xlsx
+San Martín,2023,3,2023-09-30,Prest. Ley 8930 Art.42 Inc.d Equipamiento Vial,nacional,1393868.06,1393868.06,0,0,0,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_3.xlsx
+San Martín,2023,3,2023-09-30,Prest. Ley 9033 Art.44 Mejoram. Alumbrado Pco.,nacional,16757121.97,2355371.07,0,0,14401750.9,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_3.xlsx
+San Martín,2023,3,2023-09-30,Prestamo Proyecto Ciclovia Camino Rural Urbano,nacional,0,0,9295236.81,0,9295236.81,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_3.xlsx
+San Martín,2023,4,2023-12-31,Préstamo IPV Viv. Deleg. Chapanay,nacional,12460.33,0,0,0,12460.33,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_4.xlsx
+San Martín,2023,4,2023-12-31,Préstamo IPV Redes de Agua Uniones Vecinales,nacional,112095.73,0,0,0,112095.73,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_4.xlsx
+San Martín,2023,4,2023-12-31,Préstamo Expropiación Terreno calle Alem,nacional,109018.29,0,0,0,109018.29,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_4.xlsx
+San Martín,2023,4,2023-12-31,Préstamo I.P.V. para Compra de Terreno,nacional,8270234.56,0,0,0,8270234.56,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_4.xlsx
+San Martín,2023,4,2023-12-31,Prest. Ley 9033 Art.44 Mejoram. Alumbrado Pco.,nacional,14401750.9,2355371.07,0,0,12046379.83,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_4.xlsx
+San Martín,2023,4,2023-12-31,Prestamo Proyecto Ciclovia Camino Rural Urbano,nacional,9295236.81,1758416.41,12322235.13,0,19859055.53,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_23_4.xlsx
+San Martín,2024,1,2024-03-31,Préstamo IPV Viv. Deleg. Chapanay,nacional,12460.33,0,0,0,12460.33,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_1.xlsx
+San Martín,2024,1,2024-03-31,Préstamo IPV Redes de Agua Uniones Vecinales,nacional,112095.73,0,0,0,112095.73,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_1.xlsx
+San Martín,2024,1,2024-03-31,Préstamo Expropiación Terreno calle Alem,nacional,109018.29,0,0,0,109018.29,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_1.xlsx
+San Martín,2024,1,2024-03-31,Préstamo I.P.V. para Compra de Terreno,nacional,8270234.56,0,0,0,8270234.56,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_1.xlsx
+San Martín,2024,1,2024-03-31,Prest. Ley 9033 Art.44 Mejoram. Alumbrado Pco.,nacional,12046379.83,0,0,0,12046379.83,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_1.xlsx
+San Martín,2024,1,2024-03-31,Prestamo Proyecto Ciclovia Camino Rural Urbano,nacional,31880458.59,0,0,0,31880458.59,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_1.xlsx
+San Martín,2024,2,2024-06-30,Préstamo IPV Viv. Deleg. Chapanay,nacional,12460.33,0,0,0,12460.33,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_2.xlsx
+San Martín,2024,2,2024-06-30,Préstamo IPV Redes de Agua Uniones Vecinales,nacional,112095.73,0,0,0,112095.73,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_2.xlsx
+San Martín,2024,2,2024-06-30,Préstamo Expropiación Terreno calle Alem,nacional,109018.29,0,0,0,109018.29,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_2.xlsx
+San Martín,2024,2,2024-06-30,Préstamo I.P.V. para Compra de Terreno,nacional,8270234.56,0,0,0,8270234.56,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_2.xlsx
+San Martín,2024,2,2024-06-30,Prest. Ley 9033 Art.44 Mejoram. Alumbrado Pco.,nacional,12046379.83,2355371.07,0,0,9691008.76,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_2.xlsx
+San Martín,2024,2,2024-06-30,Prestamo Proyecto Ciclovia Camino Rural Urbano,nacional,31880458.59,6031839.73,0,0,25848618.86,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_2.xlsx
+San Martín,2024,3,2024-09-30,Préstamo IPV Viv. Deleg. Chapanay,nacional,12460.33,0,0,0,12460.33,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_3.xlsx
+San Martín,2024,3,2024-09-30,Préstamo IPV Redes de Agua Uniones Vecinales,nacional,112095.73,0,0,0,112095.73,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_3.xlsx
+San Martín,2024,3,2024-09-30,Préstamo Expropiación Terreno calle Alem,nacional,109018.29,0,0,0,109018.29,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_3.xlsx
+San Martín,2024,3,2024-09-30,Préstamo I.P.V. para Compra de Terreno,nacional,8270234.56,0,0,0,8270234.56,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_3.xlsx
+San Martín,2024,3,2024-09-30,Prest. Ley 9033 Art.44 Mejoram. Alumbrado Pco.,nacional,9691008.76,0,0,0,9691008.76,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_3.xlsx
+San Martín,2024,3,2024-09-30,Prestamo Proyecto Ciclovia Camino Rural Urbano,nacional,25848618.86,0,0,0,25848618.86,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_3.xlsx
+San Martín,2024,4,2024-12-31,Préstamo IPV Viv. Deleg. Chapanay,nacional,12460.33,0,0,0,12460.33,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_4.xlsx
+San Martín,2024,4,2024-12-31,Préstamo IPV Redes de Agua Uniones Vecinales,nacional,112095.73,0,0,0,112095.73,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_4.xlsx
+San Martín,2024,4,2024-12-31,Préstamo Expropiación Terreno calle Alem,nacional,109018.29,0,0,0,109018.29,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_4.xlsx
+San Martín,2024,4,2024-12-31,Préstamo I.P.V. para Compra de Terreno,nacional,8270234.56,276122.12,0,0,7994112.44,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_4.xlsx
+San Martín,2024,4,2024-12-31,Prest. Ley 9033 Art.44 Mejoram. Alumbrado Pco.,nacional,9691008.76,2355371.07,0,0,7335637.69,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_4.xlsx
+San Martín,2024,4,2024-12-31,Prestamo Proyecto Ciclovia Camino Rural Urbano,nacional,25848618.86,8648407.98,0,0,17200210.88,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_24_4.xlsx
+San Martín,2025,1,2025-03-31,Préstamo IPV Viv. Deleg. Chapanay,nacional,12460.33,0,0,0,12460.33,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_1.xlsx
+San Martín,2025,1,2025-03-31,Préstamo IPV Redes de Agua Uniones Vecinales,nacional,112095.73,0,0,0,112095.73,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_1.xlsx
+San Martín,2025,1,2025-03-31,Préstamo Expropiación Terreno calle Alem,nacional,109018.29,0,0,0,109018.29,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_1.xlsx
+San Martín,2025,1,2025-03-31,Préstamo I.P.V. para Compra de Terreno,nacional,7994112.44,0,0,0,7994112.44,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_1.xlsx
+San Martín,2025,1,2025-03-31,Prest. Ley 9033 Art.44 Mejoram. Alumbrado Pco.,nacional,7335637.69,0,0,0,7335637.69,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_1.xlsx
+San Martín,2025,1,2025-03-31,Prestamo Proyecto Ciclovia Camino Rural Urbano,nacional,17200210.88,0,0,0,17200210.88,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_1.xlsx
+San Martín,2025,2,2025-06-30,Préstamo IPV Viv. Deleg. Chapanay,nacional,12460.33,0,0,0,12460.33,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_2.xlsx
+San Martín,2025,2,2025-06-30,Préstamo IPV Redes de Agua Uniones Vecinales,nacional,112095.73,0,0,0,112095.73,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_2.xlsx
+San Martín,2025,2,2025-06-30,Préstamo Expropiación Terreno calle Alem,nacional,109018.29,0,0,0,109018.29,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_2.xlsx
+San Martín,2025,2,2025-06-30,Préstamo I.P.V. para Compra de Terreno,nacional,7994112.44,0,0,0,7994112.44,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_2.xlsx
+San Martín,2025,2,2025-06-30,Prest. Ley 9033 Art.44 Mejoram. Alumbrado Pco.,nacional,7335637.69,2355371.07,0,0,4980266.62,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_2.xlsx
+San Martín,2025,2,2025-06-30,Prestamo Proyecto Ciclovia Camino Rural Urbano,nacional,17200210.88,10155846.09,0,0,7044364.79,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_2.xlsx
+San Martín,2025,3,2025-09-30,Préstamo IPV Viv. Deleg. Chapanay,nacional,12460.33,0,0,0,12460.33,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_3.xlsx
+San Martín,2025,3,2025-09-30,Préstamo IPV Redes de Agua Uniones Vecinales,nacional,112095.73,0,0,0,112095.73,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_3.xlsx
+San Martín,2025,3,2025-09-30,Préstamo Expropiación Terreno calle Alem,nacional,109018.29,0,0,0,109018.29,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_3.xlsx
+San Martín,2025,3,2025-09-30,Préstamo I.P.V. para Compra de Terreno,nacional,7994112.44,249588.23,0,0,7744524.21,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_3.xlsx
+San Martín,2025,3,2025-09-30,Prest. Ley 9033 Art.44 Mejoram. Alumbrado Pco.,nacional,4980266.62,0,0,0,4980266.62,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_3.xlsx
+San Martín,2025,3,2025-09-30,Prestamo Proyecto Ciclovia Camino Rural Urbano,nacional,7044364.79,0,0,0,7044364.79,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_3.xlsx
+San Martín,2025,4,2025-12-31,Préstamo IPV Viv. Deleg. Chapanay,nacional,12460.33,0,0,0,12460.33,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_4.xlsx
+San Martín,2025,4,2025-12-31,Préstamo IPV Redes de Agua Uniones Vecinales,nacional,112095.73,0,0,0,112095.73,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_4.xlsx
+San Martín,2025,4,2025-12-31,Préstamo Expropiación Terreno calle Alem,nacional,109018.29,0,0,0,109018.29,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_4.xlsx
+San Martín,2025,4,2025-12-31,Préstamo I.P.V. para Compra de Terreno,nacional,7744524.21,0,0,0,7744524.21,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_4.xlsx
+San Martín,2025,4,2025-12-31,Prest. Ley 9033 Art.44 Mejoram. Alumbrado Pco.,nacional,4980266.62,2355371.07,0,0,2624895.55,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_4.xlsx
+San Martín,2025,4,2025-12-31,Prestamo Proyecto Ciclovia Camino Rural Urbano,nacional,7044364.79,11613975.91,172943112.01,0,168373500.89,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_25_4.xlsx
+San Martín,2026,1,2026-03-31,Préstamo IPV Viv. Deleg. Chapanay,nacional,12460.33,0,0,0,12460.33,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_26_1.xlsx
+San Martín,2026,1,2026-03-31,Préstamo IPV Redes de Agua Uniones Vecinales,nacional,112095.73,0,0,0,112095.73,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_26_1.xlsx
+San Martín,2026,1,2026-03-31,Préstamo Expropiación Terreno calle Alem,nacional,109018.29,0,0,0,109018.29,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_26_1.xlsx
+San Martín,2026,1,2026-03-31,Préstamo I.P.V. para Compra de Terreno,nacional,7744524.21,0,0,0,7744524.21,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_26_1.xlsx
+San Martín,2026,1,2026-03-31,Prest. Ley 9033 Art.44 Mejoram. Alumbrado Pco.,nacional,2624895.55,0,0,0,2624895.55,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_26_1.xlsx
+San Martín,2026,1,2026-03-31,Prestamo Proyecto Ciclovia Camino Rural Urbano,nacional,168373500.89,0,0,0,168373500.89,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_26_1.xlsx
+San Martín,2026,2,2026-06-30,Préstamo IPV Viv. Deleg. Chapanay,nacional,12460.33,0,0,0,12460.33,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_26_2.xlsx
+San Martín,2026,2,2026-06-30,Préstamo IPV Redes de Agua Uniones Vecinales,nacional,112095.73,0,0,0,112095.73,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_26_2.xlsx
+San Martín,2026,2,2026-06-30,Préstamo Expropiación Terreno calle Alem,nacional,109018.29,0,0,0,109018.29,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_26_2.xlsx
+San Martín,2026,2,2026-06-30,Préstamo I.P.V. para Compra de Terreno,nacional,7744524.21,0,0,0,7744524.21,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_26_2.xlsx
+San Martín,2026,2,2026-06-30,Prest. Ley 9033 Art.44 Mejoram. Alumbrado Pco.,nacional,2624895.55,2355371.04,0,0,269524.51,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_26_2.xlsx
+San Martín,2026,2,2026-06-30,Prestamo Proyecto Ciclovia Camino Rural Urbano,nacional,168373500.89,13526126.83,0,45455893.59,109391480.47,https://web.sanmartinmza.gob.ar/hacienda/ley_resp_26_2.xlsx

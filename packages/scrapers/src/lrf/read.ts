@@ -28,9 +28,10 @@ export interface Tok {
 /** A table as rows of tokens: one PDF page or one spreadsheet sheet. */
 export type Table = Tok[][];
 
-// Spanish ("1.234,56", "1.234"), English ("1,234.56"; some municipalities export like that) or "-" (empty).
-const NUM_ES = /^(?:-|\d[\d.]*(?:,\d+)?)$/;
-const NUM_EN = /^(?:\d{1,3}(?:,\d{3})+(?:\.\d{1,2})?|\d+\.\d{2})$/;
+// Spanish ("1.234,56", "1.234"), English ("1,234.56"; some municipalities export like that) or "-" (empty). Negative
+// amounts can come with the sign attached ("-1.234,56").
+const NUM_ES = /^(?:-|-?\d[\d.]*(?:,\d+)?)$/;
+const NUM_EN = /^-?(?:\d{1,3}(?:,\d{3})+(?:\.\d{1,2})?|\d+\.\d{2})$/;
 
 /** "1.234,56" → 1234.56; "1,234.56" → 1234.56; "5626739118" → 5626739118; "-" → 0. */
 export function parseNum(s: string): number {
@@ -96,12 +97,24 @@ export async function pdfTables(bytes: Uint8Array): Promise<Table[]> {
   return (await allPageItems(bytes)).map((items) => rowsOf(items, "h"));
 }
 
-/** Every sheet of an XLS/XLSX workbook as a table: each cell is a token (numbers already come as numbers). */
-export function sheetTables(bytes: Uint8Array): { name: string; rows: Table }[] {
+/**
+ * Every sheet of an XLS/XLSX workbook as a table: each cell is a token (numbers already come as numbers).
+ * With `blankAsZero`, an empty cell between two numbers of the same row is a zero: spreadsheets leave zero amounts
+ * blank (San Martín 2025-T3), which would otherwise shift every figure after it one column to the left.
+ */
+export function sheetTables(bytes: Uint8Array, { blankAsZero = false } = {}): { name: string; rows: Table }[] {
   const wb = XLSX.read(bytes, { type: "array" });
   return wb.SheetNames.map((name) => {
     const aoa = XLSX.utils.sheet_to_json<unknown[]>(wb.Sheets[name]!, { header: 1, raw: true, defval: "" });
-    const rows = aoa.map((r) => r.flatMap((c): Tok[] => (typeof c === "number" ? [{ text: String(c), num: c }] : tokenize(String(c)))));
+    const rows = aoa.map((r) => {
+      const numeric = r.flatMap((c, i) => (typeof c === "number" ? [i] : []));
+      const [first, last] = [numeric[0] ?? -1, numeric[numeric.length - 1] ?? -1];
+      return r.flatMap((c, i): Tok[] => {
+        if (typeof c === "number") return [{ text: String(c), num: c }];
+        if (blankAsZero && i > first && i < last && String(c).trim() === "") return [{ text: "0", num: 0 }];
+        return tokenize(String(c));
+      });
+    });
     return { name, rows };
   });
 }
