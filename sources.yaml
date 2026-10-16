@@ -216,7 +216,7 @@
   nombre: Personal de los municipios (Ley de Responsabilidad Fiscal)
   organismo: Municipios de Mendoza
   url: https://www.tribunaldecuentas.mendoza.gov.ar/ley-de-resp-fiscal
-  descripcion: "Cuántos cargos de planta permanente, planta temporaria y contratos de locación tiene cada municipio y cuánto se liquidó, trimestre a trimestre, según el Anexo 19 que cada uno publica en su sitio. Cuatro municipios no lo publican de forma accesible. La Ciudad de Mendoza suma una serie mensual."
+  descripcion: "Cuántos cargos de planta permanente, planta temporaria y contratos de locación tiene cada municipio y cuánto se liquidó, trimestre a trimestre, según el Anexo 19 que cada uno publica en su sitio. Godoy Cruz y Las Heras no lo publican de forma que se pueda archivar. La Ciudad de Mendoza suma una serie mensual."
   formato: pdf (zip, planillas)
   frecuencia: trimestral
   dificultad: dificil

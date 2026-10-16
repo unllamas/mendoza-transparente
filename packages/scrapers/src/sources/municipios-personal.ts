@@ -7,7 +7,7 @@
  * Tribunal de Cuentas lo recibe por un sistema con usuario y el Ministerio de Hacienda solo publica el gasto en
  * personal, sin cantidad de cargos). Cada sitio tiene su forma de listar los informes; hay un "descubridor" por
  * municipio (ver `DISCOVERERS`). Los municipios que no publican el Anexo 19 en ningún lado que se haya podido
- * encontrar (Godoy Cruz, Las Heras, Lavalle, San Martín) quedan afuera y se anotan en `no-publicado.yaml`.
+ * encontrar (Godoy Cruz, Las Heras) quedan afuera y se anotan en `no-publicado.yaml`.
  *
  * Qué trae el anexo: una fila por jurisdicción con (cargos, importe) de planta permanente, planta temporaria, total
  * de planta, horas cátedra y (cantidad, importe) de contratos de locación de servicios u obras. De cada documento se
@@ -33,6 +33,12 @@
  *     publicar esos datos, se archiva solo el Anexo 19 (extraído del ZIP) o la página del Anexo 19 de Tupungato
  *     (como JSON con los textos y su posición y el sha256 del PDF original). En el manifiesto, la URL de cada archivo es la
  *     del ZIP o PDF original.
+ *   - Lavalle: el sitio viejo (/old/acuerdo3949) lista los trimestres en un formulario (POST con `acuerdo=AAAAT`). Su PDF
+ *     trae dos filas, la Municipalidad y el Honorable Concejo Deliberante, sin fila de totales: como con los demás
+ *     municipios que no completan los totales, se toma la fila única de datos (la Municipalidad). El HCD queda afuera.
+ *   - San Martín: un Excel por trimestre con TODOS los anexos (1 a 2 MB, y los anexos 22 y 23 traen datos de
+ *     contribuyentes). No se encontró la página que los lista: se prueba el patrón `hacienda/ley_resp_AA_T.xlsx` (o
+ *     `.xls` en 2018 y 2019) con un pedido HEAD por trimestre. Se archiva solo la hoja "ANEXO 19", como XLSX nuevo.
  *   - Los documentos ya archivados no se vuelven a descargar (un trimestre publicado no cambia); solo se consultan
  *     los listados.
  *   - No hay nombres ni datos personales en el Anexo 19: no hay nada que redactar.
@@ -42,7 +48,19 @@ import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { archive, get, latestRaw, type Municipio, normalizeMunicipio, RAW_DIR, ROOT, type Row, readRaw, writeProcessed } from "@mt/core";
+import {
+  archive,
+  get,
+  latestRaw,
+  type Municipio,
+  normalizeMunicipio,
+  RAW_DIR,
+  ROOT,
+  type Row,
+  readRaw,
+  USER_AGENT,
+  writeProcessed,
+} from "@mt/core";
 import * as cheerio from "cheerio";
 import { unzipSync } from "fflate";
 import { getDocumentProxy } from "unpdf";
@@ -133,7 +151,7 @@ const isTotalsLabel = (label: string) => /^t\.?o\.?t\.?a\.?l/.test(label);
  * Primero busca una fila "TOTALES" completa en cualquiera de las lecturas; si no hay, la única fila de datos
  * (municipios que no completan los totales) o la suma de las filas.
  */
-export function pickTotals(rowsList: Tok[][][]): { cells: number[]; how: string } | null {
+export function pickTotals(rowsList: Tok[][][], blankHoursCount = false): { cells: number[]; how: string } | null {
   const parsed = rowsList.map((rows) =>
     rows
       .map((r) => ({
@@ -145,7 +163,12 @@ export function pickTotals(rowsList: Tok[][][]): { cells: number[]; how: string 
         nums: r.filter((t) => t.num !== null).map((t) => t.num!),
       }))
       // Si el municipio dejó en blanco las horas cátedra, la fila trae 8 cifras: se completan con ceros.
-      .map((p) => (p.nums.length === 8 ? { ...p, nums: [...p.nums.slice(0, 6), 0, 0, ...p.nums.slice(6)] } : p)),
+      .map((p) => (p.nums.length === 8 ? { ...p, nums: [...p.nums.slice(0, 6), 0, 0, ...p.nums.slice(6)] } : p))
+      // Lavalle (2020) deja en blanco solo la cantidad de horas cátedra y trae el importe: 9 cifras. Solo con
+      // `blankHoursCount`: en Guaymallén 2022-T1 también hay 9 cifras y no está claro cuál falta.
+      .map((p) =>
+        blankHoursCount && p.nums.length === 9 && p.nums[6] === 0 ? { ...p, nums: [...p.nums.slice(0, 6), 0, ...p.nums.slice(6)] } : p,
+      ),
   );
   for (const rows of parsed) {
     const totals = rows.filter((p) => isTotalsLabel(p.label) && p.nums.length >= 10);
@@ -296,7 +319,7 @@ function periodFromItems(items: Item[]): Period | null {
 
 // ---------------------------------------------------------------- documentos a bajar
 
-type Kind = "pdf" | "zip" | "bigpdf" | "drive";
+type Kind = "pdf" | "zip" | "bigpdf" | "drive" | "workbook";
 
 interface Doc {
   municipality: Municipio;
@@ -608,6 +631,54 @@ const DISCOVERERS: Record<string, Discoverer> = {
     return docs;
   },
 
+  /** Lavalle: un formulario (POST `acuerdo=AAAAT`) devuelve los anexos de cada trimestre; el PDF es `Anexo 19(AAAA-T).pdf`. */
+  async Lavalle() {
+    const base = "https://lavallemendoza.gob.ar/old/acuerdo3949";
+    const $ = await indexPage(base, "indice-lavalle.html");
+    const docs: Doc[] = [];
+    const periods = $("select#acuerdo option")
+      .toArray()
+      .map((o) => /^(\d{4})([1-4])$/.exec($(o).attr("value") ?? ""))
+      .filter((m): m is RegExpExecArray => !!m && +m[1]! >= FIRST_YEAR);
+    for (const m of periods) {
+      const resp = await get(base, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `acuerdo=${m[1]}${m[2]}`,
+      });
+      const page = cheerio.load(await resp.text());
+      await sleep(800);
+      const link = anchors(page, base).find((a) => /\.pdf$/i.test(a.href) && isAnnex19(a.href));
+      if (link) docs.push({ municipality: "Lavalle", year: +m[1]!, quarter: +m[2]!, url: link.href, kind: "pdf" });
+      else warn(`Lavalle ${m[1]}-T${m[2]}: el listado no tiene el anexo 19`);
+    }
+    return docs;
+  },
+
+  /**
+   * San Martín: Hacienda publica un Excel por trimestre con todos los anexos en web.sanmartinmza.gob.ar/hacienda/
+   * (el índice de la carpeta da 403 y no se encontró la página que los enlaza). Se prueba el patrón del nombre.
+   */
+  async "San Martín"() {
+    const base = "https://web.sanmartinmza.gob.ar/hacienda/";
+    const docs: Doc[] = [];
+    const lastYear = new Date().getFullYear();
+    for (let year = FIRST_YEAR; year <= lastYear; year++) {
+      for (let quarter = 1; quarter <= 4; quarter++) {
+        for (const ext of year < 2020 ? ["xls", "xlsx"] : ["xlsx", "xls"]) {
+          const url = `${base}ley_resp_${String(year).slice(2)}_${quarter}.${ext}`;
+          const head = await fetch(url, { method: "HEAD", headers: { "User-Agent": USER_AGENT }, signal: AbortSignal.timeout(60_000) });
+          await sleep(400);
+          if (head.ok) {
+            docs.push({ municipality: "San Martín", year, quarter, url, kind: "workbook" });
+            break;
+          }
+        }
+      }
+    }
+    return docs;
+  },
+
   /** Luján de Cuyo: la página muestra solo el último trimestre, con los anexos en Drive. */
   async "Luján de Cuyo"() {
     const base = "https://lujandecuyo.gob.ar/responsabilidad-fiscal/";
@@ -627,8 +698,6 @@ const DISCOVERERS: Record<string, Discoverer> = {
 export const NOT_PUBLISHED: Record<string, string> = {
   "Godoy Cruz": "los anexos están en un sistema (webapps.godoycruz.gob.ar/responsabilidadfiscal) que no expone enlaces de descarga",
   "Las Heras": "los anexos están en una aplicación Oracle APEX (web6.lasheras.gob.ar/apex) que no se puede recorrer sin sesión",
-  Lavalle: "el sitio oficial (lavallemendoza.gob.ar) no tiene sección de responsabilidad fiscal",
-  "San Martín": "el sitio oficial (sanmartinmza.gob.ar) no tiene sección de transparencia ni de responsabilidad fiscal",
 };
 
 // ---------------------------------------------------------------- descarga y archivo
@@ -710,6 +779,25 @@ async function download(doc: Doc, manifest: Map<string, ManifestEntry>): Promise
     entries.sort((a, b) => Number(/\.pdf$/i.test(b[0])) - Number(/\.pdf$/i.test(a[0])));
     const [name, data] = entries[0]!;
     out = { bytes: data, ext: name.split(".").pop()!.toLowerCase() };
+  } else if (doc.kind === "workbook") {
+    // Un Excel con todos los anexos: se guarda solo la hoja "ANEXO 19" (los anexos 22 y 23 traen datos de contribuyentes).
+    const wb = XLSX.read(bytes, { type: "array" });
+    const name = wb.SheetNames.find((n) => /^anexo\s*19$/i.test(n.trim()));
+    if (!name) {
+      warn(`${doc.municipality} ${doc.url}: el Excel no tiene la hoja del anexo 19`);
+      return null;
+    }
+    const sheet = wb.Sheets[name]!;
+    const text = XLSX.utils.sheet_to_json<unknown[]>(sheet, { header: 1, defval: "" }).flat().join(" ");
+    const y = /EJERCICIO\s*:?\s*(\d{4})/i.exec(text)?.[1];
+    const q = /TRIMESTRE\s*:?\s*([1-4])\b/i.exec(text)?.[1];
+    if ((y && +y !== doc.year) || (q && +q !== doc.quarter)) {
+      warn(`${doc.municipality} ${doc.url}: la hoja dice ejercicio ${y} trimestre ${q}, no ${doc.year}-T${doc.quarter}; no se usa`);
+      return null;
+    }
+    const single = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(single, sheet, "ANEXO 19");
+    out = { bytes: new Uint8Array(XLSX.write(single, { type: "array", bookType: "xlsx" }) as ArrayBuffer), ext: "xlsx" };
   } else if (doc.kind === "bigpdf") {
     const found = await annexPageItems(bytes);
     if (!found) {
@@ -785,6 +873,7 @@ async function parseArchived(entry: ManifestEntry): Promise<Parsed | { error: st
   const ext = entry.filename.split(".").pop()!;
   let rows: Tok[][][] = [];
   let docYear: number | null = null;
+  const lenient = entry.filename.startsWith("lavalle-");
   if (ext === "json") {
     const items = (JSON.parse(new TextDecoder().decode(bytes)) as { items: Item[] }).items;
     rows = pdfRows(items);
@@ -793,9 +882,15 @@ async function parseArchived(entry: ManifestEntry): Promise<Parsed | { error: st
     // Los anexos largos (Capital: 8 páginas con el detalle por escalafón) traen los totales recién en la última página;
     // en uno de una sola página, la fila de totales o la única fila de datos.
     const pages = await allPageItems(bytes);
-    const picks = pages.map((items) => ({ items, pick: pickTotals(pdfRows(items)) })).filter((p) => p.pick);
+    const picks = pages.map((items) => ({ items, pick: pickTotals(pdfRows(items), lenient) })).filter((p) => p.pick);
     const withTotals = picks.filter((p) => p.pick!.how === "totales");
-    const chosen = withTotals.length ? withTotals[withTotals.length - 1] : pages.length === 1 ? picks[0] : undefined;
+    // Sin fila de totales vale la página con la única fila de datos. En Lavalle el PDF trae una segunda página vacía o
+    // la fila partida en otra página (2020); en los demás, solo un documento de una página.
+    const chosen = withTotals.length
+      ? withTotals[withTotals.length - 1]
+      : (lenient ? picks.length === 1 : pages.length === 1)
+        ? picks[0]
+        : undefined;
     if (chosen) {
       rows = pdfRows(chosen.items);
       docYear = yearFromItems(chosen.items) ?? yearFromItems(pages[0]!);
@@ -804,7 +899,7 @@ async function parseArchived(entry: ManifestEntry): Promise<Parsed | { error: st
     rows = sheetRows(bytes);
   }
   // `rows` ya es una lista de alternativas (horizontal y rotada, o una por hoja).
-  const picked = pickTotals(rows);
+  const picked = pickTotals(rows, lenient);
   if (!picked) return { error: "no se encontró la fila de totales" };
   const check = checkTotals(picked.cells);
   if (check.error) return { error: `no cuadra (${check.error})` };
