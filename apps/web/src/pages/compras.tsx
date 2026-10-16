@@ -231,12 +231,12 @@ export function OrganismoPage() {
       )}
 
       <Section title="Principales proveedores">
-        <ul className="flex flex-col gap-3 text-body-regular">
+        <ul className={listVariants()}>
           {o.proveedores.map((p) => {
             const fila = (
-              <>
+              <span className="flex min-w-0 flex-1 flex-col gap-1.5">
                 <span className="flex items-baseline justify-between gap-3">
-                  <span className="min-w-0 truncate group-hover:text-text-link" title={p.nombre}>
+                  <span className="min-w-0 truncate text-body-regular group-hover:text-text-link" title={p.nombre}>
                     {p.nombre}
                   </span>
                   <span className="text-body-medium whitespace-nowrap tabular-nums">{formatMoneda(p.monto, "ARS")}</span>
@@ -252,20 +252,17 @@ export function OrganismoPage() {
                     {p.procesos} {p.procesos === 1 ? "proceso" : "procesos"}
                   </span>
                 </span>
-              </>
+              </span>
             );
             return (
               <li key={p.cuit}>
                 {p.slug ? (
-                  <Link
-                    to="/proveedores/$slug"
-                    params={{ slug: p.slug }}
-                    className="group flex flex-col gap-1 rounded-lg hover:bg-background-secondary-default"
-                  >
+                  <Link to="/proveedores/$slug" params={{ slug: p.slug }} className={listRowVariants()}>
                     {fila}
+                    <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
                   </Link>
                 ) : (
-                  <div className="flex flex-col gap-1">{fila}</div>
+                  <div className={listRowVariants({ interactive: false })}>{fila}</div>
                 )}
               </li>
             );
