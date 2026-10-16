@@ -1,6 +1,6 @@
 import { tileVariants } from "@mt/ui/components/card";
 import { cx } from "@mt/ui/lib/cx";
-import { useMemo, useState } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import type { MapaMendoza as MapaData } from "@/types.ts";
 
@@ -23,7 +23,23 @@ interface Props {
 
 /** Mapa coroplético de los 18 departamentos, con recuadro ampliado del Gran Mendoza. */
 export function MapaMendoza({ mapa, valores, formatValue, seleccionado, onSelect, leyenda }: Props) {
-  const [hover, setHover] = useState<string | null>(null);
+  // Tooltip anchored above the hovered (mouse) or focused (keyboard) department; a tap selects instead.
+  const [tip, setTip] = useState<{ municipio: string; x: number; y: number } | null>(null);
+  const boxRef = useRef<HTMLDivElement>(null);
+  const tipRef = useRef<HTMLDivElement>(null);
+  const showTip = (el: SVGPathElement, municipio: string) => {
+    const box = boxRef.current?.getBoundingClientRect();
+    if (!box) return;
+    const r = el.getBoundingClientRect();
+    setTip({ municipio, x: r.left + r.width / 2 - box.left, y: r.top - box.top });
+  };
+  // Keep the tooltip inside the map: shift it sideways when the department is near an edge.
+  useLayoutEffect(() => {
+    const el = tipRef.current;
+    const width = boxRef.current?.clientWidth;
+    if (!tip || !el || !width) return;
+    el.style.left = `${Math.min(Math.max(tip.x - el.offsetWidth / 2, 0), width - el.offsetWidth)}px`;
+  }, [tip]);
   const nums = Object.values(valores);
   const min = Math.min(...nums);
   const max = Math.max(...nums);
@@ -47,8 +63,6 @@ export function MapaMendoza({ mapa, valores, formatValue, seleccionado, onSelect
     return `${cx - size / 2} ${cy - size / 2} ${size} ${size}`;
   }, [mapa]);
 
-  const activo = hover ?? seleccionado;
-
   const paths = (zoom: boolean) =>
     mapa.departamentos
       .filter((d) => !zoom || GRAN_MENDOZA.includes(d.municipio))
@@ -67,8 +81,10 @@ export function MapaMendoza({ mapa, valores, formatValue, seleccionado, onSelect
             aria-label={`${d.municipio}: ${valores[d.municipio] !== undefined ? formatValue(valores[d.municipio]!) : "sin dato"}`}
             aria-pressed={sel}
             className="cursor-pointer outline-none transition-opacity hover:opacity-80 focus-visible:opacity-80"
-            onPointerEnter={() => setHover(d.municipio)}
-            onPointerLeave={() => setHover(null)}
+            onPointerEnter={(e) => e.pointerType === "mouse" && showTip(e.currentTarget, d.municipio)}
+            onPointerLeave={() => setTip(null)}
+            onFocus={(e) => showTip(e.currentTarget, d.municipio)}
+            onBlur={() => setTip(null)}
             onClick={() => onSelect(sel ? null : d.municipio)}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
@@ -82,7 +98,7 @@ export function MapaMendoza({ mapa, valores, formatValue, seleccionado, onSelect
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="grid grid-cols-[3fr_2fr] items-start gap-3 sm:gap-4">
+      <div ref={boxRef} className="relative grid grid-cols-[3fr_2fr] items-start gap-3 sm:gap-4">
         <svg
           viewBox={mapa.viewBox}
           className="block h-auto max-h-[22rem] w-full sm:max-h-[36rem]"
@@ -97,21 +113,18 @@ export function MapaMendoza({ mapa, valores, formatValue, seleccionado, onSelect
           </svg>
           <span className="px-1 text-caption-1-regular text-text-tertiary">Gran Mendoza, ampliado</span>
         </div>
-      </div>
-
-      <div
-        className={cx(tileVariants({ size: "sm" }), "flex min-h-11 flex-col justify-center px-3 py-2 text-body-regular")}
-        aria-live="polite"
-      >
-        {activo ? (
-          <span>
-            <span className="font-medium">{activo}</span>{" "}
+        {tip && (
+          <div
+            ref={tipRef}
+            role="tooltip"
+            className="pointer-events-none absolute z-10 -translate-y-full whitespace-nowrap rounded-lg border border-border-button-default bg-background-primary-default px-3 py-2 text-body-regular text-text-primary shadow-dropdown"
+            style={{ top: tip.y - 8, left: tip.x }}
+          >
+            <span className="font-medium">{tip.municipio}</span>{" "}
             <span className="text-text-secondary tabular-nums">
-              {valores[activo] !== undefined ? formatValue(valores[activo]!) : "sin dato"}
+              {valores[tip.municipio] !== undefined ? formatValue(valores[tip.municipio]!) : "sin dato"}
             </span>
-          </span>
-        ) : (
-          <span className="text-text-tertiary">Tocá un departamento para ver su dato.</span>
+          </div>
         )}
       </div>
 

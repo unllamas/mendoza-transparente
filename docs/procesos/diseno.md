@@ -132,6 +132,7 @@ El ámbar es un color de estado, como el verde y el rojo: va siempre con ícono 
 - Mapas con escala por cuantiles (cada tono agrupa una cantidad parecida de departamentos) y más = más intenso en ambos modos.
 - **El borde entre departamentos se ve igual en el mapa y en el recuadro ampliado** (mismo grosor en pantalla, con `vectorEffect="non-scaling-stroke"`): si en el ampliado se afina, los departamentos con tonos parecidos se funden en una sola mancha.
 - **Tocar un departamento en un mapa que no es de un tema lleva a la página del municipio** (`/municipios/<slug>`), no a la página del tema.
+- **El dato de un departamento se lee en un tooltip** arriba de él al pasar el mouse o al llegar con el teclado, no en una tarjeta fija debajo del mapa que queda vacía hasta que se interactúa. En el celular no hay hover: tocar abre el detalle o la página del municipio, así que nada se pierde.
 - Montos en valores reales (pesos de hoy) y por habitante cuando se comparan años o lugares.
 
 ## Textos de la interfaz
