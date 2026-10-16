@@ -12,10 +12,10 @@ import type { MunicipalBudget, MunicipalBudgetYear } from "@/types.ts";
 
 const money = (v: number) => formatMoneda(v, "ARS");
 const percent = (part: number, whole: number) => (whole ? Math.round((part / whole) * 100) : 0);
-/** Share of a total for a bar: "34 %", or "menos de 1 %" so a small item does not read as nothing. */
+/** Share of a total for a bar: "34 %", or "< 1 %" so a small item does not read as nothing. */
 const share = (part: number, whole: number) => {
   const p = whole ? (part / whole) * 100 : 0;
-  return p > 0 && p < 1 ? "menos de 1 %" : `${Math.round(p)} %`;
+  return p > 0 && p < 1 ? "< 1 %" : `${Math.round(p)} %`;
 };
 
 /** One year of a municipality's budget: what was approved, spent and paid, on what, from where, and the debt. */
@@ -111,7 +111,7 @@ export function BudgetYear({ budget, year }: { budget: MunicipalBudget; year: Mu
               />
             )}
           </div>
-          <p className="text-body-regular text-text-tertiary">Los recursos que más aportaron, con los nombres que usa el municipio.</p>
+          <p className="text-body-regular text-text-tertiary">Los recursos que más aportaron en el año.</p>
           <BarList
             items={y.revenue.top.map((r) => ({ nombre: r.name, valor: r.collected, detalle: share(r.collected, ownRevenue) }))}
             formatValue={money}

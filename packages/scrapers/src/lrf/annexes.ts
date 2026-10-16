@@ -16,20 +16,47 @@ export interface Period {
 
 const rowText = (row: Tok[]) => row.map((t) => t.text).join(" ");
 
-/** Period printed in the annex header ("EJERCICIO: 2026", "TRIMESTRE: 2"). */
+const headerText = (tables: Table[]) => (tables[0] ?? []).slice(0, 20).map(rowText).join("\n");
+const QUARTER_WORDS: Record<string, number> = { primer: 1, segund: 2, tercer: 3, cuart: 4 };
+
+/** Period printed in the annex header ("EJERCICIO: 2026", "TRIMESTRE: 2" or, in Infogov, "Trimestre: Segundo"). */
 export function headerPeriod(tables: Table[]): Period | null {
-  const text = (tables[0] ?? []).slice(0, 20).map(rowText).join("\n");
+  const text = headerText(tables);
   const year = /EJERCICIO[ \t]*:?[ \t]*(\d{4})/i.exec(text);
-  const quarter = /TRIMESTRE[ \t]*:?[ \t]*([1-4])\b/i.exec(text);
-  return year && quarter ? { year: +year[1]!, quarter: +quarter[1]! } : null;
+  const quarter = /TRIMESTRE[ \t]*:?[ \t]*([1-4]\b|primer|segund|tercer|cuart)/i.exec(text);
+  if (!year || !quarter) return null;
+  const q = quarter[1]!.toLowerCase();
+  return { year: +year[1]!, quarter: QUARTER_WORDS[q] ?? +q };
 }
 
-/** Joins a lone "-" with the figure right after it: some PDFs print the sign of a negative amount as a separate text. */
-function withSigns(row: Tok[]): Tok[] {
+const ROMAN: Record<string, string> = { I: "1", II: "2", III: "3", IV: "4", V: "5", VI: "6" };
+
+/**
+ * Annex number printed in the title ("ANEXO 2:", "ANEXO II", "ANEXO 2 BIS"), as "2" or "2bis"; null if not found.
+ * It catches files published under the wrong name (Rivadavia 2024-T2: "Anexo02.pdf" holds annex 2 bis).
+ */
+export function headerAnnex(tables: Table[]): string | null {
+  const m = /\bANEXO[ \t]+([IVX]+|\d{1,2})\b[ \t]*(BIS)?/i.exec(headerText(tables));
+  if (!m) return null;
+  const n = ROMAN[m[1]!.toUpperCase()] ?? String(Number(m[1]));
+  return m[2] ? `${n}bis` : n;
+}
+
+const isAmount = (t: Tok | undefined) => !!t && t.num !== null && /,\d+\)?$/.test(t.text);
+
+/**
+ * Joins a lone "-" with the figure right after it: some PDFs print the sign of a negative amount as a separate text.
+ * By default only when the "-" opens the row or follows another amount; after a word or a number without decimals it
+ * can be part of the label ("Prestamo Ley 9356 - 33980500,00", General Alvear). With `afterLabel`, also there: in San
+ * Rafael "PRESTAMO GBO MZA LEY9243 - 9.007,97" is a negative balance. Annex 5 tries both and keeps the one that adds
+ * up to TOTALES.
+ */
+function withSigns(row: Tok[], afterLabel = false): Tok[] {
   const out: Tok[] = [];
   for (let i = 0; i < row.length; i++) {
     const next = row[i + 1];
-    if (row[i]!.text === "-" && next && next.num !== null && next.text !== "-") {
+    const opens = afterLabel || i === 0 || isAmount(row[i - 1]);
+    if (row[i]!.text === "-" && opens && next && next.num !== null && next.text !== "-") {
       out.push({ text: `-${next.text}`, num: -next.num });
       i++;
     } else out.push(row[i]!);
@@ -122,15 +149,8 @@ const UNIT_ROW = /(?:^|\s)(\d+)\.(\d{2})\.\s*(\D.*)$/;
 const JURISDICTION_ROW = /(?:^|\s)(\d+)\.\s*(\D.*)$/;
 const TOTALS_ROW = /(?:^|\s)total(?:es)?\s*:?$/i;
 
-/**
- * Reads Annex 2 ("De la ejecución del presupuesto con relación a los créditos acumulada al fin del trimestre"). Keeps
- * the item rows (the most detailed level the municipality publishes) and checks them against the document:
- *   - Rejects the document if a row breaks (5) = (2)+(3)-(4) or if the items do not add up to the TOTALES row in a
- *     published column (2 to 9): that means a misread row or a document that cannot be trusted.
- *   - Only notes the problems in the derived columns 10 to 12 (San Martín 2025-T2 has a value of column 12 shifted
- *     to the next row): they are not published and do not change the figures that are.
- */
-export function parseSpendingAnnex(tables: Table[]): SpendingAnnex | { error: string } {
+/** One row per item with the code and its 11 figures: San Martín ("41100 PERSONAL") and San Rafael (by area). */
+function readItemRows(tables: Table[]): { lines: SpendingLine[]; totals: SpendingFigures | null } | { error: string } {
   const lines: SpendingLine[] = [];
   const jurisdictions = new Map<string, string>();
   const units = new Map<string, string>();
@@ -185,9 +205,97 @@ export function parseSpendingAnnex(tables: Table[]): SpendingAnnex | { error: st
     if (!areaName(label)) unknown.push(label);
   }
 
-  if (!totals) return { error: "no se encontró la fila TOTALES" };
-  if (!lines.length) return { error: "no se encontraron partidas" };
   if (unknown.length) return { error: `filas sin reconocer: ${unknown.slice(0, 3).join(" | ")}` };
+  return { lines, totals };
+}
+
+/** Item row of the Infogov layout: "41100000 (Subtotal)". The label and the figures can come on the next lines. */
+const INFOGOV_ITEM = /^(\d{8})\s*\(Subtotal\)/i;
+const INFOGOV_TOTAL = /^TOTAL\s+GENERAL\b/i;
+/** The most detailed level, the one that adds up to TOTAL GENERAL: "41100000" (levels 1 and 2 are "40000000", "41000000"). */
+const INFOGOV_LEAF = /^\d\d[1-9]00000$/;
+/** Page furniture after the table: user, certification and the system's address. */
+const INFOGOV_FURNITURE = /^(usuario|certifico|registros|normativa|www\.|p[áa]gina|hoja)/i;
+
+/**
+ * Infogov layout (pie "www.infogov.com.ar"; General Alvear, Malargüe, Maipú, Lavalle, La Paz and others): each item
+ * opens with "41100000 (Subtotal)" and its label and figures follow, on the same line or the next ones, until the next
+ * item. Long figures spill onto other lines and mix the order of columns 10 to 12, so only columns 2 to 9 are read and
+ * 10 to 12 are derived from them.
+ */
+function readInfogov(tables: Table[]): { lines: SpendingLine[]; totals: SpendingFigures | null } | { error: string } {
+  type Item = { code: string; label: string[]; nums: number[] };
+  const items: Item[] = [];
+  let total: Item | null = null;
+  let current: Item | null = null;
+  for (const table of tables) {
+    current = null;
+    for (const raw of table) {
+      const row = withSigns(raw);
+      const text = rowText(row);
+      const item = INFOGOV_ITEM.exec(text);
+      if (item) {
+        current = { code: item[1]!, label: [], nums: [] };
+        items.push(current);
+      } else if (INFOGOV_TOTAL.test(text)) {
+        current = { code: "TOTAL", label: [], nums: [] };
+        total = current;
+      } else if (!current || INFOGOV_FURNITURE.test(text)) {
+        if (INFOGOV_FURNITURE.test(text)) current = null;
+        continue;
+      }
+      for (const t of row) {
+        if (/^\d{8}$/.test(t.text) || /^\(subtotal\)$/i.test(t.text) || /^(total|general)$/i.test(t.text)) continue;
+        if (t.num !== null) current.nums.push(t.num);
+        else current.label.push(t.text);
+      }
+    }
+  }
+  const derive = (n: number[]): SpendingFigures => {
+    const f = figures([...n.slice(0, 8), 0, 0, 0]);
+    return {
+      ...f,
+      unorderedLiabilities: f.accrued - f.ordered,
+      unusedBalance: f.currentCredit - f.committed,
+      orderedLiabilities: f.ordered - f.paid,
+    };
+  };
+  const short = items.filter((i) => INFOGOV_LEAF.test(i.code) && i.nums.length < 8).map((i) => i.code);
+  if (short.length) return { error: `partidas con menos de 8 cifras: ${short.slice(0, 3).join(", ")}` };
+  const lines: SpendingLine[] = [];
+  for (const i of items.filter((x) => INFOGOV_LEAF.test(x.code))) {
+    const objectCode = spendingObjectCode(i.code);
+    if (!objectCode) return { error: `código sin clasificar: ${i.code}` };
+    lines.push({
+      jurisdiction: "",
+      unit: "",
+      code: i.code,
+      label: i.label
+        .join(" ")
+        .replace(/[.\s]+$/, "")
+        .replace(/\s+/g, " "),
+      objectCode,
+      ...derive(i.nums),
+    });
+  }
+  return { lines, totals: total && total.nums.length >= 8 ? derive(total.nums) : null };
+}
+
+/**
+ * Reads Annex 2 ("De la ejecución del presupuesto con relación a los créditos acumulada al fin del trimestre"), in any
+ * of the known layouts, and checks the items against the document:
+ *   - Rejects the document if a row breaks (5) = (2)+(3)-(4) or if the items do not add up to the TOTALES row in a
+ *     published column (2 to 9): that means a misread row or a document that cannot be trusted.
+ *   - Only notes the problems in the derived columns 10 to 12 (San Martín 2025-T2 has a value of column 12 shifted
+ *     to the next row): they are not published and do not change the figures that are.
+ */
+export function parseSpendingAnnex(tables: Table[]): SpendingAnnex | { error: string } {
+  const infogov = tables.some((t) => t.some((row) => INFOGOV_ITEM.test(rowText(row))));
+  const read = infogov ? readInfogov(tables) : readItemRows(tables);
+  if ("error" in read) return read;
+  const { lines, totals } = read;
+  if (!totals) return { error: "no se encontró la fila de totales" };
+  if (!lines.length) return { error: "no se encontraron partidas" };
   const broken = lines.filter(breaksCredit).map((l) => l.code);
   if (broken.length) return { error: `partidas donde (5) no da (2)+(3)-(4): ${broken.slice(0, 3).join(", ")}` };
   const notes: string[] = [];
@@ -240,17 +348,11 @@ const REVENUE_ITEM = /(?:^|\s)(\d{9,12})\s*(.*)$/;
 /** Group subtotal: "1. RECURSOS CORRIENTES". */
 const REVENUE_GROUP = /^(\d)\.\s*(\D.*)$/;
 
-/**
- * Reads Annex 3 ("De la ejecución del presupuesto con relación al cálculo de recursos y financiamiento"). Keeps the
- * revenue items and checks them like Annex 2: (5) = (2)+(3)-(4) on every row and the items adding up to TOTALES in
- * the published columns; the derived column (7) = (5)-(6) is only noted. Labels that the PDF wraps onto the next lines
- * (San Rafael: "110001010001 IMPUESTO" + "SOBRE LOS INGRESOS" + "BRUTOS") are joined back.
- */
-export function parseRevenueAnnex(tables: Table[]): RevenueAnnex | { error: string } {
+/** One row per item with a code of 9 to 12 digits and its 7 figures (San Martín, San Rafael). */
+function readRevenueRows(tables: Table[]): { lines: RevenueLine[]; totals: RevenueFigures | null } | { error: string } {
   const lines: RevenueLine[] = [];
   let totals: RevenueFigures | null = null;
   const unknown: string[] = [];
-
   for (const table of tables) {
     let last: RevenueLine | null = null;
     for (const row of table) {
@@ -277,10 +379,68 @@ export function parseRevenueAnnex(tables: Table[]): RevenueAnnex | { error: stri
     }
   }
   for (const l of lines) l.label = l.label.replace(/[.\s]+$/, "").replace(/\s+/g, " ");
-
-  if (!totals) return { error: "no se encontró la fila TOTALES" };
-  if (!lines.length) return { error: "no se encontraron recursos" };
   if (unknown.length) return { error: `filas sin reconocer: ${unknown.slice(0, 3).join(" | ")}` };
+  return { lines, totals };
+}
+
+/**
+ * Item row of the Infogov layout: "5110 -", or a group with a roman numeral before ("II. 5100 -", "I. 7000 -"); the
+ * label and figures can follow on the next lines.
+ */
+const INFOGOV_REVENUE_ITEM = /^(?:([IVX]+)\.\s*)?(\d{4})\s*-/;
+
+/** Infogov layout of Annex 3: same idea as Annex 2, items with a 4-digit code and a "Totales" row. */
+function readInfogovRevenue(tables: Table[]): { lines: RevenueLine[]; totals: RevenueFigures | null } | { error: string } {
+  // Groups carry a roman numeral and are left out: the same code can be a group and an item (Malargüe: "II. 7400" and
+  // "7400", the surplus of previous years).
+  type Item = { code: string; group: boolean; label: string[]; nums: number[] };
+  const items: Item[] = [];
+  let total: Item | null = null;
+  for (const table of tables) {
+    let current: Item | null = null;
+    for (const raw of table) {
+      // The code is read before joining signs: the "-" after it ("5110 - 7.136.942.004,00") is not a minus sign.
+      const item = INFOGOV_REVENUE_ITEM.exec(rowText(raw));
+      const dash = item ? raw.findIndex((t, i) => i > 0 && t.text === "-" && raw[i - 1]!.text === item[2]) : -1;
+      const row = withSigns(item ? raw.slice(dash + 1) : raw);
+      const text = rowText(row);
+      if (item) {
+        current = { code: item[2]!, group: !!item[1], label: [], nums: [] };
+        items.push(current);
+      } else if (TOTALS_ROW.test(rowText(row.filter((t) => t.num === null)))) {
+        current = { code: "TOTAL", group: true, label: [], nums: [] };
+        total = current;
+      } else if (!current || INFOGOV_FURNITURE.test(text) || /^certifico/i.test(text)) {
+        current = null;
+        continue;
+      }
+      for (const t of row) {
+        if (t.num !== null) current.nums.push(t.num);
+        else if (!/^totales?:?$/i.test(t.text)) current.label.push(t.text);
+      }
+    }
+  }
+  const leaves = items.filter((i) => !i.group);
+  const short = leaves.filter((i) => i.nums.length < 7).map((i) => i.code);
+  if (short.length) return { error: `recursos con menos de 7 cifras: ${short.slice(0, 3).join(", ")}` };
+  const lines = leaves.map((i) => ({ code: i.code, label: i.label.join(" ").replace(/\s+/g, " ").trim(), ...revenueFigures(i.nums) }));
+  return { lines, totals: total && total.nums.length >= 7 ? revenueFigures(total.nums) : null };
+}
+
+/**
+ * Reads Annex 3 ("De la ejecución del presupuesto con relación al cálculo de recursos y financiamiento"). Keeps the
+ * revenue items and checks them like Annex 2: (5) = (2)+(3)-(4) on every row and the items adding up to TOTALES in
+ * the published columns; the derived column (7) = (5)-(6) is only noted. Labels that the PDF wraps onto the next lines
+ * (San Rafael: "110001010001 IMPUESTO" + "SOBRE LOS INGRESOS" + "BRUTOS") are joined back.
+ */
+export function parseRevenueAnnex(tables: Table[]): RevenueAnnex | { error: string } {
+  const infogov = tables.some((t) => t.some((row) => INFOGOV_REVENUE_ITEM.test(rowText(row))));
+  const read = infogov ? readInfogovRevenue(tables) : readRevenueRows(tables);
+  if ("error" in read) return read;
+  const { lines, totals } = read;
+
+  if (!totals) return { error: "no se encontró la fila de totales" };
+  if (!lines.length) return { error: "no se encontraron recursos" };
   const broken = lines.filter((l) => !close(l.originalEstimate + l.increases - l.decreases, l.finalEstimate)).map((l) => l.code);
   if (broken.length) return { error: `recursos donde (5) no da (2)+(3)-(4): ${broken.slice(0, 3).join(", ")}` };
   const notes: string[] = [];
@@ -348,20 +508,29 @@ function debtSplit(row: Tok[]): { label: string; values: number[] } | null {
  * read yet: PDFs wrap them over several lines.
  */
 export function parseDebtAnnex(tables: Table[]): DebtAnnex | { error: string } {
+  const strict = readDebt(tables, false);
+  if (!("error" in strict)) return strict;
+  const loose = readDebt(tables, true);
+  return "error" in loose ? strict : loose;
+}
+
+function readDebt(tables: Table[], signAfterLabel: boolean): DebtAnnex | { error: string } {
   const lines: DebtLine[] = [];
   let totals: DebtFigures | null = null;
   let currency: DebtLine["currency"] = "nacional";
-  for (const row of tables.flat().map(withSigns)) {
+  for (const row of tables.flat().map((r) => withSigns(r, signAfterLabel))) {
     const text = rowText(row);
     if (/moneda\s+extranjera/i.test(text)) currency = "extranjera";
     else if (/moneda\s+nacional/i.test(text)) currency = "nacional";
     const split = debtSplit(row);
     if (!split) continue;
     const values = Object.fromEntries(DEBT_COLUMNS.map((c, i) => [c, split.values[i]!])) as DebtFigures;
-    if (TOTALS_ROW.test(split.label)) {
+    if (TOTALS_ROW.test(split.label) || /^total\s+general$/i.test(split.label)) {
       totals = values;
       continue;
     }
+    // Subtotals of a group (Infogov: "Subtotal OTROS PASIVOS CORRIENTES") would count the debts twice.
+    if (/^subtotal\b/i.test(split.label)) continue;
     // Section rows ("Moneda Extranjera 0 0 0 0 0") carry the currency, not a debt.
     if (/^(en\s+)?moneda\s+(nacional|extranjera)$/i.test(split.label)) continue;
     // Rows without words are the column numbers ("1 2 3 4 5 6=2-o+3+4+o-5 7 8"), not a debt.

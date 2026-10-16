@@ -1,6 +1,6 @@
 {
   "titulo": "Anexos de Responsabilidad Fiscal de cada municipio: qué se encontró y qué se pudo leer",
-  "descripcion": "Cada fila es un anexo de un trimestre de un municipio (1: programación financiera; 2 y 2 bis: gasto; 3: recursos; 4: resultado; 5: deuda). Dice si se encontró en el sitio del municipio, si se pudo leer y, si no, por qué. Es el registro de cobertura de la tabla ejecucion_gastos. Por ahora están San Rafael y San Martín, desde 2023.",
+  "descripcion": "Cada fila es un anexo de un trimestre de un municipio (1: programación financiera; 2 y 2 bis: gasto; 3: recursos; 4: resultado; 5: deuda). Dice si se encontró en el sitio del municipio, si se pudo leer y, si no, por qué. Es el registro de cobertura de la tabla ejecucion_gastos. Desde 2023, para los municipios que ya se leen.",
   "agruparPor": "municipio",
   "columnas": {
     "municipio": {

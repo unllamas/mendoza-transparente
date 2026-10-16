@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 
-import { headerPeriod, parseDebtAnnex, parseRevenueAnnex, parseSpendingAnnex, splitRow } from "./annexes.ts";
+import { headerAnnex, headerPeriod, parseDebtAnnex, parseRevenueAnnex, parseSpendingAnnex, splitRow } from "./annexes.ts";
 import { spendingObjectCode } from "./classify.ts";
 import { type Table, type Tok, tokenize } from "./read.ts";
 
@@ -119,5 +119,55 @@ describe("lrf: interpretation of Annexes 3 and 5", () => {
       ["ALUMBRADO PUBLICO LEY 9033", 100, 25, 75],
     ]);
     expect(parsed.notes.join()).toContain("valor absoluto");
+  });
+});
+
+describe("lrf: Infogov layout (General Alvear, Malargüe and others)", () => {
+  test("period with the quarter in words and annex number in roman", () => {
+    const t = [table("ANEXO II: DE LA EJECUCIÓN DEL PRESUPUESTO", "Ejercicio: 2026", "Trimestre: Segundo")];
+    expect(headerPeriod(t)).toEqual({ year: 2026, quarter: 2 });
+    expect(headerAnnex(t)).toBe("2");
+    expect(headerAnnex([table("RCTC_ANEXO_02 SRF", "ANEXO 2 BIS: DE LA EJECUCIÓN")])).toBe("2bis");
+  });
+
+  test("spending items open with the code and carry their label and figures on the next lines", () => {
+    const parsed = parseSpendingAnnex([
+      table(
+        "40000000 (Subtotal) 110 10 0 120 100 90 80 70 10 20 10",
+        "EROGACIONES CORRIENTES",
+        "41100000 (Subtotal)",
+        "100 10 0 110 90 80 70 60 10 20 10",
+        "PERSONAL",
+        "62100000 (Subtotal) AMORTIZACIÓN DE 10 0 0 10 10 10 10 10 0 0 0",
+        "LA DEUDA",
+        "TOTAL GENERAL 110 10 0 120 100 90 80 70 10 20 10",
+        "CERTIFICO QUE LA INFORMACION 2026",
+      ),
+    ]);
+    if ("error" in parsed) throw new Error(parsed.error);
+    expect(parsed.lines.map((l) => [l.code, l.objectCode, l.label, l.accrued])).toEqual([
+      ["41100000", "4.1.1", "PERSONAL", 80],
+      ["62100000", "7.2.1", "AMORTIZACIÓN DE LA DEUDA", 10],
+    ]);
+  });
+
+  test("revenue: the dash after the code is not a minus sign, and only the leaves are kept", () => {
+    const parsed = parseRevenueAnnex([
+      table(
+        "I. 5000 -",
+        "100,00 0,00 0,00 100,00 40,00 60,00 10,00",
+        "RECURSOS",
+        "5110 - 70,00 0,00 0,00 70,00 30,00 40,00 5,00",
+        "RECURSOS CORRIENTES DE ORIGEN MUNICIPAL",
+        "5220 - 30,00 0,00 0,00 30,00 10,00 20,00 5,00",
+        "REEMBOLSO DE OBRAS PUBLICAS",
+        "Totales 100,00 0,00 0,00 100,00 40,00 60,00 10,00",
+      ),
+    ]);
+    if ("error" in parsed) throw new Error(parsed.error);
+    expect(parsed.lines.map((l) => [l.code, l.label, l.originalEstimate])).toEqual([
+      ["5110", "RECURSOS CORRIENTES DE ORIGEN MUNICIPAL", 70],
+      ["5220", "REEMBOLSO DE OBRAS PUBLICAS", 30],
+    ]);
   });
 });

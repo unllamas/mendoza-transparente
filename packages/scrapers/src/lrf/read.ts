@@ -29,13 +29,17 @@ export interface Tok {
 export type Table = Tok[][];
 
 // Spanish ("1.234,56", "1.234"), English ("1,234.56"; some municipalities export like that) or "-" (empty). Negative
-// amounts can come with the sign attached ("-1.234,56").
+// amounts can come with the sign attached ("-1.234,56") or, in accounting style, in parentheses ("(1.234,56)", Malargüe);
+// only amounts with decimals, so the column numbers of the headers ("(1)", "(2)") stay text.
 const NUM_ES = /^(?:-|-?\d[\d.]*(?:,\d+)?)$/;
 const NUM_EN = /^-?(?:\d{1,3}(?:,\d{3})+(?:\.\d{1,2})?|\d+\.\d{2})$/;
+const NUM_PARENS = /^\((\d[\d.]*,\d+)\)$/;
 
-/** "1.234,56" → 1234.56; "1,234.56" → 1234.56; "5626739118" → 5626739118; "-" → 0. */
+/** "1.234,56" → 1234.56; "1,234.56" → 1234.56; "(1.234,56)" → -1234.56; "5626739118" → 5626739118; "-" → 0. */
 export function parseNum(s: string): number {
   if (s === "-") return 0;
+  const parens = NUM_PARENS.exec(s);
+  if (parens) return -parseNum(parens[1]!);
   if (NUM_EN.test(s)) return Number(s.replace(/,/g, ""));
   return Number(s.replace(/\./g, "").replace(",", "."));
 }
@@ -45,7 +49,7 @@ export function tokenize(text: string): Tok[] {
     .replace(/\$/g, " ")
     .split(/\s+/)
     .filter(Boolean)
-    .map((t) => ({ text: t, num: NUM_EN.test(t) || NUM_ES.test(t) ? parseNum(t) : null }));
+    .map((t) => ({ text: t, num: NUM_EN.test(t) || NUM_ES.test(t) || NUM_PARENS.test(t) ? parseNum(t) : null }));
 }
 
 /** The texts of a PDF page with their position (a text with several tokens is spread along x). */
@@ -92,9 +96,12 @@ export function rowsOf(rawItems: Item[], axis: "h" | "v"): Table {
   return rows.map((r) => r.sort((a, b) => along(a) - along(b)).flatMap((i) => tokenize(i.s)));
 }
 
-/** Every page of a PDF as a table of horizontal rows. */
-export async function pdfTables(bytes: Uint8Array): Promise<Table[]> {
-  return (await allPageItems(bytes)).map((items) => rowsOf(items, "h"));
+/**
+ * Every page of a PDF as a table of rows. Horizontal by default; "v" reads pages printed sideways (General Alvear's
+ * Annex 5, Rivadavia), where the rows of the table run along the page's vertical axis.
+ */
+export async function pdfTables(bytes: Uint8Array, axis: "h" | "v" = "h"): Promise<Table[]> {
+  return (await allPageItems(bytes)).map((items) => rowsOf(items, axis));
 }
 
 /**

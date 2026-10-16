@@ -34,6 +34,17 @@ const titleCase = (s: string) =>
     .replace(/\b(De|Del|La|Las|Los|Y|E|En|Por|Para|A|Al)\b/g, (w) => w.toLowerCase())
     .replace(/^./, (c) => c.toUpperCase());
 
+/**
+ * Short names for revenue groups whose official name is too long for a phone and hides what matters at the end
+ * (Infogov: "Recursos corrientes de origen provincial").
+ */
+const REVENUE_NAMES: [RegExp, string][] = [
+  [/^recursos corrientes de origen municipal$/i, "Propios del municipio"],
+  [/^recursos corrientes de origen nacional$/i, "De la Nación"],
+  [/^recursos corrientes de origen provincial$/i, "De la Provincia"],
+];
+const revenueName = (label: string) => REVENUE_NAMES.find(([re]) => re.test(label.trim()))?.[1] ?? titleCase(label);
+
 export function buildMunicipalBudgets(
   spending: CsvRow[],
   revenue: CsvRow[],
@@ -90,7 +101,7 @@ export function buildMunicipalBudgets(
               })),
               top: totalsBy(
                 income.filter((r) => r.tipo !== "financiamiento"),
-                (r) => titleCase(r.recurso!),
+                (r) => revenueName(r.recurso!),
                 ["ingresado"],
               )
                 .filter((r) => r.ingresado > 0)

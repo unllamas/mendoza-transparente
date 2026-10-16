@@ -77,7 +77,17 @@ Fuente: el anexo 19 de la Ley de Responsabilidad Fiscal que cada municipio publi
 
 ## Presupuesto y gasto de cada municipio
 
-Fuente: los anexos de la Ley de Responsabilidad Fiscal (Ley 7314) que cada municipio publica cada trimestre en su sitio (`municipios-lrf`, scraper en `packages/scrapers/src/sources/municipios-lrf.ts`). Por ahora se interpretan, de San Rafael y San Martín desde 2023, el anexo 2 (gasto contra el presupuesto, `ejecucion_gastos.csv`), el 3 (recursos, `ejecucion_recursos.csv`) y el 5 (deuda, `deuda.csv`). Los anexos 1, 2 bis y 4 se archivan y todavía no se interpretan.
+Fuente: los anexos de la Ley de Responsabilidad Fiscal (Ley 7314) que cada municipio publica cada trimestre en su sitio (`municipios-lrf`, scraper en `packages/scrapers/src/sources/municipios-lrf.ts`). Desde 2023 se interpretan el anexo 2 (gasto contra el presupuesto, `ejecucion_gastos.csv`), el 3 (recursos, `ejecucion_recursos.csv`) y el 5 (deuda, `deuda.csv`). Los anexos 1, 2 bis y 4 se archivan y todavía no se interpretan. Qué municipios y trimestres se pudieron leer, y por qué no los demás, está en `documentos.csv`.
+
+**Formatos conocidos del anexo 2.** Cada uno lo resuelve una rama del lector (`parseSpendingAnnex`):
+
+| Formato | Municipios | Cómo se reconoce |
+|---|---|---|
+| Una fila por partida, código de 5 dígitos | San Martín (planilla) | `41100 PERSONAL` y 11 cifras |
+| Por área de gobierno | San Rafael (PDF) | `1.00.040101.PERSONAL`, con filas de jurisdicción y unidad |
+| Infogov (pie "www.infogov.com.ar") | General Alvear y Malargüe; relevados también Maipú, Lavalle, La Paz, San Carlos, Tunuyán, Tupungato, Santa Rosa y Rivadavia | `41100000 (Subtotal)` abre cada partida, con el nombre y las cifras en las líneas siguientes; la fila final es "TOTAL GENERAL" y el trimestre va en palabras ("Segundo"). Las cifras largas se derraman y desordenan las columnas 10 a 12: se leen las columnas 2 a 9 y las otras se derivan de ellas. Se toman solo las partidas del nivel más detallado. En el anexo 3, los recursos tienen 4 dígitos (`5110` municipal, `5120` nacional, `5130` provincial; `52xx` de capital, `7xxx` financiamiento) |
+
+**Control del archivo.** Además del período, se controla el número de anexo impreso en el título: hay archivos publicados con otro nombre (en Rivadavia 2024-T2, "Anexo02.pdf" trae el anexo 2 bis). Los nombres de archivo se reconocen en romano o arábigo y con errores de tipeo ("Anexo-II", "Anxo-2-bis", "Anexi-III").
 
 **Por qué los anexos:** el Tribunal de Cuentas fija qué columnas lleva cada anexo y qué cuentas hay entre ellas (Acuerdo 3949, texto ordenado por el Acuerdo 6644/25). Los 18 municipios publican el mismo contenido en envases distintos (un PDF por anexo, un ZIP, una planilla con todos los anexos) y con distinto detalle. El anexo 2 trae el crédito votado, así que da el presupuesto aprobado aunque el municipio no publique la ordenanza.
 
@@ -98,7 +108,10 @@ Fuente: los anexos de la Ley de Responsabilidad Fiscal (Ley 7314) que cada munic
 - **Pesos nominales,** como todos los datos; la conversión a pesos de hoy se hace en la web.
 - **Celdas vacías:** las planillas dejan en blanco los montos en cero (San Martín). Una celda vacía entre dos cifras de la misma fila se lee como cero (`blankAsZero` en `lrf/read.ts`); si no, todas las cifras siguientes se correrían una columna.
 - **Recursos:** los códigos solo coinciden entre municipios en el primer dígito, que da el `tipo` (corriente, capital o financiamiento). Debajo, cada municipio agrupa distinto: San Martín registra casi toda la coparticipación en un rubro "a clasificar" y San Rafael la abre por impuesto. La tabla de equivalencias de recursos se arma cuando estén relevados todos los municipios.
-- **Deuda:** los movimientos del anexo 5 son del trimestre, no acumulados, y el saldo final del cuarto trimestre es la deuda al cierre del año. Un saldo adeudado nunca es negativo: San Martín y San Rafael anotan a veces los saldos en negativo, como pasivo, y se toman en valor absoluto (queda la observación en `documentos.csv`). Se omiten las deudas con todas sus cifras en cero. La norma legal y el acreedor todavía no se leen, porque en los PDF vienen partidos en varias líneas.
+- **Deuda:** los movimientos del anexo 5 son del trimestre, no acumulados, y el saldo final del cuarto trimestre es la deuda al cierre del año. Un saldo adeudado nunca es negativo: San Martín y San Rafael anotan a veces los saldos en negativo, como pasivo, y se toman en valor absoluto (queda la observación en `documentos.csv`). Se omiten las deudas con todas sus cifras en cero. La norma legal y el acreedor todavía no se leen, porque en los PDF vienen partidos en varias líneas. Algunos municipios no informan préstamos sino cuentas del pasivo: en Malargüe, el anexo 5 es deuda de corto plazo con bancos (descubierto, cheques de pago diferido). En Infogov se descartan las filas "Subtotal" y la fila final es "TOTAL GENERAL".
+- **Páginas giradas:** si un PDF no cierra leído por filas horizontales, se lee por el otro eje (`pdfTables(bytes, "v")`). Pasa con el anexo 5 de General Alvear.
+- **Signo suelto:** un "-" separado de la cifra es signo si abre la fila o sigue a otra cifra con decimales. Después de un nombre es ambiguo: en General Alvear es parte del nombre ("Prestamo Ley 9356 - 33980500,00") y en San Rafael es un saldo negativo ("LEY9243 - 9.007,97"). El anexo 5 prueba las dos lecturas y se queda con la que cierra con la fila de totales.
+- **Negativos entre paréntesis** ("(1.324.907.402,56)", Malargüe) se leen como negativos, solo si tienen decimales: los números de columna "(1)", "(2)" quedan como texto.
 
 **Validación** (`parseSpendingAnnex`):
 
@@ -115,7 +128,7 @@ Fuente: los anexos de la Ley de Responsabilidad Fiscal (Ley 7314) que cada munic
 - **Cada año** se muestra con su último trimestre publicado. Si no es el cuarto, la página avisa hasta qué mes llegan las cifras y el gráfico lo marca con asterisco.
 - **Aprobado, autorizado, gastado y pagado** son las sumas del crédito votado, el crédito vigente, el devengado y el pagado del anexo 2. "Gastado" es lo devengado, y la página lo explica (glosario: `devengado`, `credito-vigente`).
 - **En qué se gasta** suma por `objeto`, igual para todos los municipios. **Por área** solo aparece si el municipio abre el gasto por jurisdicción (San Rafael).
-- **De dónde sale la plata:** lo ingresado sin préstamos ni remanentes (tipo `financiamiento`), que van en un renglón aparte. Los rubros llevan el nombre que usa cada municipio, porque los códigos no coinciden.
+- **De dónde sale la plata:** lo ingresado sin préstamos ni remanentes (tipo `financiamiento`), que van en un renglón aparte. Los rubros llevan el nombre que usa cada municipio, porque los códigos no coinciden; los grupos de Infogov se acortan para que entren en el celular ("Recursos corrientes de origen provincial" → "De la Provincia").
 - **Deuda:** el saldo final del último trimestre del año, y los pagos y la deuda nueva sumados en los trimestres del año.
 - **Comparación entre años y por habitante:** en pesos de hoy, con el deflactor del sitio y la población estimada del año.
 

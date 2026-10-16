@@ -1,4 +1,74 @@
 municipio,anio,trimestre,fecha_corte,deuda,moneda,saldo_inicio,pagos,deuda_contraida,renegociacion,saldo_final,fuente_url
+General Alvear,2023,1,2023-03-31,211061000 Pr.Con IPV Ag. Pot.Canalejas,nacional,125483.4,0,0,0,125483.4,https://alvearmendoza.gob.ar/resp-fiscal/archivos-1t-2023/anexo5.pdf
+General Alvear,2023,1,2023-03-31,211061600 A.F.I.P. LEY 8975-DEC 631/17,nacional,2090891.72,0,0,0,2090891.72,https://alvearmendoza.gob.ar/resp-fiscal/archivos-1t-2023/anexo5.pdf
+General Alvear,2023,1,2023-03-31,221070200 Prest. Ley 8873 Ord. 4275/2016,nacional,17917288.59,0,0,0,17917288.59,https://alvearmendoza.gob.ar/resp-fiscal/archivos-1t-2023/anexo5.pdf
+General Alvear,2023,2,2023-06-30,211061000 Pr.Con IPV Ag. Pot.Canalejas,nacional,125483.4,0,0,0,125483.4,https://alvearmendoza.gob.ar/resp-fiscal/archivos-2t-2023/anexo5.pdf
+General Alvear,2023,2,2023-06-30,211061600 A.F.I.P. LEY 8975-DEC 631/17,nacional,2090891.72,0,0,0,2090891.72,https://alvearmendoza.gob.ar/resp-fiscal/archivos-2t-2023/anexo5.pdf
+General Alvear,2023,2,2023-06-30,221070200 Prest. Ley 8873 Ord.,nacional,17917288.59,0,0,0,17917288.59,https://alvearmendoza.gob.ar/resp-fiscal/archivos-2t-2023/anexo5.pdf
+General Alvear,2023,3,2023-09-30,211061000 Pr.Con IPV Ag. Pot.Canalejas,nacional,125483.4,0,0,0,125483.4,https://alvearmendoza.gob.ar/resp-fiscal/archivos-3t-2023/anexo5.pdf
+General Alvear,2023,3,2023-09-30,211061600 A.F.I.P. LEY 8975-DEC 631/17,nacional,2090891.72,0,0,0,2090891.72,https://alvearmendoza.gob.ar/resp-fiscal/archivos-3t-2023/anexo5.pdf
+General Alvear,2023,3,2023-09-30,221070200 Prest. Ley 8873 Ord.,nacional,17917288.59,0,0,0,17917288.59,https://alvearmendoza.gob.ar/resp-fiscal/archivos-3t-2023/anexo5.pdf
+General Alvear,2023,4,2023-12-31,211061000 Pr.Con IPV Ag. Pot.Canalejas,nacional,125483.4,0,0,0,125483.4,https://alvearmendoza.gob.ar/resp-fiscal/archivos-1t-2024/anexo5.pdf
+General Alvear,2023,4,2023-12-31,211061600 A.F.I.P. LEY 8975-DEC 631/17,nacional,2090891.72,0,0,0,2090891.72,https://alvearmendoza.gob.ar/resp-fiscal/archivos-1t-2024/anexo5.pdf
+General Alvear,2023,4,2023-12-31,221070200 Prest. Ley 8873 Ord.,nacional,17917288.59,0,0,0,17917288.59,https://alvearmendoza.gob.ar/resp-fiscal/archivos-1t-2024/anexo5.pdf
+General Alvear,2023,4,2023-12-31,211060400 Prestamo Ley 9356 -,nacional,33890500,0,0,0,33890500,https://alvearmendoza.gob.ar/resp-fiscal/archivos-1t-2024/anexo5.pdf
+General Alvear,2024,1,2024-03-31,211061000 Pr.Con IPV Ag. Pot.Canalejas,nacional,125483.4,0,0,0,125483.4,https://alvearmendoza.gob.ar/resp-fiscal/archivos-2t-2024/anexo5.pdf
+General Alvear,2024,1,2024-03-31,211061600 A.F.I.P. LEY 8975-DEC 631/17,nacional,2090891.72,0,0,0,2090891.72,https://alvearmendoza.gob.ar/resp-fiscal/archivos-2t-2024/anexo5.pdf
+General Alvear,2024,1,2024-03-31,221070200 Prest. Ley 8873 Ord.,nacional,17917288.59,0,0,0,17917288.59,https://alvearmendoza.gob.ar/resp-fiscal/archivos-2t-2024/anexo5.pdf
+General Alvear,2024,1,2024-03-31,211060400 Prestamo Ley 9356 -,nacional,33890500,0,0,0,33890500,https://alvearmendoza.gob.ar/resp-fiscal/archivos-2t-2024/anexo5.pdf
+General Alvear,2024,2,2024-06-30,211061000 Pr.Con IPV Ag. Pot.Canalejas,nacional,125483.4,0,0,0,125483.4,https://alvearmendoza.gob.ar/resp-fiscal/archivos-3t-2024/anexo5.pdf
+General Alvear,2024,2,2024-06-30,211061600 A.F.I.P. LEY 8975-DEC 631/17,nacional,2090891.72,0,0,0,2090891.72,https://alvearmendoza.gob.ar/resp-fiscal/archivos-3t-2024/anexo5.pdf
+General Alvear,2024,2,2024-06-30,221070200 Prest. Ley 8873 Ord.,nacional,17917288.59,0,0,0,17917288.59,https://alvearmendoza.gob.ar/resp-fiscal/archivos-3t-2024/anexo5.pdf
+General Alvear,2024,2,2024-06-30,211060400 Prestamo Ley 9356 -,nacional,33890500,7751937.36,0,0,26138562.64,https://alvearmendoza.gob.ar/resp-fiscal/archivos-3t-2024/anexo5.pdf
+General Alvear,2024,3,2024-09-30,211061000 Pr.Con IPV Ag. Pot.Canalejas,nacional,125483.4,0,0,0,125483.4,https://alvearmendoza.gob.ar/resp-fiscal/archivos-3t1-2024/anexo5.pdf
+General Alvear,2024,3,2024-09-30,211061600 A.F.I.P. LEY 8975-DEC 631/17,nacional,2090891.72,0,0,0,2090891.72,https://alvearmendoza.gob.ar/resp-fiscal/archivos-3t1-2024/anexo5.pdf
+General Alvear,2024,3,2024-09-30,221070200 Prest. Ley 8873 Ord.,nacional,17917288.59,0,0,0,17917288.59,https://alvearmendoza.gob.ar/resp-fiscal/archivos-3t1-2024/anexo5.pdf
+General Alvear,2024,3,2024-09-30,211060400 Prestamo Ley 9356 -,nacional,41642437.36,7751937.36,0,0,33890500,https://alvearmendoza.gob.ar/resp-fiscal/archivos-3t1-2024/anexo5.pdf
+General Alvear,2024,4,2024-12-31,211061000 Pr.Con IPV Ag. Pot.Canalejas,nacional,125483.4,0,0,0,125483.4,https://alvearmendoza.gob.ar/resp-fiscal/archivos-4t-2024/anexo5.pdf
+General Alvear,2024,4,2024-12-31,211061600 A.F.I.P. LEY 8975-DEC 631/17,nacional,2090891.72,0,0,0,2090891.72,https://alvearmendoza.gob.ar/resp-fiscal/archivos-4t-2024/anexo5.pdf
+General Alvear,2024,4,2024-12-31,221070200 Prest. Ley 8873 Ord.,nacional,17917288.59,0,0,0,17917288.59,https://alvearmendoza.gob.ar/resp-fiscal/archivos-4t-2024/anexo5.pdf
+General Alvear,2024,4,2024-12-31,211060400 Prestamo Ley 9356 -,nacional,41642437.36,7751937.36,0,0,33890500,https://alvearmendoza.gob.ar/resp-fiscal/archivos-4t-2024/anexo5.pdf
+General Alvear,2025,1,2025-03-31,211061000 Pr.Con IPV Ag. Pot.Canalejas,nacional,125483.4,0,0,0,125483.4,https://alvearmendoza.gob.ar/resp-fiscal/archivos1t-2025/anexo5.pdf
+General Alvear,2025,1,2025-03-31,211061600 A.F.I.P. LEY 8975-DEC 631/17,nacional,2090891.72,0,0,0,2090891.72,https://alvearmendoza.gob.ar/resp-fiscal/archivos1t-2025/anexo5.pdf
+General Alvear,2025,1,2025-03-31,221070200 Prest. Ley 8873 Ord.,nacional,17917288.59,0,0,0,17917288.59,https://alvearmendoza.gob.ar/resp-fiscal/archivos1t-2025/anexo5.pdf
+General Alvear,2025,1,2025-03-31,211060400 Prestamo Ley 9356 -,nacional,33890500,21673656.74,0,0,12216843.26,https://alvearmendoza.gob.ar/resp-fiscal/archivos1t-2025/anexo5.pdf
+General Alvear,2025,2,2025-06-30,211061000 Pr.Con IPV Ag. Pot.Canalejas,nacional,125483.4,0,0,0,125483.4,https://alvearmendoza.gob.ar/resp-fiscal/archivos2t-2025/anexo5.pdf
+General Alvear,2025,2,2025-06-30,211061600 A.F.I.P. LEY 8975-DEC 631/17,nacional,2090891.72,0,0,0,2090891.72,https://alvearmendoza.gob.ar/resp-fiscal/archivos2t-2025/anexo5.pdf
+General Alvear,2025,2,2025-06-30,221070200 Prest. Ley 8873 Ord.,nacional,17917288.59,0,0,0,17917288.59,https://alvearmendoza.gob.ar/resp-fiscal/archivos2t-2025/anexo5.pdf
+General Alvear,2025,2,2025-06-30,211060400 Prestamo Ley 9356 -,nacional,12217143.26,13051385.15,0,0,12217143.26,https://alvearmendoza.gob.ar/resp-fiscal/archivos2t-2025/anexo5.pdf
+General Alvear,2025,3,2025-09-30,211061000 Pr.Con IPV Ag. Pot.Canalejas,nacional,125483.4,0,0,0,125483.4,https://alvearmendoza.gob.ar/resp-fiscal/archivos3t-2025/anexo5.pdf
+General Alvear,2025,3,2025-09-30,211061600 A.F.I.P. LEY 8975-DEC 631/17,nacional,2090891.72,0,0,0,2090891.72,https://alvearmendoza.gob.ar/resp-fiscal/archivos3t-2025/anexo5.pdf
+General Alvear,2025,3,2025-09-30,221070200 Prest. Ley 8873 Ord.,nacional,17917288.59,0,0,0,17917288.59,https://alvearmendoza.gob.ar/resp-fiscal/archivos3t-2025/anexo5.pdf
+General Alvear,2025,3,2025-09-30,211060400 Prestamo Ley 9356 -,nacional,12217143.26,13051385.15,0,0,12217143.26,https://alvearmendoza.gob.ar/resp-fiscal/archivos3t-2025/anexo5.pdf
+General Alvear,2025,4,2025-12-31,211061000 Pr.Con IPV Ag. Pot.Canalejas,nacional,125483.4,0,0,0,125483.4,https://alvearmendoza.gob.ar/resp-fiscal/archivos4t-2025/anexo5.pdf
+General Alvear,2025,4,2025-12-31,211061600 A.F.I.P. LEY 8975-DEC 631/17,nacional,2090891.72,0,0,0,2090891.72,https://alvearmendoza.gob.ar/resp-fiscal/archivos4t-2025/anexo5.pdf
+General Alvear,2025,4,2025-12-31,221070200 Prest. Ley 8873 Ord.,nacional,17917288.59,0,0,0,17917288.59,https://alvearmendoza.gob.ar/resp-fiscal/archivos4t-2025/anexo5.pdf
+General Alvear,2025,4,2025-12-31,211060400 Prestamo Ley 9356 -,nacional,12217143.26,14925945.52,0,0,2708802.26,https://alvearmendoza.gob.ar/resp-fiscal/archivos4t-2025/anexo5.pdf
+General Alvear,2026,1,2026-03-31,211061000 Pr.Con IPV Ag. Pot.Canalejas,nacional,125483.4,0,0,0,125483.4,https://alvearmendoza.gob.ar/resp-fiscal/archivos1t-2026/anexo5.pdf
+General Alvear,2026,1,2026-03-31,211061600 A.F.I.P. LEY 8975-DEC 631/17,nacional,2090891.72,0,0,0,2090891.72,https://alvearmendoza.gob.ar/resp-fiscal/archivos1t-2026/anexo5.pdf
+General Alvear,2026,1,2026-03-31,221070200 Prest. Ley 8873 Ord. 4275/2016,nacional,17917288.59,0,0,0,17917288.59,https://alvearmendoza.gob.ar/resp-fiscal/archivos1t-2026/anexo5.pdf
+General Alvear,2026,1,2026-03-31,211060400 Prestamo Ley 9356 - Ord. Mpal. 4,nacional,33980500,49651587.43,27977930.69,0,12306843.26,https://alvearmendoza.gob.ar/resp-fiscal/archivos1t-2026/anexo5.pdf
+General Alvear,2026,2,2026-06-30,211061000 Pr.Con IPV Ag. Pot.Canalejas,nacional,125483.4,0,0,0,125483.4,https://alvearmendoza.gob.ar/resp-fiscal/archivos2t-2026/anexo5.pdf
+General Alvear,2026,2,2026-06-30,211061600 A.F.I.P. LEY 8975-DEC 631/17,nacional,2090891.72,0,0,0,2090891.72,https://alvearmendoza.gob.ar/resp-fiscal/archivos2t-2026/anexo5.pdf
+General Alvear,2026,2,2026-06-30,221070200 Prest. Ley 8873 Ord.,nacional,17917288.59,0,0,0,17917288.59,https://alvearmendoza.gob.ar/resp-fiscal/archivos2t-2026/anexo5.pdf
+General Alvear,2026,2,2026-06-30,211060400 Prestamo Ley 9356 -,nacional,33980500,49651587.43,27977930.69,0,12306843.26,https://alvearmendoza.gob.ar/resp-fiscal/archivos2t-2026/anexo5.pdf
+Malargüe,2023,1,2023-03-31,2114000000 - DEUDA IRRIGACIÓN,nacional,2727916.36,0,0,0,2727916.36,https://www.malargue.gov.ar/wp-content/uploads/2023/05/Anexo-V-1.pdf
+Malargüe,2023,1,2023-03-31,2115000000 - REMANENTE FONDOS DESTINO,nacional,13133659.12,0,0,0,13133659.12,https://www.malargue.gov.ar/wp-content/uploads/2023/05/Anexo-V-1.pdf
+Malargüe,2023,1,2023-03-31,2124000000 - Prestamo Ley 8873,nacional,11703179.17,0,0,0,11703179.17,https://www.malargue.gov.ar/wp-content/uploads/2023/05/Anexo-V-1.pdf
+Malargüe,2023,2,2023-06-30,2114000000 - DEUDA IRRIGACIÓN,nacional,2727916.36,0,0,0,2727916.36,https://www.malargue.gov.ar/wp-content/uploads/2023/08/Anexo-V.pdf
+Malargüe,2023,2,2023-06-30,2115000000 - REMANENTE FONDOS DESTINO,nacional,13133659.12,0,0,0,13133659.12,https://www.malargue.gov.ar/wp-content/uploads/2023/08/Anexo-V.pdf
+Malargüe,2023,2,2023-06-30,2124000000 - Prestamo Ley 8873,nacional,11703179.17,0,0,0,11703179.17,https://www.malargue.gov.ar/wp-content/uploads/2023/08/Anexo-V.pdf
+Malargüe,2023,3,2023-09-30,2114000000 - DEUDA IRRIGACIÓN,nacional,2727916.36,0,0,0,2727916.36,https://www.malargue.gov.ar/wp-content/uploads/2023/10/Anexo-V.pdf
+Malargüe,2023,3,2023-09-30,2115000000 - REMANENTE FONDOS DESTINO,nacional,13133659.12,0,0,0,13133659.12,https://www.malargue.gov.ar/wp-content/uploads/2023/10/Anexo-V.pdf
+Malargüe,2023,3,2023-09-30,2124000000 - Prestamo Ley 8873,nacional,11703179.17,0,0,0,11703179.17,https://www.malargue.gov.ar/wp-content/uploads/2023/10/Anexo-V.pdf
+Malargüe,2023,4,2023-12-31,2114000000 - DEUDA IRRIGACIÓN,nacional,2727916.36,0,2727916.36,2727916.36,0,https://www.malargue.gov.ar/wp-content/uploads/2024/02/Acuerdo-3949-Anexo-V.pdf
+Malargüe,2023,4,2023-12-31,2115000000 - REMANENTE FONDOS DESTINO,nacional,13133659.12,0,25678278.68,25678278.68,38811937.8,https://www.malargue.gov.ar/wp-content/uploads/2024/02/Acuerdo-3949-Anexo-V.pdf
+Malargüe,2023,4,2023-12-31,2124000000 - Prestamo Ley 8873,nacional,11703179.17,0,0,0,11703179.17,https://www.malargue.gov.ar/wp-content/uploads/2024/02/Acuerdo-3949-Anexo-V.pdf
+Malargüe,2025,4,2025-12-31,2113010400 - DESCUBIERTO BANCOS,nacional,0,3019771606.59,3019771606.59,0,0,https://www.malargue.gov.ar/wp-content/uploads/2026/02/Anexo-5-Evolucion-de-la-deuda-publica-consolidada-acumulada-al-fin-del-trimestre.pdf
+Malargüe,2026,1,2026-03-31,2113010400 - DESCUBIERTO BANCOS,nacional,0,4300000000,5520000000,1220000000,1220000000,https://www.malargue.gov.ar/wp-content/uploads/2026/05/Anexo-5-evolucio%CC%81n-de-la-Deuda-Pu%CC%81blica-Consolidada-Acumulada-al-fin-del-trimestre.pdf
+Malargüe,2026,1,2026-03-31,2113011000 - CHEQUE PAGO DIFERIDO,nacional,0,171785335.45,357765533.54,185980198.09,185980198.09,https://www.malargue.gov.ar/wp-content/uploads/2026/05/Anexo-5-evolucio%CC%81n-de-la-Deuda-Pu%CC%81blica-Consolidada-Acumulada-al-fin-del-trimestre.pdf
+Malargüe,2026,2,2026-06-30,2113010400 - DESCUBIERTO BANCOS,nacional,1220000000,3714923731.68,3704923731.68,-10000000,1210000000,https://www.malargue.gov.ar/wp-content/uploads/2026/08/Anexo-5-Evolucion-de-la-deuda-publica-consolidada-acumulada-al-fin-del-trimestre-1.pdf
+Malargüe,2026,2,2026-06-30,2113011000 - CHEQUE PAGO DIFERIDO,nacional,185980198.09,266438942.88,313090506.91,46651564.03,232631762.12,https://www.malargue.gov.ar/wp-content/uploads/2026/08/Anexo-5-Evolucion-de-la-deuda-publica-consolidada-acumulada-al-fin-del-trimestre-1.pdf
 San Rafael,2023,1,2023-03-31,ALUMBRADO PUBLICO LEY 9033,nacional,20018707.9,0,0,0,20018707.9,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2023_1t/anexo5.pdf
 San Rafael,2023,1,2023-03-31,PRESTAMO GBO MZA LEY 8873,nacional,34852482.47,0,0,0,34852482.47,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2023_1t/anexo5.pdf
 San Rafael,2023,1,2023-03-31,PRESTAMO GBO MZA LEY9243,extranjera,12466180.59,2878889.65,0,0,9587290.94,https://www.sanrafael.gov.ar/archivos-muni/fiscal/2023_1t/anexo5.pdf

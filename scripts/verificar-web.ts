@@ -51,6 +51,7 @@ const RUTAS = [
   "/municipios/san-rafael",
   "/municipios/san-rafael/presupuesto/2025",
   "/municipios/san-martin/presupuesto/2026",
+  "/municipios/malargue/presupuesto/2025",
   "/proveedores",
   "/organismos",
   "/leyes",
