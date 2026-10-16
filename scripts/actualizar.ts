@@ -39,6 +39,7 @@ const TODAS = [
   "presupuesto-planta",
   "designaciones",
   "municipios-personal",
+  "municipios-lrf",
 ];
 
 const hace = (dias: number) => new Date(Date.now() - dias * 864e5).toISOString().slice(0, 10);

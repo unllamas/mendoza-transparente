@@ -1,0 +1,137 @@
+{
+  "titulo": "Presupuesto y gasto de cada municipio, por partida y trimestre",
+  "descripcion": "Cada fila es una partida del presupuesto de un municipio al cierre de un trimestre: cuánto se aprobó (crédito votado), cuánto se modificó, cuánto quedó autorizado (crédito vigente), cuánto se comprometió, devengó y pagó. Sale del Anexo 2 de la Ley de Responsabilidad Fiscal (Acuerdo 3949 del Tribunal de Cuentas), que cada municipio publica en su sitio. Los importes son pesos nominales ACUMULADOS desde enero hasta el fin del trimestre: el cuarto trimestre es el año completo. Cada documento se controla con sus propias cuentas (crédito vigente = votado + aumentos − disminuciones) y con su fila de totales; el que no cierra no entra. El nivel de detalle es el que publica cada municipio: San Rafael abre cada partida por área de gobierno (jurisdicción y unidad) y San Martín la informa para todo el municipio. Para comparar entre municipios, usar objeto_codigo, que traduce el código de cada uno a uno común. Por ahora están San Rafael y San Martín, desde 2023.",
+  "agruparPor": "municipio",
+  "columnas": {
+    "municipio": {
+      "etiqueta": "Municipio",
+      "tipo": "texto"
+    },
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio"
+    },
+    "trimestre": {
+      "etiqueta": "Trimestre",
+      "tipo": "numero",
+      "descripcion": "1 a 4. Los importes se acumulan desde enero hasta el fin de este trimestre."
+    },
+    "fecha_corte": {
+      "etiqueta": "Fecha de corte",
+      "tipo": "fecha",
+      "descripcion": "Último día del trimestre."
+    },
+    "jurisdiccion": {
+      "etiqueta": "Jurisdicción",
+      "tipo": "texto",
+      "descripcion": "Área de gobierno, como la escribe el municipio. Vacía si el municipio no abre el gasto por área."
+    },
+    "unidad": {
+      "etiqueta": "Unidad",
+      "tipo": "texto",
+      "descripcion": "Dependencia dentro de la jurisdicción, como la escribe el municipio. Vacía si el municipio no abre el gasto por área."
+    },
+    "partida_codigo": {
+      "etiqueta": "Código de la partida",
+      "tipo": "texto",
+      "descripcion": "Código tal como figura en el documento (por ejemplo, 41100 en San Martín o 1.00.040101 en San Rafael, que antepone jurisdicción y unidad)."
+    },
+    "partida": {
+      "etiqueta": "Partida",
+      "tipo": "texto",
+      "descripcion": "Nombre de la partida tal como figura en el documento."
+    },
+    "objeto_codigo": {
+      "etiqueta": "Código común",
+      "tipo": "texto",
+      "descripcion": "Código del clasificador por objeto del gasto, igual para todos los municipios (4.1.1 es Personal en todos). Sale de traducir el código de cada municipio; la tabla de traducción está en packages/scrapers/src/lrf/classify.ts."
+    },
+    "objeto": {
+      "etiqueta": "Objeto del gasto",
+      "tipo": "texto",
+      "descripcion": "Nombre común del código: Personal, Bienes corrientes, Servicios, Transferencias, Bienes de capital, Trabajos públicos, Amortización de la deuda, etc."
+    },
+    "credito_votado": {
+      "etiqueta": "Crédito votado",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Lo que aprobó el presupuesto original para el año (columna 2 del anexo)."
+    },
+    "aumentos": {
+      "etiqueta": "Aumentos",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Modificaciones que suben el crédito, acumuladas en el año (columna 3)."
+    },
+    "disminuciones": {
+      "etiqueta": "Disminuciones",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Modificaciones que bajan el crédito, acumuladas en el año (columna 4)."
+    },
+    "credito_vigente": {
+      "etiqueta": "Crédito vigente",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Lo autorizado a gastar después de las modificaciones: votado + aumentos − disminuciones (columna 5)."
+    },
+    "comprometido": {
+      "etiqueta": "Comprometido",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Gasto con compromiso contraído, acumulado (columna 6)."
+    },
+    "devengado": {
+      "etiqueta": "Devengado",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Gasto ya realizado (el bien o servicio se recibió), acumulado (columna 7). Es la medida habitual de lo gastado."
+    },
+    "mandado_a_pagar": {
+      "etiqueta": "Mandado a pagar",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Gasto con orden de pago emitida, acumulado (columna 8)."
+    },
+    "pagado": {
+      "etiqueta": "Pagado",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Gasto efectivamente pagado, acumulado (columna 9)."
+    },
+    "fuente_url": {
+      "etiqueta": "Documento",
+      "tipo": "url",
+      "descripcion": "Enlace al documento oficial en el sitio del municipio (en San Martín, la planilla con todos los anexos del trimestre)."
+    }
+  },
+  "orden": [
+    "municipio",
+    "anio",
+    "trimestre",
+    "jurisdiccion",
+    "unidad",
+    "partida",
+    "objeto",
+    "credito_votado",
+    "credito_vigente",
+    "devengado",
+    "pagado",
+    "comprometido",
+    "mandado_a_pagar",
+    "aumentos",
+    "disminuciones",
+    "partida_codigo",
+    "objeto_codigo",
+    "fuente_url",
+    "fecha_corte"
+  ]
+}

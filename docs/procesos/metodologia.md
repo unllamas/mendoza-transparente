@@ -75,6 +75,38 @@ Fuente: el anexo 19 de la Ley de Responsabilidad Fiscal que cada municipio publi
 - **Huecos:** cada municipio publica en su formato (PDF, ZIP, planillas, Drive) y varios solo los últimos trimestres. Godoy Cruz no lo tiene en su listado de anexos (figura en «Lo que no se publica») y Las Heras lo deja bajar desde una aplicación con links que vencen, así que no se puede archivar solo: su página dice que lo publica y que todavía no lo sumamos. Lavalle y San Martín se sumaron en octubre de 2026; de San Martín se archiva solo la hoja del anexo 19, porque su Excel trae todos los anexos y los 22 y 23 tienen datos de contribuyentes.
 - **Ciudad de Mendoza:** además publica una serie mensual (`personal_capital_mensual.csv`), con otra definición. Va aparte y no se mezcla con la trimestral.
 
+## Presupuesto y gasto de cada municipio
+
+Fuente: los anexos de la Ley de Responsabilidad Fiscal (Ley 7314) que cada municipio publica cada trimestre en su sitio (`municipios-lrf`, scraper en `packages/scrapers/src/sources/municipios-lrf.ts`). Por ahora se interpreta el anexo 2 (gasto contra el presupuesto) de San Rafael y San Martín, desde 2023. Los anexos 1, 2 bis, 3, 4 y 5 se archivan y todavía no se interpretan.
+
+**Por qué los anexos:** el Tribunal de Cuentas fija qué columnas lleva cada anexo y qué cuentas hay entre ellas (Acuerdo 3949, texto ordenado por el Acuerdo 6644/25). Los 18 municipios publican el mismo contenido en envases distintos (un PDF por anexo, un ZIP, una planilla con todos los anexos) y con distinto detalle. El anexo 2 trae el crédito votado, así que da el presupuesto aprobado aunque el municipio no publique la ordenanza.
+
+**Capas.** Cada una resuelve una sola diferencia, así que sumar un municipio es escribir su buscador, y sumar un anexo es escribir su lector:
+
+| Capa | Dónde | Resuelve |
+|---|---|---|
+| Encontrar | `FINDERS` en `sources/municipios-lrf.ts`, una por municipio | Dónde publica cada uno los documentos de cada trimestre |
+| Leer | `lrf/read.ts`, una por formato | PDF o planilla → filas de fichas. Los PDF se leen por la posición de cada texto, porque San Rafael imprime cada columna como un bloque aparte |
+| Interpretar | `lrf/annexes.ts`, una por anexo | Filas → cifras, con las cuentas del propio documento |
+| Clasificar | `lrf/classify.ts` | El código de partida de cada municipio → un código común |
+
+**Normalización:**
+
+- **Código común:** el clasificador por objeto del gasto, con un nivel por número (`4.1.1` es Personal). San Martín escribe `41100` y San Rafael `040101` (precedido de jurisdicción y unidad). Si dos municipios usan códigos distintos para lo mismo, la equivalencia va en `EQUIVALENT_CODES` con un comentario (por ejemplo, la amortización de la deuda es `060201` en San Rafael y `72100` en San Martín). Siempre se publica el código y el nombre originales junto al común.
+- **Detalle:** el que publica cada municipio. San Rafael abre cada partida por jurisdicción y unidad; San Martín da un total por partida. Para comparar municipios se suma por `objeto_codigo`.
+- **Acumulados:** los importes van desde enero hasta el fin del trimestre. El cuarto trimestre es el año completo; el año en curso se muestra con su último trimestre y la aclaración ("hasta junio").
+- **Pesos nominales,** como todos los datos; la conversión a pesos de hoy se hace en la web.
+
+**Validación** (`parseSpendingAnnex`):
+
+- Se rechaza el documento si una partida no cumple crédito vigente = votado + aumentos − disminuciones, o si las partidas no suman la fila TOTALES en una columna publicada (2 a 9). Queda en `documentos.csv` con el motivo y un aviso en la corrida.
+- Si fallan solo las columnas 10 a 12, que se derivan de las otras y no se publican, el documento entra y la falla queda como observación en `documentos.csv`. Pasa en San Martín 2025-T2: la planilla corre una cifra de la columna 12 a la fila de abajo.
+- El período impreso en el anexo debe coincidir con el del listado. El anexo 1 es anual: solo se controla el año.
+
+**Datos personales:** los anexos 22 y 23 traen deudores con nombre y nunca se bajan. De una planilla con todos los anexos (San Martín) se archivan solo las hojas de los anexos 1 a 5.
+
+**Cómo debería publicarse:** una planilla por trimestre con las columnas del Acuerdo, como hace San Martín, se lee sin errores y la puede reusar cualquiera. Un PDF se puede leer, pero cada sistema contable lo arma distinto.
+
 ## Transparencia municipal
 
 Qué publica cada municipio de lo que las leyes le piden publicar. Relevamiento a mano en `data/curado/transparencia-municipal.yaml` y cálculo en `apps/web/scripts/temas/transparency.ts`. Se muestra en la página de cada municipio («Qué publica el municipio») y en el mapa de `/municipios` («Qué publica»).

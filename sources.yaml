@@ -221,3 +221,13 @@
   frecuencia: trimestral
   dificultad: dificil
   estado: activo
+
+- id: municipios-lrf
+  nombre: Presupuesto y gasto de los municipios (Ley de Responsabilidad Fiscal)
+  organismo: Municipios de Mendoza
+  url: https://www.tribunaldecuentas.mendoza.gov.ar/ley-de-resp-fiscal
+  descripcion: "Cuánto aprobó cada municipio en su presupuesto, cuánto modificó y cuánto gastó y pagó, partida por partida y trimestre a trimestre, según el Anexo 2 que cada uno publica en su sitio. También archiva los anexos 1, 2 bis, 3, 4 y 5 (programación, recursos, resultado y deuda), que todavía no se interpretan. Por ahora, San Rafael y San Martín desde 2023."
+  formato: pdf (planillas)
+  frecuencia: trimestral
+  dificultad: dificil
+  estado: activo

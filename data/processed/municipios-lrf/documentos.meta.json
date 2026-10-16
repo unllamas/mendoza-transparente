@@ -1,0 +1,44 @@
+{
+  "titulo": "Anexos de Responsabilidad Fiscal de cada municipio: qué se encontró y qué se pudo leer",
+  "descripcion": "Cada fila es un anexo de un trimestre de un municipio (1: programación financiera; 2 y 2 bis: gasto; 3: recursos; 4: resultado; 5: deuda). Dice si se encontró en el sitio del municipio, si se pudo leer y, si no, por qué. Es el registro de cobertura de la tabla ejecucion_gastos. Por ahora están San Rafael y San Martín, desde 2023.",
+  "agruparPor": "municipio",
+  "columnas": {
+    "municipio": {
+      "etiqueta": "Municipio",
+      "tipo": "texto"
+    },
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio"
+    },
+    "trimestre": {
+      "etiqueta": "Trimestre",
+      "tipo": "numero"
+    },
+    "anexo": {
+      "etiqueta": "Anexo",
+      "tipo": "texto",
+      "descripcion": "Número de anexo del Acuerdo 3949 del Tribunal de Cuentas."
+    },
+    "estado": {
+      "etiqueta": "Estado",
+      "tipo": "texto",
+      "valores": {
+        "leido": "Leído: sus cifras están en la tabla y cierran con los totales del documento",
+        "archivado": "Archivado: guardado, todavía no se interpreta",
+        "no_encontrado": "No encontrado en el sitio del municipio para ese trimestre",
+        "error": "Encontrado pero no se pudo leer o no cierra con sus propios totales (ver el detalle)"
+      }
+    },
+    "detalle": {
+      "etiqueta": "Detalle",
+      "tipo": "texto",
+      "descripcion": "Cuántas partidas se leyeron, el motivo del error o las observaciones sobre el documento."
+    },
+    "fuente_url": {
+      "etiqueta": "Documento",
+      "tipo": "url"
+    }
+  },
+  "orden": ["municipio", "anio", "trimestre", "anexo", "estado", "detalle", "fuente_url"]
+}
