@@ -100,7 +100,7 @@ La mayoría entra desde el teléfono. Estos detalles separan «una página web e
 
 - **La gente no lee**: primero una lista corta, una fila por ítem; el detalle se abre en una **hoja modal** a la derecha con el fondo oscurecido. Nunca un panel al costado de la tabla.
 - **Lo informativo antes que lo crudo**: tarjetas y gráficos arriba, tablas abajo. Los datos crudos van en páginas internas; la portada busca el impacto.
-- **Fuentes siempre visibles**: cada página y cada cifra enlazan al sitio oficial y a la copia archivada.
+- **Fuentes siempre visibles**: cada página y cada cifra enlazan al sitio oficial, a la copia archivada y, cuando existe, a la copia en archive.org.
 - **Toda persona lleva su cara.** Donde se nombre a alguien (buscador, listas, fichas, organismos, designaciones, firmas de las leyes) va `PersonAvatar` (`@mt/ui/components/avatar`) con su foto oficial, o con sus iniciales mientras no la tengamos.
   - Las fotos salen solo de sitios oficiales (`bun run scrape fotos`).
   - Las personas sin página de funcionario se identifican como `etica-<official_id>` en `data/processed/fotos/fotos.csv`.

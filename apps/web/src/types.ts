@@ -9,6 +9,8 @@ export interface SourceMeta {
   dificultad: string;
   estado: string;
   raw: { files: number; bytes: number; lastFetch: string | null };
+  /** Copy of the raw files on archive.org, or null until they are uploaded. */
+  archiveOrg: string | null;
 }
 
 export interface ColumnaDict {

@@ -1,6 +1,6 @@
 /**
  * Prepara los datos del sitio antes de compilar. Lee sources.yaml,
- * data/raw/<id>/manifest.jsonl y data/processed/<id>/*.csv, y escribe en public/data:
+ * data/raw/<id>/manifest.jsonl, data/raw/<id>/archive-org.jsonl y data/processed/<id>/*.csv, y escribe en public/data:
  *   index.json                    catálogo de fuentes y datasets
  *   <id>/<archivo>.csv            el CSV completo, para descargar
  *   <id>/<archivo>.preview.json   las primeras filas, para mostrar en la web
@@ -87,6 +87,18 @@ function readManifest(id: string): ManifestEntry[] {
     .map((line) => JSON.parse(line) as ManifestEntry);
 }
 
+/** Page with every archive.org item of a source, once at least one file was uploaded (see `bun run archivar`). */
+function archiveOrgUrl(id: string): string | null {
+  const path = join(RAW_DIR, id, "archive-org.jsonl");
+  if (!existsSync(path)) return null;
+  const uploaded = readFileSync(path, "utf8")
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => JSON.parse(line) as { kind: string; archive_url: string | null })
+    .some((r) => r.kind === "item" && r.archive_url);
+  return uploaded ? `https://archive.org/search?query=${encodeURIComponent(`identifier:mendoza-transparente-${id}-*`)}` : null;
+}
+
 function listDirs(dir: string): string[] {
   if (!existsSync(dir)) return [];
   return readdirSync(dir).filter((d) => statSync(join(dir, d)).isDirectory());
@@ -95,7 +107,7 @@ function listDirs(dir: string): string[] {
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
 
-const catalog = parseYaml(readFileSync(join(ROOT, "sources.yaml"), "utf8")) as Omit<SourceMeta, "raw">[];
+const catalog = parseYaml(readFileSync(join(ROOT, "sources.yaml"), "utf8")) as Omit<SourceMeta, "raw" | "archiveOrg">[];
 // Fuentes con datos pero todavía sin entrada en sources.yaml (p. ej. dnap-aif).
 const ids = new Set([...catalog.map((s) => s.id), ...listDirs(RAW_DIR), ...listDirs(PROCESSED_DIR)]);
 
@@ -118,6 +130,7 @@ const sources: SourceMeta[] = [...ids].sort().map((id) => {
       bytes: manifest.reduce((sum, m) => sum + m.bytes, 0),
       lastFetch: last?.fetched_at ?? null,
     },
+    archiveOrg: archiveOrgUrl(id),
   };
 });
 

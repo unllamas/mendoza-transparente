@@ -80,7 +80,7 @@ export function PanelDetalle({
   );
 }
 
-/** De dónde sale el dato: la fuente oficial, el documento de la fila si existe y nuestra copia archivada. */
+/** De dónde sale el dato: la fuente oficial, el documento de la fila si existe, nuestra copia archivada y la de archive.org. */
 function OrigenDato({ dataset, fila, ocid }: { dataset: DatasetMeta; fila: string[]; ocid?: string }) {
   const [fuente] = useFuentes([dataset.source]);
   const urlFila = ["url_pdf", "fuente_url", "url"].map((c) => fila[dataset.columns.indexOf(c)]).find((v) => v && /^https?:\/\//.test(v));
@@ -122,6 +122,16 @@ function OrigenDato({ dataset, fila, ocid }: { dataset: DatasetMeta; fila: strin
         >
           <RiArchiveLine className="size-4" aria-hidden /> Copia archivada del archivo original
         </a>
+        {fuente?.archiveOrg && (
+          <a
+            href={fuente.archiveOrg}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 text-text-tertiary hover:text-text-primary hover:underline"
+          >
+            <RiArchiveLine className="size-4" aria-hidden /> Copia en archive.org
+          </a>
+        )}
       </div>
     </section>
   );

@@ -13,6 +13,44 @@ Todo lo que el sitio muestra sale de `data/`. Estas reglas garantizan que cada n
 
 Esto permite que la web enlace a la «copia archivada» de cada fuente y que nada se pierda aunque el organismo borre o cambie un archivo.
 
+## Copias fuera del repo: archive.org
+
+El archivo crudo no puede depender de un solo lugar: si el organismo borra un documento, queda nuestra copia, pero si se cae el repositorio, se pierde todo junto. Por eso cada archivo queda en tres lugares, y los tres links se guardan:
+
+| Qué | Dónde queda el link |
+|---|---|
+| El documento oficial | `url` en `manifest.jsonl` |
+| Nuestra copia (el respaldo) | `path` en `manifest.jsonl`, en este repo |
+| La copia en archive.org | `archive_url` en `data/raw/<fuente>/archive-org.jsonl` |
+
+`archive-org.jsonl` es de solo agregar, como el manifest. Cada línea es una copia (`kind`):
+
+- **`item`: nuestro archivo crudo**, tal cual está en el repo (con gzip si pesa más de 1 MB), en un ítem de archive.org por fuente y por mes de descarga: `mendoza-transparente-<fuente>-<AAAA-MM>`. Cada ítem lleva además el `manifest.jsonl` completo, así que se entiende sin el repo: de qué URL salió cada archivo, cuándo y su sha256. Sirve para todo, también para lo que no tiene una URL que se pueda abrir (los índices del Boletín Oficial) y para lo que el organismo ya borró.
+- **`wayback`: una captura del documento en su URL oficial**, hecha por la Wayback Machine. Es la prueba más fuerte: un tercero independiente certifica que en esa fecha el Estado publicaba eso en ese sitio. Se captura solo la última versión de cada URL; si el documento cambia (otro sha256), se vuelve a capturar. Si archive.org ya tiene una captura de los últimos 30 días, devuelve esa. Si falla, se reintenta a los 30 días (queda la línea con `archive_url: null` y el `error`).
+
+**Datos personales.** Lo que va al ítem ya está limpio por las reglas de arriba (Ética Pública redactada, nunca los anexos 22 y 23). Pero la Wayback Machine guarda el **original**, no nuestra versión limpia, así que las fuentes cuyos originales traen datos personales no se capturan nunca: Ética Pública (DNI), `municipios-lrf` (algunas planillas traen los anexos de deudores con nombre) y `proveedores` (el registro completo trae personas). La lista está en `WAYBACK_EXCLUDED` (`packages/scrapers/src/archive-org.ts`). **Al sumar una fuente cuyo original trae datos personales, se agrega ahí en el mismo commit.** Lo que se sube a archive.org es, en la práctica, irreversible: se puede pedir que lo oculten, pero ya pudo haberse copiado.
+
+**Cómo corre.** El job `archivo-externo` de `.github/workflows/actualizar-datos.yml`, después de cada actualización, con los secretos `IA_ACCESS_KEY` e `IA_SECRET_KEY` (las claves S3 de la cuenta de archive.org, en https://archive.org/account/s3.php). Sin los secretos se saltea. A mano: `bun run archivar`, con las mismas variables en el entorno.
+
+```bash
+bun run archivar                      # todas las fuentes
+bun run archivar boletin-oficial      # una fuente
+bun run archivar --solo-items         # solo subir nuestras copias
+bun run archivar --solo-wayback       # solo pedir capturas
+bun run archivar --max-capturas=300 --max-minutos=150   # topes por corrida (son los valores por defecto)
+```
+
+- **Idempotente y retomable:** cada copia se anota apenas se hace, así que una corrida cortada por el tope de tiempo sigue donde quedó. La primera vez hay unos 8.000 archivos y unas 1.100 URLs para capturar: lleva varias corridas.
+- **Amable con archive.org:** la Wayback Machine acepta 7 capturas por minuto por cuenta; se hacen de a una, con 9 segundos de pausa. Si avisa que se llegó al límite del día, se sigue en la próxima corrida.
+- **En la web:** si una fuente ya tiene copias, `FuentesOficiales` y la hoja de cada dato muestran «Copia en archive.org», que abre la lista de sus ítems (`archiveOrg` en el índice, armado en `build-data.ts`).
+
+### El repo entero, fuera de GitHub
+
+Además de los archivos, el repositorio completo (código, datos e historial) tiene que vivir en otro lado. Se configura una vez, a mano:
+
+- **Software Heritage** (https://archive.softwareheritage.org/save/): guarda repositorios públicos para siempre. Se pide guardar `https://github.com/unllamas/mendoza-transparente` y después se repite solo.
+- **Un espejo** en Codeberg o GitLab que se actualice con cada push (la función de «mirror» de cualquiera de los dos).
+
 ## `data/processed/<fuente>/`: los datos normalizados
 
 - CSV UTF-8, columnas en snake_case, una fila por observación.
@@ -38,4 +76,4 @@ Una entrada por fuente. La web lo usa para `/fuentes`, para la línea «Fuente: 
 
 ## Tamaño del repo
 
-El archivo crudo vive en git mientras sea manejable. El que más crece es el Boletín Oficial (unos 130 MB por año). Cuando el repo se vuelva pesado, se migra a una base de datos y a un almacenamiento de archivos; mientras tanto, git da historial y auditoría gratis.
+El archivo crudo vive en git mientras sea manejable (y su copia, en archive.org). El que más crece es el Boletín Oficial (unos 130 MB por año). Cuando el repo se vuelva pesado, se migra a una base de datos y a un almacenamiento de archivos; mientras tanto, git da historial y auditoría gratis.

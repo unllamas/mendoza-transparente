@@ -17,6 +17,7 @@ Fuentes completas: `docs/procesos/agregar-una-fuente.md`, `datos-y-archivo.md` y
 4. **Idempotente:** correr dos veces no duplica nada ni crea crudos nuevos si el contenido no cambió (`huella()` ignora el ruido del HTML).
 5. **Sin paralelismo masivo** contra un mismo sitio. Ante errores 429, reintentos largos (ver `boletin-oficial.ts`).
 6. **Validar** contra los totales impresos en el documento original. Anotar la cobertura (qué períodos faltan y por qué).
+7. **Copias en archive.org:** cada crudo se sube solo a archive.org y su URL oficial se captura en la Wayback Machine (`bun run archivar`, job `archivo-externo`). Si el original de una fuente nueva trae datos personales que no archivamos, la fuente va a `WAYBACK_EXCLUDED` (`packages/scrapers/src/archive-org.ts`) en el mismo commit. Detalle en `datos-y-archivo.md`.
 
 ## Pasos para una fuente nueva
 

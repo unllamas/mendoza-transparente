@@ -1,4 +1,4 @@
-/** Enlaces a la fuente oficial y a la copia archivada: para que se vea de dónde sale cada dato. */
+/** Enlaces a la fuente oficial, a la copia archivada y a la copia en archive.org: para que se vea de dónde sale cada dato. */
 
 import { tileVariants } from "@mt/ui/components/card";
 import { cx } from "@mt/ui/lib/cx";
@@ -62,6 +62,16 @@ export function FuentesOficiales({ ids }: { ids: string[] }) {
             <RiArchiveLine className="size-3.5" aria-hidden /> Copia archivada
             {s.raw.lastFetch && <> del {formatDate(s.raw.lastFetch)}</>}
           </a>
+          {s.archiveOrg && (
+            <a
+              href={s.archiveOrg}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-text-tertiary hover:text-text-primary hover:underline"
+            >
+              <RiArchiveLine className="size-3.5" aria-hidden /> Copia en archive.org
+            </a>
+          )}
         </div>
       ))}
     </div>

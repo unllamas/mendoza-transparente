@@ -12,6 +12,7 @@
     "scrape": "bun packages/scrapers/src/cli.ts",
     "typecheck": "turbo run typecheck",
     "actualizar": "bun scripts/actualizar.ts",
+    "archivar": "bun packages/scrapers/src/archive-org.ts",
     "verificar": "bun scripts/verificar-web.ts",
     "resumir-leyes": "cd apps/web && bun scripts/resumir-leyes.ts",
     "posthog-sync": "cd apps/web && bun scripts/posthog-sync.ts",

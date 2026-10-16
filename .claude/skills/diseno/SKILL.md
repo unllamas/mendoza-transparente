@@ -34,7 +34,7 @@ Los componentes base y los tokens están en `packages/ui` (`@mt/ui`). **La base 
    - Pestañas que se desplazan.
    - El buscador ocupa toda la pantalla.
 9. **Lo informativo antes que lo crudo:** primero tarjetas y gráficos, después las tablas. El detalle se abre en una hoja.
-10. **Fuente visible** en cada página y cifra: el sitio oficial y la copia archivada (`FuentesOficiales`).
+10. **Fuente visible** en cada página y cifra: el sitio oficial, la copia archivada y, cuando existe, la copia en archive.org (`FuentesOficiales`).
 11. **El link para atrás, pegado al encabezado:** `WithBreadcrumbs` envolviendo el `PageHeader` (o el `<header>` propio), nunca `Breadcrumbs` suelto con el `gap` de la página. La ruta termina en la página actual con su ícono (`current={{ label, icon }}`) y el `PageHeader` va sin `topic`: una sola línea arriba del título.
 
 ## Celular, accesibilidad y movimiento (detalle en `diseno.md`)

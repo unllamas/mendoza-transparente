@@ -13,6 +13,10 @@
 # comprobar que la web compila. Si una fuente falla se abre un issue «Scraper roto: <fuente>»,
 # que se cierra solo cuando vuelve a funcionar. También se puede correr a mano desde Actions.
 #
+# Al final, archivo-externo copia en archive.org lo que todavía no tiene copia (ítems con el archivo crudo y
+# capturas de la Wayback Machine de las URLs oficiales). Necesita los secretos IA_ACCESS_KEY e IA_SECRET_KEY;
+# sin ellos se saltea. Ver docs/procesos/datos-y-archivo.md.
+#
 # Las fotos de funcionarios no se actualizan acá: usan `sips` (macOS) y cambian poco.
 
 name: Actualizar datos
@@ -246,3 +250,55 @@ jobs:
         run: |
           gh label create scraper-roto --color B60205 --description "Una fuente dejó de actualizarse" --force || true
           gh issue create --label scraper-roto --title "Actualización de datos sin publicar ($(date -u +%F))" --body "Los scrapers trajeron datos nuevos pero la web no compiló con ellos, así que no se publicaron. Registro: $RUN"
+
+  archivo-externo:
+    # Copia en archive.org los archivos crudos nuevos y pide a la Wayback Machine que capture sus URLs oficiales.
+    # Corre después del commit, sobre lo último de main, y commitea solo los registros archive-org.jsonl.
+    needs: commit
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Controlar las claves de archive.org
+        id: claves
+        env:
+          IA_ACCESS_KEY: ${{ secrets.IA_ACCESS_KEY }}
+        run: |
+          if [ -z "$IA_ACCESS_KEY" ]; then
+            echo "::notice title=archive.org::Se saltea: faltan los secretos IA_ACCESS_KEY e IA_SECRET_KEY."
+            echo "hay=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "hay=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.claves.outputs.hay == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - if: steps.claves.outputs.hay == 'true'
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+
+      - name: Copiar en archive.org
+        if: steps.claves.outputs.hay == 'true'
+        env:
+          IA_ACCESS_KEY: ${{ secrets.IA_ACCESS_KEY }}
+          IA_SECRET_KEY: ${{ secrets.IA_SECRET_KEY }}
+        run: |
+          bun install --frozen-lockfile
+          bun run archivar --max-minutos=150
+
+      - name: Commit y push de los registros
+        if: always() && steps.claves.outputs.hay == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data/raw # archivar solo escribe los archive-org.jsonl
+          if git diff --cached --quiet; then echo "Sin copias nuevas."; exit 0; fi
+          git commit -m "Datos: copias en archive.org" -m "$(date -u +%F)"
+          for intento in 1 2 3; do
+            git pull --rebase --autostash && git push && exit 0
+            sleep $((intento * 10))
+          done
+          exit 1
