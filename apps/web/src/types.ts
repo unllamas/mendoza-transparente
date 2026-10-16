@@ -403,6 +403,11 @@ export interface MunicipalBudgetYear {
     top: { name: string; collected: number }[];
   } | null;
   debt: {
+    /**
+     * "loans": the annex lists loans. "short_term": it lists short-term liabilities instead (third-party funds,
+     * withholdings, bank overdrafts), shown as "Deudas de corto plazo" and not comparable with loans.
+     */
+    kind: "loans" | "short_term";
     quarter: number;
     balance: number;
     paidInYear: number;

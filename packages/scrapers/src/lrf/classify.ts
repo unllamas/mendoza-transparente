@@ -36,6 +36,8 @@ export const SPENDING_OBJECTS: Record<string, string> = {
 const EQUIVALENT_CODES: Record<string, string> = {
   // San Rafael "AMORTIZACION DE LA DEUDA" (060201) = San Martín "AMORTIZACION DE CAPITAL" (72100).
   "6.2.1": "7.2.1",
+  // Lavalle "AMORTIZACION DE LA DEUDA" (61100000).
+  "6.1.1": "7.2.1",
 };
 
 /** Each way of writing the code, with the three levels it carries. */

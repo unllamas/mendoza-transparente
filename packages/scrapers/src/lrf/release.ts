@@ -51,13 +51,16 @@ export function annexFromName(name: string): Annex | null {
   return ANNEXES.includes(annex) ? annex : null;
 }
 
-/** `try-finder.ts` sets it: nothing is written to data/raw while a finder is being tried. */
-export const DRY_RUN = !!process.env.LRF_DRY_RUN;
+/**
+ * `try-finder.ts` sets LRF_DRY_RUN: nothing is written to data/raw while a finder is being tried. Read when called, not
+ * at import: the script sets the variable after its imports are evaluated.
+ */
+const dryRun = () => !!process.env.LRF_DRY_RUN;
 
 /** Downloads a listing page, with a pause; archives it when given a file name (the main index of each site). */
 export async function page(url: string, filename = ""): Promise<cheerio.CheerioAPI> {
   const text = await (await get(url)).text();
-  if (filename && !DRY_RUN) await archive(LRF_SOURCE, filename, text, { url });
+  if (filename && !dryRun()) await archive(LRF_SOURCE, filename, text, { url });
   await sleep(800);
   return cheerio.load(text);
 }

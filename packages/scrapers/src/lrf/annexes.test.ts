@@ -171,3 +171,39 @@ describe("lrf: Infogov layout (General Alvear, Malargüe and others)", () => {
     ]);
   });
 });
+
+describe("lrf: cases found while adding the Infogov municipalities", () => {
+  test("a PDF that prints the annex twice is read once (Maipú)", () => {
+    const copy = ["41100000 (Subtotal) PERSONAL 100 0 0 100 90 80 70 60 10 10 10", "TOTAL GENERAL 100 0 0 100 90 80 70 60 10 10 10"];
+    const parsed = parseSpendingAnnex([table(...copy, ...copy)]);
+    if ("error" in parsed) throw new Error(parsed.error);
+    expect(parsed.lines).toHaveLength(1);
+  });
+
+  test("debt: a negative split over two lines, and the 616 accounts kept out of the list (Santa Rosa)", () => {
+    const parsed = parseDebtAnnex([
+      table(
+        "2212200000 - PRESTAMO DEL BANCO 17.777.777,64 4.444.444,41 0,00 -4.444.444,41 13.333.333,23",
+        "6162010000 - AMORTIZACION DE LA 0,00 4.444.444,41 4.444.444,41 0,00 0,00",
+        "TOTAL GENERAL 17.777.777,64 8.888.888,82 4.444.444,41 - 13.333.333,23",
+        "4.444.444,41",
+      ),
+    ]);
+    if ("error" in parsed) throw new Error(parsed.error);
+    expect(parsed.lines.map((l) => l.label)).toEqual(["2212200000 - PRESTAMO DEL BANCO"]);
+    expect(parsed.totals.renegotiation).toBe(-4444444.41);
+  });
+
+  test("debt without a totals row: each debt checked on its own (Rivadavia)", () => {
+    const parsed = parseDebtAnnex([
+      table("2026 2 60212 2117020000 PRESTAMO CONVENIO I.P.V. 909.951,81 0,00 0,00 0,00 909.951,81 Resolución"),
+    ]);
+    if ("error" in parsed) throw new Error(parsed.error);
+    expect(parsed.lines.map((l) => l.label)).toEqual(["2117020000 PRESTAMO CONVENIO I.P.V."]);
+    expect(parsed.notes.join()).toContain("no trae fila de totales");
+  });
+
+  test("Lavalle's amortization code", () => {
+    expect(spendingObjectCode("61100000")).toBe("7.2.1");
+  });
+});

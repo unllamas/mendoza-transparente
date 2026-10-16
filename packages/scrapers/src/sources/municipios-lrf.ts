@@ -45,9 +45,15 @@ import {
 } from "../lrf/annexes.ts";
 import { revenueKind, SPENDING_OBJECTS } from "../lrf/classify.ts";
 import { find as generalAlvear } from "../lrf/finders/general-alvear.ts";
+import { find as laPaz } from "../lrf/finders/la-paz.ts";
+import { find as lavalle } from "../lrf/finders/lavalle.ts";
+import { find as maipu } from "../lrf/finders/maipu.ts";
 import { find as malargue } from "../lrf/finders/malargue.ts";
+import { find as rivadavia } from "../lrf/finders/rivadavia.ts";
 import { find as sanMartin } from "../lrf/finders/san-martin.ts";
 import { find as sanRafael } from "../lrf/finders/san-rafael.ts";
+import { find as santaRosa } from "../lrf/finders/santa-rosa.ts";
+import { find as tunuyan } from "../lrf/finders/tunuyan.ts";
 import { pdfTables, sheetTables, type Table } from "../lrf/read.ts";
 import {
   ANNEXES,
@@ -67,9 +73,15 @@ const warn = (msg: string) => console.log(`::warning title=${SOURCE}::${msg}`);
 /** One finder per municipality, each in lrf/finders/<municipality>.ts. */
 const FINDERS: Record<string, Finder> = {
   "General Alvear": generalAlvear,
+  "La Paz": laPaz,
+  Lavalle: lavalle,
+  Maipú: maipu,
   Malargüe: malargue,
-  "San Rafael": sanRafael,
+  Rivadavia: rivadavia,
   "San Martín": sanMartin,
+  "San Rafael": sanRafael,
+  "Santa Rosa": santaRosa,
+  Tunuyán: tunuyan,
 };
 
 const slug = (m: string) =>

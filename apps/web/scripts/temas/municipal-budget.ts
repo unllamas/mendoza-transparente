@@ -43,7 +43,18 @@ const REVENUE_NAMES: [RegExp, string][] = [
   [/^recursos corrientes de origen nacional$/i, "De la Nación"],
   [/^recursos corrientes de origen provincial$/i, "De la Provincia"],
 ];
+/** A debt without the account code the accounting system puts first ("2113010000 - Ret. Sobre…" or "2.1.4.03 Banco…" → the name alone). */
+const debtName = (label: string) => {
+  const name = label.replace(/^[\d.]{6,}\s*-?\s*/, "").trim() || label;
+  return /\p{Ll}/u.test(name) ? name : titleCase(name);
+};
 const revenueName = (label: string) => REVENUE_NAMES.find(([re]) => re.test(label.trim()))?.[1] ?? titleCase(label);
+
+/**
+ * Municipalities whose Annex 5 lists short-term liabilities (third-party funds, withholdings, bank overdrafts) and
+ * not loans: shown as "Deudas de corto plazo". Checked by hand on their documents (docs/procesos/metodologia.md).
+ */
+const SHORT_TERM_DEBT = new Set(["La Paz", "Malargüe"]);
 
 export function buildMunicipalBudgets(
   spending: CsvRow[],
@@ -111,11 +122,12 @@ export function buildMunicipalBudgets(
           : null,
         debt: debtYear.length
           ? {
+              kind: SHORT_TERM_DEBT.has(name) ? "short_term" : "loans",
               quarter: debtQuarter,
               balance: sum(debtLast, "saldo_final"),
               paidInYear: sum(debtYear, "pagos"),
               newInYear: sum(debtYear, "deuda_contraida"),
-              loans: totalsBy(debtLast, (r) => r.deuda!, ["saldo_final"])
+              loans: totalsBy(debtLast, (r) => debtName(r.deuda!), ["saldo_final"])
                 .filter((l) => l.saldo_final > 0)
                 .map((l) => ({ name: l.name, balance: l.saldo_final })),
             }

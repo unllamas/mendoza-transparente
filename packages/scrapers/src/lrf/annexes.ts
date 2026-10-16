@@ -218,6 +218,24 @@ const INFOGOV_LEAF = /^\d\d[1-9]00000$/;
 const INFOGOV_FURNITURE = /^(usuario|certifico|registros|normativa|www\.|p[áa]gina|hoja)/i;
 
 /**
+ * Tunuyán codes the interest of the debt (4.2.1) wrongly: the credit under 42000000 and the execution under 42100000,
+ * after a first 42000000 that is the subtotal of both. The leaf is the sum of every 42000000 after the first and of
+ * every 42100000 (older documents just repeat 42000000: subtotal and leaf). Same with the amortization (62000000).
+ * The TOTAL GENERAL check confirms it.
+ */
+function mergeInterest(items: { code: string; label: string[]; nums: number[] }[]) {
+  for (const group of ["42", "62"]) {
+    const subs = items.filter((i) => i.code === `${group}000000`);
+    if (subs.length < 2) continue;
+    const parts = [...subs.slice(1), ...items.filter((i) => i.code === `${group}100000`)];
+    const leaf = subs[1]!;
+    leaf.nums = leaf.nums.map((_, k) => parts.reduce((a, p) => a + (p.nums[k] ?? 0), 0));
+    leaf.code = `${group}100000`;
+    for (const p of parts) if (p !== leaf) p.code = "00000000";
+  }
+}
+
+/**
  * Infogov layout (pie "www.infogov.com.ar"; General Alvear, Malargüe, Maipú, Lavalle, La Paz and others): each item
  * opens with "41100000 (Subtotal)" and its label and figures follow, on the same line or the next ones, until the next
  * item. Long figures spill onto other lines and mix the order of columns 10 to 12, so only columns 2 to 9 are read and
@@ -234,6 +252,8 @@ function readInfogov(tables: Table[]): { lines: SpendingLine[]; totals: Spending
       const row = withSigns(raw);
       const text = rowText(row);
       const item = INFOGOV_ITEM.exec(text);
+      // Some PDFs print the same annex two or three times (Maipú 2023-T4 and 2025-T3): the first copy is enough.
+      if (item && total) break;
       if (item) {
         current = { code: item[1]!, label: [], nums: [] };
         items.push(current);
@@ -246,6 +266,7 @@ function readInfogov(tables: Table[]): { lines: SpendingLine[]; totals: Spending
       }
       for (const t of row) {
         if (/^\d{8}$/.test(t.text) || /^\(subtotal\)$/i.test(t.text) || /^(total|general)$/i.test(t.text)) continue;
+        if (t.text === "-" && current.nums.length === 0) continue;
         if (t.num !== null) current.nums.push(t.num);
         else current.label.push(t.text);
       }
@@ -260,6 +281,7 @@ function readInfogov(tables: Table[]): { lines: SpendingLine[]; totals: Spending
       orderedLiabilities: f.ordered - f.paid,
     };
   };
+  mergeInterest(items);
   const short = items.filter((i) => INFOGOV_LEAF.test(i.code) && i.nums.length < 8).map((i) => i.code);
   if (short.length) return { error: `partidas con menos de 8 cifras: ${short.slice(0, 3).join(", ")}` };
   const lines: SpendingLine[] = [];
@@ -401,6 +423,8 @@ function readInfogovRevenue(tables: Table[]): { lines: RevenueLine[]; totals: Re
     for (const raw of table) {
       // The code is read before joining signs: the "-" after it ("5110 - 7.136.942.004,00") is not a minus sign.
       const item = INFOGOV_REVENUE_ITEM.exec(rowText(raw));
+      // As in Annex 2, a PDF can print the annex more than once: the first copy is enough.
+      if (item && total) break;
       const dash = item ? raw.findIndex((t, i) => i > 0 && t.text === "-" && raw[i - 1]!.text === item[2]) : -1;
       const row = withSigns(item ? raw.slice(dash + 1) : raw);
       const text = rowText(row);
@@ -494,6 +518,8 @@ function debtSplit(row: Tok[]): { label: string; values: number[] } | null {
     }
     let j = i;
     while (j < row.length && row[j]!.num !== null) j++;
+    // A year closing the label ("ACUERDO II 2019", "DESEQUILIBRIO FINANCIERO 2020") is not a figure.
+    if (i > 0 && /^(19|20)\d\d$/.test(row[i]!.text)) i++;
     if (j - i >= DEBT_COLUMNS.length && (!best || j - i > best[1] - best[0])) best = [i, j];
     i = j;
   }
@@ -511,19 +537,57 @@ export function parseDebtAnnex(tables: Table[]): DebtAnnex | { error: string } {
   const strict = readDebt(tables, false);
   if (!("error" in strict)) return strict;
   const loose = readDebt(tables, true);
-  return "error" in loose ? strict : loose;
+  if (!("error" in loose)) return loose;
+  // A lone "-" is a zero, not a sign (Tunuyán 2024-T2 prints "0,00 - 153.333.651,52" in the closing columns).
+  const plain = readDebt(tables, null);
+  return "error" in plain ? strict : plain;
 }
 
-function readDebt(tables: Table[], signAfterLabel: boolean): DebtAnnex | { error: string } {
+/**
+ * A negative split over two lines: the row keeps a lone "-" and the amount falls alone on the next line (Santa Rosa
+ * and La Paz, in the Subtotal and TOTAL GENERAL rows: "… 0,00 - 13.347.303,11" and below "4.444.444,41").
+ */
+function joinSplitNegatives(rows: Tok[][]): Tok[][] {
+  const out: Tok[][] = [];
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i]!;
+    const next = rows[i + 1];
+    const dash = row.findIndex((t) => t.text === "-");
+    if (dash >= 0 && next?.length === 1 && isAmount(next[0]) && row.filter(isAmount).length === DEBT_COLUMNS.length - 1) {
+      out.push(row.map((t, k) => (k === dash ? { text: `-${next[0]!.text}`, num: -next[0]!.num! } : t)));
+      i++;
+    } else out.push(row);
+  }
+  return out;
+}
+
+/** A debt name that the line cut short: fewer than four words after the account code. */
+const shortName = (label: string) =>
+  label
+    .replace(/^\d{6,}\s*-?\s*/, "")
+    .split(/\s+/)
+    .filter(Boolean).length < 4;
+
+function readDebt(tables: Table[], signAfterLabel: boolean | null): DebtAnnex | { error: string } {
   const lines: DebtLine[] = [];
   let totals: DebtFigures | null = null;
   let currency: DebtLine["currency"] = "nacional";
-  for (const row of tables.flat().map((r) => withSigns(r, signAfterLabel))) {
+  /** The last debt read, whose name can go on in the next lines. */
+  let last: DebtLine | null = null;
+  for (const row of joinSplitNegatives(tables.flat()).map((r) => (signAfterLabel === null ? r : withSigns(r, signAfterLabel)))) {
     const text = rowText(row);
     if (/moneda\s+extranjera/i.test(text)) currency = "extranjera";
     else if (/moneda\s+nacional/i.test(text)) currency = "nacional";
     const split = debtSplit(row);
-    if (!split) continue;
+    if (!split) {
+      // Infogov wraps the account name onto the next lines ("2111000000 - Residuos" + "Pasivos"). Only lines of words
+      // after a short name: in other layouts the next lines carry pieces of the legal norm and the creditor.
+      if (last && /^[\p{L}\s.,()/-]+$/u.test(text) && !/^(subtotal|total|en\s+moneda|moneda)\b/i.test(text) && shortName(last.label))
+        last.label = `${last.label} ${text}`.replace(/\s+/g, " ");
+      else last = null;
+      continue;
+    }
+    last = null;
     const values = Object.fromEntries(DEBT_COLUMNS.map((c, i) => [c, split.values[i]!])) as DebtFigures;
     if (TOTALS_ROW.test(split.label) || /^total\s+general$/i.test(split.label)) {
       totals = values;
@@ -534,19 +598,44 @@ function readDebt(tables: Table[], signAfterLabel: boolean): DebtAnnex | { error
     // Section rows ("Moneda Extranjera 0 0 0 0 0") carry the currency, not a debt.
     if (/^(en\s+)?moneda\s+(nacional|extranjera)$/i.test(split.label)) continue;
     // Rows without words are the column numbers ("1 2 3 4 5 6=2-o+3+4+o-5 7 8"), not a debt.
-    if (!/\p{L}/u.test(split.label)) continue;
+    // An account code alone is a debt whose name went to the next line (Santa Rosa: "6162010000 -").
+    const codeOnly = /^\d{6,}\s*-?$/.test(split.label);
+    if (!/\p{L}/u.test(split.label) && !/^(19|20)\d\d$/.test(split.label) && !codeOnly) continue;
     if (DEBT_COLUMNS.every((c) => values[c] === 0)) continue;
-    lines.push({ label: split.label.replace(/\s+/g, " "), currency, ...values });
+    // Rivadavia opens each row with the year, the quarter and its nomenclator ("2026 2 60212 2117020000 PRESTAMO …").
+    const label = split.label
+      .replace(/^\d{4}\s+[1-4]\s+\d{5,6}\s+/, "")
+      .replace(/\s+-$/, "")
+      .replace(/\s+/g, " ");
+    last = { label, currency, ...values };
+    lines.push(last);
   }
 
-  if (!totals) return { error: "no se encontró la fila TOTALES" };
+  const notes: string[] = [];
+  const balanced = (l: DebtFigures) => {
+    const base = l.openingBalance - l.payments + l.newDebt;
+    return close(base + l.renegotiation, l.closingBalance) || close(base - l.renegotiation, l.closingBalance);
+  };
+  if (!totals) {
+    // Rivadavia prints no totals row: each debt has to add up on its own, and the document is noted.
+    const off = lines.filter((l) => !balanced(l));
+    if (!lines.length || off.length) return { error: "no se encontró la fila TOTALES" };
+    totals = Object.fromEntries(DEBT_COLUMNS.map((c) => [c, lines.reduce((a, l) => a + l[c], 0)])) as DebtFigures;
+    notes.push("el documento no trae fila de totales: cada deuda se controló con sus propias cuentas");
+  }
   // The sums are checked on the figures as printed, before any normalization.
   for (const column of DEBT_COLUMNS) {
     const sum = lines.reduce((acc, l) => acc + l[column], 0);
     if (!close(sum, totals[column], lines.length + 1))
       return { error: `la suma de las deudas en ${column} (${Math.round(sum)}) no da el total (${Math.round(totals[column])})` };
   }
-  const notes: string[] = [];
+  // Accounts 616… (Santa Rosa, La Paz) are the amortization of those same debts seen as spending: they are part of the
+  // totals, so they stay for the check above, but listing them would count the payments twice.
+  const amortization = lines.filter((l) => /^616\d/.test(l.label));
+  if (amortization.length) {
+    lines.splice(0, lines.length, ...lines.filter((l) => !amortization.includes(l)));
+    notes.push("las cuentas 616 (amortización de la deuda, como gasto) entran en el control de totales y no se listan");
+  }
   // A balance owed is never negative: San Martín (2024) prints balances with the sign of a liability, and in 2024-T1
   // mixes a negative opening with a positive closing balance in the same row. Balances are taken in absolute value.
   if (lines.some((l) => l.openingBalance < 0 || l.closingBalance < 0)) {
@@ -557,10 +646,7 @@ function readDebt(tables: Table[], signAfterLabel: boolean): DebtAnnex | { error
     }
   }
   // (5) can add or subtract: the closing balance has to match one of both.
-  const off = lines.filter((l) => {
-    const base = l.openingBalance - l.payments + l.newDebt;
-    return !close(base + l.renegotiation, l.closingBalance) && !close(base - l.renegotiation, l.closingBalance);
-  });
+  const off = lines.filter((l) => !balanced(l));
   if (off.length) notes.push(`deudas donde el saldo final no da (2)-(3)+(4)±(5): ${off.map((l) => l.label).join(" | ")}`);
   return { lines, totals, notes };
 }

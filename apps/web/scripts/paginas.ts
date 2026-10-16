@@ -1069,7 +1069,12 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
             ["Autorizado con los cambios del año", pesos(y.current)],
             ["Gastado (devengado)", pesos(y.accrued)],
             ["Pagado", pesos(y.paid)],
-            ...(y.debt ? ([["Deuda al cierre", pesos(y.debt.balance)]] as [string, string][]) : []),
+            ...(y.debt
+              ? ([[y.debt.kind === "short_term" ? "Deudas de corto plazo al cierre" : "Deuda al cierre", pesos(y.debt.balance)]] as [
+                  string,
+                  string,
+                ][])
+              : []),
           ],
           secciones: [
             { titulo: "En qué se gasta", items: y.byObject.map((o) => ({ texto: `${o.name}: ${pesos(o.accrued)}` })) },

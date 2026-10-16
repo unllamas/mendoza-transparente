@@ -12,6 +12,9 @@ import type { MunicipalBudget, MunicipalBudgetYear } from "@/types.ts";
 
 const money = (v: number) => formatMoneda(v, "ARS");
 const percent = (part: number, whole: number) => (whole ? Math.round((part / whole) * 100) : 0);
+/** Debts listed by name; the rest is summed in one line (La Paz lists about 25 accounts). */
+const MAX_DEBTS = 8;
+
 /** Share of a total for a bar: "34 %", or "< 1 %" so a small item does not read as nothing. */
 const share = (part: number, whole: number) => {
   const p = whole ? (part / whole) * 100 : 0;
@@ -26,6 +29,7 @@ export function BudgetYear({ budget, year }: { budget: MunicipalBudget; year: Mu
   const financing = y.revenue?.byKind.find((k) => k.kind === "financiamiento");
   const ownRevenue = y.revenue ? y.revenue.collected - (financing?.collected ?? 0) : 0;
   const evolution = [...budget.years].reverse();
+  const shortTerm = y.debt?.kind === "short_term";
 
   return (
     <div className="flex flex-col gap-10">
@@ -120,19 +124,35 @@ export function BudgetYear({ budget, year }: { budget: MunicipalBudget; year: Mu
       )}
 
       {y.debt && (
-        <Section title="Deuda">
+        <Section title={shortTerm ? "Deudas de corto plazo" : "Deuda"}>
+          {shortTerm && (
+            <p className="-mt-2 text-body-regular text-text-tertiary">
+              El municipio no informa préstamos: informa lo que debe pagar en el corto plazo, como fondos de terceros, retenciones y
+              descubiertos en el banco. No se compara con la deuda por préstamos de otros municipios.
+            </p>
+          )}
           <div className="grid gap-3 sm:grid-cols-2">
             <StatTile
               icon={RiBankLine}
-              label={y.debt.quarter === 4 ? `Deuda al cierre de ${y.year}` : `Deuda a ${until}`}
+              label={`${shortTerm ? "Deudas de corto plazo" : "Deuda"} ${y.debt.quarter === 4 ? `al cierre de ${y.year}` : `a ${until}`}`}
               value={money(y.debt.balance)}
-              note={y.debt.newInYear > 0 ? `Tomó ${money(y.debt.newInYear)} de deuda nueva en el año` : "No tomó deuda nueva en el año"}
+              note={
+                shortTerm
+                  ? `Se sumaron ${money(y.debt.newInYear)} en el año`
+                  : y.debt.newInYear > 0
+                    ? `Tomó ${money(y.debt.newInYear)} de deuda nueva en el año`
+                    : "No tomó deuda nueva en el año"
+              }
             />
-            <StatTile icon={RiCoinsLine} label="Pagado de deuda en el año" value={money(y.debt.paidInYear)} />
+            <StatTile
+              icon={RiCoinsLine}
+              label={shortTerm ? "Pagado en el año" : "Pagado de deuda en el año"}
+              value={money(y.debt.paidInYear)}
+            />
           </div>
           {y.debt.loans.length > 0 && (
             <ul className={listVariants()}>
-              {y.debt.loans.map((l) => (
+              {y.debt.loans.slice(0, MAX_DEBTS).map((l) => (
                 <li key={l.name} className={listRowVariants()}>
                   <span className="min-w-0 flex-1 truncate" title={l.name}>
                     {l.name}
@@ -141,6 +161,12 @@ export function BudgetYear({ budget, year }: { budget: MunicipalBudget; year: Mu
                 </li>
               ))}
             </ul>
+          )}
+          {y.debt.loans.length > MAX_DEBTS && (
+            <p className="text-body-regular text-text-tertiary">
+              Y {y.debt.loans.length - MAX_DEBTS} {(shortTerm ? "cuenta" : "deuda") + (y.debt.loans.length - MAX_DEBTS === 1 ? "" : "s")}{" "}
+              más por {money(y.debt.loans.slice(MAX_DEBTS).reduce((a, l) => a + l.balance, 0))}, en el documento original.
+            </p>
           )}
         </Section>
       )}
