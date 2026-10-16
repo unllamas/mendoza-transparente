@@ -25,13 +25,12 @@
  *   - A quarter already archived is not downloaded again (a published quarter does not change); only listings are.
  *   - A document whose items do not satisfy the printed identities or do not add up to its TOTALES row is left out
  *     of the CSV and recorded in documentos.csv with the reason.
- *   - First municipalities: San Rafael (one PDF per annex) and San Martín (one workbook per quarter). The rest are
- *     added as finders here; the reading layers do not change.
+ *   - Each municipality's finder lives in lrf/finders/<municipality>.ts and is registered in FINDERS. Adding one does not
+ *     change the reading layers.
  */
 
 import { existsSync } from "node:fs";
-import { archive, get, latestRaw, type Municipio, normalizeMunicipio, type Row, readRaw, USER_AGENT, writeProcessed } from "@mt/core";
-import * as cheerio from "cheerio";
+import { archive, get, latestRaw, normalizeMunicipio, type Row, readRaw, writeProcessed } from "@mt/core";
 import * as XLSX from "xlsx";
 import {
   type DebtAnnex,
@@ -45,25 +44,35 @@ import {
   type SpendingAnnex,
 } from "../lrf/annexes.ts";
 import { revenueKind, SPENDING_OBJECTS } from "../lrf/classify.ts";
+import { find as generalAlvear } from "../lrf/finders/general-alvear.ts";
+import { find as malargue } from "../lrf/finders/malargue.ts";
+import { find as sanMartin } from "../lrf/finders/san-martin.ts";
+import { find as sanRafael } from "../lrf/finders/san-rafael.ts";
 import { pdfTables, sheetTables, type Table } from "../lrf/read.ts";
+import {
+  ANNEXES,
+  type Annex,
+  annexName,
+  type DocumentExt,
+  downloadRelease,
+  FIRST_YEAR,
+  type Finder,
+  type Release,
+  LRF_SOURCE as SOURCE,
+  sleep,
+} from "../lrf/release.ts";
 
-const SOURCE = "municipios-lrf";
-const FIRST_YEAR = 2023;
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const warn = (msg: string) => console.log(`::warning title=${SOURCE}::${msg}`);
 
-/** Annexes archived for each quarter. */
-const ANNEXES = ["1", "2", "2bis", "3", "4", "5"] as const;
-type Annex = (typeof ANNEXES)[number];
+/** One finder per municipality, each in lrf/finders/<municipality>.ts. */
+const FINDERS: Record<string, Finder> = {
+  "General Alvear": generalAlvear,
+  Malargüe: malargue,
+  "San Rafael": sanRafael,
+  "San Martín": sanMartin,
+};
 
-/** The documents of one quarter: one file per annex, or one workbook with a sheet per annex. */
-interface Release extends Period {
-  municipality: Municipio;
-  files: Partial<Record<Annex, string>>;
-  workbook?: string;
-}
-
-const slug = (m: Municipio) =>
+const slug = (m: string) =>
   m
     .normalize("NFD")
     .replace(/\p{Diacritic}/gu, "")
@@ -72,204 +81,48 @@ const slug = (m: Municipio) =>
 
 const periodKey = (p: Period) => `${p.year}-T${p.quarter}`;
 const quarterEnd = (p: Period) => `${p.year}-${["03-31", "06-30", "09-30", "12-31"][p.quarter - 1]}`;
-const fileName = (r: Release, annex: Annex) => `${slug(r.municipality)}-${periodKey(r)}-anexo${annex}.pdf`;
+const EXTS: DocumentExt[] = ["pdf", "xlsx", "xls"];
+const fileName = (r: Release, annex: Annex, ext: DocumentExt) => `${slug(r.municipality)}-${periodKey(r)}-anexo${annex}.${ext}`;
 const workbookName = (r: Release) => `${slug(r.municipality)}-${periodKey(r)}-anexos.xlsx`;
-const annexName = (annex: Annex) => (annex === "2bis" ? "2 bis" : annex);
-const ROMAN: Record<string, string> = { i: "1", ii: "2", iii: "3", iv: "4", v: "5", vi: "6" };
 
-/**
- * Annex named in a link text or file name, in any of the spellings found: "anexo2bis.pdf", "Anexo-II.pdf",
- * "ANEXO-2-DE-LA-EJECUCION…", "Anxo-2-bis-…", "Anexi-III.pdf". Null if it is not one of the annexes archived here.
- * The printed title is checked later (`headerAnnex`): a file can be published under the wrong name.
- */
-export function annexFromName(name: string): Annex | null {
-  let text = name;
-  try {
-    text = decodeURIComponent(name);
-  } catch {
-    /* not encoded */
+/** The archived file of an annex, whatever its extension; null if it was never archived. */
+async function archivedAnnex(r: Release, annex: Annex): Promise<{ path: string; ext: DocumentExt } | null> {
+  for (const ext of EXTS) {
+    const path = await latestRaw(SOURCE, fileName(r, annex, ext));
+    if (path && existsSync(path)) return { path, ext };
   }
-  const m = /an[e]?x[oi]?[\s_-]*(vi|iv|v|i{1,3}|\d{1,2})[\s_-]*(bis)?(?![a-z\d])/i.exec(text);
-  if (!m) return null;
-  const n = ROMAN[m[1]!.toLowerCase()] ?? String(Number(m[1]));
-  const annex = (m[2] ? `${n}bis` : n) as Annex;
-  return ANNEXES.includes(annex) ? annex : null;
+  return null;
 }
-
-// ---------------------------------------------------------------- 1. find
-
-async function page(url: string, filename: string): Promise<cheerio.CheerioAPI> {
-  const text = await (await get(url)).text();
-  if (filename) await archive(SOURCE, filename, text, { url });
-  await sleep(800);
-  return cheerio.load(text);
-}
-
-/** Links of a page, absolute. */
-function links($: cheerio.CheerioAPI, base: string): { text: string; href: string }[] {
-  return $("a")
-    .toArray()
-    .flatMap((a) => {
-      const href = $(a).attr("href");
-      if (!href || href.startsWith("#") || href.startsWith("javascript")) return [];
-      try {
-        return [{ text: $(a).text().replace(/\s+/g, " ").trim(), href: new URL(href.trim().replace(/ /g, "%20"), base).toString() }];
-      } catch {
-        return [];
-      }
-    });
-}
-
-/** The archived annexes among a page's PDF links, recognized by the file name or the link text. */
-function annexLinks(found: { text: string; href: string }[]): Partial<Record<Annex, string>> {
-  const files: Partial<Record<Annex, string>> = {};
-  for (const l of found) {
-    if (!/\.pdf(\?|$)/i.test(l.href)) continue;
-    const annex = annexFromName(l.href.split("/").pop() ?? "") ?? annexFromName(l.text);
-    if (annex && !files[annex]) files[annex] = l.href;
-  }
-  return files;
-}
-
-const FINDERS: Record<string, () => Promise<Release[]>> = {
-  /**
-   * General Alvear: one tab per quarter ("2° Trimestre | 2026") with every annex at /resp-fiscal/<folder>/anexoN.pdf.
-   * The folder name is NOT the quarter from 2023-T4 to 2024-T3 (2023-T4 is in "archivos-1t-2024"): the links are
-   * taken from the tab, and the period printed in each annex is checked. Annex 1 is yearly, in other tabs; not used.
-   */
-  async "General Alvear"() {
-    const base = "https://alvearmendoza.gob.ar/ley-de-responsabilidad-fiscal/";
-    const $ = await page(base, "indice-general-alvear.html");
-    const releases: Release[] = [];
-    $(".tab-pane").each((_, pane) => {
-      const m = /(\d)°?\s*trimestre\|(\d{4})/i.exec($(pane).attr("aria-labelledby") ?? "");
-      if (!m || +m[2]! < FIRST_YEAR) return;
-      const files = annexLinks(links(cheerio.load($(pane).html() ?? ""), base));
-      delete files["1"];
-      releases.push({ municipality: "General Alvear", year: +m[2]!, quarter: +m[1]!, files });
-    });
-    return releases;
-  },
-
-  /**
-   * Malargüe: one page per quarter, listed in the sitemap ("/responsabilidad-fiscal-2o-trimestre-2024/", and from 2025
-   * "-2-trimestre-"). Some quarters have a second page ending in "-2" and only one of them has the files (2023-T1 and
-   * T4 are in the "-2" one): the page with PDFs wins. File names change every quarter (roman or arabic numbers, typos).
-   * The site is slow: about a minute per page.
-   */
-  async Malargüe() {
-    const pages = new Map<string, { period: Period; urls: string[] }>();
-    for (const n of [1, 2, 3]) {
-      const xml = await (await get(`https://www.malargue.gov.ar/wp-sitemap-posts-post-${n}.xml`)).text();
-      await sleep(800);
-      for (const m of xml.matchAll(
-        /<loc>(https:\/\/www\.malargue\.gov\.ar\/responsabilidad-fiscal-(\d)o?-trimestre-(\d{4})(?:-\d)?\/)<\/loc>/g,
-      )) {
-        if (+m[3]! < FIRST_YEAR) continue;
-        const key = `${m[3]}-${m[2]}`;
-        const entry = pages.get(key) ?? { period: { year: +m[3]!, quarter: +m[2]! }, urls: [] };
-        entry.urls.push(m[1]!);
-        pages.set(key, entry);
-      }
-    }
-    const releases: Release[] = [];
-    for (const { period, urls } of pages.values()) {
-      for (const url of urls.sort((a, b) => a.length - b.length)) {
-        const files = annexLinks(links(await page(url, ""), url));
-        if (Object.keys(files).length) {
-          releases.push({ municipality: "Malargüe", ...period, files });
-          break;
-        }
-      }
-    }
-    return releases;
-  },
-
-  /** San Rafael: one page per year with every annex of each quarter at /archivos-muni/fiscal/AAAA_Nt/anexoN.pdf. */
-  async "San Rafael"() {
-    const base = "https://www.sanrafael.gov.ar/informacion-publica/ley-resp-fiscal/";
-    const index = await page(base, "indice-san-rafael.html");
-    const years = new Set<string>();
-    index("a").each((_, a) => {
-      const href = index(a).attr("href") ?? "";
-      const m = /ley-de-responsabilidad-fiscal-(\d{4})\/?$/.exec(href);
-      if (m && +m[1]! >= FIRST_YEAR) years.add(new URL(href, base).toString());
-    });
-    const releases = new Map<string, Release>();
-    for (const url of years) {
-      const $ = await page(url, "");
-      $("a").each((_, a) => {
-        const href = $(a).attr("href") ?? "";
-        const m = /\/fiscal\/(\d{4})_(\d)t\/anexo(\d+(?:bis)?)\.pdf$/i.exec(href);
-        const annex = m?.[3]?.toLowerCase() as Annex | undefined;
-        if (!m || !annex || !ANNEXES.includes(annex)) return;
-        const period = { year: +m[1]!, quarter: +m[2]! };
-        const key = periodKey(period);
-        const release = releases.get(key) ?? { municipality: "San Rafael", ...period, files: {} };
-        release.files[annex] = new URL(href, url).toString();
-        releases.set(key, release);
-      });
-    }
-    return [...releases.values()];
-  },
-
-  /**
-   * San Martín: Hacienda publishes one workbook per quarter with every annex at web.sanmartinmza.gob.ar/hacienda/
-   * (the folder index answers 403 and no page links them). The file name pattern is tried with a HEAD request.
-   */
-  async "San Martín"() {
-    const base = "https://web.sanmartinmza.gob.ar/hacienda/";
-    const releases: Release[] = [];
-    for (let year = FIRST_YEAR; year <= new Date().getFullYear(); year++) {
-      for (let quarter = 1; quarter <= 4; quarter++) {
-        for (const ext of ["xlsx", "xls"]) {
-          const url = `${base}ley_resp_${String(year).slice(2)}_${quarter}.${ext}`;
-          const head = await fetch(url, { method: "HEAD", headers: { "User-Agent": USER_AGENT }, signal: AbortSignal.timeout(60_000) });
-          await sleep(400);
-          if (head.ok) {
-            releases.push({ municipality: "San Martín", year, quarter, files: {}, workbook: url });
-            break;
-          }
-        }
-      }
-    }
-    return releases;
-  },
-};
 
 // ---------------------------------------------------------------- download and archive
 
 /** Archives what is missing of a release. Returns the problems found (empty if everything is in place). */
 async function ensureArchived(r: Release): Promise<string[]> {
+  if (r.workbook) return archiveWorkbook(r);
+  const skip = new Set<Annex>();
+  for (const annex of ANNEXES) if (!(r.zip || r.files[annex]) || (await archivedAnnex(r, annex))) skip.add(annex);
+  const { docs, problems } = await downloadRelease(r, skip);
+  for (const d of docs) await archive(SOURCE, fileName(r, d.annex, d.ext), d.bytes, { url: d.url });
+  return problems;
+}
+
+/** A workbook with every annex (San Martín): only the sheets of the archived annexes are kept, as a new XLSX. */
+async function archiveWorkbook(r: Release): Promise<string[]> {
   const problems: string[] = [];
-  if (r.workbook) {
-    if (await latestRaw(SOURCE, workbookName(r))) return problems;
-    const bytes = new Uint8Array(await (await get(r.workbook)).arrayBuffer());
-    await sleep(1000);
-    const wb = XLSX.read(bytes, { type: "array" });
-    const single = XLSX.utils.book_new();
-    for (const annex of ANNEXES) {
-      const name = wb.SheetNames.find((n) => sheetMatches(n, annex));
-      if (name) XLSX.utils.book_append_sheet(single, wb.Sheets[name]!, `ANEXO ${annexName(annex).toUpperCase()}`);
-      else problems.push(`el libro no tiene la hoja del anexo ${annexName(annex)}`);
-    }
-    if (single.SheetNames.length)
-      await archive(SOURCE, workbookName(r), new Uint8Array(XLSX.write(single, { type: "array", bookType: "xlsx" }) as ArrayBuffer), {
-        url: r.workbook,
-      });
-    return problems;
-  }
+  if (await latestRaw(SOURCE, workbookName(r))) return problems;
+  const bytes = new Uint8Array(await (await get(r.workbook!)).arrayBuffer());
+  await sleep(1000);
+  const wb = XLSX.read(bytes, { type: "array" });
+  const single = XLSX.utils.book_new();
   for (const annex of ANNEXES) {
-    const url = r.files[annex];
-    if (!url || (await latestRaw(SOURCE, fileName(r, annex)))) continue;
-    try {
-      const bytes = new Uint8Array(await (await get(url)).arrayBuffer());
-      await archive(SOURCE, fileName(r, annex), bytes, { url });
-    } catch (err) {
-      problems.push(`anexo ${annexName(annex)}: ${(err as Error).message}`);
-    }
-    await sleep(1000);
+    const name = wb.SheetNames.find((n) => sheetMatches(n, annex));
+    if (name) XLSX.utils.book_append_sheet(single, wb.Sheets[name]!, `ANEXO ${annexName(annex).toUpperCase()}`);
+    else problems.push(`el libro no tiene la hoja del anexo ${annexName(annex)}`);
   }
+  if (single.SheetNames.length)
+    await archive(SOURCE, workbookName(r), new Uint8Array(XLSX.write(single, { type: "array", bookType: "xlsx" }) as ArrayBuffer), {
+      url: r.workbook!,
+    });
   return problems;
 }
 
@@ -286,9 +139,14 @@ async function annexTables(r: Release, annex: Annex, axis: "h" | "v" = "h"): Pro
     const sheet = sheetTables(new Uint8Array(await readRaw(path)), { blankAsZero: true }).find((s) => sheetMatches(s.name, annex));
     return sheet ? [sheet.rows] : null;
   }
-  const path = await latestRaw(SOURCE, fileName(r, annex));
-  return path && existsSync(path) ? pdfTables(new Uint8Array(await readRaw(path)), axis) : null;
+  const file = await archivedAnnex(r, annex);
+  if (!file) return null;
+  const bytes = new Uint8Array(await readRaw(file.path));
+  return file.ext === "pdf" ? pdfTables(bytes, axis) : sheetTables(bytes, { blankAsZero: true }).map((s) => s.rows);
 }
+
+/** Source URL of an annex, for the tables and documentos.csv. */
+const annexUrl = (r: Release, annex: Annex) => r.workbook ?? r.zip ?? r.files[annex] ?? "";
 
 // ---------------------------------------------------------------- 3 and 4. interpret and classify
 
@@ -424,7 +282,7 @@ export async function run(_args: string[]): Promise<void> {
       anexo: annexName(annex),
       estado,
       detalle,
-      fuente_url: r.workbook ?? r.files[annex] ?? "",
+      fuente_url: annexUrl(r, annex),
     });
 
   for (const [name, find] of Object.entries(FINDERS)) {
@@ -483,7 +341,7 @@ export async function run(_args: string[]): Promise<void> {
           warn(`${name} ${periodKey(r)} anexo ${annexName(annex)}: ${parsed.error}`);
           continue;
         }
-        const url = r.workbook ?? r.files[annex]!;
+        const url = annexUrl(r, annex);
         outputs.set(annex, [...(outputs.get(annex) ?? []), ...reader.rows(r, parsed as never, url)]);
         const notes = parsed.notes.length ? ` Observaciones: ${parsed.notes.join(". ")}.` : "";
         record(r, annex, "leido", `${parsed.lines.length} ${reader.noun}; cierran con la fila TOTALES.${notes}`);
