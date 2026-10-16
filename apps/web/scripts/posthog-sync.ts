@@ -182,6 +182,42 @@ const INSIGHTS: { name: string; description: string; query: unknown }[] = [
     description: "Qué detalles abre la gente: pedidos, procesos de compra, proveedores, filas de datos.",
     query: ranking("sheet.open", "sheet"),
   },
+  {
+    name: "Clics sin respuesta",
+    description:
+      "Páginas donde la gente toca algo que parece tocable y no pasa nada. Cada caso es un botón que falta o un texto que confunde.",
+    query: ranking("$dead_click", "$pathname"),
+  },
+  {
+    name: "Hasta dónde baja la gente en cada página",
+    description:
+      "Por página, en los últimos 30 días: qué parte del contenido llegó a verse (mediana), cuántos llegan al final, cuántos no scrollean y cuántos segundos se quedan. Poco contenido visto y pocos segundos en una página con tráfico es lo primero a mejorar.",
+    // Scroll data rides on the next $pageview or the $pageleave, keyed by $prev_pageview_pathname,
+    // so it needs SQL: a trends breakdown cannot combine both events by that property.
+    query: {
+      kind: "DataTableNode",
+      source: {
+        kind: "HogQLQuery",
+        query: `SELECT
+  properties.$prev_pageview_pathname AS pagina,
+  count() AS vistas,
+  round(median(toFloat(properties.$prev_pageview_max_content_percentage)) * 100) AS contenido_visto_pct,
+  round(countIf(toFloat(properties.$prev_pageview_max_content_percentage) >= 0.9) / count() * 100) AS llegan_al_final_pct,
+  round(countIf(toFloat(properties.$prev_pageview_max_scroll_percentage) = 0) / count() * 100) AS no_scrollean_pct,
+  round(median(toFloat(properties.$prev_pageview_duration))) AS segundos
+FROM events
+WHERE timestamp >= now() - INTERVAL 30 DAY
+  AND event IN ('$pageview', '$pageleave')
+  AND properties.$prev_pageview_pathname IS NOT NULL
+  AND properties.$host = 'mendoza-transparente.com'
+  AND NOT coalesce(properties.$virt_is_bot, false)
+GROUP BY pagina
+HAVING vistas >= 10
+ORDER BY vistas DESC
+LIMIT 50`,
+      },
+    },
+  },
 ];
 
 type Named = { id: number; name: string; deleted?: boolean };

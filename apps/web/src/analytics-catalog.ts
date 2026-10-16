@@ -13,6 +13,11 @@ export interface EventDoc {
 export const EVENT_CATALOG: EventDoc[] = [
   { event: "$pageview", description: "Vio una página del sitio.", tags: ["navegación"] },
   { event: "$pageleave", description: "Salió de una página (cerró la pestaña o fue a otra).", tags: ["navegación"] },
+  {
+    event: "$dead_click",
+    description: "Tocó algo que parece tocable y no pasó nada (clic sin respuesta). Propiedad $pathname con la página.",
+    tags: ["navegación"],
+  },
   { event: "$web_vitals", description: "Medición de velocidad de carga de la página (Core Web Vitals).", tags: ["rendimiento"] },
   {
     event: "$exception",

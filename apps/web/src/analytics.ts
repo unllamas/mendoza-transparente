@@ -50,7 +50,10 @@ if (KEY && typeof window !== "undefined") {
           capture_pageview: false, // sent by trackPageview on every route change
           capture_pageleave: true,
           disable_session_recording: true,
-          capture_dead_clicks: false,
+          // Click and scroll coordinates per page (Heatmaps in the PostHog toolbar). No recording, no personal data.
+          capture_heatmaps: true,
+          // `$dead_click`: a click on something that looks clickable but does nothing.
+          capture_dead_clicks: true,
           // Uncaught errors and rejected promises become `$exception` events (Error tracking in PostHog).
           capture_exceptions: true,
           // No `ip: false`: the cookieless hash needs the IP at ingestion (events without it are dropped).

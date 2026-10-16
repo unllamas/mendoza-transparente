@@ -9,13 +9,22 @@ Para entender cómo se usa el sitio: qué páginas se visitan, qué se busca y q
   - **Requisito en el proyecto:** "Cookieless server hash mode" activado (`cookieless_server_hash_mode = 2`, en Project settings > Web analytics). Sin eso, PostHog descarta los eventos.
   - **No usar `ip: false`:** el hash necesita la IP; los eventos sin IP se descartan.
   - **Sin ubicación:** en este modo PostHog no agrega país ni ciudad, así que el mapa del panel queda vacío.
-  - **Se carga tarde a propósito:** cuando la página terminó de cargar y el navegador está libre. Los eventos de antes quedan en cola. Está apagada la detección de clics sin respuesta (`capture_dead_clicks: false`), que no usamos.
+  - **Se carga tarde a propósito:** cuando la página terminó de cargar y el navegador está libre. Los eventos de antes quedan en cola.
   - **Antes** se usaba `persistence: "memory"`, que contaba cada carga de página como un visitante nuevo. Los datos hasta el 12 oct 2026 están inflados por eso.
 - **Activación:** solo funciona si existe `VITE_POSTHOG_KEY` (y opcionalmente `VITE_POSTHOG_HOST`, por defecto `https://us.i.posthog.com`) en las variables de entorno del build de Cloudflare Pages. Sin clave, por ejemplo en desarrollo, no se carga ni se envía nada.
 - **Cambiar de proveedor:** se edita solo `analytics.ts`. El resto del sitio llama a `track()` y no sabe quién recibe los eventos.
 - **En el proyecto de PostHog:** activar "Discard client IP data" y desactivar la grabación de sesiones.
 - Para depurar en desarrollo: `VITE_TRACK_DEBUG=1 bun run dev` imprime cada evento en la consola.
 
+## Mapa de calor, scroll y clics sin respuesta
+
+Para saber qué contenido se lee, qué se saltea y qué se toca sin que responda. Nada de esto graba la sesión.
+
+- **Mapa de calor** (`capture_heatmaps: true`): guarda las coordenadas de cada clic, incluidos los clics repetidos de frustración, y la posición del mouse por página. Se mira con la barra de PostHog sobre el sitio: en PostHog, **Toolbar** → abrir `mendoza-transparente.com` → **Heatmap**, que superpone los clics y la profundidad de scroll a la página real. Funciona solo en dominios autorizados (Project settings > Toolbar).
+- **Profundidad de scroll:** PostHog la agrega sola al `$pageleave` y al `$pageview` siguiente (`$prev_pageview_max_scroll_percentage`, `$prev_pageview_max_content_percentage`, `$prev_pageview_duration`, con la página en `$prev_pageview_pathname`). Se resume en el gráfico «Hasta dónde baja la gente en cada página» del tablero.
+- **Clics sin respuesta** (`capture_dead_clicks: true`): `$dead_click` cuando alguien toca algo que parece tocable y no pasa nada. Se resume por página en el gráfico «Clics sin respuesta» del tablero. Para ignorar un elemento, se le pone la clase `ph-no-deadclick`.
+- **Cómo leer el scroll:** «contenido visto» es la parte de la página que llegó a estar en pantalla; una página corta se ve entera sin scrollear. Una página con mucho tráfico, poco contenido visto y pocos segundos indica que la parte de arriba no invita a seguir.
+- **Ojo con las pruebas propias:** las consultas SQL no aplican el filtro de cuentas de prueba; las páginas en las que se está trabajando quedan infladas.
 
 ## Errores
 
