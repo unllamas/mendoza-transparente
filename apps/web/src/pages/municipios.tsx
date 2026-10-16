@@ -93,8 +93,8 @@ export function MunicipiosPage() {
     <div className="flex flex-col gap-10">
       <div className="flex flex-col gap-6">
         <LandscapePhoto id={DEFAULT_PHOTO} className={LANDSCAPE_HEIGHT} />
-        <WithBreadcrumbs items={[{ label: "Municipios" }]}>
-          <PageHeader icon={RiMapPinLine} topic="Municipios" title="Los 18 municipios de Mendoza">
+        <WithBreadcrumbs items={[]} current={{ label: "Municipios", icon: RiMapPinLine }}>
+          <PageHeader title="Los 18 municipios de Mendoza">
             Quién gobierna cada uno, cuántos habitantes tiene, cuánta coparticipación recibe, cuánto personal tiene y qué publica.
           </PageHeader>
         </WithBreadcrumbs>
@@ -178,7 +178,7 @@ export function MunicipioPage() {
   if (!m) {
     return (
       <div className="flex flex-col gap-4">
-        <Breadcrumbs items={[{ label: "Municipios", to: "/municipios" }, { label: "No encontrado" }]} />
+        <Breadcrumbs items={[{ label: "Municipios", to: "/municipios" }]} current={{ label: "No encontrado" }} />
         <h1 className="text-title-1-semibold tracking-tight">No encontramos ese municipio</h1>
         <Link to="/municipios" className="w-fit text-text-link hover:underline">
           Ver los 18 municipios ›
@@ -198,8 +198,8 @@ export function MunicipioPage() {
     <div className="flex flex-col gap-10">
       <div className="flex flex-col gap-6">
         <LandscapePhoto id={municipalityPhoto(m.slug)} className={LANDSCAPE_HEIGHT} />
-        <WithBreadcrumbs items={[{ label: "Municipios", to: "/municipios" }, { label: m.nombre }]}>
-          <PageHeader icon={RiMapPinLine} topic="Municipio" title={m.nombre}>
+        <WithBreadcrumbs items={[{ label: "Municipios", to: "/municipios" }]} current={{ label: m.nombre, icon: RiMapPinLine }}>
+          <PageHeader title={m.nombre}>
             Quién lo gobierna, qué publica, cuánta coparticipación recibe y quiénes lo representan en la Legislatura.
           </PageHeader>
         </WithBreadcrumbs>

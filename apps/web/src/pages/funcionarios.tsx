@@ -190,10 +190,8 @@ export function RolePage() {
   const sections = legislature ? [...new Set(people.map((p) => p.seccion ?? "Sin sección"))].sort(sectionOrder) : [null];
   return (
     <div className="flex flex-col gap-10">
-      <WithBreadcrumbs items={[{ label: "Funcionarios", to: "/funcionarios" }, { label: r.title }]}>
-        <PageHeader icon={RiBankLine} topic="Funcionarios" title={r.title}>
-          {r.description}
-        </PageHeader>
+      <WithBreadcrumbs items={[{ label: "Funcionarios", to: "/funcionarios" }]} current={{ label: r.title, icon: RiBankLine }}>
+        <PageHeader title={r.title}>{r.description}</PageHeader>
       </WithBreadcrumbs>
       <FuentesOficiales ids={["autoridades", "legislatura"]} />
       {legislature && <Bloques personas={people} />}
@@ -212,7 +210,7 @@ const sectionOrder = (a: string, b: string) =>
 function NotFound() {
   return (
     <div className="flex flex-col gap-3">
-      <Breadcrumbs items={[{ label: "Funcionarios", to: "/funcionarios" }, { label: "No encontrada" }]} />
+      <Breadcrumbs items={[{ label: "Funcionarios", to: "/funcionarios" }]} current={{ label: "No encontrada" }} />
       <h1 className="text-title-1-semibold tracking-tight">No encontramos a esa persona</h1>
       <p className="text-text-secondary">Puede que haya dejado el cargo o que el enlace esté mal escrito.</p>
       <Link to="/funcionarios" className="w-fit text-text-link hover:underline">
@@ -233,8 +231,8 @@ export function FuncionarioPage() {
       items={[
         { label: "Funcionarios", to: "/funcionarios" },
         { label: ROLES[p.grupo].title, to: `/funcionarios/${p.role}` },
-        { label: p.nombre },
       ]}
+      current={{ label: p.nombre }}
     >
       <div className="max-w-2xl">
         <FichaFuncionario persona={p} usd={usd} />

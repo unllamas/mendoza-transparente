@@ -36,10 +36,10 @@ export function MunicipalBudgetPage() {
         items={[
           { label: "Municipios", to: "/municipios" },
           { label: budget.name, to: `/municipios/${slug}` },
-          { label: `Presupuesto ${year.year}` },
         ]}
+        current={{ label: `Presupuesto ${year.year}`, icon: RiFileList3Line }}
       >
-        <PageHeader icon={RiFileList3Line} topic={`Municipalidad de ${budget.name}`} title={`Presupuesto ${year.year}`}>
+        <PageHeader title={`Presupuesto ${year.year}`}>
           Cuánto aprobó el municipio, cuánto gastó y en qué, según los informes que publica cada trimestre por la Ley de Responsabilidad
           Fiscal.
         </PageHeader>

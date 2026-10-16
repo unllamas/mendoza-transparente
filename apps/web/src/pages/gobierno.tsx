@@ -153,7 +153,7 @@ export function AgencyPage() {
   if (!a) {
     return (
       <div className="flex flex-col gap-4">
-        <Breadcrumbs items={[{ label: "Gobierno por dentro", to: "/gobierno" }, { label: "No encontrado" }]} />
+        <Breadcrumbs items={[{ label: "Gobierno por dentro", to: "/gobierno" }]} current={{ label: "No encontrado" }} />
         <h1 className="text-title-1-semibold tracking-tight">No encontramos el organismo «{slug}»</h1>
         <Link to="/gobierno" className="w-fit text-text-link hover:underline">
           Ver todos los organismos ›
@@ -169,10 +169,10 @@ export function AgencyPage() {
         items={[
           { label: "Gobierno por dentro", to: "/gobierno" },
           ...(a.parent ? [{ label: a.parent.name, to: `/gobierno/${a.parent.slug}` }] : []),
-          { label: a.name },
         ]}
+        current={{ label: a.name, icon: RiBuilding2Line }}
       >
-        <PageHeader icon={RiBuilding2Line} topic={a.parent ? `Depende de ${a.parent.name}` : "Gobierno de Mendoza"} title={a.name}>
+        <PageHeader title={a.name}>
           {a.whatItDoes ?? "Quién lo conduce, cuántos cargos tiene, cuánto cuesta su personal y qué compra."}
         </PageHeader>
       </WithBreadcrumbs>

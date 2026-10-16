@@ -104,7 +104,7 @@ export function ProveedorPage() {
   if (!cuit || !ficha) {
     return (
       <div className="flex flex-col gap-4">
-        <Breadcrumbs items={[{ label: "Proveedores", to: "/proveedores" }, { label: "No encontrado" }]} />
+        <Breadcrumbs items={[{ label: "Proveedores", to: "/proveedores" }]} current={{ label: "No encontrado" }} />
         <h1 className="text-title-1-semibold tracking-tight">No encontramos a ese proveedor</h1>
         <Link to="/proveedores" className="w-fit text-text-link hover:underline">
           Ver todos los proveedores ›
@@ -115,11 +115,8 @@ export function ProveedorPage() {
   const nombre = ficha.empresa?.razonSocial ?? ficha.nombre;
   return (
     <div className="flex max-w-2xl flex-col gap-8">
-      <WithBreadcrumbs items={[{ label: "Proveedores", to: "/proveedores" }, { label: nombre }]}>
+      <WithBreadcrumbs items={[{ label: "Proveedores", to: "/proveedores" }]} current={{ label: `CUIT ${cuit}`, icon: RiBuilding2Line }}>
         <div className="flex flex-col gap-2">
-          <span className="flex items-center gap-2 text-body-regular text-text-tertiary">
-            <RiBuilding2Line className="size-4" aria-hidden /> Proveedor · CUIT {cuit}
-          </span>
           <h1 className="text-title-1-semibold tracking-tight text-balance break-words sm:text-display-4-semibold">{nombre}</h1>
         </div>
       </WithBreadcrumbs>
@@ -184,7 +181,7 @@ export function OrganismoPage() {
   if (!o) {
     return (
       <div className="flex flex-col gap-4">
-        <Breadcrumbs items={[{ label: "Organismos", to: "/organismos" }, { label: "No encontrado" }]} />
+        <Breadcrumbs items={[{ label: "Organismos", to: "/organismos" }]} current={{ label: "No encontrado" }} />
         <h1 className="text-title-1-semibold tracking-tight">No encontramos a ese organismo</h1>
         <p className="text-body-regular text-text-tertiary">{slug}</p>
         <Link to="/organismos" className="w-fit text-text-link hover:underline">
@@ -197,10 +194,8 @@ export function OrganismoPage() {
   const maxProv = o.proveedores[0]?.monto ?? 1;
   return (
     <div className="flex flex-col gap-10">
-      <WithBreadcrumbs items={[{ label: "Organismos", to: "/organismos" }, { label: nombre }]}>
-        <PageHeader icon={RiBankLine} topic="Organismo" title={nombre}>
-          Cuánto compró, a quiénes y con qué modalidad.
-        </PageHeader>
+      <WithBreadcrumbs items={[{ label: "Organismos", to: "/organismos" }]} current={{ label: nombre, icon: RiBankLine }}>
+        <PageHeader title={nombre}>Cuánto compró, a quiénes y con qué modalidad.</PageHeader>
       </WithBreadcrumbs>
       <FuentesOficiales ids={FUENTES} />
 

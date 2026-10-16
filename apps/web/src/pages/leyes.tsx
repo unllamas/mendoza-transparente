@@ -90,7 +90,7 @@ export function LeyPage() {
   if (!ley) {
     return (
       <div className="flex flex-col gap-4">
-        <Breadcrumbs items={[{ label: "Leyes", to: "/leyes" }, { label: `Ley ${numero}` }]} />
+        <Breadcrumbs items={[{ label: "Leyes", to: "/leyes" }]} current={{ label: `Ley ${numero}` }} />
         <h1 className="text-title-1-semibold tracking-tight">No encontramos la ley {numero}</h1>
         <Link to="/leyes" className="w-fit text-text-link hover:underline">
           Ver todas las leyes ›
@@ -101,15 +101,11 @@ export function LeyPage() {
   const primerArticulo = ley.bloques.find((b) => b.tipo === "articulo");
   return (
     <div className="flex max-w-2xl flex-col gap-8">
-      <WithBreadcrumbs items={[{ label: "Leyes", to: "/leyes" }, { label: `Ley ${ley.numero}` }]}>
+      <WithBreadcrumbs
+        items={[{ label: "Leyes", to: "/leyes" }]}
+        current={{ label: `Ley ${ley.numero}${ley.tema ? ` · ${ley.tema}` : ""}`, icon: RiScalesLine }}
+      >
         <header className="flex flex-col gap-3">
-          <span className="flex min-w-0 items-center gap-2 text-body-regular whitespace-nowrap text-text-tertiary">
-            <RiScalesLine className="size-4 shrink-0" aria-hidden />
-            <span className="truncate">
-              Ley {ley.numero}
-              {ley.tema && ` · ${ley.tema}`}
-            </span>
-          </span>
           <h1 className="text-title-1-semibold tracking-tight text-balance sm:text-display-4-regular">{ley.titulo}</h1>
           <div className="flex flex-col gap-0.5 text-body-regular text-text-tertiary sm:flex-row sm:gap-4">
             {ley.fecha && <span className="whitespace-nowrap">Sancionada el {formatDate(ley.fecha)}</span>}

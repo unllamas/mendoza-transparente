@@ -33,6 +33,7 @@ La gente describe lo que siente. Buscar la regla (detalle en `docs/procesos/dise
 | "Quedó vacío", "no sé qué hacer acá" | Pantallas vacías que orientan | `diseno` |
 | "Parece hecho por una IA", "parece un template" | Lo que no hacemos | `diseno` |
 | "Unos se ven más chicos que otros", "salta el layout" | Misma altura en una fila; lo que se toca solo cambia el fondo | `diseno` |
+| "Se repite arriba del título", "dos líneas que dicen lo mismo" | Una sola línea arriba del título: la ruta termina en la página actual con su ícono | `diseno` |
 | "Queda un espacio de más arriba del título", "sobra lugar" | El link para atrás va pegado al encabezado (`WithBreadcrumbs`) | `diseno` |
 | "No se ve igual que lo otro" | Componente de `@mt/ui`, no clases sueltas | `diseno`, `arquitectura` |
 | "No aparece en Google", "se ve mal al compartir" | Títulos, descripciones, imágenes para compartir | `seo-y-geo` |

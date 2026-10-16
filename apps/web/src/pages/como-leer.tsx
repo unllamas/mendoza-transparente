@@ -43,8 +43,8 @@ const STEPS = [
 export function ComoLeerPage() {
   return (
     <div className="flex max-w-3xl flex-col gap-12">
-      <WithBreadcrumbs items={[{ label: "Cómo leer estos datos" }]}>
-        <PageHeader icon={RiBookOpenLine} topic="Guía" title="Para qué sirve Mendoza Transparente y cómo usarlo">
+      <WithBreadcrumbs items={[]} current={{ label: "Cómo leer estos datos", icon: RiBookOpenLine }}>
+        <PageHeader title="Para qué sirve Mendoza Transparente y cómo usarlo">
           Reunimos los datos públicos de la provincia de Mendoza, que están dispersos en decenas de sitios oficiales, PDF y planillas, y los
           ordenamos para que cualquier persona pueda entender en qué se gasta la plata, quién decide y qué falta publicar. Es un proyecto
           ciudadano, independiente y apartidario.
