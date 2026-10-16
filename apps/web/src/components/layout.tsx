@@ -29,9 +29,10 @@ import {
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { trackPageview } from "@/analytics.ts";
+import { formatDate } from "@/lib.ts";
 import { usePageMeta } from "@/seo.ts";
 import { DetailSheet } from "./detail-sheet.tsx";
-import { REPO } from "./official-sources.tsx";
+import { REPO, useDataIndex } from "./official-sources.tsx";
 import { ReportErrorBand } from "./report-error.tsx";
 import { HeaderSearchButton, SearchDialog } from "./search-dialog.tsx";
 import { UiProviders } from "./ui-providers.tsx";
@@ -108,6 +109,7 @@ function withUtm(url: string) {
 
 export function Layout() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const dataIndex = useDataIndex();
   usePageMeta(pathname);
   useEffect(() => trackPageview(pathname), [pathname]);
   const [abierto, setAbierto] = useState(false);
@@ -233,6 +235,7 @@ export function Layout() {
               >
                 <RiGitBranchLine className="size-4" aria-hidden /> Código y datos abiertos en GitHub
               </a>
+              {dataIndex && <p className="text-text-tertiary">Datos actualizados al {formatDate(dataIndex.generatedAt)}</p>}
               <div className="flex items-center gap-2 pt-4">
                 <span className="text-text-tertiary">Tema</span>
                 <ThemeToggle appearance="segmented" size="compact" />

@@ -12,6 +12,16 @@ export const REPO = "https://github.com/unllamas/mendoza-transparente";
 export const archivoUrl = (sourceId: string) => `${REPO}/tree/main/data/raw/${sourceId}`;
 
 let indexPromise: Promise<DataIndex> | null = null;
+const cachedIndex = () => (indexPromise ??= loadIndex());
+
+/** The data index, loaded once and shared; `null` while it loads. */
+export function useDataIndex(): DataIndex | null {
+  const [index, setIndex] = useState<DataIndex | null>(null);
+  useEffect(() => {
+    cachedIndex().then(setIndex, () => {});
+  }, []);
+  return index;
+}
 
 /** Metadatos de las fuentes (organismo, URL oficial, última descarga), con el índice cacheado. */
 export function useFuentes(ids: string[]): SourceMeta[] {
@@ -19,8 +29,7 @@ export function useFuentes(ids: string[]): SourceMeta[] {
   const key = ids.join(",");
   // biome-ignore lint/correctness/useExhaustiveDependencies: `key` is the stable form of `ids` (a new array on every render).
   useEffect(() => {
-    indexPromise ??= loadIndex();
-    indexPromise.then((index) => setFuentes(ids.map((id) => index.sources.find((s) => s.id === id)).filter((s) => s !== undefined)));
+    cachedIndex().then((index) => setFuentes(ids.map((id) => index.sources.find((s) => s.id === id)).filter((s) => s !== undefined)));
   }, [key]);
   return fuentes;
 }

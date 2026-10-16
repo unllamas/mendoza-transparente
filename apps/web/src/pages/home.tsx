@@ -57,7 +57,7 @@ export function HomePage() {
         <LandscapePhoto id="cordon-del-plata" className="h-52 sm:h-80" />
         <p className="flex items-center gap-2 text-body-medium text-text-secondary">
           <span className="size-1.5 shrink-0 rounded-full bg-highlight" aria-hidden />
-          Rumbo a las elecciones provinciales 2027
+          {formatNumber(registros)} registros de {fuentesConDatos} fuentes oficiales
         </p>
         <div className="flex max-w-3xl flex-col gap-5">
           <h1 className="text-display-3-semibold tracking-tight text-balance sm:text-display-1-semibold">
@@ -81,9 +81,6 @@ export function HomePage() {
             </Link>
           </div>
         </div>
-        <p className="text-body-regular text-text-tertiary">
-          {formatNumber(registros)} registros de {fuentesConDatos} fuentes oficiales · Actualizado al {formatDate(index.generatedAt)}
-        </p>
       </section>
 
       {guide && (
