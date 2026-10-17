@@ -215,7 +215,7 @@ export function OrganismoPage() {
       )}
 
       {o.porAnio.length > 1 && (
-        <Section title={o.referenciaReal ? `Adjudicado por año, en pesos de ${o.referenciaReal}` : "Adjudicado por año"}>
+        <Section id="por-anio" title={o.referenciaReal ? `Adjudicado por año, en pesos de ${o.referenciaReal}` : "Adjudicado por año"}>
           <ColumnChart
             columnas={o.porAnio.map((a) => ({
               etiqueta: String(a.anio),
@@ -228,7 +228,7 @@ export function OrganismoPage() {
         </Section>
       )}
 
-      <Section title="Principales proveedores">
+      <Section id="proveedores" title="Principales proveedores">
         <ul className={listVariants()}>
           {o.proveedores.map((p) => {
             const fila = (
@@ -268,7 +268,7 @@ export function OrganismoPage() {
         </ul>
       </Section>
 
-      <Section title="Procesos recientes">
+      <Section id="recientes" title="Procesos recientes">
         <p className="-mt-2 text-body-regular text-text-tertiary">Tocá uno para ver el proceso completo.</p>
         <ul className={listVariants()}>
           {o.recientes.map((r) => (

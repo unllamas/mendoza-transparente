@@ -52,7 +52,7 @@ export function ComoLeerPage() {
         </PageHeader>
       </WithBreadcrumbs>
 
-      <Section title="Cómo empezar">
+      <Section id="como-empezar" title="Cómo empezar">
         <ol className="grid gap-3 sm:grid-cols-2">
           {STEPS.map(({ icon: Icon, title, text }, i) => (
             <li key={title} className={cx(tileVariants(), "flex items-start gap-3")}>
@@ -73,7 +73,7 @@ export function ComoLeerPage() {
         </Button>
       </Section>
 
-      <Section title="Reglas para leer los datos">
+      <Section id="reglas" title="Reglas para leer los datos">
         <ul className="flex flex-col gap-4">
           {READING_RULES.map(({ icon: Icon, title, text }) => (
             <li key={title} className="flex items-start gap-3">
@@ -87,7 +87,7 @@ export function ComoLeerPage() {
         </ul>
       </Section>
 
-      <Section title="Glosario">
+      <Section id="glosario" title="Glosario">
         <p className="-mt-2 text-body-regular text-text-tertiary">Los términos que más confunden, explicados en simple.</p>
         <dl className={listVariants()}>
           {GLOSSARY.map((g) => (
@@ -110,7 +110,7 @@ export function ComoLeerPage() {
         </dl>
       </Section>
 
-      <Section title="¿Algo no se entiende o encontraste un error?">
+      <Section id="errores" title="¿Algo no se entiende o encontraste un error?">
         <p className="-mt-2 text-text-secondary text-pretty">
           Avisanos: lo revisamos y lo corregimos. También podés sugerir datos que falten.
         </p>

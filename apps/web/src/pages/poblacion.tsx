@@ -52,7 +52,7 @@ export function PoblacionPage() {
         />
       </div>
 
-      <Section title="Habitantes por año">
+      <Section id="por-anio" title="Habitantes por año">
         <div className={cx(tileVariants())}>
           <LineChart
             data={tema.serie.map((p) => ({ fecha: `${p.anio}-01-01`, valor: p.poblacion }))}
@@ -71,7 +71,7 @@ export function PoblacionPage() {
         </Alert>
       </Section>
 
-      <Section title="Por departamento">
+      <Section id="por-departamento" title="Por departamento">
         <TrackedSegmented
           label="Qué mostrar"
           value={medida}

@@ -92,7 +92,7 @@ export function BudgetYear({ budget, year }: { budget: MunicipalBudget; year: Mu
         </p>
       </div>
 
-      <Section title="En qué se gasta">
+      <Section id="gastos" title="En qué se gasta">
         <p className="-mt-2 text-body-regular text-text-tertiary">
           Lo gastado en el año, por tipo de gasto. Cada barra es su parte del total gastado, y es la misma clasificación para todos los
           municipios.
@@ -107,7 +107,7 @@ export function BudgetYear({ budget, year }: { budget: MunicipalBudget; year: Mu
       </Section>
 
       {y.byArea && (
-        <Section title="Por área de gobierno">
+        <Section id="areas" title="Por área de gobierno">
           <p className="-mt-2 text-body-regular text-text-tertiary">
             Lo gastado por cada área, como parte del total, con los nombres que usa el municipio.
           </p>
@@ -122,7 +122,7 @@ export function BudgetYear({ budget, year }: { budget: MunicipalBudget; year: Mu
       )}
 
       {y.revenue && (
-        <Section title="De dónde sale la plata">
+        <Section id="recursos" title="De dónde sale la plata">
           <div className="grid gap-3 sm:grid-cols-2">
             <StatTile
               icon={RiCoinsLine}
@@ -151,7 +151,7 @@ export function BudgetYear({ budget, year }: { budget: MunicipalBudget; year: Mu
       )}
 
       {y.debt && (
-        <Section title={shortTerm ? "Deudas de corto plazo" : "Deuda"}>
+        <Section id="deuda" title={shortTerm ? "Deudas de corto plazo" : "Deuda"}>
           {shortTerm && (
             <p className="-mt-2 text-body-regular text-text-tertiary">
               El municipio no informa préstamos: informa lo que debe pagar en el corto plazo, como fondos de terceros, retenciones y
@@ -199,7 +199,7 @@ export function BudgetYear({ budget, year }: { budget: MunicipalBudget; year: Mu
       )}
 
       {evolution.length > 1 && (
-        <Section title={`Gastado por año${budget.reference ? `, en pesos de ${budget.reference}` : ""}`}>
+        <Section id="por-anio" title={`Gastado por año${budget.reference ? `, en pesos de ${budget.reference}` : ""}`}>
           <ColumnChart
             key={y.year}
             inicial={evolution.findIndex((e) => e.year === y.year)}
@@ -223,7 +223,7 @@ export function BudgetYear({ budget, year }: { budget: MunicipalBudget; year: Mu
         </Section>
       )}
 
-      <Section title="Los documentos originales">
+      <Section id="documentos" title="Los documentos originales">
         <p className="-mt-2 text-body-regular text-text-tertiary">
           Los informes que el municipio publica cada trimestre por la Ley de Responsabilidad Fiscal, de {until} de {y.year}.
         </p>

@@ -46,6 +46,7 @@ La conexión es opcional a propósito: si la barra apunta al servidor y el servi
 | «Hay demasiado», «no sé dónde mirar» | La gente no lee: lista corta, detalle en hoja, lo informativo antes que lo crudo | `diseno.md`, Contenido |
 | «No sé qué hacer acá», «quedó vacío» | Pantallas vacías que dicen qué hacer | `diseno.md`, Textos de la interfaz |
 | «Parece hecho por una IA», «parece un template» | Lo que no hacemos | `diseno.md`, Lo que no hacemos |
+| «Quiero mandar a alguien directo a esta parte» | Cada sección tiene su link (`Section` con `id`) | `diseno.md`, Contenido; `web.md`, Link a cada sección |
 | «Esto no se ve igual que lo otro» | Usar el componente de `@mt/ui`, no clases sueltas | `diseno.md`, Sistema de diseño |
 
 4. **Si es ambiguo, una sola pregunta** con opciones concretas (por ejemplo: «¿cortar con … o pasar a dos líneas?»). Si no, actuar.

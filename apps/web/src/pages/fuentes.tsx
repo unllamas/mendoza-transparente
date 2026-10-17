@@ -33,7 +33,7 @@ export function FuentesPage() {
         </p>
       </div>
 
-      <Section title="Con datos">
+      <Section id="con-datos" title="Con datos">
         <ul className="flex flex-col gap-3">
           {conDatos.map((s) => (
             <FuenteItem key={s.id} source={s} tables={datasets.filter((d) => d.source === s.id).length} />
@@ -42,7 +42,7 @@ export function FuentesPage() {
       </Section>
 
       {pendientes.length > 0 && (
-        <Section title="En preparación">
+        <Section id="en-preparacion" title="En preparación">
           <ul className="flex flex-col gap-3">
             {pendientes.map((s) => (
               <FuenteItem key={s.id} source={s} tables={0} />

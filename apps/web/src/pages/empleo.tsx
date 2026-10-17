@@ -63,7 +63,7 @@ export function EmpleoPage() {
         />
       </div>
 
-      <Section title={`Todas las provincias, ${empleo.anio}`}>
+      <Section id="provincias" title={`Todas las provincias, ${empleo.anio}`}>
         <BarList
           items={empleo.ranking.map((r) => ({
             nombre: r.provincia,
@@ -77,7 +77,7 @@ export function EmpleoPage() {
         </p>
       </Section>
 
-      <Section title="Evolución en Mendoza, empleados cada mil habitantes">
+      <Section id="evolucion" title="Evolución en Mendoza, empleados cada mil habitantes">
         <TrackedSegmented label="Período" options={PERIODOS} value={periodo} onChange={setPeriodo} />
         <div className={cx(tileVariants())}>
           <LineChart

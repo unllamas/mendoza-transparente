@@ -46,7 +46,7 @@ export function DeudaPage() {
         <StatTile icon={RiLineChartLine} label="Máximo de la serie" value={usdM(pico.usd)} note={trimestre(pico.fecha)} />
       </div>
 
-      <Section title="Evolución de la deuda, en millones de dólares">
+      <Section id="evolucion" title="Evolución de la deuda, en millones de dólares">
         <div className={cx(tileVariants())}>
           <LineChart
             data={deuda.serie.map((p) => ({ fecha: p.fecha, valor: p.usd }))}
@@ -66,7 +66,7 @@ export function DeudaPage() {
         </Alert>
       </Section>
 
-      <Section title="Por mandato">
+      <Section id="por-mandato" title="Por mandato">
         <div className="grid gap-3 md:grid-cols-3">
           {deuda.mandatos.map((m) => {
             const delta = m.fin.usd - m.inicio.usd;
@@ -90,7 +90,7 @@ export function DeudaPage() {
       </Section>
 
       <div className="grid gap-12 md:grid-cols-2">
-        <Section title="¿A quién le debe?">
+        <Section id="acreedores" title="¿A quién le debe?">
           <BarList
             items={deuda.porAcreedor.map((a) => ({
               nombre: a.nombre,
@@ -100,7 +100,7 @@ export function DeudaPage() {
             formatValue={usdM}
           />
         </Section>
-        <Section title="¿En qué moneda?">
+        <Section id="monedas" title="¿En qué moneda?">
           <BarList
             items={deuda.porMoneda.map((a) => ({
               nombre: a.nombre,
@@ -115,7 +115,7 @@ export function DeudaPage() {
         </Section>
       </div>
 
-      <Section title="Instrumentos vigentes">
+      <Section id="instrumentos" title="Instrumentos vigentes">
         <div className={cx(tileVariants({ size: "sm" }), "overflow-x-auto p-0")}>
           <table className="w-full text-left text-body-regular">
             <thead className="border-b border-separator-border text-text-tertiary">

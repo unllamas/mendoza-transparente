@@ -111,7 +111,7 @@ export function GobiernoPage() {
         const list = agencies.filter((a) => groupOf(a) === k.id);
         if (!list.length) return null;
         return (
-          <Section key={k.title} title={k.title}>
+          <Section key={k.id} id={k.id.replace("_", "-")} title={k.title}>
             <p className="-mt-2 text-body-regular text-text-tertiary">{k.description}</p>
             <ul className={listVariants()}>
               {list.map((a) => (
@@ -222,7 +222,7 @@ export function AgencyPage() {
       )}
 
       {a.points.length > 0 && (
-        <Section title="Qué hace">
+        <Section id="que-hace" title="Qué hace">
           <ul className="flex flex-col gap-2.5">
             {a.points.map((p) => (
               <li key={p} className="flex gap-3 text-text-secondary">
@@ -250,7 +250,7 @@ export function AgencyPage() {
       )}
 
       {yearly.length > 1 && (
-        <Section title="Cargos de planta por año">
+        <Section id="cargos-por-anio" title="Cargos de planta por año">
           <ColumnChart
             columnas={yearly.map((p) => ({
               etiqueta: p.period.slice(0, 4),
@@ -267,7 +267,7 @@ export function AgencyPage() {
       )}
 
       {a.costByYear.length > 1 && (
-        <Section title={`Costo del personal por año, en pesos de ${a.realReference ?? "hoy"}`}>
+        <Section id="costo-del-personal" title={`Costo del personal por año, en pesos de ${a.realReference ?? "hoy"}`}>
           <ColumnChart
             columnas={a.costByYear.map((c) => ({
               etiqueta: c.complete ? String(c.year) : `${c.year}*`,
@@ -286,7 +286,7 @@ export function AgencyPage() {
       {a.budget.length > 1 && <BudgetSection agency={a} />}
 
       {a.units.length > 0 && (
-        <Section title="Dónde están los cargos">
+        <Section id="donde-estan-los-cargos" title="Dónde están los cargos">
           <ul className={listVariants()}>
             {a.units.map((u) => (
               <li key={u.name} className={listRowVariants({ interactive: false })}>
@@ -299,7 +299,7 @@ export function AgencyPage() {
       )}
 
       {a.team.length > 0 && (
-        <Section title={`Equipo de conducción (${a.teamTotal})`}>
+        <Section id="equipo" title={`Equipo de conducción (${a.teamTotal})`}>
           <p className="-mt-2 text-body-regular text-text-tertiary">
             Funcionarios con obligación de presentar declaración jurada, según la Oficina de Ética Pública.
             {a.teamTotal > a.team.length && ` Se muestran los ${a.team.length} de mayor jerarquía.`}
@@ -347,7 +347,7 @@ export function AgencyPage() {
 
       {a.purchases && <Purchases agency={a} />}
 
-      <Section title="Designaciones recientes">
+      <Section id="designaciones" title="Designaciones recientes">
         {a.appointments.length > 0 ? (
           <ul className={listVariants()}>
             {a.appointments.map((d) => (
@@ -378,7 +378,7 @@ export function AgencyPage() {
       </Section>
 
       {a.children.length > 0 && (
-        <Section title="Organismos que dependen de este">
+        <Section id="organismos" title="Organismos que dependen de este">
           <ul className="flex flex-wrap gap-2">
             {a.children.map((c) => (
               <li key={c.slug}>
@@ -440,7 +440,7 @@ function HeadCard({ head }: { head: NonNullable<AgencyDetail["head"]> }) {
 function Purchases({ agency: a }: { agency: AgencyDetail }) {
   const p = a.purchases!;
   return (
-    <Section title="Qué compra">
+    <Section id="compras" title="Qué compra">
       <div className="grid gap-3 sm:grid-cols-3">
         <StatTile
           icon={RiShoppingCartLine}
@@ -498,7 +498,7 @@ function BudgetSection({ agency: a }: { agency: AgencyDetail }) {
   const current = [...a.budget].reverse().find((b) => !b.project);
   const project = a.budget.find((b) => b.project);
   return (
-    <Section title="Cargos en la Ley de Presupuesto">
+    <Section id="presupuesto" title="Cargos en la Ley de Presupuesto">
       <ColumnChart
         columnas={a.budget.map((b) => ({
           etiqueta: b.project ? `${b.year}*` : String(b.year),
@@ -540,7 +540,7 @@ function Overview({ overview: o }: { overview: GobiernoOverview }) {
   const falls = o.quarterlyChange.filter((q) => q.change < 0).length;
   return (
     <>
-      <Section title="Cómo cambió la planta del Estado">
+      <Section id="cambios" title="Cómo cambió la planta del Estado">
         <LineChart
           data={o.series.map((p) => ({ fecha: p.date, valor: p.staff }))}
           bands={GOBIERNOS.map((g) => ({ desde: g.desde, hasta: g.hasta, label: g.nombre }))}
@@ -585,7 +585,7 @@ function Overview({ overview: o }: { overview: GobiernoOverview }) {
         />
       </Section>
 
-      <Section title="Para mirar de cerca">
+      <Section id="para-mirar" title="Para mirar de cerca">
         <p className="-mt-2 text-body-regular text-text-tertiary text-pretty">
           Cambios en la planta desde el inicio de la gestión actual ({periodLabel(o.baseline)}) y organismos con más contratados. No son
           irregularidades: son preguntas que cada organismo podría explicar.

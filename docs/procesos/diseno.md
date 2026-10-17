@@ -44,7 +44,7 @@ Los componentes base y los tokens viven en el paquete `@mt/ui`. Lo usa la web y 
 | `Popover` | Nota flotante (React Aria `DialogTrigger` + `Popover`): `PopoverTrigger` es el botón (abierto, lleva `aria-expanded`) y `PopoverContent` la nota, que se reacomoda sola para no salirse de la pantalla. |
 | `Dialog` | Ventana a pantalla completa o centrada (React Aria): el buscador y el menú del celular. Foco adentro, Escape cierra. Para enfocar un campo al abrir, se enfoca desde un efecto del contenido. |
 | `Alert` | Aviso `warning` (ámbar) o `note`, con íconos Remix. |
-| `StatTile`, `Section`, `PageHeader`, `PersonAvatar`, `SearchInput`, `Segmented` | Cifra con etiqueta, bloque con título, encabezado de página, cara de una persona, buscador de listas y selector de opciones. |
+| `StatTile`, `Section`, `PageHeader`, `PersonAvatar`, `SearchInput`, `Segmented` | Cifra con etiqueta, bloque con título (con su `id`: el título es el link a esa sección), encabezado de página, cara de una persona, buscador de listas y selector de opciones. |
 
 - **Nada a mano.** Un botón, un bloque, una tarjeta, una etiqueta o un campo no se arman con clases sueltas: se usa el componente o sus clases (`buttonClassName`, `tileVariants`, `cardVariants`). Si falta una variante, se agrega al paquete. Las únicas excepciones son el campo del buscador (va sin borde dentro de su barra) y el campo trampa contra spam de Participar.
 - **Sin código muerto:** `noUnusedLocals` está activado en la web y en el paquete, así que `bunx tsc --noEmit` falla con imports o variables sin usar.
@@ -100,6 +100,7 @@ La mayoría entra desde el teléfono. Estos detalles separan «una página web e
 
 - **La gente no lee**: primero una lista corta, una fila por ítem; el detalle se abre en una **hoja modal** a la derecha con el fondo oscurecido. Nunca un panel al costado de la tabla.
 - **Lo informativo antes que lo crudo**: tarjetas y gráficos arriba, tablas abajo. Los datos crudos van en páginas internas; la portada busca el impacto.
+- **Cada sección tiene su link.** Todo título de bloque (h2) lleva un `id` y es un link a `#id` con el ícono de link visible, para mostrarle a alguien un dato puntual de una página larga (la coparticipación de San Rafael, no todo el municipio). `Section` lo pide; los títulos armados aparte usan `SectionTitle`. Detalle en `web.md`, «Link a cada sección».
 - **Fuentes siempre visibles**: cada página y cada cifra enlazan al sitio oficial, a la copia archivada y, cuando existe, a la copia en archive.org.
 - **Toda persona lleva su cara.** Donde se nombre a alguien (buscador, listas, fichas, organismos, designaciones, firmas de las leyes) va `PersonAvatar` (`@mt/ui/components/avatar`) con su foto oficial, o con sus iniciales mientras no la tengamos.
   - Las fotos salen solo de sitios oficiales (`bun run scrape fotos`).

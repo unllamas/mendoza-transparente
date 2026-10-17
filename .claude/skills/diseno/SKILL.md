@@ -15,6 +15,7 @@ Los componentes base y los tokens están en `packages/ui` (`@mt/ui`). **La base 
 - **Tema claro por defecto;** el oscuro (`.dark`) solo si la persona lo elige en el footer. Nunca `dark:` a mano.
 - **Antes de armar un botón, una etiqueta, una tarjeta o un campo a mano,** usar el componente del paquete. Si falta uno, se agrega al paquete, no a la página.
 - **Lo que alguien querría compartir va en la URL** (pestañas, búsquedas, hojas abiertas): `useUrlOption` y `useUrlText` de `apps/web/src/url-state.ts`, nunca `useState`.
+- **Cada sección tiene su link:** todo h2 de bloque va con `Section id="leyes"` (o `SectionTitle` si el título se arma aparte); el título es el link a `#leyes` y lo copia. El id es corto, en español y sin años ni nombres que cambien.
 
 ## Reglas que no se negocian
 

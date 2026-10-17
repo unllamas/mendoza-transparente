@@ -317,7 +317,7 @@ export function MunicipioPage() {
       )}
 
       {c && c.serie.length > 1 && (
-        <Section title={`Coparticipación por habitante, en pesos de ${c.referencia}`}>
+        <Section id="coparticipacion" title={`Coparticipación por habitante, en pesos de ${c.referencia}`}>
           <ColumnChart
             columnas={c.serie.map((s) => ({ etiqueta: String(s.anio), valor: s.perCapita }))}
             formatValue={pesos}
@@ -332,7 +332,7 @@ export function MunicipioPage() {
         </Section>
       )}
 
-      <Section title="Personal del municipio">
+      <Section id="personal" title="Personal del municipio">
         {st ? (
           <>
             <p className="-mt-2 text-body-regular text-text-tertiary">
@@ -396,7 +396,7 @@ export function MunicipioPage() {
       </Section>
 
       {localLaws.length > 0 && (
-        <Section title={`Leyes que tocan a ${m.nombre}`}>
+        <Section id="leyes" title={`Leyes que tocan a ${m.nombre}`}>
           <p className="-mt-2 text-body-regular text-text-tertiary">
             Leyes provinciales que hacen algo concreto en el departamento: un terreno, una obra, un convenio.
           </p>
@@ -427,7 +427,7 @@ export function MunicipioPage() {
       )}
 
       {m.legisladores.length > 0 && (
-        <Section title={`Legisladores provinciales de la ${m.seccion?.toLowerCase() ?? ""} sección`}>
+        <Section id="legisladores" title={`Legisladores provinciales de la ${m.seccion?.toLowerCase() ?? ""} sección`}>
           <p className="-mt-2 text-body-regular text-text-tertiary">Los eligen los vecinos de {m.nombre} y del resto de la sección.</p>
           <ul className={listVariants()}>
             {m.legisladores.map((l) => (

@@ -2,7 +2,7 @@ import { Alert } from "@mt/ui/components/alert";
 import { PersonAvatar } from "@mt/ui/components/avatar";
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { cardVariants, listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
-import { PageHeader } from "@mt/ui/components/section";
+import { PageHeader, SectionTitle } from "@mt/ui/components/section";
 import { cx } from "@mt/ui/lib/cx";
 import {
   RiArrowRightSLine,
@@ -24,7 +24,7 @@ import { FuentesOficiales } from "@/components/official-sources.tsx";
 import { ShareButton } from "@/components/share-button.tsx";
 import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
 import { formatDate, formatNumber, normalizeText } from "@/lib.ts";
-import { ROLES, roleBySlug } from "@/slug.ts";
+import { ROLES, roleBySlug, slug } from "@/slug.ts";
 import type { Funcionario, FuncionariosTema, GrupoFuncionario } from "@/types.ts";
 import { useSetUrlParams, useUrlOption, useUrlText } from "@/url-state.ts";
 
@@ -98,14 +98,14 @@ export function FuncionariosPage() {
       </div>
 
       {busqueda ? (
-        <Lista titulo={`${visibles.length} resultados`} personas={visibles} />
+        <Lista id="resultados" titulo={`${visibles.length} resultados`} personas={visibles} />
       ) : (
         grupos.map((g) => {
           const delGrupo = visibles.filter((p) => p.grupo === g);
           return (
             <div key={g} className="flex flex-col gap-4">
               {(g === "diputados_provincial" || g === "senado_provincial") && <Bloques personas={delGrupo} />}
-              <Lista titulo={`${NOMBRE_GRUPO[g]} (${delGrupo.length})`} personas={delGrupo} role={ROLES[g].slug} />
+              <Lista id={ROLES[g].slug} titulo={`${NOMBRE_GRUPO[g]} (${delGrupo.length})`} personas={delGrupo} role={ROLES[g].slug} />
             </div>
           );
         })
@@ -139,11 +139,13 @@ function subtitulo(p: Funcionario) {
   return [p.bloque ?? p.partido, p.seccion].filter(Boolean).join(" · ");
 }
 
-function Lista({ titulo, personas, role }: { titulo: string; personas: Funcionario[]; role?: string }) {
+function Lista({ id, titulo, personas, role }: { id: string; titulo: string; personas: Funcionario[]; role?: string }) {
   return (
-    <section className="flex flex-col gap-3">
-      <h2 className="flex min-w-0 items-baseline justify-between gap-3 text-title-3-semibold tracking-tight">
-        <span className="truncate">{titulo}</span>
+    <section id={id} className="flex scroll-mt-20 flex-col gap-3">
+      <div className="flex min-w-0 items-center justify-between gap-3">
+        <SectionTitle id={id} className="min-w-0">
+          <span className="block truncate">{titulo}</span>
+        </SectionTitle>
         {role && (
           <Link
             to="/funcionarios/$role"
@@ -153,7 +155,7 @@ function Lista({ titulo, personas, role }: { titulo: string; personas: Funcionar
             Ver página ›
           </Link>
         )}
-      </h2>
+      </div>
       <ul className={listVariants()}>
         {personas.map((p) => (
           <li key={p.id}>
@@ -200,7 +202,7 @@ export function RolePage() {
       {legislature && <Bloques personas={people} />}
       {sections.map((sec) => {
         const list = sec === null ? people : people.filter((p) => (p.seccion ?? "Sin sección") === sec);
-        return <Lista key={sec ?? "todos"} titulo={`${sec ?? r.title} (${list.length})`} personas={list} />;
+        return <Lista key={sec ?? "todos"} id={sec ? slug(sec) : "todos"} titulo={`${sec ?? r.title} (${list.length})`} personas={list} />;
       })}
     </div>
   );

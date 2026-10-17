@@ -108,7 +108,7 @@ export function MunicipalTransparencySection({ name, data }: { name: string; dat
   const open = data.items.find((i) => i.id === openId);
   const total = data.items.length;
   return (
-    <Section title="Qué publica el municipio">
+    <Section id="que-publica" title="Qué publica el municipio">
       <p className="-mt-2 text-body-regular text-text-tertiary">
         Lo que las leyes le piden publicar a {name} y lo que encontramos en su sitio: publica {data.published} de {total} ({data.current} al
         día). El promedio de los 18 municipios es {formatNumber(data.average)}. Revisado el {formatDate(data.checked)}.

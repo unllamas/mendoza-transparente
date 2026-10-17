@@ -2,7 +2,7 @@ import { Alert } from "@mt/ui/components/alert";
 import { Button, buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { Textarea } from "@mt/ui/components/base/textarea/textarea";
 import { cardVariants, listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
-import { PageHeader } from "@mt/ui/components/section";
+import { PageHeader, SectionTitle } from "@mt/ui/components/section";
 import { cx } from "@mt/ui/lib/cx";
 import { RiArrowRightSLine, RiCheckLine, RiExternalLinkLine, RiEyeOffLine, RiFileCopyLine, RiSearchLine } from "@remixicon/react";
 import { getRouteApi, Link } from "@tanstack/react-router";
@@ -119,10 +119,8 @@ export function NoPublicadoPage() {
       </div>
 
       {shown.map((t) => (
-        <section key={t.id} className="flex flex-col gap-3" aria-labelledby={`tema-${t.id}`}>
-          <h2 id={`tema-${t.id}`} className="text-title-3-semibold tracking-tight">
-            {t.label}
-          </h2>
+        <section key={t.id} id={`tema-${t.id}`} className="flex scroll-mt-20 flex-col gap-3">
+          <SectionTitle id={`tema-${t.id}`}>{t.label}</SectionTitle>
           <ul className={listVariants()}>
             {inTheme(t).map((item) => (
               <li key={item.id} id={item.id} className="scroll-mt-8">

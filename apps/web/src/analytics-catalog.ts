@@ -60,6 +60,12 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["compartir"],
   },
   {
+    event: "share.section.copy",
+    description:
+      "Tocó el título de una sección (con el ícono de link): la página baja a esa sección, la URL queda con #sección y el link se copia. Propiedades path y section (el id, por ejemplo leyes o coparticipacion).",
+    tags: ["compartir"],
+  },
+  {
     event: "share.native",
     description:
       "Tocó Compartir en el celular, que abre el menú de compartir del teléfono (no sabemos qué app eligió). Propiedades path y context.",

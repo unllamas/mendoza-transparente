@@ -76,6 +76,15 @@ Cada página con encabezado (`PageHeader`) lleva abajo de la bajada el botón **
 - **Página nueva:** `<PageHeader action={<ShareButton />} …>`.
 - **Eventos:** `share.x`, `share.whatsapp`, `share.copy` y `share.native`, con `context` (`page` o `missing_data`).
 
+## Link a cada sección
+
+Cada bloque con título de una página se puede compartir solo: `/municipios/san-rafael#leyes` abre la página ya bajada hasta «Leyes que tocan a San Rafael».
+
+- **Cómo:** `Section` (`@mt/ui/components/section`) pide un `id`; el título es un link a `#id` con el ícono de link siempre visible. Al tocarlo, la página baja a la sección, la URL queda con `#id` y el link se copia. Los títulos que no usan `Section` (portada, listas de funcionarios, tablas de `/datos`, temas de «Lo que no se publica») usan `SectionTitle` con el mismo `id` en el bloque.
+- **El id:** una o dos palabras en español, en minúsculas y con guiones (`leyes`, `coparticipacion`, `por-anio`). Forma parte de links compartidos: nunca lleva un año, un nombre ni una cifra que cambie, aunque el título los tenga. Único dentro de la página.
+- **Al abrir el link** el router baja solo hasta la sección, también cuando la página carga sus datos después; `scroll-mt-20` deja el título debajo del encabezado fijo.
+- **Evento:** `share.section.copy`, con `section` (el id).
+
 ## Hojas con el id en la URL
 
 Las hojas de detalle se abren con parámetros en la URL, así cada caso se puede compartir y abrir directo:

@@ -60,7 +60,7 @@ export function CoparticipacionPage() {
         />
       </div>
 
-      <Section title={`Por habitante, ${tema.anioCompleto}`}>
+      <Section id="por-habitante" title={`Por habitante, ${tema.anioCompleto}`}>
         <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_22rem]">
           <MapaMendoza
             mapa={mapa}
@@ -96,7 +96,7 @@ export function CoparticipacionPage() {
         </Alert>
       </Section>
 
-      <Section title={`Total repartido por año, en millones de pesos de ${tema.referencia}`}>
+      <Section id="por-anio" title={`Total repartido por año, en millones de pesos de ${tema.referencia}`}>
         <div className={cx(tileVariants())}>
           <LineChart
             data={tema.provincia.filter((p) => !p.parcial).map((p) => ({ fecha: `${p.anio}-01-01`, valor: p.real / 1e6 }))}

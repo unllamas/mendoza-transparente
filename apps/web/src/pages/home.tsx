@@ -1,5 +1,6 @@
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { cardVariants, listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
+import { SectionTitle } from "@mt/ui/components/section";
 import { cx } from "@mt/ui/lib/cx";
 import {
   type RemixiconComponentType,
@@ -86,6 +87,7 @@ export function HomePage() {
       {guide && (
         <section className="flex flex-col gap-6">
           <Encabezado
+            id="preguntas"
             icon={RiQuestionLine}
             titulo="Empezá por una pregunta"
             bajada="Las preguntas que más nos hacen, con la respuesta a un clic."
@@ -96,14 +98,19 @@ export function HomePage() {
 
       {guide && guide.news.length > 0 && (
         <section className="flex flex-col gap-6">
-          <Encabezado icon={RiSparklingLine} titulo="Lo nuevo" bajada="Las últimas leyes, nombramientos y datos actualizados." />
+          <Encabezado
+            id="lo-nuevo"
+            icon={RiSparklingLine}
+            titulo="Lo nuevo"
+            bajada="Las últimas leyes, nombramientos y datos actualizados."
+          />
           <WhatsNew guide={guide} />
         </section>
       )}
 
       {/* Las cifras principales */}
-      <section id="numeros" className="flex scroll-mt-8 flex-col gap-6">
-        <Encabezado titulo="Mendoza en números" bajada="Tocá cualquier cifra para ver el detalle, la evolución y la fuente." />
+      <section className="flex flex-col gap-6">
+        <Encabezado id="numeros" titulo="Mendoza en números" bajada="Tocá cualquier cifra para ver el detalle, la evolución y la fuente." />
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {deuda && (
             <Cifra
@@ -206,6 +213,7 @@ export function HomePage() {
       {guide && (
         <section className="flex flex-col gap-6">
           <Encabezado
+            id="temas"
             icon={RiLayoutGridLine}
             titulo="Todo lo que hay en Mendoza Transparente"
             bajada={`${formatNumber(guide.counts.records)} registros ordenados en cuatro preguntas. Elegí por dónde seguir.`}
@@ -215,7 +223,12 @@ export function HomePage() {
       )}
 
       <section className="flex flex-col gap-6">
-        <Encabezado icon={RiBookOpenLine} titulo="Cómo leer estos datos" bajada="Cuatro reglas para entender lo que vas a ver." />
+        <Encabezado
+          id="como-leer"
+          icon={RiBookOpenLine}
+          titulo="Cómo leer estos datos"
+          bajada="Cuatro reglas para entender lo que vas a ver."
+        />
         <ReadingRules />
       </section>
 
@@ -223,6 +236,7 @@ export function HomePage() {
       {noPublicado.length > 0 && (
         <section className="flex flex-col gap-6">
           <Encabezado
+            id="no-publicado"
             icon={RiEyeOffLine}
             titulo="Lo que el Estado no publica"
             bajada={`${noPublicado.length} datos que deberían ser públicos y no encontramos en ningún sitio oficial. Podés pedirlos vos.`}
@@ -255,6 +269,7 @@ export function HomePage() {
       {coparticipacion && mapa && (
         <section className="flex flex-col gap-6">
           <Encabezado
+            id="tu-departamento"
             icon={RiMapLine}
             titulo="Tu departamento"
             bajada={`Cuánto recibió cada municipio por habitante en ${coparticipacion.anio}. Tocá uno para ver su detalle.`}
@@ -276,6 +291,7 @@ export function HomePage() {
       {compras && (
         <section className="flex flex-col gap-6">
           <Encabezado
+            id="para-mirar"
             icon={RiScales3Line}
             titulo="Para mirar de cerca"
             bajada="No son acusaciones: son patrones en los datos oficiales que merecen una explicación."
@@ -308,13 +324,15 @@ export function HomePage() {
   );
 }
 
-function Encabezado({ titulo, bajada, icon: Icon }: { titulo: string; bajada?: string; icon?: RemixiconComponentType }) {
+function Encabezado({ id, titulo, bajada, icon: Icon }: { id: string; titulo: string; bajada?: string; icon?: RemixiconComponentType }) {
   return (
-    <div className="flex max-w-2xl flex-col gap-1.5">
-      <h2 className="flex items-center gap-2 text-title-1-semibold tracking-tight">
-        {Icon && <Icon className="size-5 text-foreground-icon-secondary" aria-hidden />}
-        {titulo}
-      </h2>
+    <div id={id} className="flex max-w-2xl scroll-mt-20 flex-col gap-1.5">
+      <SectionTitle id={id} className="text-title-1-semibold">
+        <span className="flex items-center gap-2">
+          {Icon && <Icon className="size-5 shrink-0 text-foreground-icon-secondary" aria-hidden />}
+          {titulo}
+        </span>
+      </SectionTitle>
       {bajada && <p className="text-text-secondary text-pretty">{bajada}</p>}
     </div>
   );

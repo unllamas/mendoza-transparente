@@ -1,6 +1,7 @@
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { Select, SelectItem } from "@mt/ui/components/base/select/select";
 import { tileVariants } from "@mt/ui/components/card";
+import { SectionTitle } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
 import { cx } from "@mt/ui/lib/cx";
 import { RiArrowLeftLine, RiCursorLine, RiDownloadLine, RiExternalLinkLine } from "@remixicon/react";
@@ -71,7 +72,8 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
   const groups = dataset.groups;
   const inicial = groups?.find((g) => g.value === dict?.grupoInicial) ?? groups?.[0];
   // The group shown (a year, an agency) lives in the URL with the table's name: /datos/lrf-personal?personal=2025.
-  const [groupParam, setGroupParam] = useUrlText(dataset.file.replace(/\.csv$/, ""));
+  const tableName = dataset.file.replace(/\.csv$/, "");
+  const [groupParam, setGroupParam] = useUrlText(tableName);
   const groupSlug = groups?.some((g) => g.slug === groupParam) ? groupParam : inicial?.slug;
   const setGroupSlug = (s: string) => setGroupParam(s === inicial?.slug ? null : s);
   const group = groups?.find((g) => g.slug === groupSlug);
@@ -101,10 +103,10 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
   };
 
   return (
-    <section className="flex flex-col gap-4">
+    <section id={tableName} className="flex scroll-mt-20 flex-col gap-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div className="flex max-w-2xl flex-col gap-1">
-          <h2 className="text-title-3-semibold tracking-tight">{dict?.titulo ?? humanize(dataset.file)}</h2>
+          <SectionTitle id={tableName}>{dict?.titulo ?? humanize(dataset.file)}</SectionTitle>
           {dict?.descripcion && <p className="text-body-regular text-text-secondary text-pretty">{dict.descripcion}</p>}
           <p className="text-body-regular text-text-tertiary">
             {formatNumber(rowCount)} filas{group ? ` de ${group.value}` : ""} · CSV completo: {formatBytes(dataset.bytes)}
