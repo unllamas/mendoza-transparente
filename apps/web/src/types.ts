@@ -623,6 +623,8 @@ export interface AgencyDetail extends AgencySummary {
 export interface GobiernoOverview {
   /** Total positions (planta) and service contracts per quarter, whole provincial State. */
   series: { period: string; date: string; staff: number; contracts: number }[];
+  /** Net change in positions against the previous published quarter (not always the one right before). */
+  quarterlyChange: { period: string; previous: string; change: number }[];
   /** Quarter used as the start of the current administration. */
   baseline: string;
   changes: { slug: string; name: string; from: number; to: number; pct: number; restructured: boolean }[];

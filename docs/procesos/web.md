@@ -103,7 +103,7 @@ Estructura de `apps/web/src`:
 |---|---|---|
 | `pages/` | Solo las páginas de cada ruta (las que carga `src/main.tsx`). | `municipios.tsx`, `leyes.tsx` |
 | `components/` | Componentes de la web: los que usan el router, la analítica o los datos del sitio. | `layout.tsx`, `search-dialog.tsx`, `detail-sheet.tsx`, `purchase-detail.tsx` (`Proceso`, `Proveedor`, `PanelDetalle`), `home-guide.tsx`, `official-sources.tsx`, `tracked-sheet.tsx`, `tracked-segmented.tsx`, `list-search.tsx`, `breadcrumbs.tsx` |
-| `charts/` | Gráficos. | `LineChart`, `ColumnChart`, `BarList`, `Sparkline`, `MapaMendoza` |
+| `charts/` | Gráficos. | `LineChart`, `ColumnChart`, `ChangeChart`, `BarList`, `Sparkline`, `MapaMendoza` |
 | raíz | Lógica sin interfaz. | `lib.ts`, `url-state.ts`, `analytics.ts`, `types.ts` |
 
 Lo genérico (botones, hojas, bloques, campos) no va en la web: está en el design system (`@mt/ui`, ver `docs/procesos/diseno.md`). Si un componente de la web deja de depender del router o de la analítica, se pasa al paquete.

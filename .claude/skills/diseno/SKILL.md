@@ -64,7 +64,7 @@ Tarjetas dentro de tarjetas, etiquetitas sobre los títulos, secciones numeradas
 ## Gráficos
 
 - **Con Recharts, al estilo de BoardUI** (`src/charts/`), solo con tokens (`highlight`, `chart-grid`, `chart-axis`).
-- **Cuál usar:** evolución → línea (`LineChart`) o columnas por año (`ColumnChart`); ranking → `BarList`; partes de un total → `BarList` con `total`, para que la barra mida su porcentaje; mapa → `MapaMendoza` (cuantiles) o `MunicipalityLocator` (un departamento resaltado).
+- **Cuál usar:** evolución → línea (`LineChart`) o columnas por año (`ColumnChart`); subas y bajas por período → `ChangeChart`; ranking → `BarList`; partes de un total → `BarList` con `total`, para que la barra mida su porcentaje; mapa → `MapaMendoza` (cuantiles) o `MunicipalityLocator` (un departamento resaltado).
 - **Bandas de gestiones de gobierno:** `GOBIERNOS` (`src/gobiernos.ts`).
 - **Paleta:** está validada (skill `dataviz` del entorno). No inventar colores.
 

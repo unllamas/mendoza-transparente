@@ -386,5 +386,11 @@ export function buildOverview(lrf: Row[], details: AgencyDetail[]): GobiernoOver
     .filter((c): c is NonNullable<typeof c> => c !== null && c.contracts > 0)
     .sort((a, b) => b.ratio - a.ratio)
     .slice(0, 8);
-  return { series, baseline: BASELINES.current, changes, contractShare };
+  // Net change in positions against the previous published quarter (a missing report makes the step longer).
+  const quarterlyChange = series.slice(1).map((p, i) => ({
+    period: p.period,
+    previous: series[i]!.period,
+    change: p.staff - series[i]!.staff,
+  }));
+  return { series, quarterlyChange, baseline: BASELINES.current, changes, contractShare };
 }
