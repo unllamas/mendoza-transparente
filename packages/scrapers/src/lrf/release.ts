@@ -5,7 +5,7 @@
  */
 
 import { createHash } from "node:crypto";
-import { archive, get, type Municipio } from "@mt/core";
+import { archive, get, type Municipio, readManifest } from "@mt/core";
 import * as cheerio from "cheerio";
 import { unzipSync } from "fflate";
 import { getDocumentProxy } from "unpdf";
@@ -98,6 +98,25 @@ export function annexLinks(found: { text: string; href: string }[]): Partial<Rec
     if (annex && !files[annex]) files[annex] = l.href;
   }
   return files;
+}
+
+/**
+ * Releases already archived for a municipality, rebuilt from the manifest (`<slug>-<YEAR>-T<Q>-anexo<N>.<ext>` and the
+ * address each file came from). For sites that replace the previous quarter (Luján de Cuyo): a quarter archived once
+ * stays in the tables even when it is no longer on the site.
+ */
+export async function archivedReleases(municipality: Municipio, slug: string): Promise<Release[]> {
+  const byPeriod = new Map<string, Release>();
+  for (const entry of await readManifest(LRF_SOURCE)) {
+    const m = new RegExp(`^${slug}-(\\d{4})-T([1-4])-anexo(\\w+)\\.`).exec(entry.filename);
+    const annex = m?.[3] as Annex | undefined;
+    if (!m || !annex || !ANNEXES.includes(annex)) continue;
+    const key = `${m[1]}-${m[2]}`;
+    const release = byPeriod.get(key) ?? { municipality, year: +m[1]!, quarter: +m[2]!, files: {} };
+    release.files[annex] = entry.url;
+    byPeriod.set(key, release);
+  }
+  return [...byPeriod.values()];
 }
 
 // ---------------------------------------------------------------- download

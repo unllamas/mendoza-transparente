@@ -29,6 +29,9 @@ export const SPENDING_OBJECTS: Record<string, string> = {
   "5.2.4": "Otros títulos y valores",
   "5.3.1": "Bienes preexistentes",
   "5.4.1": "Crédito adicional para gastos de capital",
+  "5.2": "Inversión financiera",
+  "6": "Otras erogaciones",
+  "7": "Servicio de la deuda",
   "6.3": "Adelantos a proveedores",
   "8.1.1": "Gastos de ejercicios anteriores",
   "7.2.1": "Amortización de la deuda",
@@ -115,4 +118,35 @@ export function objectCodeFromLevels(levels: string[], label: string): string {
   if (code.startsWith("5.4.") && /transferencia/i.test(label)) return "4.3.2";
   if (code === "6.2.1" && levels[3] === "2") return "7.4.1";
   return EQUIVALENT_CODES[code] ?? code;
+}
+
+/**
+ * Normalized object code from the printed name alone, for documents whose codes belong to another scheme (Luján de
+ * Cuyo: "4.2" in 2024 and "7" in 2026 for the debt, with the Concejo Deliberante's items as "8.1.1 PERSONAL HCD" or
+ * repeating the municipality's codes). Null if the name is not one of the known ones.
+ */
+const OBJECT_NAMES: [RegExp, string][] = [
+  [/^personal$/, "4.1.1"],
+  [/^bienes de consumo$/, "4.1.2"],
+  [/^servicios$/, "4.1.3"],
+  [/^intereses y gastos de la deuda$/, "4.2.1"],
+  [/^transferencias corrientes$/, "4.3.1"],
+  [/^transf\.? ?p\/ ?financ\.? ?erog\.? ?(de )?cap/, "4.3.2"],
+  [/^bienes( de capital| de uso)?$/, "5.1.1"],
+  [/^(trabajos publicos|construcciones)$/, "5.1.2"],
+  [/^(inversion en )?bienes preexist/, "5.3.1"],
+  [/^otras erogaciones$/, "6"],
+  [/^activos financieros$/, "5.2"],
+  [/^servicio de la deuda/, "7"],
+];
+
+export function objectCodeFromLabel(label: string): string | null {
+  const name = label
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "")
+    .toLowerCase()
+    .replace(/[\s.-]*hcd\.?$/, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  return OBJECT_NAMES.find(([re]) => re.test(name))?.[1] ?? null;
 }
