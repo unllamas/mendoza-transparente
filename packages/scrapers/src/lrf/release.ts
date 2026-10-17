@@ -1,13 +1,16 @@
 /**
  * What every municipality's finder needs (lrf/finders/<municipality>.ts) and how a quarter's documents are downloaded,
- * whatever the container: one file per annex (PDF, spreadsheet or Google Drive) or a ZIP with all of them. The
- * workbook with a sheet per annex (San Martín) is handled by the source itself.
+ * whatever the container: one file per annex (PDF, spreadsheet, saved web page or Google Drive), a ZIP with all of them,
+ * or one PDF with the whole report. The workbook with a sheet per annex (San Martín) is handled by the source itself.
  */
 
+import { createHash } from "node:crypto";
 import { archive, get, type Municipio } from "@mt/core";
 import * as cheerio from "cheerio";
 import { unzipSync } from "fflate";
-import type { Period } from "./annexes.ts";
+import { getDocumentProxy } from "unpdf";
+import { headerAnnex, type Period } from "./annexes.ts";
+import { htmlTables, type Item, pageItems, pdfTables, rowsOf, sheetTables, type Table } from "./read.ts";
 
 export const LRF_SOURCE = "municipios-lrf";
 /** The site shows the last four years. */
@@ -19,12 +22,16 @@ export const ANNEXES = ["1", "2", "2bis", "3", "4", "5"] as const;
 export type Annex = (typeof ANNEXES)[number];
 export const annexName = (annex: Annex) => (annex === "2bis" ? "2 bis" : annex);
 
-/** The documents of one quarter: one file per annex, a ZIP with every annex, or a workbook with a sheet per annex. */
+/**
+ * The documents of one quarter: one file per annex, a ZIP with every annex, a workbook with a sheet per annex, or one
+ * PDF with the whole report (`report`, Tupungato).
+ */
 export interface Release extends Period {
   municipality: Municipio;
   files: Partial<Record<Annex, string>>;
   zip?: string;
   workbook?: string;
+  report?: string;
 }
 
 /** A municipality's finder: every quarter it publishes (the source drops those before FIRST_YEAR). */
@@ -93,7 +100,8 @@ export function annexLinks(found: { text: string; href: string }[]): Partial<Rec
 
 // ---------------------------------------------------------------- download
 
-export type DocumentExt = "pdf" | "xlsx" | "xls";
+/** "json": the pages of one annex taken out of a whole report, as positioned texts (see `reportPages`). */
+export type DocumentExt = "pdf" | "xlsx" | "xls" | "html" | "mht" | "json";
 
 /** One downloaded annex, ready to archive or read. */
 export interface AnnexDocument {
@@ -116,8 +124,51 @@ export function documentExt(bytes: Uint8Array): DocumentExt | null {
     .join("");
   if (head === "25504446") return "pdf";
   if (head === "d0cf11e0") return "xls";
-  if (head === "504b0304") return "xlsx";
+  // An .xlsx is a ZIP too: only one with a workbook inside counts (San Carlos 2025-T4 nests a plain ZIP as annex 1).
+  if (head === "504b0304") return new TextDecoder("latin1").decode(bytes).includes("xl/workbook") ? "xlsx" : null;
+  // A page saved from the browser (San Carlos): an .mht from Internet Explorer, or plain HTML.
+  const text = new TextDecoder("latin1").decode(bytes.slice(0, 600)).trimStart();
+  if (/^(From:|MIME-Version:)/i.test(text) && /multipart\/related/i.test(text)) return "mht";
+  if (/^(<!DOCTYPE\s+html|<html)/i.test(text)) return "html";
   return null;
+}
+
+/** An archived annex as tables, whatever its format. PDFs and report pages along the given axis. */
+export async function documentTables(bytes: Uint8Array, ext: DocumentExt, axis: "h" | "v" = "h"): Promise<Table[]> {
+  if (ext === "pdf") return pdfTables(bytes, axis);
+  if (ext === "html" || ext === "mht") return htmlTables(bytes);
+  if (ext === "json")
+    return (JSON.parse(new TextDecoder().decode(bytes)) as { pages: { items: Item[] }[] }).pages.map((p) => rowsOf(p.items, axis));
+  return sheetTables(bytes, { blankAsZero: true }).map((s) => s.rows);
+}
+
+/** Pages where each annex is, in a report: the first pages hold annexes 1 to 6; 19, 22 and 23 come much later. */
+const REPORT_PAGES = 20;
+
+/**
+ * The annexes of a whole report (Tupungato: 93 to 141 pages, with debtors' names in annexes 22 and 23). Each annex is
+ * found by its printed title among the first pages and kept as its positioned texts, with the original's sha256: the
+ * rest of the report is never stored.
+ */
+async function reportPages(bytes: Uint8Array, url: string, skip: Set<Annex>): Promise<AnnexDocument[]> {
+  const pdf = await getDocumentProxy(new Uint8Array(bytes));
+  const sha256 = createHash("sha256").update(bytes).digest("hex");
+  const found = new Map<Annex, { page: number; items: Item[] }[]>();
+  for (let n = 1; n <= Math.min(pdf.numPages, REPORT_PAGES); n++) {
+    const items = await pageItems(pdf, n);
+    const printed = headerAnnex([rowsOf(items, "h")]) ?? headerAnnex([rowsOf(items, "v")]);
+    const annex = ANNEXES.find((a) => a === printed);
+    if (!annex || skip.has(annex)) continue;
+    const round = (v: number) => Math.round(v * 100) / 100;
+    const kept = items.map((i) => ({ x: round(i.x), y: round(i.y), s: i.s, h: round(i.h ?? 0) }));
+    found.set(annex, [...(found.get(annex) ?? []), { page: n, items: kept }]);
+  }
+  return [...found].map(([annex, pages]) => ({
+    annex,
+    ext: "json" as const,
+    url,
+    bytes: new TextEncoder().encode(JSON.stringify({ url, sha256_original: sha256, bytes_original: bytes.length, pages })),
+  }));
 }
 
 /**
@@ -127,6 +178,12 @@ export function documentExt(bytes: Uint8Array): DocumentExt | null {
 export async function downloadRelease(r: Release, skip: Set<Annex>): Promise<{ docs: AnnexDocument[]; problems: string[] }> {
   const docs: AnnexDocument[] = [];
   const problems: string[] = [];
+  if (r.report) {
+    if (ANNEXES.every((a) => skip.has(a))) return { docs, problems };
+    const bytes = new Uint8Array(await (await get(r.report)).arrayBuffer());
+    await sleep(1000);
+    return { docs: await reportPages(bytes, r.report, skip), problems };
+  }
   if (r.zip) {
     if (ANNEXES.every((a) => skip.has(a))) return { docs, problems };
     const bytes = new Uint8Array(await (await get(r.zip)).arrayBuffer());

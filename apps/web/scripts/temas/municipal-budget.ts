@@ -39,9 +39,9 @@ const titleCase = (s: string) =>
  * (Infogov: "Recursos corrientes de origen provincial").
  */
 const REVENUE_NAMES: [RegExp, string][] = [
-  [/^recursos corrientes de origen municipal$/i, "Propios del municipio"],
-  [/^recursos corrientes de origen nacional$/i, "De la Nación"],
-  [/^recursos corrientes de origen provincial$/i, "De la Provincia"],
+  [/^(recursos corrientes )?de (origen|jurisdicci[oó]n) municipal$/i, "Propios del municipio"],
+  [/^(recursos corrientes )?de (origen|jurisdicci[oó]n) nacional$/i, "De la Nación"],
+  [/^(recursos corrientes )?de (origen|jurisdicci[oó]n) provincial$/i, "De la Provincia"],
 ];
 /** A debt without the account code the accounting system puts first ("2113010000 - Ret. Sobre…" or "2.1.4.03 Banco…" → the name alone). */
 const debtName = (label: string) => {
@@ -90,6 +90,8 @@ export function buildMunicipalBudgets(
         year,
         quarter,
         partial: quarter < 4,
+        // A later year in the annexes means this one ended: its December report is what is missing.
+        missingClose: quarter < 4 && own.some((r) => num(r.anio) > year),
         cutoff: `${MONTHS[quarter - 1]} de ${year}`,
         voted: sum(rows, "credito_votado"),
         current: sum(rows, "credito_vigente"),

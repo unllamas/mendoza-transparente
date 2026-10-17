@@ -12,8 +12,18 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { headerAnnex, headerPeriod, parseDebtAnnex, parseRevenueAnnex, parseSpendingAnnex } from "./annexes.ts";
-import { pdfTables, sheetTables, type Table } from "./read.ts";
-import { ANNEXES, type Annex, type AnnexDocument, annexName, downloadRelease, FIRST_YEAR, type Finder, type Release } from "./release.ts";
+import type { Table } from "./read.ts";
+import {
+  ANNEXES,
+  type Annex,
+  type AnnexDocument,
+  annexName,
+  documentTables,
+  downloadRelease,
+  FIRST_YEAR,
+  type Finder,
+  type Release,
+} from "./release.ts";
 
 const PARSERS = { "2": parseSpendingAnnex, "3": parseRevenueAnnex, "5": parseDebtAnnex } as Partial<
   Record<Annex, (t: Table[]) => { lines: unknown[]; notes: string[] } | { error: string }>
@@ -31,7 +41,7 @@ mkdirSync(cacheDir, { recursive: true });
 /** Downloads through a cache keyed by the release, so trying again does not hit the site. */
 async function cachedDownload(r: Release): Promise<{ docs: AnnexDocument[]; problems: string[] }> {
   const key = createHash("sha256")
-    .update(JSON.stringify([r.files, r.zip]))
+    .update(JSON.stringify([r.files, r.zip, r.report]))
     .digest("hex")
     .slice(0, 16);
   const index = join(cacheDir, `${r.year}-T${r.quarter}-${key}.json`);
@@ -60,13 +70,12 @@ for (const r of releases) {
       cells.push(`anexo ${annexName(annex)}: no está`);
       continue;
     }
-    const read = async (axis: "h" | "v") =>
-      d.ext === "pdf" ? pdfTables(d.bytes, axis) : sheetTables(d.bytes, { blankAsZero: true }).map((s) => s.rows);
+    const read = (axis: "h" | "v") => documentTables(d.bytes, d.ext, axis);
     const tables = await read("h");
     const period = headerPeriod(tables);
     const printed = headerAnnex(tables);
     let parsed = PARSERS[annex]!(tables);
-    if ("error" in parsed && d.ext === "pdf") {
+    if ("error" in parsed && (d.ext === "pdf" || d.ext === "json")) {
       const retry = PARSERS[annex]!(await read("v"));
       if (!("error" in retry)) parsed = retry;
     }

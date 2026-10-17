@@ -50,16 +50,19 @@ import { find as lavalle } from "../lrf/finders/lavalle.ts";
 import { find as maipu } from "../lrf/finders/maipu.ts";
 import { find as malargue } from "../lrf/finders/malargue.ts";
 import { find as rivadavia } from "../lrf/finders/rivadavia.ts";
+import { find as sanCarlos } from "../lrf/finders/san-carlos.ts";
 import { find as sanMartin } from "../lrf/finders/san-martin.ts";
 import { find as sanRafael } from "../lrf/finders/san-rafael.ts";
 import { find as santaRosa } from "../lrf/finders/santa-rosa.ts";
 import { find as tunuyan } from "../lrf/finders/tunuyan.ts";
-import { pdfTables, sheetTables, type Table } from "../lrf/read.ts";
+import { find as tupungato } from "../lrf/finders/tupungato.ts";
+import { sheetTables, type Table } from "../lrf/read.ts";
 import {
   ANNEXES,
   type Annex,
   annexName,
   type DocumentExt,
+  documentTables,
   downloadRelease,
   FIRST_YEAR,
   type Finder,
@@ -78,10 +81,12 @@ const FINDERS: Record<string, Finder> = {
   Maipú: maipu,
   Malargüe: malargue,
   Rivadavia: rivadavia,
+  "San Carlos": sanCarlos,
   "San Martín": sanMartin,
   "San Rafael": sanRafael,
   "Santa Rosa": santaRosa,
   Tunuyán: tunuyan,
+  Tupungato: tupungato,
 };
 
 const slug = (m: string) =>
@@ -93,7 +98,7 @@ const slug = (m: string) =>
 
 const periodKey = (p: Period) => `${p.year}-T${p.quarter}`;
 const quarterEnd = (p: Period) => `${p.year}-${["03-31", "06-30", "09-30", "12-31"][p.quarter - 1]}`;
-const EXTS: DocumentExt[] = ["pdf", "xlsx", "xls"];
+const EXTS: DocumentExt[] = ["pdf", "xlsx", "xls", "html", "mht", "json"];
 const fileName = (r: Release, annex: Annex, ext: DocumentExt) => `${slug(r.municipality)}-${periodKey(r)}-anexo${annex}.${ext}`;
 const workbookName = (r: Release) => `${slug(r.municipality)}-${periodKey(r)}-anexos.xlsx`;
 
@@ -112,7 +117,7 @@ async function archivedAnnex(r: Release, annex: Annex): Promise<{ path: string; 
 async function ensureArchived(r: Release): Promise<string[]> {
   if (r.workbook) return archiveWorkbook(r);
   const skip = new Set<Annex>();
-  for (const annex of ANNEXES) if (!(r.zip || r.files[annex]) || (await archivedAnnex(r, annex))) skip.add(annex);
+  for (const annex of ANNEXES) if (!(r.zip || r.report || r.files[annex]) || (await archivedAnnex(r, annex))) skip.add(annex);
   const { docs, problems } = await downloadRelease(r, skip);
   for (const d of docs) await archive(SOURCE, fileName(r, d.annex, d.ext), d.bytes, { url: d.url });
   return problems;
@@ -153,12 +158,11 @@ async function annexTables(r: Release, annex: Annex, axis: "h" | "v" = "h"): Pro
   }
   const file = await archivedAnnex(r, annex);
   if (!file) return null;
-  const bytes = new Uint8Array(await readRaw(file.path));
-  return file.ext === "pdf" ? pdfTables(bytes, axis) : sheetTables(bytes, { blankAsZero: true }).map((s) => s.rows);
+  return documentTables(new Uint8Array(await readRaw(file.path)), file.ext, axis);
 }
 
 /** Source URL of an annex, for the tables and documentos.csv. */
-const annexUrl = (r: Release, annex: Annex) => r.workbook ?? r.zip ?? r.files[annex] ?? "";
+const annexUrl = (r: Release, annex: Annex) => r.workbook ?? r.zip ?? r.report ?? r.files[annex] ?? "";
 
 // ---------------------------------------------------------------- 3 and 4. interpret and classify
 
@@ -312,7 +316,14 @@ export async function run(_args: string[]): Promise<void> {
     for (const r of releases) {
       for (const problem of await ensureArchived(r)) warn(`${name} ${periodKey(r)}: ${problem}`);
       for (const annex of ANNEXES) {
-        const tables = await annexTables(r, annex);
+        let tables: Table[] | null;
+        try {
+          tables = await annexTables(r, annex);
+        } catch (err) {
+          record(r, annex, "error", `No se pudo abrir el archivo: ${(err as Error).message}.`);
+          warn(`${name} ${periodKey(r)} anexo ${annexName(annex)}: no se pudo abrir (${(err as Error).message})`);
+          continue;
+        }
         if (!tables) {
           record(r, annex, "no_encontrado", "El trimestre no trae este anexo.");
           continue;

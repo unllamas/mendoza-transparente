@@ -85,7 +85,7 @@ Fuente: los anexos de la Ley de Responsabilidad Fiscal (Ley 7314) que cada munic
 |---|---|---|
 | Una fila por partida, código de 5 dígitos | San Martín (planilla) | `41100 PERSONAL` y 11 cifras |
 | Por área de gobierno | San Rafael (PDF) | `1.00.040101.PERSONAL`, con filas de jurisdicción y unidad |
-| Infogov (pie "www.infogov.com.ar") | General Alvear, Malargüe, Maipú, Lavalle, La Paz, Rivadavia, Santa Rosa y Tunuyán; relevados también San Carlos y Tupungato | `41100000 (Subtotal)` abre cada partida, con el nombre y las cifras en las líneas siguientes; la fila final es "TOTAL GENERAL" y el trimestre va en palabras ("Segundo"). Las cifras largas se derraman y desordenan las columnas 10 a 12: se leen las columnas 2 a 9 y las otras se derivan de ellas. Se toman solo las partidas del nivel más detallado. En el anexo 3, los recursos tienen 4 dígitos (`5110` municipal, `5120` nacional, `5130` provincial; `52xx` de capital, `7xxx` financiamiento) |
+| Infogov (pie "www.infogov.com.ar") | General Alvear, Malargüe, Maipú, Lavalle, La Paz, Rivadavia, Santa Rosa, Tunuyán, San Carlos y Tupungato | `41100000 (Subtotal)` abre cada partida, con el nombre y las cifras en las líneas siguientes; la fila final es "TOTAL GENERAL" y el trimestre va en palabras ("Segundo"). Las cifras largas se derraman y desordenan las columnas 10 a 12: se leen las columnas 2 a 9 y las otras se derivan de ellas. Se toman solo las partidas del nivel más detallado. En el anexo 3, los recursos tienen 4 dígitos (`5110` municipal, `5120` nacional, `5130` provincial; `52xx` de capital, `7xxx` financiamiento) |
 
 **Casos de Infogov que el lector resuelve:**
 
@@ -94,6 +94,11 @@ Fuente: los anexos de la Ley de Responsabilidad Fiscal (Ley 7314) que cada munic
 - En el anexo 5, un negativo partido en dos renglones (el "-" en la fila y la cifra sola abajo, Santa Rosa y La Paz) se une; un "-" suelto que no es eso se prueba como cero; las filas con solo el código de cuenta se cuentan; y si el documento no trae fila de totales (Rivadavia), cada deuda se controla con sus propias cuentas y queda la observación.
 - Las cuentas `616…` del anexo 5 (Santa Rosa, La Paz) son la amortización de esas mismas deudas vista como gasto: entran en el control de totales y no se listan, para no contar los pagos dos veces.
 - El anexo 5 de La Paz y de Malargüe no lista préstamos sino cuentas del pasivo de corto plazo (fondos de terceros, retenciones, descubiertos): no es comparable con el de los municipios que informan préstamos. En la web se muestra como "Deudas de corto plazo", con una línea que lo explica (`SHORT_TERM_DEBT` en `apps/web/scripts/temas/municipal-budget.ts`; si otro municipio informa así, se suma ahí).
+
+**Envases poco comunes:**
+
+- San Carlos publica un ZIP por trimestre con los anexos 1 a 4 como páginas guardadas desde el navegador (`.htm`, y `.mht` de Internet Explorer en 2023) y el anexo 5 como planilla. `htmlTables` (`lrf/read.ts`) arma una fila por cada `<tr>`; del `.mht` toma la parte HTML y la decodifica. Se archivan tal cual, con su extensión.
+- Tupungato publica un solo PDF por trimestre con todo el informe (93 a 141 páginas, con deudores con nombre en los anexos 22 y 23). Es un `report`: se recorren solo las primeras 20 páginas, cada anexo se ubica por su título impreso y se guardan solo esas páginas, como textos con su posición (JSON), con el sha256 del PDF original. El resto del informe nunca se guarda.
 
 **Cómo se suma un municipio.** Se escribe su buscador en `packages/scrapers/src/lrf/finders/<municipio>.ts` (exporta `find()`, que devuelve un `Release` por trimestre con la URL de cada anexo, un ZIP o una planilla) y se prueba con `bun packages/scrapers/src/lrf/try-finder.ts <archivo>`, que lee los anexos 2, 3 y 5 con los mismos controles sin escribir en `data/`. Si el lector necesita un cambio, se hace en `lrf/annexes.ts` o `lrf/read.ts` con un caso de prueba y se vuelve a probar con los municipios que ya estaban. Después se registra en `FINDERS`.
 
@@ -135,7 +140,7 @@ Fuente: los anexos de la Ley de Responsabilidad Fiscal (Ley 7314) que cada munic
 
 **En la web** (`/municipios/<slug>/presupuesto/<año>`; sin año, abre el último año completo). Cálculo en `apps/web/scripts/temas/municipal-budget.ts`:
 
-- **Cada año** se muestra con su último trimestre publicado. Si no es el cuarto, la página avisa hasta qué mes llegan las cifras y el gráfico lo marca con asterisco.
+- **Cada año** se muestra con su último trimestre publicado. Si no es el cuarto, la página avisa hasta qué mes llegan las cifras y el gráfico lo marca con asterisco. Si el año ya terminó pero falta el informe de diciembre (no se publicó o no se pudo leer, como Tupungato 2024), el aviso lo dice así y no "el año todavía no terminó".
 - **Aprobado, autorizado, gastado y pagado** son las sumas del crédito votado, el crédito vigente, el devengado y el pagado del anexo 2. "Gastado" es lo devengado, y la página lo explica (glosario: `devengado`, `credito-vigente`).
 - **En qué se gasta** suma por `objeto`, igual para todos los municipios. **Por área** solo aparece si el municipio abre el gasto por jurisdicción (San Rafael).
 - **De dónde sale la plata:** lo ingresado sin préstamos ni remanentes (tipo `financiamiento`), que van en un renglón aparte. Los rubros llevan el nombre que usa cada municipio, porque los códigos no coinciden; los grupos de Infogov se acortan para que entren en el celular ("Recursos corrientes de origen provincial" → "De la Provincia").

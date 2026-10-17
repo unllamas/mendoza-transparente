@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test";
 
 import { headerAnnex, headerPeriod, parseDebtAnnex, parseRevenueAnnex, parseSpendingAnnex, splitRow } from "./annexes.ts";
 import { spendingObjectCode } from "./classify.ts";
-import { type Table, type Tok, tokenize } from "./read.ts";
+import { htmlTables, type Table, type Tok, tokenize } from "./read.ts";
 
 const row = (text: string): Tok[] => tokenize(text);
 const table = (...lines: string[]): Table => lines.map(row);
@@ -205,5 +205,25 @@ describe("lrf: cases found while adding the Infogov municipalities", () => {
 
   test("Lavalle's amortization code", () => {
     expect(spendingObjectCode("61100000")).toBe("7.2.1");
+  });
+});
+
+describe("lrf: pages saved from the browser (San Carlos)", () => {
+  test("an .mht with quoted-printable HTML in Latin-1 becomes rows", () => {
+    const mht = [
+      "From: <Guardado por Windows Internet Explorer 9>",
+      "MIME-Version: 1.0",
+      'Content-Type: multipart/related; type="text/html"; boundary="----=_NextPart_000"',
+      "",
+      "------=_NextPart_000",
+      'Content-Type: text/html; charset="iso-8859-1"',
+      "Content-Transfer-Encoding: quoted-printable",
+      "",
+      "<HTML><BODY><TABLE><TR><TD>ANEXO II: EJECUCI=D3N</TD></TR><TR><TD>41100000 (Subtotal) =",
+      "PERSONAL</TD><TD>1.234,50</TD></TR></TABLE></BODY></HTML>",
+      "------=_NextPart_000--",
+    ].join("\r\n");
+    const rows = htmlTables(new TextEncoder().encode(mht))[0]!;
+    expect(rows.map((r) => r.map((t) => t.text).join(" "))).toEqual(["ANEXO II: EJECUCIÓN", "41100000 (Subtotal) PERSONAL 1.234,50"]);
   });
 });

@@ -21,6 +21,23 @@ const share = (part: number, whole: number) => {
   return p > 0 && p < 1 ? "< 1 %" : `${Math.round(p)} %`;
 };
 
+/**
+ * The original documents, one link per file: when one file holds several annexes (a workbook, a ZIP or a whole report)
+ * it says so instead of naming only the first annex.
+ */
+function documents(y: MunicipalBudgetYear): [string, string][] {
+  const annexes: [string, string | null][] = [
+    ["Gastos (anexo 2)", y.sources.spending],
+    ["Recursos (anexo 3)", y.sources.revenue],
+    ["Deuda (anexo 5)", y.sources.debt],
+  ];
+  const urls = [...new Set(annexes.map(([, href]) => href).filter((href): href is string => !!href))];
+  return urls.map((href) => {
+    const labels = annexes.filter(([, h]) => h === href).map(([label]) => label);
+    return [labels.length > 1 ? "Documento con todos los anexos del trimestre" : labels[0]!, href];
+  });
+}
+
 /** One year of a municipality's budget: what was approved, spent and paid, on what, from where, and the debt. */
 export function BudgetYear({ budget, year }: { budget: MunicipalBudget; year: MunicipalBudgetYear }) {
   const y = year;
@@ -36,7 +53,9 @@ export function BudgetYear({ budget, year }: { budget: MunicipalBudget; year: Mu
       <div className="flex flex-col gap-3">
         {y.partial && (
           <Alert variant="note">
-            {y.year} todavía no terminó: las cifras van de enero a {until}, el último trimestre que publicó el municipio.
+            {y.missingClose
+              ? `El informe de diciembre de ${y.year} no se publicó o no se pudo leer: las cifras van de enero a ${until}.`
+              : `${y.year} todavía no terminó: las cifras van de enero a ${until}, el último trimestre que publicó el municipio.`}
           </Alert>
         )}
         <div className="grid gap-3 sm:grid-cols-2">
@@ -185,7 +204,13 @@ export function BudgetYear({ budget, year }: { budget: MunicipalBudget; year: Mu
             ariaLabel={`Gastado por la Municipalidad de ${budget.name} por año, en pesos de hoy`}
           />
           {evolution.some((e) => e.partial) && (
-            <p className="text-caption-1-regular text-text-tertiary">* El año todavía no terminó: no se compara con los años completos.</p>
+            <p className="text-caption-1-regular text-text-tertiary">
+              * Sin el año completo
+              {evolution.some((e) => e.missingClose)
+                ? " (el año en curso, o falta el informe de diciembre)"
+                : ": el año todavía no terminó"}
+              . No se compara con los años completos.
+            </p>
           )}
         </Section>
       )}
@@ -195,32 +220,21 @@ export function BudgetYear({ budget, year }: { budget: MunicipalBudget; year: Mu
           Los informes que el municipio publica cada trimestre por la Ley de Responsabilidad Fiscal, de {until} de {y.year}.
         </p>
         <ul className={listVariants()}>
-          {(
-            [
-              ["Gastos (anexo 2)", y.sources.spending],
-              ["Recursos (anexo 3)", y.sources.revenue],
-              ["Deuda (anexo 5)", y.sources.debt],
-            ] as const
-          )
-            .filter(([, href]) => href)
-            .filter(([, href], i, all) => all.findIndex(([, h]) => h === href) === i)
-            .map(([label, href]) => (
-              <li key={label}>
-                <a
-                  href={href!}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={listRowVariants()}
-                  data-track="municipality.budget_source.open"
-                  data-track-municipality={budget.name}
-                >
-                  <span className="min-w-0 flex-1 truncate text-text-link">
-                    {y.sources.spending === y.sources.debt ? "Planilla con todos los anexos del trimestre" : label}
-                  </span>
-                  <RiArrowRightUpLine className="size-4 shrink-0 text-text-link" aria-hidden />
-                </a>
-              </li>
-            ))}
+          {documents(y).map(([label, href]) => (
+            <li key={href}>
+              <a
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                className={listRowVariants()}
+                data-track="municipality.budget_source.open"
+                data-track-municipality={budget.name}
+              >
+                <span className="min-w-0 flex-1 truncate text-text-link">{label}</span>
+                <RiArrowRightUpLine className="size-4 shrink-0 text-text-link" aria-hidden />
+              </a>
+            </li>
+          ))}
         </ul>
       </Section>
     </div>

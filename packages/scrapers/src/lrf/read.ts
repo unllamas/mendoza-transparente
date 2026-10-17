@@ -7,6 +7,7 @@
  * text comes out scrambled (San Rafael prints each column as a separate block) and some pages are rotated.
  */
 
+import * as cheerio from "cheerio";
 import { getDocumentProxy } from "unpdf";
 import * as XLSX from "xlsx";
 
@@ -129,4 +130,56 @@ export function sheetTables(bytes: Uint8Array, { blankAsZero = false } = {}): { 
 /** Every sheet of a workbook as a table, without the sheet names. */
 export function sheetRows(bytes: Uint8Array): Table[] {
   return sheetTables(bytes).map((s) => s.rows);
+}
+
+// ---------------------------------------------------------------- pages saved from the browser
+
+type Encoding = ConstructorParameters<typeof TextDecoder>[0];
+
+/** Text of an HTML document in its declared charset (old pages are usually Latin-1). */
+function decodeHtml(bytes: Uint8Array): string {
+  const head = new TextDecoder("latin1").decode(bytes.slice(0, 2000));
+  const charset = /charset\s*=\s*["']?([\w-]+)/i.exec(head)?.[1] ?? "windows-1252";
+  try {
+    return new TextDecoder(charset as Encoding).decode(bytes);
+  } catch {
+    return new TextDecoder("windows-1252").decode(bytes);
+  }
+}
+
+/**
+ * The HTML of a page saved from the browser: a plain .htm, or an .mht (Internet Explorer's single file: a MIME message
+ * whose text/html part is usually quoted-printable). San Carlos publishes its annexes this way.
+ */
+export function savedPageHtml(bytes: Uint8Array): string {
+  const latin = new TextDecoder("latin1").decode(bytes);
+  if (!/^(From:|MIME-Version:)/m.test(latin.slice(0, 300)) || !/multipart\/related/i.test(latin.slice(0, 1500))) return decodeHtml(bytes);
+  const part = /Content-Type:\s*text\/html([\s\S]*?)\r?\n\r?\n([\s\S]*?)(?:\r?\n--[^\r\n]*NextPart|$)/i.exec(latin);
+  if (!part) return decodeHtml(bytes);
+  const headers = part[1]!;
+  let body = part[2]!;
+  if (/quoted-printable/i.test(headers))
+    body = body.replace(/=\r?\n/g, "").replace(/=([0-9A-F]{2})/gi, (_, h: string) => String.fromCharCode(Number.parseInt(h, 16)));
+  const charset = /charset\s*=\s*"?([\w-]+)/i.exec(headers)?.[1] ?? "windows-1252";
+  const raw = Uint8Array.from(body, (c) => c.charCodeAt(0) & 0xff);
+  try {
+    return new TextDecoder(charset as Encoding).decode(raw);
+  } catch {
+    return new TextDecoder("windows-1252").decode(raw);
+  }
+}
+
+/** A saved page as one table: a row per innermost <tr>, each cell tokenized. */
+export function htmlTables(bytes: Uint8Array): Table[] {
+  const $ = cheerio.load(savedPageHtml(bytes));
+  const rows: Table = [];
+  $("tr").each((_, tr) => {
+    if ($(tr).find("tr").length) return;
+    const row = $(tr)
+      .children("td,th")
+      .toArray()
+      .flatMap((td) => tokenize($(td).text().replace(/\s+/g, " ").trim()));
+    if (row.length) rows.push(row);
+  });
+  return [rows];
 }

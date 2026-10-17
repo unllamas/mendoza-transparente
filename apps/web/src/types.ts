@@ -380,7 +380,10 @@ export interface MunicipalBudgetYear {
   year: number;
   /** Last quarter published for the year; the figures accumulate from January to its end. */
   quarter: number;
+  /** The figures do not cover the whole year: the year is still going, or its last report is missing. */
   partial: boolean;
+  /** The year ended but its December report was not published or could not be read (Tupungato 2024). */
+  missingClose: boolean;
   cutoff: string;
   /** Approved in the original budget (crédito votado). */
   voted: number;
