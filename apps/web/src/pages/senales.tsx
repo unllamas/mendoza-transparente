@@ -2,7 +2,7 @@ import { Alert } from "@mt/ui/components/alert";
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { Dropdown, DropdownItem, DropdownPopover, DropdownTrigger } from "@mt/ui/components/base/dropdown/dropdown";
 import { cardVariants, listRowVariants, listVariants } from "@mt/ui/components/card";
-import { PageHeader } from "@mt/ui/components/section";
+import { PageHeader, Section } from "@mt/ui/components/section";
 import { cx } from "@mt/ui/lib/cx";
 import { RiArrowRightSLine, RiArrowUpDownLine, RiBuilding2Line, RiCheckLine, RiFileTextLine, RiScalesLine } from "@remixicon/react";
 import { getRouteApi, Link, useRouter, useRouterState } from "@tanstack/react-router";
@@ -16,13 +16,15 @@ import { FuentesOficiales } from "@/components/official-sources.tsx";
 import { ShareButton } from "@/components/share-button.tsx";
 import { TrackedSheet } from "@/components/tracked-sheet.tsx";
 import { formatDate } from "@/lib.ts";
-import type { Caso, Senal } from "@/types.ts";
+import type { Caso, Senal, SignalGroup } from "@/types.ts";
 import { useUrlOption } from "@/url-state.ts";
 
 const route = getRouteApi("/senales");
 
 export function SenalesPage() {
   const { senales } = route.useLoaderData();
+  // Missing data goes first and alone: it limits every other signal on the page.
+  const lead = senales.find((s) => s.group === "datos");
   const router = useRouter();
   // The open signal lives in the URL (?senal=<id>): shareable, and the back button closes it.
   const search = useRouterState({ select: (st) => st.location.search as Record<string, unknown> });
@@ -51,30 +53,68 @@ export function SenalesPage() {
         al Estado, con los casos concretos para revisar.
       </PageHeader>
 
-      <ul className="grid gap-3 md:grid-cols-2">
-        {senales.map((s) => (
-          <li key={s.id}>
-            <button
-              type="button"
-              onClick={() => setAbierta(s)}
-              className={cx(cardVariants({ size: "lg" }), "flex h-full w-full flex-col gap-3")}
-            >
-              <span className="text-caption-1-medium tracking-wide text-text-tertiary uppercase">{s.tema}</span>
-              <span className="text-display-3-semibold tracking-tight whitespace-nowrap tabular-nums">{s.cifra}</span>
-              <span className="text-body-regular text-pretty">{s.titulo}</span>
-              <span className="text-body-regular text-text-tertiary text-pretty">{s.matiz}</span>
-              <span className="mt-auto inline-flex items-center gap-1 pt-1 text-body-medium text-text-link">
-                {s.casos.length ? `Ver los ${s.casos.length} casos` : "Ver más"} <RiArrowRightSLine className="size-5" aria-hidden />
-              </span>
-            </button>
-          </li>
-        ))}
-      </ul>
+      {lead && (
+        <Alert title={`${lead.cifra} ${lead.titulo}`}>
+          <div className="flex flex-col gap-3">
+            <p>{lead.matiz}</p>
+            <div className="flex flex-wrap gap-x-6 gap-y-1">
+              {lead.pedido && (
+                <Link
+                  to="/no-publicado"
+                  search={{ dato: lead.pedido } as never}
+                  className="inline-flex min-h-11 items-center gap-1 text-body-medium text-text-link"
+                >
+                  Pedir los datos actualizados <RiArrowRightSLine className="size-5" aria-hidden />
+                </Link>
+              )}
+              <button
+                type="button"
+                onClick={() => setAbierta(lead)}
+                className="inline-flex min-h-11 items-center gap-1 text-body-medium text-text-link"
+              >
+                Por qué importa <RiArrowRightSLine className="size-5" aria-hidden />
+              </button>
+            </div>
+          </div>
+        </Alert>
+      )}
+
+      {GROUPS.map((g) => {
+        const items = senales.filter((s) => s.group === g);
+        if (!items.length) return null;
+        return (
+          <Section key={g} id={g} title={items[0]!.tema}>
+            <ul className="grid gap-3 md:grid-cols-2">
+              {items.map((s) => (
+                <li key={s.id} className="md:last:odd:col-span-2">
+                  <SignalCard signal={s} onOpen={setAbierta} />
+                </li>
+              ))}
+            </ul>
+          </Section>
+        );
+      })}
 
       <FuentesOficiales ids={["compras-ocds", "proveedores"]} />
 
       {abierta && <SenalSheet senal={abierta} onClose={() => setAbierta(null)} />}
     </div>
+  );
+}
+
+/** Blocks of the page, in reading order; "datos" goes above them, without a title. */
+const GROUPS: SignalGroup[] = ["competencia", "precios", "proveedores"];
+
+function SignalCard({ signal: s, onOpen }: { signal: Senal; onOpen: (s: Senal) => void }) {
+  return (
+    <button type="button" onClick={() => onOpen(s)} className={cx(cardVariants({ size: "lg" }), "flex h-full w-full flex-col gap-3")}>
+      <span className="text-display-3-semibold tracking-tight whitespace-nowrap tabular-nums">{s.cifra}</span>
+      <span className="text-body-regular text-pretty">{s.titulo}</span>
+      <span className="text-body-regular text-text-tertiary text-pretty">{s.matiz}</span>
+      <span className="mt-auto inline-flex items-center gap-1 pt-1 text-body-medium text-text-link">
+        {s.casos.length ? `Ver los ${s.casos.length} casos` : "Por qué importa"} <RiArrowRightSLine className="size-5" aria-hidden />
+      </span>
+    </button>
   );
 }
 
@@ -145,7 +185,7 @@ function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }
   const casos = sortCases(s.casos, order);
 
   return (
-    <TrackedSheet title={s.tema} onClose={onClose}>
+    <TrackedSheet title={s.tema} trackId={`signal.${s.id}`} onClose={onClose}>
       {
         <>
           <div className="flex flex-col gap-2">
