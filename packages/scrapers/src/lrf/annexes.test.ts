@@ -99,7 +99,13 @@ describe("lrf: interpretation of Annexes 3 and 5", () => {
   });
 
   test("a row with the collected amount in the wrong column is rejected (San Martín 2025-T1)", () => {
-    const parsed = parseRevenueAnnex([table("1110605010 Coparticipación 0 1603 -1603 0 0 1603 1603", "total 0 1603 -1603 0 0 1603 1603")]);
+    const parsed = parseRevenueAnnex([
+      table(
+        "1110101000 Ingresos brutos 500 0 20 480 200 280 100",
+        "1110605010 Coparticipación 0 1603 -1603 0 0 1603 1603",
+        "total 500 1603 -1583 480 200 1883 1703",
+      ),
+    ]);
     expect("error" in parsed && parsed.error).toContain("1110605010");
   });
 
@@ -268,5 +274,39 @@ describe("lrf: hierarchical codes (Capital, Guaymallén)", () => {
   test("a scanned document says so (Capital 2025-T4)", () => {
     const parsed = parseSpendingAnnex([[]]);
     expect("error" in parsed && parsed.error).toContain("escaneada");
+  });
+});
+
+describe("lrf: grouped codes (Godoy Cruz)", () => {
+  test("code before or after the name, negative decreases, and the debt split by the fourth group", () => {
+    const parsed = parseSpendingAnnex([
+      table(
+        "4.1.01.00.0000 PERSONAL 100,00 10,00 -20,00 90,00 80,00 70,00 60,00 50,00 10,00 10,00 10,00",
+        "Interes y gast 4.2.01.00.00.0000 10,00 0,00 -5,00 5,00 5,00 5,00 5,00 5,00 0,00 0,00 0,00",
+        "6.2.01.02.0000 DEUDA FLOTANTE 10,00 0,00 0,00 10,00 10,00 10,00 10,00 10,00 0,00 0,00 0,00",
+        "5.2.02.00.0000 TRABAJOS PÚBLICOS 20,00 0,00 0,00 20,00 10,00 10,00 10,00 10,00 0,00 10,00 0,00",
+        "TOTALES 140,00 10,00 -25,00 125,00 105,00 95,00 85,00 75,00 10,00 20,00 10,00",
+      ),
+    ]);
+    if ("error" in parsed) throw new Error(parsed.error);
+    expect(parsed.lines.map((l) => [l.objectCode, l.decreases])).toEqual([
+      ["4.1.1", 20],
+      ["4.2.1", 5],
+      ["7.4.1", 0],
+      ["5.1.2", 0],
+    ]);
+    expect(parsed.notes.join()).toContain("disminuciones en negativo");
+  });
+
+  test("revenue with a double dot in the code", () => {
+    const parsed = parseRevenueAnnex([
+      table(
+        "1.1..00.00.0000 DE ORIGEN PROVINCIAL 60,00 0,00 0,00 60,00 30,00 30,00 10,00",
+        "7.1.00.00.0000 USO DEL CREDITO 40,00 0,00 0,00 40,00 10,00 30,00 5,00",
+        "TOTALES 100,00 0,00 0,00 100,00 40,00 60,00 15,00",
+      ),
+    ]);
+    if ("error" in parsed) throw new Error(parsed.error);
+    expect(parsed.lines.map((l) => l.code)).toEqual(["1.1", "7.1"]);
   });
 });
