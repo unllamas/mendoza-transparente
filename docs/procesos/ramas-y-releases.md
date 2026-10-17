@@ -182,7 +182,7 @@ gh pr create --base main
 `main` recibe commits que no pasan por `dev`: los hotfixes y las actualizaciones de datos (las automáticas de GitHub Actions y las manuales con `bun run actualizar`, que se publican directo en `main` para no esperar una publicación). Para que `dev` no quede atrás, el workflow **«Back merge a dev»** corre en cada push a `main`:
 
 - Si `dev` ya tiene todo, no hace nada.
-- Si puede, mergea `main` en `dev` y pushea (después de una publicación es un fast-forward).
+- Si puede, mergea `main` en `dev` y pushea (después de una publicación es un fast-forward). El commit lleva `[CF-Pages-Skip]`, así Cloudflare no gasta un build en la vista previa de `dev` (ver [Web: ahorrar recursos](web.md#publicar)). Si es un fast-forward no hay commit nuevo: la vista previa se arma igual.
 - Si hay un conflicto, o la deploy key falla, abre un PR `main → dev` con la etiqueta `back-merge`. Se resuelve a mano y **se mergea con merge commit**, nunca con squash.
 
 Si alguna vez hace falta a mano:

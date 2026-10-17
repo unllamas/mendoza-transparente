@@ -35,12 +35,15 @@ export type Table = Tok[][];
 const NUM_ES = /^(?:-|-?\d[\d.]*(?:,\d+)?)$/;
 const NUM_EN = /^-?(?:\d{1,3}(?:,\d{3})+(?:\.\d{1,2})?|\d+\.\d{2})$/;
 const NUM_PARENS = /^\((\d[\d.]*,\d+)\)$/;
+// Commas for both the thousands and the decimals ("35,522,500,000,00", the totals of Luján de Cuyo).
+const NUM_COMMAS = /^-?\d{1,3}(?:,\d{3})+,\d{2}$/;
 
-/** "1.234,56" → 1234.56; "1,234.56" → 1234.56; "(1.234,56)" → -1234.56; "5626739118" → 5626739118; "-" → 0. */
+/** "1.234,56" → 1234.56; "1,234.56" → 1234.56; "1,234,56" → 1234.56; "(1.234,56)" → -1234.56; "5626739118" → 5626739118; "-" → 0. */
 export function parseNum(s: string): number {
   if (s === "-") return 0;
   const parens = NUM_PARENS.exec(s);
   if (parens) return -parseNum(parens[1]!);
+  if (NUM_COMMAS.test(s)) return Number(s.slice(0, -3).replace(/,/g, "") + "." + s.slice(-2));
   if (NUM_EN.test(s)) return Number(s.replace(/,/g, ""));
   return Number(s.replace(/\./g, "").replace(",", "."));
 }
@@ -50,7 +53,7 @@ export function tokenize(text: string): Tok[] {
     .replace(/\$/g, " ")
     .split(/\s+/)
     .filter(Boolean)
-    .map((t) => ({ text: t, num: NUM_EN.test(t) || NUM_ES.test(t) || NUM_PARENS.test(t) ? parseNum(t) : null }));
+    .map((t) => ({ text: t, num: NUM_EN.test(t) || NUM_ES.test(t) || NUM_PARENS.test(t) || NUM_COMMAS.test(t) ? parseNum(t) : null }));
 }
 
 /** The texts of a PDF page with their position (a text with several tokens is spread along x). */
@@ -97,12 +100,88 @@ export function rowsOf(rawItems: Item[], axis: "h" | "v"): Table {
   return rows.map((r) => r.sort((a, b) => along(a) - along(b)).flatMap((i) => tokenize(i.s)));
 }
 
+/** An amount whose last characters fell on the next line of its cell ("1.599.740.000,0" + "0", "1.717.250.00" + "0,00"). */
+const OPEN_AMOUNT = /^-?\d[\d.]*(?:,\d?)?$/;
+const AMOUNT_TAIL = /^[\d,]{1,4}$/;
+const isAmount = (s: string) => /^-?\d[\d.]*,\d{2}$/.test(s);
+const isCode = (s: string) => /^\d{5,}$/.test(s);
+
+/**
+ * Rows of a sideways page whose cells wrap their text over several lines (Junín). Each cell is centered on its row, so
+ * the label and the figures of a row spread over up to three lines, and an amount can lose its last characters to the
+ * next line of its cell ("27.063.535.000," and below it "00"). First every tail is joined to the open amount right above
+ * it in its column; then the lines are grouped into rows: a row starts at the line with its code ("4310000 - …"), the
+ * lines with figures only go to the nearest code line, and the label lines with no code go with the row above. Lines far
+ * from any code (the totals row, the headers) are rows of their own.
+ */
+export function cellRows(items: Item[]): Table {
+  const heights = items
+    .map((i) => i.h ?? 0)
+    .filter((h) => h > 0)
+    .sort((a, b) => a - b);
+  const height = heights[Math.floor(heights.length / 2)] ?? 8;
+  const texts = items.map((i) => ({ ...i }));
+  const joined = new Set<(typeof texts)[number]>();
+  const heads = texts.filter((a) => OPEN_AMOUNT.test(a.s) && /[.,]/.test(a.s) && !isAmount(a.s)).sort((a, b) => a.x - b.x || a.y - b.y);
+  for (const head of heads) {
+    const tail = texts
+      .filter((t) => !joined.has(t) && t !== head && AMOUNT_TAIL.test(t.s) && isAmount(head.s + t.s))
+      .filter((t) => t.x - head.x > 0.25 * height && t.x - head.x <= 1.6 * height && t.y >= head.y && t.y - head.y < 90)
+      .sort((a, b) => a.x - b.x || a.y - b.y)[0];
+    if (!tail) continue;
+    head.s += tail.s;
+    joined.add(tail);
+  }
+  const lines: (typeof texts)[] = [];
+  for (const it of texts.filter((i) => !joined.has(i)).sort((a, b) => a.x - b.x)) {
+    const last = lines.at(-1);
+    if (last && it.x - last.at(-1)!.x <= 0.25 * height) last.push(it);
+    else lines.push([it]);
+  }
+  const lineOf = new Map(lines.flatMap((l, n) => l.map((i) => [i, n] as const)));
+  const codeLines = lines.filter((l) => l.some((i) => isCode(i.s)));
+  const rows = new Map<(typeof texts)[number][], (typeof texts)[number][]>(codeLines.map((l) => [l, [...l]]));
+  const own: (typeof texts)[] = [];
+  let current: (typeof texts)[number][] | null = null;
+  for (const line of lines) {
+    const x = line[0]!.x;
+    if (rows.has(line)) {
+      current = rows.get(line)!;
+      own.push(current);
+      continue;
+    }
+    const figuresOnly = line.every((i) => isAmount(i.s));
+    const nearest = figuresOnly
+      ? codeLines.filter((l) => Math.abs(l[0]!.x - x) <= 1.5 * height).sort((a, b) => Math.abs(a[0]!.x - x) - Math.abs(b[0]!.x - x))[0]
+      : null;
+    const above = current && x - current.reduce((m, i) => Math.max(m, i.x), 0) <= 1.5 * height ? current : null;
+    if (nearest) rows.get(nearest)!.push(...line);
+    else if (above) above.push(...line);
+    else {
+      current = null;
+      own.push([...line]);
+    }
+  }
+  // The label first (in reading order), then the figures in the order of the columns.
+  return own
+    .sort((a, b) => Math.min(...a.map((i) => i.x)) - Math.min(...b.map((i) => i.x)))
+    .map((row) => {
+      const label = row.filter((i) => !isAmount(i.s)).sort((a, b) => lineOf.get(a)! - lineOf.get(b)! || a.y - b.y);
+      const amounts = row.filter((i) => isAmount(i.s)).sort((a, b) => a.y - b.y);
+      return [...label, ...amounts].flatMap((i) => tokenize(i.s));
+    });
+}
+
+/** How the texts of a PDF page become rows: horizontal, sideways, or sideways with cells that wrap (`cellRows`). */
+export type Layout = "h" | "v" | "cells";
+
 /**
  * Every page of a PDF as a table of rows. Horizontal by default; "v" reads pages printed sideways (General Alvear's
- * Annex 5, Rivadavia), where the rows of the table run along the page's vertical axis.
+ * Annex 5, Rivadavia), where the rows of the table run along the page's vertical axis; "cells", sideways pages whose
+ * cells wrap (Junín).
  */
-export async function pdfTables(bytes: Uint8Array, axis: "h" | "v" = "h"): Promise<Table[]> {
-  return (await allPageItems(bytes)).map((items) => rowsOf(items, axis));
+export async function pdfTables(bytes: Uint8Array, layout: Layout = "h"): Promise<Table[]> {
+  return (await allPageItems(bytes)).map((items) => (layout === "cells" ? cellRows(items) : rowsOf(items, layout)));
 }
 
 /**

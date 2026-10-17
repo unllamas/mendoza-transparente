@@ -12,7 +12,7 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { headerAnnex, headerPeriod, parseDebtAnnex, parseRevenueAnnex, parseSpendingAnnex } from "./annexes.ts";
-import type { Table } from "./read.ts";
+import type { Layout, Table } from "./read.ts";
 import {
   ANNEXES,
   type Annex,
@@ -70,14 +70,15 @@ for (const r of releases) {
       cells.push(`anexo ${annexName(annex)}: no está`);
       continue;
     }
-    const read = (axis: "h" | "v") => documentTables(d.bytes, d.ext, axis);
+    const read = (layout: Layout) => documentTables(d.bytes, d.ext, layout);
     const tables = await read("h");
     const period = headerPeriod(tables);
     const printed = headerAnnex(tables);
     let parsed = PARSERS[annex]!(tables);
-    if ("error" in parsed && (d.ext === "pdf" || d.ext === "json")) {
-      const retry = PARSERS[annex]!(await read("v"));
-      if (!("error" in retry)) parsed = retry;
+    for (const layout of ["v", "cells"] as const) {
+      if (!("error" in parsed) || (d.ext !== "pdf" && d.ext !== "json")) break;
+      const retry = PARSERS[annex]!(await read(layout));
+      if (!("error" in retry) || / no da | no cumple /.test(retry.error)) parsed = retry;
     }
     const checks = [
       period && (period.year !== r.year || period.quarter !== r.quarter) ? `dice ${period.year}-T${period.quarter}` : "",

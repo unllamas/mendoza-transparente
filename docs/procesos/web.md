@@ -208,7 +208,13 @@ Errores de consola del tipo «Could not establish connection. Receiving end does
 - **Tráfico sin costo extra:** los archivos estáticos se sirven sin límite de ancho de banda en el plan gratis. En Vercel, el plan gratis corta a los 100 GB por mes y el Pro cobra el excedente sobre 1 TB. Un pico de tráfico, o un ataque, no genera una factura en Cloudflare.
 - **Protección contra DDoS:** incluida y sin límite en todos los planes. Además están el modo "Under Attack", las reglas de WAF y los límites de pedidos por IP, útiles para un sitio político que pueden intentar tumbar.
 - **Backend gratis:** Turnstile (anti-spam), Pages Functions y D1 (base para participación) entran en el plan gratis: 100.000 pedidos por día a funciones y 100.000 filas escritas por día.
-- **Límites a vigilar:** 20.000 archivos por sitio en el plan gratis (hoy usamos unos 3.600) y 25 MiB por archivo. Si se supera, el plan pago (USD 5 por mes) sube a 100.000 archivos.
+- **Límites a vigilar:** 20.000 archivos por sitio en el plan gratis (hoy usamos unos 3.600) y 25 MiB por archivo. Si se supera, el plan pago (USD 5 por mes) sube a 100.000 archivos. También hay 500 builds por mes, que se comparten entre producción y vistas previas.
+
+**Ahorrar recursos.** El proyecto no tiene financiación, así que cuidamos lo que tiene cupo: builds, pedidos a funciones y lecturas de D1. Servir archivos estáticos no gasta nada.
+
+- **Lo estático no se mueve a Workers.** Un HTML prerenderizado se sirve gratis y sin límite; la misma página armada en el momento por un Worker gastaría un pedido del cupo diario.
+- **Commits que no necesitan build:** llevan `[CF-Pages-Skip]` en el mensaje y Cloudflare no los construye. Lo usan el back merge a `dev` y el commit de copias en archive.org. Los links a esas copias aparecen con el build siguiente. `scripts/release-notes.ts` saca la marca de las notas del release.
+- **Cómo sigue:** ver el plan [Consumo de Cloudflare](../planes/consumo-de-cloudflare.md).
 
 **Configuración del proyecto:**
 - Directorio `apps/web`, comando de build `bun run build`, salida `dist`.

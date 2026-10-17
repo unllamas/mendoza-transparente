@@ -48,8 +48,11 @@ import { find as capital } from "../lrf/finders/capital.ts";
 import { find as generalAlvear } from "../lrf/finders/general-alvear.ts";
 import { find as godoyCruz } from "../lrf/finders/godoy-cruz.ts";
 import { find as guaymallen } from "../lrf/finders/guaymallen.ts";
+import { find as junin } from "../lrf/finders/junin.ts";
 import { find as laPaz } from "../lrf/finders/la-paz.ts";
+import { find as lasHeras } from "../lrf/finders/las-heras.ts";
 import { find as lavalle } from "../lrf/finders/lavalle.ts";
+import { find as lujanDeCuyo } from "../lrf/finders/lujan-de-cuyo.ts";
 import { find as maipu } from "../lrf/finders/maipu.ts";
 import { find as malargue } from "../lrf/finders/malargue.ts";
 import { find as rivadavia } from "../lrf/finders/rivadavia.ts";
@@ -59,7 +62,7 @@ import { find as sanRafael } from "../lrf/finders/san-rafael.ts";
 import { find as santaRosa } from "../lrf/finders/santa-rosa.ts";
 import { find as tunuyan } from "../lrf/finders/tunuyan.ts";
 import { find as tupungato } from "../lrf/finders/tupungato.ts";
-import { sheetTables, type Table } from "../lrf/read.ts";
+import { type Layout, sheetTables, type Table } from "../lrf/read.ts";
 import {
   ANNEXES,
   type Annex,
@@ -82,8 +85,11 @@ const FINDERS: Record<string, Finder> = {
   "General Alvear": generalAlvear,
   "Godoy Cruz": godoyCruz,
   Guaymallén: guaymallen,
+  Junín: junin,
   "La Paz": laPaz,
+  "Las Heras": lasHeras,
   Lavalle: lavalle,
+  "Luján de Cuyo": lujanDeCuyo,
   Maipú: maipu,
   Malargüe: malargue,
   Rivadavia: rivadavia,
@@ -155,7 +161,7 @@ const sheetMatches = (sheet: string, annex: Annex) =>
 // ---------------------------------------------------------------- 2. read
 
 /** The archived annex as tables, whatever its format; null if it was not published or archived. */
-async function annexTables(r: Release, annex: Annex, axis: "h" | "v" = "h"): Promise<Table[] | null> {
+async function annexTables(r: Release, annex: Annex, layout: Layout = "h"): Promise<Table[] | null> {
   if (r.workbook) {
     const path = await latestRaw(SOURCE, workbookName(r));
     if (!path || !existsSync(path)) return null;
@@ -164,7 +170,7 @@ async function annexTables(r: Release, annex: Annex, axis: "h" | "v" = "h"): Pro
   }
   const file = await archivedAnnex(r, annex);
   if (!file) return null;
-  return documentTables(new Uint8Array(await readRaw(file.path)), file.ext, axis);
+  return documentTables(new Uint8Array(await readRaw(file.path)), file.ext, layout);
 }
 
 /** Source URL of an annex, for the tables and documentos.csv. */
@@ -359,11 +365,13 @@ export async function run(_args: string[]): Promise<void> {
           continue;
         }
         let parsed = reader.parse(tables);
-        // A PDF printed sideways only reads along the other axis.
-        if ("error" in parsed && !r.workbook) {
-          const sideways = await annexTables(r, annex, "v");
+        // A PDF printed sideways only reads along the other axis, and with cells that wrap, by cells (Junín).
+        for (const layout of ["v", "cells"] as const) {
+          if (!("error" in parsed) || r.workbook) break;
+          const sideways = await annexTables(r, annex, layout);
           const retry = sideways ? reader.parse(sideways) : parsed;
-          if (!("error" in retry)) parsed = retry;
+          // A failed check of the document's own arithmetic says more than a layout that was not recognized.
+          if (!("error" in retry) || / no da | no cumple /.test(retry.error)) parsed = retry;
         }
         if ("error" in parsed) {
           record(r, annex, "error", parsed.error);

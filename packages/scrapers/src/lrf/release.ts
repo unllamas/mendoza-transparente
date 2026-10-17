@@ -5,12 +5,12 @@
  */
 
 import { createHash } from "node:crypto";
-import { archive, get, type Municipio } from "@mt/core";
+import { archive, get, type Municipio, readManifest } from "@mt/core";
 import * as cheerio from "cheerio";
 import { unzipSync } from "fflate";
 import { getDocumentProxy } from "unpdf";
 import { headerAnnex, type Period } from "./annexes.ts";
-import { htmlTables, type Item, pageItems, pdfTables, rowsOf, sheetTables, type Table } from "./read.ts";
+import { cellRows, htmlTables, type Item, type Layout, pageItems, pdfTables, rowsOf, sheetTables, type Table } from "./read.ts";
 
 export const LRF_SOURCE = "municipios-lrf";
 /** The site shows the last four years. */
@@ -32,6 +32,8 @@ export interface Release extends Period {
   zip?: string;
   workbook?: string;
   report?: string;
+  /** Headers the downloads need, such as the session cookie of an application whose links expire (Las Heras). */
+  headers?: Record<string, string>;
 }
 
 /** A municipality's finder: every quarter it publishes (the source drops those before FIRST_YEAR). */
@@ -98,6 +100,25 @@ export function annexLinks(found: { text: string; href: string }[]): Partial<Rec
   return files;
 }
 
+/**
+ * Releases already archived for a municipality, rebuilt from the manifest (`<slug>-<YEAR>-T<Q>-anexo<N>.<ext>` and the
+ * address each file came from). For sites that replace the previous quarter (Luján de Cuyo): a quarter archived once
+ * stays in the tables even when it is no longer on the site.
+ */
+export async function archivedReleases(municipality: Municipio, slug: string): Promise<Release[]> {
+  const byPeriod = new Map<string, Release>();
+  for (const entry of await readManifest(LRF_SOURCE)) {
+    const m = new RegExp(`^${slug}-(\\d{4})-T([1-4])-anexo(\\w+)\\.`).exec(entry.filename);
+    const annex = m?.[3] as Annex | undefined;
+    if (!m || !annex || !ANNEXES.includes(annex)) continue;
+    const key = `${m[1]}-${m[2]}`;
+    const release = byPeriod.get(key) ?? { municipality, year: +m[1]!, quarter: +m[2]!, files: {} };
+    release.files[annex] = entry.url;
+    byPeriod.set(key, release);
+  }
+  return [...byPeriod.values()];
+}
+
 // ---------------------------------------------------------------- download
 
 /** "json": the pages of one annex taken out of a whole report, as positioned texts (see `reportPages`). */
@@ -133,12 +154,14 @@ export function documentExt(bytes: Uint8Array): DocumentExt | null {
   return null;
 }
 
-/** An archived annex as tables, whatever its format. PDFs and report pages along the given axis. */
-export async function documentTables(bytes: Uint8Array, ext: DocumentExt, axis: "h" | "v" = "h"): Promise<Table[]> {
-  if (ext === "pdf") return pdfTables(bytes, axis);
+/** An archived annex as tables, whatever its format. PDFs and report pages with the given layout. */
+export async function documentTables(bytes: Uint8Array, ext: DocumentExt, layout: Layout = "h"): Promise<Table[]> {
+  if (ext === "pdf") return pdfTables(bytes, layout);
   if (ext === "html" || ext === "mht") return htmlTables(bytes);
   if (ext === "json")
-    return (JSON.parse(new TextDecoder().decode(bytes)) as { pages: { items: Item[] }[] }).pages.map((p) => rowsOf(p.items, axis));
+    return (JSON.parse(new TextDecoder().decode(bytes)) as { pages: { items: Item[] }[] }).pages.map((p) =>
+      layout === "cells" ? cellRows(p.items) : rowsOf(p.items, layout),
+    );
   return sheetTables(bytes, { blankAsZero: true }).map((s) => s.rows);
 }
 
@@ -180,13 +203,13 @@ export async function downloadRelease(r: Release, skip: Set<Annex>): Promise<{ d
   const problems: string[] = [];
   if (r.report) {
     if (ANNEXES.every((a) => skip.has(a))) return { docs, problems };
-    const bytes = new Uint8Array(await (await get(r.report)).arrayBuffer());
+    const bytes = new Uint8Array(await (await get(r.report, { headers: r.headers })).arrayBuffer());
     await sleep(1000);
     return { docs: await reportPages(bytes, r.report, skip), problems };
   }
   if (r.zip) {
     if (ANNEXES.every((a) => skip.has(a))) return { docs, problems };
-    const bytes = new Uint8Array(await (await get(r.zip)).arrayBuffer());
+    const bytes = new Uint8Array(await (await get(r.zip, { headers: r.headers })).arrayBuffer());
     await sleep(1000);
     let entries: Record<string, Uint8Array>;
     try {
@@ -207,7 +230,7 @@ export async function downloadRelease(r: Release, skip: Set<Annex>): Promise<{ d
     const url = r.files[annex];
     if (!url || skip.has(annex)) continue;
     try {
-      const bytes = new Uint8Array(await (await get(driveDownload(url))).arrayBuffer());
+      const bytes = new Uint8Array(await (await get(driveDownload(url), { headers: r.headers })).arrayBuffer());
       const ext = documentExt(bytes);
       if (ext) docs.push({ annex, bytes, ext, url });
       else problems.push(`anexo ${annexName(annex)}: el archivo no es PDF ni planilla`);
