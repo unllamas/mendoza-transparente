@@ -38,10 +38,12 @@ const titleCase = (s: string) =>
  * Short names for revenue groups whose official name is too long for a phone and hides what matters at the end
  * (Infogov: "Recursos corrientes de origen provincial").
  */
+/** "Recursos corrientes de", "Rec. Ctes. de" or nothing, then "origen" or "jurisdicción" (Infogov, Capital, Guaymallén). */
+const ORIGIN = String.raw`^(?:recursos corrientes |rec\. ctes\. )?de (?:origen|jurisdicci[oó]n|jurisd\.)`;
 const REVENUE_NAMES: [RegExp, string][] = [
-  [/^(recursos corrientes )?de (origen|jurisdicci[oó]n) municipal$/i, "Propios del municipio"],
-  [/^(recursos corrientes )?de (origen|jurisdicci[oó]n) nacional$/i, "De la Nación"],
-  [/^(recursos corrientes )?de (origen|jurisdicci[oó]n) provincial$/i, "De la Provincia"],
+  [new RegExp(`${ORIGIN} municipal$`, "i"), "Propios del municipio"],
+  [new RegExp(`${ORIGIN} nacional$`, "i"), "De la Nación"],
+  [new RegExp(`${ORIGIN} provincial$`, "i"), "De la Provincia"],
 ];
 /** A debt without the account code the accounting system puts first ("2113010000 - Ret. Sobre…" or "2.1.4.03 Banco…" → the name alone). */
 const debtName = (label: string) => {

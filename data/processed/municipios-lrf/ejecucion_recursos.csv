@@ -1,4 +1,147 @@
 municipio,anio,trimestre,fecha_corte,recurso_codigo,recurso,tipo,calculo_original,aumentos,disminuciones,calculo_vigente,ingresado,ingresado_trimestre,fuente_url
+Capital,2023,1,2023-03-31,1.1,De Jurisdiccion Municipal,corriente,6220781300,0,0,6220781300,1585799354.53,1585799354.53,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-Trimestre-2023.zip
+Capital,2023,1,2023-03-31,1.2,De Origen Nacional,corriente,3462615300,112409435.58,0,3575024735.58,548071346.27,548071346.27,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-Trimestre-2023.zip
+Capital,2023,1,2023-03-31,1.3,De Origen Provincial,corriente,5116322100,21293356.41,0,5137615456.41,1434580752.99,1434580752.99,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-Trimestre-2023.zip
+Capital,2023,1,2023-03-31,2.1,Venta de Bienes de Uso,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-Trimestre-2023.zip
+Capital,2023,1,2023-03-31,2.2,Reembolso de Obras,capital,561500,0,0,561500,15493.93,15493.93,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-Trimestre-2023.zip
+Capital,2023,1,2023-03-31,2.3,Reembolso de Prestamos,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-Trimestre-2023.zip
+Capital,2023,1,2023-03-31,7.1,Uso del Crédito,financiamiento,201178000,0,0,201178000,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-Trimestre-2023.zip
+Capital,2023,1,2023-03-31,7.2,Aportes no Reintegrables,financiamiento,0,57906532.37,0,57906532.37,57906532.37,57906532.37,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-Trimestre-2023.zip
+Capital,2023,1,2023-03-31,7.3,Aportes Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-Trimestre-2023.zip
+Capital,2023,1,2023-03-31,7.4,Remanente del Ejercicio,financiamiento,106290300,0,0,106290300,534341980.24,534341980.24,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-Trimestre-2023.zip
+Capital,2023,1,2023-03-31,7.5,Adelantos de Terceros,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-Trimestre-2023.zip
+Capital,2023,2,2023-06-30,1.1,De Jurisdiccion Municipal,corriente,6220781300,0,0,6220781300,3091315573.12,1505516218.59,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre-2023.zip
+Capital,2023,2,2023-06-30,1.2,De Origen Nacional,corriente,3462615300,307856625.62,0,3770471925.62,1653228065.72,1105156719.45,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre-2023.zip
+Capital,2023,2,2023-06-30,1.3,De Origen Provincial,corriente,5116322100,47502583.09,0,5163824683.09,3112686693.37,1678105940.38,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre-2023.zip
+Capital,2023,2,2023-06-30,2.1,Venta de Bienes de Uso,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre-2023.zip
+Capital,2023,2,2023-06-30,2.2,Reembolso de Obras,capital,561500,0,0,561500,132965.05,117471.12,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre-2023.zip
+Capital,2023,2,2023-06-30,2.3,Reembolso de Prestamos,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre-2023.zip
+Capital,2023,2,2023-06-30,7.1,Uso del Crédito,financiamiento,201178000,0,0,201178000,31389795.76,31389795.76,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre-2023.zip
+Capital,2023,2,2023-06-30,7.2,Aportes no Reintegrables,financiamiento,0,57906532.37,0,57906532.37,57906532.37,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre-2023.zip
+Capital,2023,2,2023-06-30,7.3,Aportes Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre-2023.zip
+Capital,2023,2,2023-06-30,7.4,Remanente del Ejercicio,financiamiento,106290300,0,0,106290300,534341980.24,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre-2023.zip
+Capital,2023,2,2023-06-30,7.5,Adelantos de Terceros,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre-2023.zip
+Capital,2023,3,2023-09-30,1.1,De Jurisdiccion Municipal,corriente,6220781300,0,0,6220781300,4966444254,1875128680.88,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Tercer-Trimestre-2023.zip
+Capital,2023,3,2023-09-30,1.2,De Origen Nacional,corriente,3462615300,1876354800.9,0,5338970100.9,3064843924.29,1411615858.57,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Tercer-Trimestre-2023.zip
+Capital,2023,3,2023-09-30,1.3,De Origen Provincial,corriente,5116322100,2103000278.88,0,7219322378.88,4888850444.4,1776163751.03,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Tercer-Trimestre-2023.zip
+Capital,2023,3,2023-09-30,2.1,Venta de Bienes de Uso,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Tercer-Trimestre-2023.zip
+Capital,2023,3,2023-09-30,2.2,Reembolso de Obras,capital,561500,0,0,561500,206140.77,73175.72,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Tercer-Trimestre-2023.zip
+Capital,2023,3,2023-09-30,2.3,Reembolso de Prestamos,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Tercer-Trimestre-2023.zip
+Capital,2023,3,2023-09-30,7.1,Uso del Crédito,financiamiento,201178000,0,0,201178000,89309215.66,57919419.9,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Tercer-Trimestre-2023.zip
+Capital,2023,3,2023-09-30,7.2,Aportes no Reintegrables,financiamiento,0,86796532.37,0,86796532.37,86796532.37,28890000,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Tercer-Trimestre-2023.zip
+Capital,2023,3,2023-09-30,7.3,Aportes Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Tercer-Trimestre-2023.zip
+Capital,2023,3,2023-09-30,7.4,Remanente del Ejercicio,financiamiento,106290300,0,0,106290300,534341980.24,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Tercer-Trimestre-2023.zip
+Capital,2023,3,2023-09-30,7.5,Adelantos de Terceros,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Tercer-Trimestre-2023.zip
+Capital,2023,4,2023-12-31,1.1,De Jurisdiccion Municipal,corriente,6220781300,369982739.64,0,6590764039.64,7335292939.85,2368848685.85,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/cuarto-trimestre-2023.zip
+Capital,2023,4,2023-12-31,1.2,De Origen Nacional,corriente,3462615300,1944251745.63,0,5406867045.63,4615237985.31,1550394061.02,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/cuarto-trimestre-2023.zip
+Capital,2023,4,2023-12-31,1.3,De Origen Provincial,corriente,5116322100,2391871736.4,0,7508193836.4,7025816511.88,2136966067.48,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/cuarto-trimestre-2023.zip
+Capital,2023,4,2023-12-31,2.1,Venta de Bienes de Uso,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/cuarto-trimestre-2023.zip
+Capital,2023,4,2023-12-31,2.2,Reembolso de Obras,capital,561500,0,0,561500,222267.5,16126.73,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/cuarto-trimestre-2023.zip
+Capital,2023,4,2023-12-31,2.3,Reembolso de Prestamos,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/cuarto-trimestre-2023.zip
+Capital,2023,4,2023-12-31,7.1,Uso del Crédito,financiamiento,201178000,0,0,201178000,121537246.87,32228031.21,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/cuarto-trimestre-2023.zip
+Capital,2023,4,2023-12-31,7.2,Aportes no Reintegrables,financiamiento,0,164122532.37,0,164122532.37,164122532.37,77326000,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/cuarto-trimestre-2023.zip
+Capital,2023,4,2023-12-31,7.3,Aportes Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/cuarto-trimestre-2023.zip
+Capital,2023,4,2023-12-31,7.4,Remanente del Ejercicio,financiamiento,106290300,0,0,106290300,534341980.24,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/cuarto-trimestre-2023.zip
+Capital,2023,4,2023-12-31,7.5,Adelantos de Terceros,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/cuarto-trimestre-2023.zip
+Capital,2024,1,2024-03-31,1.1,De Jurisdiccion Municipal,corriente,14360333000,0,0,14360333000,3888229854.99,3888229854.99,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-trimestre.zip
+Capital,2024,1,2024-03-31,1.2,De Origen Nacional,corriente,7627594800,0,0,7627594800,1929976776.29,1929976776.29,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-trimestre.zip
+Capital,2024,1,2024-03-31,1.3,De Origen Provincial,corriente,13152164500,0,0,13152164500,3069056298.12,3069056298.12,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-trimestre.zip
+Capital,2024,1,2024-03-31,2.1,Venta de Bienes de Uso,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-trimestre.zip
+Capital,2024,1,2024-03-31,2.2,Reembolso de Obras,capital,701400,0,0,701400,63634.48,63634.48,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-trimestre.zip
+Capital,2024,1,2024-03-31,2.3,Reembolso de Prestamos,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-trimestre.zip
+Capital,2024,1,2024-03-31,7.1,Uso del Crédito,financiamiento,1700000000,0,0,1700000000,50689284.17,50689284.17,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-trimestre.zip
+Capital,2024,1,2024-03-31,7.2,Aportes no Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-trimestre.zip
+Capital,2024,1,2024-03-31,7.3,Aportes Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-trimestre.zip
+Capital,2024,1,2024-03-31,7.4,Remanente del Ejercicio,financiamiento,0,0,0,0,1153436325.28,1153436325.28,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-trimestre.zip
+Capital,2024,1,2024-03-31,7.5,Adelantos de Terceros,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-trimestre.zip
+Capital,2024,2,2024-06-30,1.1,De Jurisdiccion Municipal,corriente,14360333000,0,0,14360333000,7934053365.27,4045823510.28,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre.zip
+Capital,2024,2,2024-06-30,1.2,De Origen Nacional,corriente,7627594800,0,0,7627594800,5374034428.74,3444057652.45,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre.zip
+Capital,2024,2,2024-06-30,1.3,De Origen Provincial,corriente,13152164500,0,0,13152164500,8707846400.79,5638790102.67,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre.zip
+Capital,2024,2,2024-06-30,2.1,Venta de Bienes de Uso,capital,0,0,0,0,80518000,80518000,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre.zip
+Capital,2024,2,2024-06-30,2.2,Reembolso de Obras,capital,701400,0,0,701400,323016.4,259381.92,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre.zip
+Capital,2024,2,2024-06-30,2.3,Reembolso de Prestamos,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre.zip
+Capital,2024,2,2024-06-30,7.1,Uso del Crédito,financiamiento,1700000000,0,0,1700000000,149693924.28,99004640.11,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre.zip
+Capital,2024,2,2024-06-30,7.2,Aportes no Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre.zip
+Capital,2024,2,2024-06-30,7.3,Aportes Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre.zip
+Capital,2024,2,2024-06-30,7.4,Remanente del Ejercicio,financiamiento,0,0,0,0,1153436325.28,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre.zip
+Capital,2024,2,2024-06-30,7.5,Adelantos de Terceros,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre.zip
+Capital,2024,3,2024-09-30,1.1,De Jurisdiccion Municipal,corriente,14360333000,0,0,14360333000,14064050663.65,6129997298.38,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/02/Tercer-Trimestre.zip
+Capital,2024,3,2024-09-30,1.2,De Origen Nacional,corriente,7627594800,2869772600,0,10497367400,9130419706.94,3756385278.2,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/02/Tercer-Trimestre.zip
+Capital,2024,3,2024-09-30,1.3,De Origen Provincial,corriente,13152164500,3028680300,0,16180844800,14201431915.07,5493585514.28,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/02/Tercer-Trimestre.zip
+Capital,2024,3,2024-09-30,2.1,Venta de Bienes de Uso,capital,0,80518000,0,80518000,80518000,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/02/Tercer-Trimestre.zip
+Capital,2024,3,2024-09-30,2.2,Reembolso de Obras,capital,701400,0,0,701400,634013.67,310997.27,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/02/Tercer-Trimestre.zip
+Capital,2024,3,2024-09-30,2.3,Reembolso de Prestamos,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/02/Tercer-Trimestre.zip
+Capital,2024,3,2024-09-30,7.1,Uso del Crédito,financiamiento,1700000000,0,0,1700000000,649693924.28,500000000,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/02/Tercer-Trimestre.zip
+Capital,2024,3,2024-09-30,7.2,Aportes no Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/02/Tercer-Trimestre.zip
+Capital,2024,3,2024-09-30,7.3,Aportes Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/02/Tercer-Trimestre.zip
+Capital,2024,3,2024-09-30,7.4,Remanente del Ejercicio,financiamiento,0,0,0,0,1153436325.28,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/02/Tercer-Trimestre.zip
+Capital,2024,3,2024-09-30,7.5,Adelantos de Terceros,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/02/Tercer-Trimestre.zip
+Capital,2024,4,2024-12-31,1.1,De Jurisdiccion Municipal,corriente,14360333000,3360893500,0,17721226500,20740252912.89,6676202249.24,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/05/Cuarto-Trimestre.zip
+Capital,2024,4,2024-12-31,1.2,De Origen Nacional,corriente,7627594800,2869772600,0,10497367400,13630518876.88,4500099169.94,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/05/Cuarto-Trimestre.zip
+Capital,2024,4,2024-12-31,1.3,De Origen Provincial,corriente,13152164500,5001297100,0,18153461600,20130558889.58,5929126974.51,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/05/Cuarto-Trimestre.zip
+Capital,2024,4,2024-12-31,2.1,Venta de Bienes de Uso,capital,0,80518000,0,80518000,92970888.58,12452888.58,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/05/Cuarto-Trimestre.zip
+Capital,2024,4,2024-12-31,2.2,Reembolso de Obras,capital,701400,0,0,701400,892459.8,258446.13,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/05/Cuarto-Trimestre.zip
+Capital,2024,4,2024-12-31,2.3,Reembolso de Prestamos,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/05/Cuarto-Trimestre.zip
+Capital,2024,4,2024-12-31,7.1,Uso del Crédito,financiamiento,1700000000,0,0,1700000000,654693924.28,5000000,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/05/Cuarto-Trimestre.zip
+Capital,2024,4,2024-12-31,7.2,Aportes no Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/05/Cuarto-Trimestre.zip
+Capital,2024,4,2024-12-31,7.3,Aportes Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/05/Cuarto-Trimestre.zip
+Capital,2024,4,2024-12-31,7.4,Remanente del Ejercicio,financiamiento,0,0,0,0,1153436325.28,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/05/Cuarto-Trimestre.zip
+Capital,2024,4,2024-12-31,7.5,Adelantos de Terceros,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/05/Cuarto-Trimestre.zip
+Capital,2025,1,2025-03-31,1.1,De Jurisdiccion Municipal,corriente,32513352900,0,0,32513352900,9616029669.19,9616029669.19,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/08/primer-trimestre-2025.zip
+Capital,2025,1,2025-03-31,1.2,De Origen Nacional,corriente,16796596183,0,0,16796596183,4114621260.88,4114621260.88,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/08/primer-trimestre-2025.zip
+Capital,2025,1,2025-03-31,1.3,De Origen Provincial,corriente,26751665117,0,0,26751665117,6894069882.2,6894069882.2,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/08/primer-trimestre-2025.zip
+Capital,2025,1,2025-03-31,2.1,Venta de Bienes de Uso,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/08/primer-trimestre-2025.zip
+Capital,2025,1,2025-03-31,2.2,Reembolso de Obras,capital,1291300,0,0,1291300,75758.56,75758.56,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/08/primer-trimestre-2025.zip
+Capital,2025,1,2025-03-31,2.3,Reembolso de Prestamos,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/08/primer-trimestre-2025.zip
+Capital,2025,1,2025-03-31,7.1,Uso del Crédito,financiamiento,700000000,0,0,700000000,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/08/primer-trimestre-2025.zip
+Capital,2025,1,2025-03-31,7.2,Aportes no Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/08/primer-trimestre-2025.zip
+Capital,2025,1,2025-03-31,7.3,Aportes Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/08/primer-trimestre-2025.zip
+Capital,2025,1,2025-03-31,7.4,Remanente del Ejercicio,financiamiento,0,0,0,0,9852328914.08,9852328914.08,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/08/primer-trimestre-2025.zip
+Capital,2025,1,2025-03-31,7.5,Adelantos de Terceros,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/08/primer-trimestre-2025.zip
+Capital,2025,2,2025-06-30,1.1,De Jurisdiccion Municipal,corriente,32513352900,3781094500,0,36294447400,18042400036.92,8426370367.73,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/12/segundo-trimestre.zip
+Capital,2025,2,2025-06-30,1.2,De Origen Nacional,corriente,16796596183,3359319200,0,20155915383,8270981157.75,4156359896.87,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/12/segundo-trimestre.zip
+Capital,2025,2,2025-06-30,1.3,De Origen Provincial,corriente,26751665117,7641714600,0,34393379717,15782297702.77,8888227820.57,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/12/segundo-trimestre.zip
+Capital,2025,2,2025-06-30,2.1,Venta de Bienes de Uso,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/12/segundo-trimestre.zip
+Capital,2025,2,2025-06-30,2.2,Reembolso de Obras,capital,1291300,0,0,1291300,410682.49,334923.93,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/12/segundo-trimestre.zip
+Capital,2025,2,2025-06-30,2.3,Reembolso de Prestamos,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/12/segundo-trimestre.zip
+Capital,2025,2,2025-06-30,7.1,Uso del Crédito,financiamiento,700000000,0,0,700000000,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/12/segundo-trimestre.zip
+Capital,2025,2,2025-06-30,7.2,Aportes no Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/12/segundo-trimestre.zip
+Capital,2025,2,2025-06-30,7.3,Aportes Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/12/segundo-trimestre.zip
+Capital,2025,2,2025-06-30,7.4,Remanente del Ejercicio,financiamiento,0,0,0,0,0,-9852328914.08,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/12/segundo-trimestre.zip
+Capital,2025,2,2025-06-30,7.5,Adelantos de Terceros,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/12/segundo-trimestre.zip
+Capital,2025,3,2025-09-30,1.1,De Jurisdiccion Municipal,corriente,32513352900,3781094500,0,36294447400,28603916258.16,10561516221.24,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/02/tercer-trimestre.zip
+Capital,2025,3,2025-09-30,1.2,De Origen Nacional,corriente,16796596183,3359319200,0,20155915383,12627795799.04,4356814641.29,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/02/tercer-trimestre.zip
+Capital,2025,3,2025-09-30,1.3,De Origen Provincial,corriente,26751665117,7641714600,0,34393379717,23966424381.53,8184126678.76,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/02/tercer-trimestre.zip
+Capital,2025,3,2025-09-30,2.1,Venta de Bienes de Uso,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/02/tercer-trimestre.zip
+Capital,2025,3,2025-09-30,2.2,Reembolso de Obras,capital,1291300,0,0,1291300,419697.77,9015.28,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/02/tercer-trimestre.zip
+Capital,2025,3,2025-09-30,2.3,Reembolso de Prestamos,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/02/tercer-trimestre.zip
+Capital,2025,3,2025-09-30,7.1,Uso del Crédito,financiamiento,700000000,0,0,700000000,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/02/tercer-trimestre.zip
+Capital,2025,3,2025-09-30,7.2,Aportes no Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/02/tercer-trimestre.zip
+Capital,2025,3,2025-09-30,7.3,Aportes Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/02/tercer-trimestre.zip
+Capital,2025,3,2025-09-30,7.4,Remanente del Ejercicio,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/02/tercer-trimestre.zip
+Capital,2025,3,2025-09-30,7.5,Adelantos de Terceros,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/02/tercer-trimestre.zip
+Capital,2026,1,2026-03-31,1.1,De Jurisdiccion Municipal,corriente,50331592300,0,0,50331592300,12766043592.42,12766043592.42,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/primer-trimestre.zip
+Capital,2026,1,2026-03-31,1.2,De Origen Nacional,corriente,22444886200,0,0,22444886200,4021846587.03,4021846587.03,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/primer-trimestre.zip
+Capital,2026,1,2026-03-31,1.3,De Origen Provincial,corriente,36903901200,0,0,36903901200,9296309449.43,9296309449.43,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/primer-trimestre.zip
+Capital,2026,1,2026-03-31,2.1,Venta de Bienes de Uso,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/primer-trimestre.zip
+Capital,2026,1,2026-03-31,2.2,Reembolso de Obras,capital,512000,0,0,512000,2916.19,2916.19,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/primer-trimestre.zip
+Capital,2026,1,2026-03-31,2.3,Reembolso de Prestamos,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/primer-trimestre.zip
+Capital,2026,1,2026-03-31,7.1,Uso del Crédito,financiamiento,2500000000,0,0,2500000000,59625688.34,59625688.34,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/primer-trimestre.zip
+Capital,2026,1,2026-03-31,7.2,Aportes no Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/primer-trimestre.zip
+Capital,2026,1,2026-03-31,7.3,Aportes Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/primer-trimestre.zip
+Capital,2026,1,2026-03-31,7.4,Remanente del Ejercicio,financiamiento,3988000000,0,0,3988000000,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/primer-trimestre.zip
+Capital,2026,1,2026-03-31,7.5,Adelantos de Terceros,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/primer-trimestre.zip
+Capital,2026,2,2026-06-30,1.1,De Jurisdiccion Municipal,corriente,50331592300,0,0,50331592300,23866261964.52,11100218372.1,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/4-ANEXO-3-DE-LA-EJECUCION-DEL-PRESUPUESTO-CON-RELACION-AL-CALCULO-DE-RECURSOS-Y-FINANCIAMIENTO-ACUMULADO.pdf
+Capital,2026,2,2026-06-30,1.2,De Origen Nacional,corriente,22444886200,0,0,22444886200,9721648738.94,5699802151.91,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/4-ANEXO-3-DE-LA-EJECUCION-DEL-PRESUPUESTO-CON-RELACION-AL-CALCULO-DE-RECURSOS-Y-FINANCIAMIENTO-ACUMULADO.pdf
+Capital,2026,2,2026-06-30,1.3,De Origen Provincial,corriente,36903901200,0,0,36903901200,21075025651.42,11778716201.99,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/4-ANEXO-3-DE-LA-EJECUCION-DEL-PRESUPUESTO-CON-RELACION-AL-CALCULO-DE-RECURSOS-Y-FINANCIAMIENTO-ACUMULADO.pdf
+Capital,2026,2,2026-06-30,2.1,Venta de Bienes de Uso,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/4-ANEXO-3-DE-LA-EJECUCION-DEL-PRESUPUESTO-CON-RELACION-AL-CALCULO-DE-RECURSOS-Y-FINANCIAMIENTO-ACUMULADO.pdf
+Capital,2026,2,2026-06-30,2.2,Reembolso de Obras,capital,512000,0,0,512000,561226.5,558310.31,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/4-ANEXO-3-DE-LA-EJECUCION-DEL-PRESUPUESTO-CON-RELACION-AL-CALCULO-DE-RECURSOS-Y-FINANCIAMIENTO-ACUMULADO.pdf
+Capital,2026,2,2026-06-30,2.3,Reembolso de Prestamos,capital,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/4-ANEXO-3-DE-LA-EJECUCION-DEL-PRESUPUESTO-CON-RELACION-AL-CALCULO-DE-RECURSOS-Y-FINANCIAMIENTO-ACUMULADO.pdf
+Capital,2026,2,2026-06-30,7.1,Uso del Crédito,financiamiento,2500000000,0,0,2500000000,1171547252.1,1111921563.76,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/4-ANEXO-3-DE-LA-EJECUCION-DEL-PRESUPUESTO-CON-RELACION-AL-CALCULO-DE-RECURSOS-Y-FINANCIAMIENTO-ACUMULADO.pdf
+Capital,2026,2,2026-06-30,7.2,Aportes no Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/4-ANEXO-3-DE-LA-EJECUCION-DEL-PRESUPUESTO-CON-RELACION-AL-CALCULO-DE-RECURSOS-Y-FINANCIAMIENTO-ACUMULADO.pdf
+Capital,2026,2,2026-06-30,7.3,Aportes Reintegrables,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/4-ANEXO-3-DE-LA-EJECUCION-DEL-PRESUPUESTO-CON-RELACION-AL-CALCULO-DE-RECURSOS-Y-FINANCIAMIENTO-ACUMULADO.pdf
+Capital,2026,2,2026-06-30,7.4,Remanente del Ejercicio,financiamiento,3988000000,0,0,3988000000,3988000000,3988000000,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/4-ANEXO-3-DE-LA-EJECUCION-DEL-PRESUPUESTO-CON-RELACION-AL-CALCULO-DE-RECURSOS-Y-FINANCIAMIENTO-ACUMULADO.pdf
+Capital,2026,2,2026-06-30,7.5,Adelantos de Terceros,financiamiento,0,0,0,0,0,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/4-ANEXO-3-DE-LA-EJECUCION-DEL-PRESUPUESTO-CON-RELACION-AL-CALCULO-DE-RECURSOS-Y-FINANCIAMIENTO-ACUMULADO.pdf
 General Alvear,2023,1,2023-03-31,5110,RECURSOS CORRIENTES DE ORIGEN MUNICIPAL,corriente,450749360,15302650.7,0,466052010.7,179367459.36,179367459.36,https://alvearmendoza.gob.ar/resp-fiscal/archivos-1t-2023/anexo3.pdf
 General Alvear,2023,1,2023-03-31,5120,RECURSOS CORRIENTES DE ORIGEN NACIONAL,corriente,1443204749,0,0,1443204749,522307230.75,522307230.75,https://alvearmendoza.gob.ar/resp-fiscal/archivos-1t-2023/anexo3.pdf
 General Alvear,2023,1,2023-03-31,5130,RECURSOS CORRIENTES DE ORIGEN PROVINCIAL,corriente,3503345014,278415593.94,0,3781760607.94,819953596.29,819953596.29,https://alvearmendoza.gob.ar/resp-fiscal/archivos-1t-2023/anexo3.pdf
@@ -151,6 +294,170 @@ General Alvear,2026,2,2026-06-30,5230,REEMBOLSO DE PRESTAMOS,capital,25000003,0,
 General Alvear,2026,2,2026-06-30,7110,USO DEL CREDITO A LARGO PLAZO,financiamiento,2650000000,0,0,2650000000,144492947.34,73446473.67,https://alvearmendoza.gob.ar/resp-fiscal/archivos2t-2026/anexo3.pdf
 General Alvear,2026,2,2026-06-30,7120,USO DEL CREDITO A CORTO PLAZO,financiamiento,0,534600000,0,534600000,0,0,https://alvearmendoza.gob.ar/resp-fiscal/archivos2t-2026/anexo3.pdf
 General Alvear,2026,2,2026-06-30,7220,APORTES NO REINTEGRABLES DE JURISDICCION PROVINCIA,financiamiento,500000000,1444081795.5,0,1944081795.5,682989845.75,433662511.04,https://alvearmendoza.gob.ar/resp-fiscal/archivos2t-2026/anexo3.pdf
+Guaymallén,2023,1,2023-03-31,5110,Rec. Ctes. de Origen Provincial,corriente,9132102191.24,725391138.21,0,9857493329.45,1623729999.96,1623729999.96,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO3.pdf
+Guaymallén,2023,1,2023-03-31,5120,Rec. Ctes. de Origen Nacional,corriente,9687946777.07,626831112.25,0,10314777889.32,1917725614.19,1917725614.19,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO3.pdf
+Guaymallén,2023,1,2023-03-31,5130,Rec. Ctes. de Jurisd. Municipal,corriente,7120000000,390000000,0,7510000000,2154395849.31,2154395849.31,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO3.pdf
+Guaymallén,2023,1,2023-03-31,5210,Venta de Bienes de Uso,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO3.pdf
+Guaymallén,2023,1,2023-03-31,5220,Reembolso Obras Publicas,capital,0,0,0,0,90918.53,90918.53,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO3.pdf
+Guaymallén,2023,1,2023-03-31,5230,Programa Infraestructura Municipal,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO3.pdf
+Guaymallén,2023,1,2023-03-31,5240,Otros Rec de Capital de Orig Prov,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO3.pdf
+Guaymallén,2023,1,2023-03-31,5250,Otros Rec de Capital de Orig Nac,capital,0,94440414.9,0,94440414.9,13636244.89,13636244.89,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO3.pdf
+Guaymallén,2023,1,2023-03-31,571001,Uso del Crédito a largo plazo,,0,147337816.61,0,147337816.61,67664305.15,67664305.15,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO3.pdf
+Guaymallén,2023,1,2023-03-31,571002,Uso del Crédito a corto plazo,,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO3.pdf
+Guaymallén,2023,1,2023-03-31,572020,Aportes No Reintegrables-urisdicº,,59951031.69,147337816.61,0,207288848.3,25473362.7,25473362.7,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO3.pdf
+Guaymallén,2023,1,2023-03-31,572030,Aportes Reintegrables,,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO3.pdf
+Guaymallén,2023,1,2023-03-31,573000,Remanente Ejercicio Anterior,,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO3.pdf
+Guaymallén,2023,2,2023-06-30,5110,Rec. Ctes. de Origen Provincial,corriente,9132102191.24,725391138.21,0,9857493329.45,3553958603.46,1930228603.5,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-3.pdf
+Guaymallén,2023,2,2023-06-30,5120,Rec. Ctes. de Origen Nacional,corriente,9687946777.07,777547080.72,0,10465493857.79,4527548657.06,2609823042.87,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-3.pdf
+Guaymallén,2023,2,2023-06-30,5130,Rec. Ctes. de Jurisd. Municipal,corriente,7120000000,890000000,0,8010000000,4063701661.68,1909305812.37,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-3.pdf
+Guaymallén,2023,2,2023-06-30,5210,Venta de Bienes de Uso,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-3.pdf
+Guaymallén,2023,2,2023-06-30,5220,Reembolso Obras Publicas,capital,0,0,0,0,187378.54,96460.01,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-3.pdf
+Guaymallén,2023,2,2023-06-30,5230,Programa Infraestructura Municipal,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-3.pdf
+Guaymallén,2023,2,2023-06-30,5240,Otros Rec de Capital de Orig Prov,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-3.pdf
+Guaymallén,2023,2,2023-06-30,5250,Otros Rec de Capital de Orig Nac,capital,0,160423433.06,0,160423433.06,87881279.5,74245034.61,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-3.pdf
+Guaymallén,2023,2,2023-06-30,571001,Uso del Crédito a largo plazo,,0,147337816.61,0,147337816.61,195337750.1,127673444.95,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-3.pdf
+Guaymallén,2023,2,2023-06-30,571002,Uso del Crédito a corto plazo,,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-3.pdf
+Guaymallén,2023,2,2023-06-30,572020,Aportes No Reintegrables-urisdicº,,59951031.69,256669097.27,0,316620128.96,121067438.81,95594076.11,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-3.pdf
+Guaymallén,2023,2,2023-06-30,572030,Aportes Reintegrables,,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-3.pdf
+Guaymallén,2023,2,2023-06-30,573000,Remanente Ejercicio Anterior,,0,2004826127.43,0,2004826127.43,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-3.pdf
+Guaymallén,2023,3,2023-09-30,5110,Rec. Ctes. de Origen Provincial,corriente,9132102191.24,884626298.97,0,10016728490.21,7077525117.92,3523566514.46,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-3.pdf
+Guaymallén,2023,3,2023-09-30,5120,Rec. Ctes. de Origen Nacional,corriente,9687946777.07,777847080.72,0,10465793857.79,7942664806.28,3415116149.22,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-3.pdf
+Guaymallén,2023,3,2023-09-30,5130,Rec. Ctes. de Jurisd. Municipal,corriente,7120000000,2482483147.29,0,9602483147.29,6384651391.95,2320949730.27,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-3.pdf
+Guaymallén,2023,3,2023-09-30,5210,Venta de Bienes de Uso,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-3.pdf
+Guaymallén,2023,3,2023-09-30,5220,Reembolso Obras Publicas,capital,0,500000,0,500000,339321.91,151943.37,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-3.pdf
+Guaymallén,2023,3,2023-09-30,5230,Programa Infraestructura Municipal,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-3.pdf
+Guaymallén,2023,3,2023-09-30,5240,Otros Rec de Capital de Orig Prov,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-3.pdf
+Guaymallén,2023,3,2023-09-30,5250,Otros Rec de Capital de Orig Nac,capital,0,160423433.06,0,160423433.06,183429081.25,95547801.75,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-3.pdf
+Guaymallén,2023,3,2023-09-30,571001,Uso del Crédito a largo plazo,,0,147337816.61,0,147337816.61,320037176.25,124699426.15,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-3.pdf
+Guaymallén,2023,3,2023-09-30,571002,Uso del Crédito a corto plazo,,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-3.pdf
+Guaymallén,2023,3,2023-09-30,572020,Aportes No Reintegrables-urisdicº,,59951031.69,530227816.61,0,590178848.3,342300227.14,221232788.33,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-3.pdf
+Guaymallén,2023,3,2023-09-30,572030,Aportes Reintegrables,,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-3.pdf
+Guaymallén,2023,3,2023-09-30,573000,Remanente Ejercicio Anterior,,0,2004826127.43,0,2004826127.43,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-3.pdf
+Guaymallén,2023,4,2023-12-31,5110,Rec. Ctes. de Origen Provincial,corriente,9132102191.24,2479607949.95,0,11611710141.19,10364878792.15,3287353674.23,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-3.pdf
+Guaymallén,2023,4,2023-12-31,5120,Rec. Ctes. de Origen Nacional,corriente,9687946777.07,212387895.88,0,9900334672.95,11529400923.24,3586736116.96,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-3.pdf
+Guaymallén,2023,4,2023-12-31,5130,Rec. Ctes. de Jurisd. Municipal,corriente,7120000000,3282483147.29,0,10402483147.29,10047114509.35,3662463117.4,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-3.pdf
+Guaymallén,2023,4,2023-12-31,5210,Venta de Bienes de Uso,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-3.pdf
+Guaymallén,2023,4,2023-12-31,5220,Reembolso Obras Publicas,capital,0,500000,0,500000,815453.42,476131.51,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-3.pdf
+Guaymallén,2023,4,2023-12-31,5230,Programa Infraestructura Municipal,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-3.pdf
+Guaymallén,2023,4,2023-12-31,5240,Otros Rec de Capital de Orig Prov,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-3.pdf
+Guaymallén,2023,4,2023-12-31,5250,Otros Rec de Capital de Orig Nac,capital,0,160423433.06,0,160423433.06,233693282.72,50264201.47,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-3.pdf
+Guaymallén,2023,4,2023-12-31,571001,Uso del Crédito a largo plazo,,0,147337816.61,0,147337816.61,361647940.99,41610764.74,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-3.pdf
+Guaymallén,2023,4,2023-12-31,571002,Uso del Crédito a corto plazo,,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-3.pdf
+Guaymallén,2023,4,2023-12-31,572020,Aportes No Reintegrables-urisdicº,,59951031.69,1708535350.47,0,1768486382.16,1340535846.78,998235619.64,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-3.pdf
+Guaymallén,2023,4,2023-12-31,572030,Aportes Reintegrables,,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-3.pdf
+Guaymallén,2023,4,2023-12-31,573000,Remanente Ejercicio Anterior,,0,2004826127.43,0,2004826127.43,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-3.pdf
+Guaymallén,2024,2,2024-06-30,5110,Rec. Ctes. de Origen Provincial,corriente,41107225827.95,510932961.38,0,41618158789.33,11275939789.18,7080870815.69,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO-3.pdf
+Guaymallén,2024,2,2024-06-30,5120,Rec. Ctes. de Origen Nacional,corriente,4173270200.99,263278503.16,0,4436548704.15,13535799181.94,8771255704.66,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO-3.pdf
+Guaymallén,2024,2,2024-06-30,5130,Rec. Ctes. de Jurisd. Municipal,corriente,15189915000,4200000000,0,19389915000,10023487504.24,4579241858.21,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO-3.pdf
+Guaymallén,2024,2,2024-06-30,5210,Venta de Bienes de Uso,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO-3.pdf
+Guaymallén,2024,2,2024-06-30,5220,Reembolso Obras Publicas,capital,12601600,0,0,12601600,145876.17,64658.56,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO-3.pdf
+Guaymallén,2024,2,2024-06-30,5230,Reembolso de Préstamos,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO-3.pdf
+Guaymallén,2024,2,2024-06-30,5240,Otros Rec de Capital de Orig Prov,capital,0,27077931.83,0,27077931.83,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO-3.pdf
+Guaymallén,2024,2,2024-06-30,5250,Otros Rec de Capital de Orig Nac,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO-3.pdf
+Guaymallén,2024,2,2024-06-30,7110,Uso del Crédito a largo plazo,financiamiento,0,0,0,0,16826318.56,0,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO-3.pdf
+Guaymallén,2024,2,2024-06-30,7120,Uso del Crédito a corto plazo,financiamiento,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO-3.pdf
+Guaymallén,2024,2,2024-06-30,7220,Aportes no Reintegrables-Jurisdicº,financiamiento,132446964,0,0,132446964,101524651.51,70560793.14,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO-3.pdf
+Guaymallén,2024,2,2024-06-30,7300,Remanente Ejercicio Anterior,financiamiento,0,4900031023,0,4900031023,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO-3.pdf
+Guaymallén,2024,3,2024-09-30,5110,Rec. Ctes. de Origen Provincial,corriente,41107225827.95,11440850051.05,0,52548075879,21796276936.12,10520337146.94,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo3.pdf
+Guaymallén,2024,3,2024-09-30,5120,Rec. Ctes. de Origen Nacional,corriente,4173270200.99,11556463845.52,0,15729734046.51,22824333063.96,9288533882.02,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo3.pdf
+Guaymallén,2024,3,2024-09-30,5130,Rec. Ctes. de Jurisd. Municipal,corriente,15189915000,8320642592.92,0,23510557592.92,16507475407.65,6483987903.41,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo3.pdf
+Guaymallén,2024,3,2024-09-30,5210,Venta de Bienes de Uso,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo3.pdf
+Guaymallén,2024,3,2024-09-30,5220,Reembolso Obras Publicas,capital,12601600,205965.67,0,12807565.67,256309.11,110432.94,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo3.pdf
+Guaymallén,2024,3,2024-09-30,5230,Reembolso de Préstamos,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo3.pdf
+Guaymallén,2024,3,2024-09-30,5240,Otros Rec de Capital de Orig Prov,capital,0,27077931.83,0,27077931.83,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo3.pdf
+Guaymallén,2024,3,2024-09-30,5250,Otros Rec de Capital de Orig Nac,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo3.pdf
+Guaymallén,2024,3,2024-09-30,7110,Uso del Crédito a largo plazo,financiamiento,0,0,0,0,16826318.56,0,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo3.pdf
+Guaymallén,2024,3,2024-09-30,7120,Uso del Crédito a corto plazo,financiamiento,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo3.pdf
+Guaymallén,2024,3,2024-09-30,7220,Aportes no Reintegrables-Jurisdicº,financiamiento,132446964,0,0,132446964,189930138.69,88405487.18,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo3.pdf
+Guaymallén,2024,3,2024-09-30,7300,Remanente Ejercicio Anterior,financiamiento,0,4900031023,0,4900031023,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo3.pdf
+Guaymallén,2024,4,2024-12-31,5110,Rec. Ctes. de Origen Provincial,corriente,41107225827.95,11440850051.05,0,52548075879,21796276936.12,10520337146.94,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo3.pdf
+Guaymallén,2024,4,2024-12-31,5120,Rec. Ctes. de Origen Nacional,corriente,4173270200.99,11556463845.52,0,15729734046.51,22824333063.96,9288533882.02,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo3.pdf
+Guaymallén,2024,4,2024-12-31,5130,Rec. Ctes. de Jurisd. Municipal,corriente,15189915000,8320642592.92,0,23510557592.92,16507475407.65,6483987903.41,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo3.pdf
+Guaymallén,2024,4,2024-12-31,5210,Venta de Bienes de Uso,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo3.pdf
+Guaymallén,2024,4,2024-12-31,5220,Reembolso Obras Publicas,capital,12601600,205965.67,0,12807565.67,256309.11,110432.94,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo3.pdf
+Guaymallén,2024,4,2024-12-31,5230,Reembolso de Préstamos,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo3.pdf
+Guaymallén,2024,4,2024-12-31,5240,Otros Rec de Capital de Orig Prov,capital,0,27077931.83,0,27077931.83,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo3.pdf
+Guaymallén,2024,4,2024-12-31,5250,Otros Rec de Capital de Orig Nac,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo3.pdf
+Guaymallén,2024,4,2024-12-31,7110,Uso del Crédito a largo plazo,financiamiento,0,0,0,0,16826318.56,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo3.pdf
+Guaymallén,2024,4,2024-12-31,7120,Uso del Crédito a corto plazo,financiamiento,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo3.pdf
+Guaymallén,2024,4,2024-12-31,7220,Aportes no Reintegrables-Jurisdicº,financiamiento,132446964,0,0,132446964,189930138.69,88405487.18,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo3.pdf
+Guaymallén,2024,4,2024-12-31,7300,Remanente Ejercicio Anterior,financiamiento,0,4900031023,0,4900031023,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo3.pdf
+Guaymallén,2025,1,2025-03-31,5110,Rec. Ctes. de Origen Provincial,corriente,46094660694.89,1210822341.5,0,47305483036.39,7805751242.18,7805751242.18,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo3.pdf
+Guaymallén,2025,1,2025-03-31,5120,Rec. Ctes. de Origen Nacional,corriente,46737507962.88,669379266.55,0,47406887229.43,10536635841.59,10536635841.59,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo3.pdf
+Guaymallén,2025,1,2025-03-31,5130,Rec. Ctes. de Jurisd. Municipal,corriente,26501736089.11,0,0,26501736089.11,9604152451.01,9604152451.01,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo3.pdf
+Guaymallén,2025,1,2025-03-31,5210,Venta de Bienes de Uso,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo3.pdf
+Guaymallén,2025,1,2025-03-31,5220,Reembolso Obras Publicas,capital,0,0,0,0,117582.62,117582.62,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo3.pdf
+Guaymallén,2025,1,2025-03-31,5230,Reembolso de Préstamos,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo3.pdf
+Guaymallén,2025,1,2025-03-31,5240,Otros Rec de Capital de Orig Prov,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo3.pdf
+Guaymallén,2025,1,2025-03-31,5250,Otros Rec de Capital de Orig Nac,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo3.pdf
+Guaymallén,2025,1,2025-03-31,7110,Uso del Crédito a largo plazo,financiamiento,0,505661566.21,0,505661566.21,76382698.35,76382698.35,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo3.pdf
+Guaymallén,2025,1,2025-03-31,7120,Uso del Crédito a corto plazo,financiamiento,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo3.pdf
+Guaymallén,2025,1,2025-03-31,7220,Aportes no Reintegrables-Jurisdicº,financiamiento,313909662,0,0,313909662,69946558.55,69946558.55,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo3.pdf
+Guaymallén,2025,1,2025-03-31,7300,Remanente Ejercicio Anterior,financiamiento,19000000000,0,0,19000000000,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo3.pdf
+Guaymallén,2025,2,2025-06-30,5110,Rec. Ctes. de Origen Provincial,corriente,46094660694.89,1633630775,0,47728291469.89,18270739665.46,10464988423.28,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo3.pdf
+Guaymallén,2025,2,2025-06-30,5120,Rec. Ctes. de Origen Nacional,corriente,46737507962.88,669379266.55,0,47406887229.43,23760930444.62,13224294603.03,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo3.pdf
+Guaymallén,2025,2,2025-06-30,5130,Rec. Ctes. de Jurisd. Municipal,corriente,26501736089.11,503646560.43,0,27005382649.54,17400514204.36,7796361753.35,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo3.pdf
+Guaymallén,2025,2,2025-06-30,5210,Venta de Bienes de Uso,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo3.pdf
+Guaymallén,2025,2,2025-06-30,5220,Reembolso Obras Publicas,capital,0,0,0,0,174255.84,56673.22,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo3.pdf
+Guaymallén,2025,2,2025-06-30,5230,Reembolso de Préstamos,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo3.pdf
+Guaymallén,2025,2,2025-06-30,5240,Otros Rec de Capital de Orig Prov,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo3.pdf
+Guaymallén,2025,2,2025-06-30,5250,Otros Rec de Capital de Orig Nac,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo3.pdf
+Guaymallén,2025,2,2025-06-30,7110,Uso del Crédito a largo plazo,financiamiento,0,505661566.21,0,505661566.21,247335353.64,170952655.29,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo3.pdf
+Guaymallén,2025,2,2025-06-30,7120,Uso del Crédito a corto plazo,financiamiento,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo3.pdf
+Guaymallén,2025,2,2025-06-30,7220,Aportes no Reintegrables-Jurisdicº,financiamiento,313909662,0,0,313909662,158249612.98,88303054.43,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo3.pdf
+Guaymallén,2025,2,2025-06-30,7300,Remanente Ejercicio Anterior,financiamiento,19000000000,0,0,19000000000,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo3.pdf
+Guaymallén,2025,3,2025-09-30,5110,Rec. Ctes. de Origen Provincial,corriente,46094660694.89,6306035819.09,0,52400696513.98,28542957810.95,10272218145.49,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo3.pdf
+Guaymallén,2025,3,2025-09-30,5120,Rec. Ctes. de Origen Nacional,corriente,46737507962.88,871997073.99,0,47609505036.87,36390620409.11,12629689964.49,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo3.pdf
+Guaymallén,2025,3,2025-09-30,5130,Rec. Ctes. de Jurisd. Municipal,corriente,26501736089.11,9371787902.63,0,35873523991.74,24278315160.7,6877800956.34,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo3.pdf
+Guaymallén,2025,3,2025-09-30,5210,Venta de Bienes de Uso,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo3.pdf
+Guaymallén,2025,3,2025-09-30,5220,Reembolso Obras Publicas,capital,0,0,0,0,257264.19,83008.35,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo3.pdf
+Guaymallén,2025,3,2025-09-30,5230,Programa Infraestructura Municipal,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo3.pdf
+Guaymallén,2025,3,2025-09-30,5240,Otros Rec de Capital de Orig Prov,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo3.pdf
+Guaymallén,2025,3,2025-09-30,5250,Otros Rec de Capital de Orig Nac,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo3.pdf
+Guaymallén,2025,3,2025-09-30,57110,Uso del Crédito a largo plazo,financiamiento,0,505661566.21,0,505661566.21,432727360.47,185392006.83,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo3.pdf
+Guaymallén,2025,3,2025-09-30,57120,Uso del Crédito a corto plazo,financiamiento,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo3.pdf
+Guaymallén,2025,3,2025-09-30,57220,Aportes No Reintegrables-Jurisdicº,financiamiento,313909662,0,0,313909662,183614226.43,25364613.45,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo3.pdf
+Guaymallén,2025,3,2025-09-30,57230,Aportes Reintegrables,financiamiento,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo3.pdf
+Guaymallén,2025,3,2025-09-30,57300,Remanente Ejercicio Anterior,financiamiento,19000000000,4105739209,0,23105739209,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo3.pdf
+Guaymallén,2025,4,2025-12-31,5110,Rec. Ctes. de Origen Provincial,corriente,46094660694.89,6382092261.89,0,52476752956.78,39665321154.84,11122363343.89,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo3.pdf
+Guaymallén,2025,4,2025-12-31,5120,Rec. Ctes. de Origen Nacional,corriente,46737507962.88,874997073.99,0,47612505036.87,50870744239.16,14480123830.05,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo3.pdf
+Guaymallén,2025,4,2025-12-31,5130,Rec. Ctes. de Jurisd. Municipal,corriente,26501736089.11,10871787902.63,0,37373523991.74,33448969630.24,9170654469.54,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo3.pdf
+Guaymallén,2025,4,2025-12-31,5210,Venta de Bienes de Uso,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo3.pdf
+Guaymallén,2025,4,2025-12-31,5220,Reembolso Obras Publicas,capital,0,0,0,0,326634.52,69370.33,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo3.pdf
+Guaymallén,2025,4,2025-12-31,5230,Programa Infraestructura Municipal,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo3.pdf
+Guaymallén,2025,4,2025-12-31,5240,Otros Rec de Capital de Orig Prov,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo3.pdf
+Guaymallén,2025,4,2025-12-31,5250,Otros Rec de Capital de Orig Nac,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo3.pdf
+Guaymallén,2025,4,2025-12-31,57110,Uso del Crédito a largo plazo,financiamiento,0,505661566.21,0,505661566.21,505661566.22,72934205.75,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo3.pdf
+Guaymallén,2025,4,2025-12-31,57120,Uso del Crédito a corto plazo,financiamiento,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo3.pdf
+Guaymallén,2025,4,2025-12-31,57220,Aportes No Reintegrables-Jurisdicº,financiamiento,313909662,375994163.17,0,689903825.17,223181031.15,39566804.72,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo3.pdf
+Guaymallén,2025,4,2025-12-31,57230,Aportes Reintegrables,financiamiento,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo3.pdf
+Guaymallén,2025,4,2025-12-31,57300,Remanente Ejercicio Anterior,financiamiento,19000000000,4105739209,0,23105739209,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo3.pdf
+Guaymallén,2026,1,2026-03-31,5110,Rec. Ctes. de Origen Provincial,corriente,64261866444.99,0,0,64261866444.99,1951623977.36,1951623977.36,http://www.guaymallen.gob.ar/wp-content/uploads/2026/06/anexo3.pdf
+Guaymallén,2026,1,2026-03-31,5120,Rec. Ctes. de Origen Nacional,corriente,67689786780.2,0,0,67689786780.2,12764171525.61,12764171525.61,http://www.guaymallen.gob.ar/wp-content/uploads/2026/06/anexo3.pdf
+Guaymallén,2026,1,2026-03-31,5130,Rec. Ctes. de Jurisd. Municipal,corriente,62297891055.66,0,0,62297891055.66,5792041934.31,5792041934.31,http://www.guaymallen.gob.ar/wp-content/uploads/2026/06/anexo3.pdf
+Guaymallén,2026,1,2026-03-31,5210,Venta de Bienes de Uso,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/06/anexo3.pdf
+Guaymallén,2026,1,2026-03-31,5220,Reembolso Obras Publicas,capital,485400000,0,0,485400000,40130.78,40130.78,http://www.guaymallen.gob.ar/wp-content/uploads/2026/06/anexo3.pdf
+Guaymallén,2026,1,2026-03-31,5230,Programa Infraestructura Municipal,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/06/anexo3.pdf
+Guaymallén,2026,1,2026-03-31,5240,Otros Rec de Capital de Orig Prov,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/06/anexo3.pdf
+Guaymallén,2026,1,2026-03-31,5250,Otros Rec de Capital de Orig Nac,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/06/anexo3.pdf
+Guaymallén,2026,1,2026-03-31,57110,Uso del Crédito a largo plazo,financiamiento,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/06/anexo3.pdf
+Guaymallén,2026,1,2026-03-31,57120,Uso del Crédito a corto plazo,financiamiento,0,0,0,0,1202399767.42,1202399767.42,http://www.guaymallen.gob.ar/wp-content/uploads/2026/06/anexo3.pdf
+Guaymallén,2026,1,2026-03-31,57220,Aportes No Reintegrables-Jurisdicº,financiamiento,5604265239.33,0,0,5604265239.33,11276629.41,11276629.41,http://www.guaymallen.gob.ar/wp-content/uploads/2026/06/anexo3.pdf
+Guaymallén,2026,1,2026-03-31,57230,Aportes Reintegrables,financiamiento,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/06/anexo3.pdf
+Guaymallén,2026,1,2026-03-31,57300,Remanente Ejercicio Anterior,financiamiento,20000000000,0,0,20000000000,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/06/anexo3.pdf
+Guaymallén,2026,2,2026-06-30,5110,Rec. Ctes. de Origen Provincial,corriente,64261866444.99,0,0,64261866444.99,21316607725.44,19364983748.08,http://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo3.pdf
+Guaymallén,2026,2,2026-06-30,5120,Rec. Ctes. de Origen Nacional,corriente,67689786780.2,0,0,67689786780.2,29631149551.82,16866978026.21,http://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo3.pdf
+Guaymallén,2026,2,2026-06-30,5130,Rec. Ctes. de Jurisd. Municipal,corriente,62297891055.66,0,0,62297891055.66,11288914429.03,5496872494.72,http://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo3.pdf
+Guaymallén,2026,2,2026-06-30,5210,Venta de Bienes de Uso,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo3.pdf
+Guaymallén,2026,2,2026-06-30,5220,Reembolso Obras Publicas,capital,485400000,0,0,485400000,50062.95,9932.17,http://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo3.pdf
+Guaymallén,2026,2,2026-06-30,5230,Programa Infraestructura Municipal,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo3.pdf
+Guaymallén,2026,2,2026-06-30,5240,Otros Rec de Capital de Orig Prov,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo3.pdf
+Guaymallén,2026,2,2026-06-30,5250,Otros Rec de Capital de Orig Nac,capital,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo3.pdf
+Guaymallén,2026,2,2026-06-30,57110,Uso del Crédito a largo plazo,financiamiento,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo3.pdf
+Guaymallén,2026,2,2026-06-30,57120,Uso del Crédito a corto plazo,financiamiento,0,0,0,0,2185610335.96,983210568.54,http://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo3.pdf
+Guaymallén,2026,2,2026-06-30,57220,Aportes No Reintegrables-Jurisdicº,financiamiento,5604265239.33,0,0,5604265239.33,448928032.16,437651402.75,http://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo3.pdf
+Guaymallén,2026,2,2026-06-30,57230,Aportes Reintegrables,financiamiento,0,0,0,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo3.pdf
+Guaymallén,2026,2,2026-06-30,57300,Remanente Ejercicio Anterior,financiamiento,20000000000,0,0,20000000000,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo3.pdf
 La Paz,2023,1,2023-03-31,5110,RECURSOS CORRIENTES DE ORIGEN PROVINCIAL,corriente,1114193944,4578437.5,0,1118772381.5,219832381.56,219832381.56,https://lapazmendoza.gob.ar/Documentos/Informaci%C3%B3n%20publica/2023/02_PRIEMR%20TRIMESTRE/ANEXO%203.pdf
 La Paz,2023,1,2023-03-31,5120,RECURSOS CORRIENTES DE ORIGEN NACIONAL,corriente,1710235243,0,0,1710235243,294755908,294755908,https://lapazmendoza.gob.ar/Documentos/Informaci%C3%B3n%20publica/2023/02_PRIEMR%20TRIMESTRE/ANEXO%203.pdf
 La Paz,2023,1,2023-03-31,5130,RECURSOS CORRIENTES DE ORIGEN MUNICIPAL,corriente,27299168,0,0,27299168,11786540.51,11786540.51,https://lapazmendoza.gob.ar/Documentos/Informaci%C3%B3n%20publica/2023/02_PRIEMR%20TRIMESTRE/ANEXO%203.pdf

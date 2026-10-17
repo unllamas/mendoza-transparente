@@ -227,3 +227,46 @@ describe("lrf: pages saved from the browser (San Carlos)", () => {
     expect(rows.map((r) => r.map((t) => t.text).join(" "))).toEqual(["ANEXO II: EJECUCIÓN", "41100000 (Subtotal) PERSONAL 1.234,50"]);
   });
 });
+
+describe("lrf: hierarchical codes (Capital, Guaymallén)", () => {
+  const OK = "100,00 10,00 0,00 110,00 90,00 80,00 70,00 60,00 10,00 20,00 10,00";
+
+  test("Capital: subtotals out, a split code joined, a level-2 code without children is an item", () => {
+    const parsed = parseSpendingAnnex([
+      table(
+        `4.EROGACIONES CORRIENTES ${OK}`,
+        `4.1.OPERACIÓN ${OK}`,
+        `4.1.1.PERSONAL ${OK}`,
+        `6. .3.EROGACIONES PARA ATENDER ADELANTOS ${OK}`,
+        "TOTALES: 200,00 20,00 0,00 220,00 180,00 160,00 140,00 120,00 20,00 40,00 20,00",
+      ),
+    ]);
+    if ("error" in parsed) throw new Error(parsed.error);
+    expect(parsed.lines.map((l) => [l.code, l.objectCode])).toEqual([
+      ["4.1.1", "4.1.1"],
+      ["6.3", "6.3"],
+    ]);
+  });
+
+  test("Guaymallén: three digits, and revenue whose name is on the line above its figures", () => {
+    const spending = parseSpendingAnnex([table(`## 411- Personal ${OK}`, `## 999 TOTALES ${OK}`)]);
+    if ("error" in spending) throw new Error(spending.error);
+    expect(spending.lines.map((l) => l.objectCode)).toEqual(["4.1.1"]);
+    const revenue = parseRevenueAnnex([
+      table(
+        "5110 Rec. Ctes. de Origen Provincial 60,00 0,00 0,00 60,00 30,00 30,00 10,00",
+        "57220 Aportes No Reintegrables-Jurisdicº",
+        "40,00 0,00 0,00 40,00 10,00 30,00 5,00",
+        "sáb 00-ene-00 0,00 0,00 0,00 0,00 0,00 0,00 0,00",
+        "999 TOTALES 100,00 0,00 0,00 100,00 40,00 60,00 15,00",
+      ),
+    ]);
+    if ("error" in revenue) throw new Error(revenue.error);
+    expect(revenue.lines.map((l) => l.code)).toEqual(["5110", "57220"]);
+  });
+
+  test("a scanned document says so (Capital 2025-T4)", () => {
+    const parsed = parseSpendingAnnex([[]]);
+    expect("error" in parsed && parsed.error).toContain("escaneada");
+  });
+});

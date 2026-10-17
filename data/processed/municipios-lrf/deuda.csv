@@ -1,4 +1,54 @@
 municipio,anio,trimestre,fecha_corte,deuda,moneda,saldo_inicio,pagos,deuda_contraida,renegociacion,saldo_final,fuente_url
+Capital,2023,1,2023-03-31,Prestamo Banco Nacion,nacional,44496882.62,2499999.96,0,0,41996882.66,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-Trimestre-2023.zip
+Capital,2023,1,2023-03-31,Prestamo Gobieno Provincial,nacional,20417082.32,0,0,0,20417082.32,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-Trimestre-2023.zip
+Capital,2023,1,2023-03-31,Mendoza Activa,nacional,524774429,0,0,0,524774429,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-Trimestre-2023.zip
+Capital,2023,1,2023-03-31,Banco Supervielle,nacional,240000000,0,0,0,240000000,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-Trimestre-2023.zip
+Capital,2023,2,2023-06-30,Prestamo Banco Nacion,nacional,41996882.66,2499999.96,0,0,39496882.7,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre-2023.zip
+Capital,2023,2,2023-06-30,Prestamo Gobieno Provincial,nacional,20417082.32,22420083.5,0,2003001.18,0,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre-2023.zip
+Capital,2023,2,2023-06-30,Mendoza Activa,nacional,524774429,0,0,0,524774429,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre-2023.zip
+Capital,2023,2,2023-06-30,Banco Supervielle,nacional,240000000,0,0,0,240000000,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre-2023.zip
+Capital,2023,3,2023-09-30,Prestamo Banco Nacion,nacional,39496882.7,2499999.96,0,0,36996882.74,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Tercer-Trimestre-2023.zip
+Capital,2023,3,2023-09-30,Mendoza Activa,nacional,524774429,0,0,0,524774429,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Tercer-Trimestre-2023.zip
+Capital,2023,3,2023-09-30,Banco Supervielle,nacional,240000000,0,0,0,240000000,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Tercer-Trimestre-2023.zip
+Capital,2023,4,2023-12-31,Prestamo Banco Nacion,nacional,36999882.74,2499999.96,0,0,34499882.78,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/cuarto-trimestre-2023.zip
+Capital,2023,4,2023-12-31,Mendoza Activa,nacional,524774429,7576566.52,0,0,517197862.48,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/cuarto-trimestre-2023.zip
+Capital,2023,4,2023-12-31,Banco Supervielle,nacional,240000000,1932308.43,0,0,238067691.57,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/cuarto-trimestre-2023.zip
+Capital,2024,1,2024-03-31,Prestamo Banco Nacion,nacional,34499882.78,2499999.96,0,0,31999882.82,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-trimestre.zip
+Capital,2024,1,2024-03-31,Mendoza Activa,nacional,517197862.48,0,0,0,517197862.48,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-trimestre.zip
+Capital,2024,1,2024-03-31,Banco Supervielle,nacional,238067691.57,0,0,0,238067691.57,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Primer-trimestre.zip
+Capital,2024,2,2024-06-30,Prestamo Banco Nacion,nacional,31996882.82,2499999.96,0,0,29496882.86,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre.zip
+Capital,2024,2,2024-06-30,Mendoza Activa,nacional,517197862.48,27828489.43,0,0,489369373.05,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre.zip
+Capital,2024,2,2024-06-30,Banco Supervielle,nacional,238067691.57,1529754.33,0,0,236537937.24,https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/11/Segundo-Trimestre.zip
+Capital,2024,3,2024-09-30,Prestamo Banco Nacion,nacional,29496882.86,2499999.96,0,0,26996882.9,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/02/Tercer-Trimestre.zip
+Capital,2024,3,2024-09-30,Bono Verde,nacional,0,0,500000000,0,500000000,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/02/Tercer-Trimestre.zip
+Capital,2024,3,2024-09-30,Banco Supervielle,nacional,236537937.24,0,0,0,236537937.24,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/02/Tercer-Trimestre.zip
+Capital,2024,3,2024-09-30,Mendoza Activa lll,nacional,489369373.05,0,0,0,489369373.05,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/02/Tercer-Trimestre.zip
+Capital,2024,4,2024-12-31,Prestamo Banco Nacion,nacional,26996882.9,2499999.96,0,0,24496882.94,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/05/Cuarto-Trimestre.zip
+Capital,2024,4,2024-12-31,Bono Verde,nacional,500000000,0,0,0,500000000,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/05/Cuarto-Trimestre.zip
+Capital,2024,4,2024-12-31,Banco Supervielle,nacional,236537937.24,13888034.6,0,0,222649902.64,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/05/Cuarto-Trimestre.zip
+Capital,2024,4,2024-12-31,Mendoza Activa lll,nacional,489369373.05,50651993.08,0,0,438717379.97,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/05/Cuarto-Trimestre.zip
+Capital,2025,1,2025-03-31,Prestamo Banco Nacion,nacional,24496882.94,2499999.96,0,0,21996882.98,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/08/primer-trimestre-2025.zip
+Capital,2025,1,2025-03-31,Bono Verde,nacional,500000000,0,0,0,500000000,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/08/primer-trimestre-2025.zip
+Capital,2025,1,2025-03-31,Banco Supervielle,nacional,222649902.64,0,0,0,222649902.64,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/08/primer-trimestre-2025.zip
+Capital,2025,1,2025-03-31,Mendoza Activa lll,nacional,438717379.97,0,0,0,438717379.97,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/08/primer-trimestre-2025.zip
+Capital,2025,2,2025-06-30,Prestamo Banco Nacion,nacional,21996882.98,2499999.96,0,0,19496883.02,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/12/segundo-trimestre.zip
+Capital,2025,2,2025-06-30,Bono Verde,nacional,500000000,0,0,0,500000000,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/12/segundo-trimestre.zip
+Capital,2025,2,2025-06-30,Banco Supervielle,nacional,222649902.64,15768116.11,0,0,206881786.53,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/12/segundo-trimestre.zip
+Capital,2025,2,2025-06-30,Mendoza Activa lll,nacional,438717379.97,59480756.16,0,0,379236623.81,https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/12/segundo-trimestre.zip
+Capital,2025,3,2025-09-30,Prestamo Banco Nacion,nacional,19496883.02,2499999.96,0,0,16996883.06,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/02/tercer-trimestre.zip
+Capital,2025,3,2025-09-30,Bono Verde,nacional,500000000,0,0,0,500000000,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/02/tercer-trimestre.zip
+Capital,2025,3,2025-09-30,Banco Supervielle,nacional,206881786.53,0,0,0,206881786.53,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/02/tercer-trimestre.zip
+Capital,2025,3,2025-09-30,Mendoza Activa lll,nacional,379236623.81,0,0,0,379236623.81,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/02/tercer-trimestre.zip
+Capital,2026,1,2026-03-31,Prestamo Banco Nacion,nacional,14496883.1,2499999.96,0,0,11996883.14,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/primer-trimestre.zip
+Capital,2026,1,2026-03-31,Prestamo Gobieno Provincial,nacional,1199055512.11,59625688.34,0,0,1139429823.77,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/primer-trimestre.zip
+Capital,2026,1,2026-03-31,Bono Verde,nacional,500000000,0,0,0,500000000,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/primer-trimestre.zip
+Capital,2026,1,2026-03-31,Banco Supervielle,nacional,186423365.57,0,0,0,186423365.57,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/primer-trimestre.zip
+Capital,2026,1,2026-03-31,Mendoza Activa lll,nacional,311215859.51,0,0,0,311215859.51,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/primer-trimestre.zip
+Capital,2026,2,2026-06-30,Banco Supervielle,nacional,186423365.57,25456342.64,0,0,160967022.93,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/6-ANEXO-5-EVOLUCION-DE-LA-DEUDA-PUBLICA-CONSOLIDADA-ACUMULADA-AL-FIN-DEL-TRIMESTRE.pdf
+Capital,2026,2,2026-06-30,Prestamo Banco Nacion,nacional,11996883.14,2499999.96,0,0,9496883.18,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/6-ANEXO-5-EVOLUCION-DE-LA-DEUDA-PUBLICA-CONSOLIDADA-ACUMULADA-AL-FIN-DEL-TRIMESTRE.pdf
+Capital,2026,2,2026-06-30,Anticipo Financiero de Coparticipación,nacional,0,0,1150000000,0,1150000000,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/6-ANEXO-5-EVOLUCION-DE-LA-DEUDA-PUBLICA-CONSOLIDADA-ACUMULADA-AL-FIN-DEL-TRIMESTRE.pdf
+Capital,2026,2,2026-06-30,Mendoza Activa lll,nacional,311215859.51,79219853.76,21547252.1,0,253543257.85,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/6-ANEXO-5-EVOLUCION-DE-LA-DEUDA-PUBLICA-CONSOLIDADA-ACUMULADA-AL-FIN-DEL-TRIMESTRE.pdf
+Capital,2026,2,2026-06-30,Bono Verde,nacional,500000000,0,0,0,500000000,https://ciudaddemendoza.gob.ar/wp-content/uploads/2026/08/6-ANEXO-5-EVOLUCION-DE-LA-DEUDA-PUBLICA-CONSOLIDADA-ACUMULADA-AL-FIN-DEL-TRIMESTRE.pdf
 General Alvear,2023,1,2023-03-31,211061000 Pr.Con IPV Ag. Pot.Canalejas,nacional,125483.4,0,0,0,125483.4,https://alvearmendoza.gob.ar/resp-fiscal/archivos-1t-2023/anexo5.pdf
 General Alvear,2023,1,2023-03-31,211061600 A.F.I.P. LEY 8975-DEC 631/17,nacional,2090891.72,0,0,0,2090891.72,https://alvearmendoza.gob.ar/resp-fiscal/archivos-1t-2023/anexo5.pdf
 General Alvear,2023,1,2023-03-31,221070200 Prest. Ley 8873 Ord. 4275/2016,nacional,17917288.59,0,0,0,17917288.59,https://alvearmendoza.gob.ar/resp-fiscal/archivos-1t-2023/anexo5.pdf
@@ -52,6 +102,142 @@ General Alvear,2026,2,2026-06-30,211061000 Pr.Con IPV Ag. Pot.Canalejas,nacional
 General Alvear,2026,2,2026-06-30,211061600 A.F.I.P. LEY 8975-DEC 631/17,nacional,2090891.72,0,0,0,2090891.72,https://alvearmendoza.gob.ar/resp-fiscal/archivos2t-2026/anexo5.pdf
 General Alvear,2026,2,2026-06-30,221070200 Prest. Ley 8873 Ord.,nacional,17917288.59,0,0,0,17917288.59,https://alvearmendoza.gob.ar/resp-fiscal/archivos2t-2026/anexo5.pdf
 General Alvear,2026,2,2026-06-30,211060400 Prestamo Ley 9356,nacional,33980500,49651587.43,27977930.69,0,12306843.26,https://alvearmendoza.gob.ar/resp-fiscal/archivos2t-2026/anexo5.pdf
+Guaymallén,2023,1,2023-03-31,212 003 0200- - Deuda Prést. Gob. de,nacional,325000,0,0,0,325000,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO5.pdf
+Guaymallén,2023,1,2023-03-31,Adquisición Maquinaria (en conj,nacional,915172.48,0,0,0,915172.48,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO5.pdf
+Guaymallén,2023,1,2023-03-31,212 0030500- Deuda AFIP,nacional,58296538.31,10502030.11,0,0,47794508.2,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO5.pdf
+Guaymallén,2023,1,2023-03-31,2220010000-Deuda Consolidada- 9426-ACE-,nacional,16385753.16,0,0,0,16385753.16,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO5.pdf
+Guaymallén,2023,1,2023-03-31,2220020800-Deuda Préstamo 9033/18 Gobierno de,nacional,228834797.11,0,0,0,228834797.11,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO5.pdf
+Guaymallén,2023,1,2023-03-31,Nación x Copartic Nacional (ley,nacional,46010317.5,0,0,0,46010317.5,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO5.pdf
+Guaymallén,2023,1,2023-03-31,2220030300-Deuda Préstamo N° 9356 Gobierno de,nacional,32747254.78,0,0,0,32747254.78,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO5.pdf
+Guaymallén,2023,1,2023-03-31,2220030400-Deuda Préstamo N° 9356 Gobierno de,nacional,20941025.47,0,0,0,20941025.47,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO5.pdf
+Guaymallén,2023,1,2023-03-31,PIPM Elpidio Gonzalez e Urquiza,nacional,8560256.09,0,0,0,8560256.09,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO5.pdf
+Guaymallén,2023,1,2023-03-31,PIPM Proy. Intervenciones,nacional,0,0,61602161.64,0,61602161.64,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO5.pdf
+Guaymallén,2023,1,2023-03-31,PIPM Proy. Intervenciones,nacional,0,0,6062143.51,0,6062143.51,http://www.guaymallen.gob.ar/wp-content/uploads/2023/06/ANEXO5.pdf
+Guaymallén,2023,2,2023-06-30,212 003 0200- - Deuda Prést. Gob. de,nacional,325000,0,0,0,325000,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-5.pdf
+Guaymallén,2023,2,2023-06-30,Adquisición Maquinaria (en conj,nacional,915172.48,660603.4,0,0,254569.08,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-5.pdf
+Guaymallén,2023,2,2023-06-30,212 0030500- Deuda AFIP,nacional,47794508.2,0,0,0,47794508.2,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-5.pdf
+Guaymallén,2023,2,2023-06-30,2220010000-Deuda Consolidada- 9426-ACE-,nacional,16385753.16,0,0,0,16385753.16,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-5.pdf
+Guaymallén,2023,2,2023-06-30,2220020800-Deuda Préstamo 9033/18 Gobierno de,nacional,228834797.11,3801383.61,0,0,225033413.5,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-5.pdf
+Guaymallén,2023,2,2023-06-30,Nación x Copartic Nacional (ley,nacional,46010317.5,46010317.5,0,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-5.pdf
+Guaymallén,2023,2,2023-06-30,2220030300-Deuda Préstamo N° 9356 Gobierno de,nacional,32747254.78,0,23612394.83,0,56359649.61,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-5.pdf
+Guaymallén,2023,2,2023-06-30,2220030400-Deuda Préstamo N° 9356 Gobierno de,nacional,20941025.47,0,32698106.31,0,53639131.78,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-5.pdf
+Guaymallén,2023,2,2023-06-30,PIPM Elpidio Gonzalez e Urquiza,nacional,8560256.09,0,19591185.63,0,28151441.72,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-5.pdf
+Guaymallén,2023,2,2023-06-30,PIPM Proy. Intervenciones,nacional,61602161.64,0,34299517.05,0,95901678.69,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-5.pdf
+Guaymallén,2023,2,2023-06-30,PIPM Proy. Intervenciones,nacional,6062143.51,0,0,0,6062143.51,http://www.guaymallen.gob.ar/wp-content/uploads/2023/09/ANEXO-5.pdf
+Guaymallén,2023,3,2023-09-30,212 003 0200- - Deuda Prést. Gob. de,nacional,325000,0,0,0,325000,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-5.pdf
+Guaymallén,2023,3,2023-09-30,Adquisición Maquinaria (en conj,nacional,254569.08,0,0,0,254569.08,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-5.pdf
+Guaymallén,2023,3,2023-09-30,212 0030500- Deuda AFIP,nacional,47794508.2,0,0,0,47794508.2,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-5.pdf
+Guaymallén,2023,3,2023-09-30,2220010000-Deuda Consolidada- 9426-ACE- ART,nacional,16385753.16,0,0,0,16385753.16,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-5.pdf
+Guaymallén,2023,3,2023-09-30,2220020800-Deuda Préstamo 9033/18 Gobierno de,nacional,225033413.5,14658767.24,0,0,210374646.26,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-5.pdf
+Guaymallén,2023,3,2023-09-30,2220030300-Deuda Préstamo N° 9356 Gobierno de,nacional,56359649.61,0,17999689.32,0,74359338.93,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-5.pdf
+Guaymallén,2023,3,2023-09-30,2220030400-Deuda Préstamo N° 9356 Gobierno de,nacional,53639131.78,0,33178792.64,0,86817924.42,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-5.pdf
+Guaymallén,2023,3,2023-09-30,PIPM Elpidio Gonzalez e Urquiza,nacional,28151441.72,0,2004252.5,0,30155694.22,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-5.pdf
+Guaymallén,2023,3,2023-09-30,PIPM Proy. Intervenciones,nacional,95901678.69,0,23873133.91,0,119774812.6,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-5.pdf
+Guaymallén,2023,3,2023-09-30,PIPM Proy. Intervenciones,nacional,6062143.51,0,65115798.91,0,71177942.42,http://www.guaymallen.gob.ar/wp-content/uploads/2023/11/ANEXO-5.pdf
+Guaymallén,2023,4,2023-12-31,212 003 0200- - Deuda Prést. Gob. de,nacional,325000,0,0,0,325000,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-5.pdf
+Guaymallén,2023,4,2023-12-31,Adquisición Maquinaria (en conj,nacional,254569.08,0,0,0,254569.08,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-5.pdf
+Guaymallén,2023,4,2023-12-31,212 0030500- Deuda AFIP,nacional,47794508.2,0,0,0,47794508.2,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-5.pdf
+Guaymallén,2023,4,2023-12-31,2220010000-Deuda Consolidada- 9426-ACE- ART,nacional,16385753.16,0,0,0,16385753.16,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-5.pdf
+Guaymallén,2023,4,2023-12-31,2220020800-Deuda Préstamo 9033/18 Gobierno de,nacional,210374646.26,3801383.61,0,0,206573262.65,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-5.pdf
+Guaymallén,2023,4,2023-12-31,2220030300-Deuda Préstamo N° 9356 Gobierno de,nacional,74359338.93,0,0,0,74359338.93,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-5.pdf
+Guaymallén,2023,4,2023-12-31,2220030400-Deuda Préstamo N° 9356 Gobierno de,nacional,86817924.42,0,0,0,86817924.42,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-5.pdf
+Guaymallén,2023,4,2023-12-31,PIPM Elpidio Gonzalez e Urquiza,nacional,30155694.22,0,5085315.15,0,35241009.37,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-5.pdf
+Guaymallén,2023,4,2023-12-31,PIPM Proy. Intervenciones,nacional,119774812.6,0,2377448.96,0,122152261.56,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-5.pdf
+Guaymallén,2023,4,2023-12-31,PIPM Proy. Intervenciones,nacional,71177942.42,0,34148000.63,0,105325943.05,http://www.guaymallen.gob.ar/wp-content/uploads/2024/03/ANEXO-5.pdf
+Guaymallén,2024,1,2024-03-31,212 003 0200- - Deuda Prést. Gob. de,nacional,325000,0,0,0,325000,http://www.guaymallen.gob.ar/wp-content/uploads/2024/06/Anexo5.pdf
+Guaymallén,2024,1,2024-03-31,Adquisición Maquinaria (en conj,nacional,254569.08,0,0,0,254569.08,http://www.guaymallen.gob.ar/wp-content/uploads/2024/06/Anexo5.pdf
+Guaymallén,2024,1,2024-03-31,212 0030500- Deuda AFIP,nacional,47794508.2,0,0,0,47794508.2,http://www.guaymallen.gob.ar/wp-content/uploads/2024/06/Anexo5.pdf
+Guaymallén,2024,1,2024-03-31,2220010000-Deuda Consolidada- 9426-ACE- ART,nacional,16385753.16,0,0,0,16385753.16,http://www.guaymallen.gob.ar/wp-content/uploads/2024/06/Anexo5.pdf
+Guaymallén,2024,1,2024-03-31,2220020800-Deuda Préstamo 9033/18 Gobierno de,nacional,206573262.65,0,0,0,206573262.65,http://www.guaymallen.gob.ar/wp-content/uploads/2024/06/Anexo5.pdf
+Guaymallén,2024,1,2024-03-31,2220030300-Deuda Préstamo N° 9356 Gobierno de,nacional,74359338.93,0,0,0,74359338.93,http://www.guaymallen.gob.ar/wp-content/uploads/2024/06/Anexo5.pdf
+Guaymallén,2024,1,2024-03-31,2220030400-Deuda Préstamo N° 9356 Gobierno de,nacional,97515858.76,0,0,0,97515858.76,http://www.guaymallen.gob.ar/wp-content/uploads/2024/06/Anexo5.pdf
+Guaymallén,2024,1,2024-03-31,PIPM Elpidio Gonzalez e Urquiza,nacional,35241009.37,0,0,0,35241009.37,http://www.guaymallen.gob.ar/wp-content/uploads/2024/06/Anexo5.pdf
+Guaymallén,2024,1,2024-03-31,PIPM Proy. Intervenciones,nacional,122152261.56,0,0,0,122152261.56,http://www.guaymallen.gob.ar/wp-content/uploads/2024/06/Anexo5.pdf
+Guaymallén,2024,1,2024-03-31,PIPM Proy. Intervenciones,nacional,105325943.05,0,16826318.56,0,122152261.61,http://www.guaymallen.gob.ar/wp-content/uploads/2024/06/Anexo5.pdf
+Guaymallén,2024,2,2024-06-30,212 003 0200- - Deuda Prést. Gob. de,nacional,325000,0,0,0,325000,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO5.pdf
+Guaymallén,2024,2,2024-06-30,Adquisición Maquinaria (en conj,nacional,254569.08,0,0,0,254569.08,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO5.pdf
+Guaymallén,2024,2,2024-06-30,212 0030500- Deuda AFIP,nacional,47794508.2,0,0,0,47794508.2,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO5.pdf
+Guaymallén,2024,2,2024-06-30,2220010000-Deuda Consolidada- 9426-ACE- ART,nacional,16385753.16,0,0,0,16385753.16,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO5.pdf
+Guaymallén,2024,2,2024-06-30,2220020800-Deuda Préstamo 9033/18 Gobierno de,nacional,206573262.65,48405745.69,0,0,158167516.96,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO5.pdf
+Guaymallén,2024,2,2024-06-30,2220030300-Deuda Préstamo N° 9356 Gobierno de,nacional,74359338.93,9540608.03,0,0,64818730.9,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO5.pdf
+Guaymallén,2024,2,2024-06-30,2220030400-Deuda Préstamo N° 9356 Gobierno de,nacional,97515858.76,8878608.86,0,0,88637249.9,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO5.pdf
+Guaymallén,2024,2,2024-06-30,PIPM Elpidio Gonzalez e Urquiza,nacional,35241009.37,4774529.6,0,0,30466479.77,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO5.pdf
+Guaymallén,2024,2,2024-06-30,PIPM Proy. Intervenciones,nacional,122152261.56,11866027.86,0,0,110286233.7,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO5.pdf
+Guaymallén,2024,2,2024-06-30,PIPM Proy. Intervenciones,nacional,122152261.61,6915828.98,0,0,115236432.63,http://www.guaymallen.gob.ar/wp-content/uploads/2024/09/ANEXO5.pdf
+Guaymallén,2024,3,2024-09-30,212 003 0200- - Deuda Prést. Gob. de,nacional,325000,0,0,0,325000,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo5.pdf
+Guaymallén,2024,3,2024-09-30,Adquisición Maquinaria (en conj,nacional,254569.08,0,0,0,254569.08,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo5.pdf
+Guaymallén,2024,3,2024-09-30,212 0030500- Deuda AFIP,nacional,47794508.2,0,0,0,47794508.2,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo5.pdf
+Guaymallén,2024,3,2024-09-30,2220010000-Deuda Consolidada- 9426-ACE- ART,nacional,16385753.16,0,0,0,16385753.16,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo5.pdf
+Guaymallén,2024,3,2024-09-30,2220020800-Deuda Préstamo 9033/18 Gobierno de,nacional,158167516.96,117947631.88,0,0,40219885.08,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo5.pdf
+Guaymallén,2024,3,2024-09-30,2220030300-Deuda Préstamo N° 9356 Gobierno de,nacional,64818730.9,22497837.75,0,0,42320893.15,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo5.pdf
+Guaymallén,2024,3,2024-09-30,2220030400-Deuda Préstamo N° 9356 Gobierno de,nacional,88637249.9,20936768.5,0,0,67700481.4,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo5.pdf
+Guaymallén,2024,3,2024-09-30,PIPM Elpidio Gonzalez e Urquiza,nacional,30466479.77,11258883.29,0,0,19207596.48,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo5.pdf
+Guaymallén,2024,3,2024-09-30,PIPM Proy. Intervenciones,nacional,110286233.7,28371177.09,0,0,81915056.61,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo5.pdf
+Guaymallén,2024,3,2024-09-30,PIPM Proy. Intervenciones,nacional,115236432.63,22495432.55,0,0,92741000.08,http://www.guaymallen.gob.ar/wp-content/uploads/2024/12/Anexo5.pdf
+Guaymallén,2024,4,2024-12-31,212 003 0200- - Deuda Prést. Gob. de,nacional,325000,0,0,0,325000,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo5.pdf
+Guaymallén,2024,4,2024-12-31,Adquisición Maquinaria (en conj,nacional,254569.08,0,0,0,254569.08,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo5.pdf
+Guaymallén,2024,4,2024-12-31,212 0030500- Deuda AFIP,nacional,47794508.2,0,0,0,47794508.2,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo5.pdf
+Guaymallén,2024,4,2024-12-31,2220010000-Deuda Consolidada- 9426-ACE- ART,nacional,16385753.16,0,0,0,16385753.16,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo5.pdf
+Guaymallén,2024,4,2024-12-31,2220020800-Deuda Préstamo 9033/18 Gobierno de,nacional,40219885.08,167463444.89,0,374295685.63,247052125.82,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo5.pdf
+Guaymallén,2024,4,2024-12-31,2220030300-Deuda Préstamo N° 9356 Gobierno de,nacional,42320893.15,32257236.28,0,0,10063656.87,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo5.pdf
+Guaymallén,2024,4,2024-12-31,2220030400-Deuda Préstamo N° 9356 Gobierno de,nacional,67700481.4,30018986.52,0,0,37681494.88,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo5.pdf
+Guaymallén,2024,4,2024-12-31,PIPM Elpidio Gonzalez e Urquiza,nacional,19207596.48,16142905.05,0,0,3064691.43,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo5.pdf
+Guaymallén,2024,4,2024-12-31,PIPM Proy. Intervenciones,nacional,81915056.61,40678387.54,0,0,41236669.07,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo5.pdf
+Guaymallén,2024,4,2024-12-31,PIPM Proy. Intervenciones,nacional,92741000.08,32253787.72,0,0,60487212.36,http://www.guaymallen.gob.ar/wp-content/uploads/2025/03/anexo5.pdf
+Guaymallén,2025,1,2025-03-31,212 003 0200- - Deuda Prést. Gob. de,nacional,325000,0,0,0,325000,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo5.pdf
+Guaymallén,2025,1,2025-03-31,Adquisición Maquinaria (en conj,nacional,254569.08,0,0,0,254569.08,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo5.pdf
+Guaymallén,2025,1,2025-03-31,212 0030500- Deuda AFIP,nacional,47794508.2,0,0,0,47794508.2,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo5.pdf
+Guaymallén,2025,1,2025-03-31,2220010000-Deuda Consolidada- 9426-ACE- ART,nacional,16385753.16,0,0,0,16385753.16,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo5.pdf
+Guaymallén,2025,1,2025-03-31,2220020800-Deuda Préstamo 9033/18 Gobierno de,nacional,247052125.82,0,0,0,247052125.82,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo5.pdf
+Guaymallén,2025,1,2025-03-31,2220030300-Deuda Préstamo N° 9356 Gobierno de,nacional,10063656.87,0,0,0,10063656.87,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo5.pdf
+Guaymallén,2025,1,2025-03-31,2220030400-Deuda Préstamo N° 9356 Gobierno de,nacional,37681494.88,0,0,0,37681494.88,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo5.pdf
+Guaymallén,2025,1,2025-03-31,PIPM Elpidio Gonzalez e Urquiza,nacional,3064691.43,0,0,0,3064691.43,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo5.pdf
+Guaymallén,2025,1,2025-03-31,PIPM Proy. Intervenciones,nacional,41236669.07,0,0,0,41236669.07,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo5.pdf
+Guaymallén,2025,1,2025-03-31,PIPM Proy. Intervenciones,nacional,60487212.36,0,0,0,60487212.36,http://www.guaymallen.gob.ar/wp-content/uploads/2025/06/anexo5.pdf
+Guaymallén,2025,2,2025-06-30,212 003 0200- - Deuda Prést. Gob. de,nacional,325000,0,0,0,325000,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo5.pdf
+Guaymallén,2025,2,2025-06-30,Adquisición Maquinaria (en conj,nacional,254569.08,0,0,0,254569.08,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo5.pdf
+Guaymallén,2025,2,2025-06-30,212 0030500- Deuda AFIP,nacional,47794508.2,0,0,0,47794508.2,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo5.pdf
+Guaymallén,2025,2,2025-06-30,2220010000-Deuda Consolidada- 9426-ACE- ART,nacional,16385753.16,0,0,0,16385753.16,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo5.pdf
+Guaymallén,2025,2,2025-06-30,2220020800-Deuda Préstamo 9033/18 Gobierno de,nacional,247052125.82,195990132.13,0,0,51061993.69,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo5.pdf
+Guaymallén,2025,2,2025-06-30,2220030300-Deuda Préstamo N° 9356 Gobierno de,nacional,10063656.87,37879749.42,0,27816092.55,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo5.pdf
+Guaymallén,2025,2,2025-06-30,2220030400-Deuda Préstamo N° 9356 Gobierno de,nacional,37681494.88,35251367.4,0,0,2430127.48,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo5.pdf
+Guaymallén,2025,2,2025-06-30,PIPM Elpidio Gonzalez e Urquiza,nacional,3064691.43,18956651.86,0,15891960.43,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo5.pdf
+Guaymallén,2025,2,2025-06-30,PIPM Proy. Intervenciones,nacional,41236669.07,47768727.41,0,6532058.34,0,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo5.pdf
+Guaymallén,2025,2,2025-06-30,PIPM Proy. Intervenciones,nacional,60487212.36,37875713.88,0,0,22611498.48,http://www.guaymallen.gob.ar/wp-content/uploads/2025/09/anexo5.pdf
+Guaymallén,2025,3,2025-09-30,212 003 0200- - Deuda Prést. Gob. de,nacional,325000,0,0,0,325000,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo5.pdf
+Guaymallén,2025,3,2025-09-30,Adquisición Maquinaria (en conj,nacional,254569.08,0,0,0,254569.08,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo5.pdf
+Guaymallén,2025,3,2025-09-30,212 0030500- Deuda AFIP,nacional,47794508.2,0,0,0,47794508.2,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo5.pdf
+Guaymallén,2025,3,2025-09-30,2220010000-Deuda Consolidada- 9426-ACE- ART,nacional,16385753.16,0,0,0,16385753.16,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo5.pdf
+Guaymallén,2025,3,2025-09-30,2220020800-Deuda Préstamo 9033/18 Gobierno de,nacional,51061993.69,0,0,0,51061993.69,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo5.pdf
+Guaymallén,2025,3,2025-09-30,2220030400-Deuda Préstamo N° 9356 Gobierno de,nacional,2430127.48,0,0,0,2430127.48,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo5.pdf
+Guaymallén,2025,3,2025-09-30,PIPM Proy. Intervenciones,nacional,22611498.48,0,0,0,22611498.48,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo5.pdf
+Guaymallén,2025,3,2025-09-30,PIPM Proy. Intervenciones,nacional,113668564.59,0,0,86913124.37,200581688.96,http://www.guaymallen.gob.ar/wp-content/uploads/2025/12/anexo5.pdf
+Guaymallén,2025,4,2025-12-31,212 003 0200- - Deuda Prést. Gob. de,nacional,325000,0,0,0,325000,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo5.pdf
+Guaymallén,2025,4,2025-12-31,Adquisición Maquinaria (en conj,nacional,254569.08,0,0,0,254569.08,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo5.pdf
+Guaymallén,2025,4,2025-12-31,212 0030500- Deuda AFIP,nacional,47794508.2,0,0,0,47794508.2,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo5.pdf
+Guaymallén,2025,4,2025-12-31,2220010000-Deuda Consolidada- 9426-ACE- ART,nacional,16385753.16,0,0,0,16385753.16,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo5.pdf
+Guaymallén,2025,4,2025-12-31,2220020800-Deuda Préstamo 9033/18 Gobierno de,nacional,51061993.69,0,0,0,51061993.69,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo5.pdf
+Guaymallén,2025,4,2025-12-31,2220030300-Deuda Préstamo N° 9356 Gobierno de,nacional,0,43318374.43,43318374.43,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo5.pdf
+Guaymallén,2025,4,2025-12-31,2220030400-Deuda Préstamo N° 9356 Gobierno de,nacional,2430127.48,40312620,37882492.52,-2430127.48,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo5.pdf
+Guaymallén,2025,4,2025-12-31,PIPM Elpidio Gonzalez de,nacional,0,21678378.4,21678378.4,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo5.pdf
+Guaymallén,2025,4,2025-12-31,PIPM Proy. Intervenciones,nacional,0,54627172.21,54627172.21,0,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo5.pdf
+Guaymallén,2025,4,2025-12-31,PIPM Proy. Intervenciones,nacional,22611498.48,43313747.88,20702249.4,-22611498.48,0,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo5.pdf
+Guaymallén,2025,4,2025-12-31,PIPM Proy. Intervenciones,nacional,200581688.96,14549264.84,63110693.52,48561428.68,249143117.64,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo5.pdf
+Guaymallén,2025,4,2025-12-31,PIPM Proy. Intervenciones,nacional,232145671.51,17096365.22,9823512.23,-7272852.99,224872818.52,http://www.guaymallen.gob.ar/wp-content/uploads/2026/03/anexo5.pdf
+Guaymallén,2026,1,2026-03-31,212 003 0200- - Deuda Prést. Gob. de,nacional,325000,0,0,0,325000,http://www.guaymallen.gob.ar/wp-content/uploads/2026/06/anexo5.pdf
+Guaymallén,2026,1,2026-03-31,Adquisición Maquinaria (en conj,nacional,254569.08,0,0,0,254569.08,http://www.guaymallen.gob.ar/wp-content/uploads/2026/06/anexo5.pdf
+Guaymallén,2026,1,2026-03-31,212 0030500- Deuda AFIP,nacional,47794508.2,0,0,0,47794508.2,http://www.guaymallen.gob.ar/wp-content/uploads/2026/06/anexo5.pdf
+Guaymallén,2026,1,2026-03-31,2220010000-Deuda Consolidada- 9426-ACE- ART,nacional,16385753.16,0,0,0,16385753.16,http://www.guaymallen.gob.ar/wp-content/uploads/2026/06/anexo5.pdf
+Guaymallén,2026,1,2026-03-31,2220020800-Deuda Préstamo 9033/18 Gobierno de,nacional,51061993.69,0,0,0,51061993.69,http://www.guaymallen.gob.ar/wp-content/uploads/2026/06/anexo5.pdf
+Guaymallén,2026,1,2026-03-31,PIPM Proy. Intervenciones,nacional,249143117.64,0,0,0,249143117.64,http://www.guaymallen.gob.ar/wp-content/uploads/2026/06/anexo5.pdf
+Guaymallén,2026,1,2026-03-31,PIPM Proy. Intervenciones,nacional,224872818.52,0,0,0,224872818.52,http://www.guaymallen.gob.ar/wp-content/uploads/2026/06/anexo5.pdf
+Guaymallén,2026,2,2026-06-30,212 003 0200- - Deuda Prést. Gob. de,nacional,325000,0,0,0,325000,http://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo5.pdf
+Guaymallén,2026,2,2026-06-30,Adquisición Maquinaria (en conj,nacional,254569.08,0,0,0,254569.08,http://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo5.pdf
+Guaymallén,2026,2,2026-06-30,212 0030500- Deuda AFIP,nacional,47794508.2,0,0,0,47794508.2,http://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo5.pdf
+Guaymallén,2026,2,2026-06-30,2220010000-Deuda Consolidada- 9426-ACE- ART,nacional,16385753.16,0,0,0,16385753.16,http://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo5.pdf
+Guaymallén,2026,2,2026-06-30,2220020800-Deuda Préstamo 9033/18 Gobierno de,nacional,51061993.69,0,0,0,51061993.69,http://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo5.pdf
+Guaymallén,2026,2,2026-06-30,PIPM Proy. Intervenciones,nacional,249143117.64,0,0,0,249143117.64,http://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo5.pdf
+Guaymallén,2026,2,2026-06-30,PIPM Proy. Intervenciones,nacional,224872818.52,0,0,0,224872818.52,http://www.guaymallen.gob.ar/wp-content/uploads/2026/09/anexo5.pdf
 La Paz,2023,1,2023-03-31,2111000000 - Residuos Pasivos,nacional,72612913.71,55890240.58,0,-55890240.58,16722673.13,https://lapazmendoza.gob.ar/Documentos/Informaci%C3%B3n%20publica/2023/02_PRIEMR%20TRIMESTRE/ANEXO%205.pdf
 La Paz,2023,1,2023-03-31,2112010000 - Pasivos sin Orden de pago,nacional,0,804601241,888224340.91,83623099.91,83623099.91,https://lapazmendoza.gob.ar/Documentos/Informaci%C3%B3n%20publica/2023/02_PRIEMR%20TRIMESTRE/ANEXO%205.pdf
 La Paz,2023,1,2023-03-31,2112020000 - Pasivos con Orden de Pago,nacional,0,784955201.54,785094691.68,139490.14,139490.14,https://lapazmendoza.gob.ar/Documentos/Informaci%C3%B3n%20publica/2023/02_PRIEMR%20TRIMESTRE/ANEXO%205.pdf

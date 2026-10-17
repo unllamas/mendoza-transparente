@@ -6,7 +6,7 @@
  * per annex enough for all of them and lets each document be checked against itself.
  */
 
-import { spendingObjectCode } from "./classify.ts";
+import { objectCodeFromLevels, spendingObjectCode } from "./classify.ts";
 import type { Table, Tok } from "./read.ts";
 
 export interface Period {
@@ -44,6 +44,10 @@ export function headerAnnex(tables: Table[]): string | null {
 
 const isAmount = (t: Tok | undefined) => !!t && t.num !== null && /,\d+\)?$/.test(t.text);
 
+/** A document whose pages have no text: a scanned image (Capital 2025-T4, Las Heras 2024). */
+const SCANNED = { error: "el documento es una imagen escaneada, sin texto" };
+const isScanned = (tables: Table[]) => !tables.some((t) => t.some((row) => row.length));
+
 /**
  * Joins a lone "-" with the figure right after it: some PDFs print the sign of a negative amount as a separate text.
  * By default only when the "-" opens the row or follows another amount; after a word or a number without decimals it
@@ -62,6 +66,12 @@ function withSigns(row: Tok[], afterLabel = false): Tok[] {
     } else out.push(row[i]!);
   }
   return out;
+}
+
+/** The figures of a row made only of `n` figures, with its label on the line above (Guaymallén); null otherwise. */
+function figuresOnly(row: Tok[], n: number): number[] | null {
+  const toks = withSigns(row);
+  return toks.length === n && toks.every((t) => t.num !== null) ? toks.map((t) => t.num!) : null;
 }
 
 /** Splits a row into its label and its last `n` figures; null if it does not end in `n` figures. */
@@ -209,6 +219,69 @@ function readItemRows(tables: Table[]): { lines: SpendingLine[]; totals: Spendin
   return { lines, totals };
 }
 
+/**
+ * Hierarchical codes, one level per digit: "4.1.1.PERSONAL" with its subtotals "4.EROGACIONES CORRIENTES" and
+ * "4.1.OPERACIÓN" (Capital), or "## 411- Personal" (Guaymallén, only the leaves). The page can split a code
+ * ("6. .3.EROGACIONES…", Capital): it is joined back.
+ */
+const DOTTED_ROW = /^((?:\d\.){1,3})\s*(\D.*)$/;
+const THREE_DIGIT_ROW = /^(?:##\s*)?(\d)(\d)(\d)\s*-\s*(\D.*)$/;
+const isDottedLayout = (text: string) => /^\d\.\d\.\d\.\S/.test(text);
+const isThreeDigitLayout = (text: string) => /^##\s*\d{3}\s*-/.test(text);
+
+/**
+ * Items with hierarchical codes (Capital, Guaymallén). The items are the most detailed codes: those with no child in
+ * the document (Capital's 6.3 has no 6.3.x, so it is an item; 4.1 is the subtotal of 4.1.1 to 4.1.3). A label left alone
+ * on the line above its figures (Guaymallén) is joined to them.
+ */
+function readHierarchicalRows(tables: Table[]): { lines: SpendingLine[]; totals: SpendingFigures | null } | { error: string } {
+  type Candidate = { levels: string[]; label: string; values: number[] };
+  const candidates: Candidate[] = [];
+  let totals: SpendingFigures | null = null;
+  const unknown: string[] = [];
+  let pending = "";
+  const parse = (label: string): { levels: string[]; label: string } | null => {
+    const text = label.replace(/^(\d)\.\s+\.(\d)\./, "$1.$2.");
+    const dotted = DOTTED_ROW.exec(text);
+    if (dotted) return { levels: dotted[1]!.split(".").filter(Boolean), label: dotted[2]! };
+    const three = THREE_DIGIT_ROW.exec(text);
+    if (three) return { levels: [three[1]!, three[2]!, three[3]!], label: three[4]! };
+    return null;
+  };
+  for (const row of tables.flat()) {
+    const bare = pending ? figuresOnly(row, SPENDING_COLUMNS.length) : null;
+    const split = splitRow(row, SPENDING_COLUMNS.length) ?? (bare ? { label: "", values: bare } : null);
+    if (!split) {
+      pending = row.some(isAmount) ? "" : rowText(row);
+      continue;
+    }
+    const label = split.label.replace(/^##\s*/, "");
+    if (TOTALS_ROW.test(label)) totals = figures(split.values);
+    else {
+      const item = parse(label) ?? parse(`${pending} ${label}`.trim());
+      if (item) candidates.push({ ...item, values: split.values });
+      else unknown.push(label);
+    }
+    pending = "";
+  }
+  if (unknown.length) return { error: `filas sin reconocer: ${unknown.slice(0, 3).join(" | ")}` };
+  const key = (c: Candidate) => c.levels.join(".");
+  const leaves = candidates.filter((c) => !candidates.some((o) => o !== c && key(o).startsWith(`${key(c)}.`)));
+  const lines: SpendingLine[] = [];
+  for (const c of leaves) {
+    const label = c.label.replace(/[.\s]+$/, "").replace(/\s+/g, " ");
+    lines.push({
+      jurisdiction: "",
+      unit: "",
+      code: key(c),
+      label,
+      objectCode: objectCodeFromLevels(c.levels, label),
+      ...figures(c.values),
+    });
+  }
+  return { lines, totals };
+}
+
 /** Item row of the Infogov layout: "41100000 (Subtotal)". The label and the figures can come on the next lines. */
 const INFOGOV_ITEM = /^(\d{8})\s*\(Subtotal\)/i;
 const INFOGOV_TOTAL = /^TOTAL\s+GENERAL\b/i;
@@ -312,8 +385,13 @@ function readInfogov(tables: Table[]): { lines: SpendingLine[]; totals: Spending
  *     to the next row): they are not published and do not change the figures that are.
  */
 export function parseSpendingAnnex(tables: Table[]): SpendingAnnex | { error: string } {
-  const infogov = tables.some((t) => t.some((row) => INFOGOV_ITEM.test(rowText(row))));
-  const read = infogov ? readInfogov(tables) : readItemRows(tables);
+  if (isScanned(tables)) return SCANNED;
+  const texts = tables.flat().map(rowText);
+  const read = texts.some((t) => INFOGOV_ITEM.test(t))
+    ? readInfogov(tables)
+    : texts.some((t) => isDottedLayout(t) || isThreeDigitLayout(t))
+      ? readHierarchicalRows(tables)
+      : readItemRows(tables);
   if ("error" in read) return read;
   const { lines, totals } = read;
   if (!totals) return { error: "no se encontró la fila de totales" };
@@ -451,6 +529,59 @@ function readInfogovRevenue(tables: Table[]): { lines: RevenueLine[]; totals: Re
   return { lines, totals: total && total.nums.length >= 7 ? revenueFigures(total.nums) : null };
 }
 
+/** Revenue groups with dotted codes: "1. RECURSOS CORRIENTES", "1.1. De Jurisdiccion Municipal" (Capital). */
+const DOTTED_REVENUE = /^((?:\d\.){1,3})\s+(\D.*)$/;
+/** Revenue with a code of 4 to 6 digits: "5110 Rec. Ctes. de Origen Provincial", "57120 Uso del Crédito…" (Guaymallén). */
+const SHORT_REVENUE = /^(\d{4,6})\s+(\D.*)$/;
+
+/**
+ * Revenue with short codes (Capital, Guaymallén): only a few groups, no detail per tax. The items are the codes with no
+ * child in the document (dotted: "1.1" under "1."; numeric: "5110" is a child of "5100"). A label left alone on the line
+ * above its figures (Guaymallén: "57220 Aportes No Reintegrables-Jurisdicº" + "Provincial …") is joined to them.
+ */
+function readShortCodedRevenue(tables: Table[]): { lines: RevenueLine[]; totals: RevenueFigures | null } | { error: string } {
+  type Candidate = { code: string; label: string; values: number[] };
+  const candidates: Candidate[] = [];
+  let totals: RevenueFigures | null = null;
+  const unknown: string[] = [];
+  let pending = "";
+  const parse = (label: string): { code: string; label: string } | null => {
+    const dotted = DOTTED_REVENUE.exec(label);
+    if (dotted) return { code: dotted[1]!.replace(/\.$/, ""), label: dotted[2]! };
+    const short = SHORT_REVENUE.exec(label);
+    return short ? { code: short[1]!, label: short[2]! } : null;
+  };
+  for (const row of tables.flat()) {
+    const bare = pending ? figuresOnly(row, REVENUE_COLUMNS.length) : null;
+    const split = splitRow(row, REVENUE_COLUMNS.length) ?? (bare ? { label: "", values: bare } : null);
+    if (!split) {
+      pending = row.some(isAmount) ? "" : rowText(row);
+      continue;
+    }
+    if (TOTALS_ROW.test(split.label)) totals = revenueFigures(split.values);
+    else {
+      const item = parse(split.label) ?? parse(`${pending} ${split.label}`.trim());
+      if (item) candidates.push({ ...item, values: split.values });
+      // Guaymallén 2025-T3 has a row "sáb 00-ene-00" (a date format gone wrong) with every figure at zero.
+      else if (split.values.every((v) => v === 0)) {
+        /* nothing to read */
+      }
+      // Rows with a name and no code (Guaymallén 2024: "Aportes Reintegrables"): items without a kind.
+      else if (/\p{L}/u.test(split.label)) candidates.push({ code: "", label: split.label, values: split.values });
+      else unknown.push(split.label);
+    }
+    pending = "";
+  }
+  if (unknown.length) return { error: `filas sin reconocer: ${unknown.slice(0, 3).join(" | ")}` };
+  // A parent is a prefix of its children: "1" of "1.1", and "51" (from "5100") of "5110". Rows without a code are items.
+  const stem = (code: string) => (code.includes(".") ? `${code}.` : code.replace(/0+$/, ""));
+  const isParent = (c: Candidate) =>
+    !!c.code && candidates.some((o) => o !== c && !!o.code && o.code !== c.code && o.code.startsWith(stem(c.code)));
+  const leaves = candidates.filter((c) => !isParent(c));
+  const lines = leaves.map((c) => ({ code: c.code, label: c.label.replace(/\s+/g, " ").trim(), ...revenueFigures(c.values) }));
+  return { lines, totals };
+}
+
 /**
  * Reads Annex 3 ("De la ejecución del presupuesto con relación al cálculo de recursos y financiamiento"). Keeps the
  * revenue items and checks them like Annex 2: (5) = (2)+(3)-(4) on every row and the items adding up to TOTALES in
@@ -458,8 +589,13 @@ function readInfogovRevenue(tables: Table[]): { lines: RevenueLine[]; totals: Re
  * (San Rafael: "110001010001 IMPUESTO" + "SOBRE LOS INGRESOS" + "BRUTOS") are joined back.
  */
 export function parseRevenueAnnex(tables: Table[]): RevenueAnnex | { error: string } {
-  const infogov = tables.some((t) => t.some((row) => INFOGOV_REVENUE_ITEM.test(rowText(row))));
-  const read = infogov ? readInfogovRevenue(tables) : readRevenueRows(tables);
+  if (isScanned(tables)) return SCANNED;
+  const texts = tables.flat().map(rowText);
+  const read = texts.some((t) => INFOGOV_REVENUE_ITEM.test(t))
+    ? readInfogovRevenue(tables)
+    : texts.some((t) => /^\d\.\d\.\s/.test(t) || SHORT_REVENUE.test(t))
+      ? readShortCodedRevenue(tables)
+      : readRevenueRows(tables);
   if ("error" in read) return read;
   const { lines, totals } = read;
 
@@ -518,9 +654,12 @@ function debtSplit(row: Tok[]): { label: string; values: number[] } | null {
     }
     let j = i;
     while (j < row.length && row[j]!.num !== null) j++;
+    // Lone "-" after the balances are the empty legal norm columns (Capital: "253.543.257,85 - - Gobierno").
+    let end = j;
+    while (end > i && row[end - 1]!.text === "-") end--;
     // A year closing the label ("ACUERDO II 2019", "DESEQUILIBRIO FINANCIERO 2020") is not a figure.
     if (i > 0 && /^(19|20)\d\d$/.test(row[i]!.text)) i++;
-    if (j - i >= DEBT_COLUMNS.length && (!best || j - i > best[1] - best[0])) best = [i, j];
+    if (end - i >= DEBT_COLUMNS.length && (!best || end - i > best[1] - best[0])) best = [i, end];
     i = j;
   }
   if (!best) return null;
@@ -534,6 +673,7 @@ function debtSplit(row: Tok[]): { label: string; values: number[] } | null {
  * read yet: PDFs wrap them over several lines.
  */
 export function parseDebtAnnex(tables: Table[]): DebtAnnex | { error: string } {
+  if (isScanned(tables)) return SCANNED;
   const strict = readDebt(tables, false);
   if (!("error" in strict)) return strict;
   const loose = readDebt(tables, true);
@@ -574,20 +714,34 @@ function readDebt(tables: Table[], signAfterLabel: boolean | null): DebtAnnex | 
   let currency: DebtLine["currency"] = "nacional";
   /** The last debt read, whose name can go on in the next lines. */
   let last: DebtLine | null = null;
+  /** The last line of words, the name of a debt whose figures come alone on the next line (Guaymallén). */
+  let above = "";
   for (const row of joinSplitNegatives(tables.flat()).map((r) => (signAfterLabel === null ? r : withSigns(r, signAfterLabel)))) {
     const text = rowText(row);
     if (/moneda\s+extranjera/i.test(text)) currency = "extranjera";
     else if (/moneda\s+nacional/i.test(text)) currency = "nacional";
-    const split = debtSplit(row);
+    const found = debtSplit(row);
+    // Figures with no name on their line take the line above, only if they are amounts with decimals: a row of column
+    // numbers ("1 2 3 4 5 6=2-o+3+4+o-5 7 8") has no name either.
+    const split = found && !found.label && above && row.some(isAmount) ? { ...found, label: above } : found;
     if (!split) {
+      above = /\p{L}/u.test(text) && !row.some(isAmount) ? text : "";
       // Infogov wraps the account name onto the next lines ("2111000000 - Residuos" + "Pasivos"). Only lines of words
-      // after a short name: in other layouts the next lines carry pieces of the legal norm and the creditor.
-      if (last && /^[\p{L}\s.,()/-]+$/u.test(text) && !/^(subtotal|total|en\s+moneda|moneda)\b/i.test(text) && shortName(last.label))
+      // after a short name that starts with an account code: in other layouts (Capital, San Rafael) the next lines carry
+      // pieces of the legal norm and the creditor.
+      if (
+        last &&
+        /^[\p{L}\s.,()/-]+$/u.test(text) &&
+        !/^(subtotal|total|en\s+moneda|moneda)\b/i.test(text) &&
+        /^\d{6,}/.test(last.label) &&
+        shortName(last.label)
+      )
         last.label = `${last.label} ${text}`.replace(/\s+/g, " ");
       else last = null;
       continue;
     }
     last = null;
+    above = "";
     const values = Object.fromEntries(DEBT_COLUMNS.map((c, i) => [c, split.values[i]!])) as DebtFigures;
     if (TOTALS_ROW.test(split.label) || /^total\s+general$/i.test(split.label)) {
       totals = values;

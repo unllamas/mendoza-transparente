@@ -28,6 +28,8 @@ export const SPENDING_OBJECTS: Record<string, string> = {
   "5.2.4": "Otros títulos y valores",
   "5.3.1": "Bienes preexistentes",
   "5.4.1": "Crédito adicional para gastos de capital",
+  "6.3": "Adelantos a proveedores",
+  "8.1.1": "Gastos de ejercicios anteriores",
   "7.2.1": "Amortización de la deuda",
   "7.4.1": "Amortización de la deuda flotante",
 };
@@ -38,6 +40,10 @@ const EQUIVALENT_CODES: Record<string, string> = {
   "6.2.1": "7.2.1",
   // Lavalle "AMORTIZACION DE LA DEUDA" (61100000).
   "6.1.1": "7.2.1",
+  // Capital "AMORTIZACION DE LA DEUDA FLOTANTE" (6.2.2).
+  "6.2.2": "7.4.1",
+  // Guaymallén "Adelantos a Proveed. de Ejercicios Ants." (670) = Capital "ADELANTOS A PROVEEDORES Y CONTRATISTAS" (6.3).
+  "6.7.0": "6.3",
 };
 
 /** Each way of writing the code, with the three levels it carries. */
@@ -75,5 +81,17 @@ export function revenueKind(code: string): string | null {
   // Infogov writes revenue with 4 digits and a leading 5: "51xx" current, "52xx" capital ("7xxx" is financing).
   const infogov = /^5([12])\d\d$/.exec(code);
   if (infogov) return infogov[1] === "1" ? "corriente" : "capital";
+  // Guaymallén writes financing with 5 digits and a leading 57 ("57120 Uso del Crédito a corto plazo").
+  if (/^57\d{3}$/.test(code)) return "financiamiento";
   return REVENUE_KINDS[code[0] ?? ""] ?? null;
+}
+
+/**
+ * Normalized object code from a hierarchical code already split in levels ("4.1.1.PERSONAL" → ["4", "1", "1"]; Capital
+ * and Guaymallén). Capital uses 5.4.1 for capital transfers, which elsewhere is an additional credit: the label decides.
+ */
+export function objectCodeFromLevels(levels: string[], label: string): string {
+  const code = levels.join(".");
+  if (code === "5.4.1" && /transferencia/i.test(label)) return "4.3.2";
+  return EQUIVALENT_CODES[code] ?? code;
 }

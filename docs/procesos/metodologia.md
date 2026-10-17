@@ -85,6 +85,8 @@ Fuente: los anexos de la Ley de Responsabilidad Fiscal (Ley 7314) que cada munic
 |---|---|---|
 | Una fila por partida, código de 5 dígitos | San Martín (planilla) | `41100 PERSONAL` y 11 cifras |
 | Por área de gobierno | San Rafael (PDF) | `1.00.040101.PERSONAL`, con filas de jurisdicción y unidad |
+| Código jerárquico con puntos | Capital (PDF del sistema de Contaduría) | `4.1.1.PERSONAL`, con los subtotales `4.EROGACIONES CORRIENTES` y `4.1.OPERACIÓN`; la partida es el código sin hijos en el documento (`6.3` no tiene `6.3.x`). Recursos por grupo: `1.1. De Jurisdiccion Municipal` |
+| Código de 3 dígitos | Guaymallén | `## 411- Personal` y fila `999 TOTALES`; recursos de 4 a 6 dígitos (`5110 Rec. Ctes. de Origen Provincial`, `57120 Uso del Crédito…`). A veces el nombre queda en un renglón y las cifras solas en el siguiente: se unen |
 | Infogov (pie "www.infogov.com.ar") | General Alvear, Malargüe, Maipú, Lavalle, La Paz, Rivadavia, Santa Rosa, Tunuyán, San Carlos y Tupungato | `41100000 (Subtotal)` abre cada partida, con el nombre y las cifras en las líneas siguientes; la fila final es "TOTAL GENERAL" y el trimestre va en palabras ("Segundo"). Las cifras largas se derraman y desordenan las columnas 10 a 12: se leen las columnas 2 a 9 y las otras se derivan de ellas. Se toman solo las partidas del nivel más detallado. En el anexo 3, los recursos tienen 4 dígitos (`5110` municipal, `5120` nacional, `5130` provincial; `52xx` de capital, `7xxx` financiamiento) |
 
 **Casos de Infogov que el lector resuelve:**

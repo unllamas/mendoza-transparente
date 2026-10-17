@@ -44,7 +44,9 @@ import {
   type SpendingAnnex,
 } from "../lrf/annexes.ts";
 import { revenueKind, SPENDING_OBJECTS } from "../lrf/classify.ts";
+import { find as capital } from "../lrf/finders/capital.ts";
 import { find as generalAlvear } from "../lrf/finders/general-alvear.ts";
+import { find as guaymallen } from "../lrf/finders/guaymallen.ts";
 import { find as laPaz } from "../lrf/finders/la-paz.ts";
 import { find as lavalle } from "../lrf/finders/lavalle.ts";
 import { find as maipu } from "../lrf/finders/maipu.ts";
@@ -75,7 +77,9 @@ const warn = (msg: string) => console.log(`::warning title=${SOURCE}::${msg}`);
 
 /** One finder per municipality, each in lrf/finders/<municipality>.ts. */
 const FINDERS: Record<string, Finder> = {
+  Capital: capital,
   "General Alvear": generalAlvear,
+  Guaymallén: guaymallen,
   "La Paz": laPaz,
   Lavalle: lavalle,
   Maipú: maipu,
