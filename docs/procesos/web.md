@@ -100,7 +100,7 @@ Pasar de un proceso a un proveedor agrega un paso al historial: el botón "atrá
 ## Sumar una página temática
 
 1. **Cálculo**: un script en `scripts/temas/<tema>.ts` que recibe las tablas y devuelve el JSON del tema; su tipo va en `src/types.ts`. Llamarlo desde `build-data.ts`.
-2. **Página**: `src/pages/<tema>.tsx` con `PageHeader`, `FuentesOficiales` (fuente, sitio oficial, copia archivada y copia en archive.org), tarjetas `StatTile` y los gráficos de `src/charts/`.
+2. **Página**: `src/pages/<tema>.tsx` con `PageHeader`, tarjetas `StatTile`, los gráficos de `src/charts/` y, como último bloque, `FuentesOficiales` (la sección «Fuentes»: organismo, sitio oficial, copia archivada y copia en archive.org).
 3. **Ruta**: `createRoute` en `src/main.tsx` con su `loader`.
 4. **Menú**: agregarla al grupo que corresponda en `src/components/layout.tsx` (con ícono y descripción).
 5. **SEO**: entrada en `PAGES` de `src/seo.ts` (título de hasta 60 caracteres con la palabra clave, descripción de 140 a 160) y su página en `scripts/paginas.ts` (cifra para la imagen, JSON-LD y contenido escrito). Ver [SEO y GEO](#seo-y-geo).

@@ -3,7 +3,7 @@ import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
 import { cx } from "@mt/ui/lib/cx";
 import { RiBriefcase4Line, RiTeamLine, RiTrophyLine } from "@remixicon/react";
-import { getRouteApi, Link } from "@tanstack/react-router";
+import { getRouteApi } from "@tanstack/react-router";
 import { BarList } from "@/charts/bar-list.tsx";
 import { LineChart } from "@/charts/line-chart.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
@@ -23,8 +23,6 @@ const PERIODOS: { value: Periodo; label: string }[] = [
 ];
 
 const decimal = new Intl.NumberFormat("es-AR", { maximumFractionDigits: 1 });
-const FUENTE =
-  "https://www.argentina.gob.ar/economia/sechacienda/coordinacion-fiscal-provincial/ejecucion-presupuestaria-provincial/ocupacion-y";
 
 export function EmpleoPage() {
   const empleo = route.useLoaderData();
@@ -40,8 +38,6 @@ export function EmpleoPage() {
         Personal ocupado en la administración pública provincial, comparado con la población. Medirlo cada mil habitantes permite comparar
         provincias de distinto tamaño.
       </PageHeader>
-      <FuentesOficiales ids={["dnap-ocupacion"]} />
-
       <div className="grid gap-3 md:grid-cols-3">
         <StatTile
           icon={RiTeamLine}
@@ -94,17 +90,7 @@ export function EmpleoPage() {
         </p>
       </Section>
 
-      <p className="text-body-regular text-text-tertiary">
-        Fuente:{" "}
-        <a href={FUENTE} className="underline hover:text-text-primary">
-          Dirección Nacional de Asuntos Provinciales, ocupación y salarios
-        </a>
-        . Datos completos en{" "}
-        <Link to="/datos/$fuente" params={{ fuente: "dnap-ocupacion" }} className="underline hover:text-text-primary">
-          Datos › Empleo público
-        </Link>
-        .
-      </p>
+      <FuentesOficiales ids={["dnap-ocupacion"]} />
     </div>
   );
 }

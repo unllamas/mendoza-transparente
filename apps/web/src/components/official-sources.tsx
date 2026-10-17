@@ -1,8 +1,9 @@
 /** Enlaces a la fuente oficial, a la copia archivada y a la copia en archive.org: para que se vea de dónde sale cada dato. */
 
-import { tileVariants } from "@mt/ui/components/card";
+import { listRowVariants, listVariants } from "@mt/ui/components/card";
+import { Section } from "@mt/ui/components/section";
 import { cx } from "@mt/ui/lib/cx";
-import { RiArchiveLine, RiBankLine, RiExternalLinkLine } from "@remixicon/react";
+import { RiArchiveLine, RiExternalLinkLine } from "@remixicon/react";
 import { useEffect, useState } from "react";
 
 import { formatDate, loadIndex } from "@/lib.ts";
@@ -34,46 +35,49 @@ export function useFuentes(ids: string[]): SourceMeta[] {
   return fuentes;
 }
 
-/** Línea de fuentes debajo del título de una página temática. */
+const LINK = "inline-flex min-h-11 items-center gap-1 text-text-link hover:underline sm:min-h-0";
+
+/**
+ * "Fuentes" section, always last on the page: who publishes each piece of data, a link to the official site and to
+ * our archived copy. Few people open it, but it is how anyone can check that what we show is right.
+ */
 export function FuentesOficiales({ ids }: { ids: string[] }) {
   const fuentes = useFuentes(ids);
   if (fuentes.length === 0) return null;
   return (
-    <div className={cx(tileVariants({ size: "sm" }), "flex flex-col gap-3 text-body-regular")}>
-      {fuentes.map((s) => (
-        <div key={s.id} className="flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3">
-          <span className="flex items-start gap-1.5 text-text-secondary">
-            <RiBankLine className="mt-0.5 size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
-            <span>
-              Fuente: <span className="text-text-primary">{s.organismo || s.nombre}</span>
-            </span>
-          </span>
-          {s.url && (
-            <a href={s.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-text-link hover:underline">
-              Ver en el sitio oficial <RiExternalLinkLine className="size-3.5" aria-hidden />
-            </a>
-          )}
-          <a
-            href={archivoUrl(s.id)}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1 text-text-tertiary hover:text-text-primary hover:underline"
+    <Section id="fuentes" title="Fuentes">
+      <p className="-mt-2 max-w-2xl text-body-regular text-text-tertiary text-pretty">
+        De dónde sale cada dato de esta página. Guardamos una copia de lo que descargamos, por si el original cambia o se borra.
+      </p>
+      <ul className={listVariants()}>
+        {fuentes.map((s) => (
+          <li
+            key={s.id}
+            className={cx(
+              listRowVariants({ interactive: false }),
+              "flex-col items-start gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-4",
+            )}
           >
-            <RiArchiveLine className="size-3.5" aria-hidden /> Copia archivada
-            {s.raw.lastFetch && <> del {formatDate(s.raw.lastFetch)}</>}
-          </a>
-          {s.archiveOrg && (
-            <a
-              href={s.archiveOrg}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 text-text-tertiary hover:text-text-primary hover:underline"
-            >
-              <RiArchiveLine className="size-3.5" aria-hidden /> Copia en archive.org
-            </a>
-          )}
-        </div>
-      ))}
-    </div>
+            <span className="text-body-regular text-text-primary text-pretty">{s.organismo || s.nombre}</span>
+            <span className="flex shrink-0 flex-wrap gap-x-4 text-body-regular">
+              {s.url && (
+                <a href={s.url} target="_blank" rel="noreferrer" className={LINK}>
+                  Sitio oficial <RiExternalLinkLine className="size-3.5" aria-hidden />
+                </a>
+              )}
+              <a href={archivoUrl(s.id)} target="_blank" rel="noreferrer" className={LINK}>
+                <RiArchiveLine className="size-3.5" aria-hidden />
+                {s.raw.lastFetch ? `Copia del ${formatDate(s.raw.lastFetch)}` : "Copia archivada"}
+              </a>
+              {s.archiveOrg && (
+                <a href={s.archiveOrg} target="_blank" rel="noreferrer" className={LINK}>
+                  <RiArchiveLine className="size-3.5" aria-hidden /> archive.org
+                </a>
+              )}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </Section>
   );
 }
