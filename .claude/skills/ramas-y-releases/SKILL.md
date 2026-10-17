@@ -9,6 +9,7 @@ Detalle completo: `docs/procesos/ramas-y-releases.md`.
 
 ## Reglas
 
+- **Toda tarea se cierra con commit, push y PR a `dev`, sin esperar un pedido aparte.** Los cambios siguientes de la misma conversación van a la misma rama y al mismo PR.
 - **`main` es producción**: cada push publica el sitio. Nunca se pushea directo a `main`.
 - **Todo lo nuevo sale de `dev`**: `git switch dev && git pull && git switch -c <tipo>/<tema>` (`feat/`, `fix/`, `datos/`, `docs/`).
 - **PR a `dev`** con la plantilla `.github/pull_request_template.md` completa, CI verde y **squash**. El agente lo mergea él mismo; no espera aprobación salvo que el PR venga de alguien de afuera del equipo, que necesita la revisión de alguien del equipo.

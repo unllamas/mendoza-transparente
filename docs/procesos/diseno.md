@@ -132,6 +132,8 @@ El ámbar es un color de estado, como el verde y el rojo: va siempre con ícono 
 - Una sola serie por gráfico de línea; el eje Y sin unidad (va en el título) y el eje X con etiquetas espaciadas según el ancho.
 - Franjas por gobernador, neutras, en las series temporales; comparación por mandato con el dato inicial y final.
 - Mapas con escala por cuantiles (cada tono agrupa una cantidad parecida de departamentos) y más = más intenso en ambos modos.
+- **El departamento que se mira (bajo el mouse, con el foco del teclado o elegido) se marca con su color y los demás se apagan** a gris (`chart-grid`), nunca con un borde grueso ni bajando la opacidad: el borde se corta en las costuras del dibujo y queda tapado por los vecinos.
+- **El mapa y su detalle se reparten el ancho por mitades** (`lg:grid-cols-2`): con el detalle en una columna fija y angosta, los montos de las tarjetas se cortan.
 - **El borde entre departamentos se ve igual en el mapa y en el recuadro ampliado** (mismo grosor en pantalla, con `vectorEffect="non-scaling-stroke"`): si en el ampliado se afina, los departamentos con tonos parecidos se funden en una sola mancha.
 - **Tocar un departamento en un mapa que no es de un tema lleva a la página del municipio** (`/municipios/<slug>`), no a la página del tema.
 - **El dato de un departamento se lee en un tooltip** arriba de él al pasar el mouse o al llegar con el teclado, no en una tarjeta fija debajo del mapa que queda vacía hasta que se interactúa. En el celular no hay hover: tocar abre el detalle o la página del municipio, así que nada se pierde.

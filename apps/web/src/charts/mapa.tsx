@@ -63,24 +63,28 @@ export function MapaMendoza({ mapa, valores, formatValue, seleccionado, onSelect
     return `${cx - size / 2} ${cy - size / 2} ${size} ${size}`;
   }, [mapa]);
 
+  const active = tip?.municipio ?? seleccionado;
   const paths = (zoom: boolean) =>
     mapa.departamentos
       .filter((d) => !zoom || GRAN_MENDOZA.includes(d.municipio))
       .map((d) => {
         const sel = d.municipio === seleccionado;
+        // The hovered (or else the selected) department keeps its color and the rest fade to grey: no outline,
+        // which breaks at the seams of the drawing and hides under the neighbors.
+        const dim = active !== null && d.municipio !== active;
         return (
           <path
             key={d.municipio}
             d={d.path}
-            style={{ fill: color(valores[d.municipio]) }}
-            stroke={sel ? "var(--color-text-primary)" : "var(--color-background-primary-default)"}
-            strokeWidth={sel ? 3 : 1.2}
+            style={{ fill: dim ? "var(--color-chart-grid)" : color(valores[d.municipio]) }}
+            stroke="var(--color-background-primary-default)"
+            strokeWidth={1.2}
             vectorEffect="non-scaling-stroke"
             role="button"
             tabIndex={zoom ? -1 : 0}
             aria-label={`${d.municipio}: ${valores[d.municipio] !== undefined ? formatValue(valores[d.municipio]!) : "sin dato"}`}
             aria-pressed={sel}
-            className="cursor-pointer outline-none transition-opacity hover:opacity-80 focus-visible:opacity-80"
+            className="cursor-pointer outline-none transition-[fill] duration-150"
             onPointerEnter={(e) => e.pointerType === "mouse" && showTip(e.currentTarget, d.municipio)}
             onPointerLeave={() => setTip(null)}
             onFocus={(e) => showTip(e.currentTarget, d.municipio)}
