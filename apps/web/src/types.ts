@@ -463,6 +463,13 @@ export interface MunicipalTransparency {
   note: string | null;
 }
 
+/** Net change in positions (planta) against the previous published quarter, not always the one right before. */
+export interface QuarterlyChange {
+  period: string; // "2026-T2"
+  previous: string;
+  change: number;
+}
+
 export interface MunicipalStaff {
   /** Latest quarter published ("2.º trimestre de 2026") and its cut-off date. */
   quarter: string;
@@ -478,6 +485,7 @@ export interface MunicipalStaff {
   rank: number;
   withData: number;
   series: { label: string; cutoff: string; positions: number; contracts: number }[];
+  quarterlyChange: QuarterlyChange[];
   sourceUrl: string;
   /** Caveat written by the scraper for the latest quarter (a file repeated by the municipality, totals that do not add up). */
   note: string | null;
@@ -599,6 +607,7 @@ export interface AgencyDetail extends AgencySummary {
     contracts: number;
     teachingHours: number;
   }[];
+  quarterlyChange: QuarterlyChange[];
   costByYear: { year: number; nominal: number; real: number; complete: boolean }[];
   /** Monthly cost per position in the last complete year, in real pesos. */
   monthlyCostPerPosition: number | null;
@@ -623,8 +632,7 @@ export interface AgencyDetail extends AgencySummary {
 export interface GobiernoOverview {
   /** Total positions (planta) and service contracts per quarter, whole provincial State. */
   series: { period: string; date: string; staff: number; contracts: number }[];
-  /** Net change in positions against the previous published quarter (not always the one right before). */
-  quarterlyChange: { period: string; previous: string; change: number }[];
+  quarterlyChange: QuarterlyChange[];
   /** Quarter used as the start of the current administration. */
   baseline: string;
   changes: { slug: string; name: string; from: number; to: number; pct: number; restructured: boolean }[];

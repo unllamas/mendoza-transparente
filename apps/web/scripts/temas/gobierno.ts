@@ -18,6 +18,7 @@ import type {
   GobiernoOverview,
   OrganismoResumen,
   ProveedorResumen,
+  QuarterlyChange,
 } from "../../src/types.ts";
 import type { Deflactor } from "./inflacion.ts";
 
@@ -313,6 +314,11 @@ export function buildGobierno(
       children: table.organismos.filter((c) => c.depende_de === o.id && c.tipo !== "poder").map((c) => ({ slug: c.id, name: c.nombre })),
       realReference: inflation?.referencia ?? null,
       staffSeries,
+      quarterlyChange: quarterlyChange(
+        staffSeries
+          .filter((p, i) => !missesLine(rows, staffSeries[i - 1]?.period, p.period, staffSeries[i + 1]?.period))
+          .map((p) => ({ period: p.period, positions: p.permanent + p.temporary })),
+      ),
       costByYear,
       monthlyCostPerPosition: lastComplete && avgPositions ? lastComplete.real / avgPositions / 12 : null,
       units: units.filter((u) => u.staff > 0).length > 1 ? units.filter((u) => u.staff > 0).sort((a, b) => b.staff - a.staff) : [],
@@ -342,6 +348,33 @@ export function buildGobierno(
 }
 
 const QUARTER_END = ["03-31", "06-30", "09-30", "12-31"];
+
+/**
+ * Whether the annex of a quarter leaves out a line (an `organismo` row) that is there the quarter before and
+ * after: the agency's total drops and comes back without anyone leaving (1.er trimestre de 2025, Protección de
+ * Derechos de Niños, Niñas y Adolescentes). Such quarters are left out of the quarterly steps.
+ */
+function missesLine(rows: Row[], before: string | undefined, quarter: string, after: string | undefined): boolean {
+  if (!before || !after) return false;
+  const lines = (q: string) => new Set(rows.filter((r) => quarterKey(r) === q).map((r) => r.organismo));
+  const [b, q, a] = [lines(before), lines(quarter), lines(after)];
+  return [...b].some((line) => a.has(line) && !q.has(line));
+}
+
+/**
+ * Net change in positions against the previous published quarter ("2026-T2" periods, sorted). A missing report
+ * makes the step longer and the column says against which quarter it compares; after a gap of more than a year
+ * the step is dropped, because it would read as one quarter on the chart.
+ */
+export function quarterlyChange(series: { period: string; positions: number }[]): QuarterlyChange[] {
+  const index = (p: string) => Number(p.slice(0, 4)) * 4 + Number(p.slice(-1));
+  return series.slice(1).flatMap((p, i) => {
+    const prev = series[i]!;
+    return index(p.period) - index(prev.period) <= 4
+      ? [{ period: p.period, previous: prev.period, change: p.positions - prev.positions }]
+      : [];
+  });
+}
 /** Start of the current administration (Dec 2023) and the previous one (Dec 2019), as quarterly cut-offs. */
 const BASELINES = { current: "2023-T4", previous: "2019-T4" } as const;
 
@@ -386,11 +419,15 @@ export function buildOverview(lrf: Row[], details: AgencyDetail[]): GobiernoOver
     .filter((c): c is NonNullable<typeof c> => c !== null && c.contracts > 0)
     .sort((a, b) => b.ratio - a.ratio)
     .slice(0, 8);
-  // Net change in positions against the previous published quarter (a missing report makes the step longer).
-  const quarterlyChange = series.slice(1).map((p, i) => ({
-    period: p.period,
-    previous: series[i]!.period,
-    change: p.staff - series[i]!.staff,
-  }));
-  return { series, quarterlyChange, baseline: BASELINES.current, changes, contractShare };
+  return {
+    series,
+    quarterlyChange: quarterlyChange(
+      series
+        .filter((p, i) => !missesLine(lrf, series[i - 1]?.period, p.period, series[i + 1]?.period))
+        .map((p) => ({ period: p.period, positions: p.staff })),
+    ),
+    baseline: BASELINES.current,
+    changes,
+    contractShare,
+  };
 }

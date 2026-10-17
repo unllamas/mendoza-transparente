@@ -20,6 +20,7 @@ import type {
   PoblacionTema,
   ProveedorResumen,
 } from "../../src/types.ts";
+import { quarterlyChange } from "./gobierno.ts";
 import type { Deflactor } from "./inflacion.ts";
 import { estructurarLey, type ResumenLey, tituloLey } from "./leyes.ts";
 import { buildMunicipalTransparency, bulletinByMunicipality, declarationsByMunicipality, type TransparencySurvey } from "./transparency.ts";
@@ -59,7 +60,13 @@ export function buildMunicipalStaff(rows: CsvRow[], population: Map<string, numb
     const series = cutoffs.map((cutoff) => {
       const q = quarters.get(cutoff)!;
       const positions = count(q, "total_planta") || count(q, "permanente") + count(q, "temporaria");
-      return { label: `${q[0]!.trimestre}T ${q[0]!.anio}`, cutoff, positions, contracts: count(q, "contratos_locacion") };
+      return {
+        label: `${q[0]!.trimestre}T ${q[0]!.anio}`,
+        period: `${q[0]!.anio}-T${q[0]!.trimestre}`,
+        cutoff,
+        positions,
+        contracts: count(q, "contratos_locacion"),
+      };
     });
     const latest = quarters.get(cutoffs.at(-1)!)!;
     const last = series.at(-1)!;
@@ -74,6 +81,11 @@ export function buildMunicipalStaff(rows: CsvRow[], population: Map<string, numb
       contracts: last.contracts,
       perThousand: ((last.positions + last.contracts) / people) * 1000,
       series,
+      // Quarters whose total the scraper had to add up from the rows are left out of the steps: one of them
+      // (San Rafael, 2.º trimestre de 2024) counts subtotals twice and would read as the planta doubling.
+      quarterlyChange: quarterlyChange(
+        series.filter((s) => !quarters.get(s.cutoff)!.some((r) => /suma de sus filas/.test(r.observacion ?? ""))),
+      ),
       sourceUrl: latest[0]!.fuente_url ?? "",
       // Notes about amounts are left out: the site shows people, not the amounts paid.
       note: latest.map((r) => r.observacion).find((o) => o && !/importe/i.test(o)) ?? null,

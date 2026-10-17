@@ -24,6 +24,7 @@ import { LandscapePhoto } from "@/components/landscape-photo.tsx";
 import { MunicipalTransparencySection } from "@/components/municipal-transparency.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
 import { ShareButton } from "@/components/share-button.tsx";
+import { StaffChange } from "@/components/staff-change.tsx";
 import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
 import { formatDate, formatNumber } from "@/lib.ts";
 import { DEFAULT_PHOTO, municipalityPhoto } from "@/photos.ts";
@@ -356,6 +357,7 @@ export function MunicipioPage() {
                 ariaLabel={`Cargos y contratos de ${m.nombre}, por año`}
               />
             )}
+            <StaffChange changes={st.quarterlyChange} subject={m.nombre} />
             {st.note && <Alert variant="note">{st.note}</Alert>}
             <a
               href={st.sourceUrl}

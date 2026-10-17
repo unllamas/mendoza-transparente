@@ -19,12 +19,12 @@ import {
 } from "@remixicon/react";
 import { getRouteApi, Link } from "@tanstack/react-router";
 
-import { ChangeChart } from "@/charts/change-chart.tsx";
 import { ColumnChart } from "@/charts/column-chart.tsx";
 import { LineChart } from "@/charts/line-chart.tsx";
 import { Breadcrumbs, WithBreadcrumbs } from "@/components/breadcrumbs.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
 import { ShareButton } from "@/components/share-button.tsx";
+import { StaffChange } from "@/components/staff-change.tsx";
 import { GOBIERNOS } from "@/gobiernos.ts";
 import { formatDate, formatNumber } from "@/lib.ts";
 import type { AgencyDetail, AgencySummary, GobiernoOverview } from "@/types.ts";
@@ -64,8 +64,6 @@ const billions = (v: number) => `$ ${formatNumber(Math.round(v / 1e9))} mil M`;
 const millionsOrBillions = (v: number) => (v >= 1e9 ? billions(v) : `$ ${formatNumber(Math.round(v / 1e6))} M`);
 const pesos = (v: number) => `$ ${formatNumber(Math.round(v))}`;
 const periodLabel = (p: string) => p.replace(/^(\d{4})-T(\d)$/, "$2.º trimestre de $1");
-const signedPositions = (v: number) =>
-  `${v > 0 ? "+" : v < 0 ? "−" : ""}${formatNumber(Math.abs(v))} ${Math.abs(v) === 1 ? "cargo" : "cargos"}`;
 
 export function GobiernoPage() {
   const { agencies, overview } = listApi.useLoaderData();
@@ -263,6 +261,15 @@ export function AgencyPage() {
           <p className="text-caption-1-regular text-text-tertiary">
             Al cierre de cada año (cuarto trimestre); el último es el trimestre más reciente.
           </p>
+          <StaffChange
+            changes={a.quarterlyChange}
+            subject={a.name}
+            note={
+              a.before.length > 0
+                ? "Este organismo cambió de áreas entre gestiones: un salto grande puede ser un traspaso desde o hacia otro organismo."
+                : undefined
+            }
+          />
         </Section>
       )}
 
@@ -536,8 +543,6 @@ function Overview({ overview: o }: { overview: GobiernoOverview }) {
     .filter((c) => c.pct <= -1)
     .slice(0, 5);
   const yearEnds = o.series.filter((p, i, all) => p.period.endsWith("-T4") || i === all.length - 1);
-  const rises = o.quarterlyChange.filter((q) => q.change > 0).length;
-  const falls = o.quarterlyChange.filter((q) => q.change < 0).length;
   return (
     <>
       <Section id="cambios" title="Cómo cambió la planta del Estado">
@@ -553,30 +558,11 @@ function Overview({ overview: o }: { overview: GobiernoOverview }) {
           De {formatNumber(first.staff)} cargos de planta en el {periodLabel(first.period)} a {formatNumber(last.staff)} en el{" "}
           {periodLabel(last.period)}. Los contratos de locación pasaron de {formatNumber(first.contracts)} a {formatNumber(last.contracts)}.
         </p>
-        {o.quarterlyChange.length > 1 && (
-          <>
-            <h3 className="pt-2 text-body-semibold">Cuánto subió o bajó cada trimestre</h3>
-            <ChangeChart
-              columnas={o.quarterlyChange.map((q) => ({
-                etiqueta: periodLabel(q.period),
-                valor: q.change,
-                detalle: `frente al ${periodLabel(q.previous)}`,
-              }))}
-              formatValue={signedPositions}
-              ticks={o.quarterlyChange.filter((q) => q.period.endsWith("-T1")).map((q) => periodLabel(q.period))}
-              formatTick={(label) => `'${label.slice(-2)}`}
-              ariaLabel="Diferencia de cargos de planta del Estado provincial contra el trimestre anterior"
-            />
-            <p className="text-body-regular text-text-secondary text-pretty">
-              La planta creció en {rises} trimestres y se achicó en {falls}. Cada columna es la diferencia neta: los cargos que se sumaron
-              menos los que se dejaron de liquidar.
-            </p>
-            <p className="text-caption-1-regular text-text-tertiary text-pretty">
-              Cuenta cargos de planta (permanentes y temporarios), no personas, y no incluye contratos de locación. Las designaciones y
-              renuncias con nombre y apellido que salen en el Boletín Oficial están en la ficha de cada organismo.
-            </p>
-          </>
-        )}
+        <StaffChange
+          changes={o.quarterlyChange}
+          subject="el Estado provincial"
+          note="Las designaciones y renuncias con nombre y apellido que salen en el Boletín Oficial están en la ficha de cada organismo."
+        />
         <h3 className="pt-2 text-body-semibold">Contratos de locación al cierre de cada año</h3>
         <ColumnChart
           columnas={yearEnds.map((p) => ({ etiqueta: p.period.slice(0, 4), valor: p.contracts }))}

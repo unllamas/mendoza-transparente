@@ -192,6 +192,11 @@ Fuente: anexo 19 del informe trimestral de Responsabilidad Fiscal (`lrf-personal
   - Cambio de cargos de planta desde el cuarto trimestre de 2023, el inicio de la gestión actual. Solo organismos con al menos 50 cargos. Se marcan con asterisco los que cambiaron de áreas (`antes`), porque parte de la diferencia puede ser un traspaso.
   - Contratados cada 100 cargos de planta.
   - Se presentan como preguntas, no como irregularidades.
+- **Cuánto subió o bajó cada trimestre** (`quarterlyChange`, componente `StaffChange`; en `/gobierno`, en cada organismo y en cada municipio): cargos de planta (permanente + temporaria) de un trimestre menos los del trimestre publicado anterior. No incluye contratos. Reglas:
+  - Si falta un informe, la columna compara con el último publicado y lo dice («frente al 1.º trimestre de 2024»). Si el hueco es de más de un año, ese paso no se muestra, porque en el gráfico parecería un solo trimestre.
+  - Se saltea el trimestre en que el anexo omite una línea (`organismo`) que está el trimestre anterior y el siguiente: el total baja y vuelve sin que se vaya nadie (1.er trimestre de 2025, Protección de Derechos de Niños, Niñas y Adolescentes).
+  - En los municipios se saltea el trimestre cuyo total se armó sumando filas porque el documento no traía la fila de totales (San Rafael, 2.º trimestre de 2024: cuenta subtotales dos veces).
+  - Se muestra desde cuatro pasos. En los organismos que cambiaron de áreas (`antes`) se aclara que un salto grande puede ser un traspaso.
 - **Designaciones:** las del Boletín Oficial (`designaciones`), asignadas por organismo emisor o repartición. La cobertura depende de cuántos Boletines tengamos con texto completo.
 
 ## Desvío entre lo estimado y lo adjudicado
