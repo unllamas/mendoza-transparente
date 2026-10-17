@@ -244,7 +244,7 @@ export function FuncionarioPage() {
   );
 }
 
-/** Contenido de la ficha: foto, cargo, mandato, sueldo publicado y declaración jurada. */
+/** Contenido de la ficha: foto, cargo, mandato, declaración jurada y sueldo publicado. */
 function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: FuncionariosTema["usd"] }) {
   const pedido = PEDIDO_SUELDO[p.grupo];
   return (
@@ -268,6 +268,8 @@ function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: Fun
         {p.seccion && <Campo label="Electo por" value={p.seccion} />}
         {(p.mandatoDesde || p.mandatoHasta) && <Campo label="Mandato" value={`${p.mandatoDesde ?? "?"}–${p.mandatoHasta ?? "?"}`} />}
       </dl>
+
+      <Declaracion persona={p} usd={usd} />
 
       <section className="flex flex-col gap-2">
         <h4 className="text-body-semibold">Cuánto cobra</h4>
@@ -299,8 +301,6 @@ function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: Fun
           </Alert>
         )}
       </section>
-
-      <Declaracion persona={p} usd={usd} />
 
       {/diputados|senado/.test(p.grupo) && (
         <p className="flex items-center gap-2 text-body-regular text-text-tertiary">
