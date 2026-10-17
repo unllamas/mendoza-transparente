@@ -20,13 +20,28 @@ git switch dev && git pull
 git switch -c feat/mi-cambio
 # … commits …
 git push -u origin feat/mi-cambio
-gh pr create --base dev --fill
+gh pr create --base dev          # abre el editor con la plantilla
 ```
 
-1. **Cada PR a `dev` pasa la CI** (`.github/workflows/ci.yml`: Biome, arquitectura, tipos, pruebas, build y verificación visual) y, cuando haya más de una persona, la revisión de otra.
-2. **Se mergea con squash**: un commit por tarea en `dev`, con el mensaje en español que explica qué cambia y por qué.
-3. **Cloudflare publica la vista previa** de cada rama y de `dev`: se prueba ahí, no en producción.
-4. Si `dev` avanzó mientras tanto, se actualiza la rama con `git pull --rebase origin dev`.
+1. **El PR usa la plantilla** (`.github/pull_request_template.md`); ver [abajo](#la-plantilla-de-pr).
+2. **Cada PR a `dev` pasa la CI** (`.github/workflows/ci.yml`: Biome, arquitectura, tipos, pruebas, build y verificación visual) y, cuando haya más de una persona, la revisión de otra.
+3. **Se mergea con squash**: un commit por tarea en `dev`, con el mensaje en español que explica qué cambia y por qué.
+4. **Cloudflare publica la vista previa** de cada rama y de `dev`: se prueba ahí, no en producción.
+5. Si `dev` avanzó mientras tanto, se actualiza la rama con `git pull --rebase origin dev`.
+
+## La plantilla de PR
+
+`.github/pull_request_template.md` la carga GitHub al abrir un PR desde la web, y `gh pr create` sin `--fill` ni `--body`. Pide:
+
+- **Qué cambia y por qué**, para alguien que no vio la conversación.
+- **Tipo**: funcionalidad, arreglo, hotfix, datos, documentación o release.
+- **Revisión del propio cambio**: alcance del diff, documentación al día (procesos, skills, `AGENTS.md` y referencias viejas a comandos o rutas), convenciones de idioma, secretos, reglas de `data/` y, si hay interfaz, la revisión con `revisar-interfaz`, la analítica y las capturas.
+- **Cómo se verificó**: cada comando corrido con su resultado (`bun run lint`, `bun run typecheck`, `bun test`, `bun run verificar`…) y el link a la vista previa.
+- **Riesgos y pendientes**.
+
+Lo que no aplica se tacha diciendo por qué, en vez de borrarlo: así quien revisa ve que se pensó.
+
+**Un agente** no abre el PR sin hacer esa revisión de verdad: mira el diff (`git diff origin/dev...HEAD`), corre los comandos y busca las referencias viejas antes de marcar cada punto. Si algo falla o falta, lo arregla antes de abrir el PR o lo deja escrito en «Riesgos y pendientes». Escribe el cuerpo en un archivo temporal siguiendo la plantilla y abre el PR con `gh pr create --base dev --title "…" --body-file <archivo>`.
 
 ## Release: de `dev` a `main`
 
@@ -52,10 +67,10 @@ git switch main && git pull
 git switch -c hotfix/mi-arreglo
 # … el arreglo mínimo …
 git push -u origin hotfix/mi-arreglo
-gh pr create --base main --fill
+gh pr create --base main
 ```
 
-1. El PR va a `main`, con la CI verde. Se mergea con squash.
+1. El PR va a `main`, con la plantilla completa y la CI verde. Se mergea con squash.
 2. **Back merge a `dev`**: lo hace solo el workflow `.github/workflows/back-merge.yml` en cada push a `main` (ver abajo). Hay que **confirmar que corrió**: si `dev` no recibe el arreglo, el próximo release lo pisa y el error vuelve a producción.
 
 ## Back merge automático

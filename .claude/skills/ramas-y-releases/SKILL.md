@@ -11,14 +11,16 @@ Detalle completo: `docs/procesos/ramas-y-releases.md`.
 
 - **`main` es producción**: cada push publica el sitio. Nunca se pushea directo a `main`.
 - **Todo lo nuevo sale de `dev`**: `git switch dev && git pull && git switch -c <tipo>/<tema>` (`feat/`, `fix/`, `datos/`, `docs/`).
-- **PR a `dev`** con `gh pr create --base dev --fill`, CI verde y **squash**.
+- **PR a `dev`** con la plantilla `.github/pull_request_template.md` completa, CI verde y **squash**.
 - **Release**: PR `dev → main` titulado `Release <fecha>`, probado en `dev.mendoza-transparente.pages.dev`, mergeado con **merge commit** (nunca squash ni rebase). Lo decide una persona: un agente puede abrirlo, no mergearlo sin pedido.
 - **Hotfix**: rama `hotfix/<tema>` desde `main`, PR a `main` con squash. Después, **confirmar el back merge a `dev`** (workflow «Back merge a dev»); si abrió un PR `main → dev` con la etiqueta `back-merge`, resolverlo con merge commit.
 - **Datos**: se publican en `main` (workflow de actualización y `bun run actualizar`, que solo publica desde `main`). Un scraper nuevo o cambiado es código y va por `dev`.
 
-## Checklist antes de pushear
+## Antes de abrir el PR
 
-1. ¿Estoy en una rama de trabajo, no en `main` ni en `dev`?
-2. ¿La rama salió de `dev` (o de `main` si es un hotfix)?
-3. ¿El PR apunta a la base correcta?
-4. Para revisar el cambio, la base es `origin/dev` (`origin/main` en un hotfix).
+1. ¿Estoy en una rama de trabajo, no en `main` ni en `dev`? ¿Salió de `dev` (o de `main` si es un hotfix)?
+2. **Revisar el propio diff** (`git diff origin/dev...HEAD`; en un hotfix, `origin/main`): solo lo de la tarea, sin secretos ni `bun.lock` de más.
+3. **Documentación**: si cambió un proceso, su documento en `docs/procesos/` y su skill; si cambió un comando, un script o una ruta, buscar el nombre viejo con `grep -rn` en `docs/`, `.claude/skills/`, `AGENTS.md` y `README.md`.
+4. **Correr** `bun run lint`, `bun run typecheck`, `bun test` y, si hay interfaz, `bun run verificar` y la skill `revisar-interfaz`. Anotar cada resultado.
+5. **Escribir el cuerpo** siguiendo `.github/pull_request_template.md` en un archivo temporal: marcar solo lo que se revisó de verdad, tachar con el motivo lo que no aplica, y dejar en «Riesgos y pendientes» lo que falló o quedó afuera.
+6. `gh pr create --base dev --title "…" --body-file <archivo>`.
