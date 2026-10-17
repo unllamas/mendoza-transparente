@@ -4,7 +4,7 @@ import { PageHeader, Section } from "@mt/ui/components/section";
 import { StatTile } from "@mt/ui/components/stat-tile";
 import { cx } from "@mt/ui/lib/cx";
 import { RiBankLine, RiLineChartLine, RiUserLine } from "@remixicon/react";
-import { getRouteApi, Link } from "@tanstack/react-router";
+import { getRouteApi } from "@tanstack/react-router";
 
 import { BarList } from "@/charts/bar-list.tsx";
 import { LineChart } from "@/charts/line-chart.tsx";
@@ -21,7 +21,6 @@ const trimestre = (fecha: string) => {
   return `${Math.ceil(Number(m) / 3)}.º trim. ${y}`;
 };
 const mesAnio = (fecha: string) => new Date(`${fecha.slice(0, 7)}-15`).toLocaleDateString("es-AR", { month: "short", year: "numeric" });
-const FUENTE = "https://sitios.mendoza.gob.ar/haciendayfinanzas/stock-vigente/";
 
 export function DeudaPage() {
   const deuda = route.useLoaderData();
@@ -33,8 +32,6 @@ export function DeudaPage() {
         La deuda pública consolidada de la provincia: bonos, préstamos de organismos internacionales y de bancos. Los montos están en
         dólares para poder comparar años con distinta inflación.
       </PageHeader>
-      <FuentesOficiales ids={["hacienda-deuda-stock"]} />
-
       <div className="grid gap-3 md:grid-cols-3">
         <StatTile icon={RiBankLine} label="Deuda consolidada" value={usdM(deuda.totalUsd)} note={`Al ${formatDate(deuda.corte)}`} />
         <StatTile
@@ -142,18 +139,9 @@ export function DeudaPage() {
             </tbody>
           </table>
         </div>
-        <p className="text-body-regular text-text-tertiary">
-          Fuente:{" "}
-          <a href={FUENTE} className="underline hover:text-text-primary">
-            Ministerio de Hacienda y Finanzas de Mendoza, tablero de deuda
-          </a>
-          . Datos crudos y metodología en{" "}
-          <Link to="/datos/$fuente" params={{ fuente: "hacienda-deuda-stock" }} className="underline hover:text-text-primary">
-            Datos › Deuda
-          </Link>
-          .
-        </p>
       </Section>
+
+      <FuentesOficiales ids={["hacienda-deuda-stock"]} />
     </div>
   );
 }

@@ -37,8 +37,6 @@ export function CoparticipacionPage() {
         La provincia reparte entre los 18 municipios una parte de lo que recauda y de lo que le manda Nación (coparticipación). Todo está en
         pesos de {tema.referencia}, para que se pueda comparar entre años.
       </PageHeader>
-      <FuentesOficiales ids={["hacienda-participacion-municipal", "indices", "poblacion"]} />
-
       <div className="grid gap-3 md:grid-cols-3">
         <StatTile
           icon={RiCoinsLine}
@@ -122,6 +120,8 @@ export function CoparticipacionPage() {
         </Link>
         .
       </p>
+
+      <FuentesOficiales ids={["hacienda-participacion-municipal", "indices", "poblacion"]} />
     </div>
   );
 }

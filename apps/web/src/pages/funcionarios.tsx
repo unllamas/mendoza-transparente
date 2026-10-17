@@ -80,8 +80,6 @@ export function FuncionariosPage() {
         Gobernador, ministros, legisladores, intendentes y quienes representan a Mendoza en el Congreso: su cargo, su partido o bloque,
         hasta cuándo dura su mandato y cuánto cobran cuando el dato es público.
       </PageHeader>
-      <FuentesOficiales ids={["autoridades", "legislatura"]} />
-
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <TrackedSegmented
           label="Grupo"
@@ -110,6 +108,8 @@ export function FuncionariosPage() {
           );
         })
       )}
+
+      <FuentesOficiales ids={["autoridades", "legislatura"]} />
     </div>
   );
 }
