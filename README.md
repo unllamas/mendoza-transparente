@@ -47,17 +47,22 @@ El detalle de los cálculos (pesos de hoy, por habitante, deuda en dólares, com
 
 ## Cómo funciona por dentro
 
+```mermaid
+flowchart TD
+    A[Sitio oficial] --> B[Recolector]
+    B --> C[(Archivo original)]
+    C --> D[(Copia en archive.org)]
+    C --> E[Datos normalizados]
+    F[Contenido curado] --> G
+    E --> G[mendoza-transparente.com]
 ```
- sitio oficial ──▶ scraper ──▶ data/raw/<fuente>/<fecha>/   archivo original + manifest con sha256
-                                       │
-                                       ├──▶ archive.org     copia fuera del repo y captura en la Wayback Machine
-                                       ▼
-                               data/processed/<fuente>/      CSV normalizados, con diccionario de datos
-                                       │
-                         data/curado/ ─┤                     leyes resumidas, correcciones, lo que no se publica
-                                       ▼
-                               mendoza-transparente.com      páginas prerenderizadas, cada cifra con su fuente
-```
+
+1. **Recolector.** Un script por fuente descarga cada archivo del sitio oficial.
+2. **Archivo original.** Se guarda tal cual llegó en `data/raw/<fuente>/<fecha>/`, con su sha256 en un `manifest.jsonl`.
+3. **Copia en archive.org.** El archivo se sube a archive.org y la Wayback Machine captura la URL oficial: si el organismo lo borra, la prueba queda afuera del repo.
+4. **Datos normalizados.** CSV limpios y comparables en `data/processed/<fuente>/`.
+5. **Contenido curado.** Lo escrito o revisado a mano en `data/curado/`: resúmenes de leyes, correcciones y lo que no se publica.
+6. **La web.** Páginas prerenderizadas, cada cifra con su fuente.
 
 Cada fuente tiene su propio recolector, que es idempotente (correrlo dos veces no duplica nada) y amable con los servidores del Estado (pedidos en secuencia, con pausas). El catálogo completo de fuentes está en [`sources.yaml`](sources.yaml) y el relevamiento, en [`docs/relevamiento-fuentes.md`](docs/relevamiento-fuentes.md). Las columnas de cada CSV se explican en el [diccionario de datos](docs/diccionario-de-datos.md).
 
