@@ -1,0 +1,10 @@
+# Planes
+
+La hoja de ruta: proyectos e ideas que todavía no funcionan del todo. Cada plan dice qué se quiere lograr, por qué, en qué etapas y qué falta decidir.
+
+Cuando una parte de un plan queda funcionando, su proceso se documenta en `docs/procesos/` y el plan se actualiza con lo que se hizo y lo que falta.
+
+| Plan | Estado |
+|---|---|
+| [El Estado por dentro](el-estado-por-dentro.md) | Etapas 1 a 4 hechas; falta el histórico de designaciones |
+| [Agentes sobre los datos](agentes-sobre-los-datos.md) | Propuesta, sin empezar |
