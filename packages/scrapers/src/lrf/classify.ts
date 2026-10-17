@@ -87,11 +87,18 @@ export function revenueKind(code: string): string | null {
 }
 
 /**
- * Normalized object code from a hierarchical code already split in levels ("4.1.1.PERSONAL" → ["4", "1", "1"]; Capital
- * and Guaymallén). Capital uses 5.4.1 for capital transfers, which elsewhere is an additional credit: the label decides.
+ * Normalized object code from a hierarchical code already split in levels ("4.1.1.PERSONAL" → ["4", "1", "1"]; Capital,
+ * Guaymallén, Godoy Cruz). The object is the first three levels, with corrections where a municipality uses a code for
+ * something else, decided by the printed label when there is one:
+ *   - Capital's 5.4.1 is capital transfers, which elsewhere is an additional credit.
+ *   - Godoy Cruz 2026 swaps 5.1.02 and 5.2.02: the label says which one is public works and which one loans.
+ *   - Godoy Cruz splits the debt with a fourth level: 6.2.01.01 consolidated, 6.2.01.02 floating.
  */
 export function objectCodeFromLevels(levels: string[], label: string): string {
-  const code = levels.join(".");
+  const code = levels.slice(0, 3).join(".");
+  if (/trabajos?\s+p[uú]blicos/i.test(label)) return "5.1.2";
+  if (/^pr[eé]stamos$/i.test(label.trim())) return "5.2.2";
   if (code === "5.4.1" && /transferencia/i.test(label)) return "4.3.2";
+  if (code === "6.2.1" && levels[3] === "2") return "7.4.1";
   return EQUIVALENT_CODES[code] ?? code;
 }
