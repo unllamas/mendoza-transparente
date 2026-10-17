@@ -11,8 +11,8 @@ Detalle completo: `docs/procesos/ramas-y-releases.md`.
 
 - **`main` es producción**: cada push publica el sitio. Nunca se pushea directo a `main`.
 - **Todo lo nuevo sale de `dev`**: `git switch dev && git pull && git switch -c <tipo>/<tema>` (`feat/`, `fix/`, `datos/`, `docs/`).
-- **PR a `dev`** con la plantilla `.github/pull_request_template.md` completa, CI verde y **squash**.
-- **Release**: PR `dev → main` titulado `Release <fecha>`, probado en `dev.mendoza-transparente.pages.dev`, mergeado con **merge commit** (nunca squash ni rebase). Lo decide una persona: un agente puede abrirlo, no mergearlo sin pedido.
+- **PR a `dev`** con la plantilla `.github/pull_request_template.md` completa, CI verde y **squash**. El agente lo mergea él mismo; no espera aprobación salvo que el PR venga de alguien de afuera del equipo, que necesita la revisión de alguien del equipo.
+- **Release**: PR `dev → main` titulado `Release <fecha>`, probado en `dev.mendoza-transparente.pages.dev`, mergeado con **merge commit** (nunca squash ni rebase). Si la persona pidió que se publique cuando funcione, el agente lo mergea con la CI y la vista previa bien.
 - **Hotfix**: rama `hotfix/<tema>` desde `main`, PR a `main` con squash. Después, **confirmar el back merge a `dev`** (workflow «Back merge a dev»); si abrió un PR `main → dev` con la etiqueta `back-merge`, resolverlo con merge commit.
 - **Datos**: se publican en `main` (workflow de actualización y `bun run actualizar`, que solo publica desde `main`). Un scraper nuevo o cambiado es código y va por `dev`.
 
