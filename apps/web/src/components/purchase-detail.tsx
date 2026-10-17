@@ -82,7 +82,7 @@ export function PanelDetalle({
 
 /** De dónde sale el dato: la fuente oficial, el documento de la fila si existe, nuestra copia archivada y la de archive.org. */
 function OrigenDato({ dataset, fila, ocid }: { dataset: DatasetMeta; fila: string[]; ocid?: string }) {
-  const [fuente] = useFuentes([dataset.source]);
+  const fuente = useFuentes([dataset.source])?.[0];
   const urlFila = ["url_pdf", "fuente_url", "url"].map((c) => fila[dataset.columns.indexOf(c)]).find((v) => v && /^https?:\/\//.test(v));
   const esCompra = dataset.source === "compras-ocds";
 
@@ -161,11 +161,16 @@ function CamposFila({ columnas, fila, titulo }: { columnas: ColumnaVista[]; fila
   );
 }
 
-function useCarga<T>(path: string, pick?: (data: unknown) => T | undefined) {
-  const [data, setData] = useState<T | null>(null);
+/** Loads a JSON file on mount. `initial`: the same file already loaded by the route, so it is neither fetched twice nor shown as «Cargando…». */
+function useCarga<T>(path: string, pick?: (data: unknown) => T | undefined, initial?: T | null) {
+  const [data, setData] = useState<T | null>(initial ?? null);
   const [error, setError] = useState(false);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: reload only when the file changes; `pick` is a new function on every render.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: reload only when the file changes; `pick` and `initial` are not keys.
   useEffect(() => {
+    if (initial) {
+      setData(initial);
+      return;
+    }
     setData(null);
     setError(false);
     loadJson<unknown>(path).then(
@@ -180,8 +185,19 @@ function useCarga<T>(path: string, pick?: (data: unknown) => T | undefined) {
   return { data, error };
 }
 
-export function Proveedor({ cuit, onProceso, sinTitulo }: { cuit: string; onProceso: (ocid: string) => void; sinTitulo?: boolean }) {
-  const { data: p, error } = useCarga<ProveedorDetalle>(`temas/compras/proveedores/${cuit}.json`);
+export function Proveedor({
+  cuit,
+  onProceso,
+  sinTitulo,
+  initial,
+}: {
+  cuit: string;
+  onProceso: (ocid: string) => void;
+  sinTitulo?: boolean;
+  /** The supplier's file when the page already loaded it (its own route); the sheet loads it here. */
+  initial?: ProveedorDetalle | null;
+}) {
+  const { data: p, error } = useCarga<ProveedorDetalle>(`temas/compras/proveedores/${cuit}.json`, undefined, initial);
   // Agencies with their own page (the ones with enough processes), by their name in the purchase data.
   const { data: agencies } = useCarga<OrganismoResumen[]>("temas/organismos.json");
   const agencySlug = new Map((agencies ?? []).map((a) => [a.buyer, a.slug]));

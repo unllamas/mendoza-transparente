@@ -9,7 +9,7 @@ Fuente completa: `docs/procesos/diseno.md`. Público: cualquier persona de Mendo
 
 ## Sistema de diseño
 
-Los componentes base y los tokens están en `packages/ui` (`@mt/ui`). **La base es BoardUI** (React Aria, en `src/components/{base,application,foundations}/`) y se está migrando: lo nuevo se arma con BoardUI y lo que se toca se pasa. Se agrega con `BOARDUI_TELEMETRY_DISABLED=1 npx -y boardui@latest add <x>` desde `packages/ui`, nunca con `init`. De BoardUI: `Button` e `IconButton` (44 px por defecto; `buttonClassName()` para un `Link`), `Input`, `Textarea`, `Select`/`SelectItem`, `SegmentedControl`, `Chip`, `StatusDot` y `Avatar`, con íconos de `@remixicon/react`. Propios armados con BoardUI y React Aria: `Sheet`, `Dialog`, `Popover`, `Alert`, `StatTile`, `Section`, `PageHeader`, `PersonAvatar`, `SearchInput` y `Segmented`. Para estilizar otro elemento: `buttonClassName`, `tileVariants`, `cardVariants`, `listVariants` y `listRowVariants`. Clases con `cx()` (`@mt/ui/lib/cx`); sin Radix ni `cva`.
+Los componentes base y los tokens están en `packages/ui` (`@mt/ui`). **La base es BoardUI** (React Aria, en `src/components/{base,application,foundations}/`) y se está migrando: lo nuevo se arma con BoardUI y lo que se toca se pasa. Se agrega con `BOARDUI_TELEMETRY_DISABLED=1 npx -y boardui@latest add <x>` desde `packages/ui`, nunca con `init`. De BoardUI: `Button` e `IconButton` (44 px por defecto; `buttonClassName()` para un `Link`), `Input`, `Textarea`, `Select`/`SelectItem`, `SegmentedControl`, `Chip`, `StatusDot` y `Avatar`, con íconos de `@remixicon/react`. Propios armados con BoardUI y React Aria: `Sheet`, `Dialog`, `Popover`, `Alert`, `Skeleton`, `StatTile`, `Section`, `PageHeader`, `PersonAvatar`, `SearchInput` y `Segmented`. Para estilizar otro elemento: `buttonClassName`, `tileVariants`, `cardVariants`, `listVariants` y `listRowVariants`. Clases con `cx()` (`@mt/ui/lib/cx`); sin Radix ni `cva`.
 
 - **Solo Tailwind:** no se escribe CSS propio. Los tokens del sitio viven en `packages/ui/src/styles/mt.css`, encima de los de BoardUI (`theme.css`, que no se edita).
 - **Tema claro por defecto;** el oscuro (`.dark`) solo si la persona lo elige en el footer. Nunca `dark:` a mano.
@@ -44,6 +44,7 @@ Los componentes base y los tokens están en `packages/ui` (`@mt/ui`). **La base 
 - **Teclado correcto** (`type`, `inputMode`, `enterKeyHint`) y **respuesta al tocar** (`active:`).
 - **Elementos nativos:** `<button>` para acciones, `<a>`/`Link` para navegar; nunca `<div onClick>`. Foco visible siempre; Escape cierra; todo se hace con teclado.
 - **Nombre accesible** en todo lo que se toca; el color nunca va solo; contraste 4,5:1 en texto.
+- **Lo que llega después guarda su lugar:** `Skeleton`/`SkeletonText` de `@mt/ui` con el alto real del bloque (medido en 375 y 1280 px), nunca un «Cargando…» que después empuja la página. Capas de datos en `docs/procesos/web.md#velocidad-de-carga`.
 - **Movimiento mínimo:** 200 ms o menos, `motion-safe:` para desplazamientos y escalas, propiedades con nombre (nunca `transition-all`) y nunca como única señal.
 
 ## Fotos de paisaje

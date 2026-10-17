@@ -8,7 +8,8 @@
 
 1. Lee `sources.yaml`, los `manifest.jsonl` y los CSV de `data/processed/`.
 2. Escribe en `apps/web/public/data/`:
-   - `index.json`: catálogo de fuentes y tablas.
+   - `index.json`: catálogo de fuentes y tablas (más de 100 KB: solo lo usan `/fuentes` y `/datos`).
+   - `fuentes.json`: solo las fuentes, la fecha de los datos y dos totales (unos 4 KB comprimido). Lo usan el footer, la portada y cada sección «Fuentes».
    - Por tabla: el CSV completo (para descargar) y una vista previa de las filas más recientes (o una por grupo si la tabla se agrupa).
    - `temas/*.json`: los agregados de cada página temática, calculados por los scripts de `scripts/temas/` (deuda, coparticipación, empleo, población, funcionarios, señales, compras, portada).
    - `fotos/`: miniaturas de funcionarios.
@@ -178,11 +179,47 @@ El pie lista, debajo del selector de tema, otros proyectos cívicos y de datos a
 
 ## Velocidad de carga
 
+### Los datos de cada página, por capas
+
+Una página no espera todo lo que muestra: espera solo lo que se ve al entrar. Los datos se separan en tres capas:
+
+| Capa | Qué es | Cómo se carga |
+|---|---|---|
+| **1. Primaria** | Lo que pide la búsqueda y se ve al entrar: el título, las cifras, el gráfico principal. | El `loader` de la ruta lo espera (`await`). El HTML de la página lo precarga (ver abajo). |
+| **2. Secundaria** | Lo relacionado con lo que se busca, más abajo en la página. | El `loader` lo devuelve sin `await` y la página lo muestra con `<Await promise={…} fallback={<…Skeleton />}>` (TanStack Router). |
+| **3. Terciaria** | Fuentes, metadatos, extras. | Se pide desde el componente, sin bloquear nada, y guarda su lugar mientras llega. `FuentesOficiales` y la fecha del footer son de esta capa. |
+
+- **Ejemplo:** la portada espera `home.json`, `guia.json`, `mapa.json` y `fuentes.json`; «Lo que el Estado no publica» llega después (`no-publicado.json`, con `MissingDataSkeleton`).
+- **Lo que llega después guarda su lugar.** Un bloque que aparece tarde y empuja lo de abajo es un salto (CLS). Mientras carga se muestra `Skeleton` o `SkeletonText` de `@mt/ui` con el alto real del bloque, medido en 375 y 1280 px. Un skeleton de otro alto sigue moviendo la página.
+- **Un archivo se baja una sola vez.** Si la ruta ya cargó un archivo, el componente lo recibe por props (`initial` en `Proveedor`) en vez de volver a pedirlo.
+- **Los archivos de una misma capa se piden juntos** (`Promise.all`), nunca uno detrás del otro.
+- **Un archivo grande para un dato chico se parte en el build.** La fecha del footer no justifica bajar `index.json`: para eso está `fuentes.json`. Lo mismo vale para cualquier lista completa que se usa para mostrar un solo elemento.
+- **`meta.json`** (título y descripción de las 800 páginas) se pide solo al navegar dentro del sitio: la página de entrada ya los trae en su HTML.
+
+### Precarga desde el HTML
+
+`scripts/seo.ts` agrega en el `<head>` de cada página prerenderizada:
+
+- `<link rel="preload" as="fetch" crossorigin="anonymous">` para los JSON de la capa 1,
+- `<link rel="modulepreload">` para el JavaScript de la página y todo lo que importa (incluido Recharts).
+
+Así se descargan junto con el HTML, en vez de esperar a que corra `main.js` para descubrirlos. Qué archivos lleva cada ruta está en `apps/web/scripts/preload.ts` (`routePreload`): **cuando cambia el `loader` de una ruta en `src/main.tsx`, se cambia también ahí**. Los chunks salen del manifest de Vite (`build.manifest`), que `seo.ts` lee y borra antes de publicar. Un JSON que no existe no se precarga.
+
+### Lo demás
+
 - **Cada página es su propio archivo de JavaScript** (`lazyRouteComponent` en `src/main.tsx`): la primera visita baja el layout y la página donde entra. La hoja de detalle de compras se descarga la primera vez que se abre (`React.lazy` en `src/components/detail-sheet.tsx`).
 - **El CSS va dentro del HTML:** `scripts/seo.ts` lo inserta en cada página después del build. Es un viaje menos antes de la primera pintura.
 - **PostHog se carga cuando la página terminó y el navegador está libre** (`whenIdle` en `src/analytics.ts`). Los eventos de antes quedan en cola y se envían después.
 - **Source maps publicados** (`build.sourcemap`): el repo es público.
-- **Para medir:** `bunx lighthouse <url> --form-factor=mobile`. Lo más pesado que queda es el tiempo de render: la página aparece cuando corre el JavaScript.
+
+### Medir
+
+- **En local:** `bun run medir` (`scripts/measure-vitals.ts`) sobre el build (`bun run data`, `bunx vite build` y `bun scripts/seo.ts` en `apps/web`). Mide FCP, LCP y CLS de las páginas clave como un celular con red lenta y CPU 4 veces más lenta, y como una computadora. Para cada salto dice qué elementos se movieron, y además muestra los avisos de consola, como un preload sin usar. Con rutas como argumento mide solo esas. El LCP del celular varía de una corrida a otra: comparar varias.
+- **En producción:** PostHog, *Web analytics → Web vitals*, siempre en **P75**, que es el criterio de Google. Con pocas visitas por día, P90 y P99 muestran la peor visita, no la tendencia. Para encontrar la página culpable: el evento `$web_vitals` desglosado por `$pathname` y `$device_type`.
+- **El CLS de PostHog suma toda la visita**, incluidas las navegaciones dentro del sitio. Un salto al cambiar de página cuenta igual que uno al entrar.
+- `bunx lighthouse <url> --form-factor=mobile` para el detalle de una página.
+
+Plan de lo que falta: [Carga por capas](../planes/carga-por-capas.md).
 
 ## Verificar antes de dar algo por terminado
 

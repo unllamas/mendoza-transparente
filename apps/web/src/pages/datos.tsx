@@ -2,6 +2,7 @@ import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { Select, SelectItem } from "@mt/ui/components/base/select/select";
 import { tileVariants } from "@mt/ui/components/card";
 import { SectionTitle } from "@mt/ui/components/section";
+import { Skeleton } from "@mt/ui/components/skeleton";
 import { StatTile } from "@mt/ui/components/stat-tile";
 import { cx } from "@mt/ui/lib/cx";
 import { RiArrowLeftLine, RiCursorLine, RiDownloadLine, RiExternalLinkLine } from "@remixicon/react";
@@ -137,7 +138,11 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
       </div>
 
       {error && <p className="text-body-regular text-text-secondary">{error}</p>}
-      {!preview && !error && <p className="text-body-regular text-text-tertiary">Cargando…</p>}
+      {!preview && !error && dict?.vista === "ultimo" && <p className="text-body-regular text-text-tertiary">Cargando…</p>}
+      {/* The table's place while the rows load: header plus one 33 px row per row, up to the table's 32 rem. */}
+      {!preview && !error && dict?.vista !== "ultimo" && (
+        <Skeleton className="rounded-xl" style={{ height: `min(32rem, ${40 + Math.min(rowCount, 500) * 33}px)` }} />
+      )}
 
       {preview && dict?.vista === "ultimo" && <UltimoDato columnas={columnas} fila={preview.rows[0]} />}
 

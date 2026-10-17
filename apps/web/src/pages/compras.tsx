@@ -122,8 +122,8 @@ export function ProveedorPage() {
           <h1 className="text-title-1-semibold tracking-tight text-balance break-words sm:text-display-4-semibold">{nombre}</h1>
         </div>
       </WithBreadcrumbs>
+      <Proveedor cuit={cuit} initial={ficha} sinTitulo onProceso={(ocid) => detail.open("proceso", ocid)} />
       <FuentesOficiales ids={FUENTES} />
-      <Proveedor cuit={cuit} sinTitulo onProceso={(ocid) => detail.open("proceso", ocid)} />
     </div>
   );
 }
@@ -202,7 +202,6 @@ export function OrganismoPage() {
           Cuánto compró, a quiénes y con qué modalidad.
         </PageHeader>
       </WithBreadcrumbs>
-      <FuentesOficiales ids={FUENTES} />
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <StatTile icon={RiReceiptLine} label="Total adjudicado" value={formatMoneda(o.total, "ARS")} />
@@ -292,6 +291,8 @@ export function OrganismoPage() {
           ))}
         </ul>
       </Section>
+
+      <FuentesOficiales ids={FUENTES} />
     </div>
   );
 }

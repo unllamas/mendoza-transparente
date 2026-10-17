@@ -1,6 +1,7 @@
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { cardVariants, listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
 import { SectionTitle } from "@mt/ui/components/section";
+import { Skeleton, SkeletonText } from "@mt/ui/components/skeleton";
 import { cx } from "@mt/ui/lib/cx";
 import {
   type RemixiconComponentType,
@@ -22,7 +23,7 @@ import {
   RiSparklingLine,
   RiTeamLine,
 } from "@remixicon/react";
-import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
+import { Await, getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
 import { track } from "@/analytics.ts";
@@ -34,7 +35,7 @@ import { LandscapePhoto } from "@/components/landscape-photo.tsx";
 import { SearchTrigger } from "@/components/search-dialog.tsx";
 import { formatDate, formatNumber } from "@/lib.ts";
 import { slug } from "@/slug.ts";
-import type { SourceMeta } from "@/types.ts";
+import type { NoPublicado, SourceMeta } from "@/types.ts";
 
 const route = getRouteApi("/");
 
@@ -45,12 +46,10 @@ const pesos = (v: number) => `$ ${entero(v)}`;
 const millones = (v: number) => `$ ${entero(v / 1e6)}`;
 
 export function HomePage() {
-  const { index, home, mapa, noPublicado, guide } = route.useLoaderData();
+  const { sources, home, mapa, noPublicado, guide } = route.useLoaderData();
   const navigate = useNavigate();
-  const fuentesConDatos = index.sources.filter((s) => index.datasets.some((d) => d.source === s.id)).length;
-  const registros = index.datasets.reduce((s, d) => s + d.rowCount, 0);
   const { deuda, coparticipacion, empleo, poblacion, compras, boletin, inflacion, dolar } = home;
-  const fuente = (id: string) => index.sources.find((s) => s.id === id);
+  const fuente = (id: string) => sources.sources.find((s) => s.id === id);
 
   return (
     <div className="flex flex-col gap-14 sm:gap-20">
@@ -61,7 +60,7 @@ export function HomePage() {
           <div className="flex max-w-3xl flex-col gap-3 sm:gap-4">
             <p className="flex items-center gap-2 text-body-medium text-text-secondary">
               <span className="size-1.5 shrink-0 rounded-full bg-highlight" aria-hidden />
-              {formatNumber(registros)} registros de {fuentesConDatos} fuentes oficiales
+              {formatNumber(sources.records)} registros de {sources.sourcesWithData} fuentes oficiales
             </p>
             <h1 className="text-display-4-semibold tracking-tight text-balance sm:text-display-2-semibold">
               Mendoza, con los números sobre la mesa.
@@ -308,40 +307,10 @@ export function HomePage() {
         )}
       </section>
 
-      {/* Lo que no se publica */}
-      {noPublicado.length > 0 && (
-        <section className="flex flex-col gap-6">
-          <Encabezado
-            id="no-publicado"
-            icon={RiEyeOffLine}
-            titulo="Lo que el Estado no publica"
-            bajada={`${noPublicado.length} datos que deberían ser públicos y no encontramos en ningún sitio oficial. Podés pedirlos vos.`}
-          />
-          <ul className={listVariants()}>
-            {noPublicado.slice(0, 4).map((item) => (
-              <li key={item.id}>
-                <Link
-                  to="/no-publicado"
-                  search={{ dato: item.id } as never}
-                  data-track="home.missing_data.open"
-                  data-track-item={item.id}
-                  className={cx(listRowVariants(), "items-start text-body-regular")}
-                >
-                  <RiEyeOffLine className="mt-0.5 size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
-                  <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                    <span className="font-medium">{item.titulo}</span>
-                    <span className="text-text-tertiary">{item.organismo}</span>
-                  </span>
-                  <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <Link to="/no-publicado" className={buttonClassName({ variant: "secondary", className: "w-full sm:w-fit" })}>
-            Ver los {noPublicado.length} y cómo pedirlos <RiArrowRightLine className="size-5" aria-hidden />
-          </Link>
-        </section>
-      )}
+      {/* Lo que no se publica: tercera capa, llega después y mientras tanto guarda su lugar */}
+      <Await promise={noPublicado} fallback={<MissingDataSkeleton />}>
+        {(items) => <MissingData items={items} />}
+      </Await>
 
       {guide && (
         <section className="flex flex-col gap-6">
@@ -365,6 +334,61 @@ export function HomePage() {
         <ReadingRules />
       </section>
     </div>
+  );
+}
+
+/** «Lo que el Estado no publica»: the first four, with a link to the full list. */
+function MissingData({ items }: { items: NoPublicado[] }) {
+  if (items.length === 0) return null;
+  return (
+    <section className="flex flex-col gap-6">
+      <Encabezado
+        id="no-publicado"
+        icon={RiEyeOffLine}
+        titulo="Lo que el Estado no publica"
+        bajada={`${items.length} datos que deberían ser públicos y no encontramos en ningún sitio oficial. Podés pedirlos vos.`}
+      />
+      <ul className={listVariants()}>
+        {items.slice(0, 4).map((item) => (
+          <li key={item.id}>
+            <Link
+              to="/no-publicado"
+              search={{ dato: item.id } as never}
+              data-track="home.missing_data.open"
+              data-track-item={item.id}
+              className={cx(listRowVariants(), "items-start text-body-regular")}
+            >
+              <RiEyeOffLine className="mt-0.5 size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
+              <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                <span className="font-medium">{item.titulo}</span>
+                <span className="text-text-tertiary">{item.organismo}</span>
+              </span>
+              <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <Link to="/no-publicado" className={buttonClassName({ variant: "secondary", className: "w-full sm:w-fit" })}>
+        Ver los {items.length} y cómo pedirlos <RiArrowRightLine className="size-5" aria-hidden />
+      </Link>
+    </section>
+  );
+}
+
+/** Same height as `MissingData` while the list loads: heading, four two-line rows and the button. */
+function MissingDataSkeleton() {
+  return (
+    <section aria-hidden className="flex flex-col gap-6">
+      <div className="flex max-w-2xl flex-col gap-1.5">
+        <SkeletonText className="w-3/5 text-title-1-semibold" />
+        <SkeletonText className="w-full" />
+        <SkeletonText className="w-2/3" />
+        <SkeletonText className="w-1/3 sm:hidden" />
+      </div>
+      {/* Measured: the four rows wrap to more lines on a phone. */}
+      <Skeleton className="h-[21.75rem] rounded-xl sm:h-[16.75rem]" />
+      <Skeleton className="h-11 w-full sm:w-64" />
+    </section>
   );
 }
 

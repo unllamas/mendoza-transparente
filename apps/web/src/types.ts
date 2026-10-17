@@ -60,6 +60,16 @@ export interface DataIndex {
   datasets: DatasetMeta[];
 }
 
+/** public/data/fuentes.json: the sources without the datasets, for the footer, the home and every «Fuentes» section. */
+export interface SourceCatalog {
+  generatedAt: string;
+  sources: SourceMeta[];
+  /** Rows across every published dataset. */
+  records: number;
+  /** Sources with at least one published dataset. */
+  sourcesWithData: number;
+}
+
 export interface Preview {
   columns: string[];
   rows: string[][];
