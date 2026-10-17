@@ -55,7 +55,6 @@ export function ProveedoresPage() {
       <PageHeader action={<ShareButton />} icon={RiBuilding2Line} topic="Proveedores" title="¿A quiénes les compra el Estado?">
         Las empresas que más le vendieron al Gobierno de Mendoza, ordenadas por lo que se les adjudicó.
       </PageHeader>
-      <FuentesOficiales ids={FUENTES} />
       <div className="flex flex-col gap-4">
         <ListSearch
           value={q}
@@ -88,6 +87,8 @@ export function ProveedoresPage() {
         </ul>
         {mostrar < visibles.length && <VerMas onClick={() => setMostrar((n) => n + PAGINA)} />}
       </div>
+
+      <FuentesOficiales ids={FUENTES} />
     </div>
   );
 }
@@ -140,7 +141,6 @@ export function OrganismosPage() {
       <PageHeader action={<ShareButton />} icon={RiBankLine} topic="Organismos" title="¿Quién compra y cómo?">
         Los organismos del Estado provincial que más compran, cuánto gastan y qué parte lo hace por contratación directa.
       </PageHeader>
-      <FuentesOficiales ids={FUENTES} />
       <div className="flex flex-col gap-4">
         <ListSearch
           value={q}
@@ -171,6 +171,8 @@ export function OrganismosPage() {
         </ul>
         {mostrar < visibles.length && <VerMas onClick={() => setMostrar((n) => n + PAGINA)} />}
       </div>
+
+      <FuentesOficiales ids={FUENTES} />
     </div>
   );
 }
