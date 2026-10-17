@@ -75,7 +75,7 @@ gh pr create --base main
 
 ## Back merge automático
 
-`main` recibe commits que no pasan por `dev`: los hotfixes y las actualizaciones de datos (las automáticas de GitHub Actions y las manuales con `bun run actualizar`, que se publican directo en `main` para no esperar un release). Para que `dev` no quede atrás, el workflow **«Back merge a dev»** corre en cada push a `main`:
+`main` recibe commits que no pasan por `dev`: los hotfixes y las actualizaciones de datos (las automáticas de GitHub Actions y las manuales con `bun run actualizar`, que se publican directo en `main` para no esperar un release). Para que `dev` no quede atrás, el workflow **«Back merge a dev»** corre en cada push a `main` (los push del bot con el token del workflow no disparan otros workflows, así que el de datos lo pide con `gh workflow run`):
 
 - Si `dev` ya tiene todo, no hace nada.
 - Si puede, mergea `main` en `dev` y pushea (después de un release es un fast-forward).
@@ -99,14 +99,24 @@ Los datos no esperan un release: se publican en `main` apenas se descargan y el 
 
 ## Configuración en GitHub
 
-Se hace una vez, desde **Settings** del repo (`unllamas/mendoza-transparente`):
+Configurado por API el 17/10/2026 en `unllamas/mendoza-transparente`:
 
-| Qué | Dónde | Cómo |
-|---|---|---|
-| Rama por defecto `dev` | Settings → General → Default branch | Así los PRs apuntan a `dev` sin pensarlo |
-| Proteger `main` | Settings → Rules → Rulesets | Pedir PR y la CI (`verificar`) en verde; prohibir force push y borrado. Excepción (*bypass*) para quienes administran el repo y para GitHub Actions, que pushea los datos |
-| Proteger `dev` | Settings → Rules → Rulesets | Pedir PR y la CI en verde; prohibir force push y borrado. Excepción para GitHub Actions, que hace el back merge |
-| Merges permitidos | Settings → General → Pull Requests | Squash y merge commit habilitados; rebase deshabilitado |
+| Qué | Estado |
+|---|---|
+| Rama por defecto | `dev`: los PRs apuntan ahí sin pensarlo, y los workflows programados corren desde ahí (por eso el de datos fija `ref: main`) |
+| Merges permitidos | Squash y merge commit; rebase deshabilitado |
+| Ruleset «main: producción» | Prohíbe borrar la rama y el force push. Cuando exista `BOT_TOKEN`, también pide PR y la CI (`verificar`) en verde |
+| Ruleset «dev: integración» | Prohíbe borrar la rama y el force push; pide PR y la CI en verde |
+| Excepción (*bypass*) | Quien administra el repo, en las dos reglas |
+
+**Por qué hace falta `BOT_TOKEN`.** En un repo personal, GitHub no deja que GitHub Actions saltee las reglas (solo en organizaciones). Con el token del workflow, el bot no podría publicar datos en `main` si `main` pide PR, ni hacer el back merge en `dev`. La salida es un secreto **`BOT_TOKEN`**: un *fine-grained token* de quien administra el repo, limitado a este repositorio, con permisos de lectura y escritura en *Contents*, *Pull requests*, *Issues* y *Actions*. Los workflows lo usan si existe y, si no, vuelven al token del workflow. Mientras no exista:
+
+- `main` solo tiene la protección contra borrado y force push; que nadie pushee directo es una convención.
+- El back merge no puede pushear a `dev` y abre siempre un PR `main → dev`, que se mergea con la excepción de administración (la CI no corre en PRs abiertos por el bot).
+
+Al vencer el token, los push del bot fallan y se abre el issue de «Actualización de datos sin publicar»: renovarlo en Settings → Secrets and variables → Actions.
+
+Para ver o cambiar las reglas: Settings → Rules → Rulesets, o `gh api repos/unllamas/mendoza-transparente/rulesets`.
 
 ## Agentes
 
