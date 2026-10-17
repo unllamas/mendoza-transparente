@@ -78,6 +78,7 @@ Cuando alguien pide mejorar o arreglar algo, lo describe como lo siente ("no se 
 
 - Tipos: `bun run typecheck`.
 - Web: `bun run verificar` (sin scroll horizontal en ningún ancho, consola limpia y un solo scroll con el menú móvil abierto). Obligatorio antes de dar por terminado un cambio de interfaz.
+- Velocidad: `bun run medir` (LCP, FCP y CLS de las páginas clave sobre el build, en celular y escritorio). Correrlo cuando un cambio toca cómo carga una página. Ver `docs/procesos/web.md#velocidad-de-carga`.
 - Actualización manual de datos (respaldo de GitHub Actions): `bun run actualizar`.
 
 <!-- BEGIN:turborepo-agent-rules -->

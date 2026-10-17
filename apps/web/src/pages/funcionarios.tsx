@@ -198,12 +198,12 @@ export function RolePage() {
           {r.description}
         </PageHeader>
       </WithBreadcrumbs>
-      <FuentesOficiales ids={["autoridades", "legislatura"]} />
       {legislature && <Bloques personas={people} />}
       {sections.map((sec) => {
         const list = sec === null ? people : people.filter((p) => (p.seccion ?? "Sin sección") === sec);
         return <Lista key={sec ?? "todos"} id={sec ? slug(sec) : "todos"} titulo={`${sec ?? r.title} (${list.length})`} personas={list} />;
       })}
+      <FuentesOficiales ids={["autoridades", "legislatura"]} />
     </div>
   );
 }

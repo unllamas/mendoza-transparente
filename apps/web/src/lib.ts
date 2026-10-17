@@ -1,9 +1,19 @@
-import type { DataIndex, Preview } from "./types.ts";
+import type { DataIndex, Preview, SourceCatalog } from "./types.ts";
 
 export async function loadIndex(): Promise<DataIndex> {
   const resp = await fetch("/data/index.json");
   if (!resp.ok) throw new Error("No se pudo cargar el índice de datos");
   return resp.json();
+}
+
+let sourcesPromise: Promise<SourceCatalog> | null = null;
+/** The sources (fuentes.json), downloaded once per visit: the footer, the home and every «Fuentes» section share it. */
+export function loadSources(): Promise<SourceCatalog> {
+  sourcesPromise ??= loadJson<SourceCatalog>("fuentes.json").catch((e: unknown) => {
+    sourcesPromise = null;
+    throw e;
+  });
+  return sourcesPromise;
 }
 
 export async function loadPreview(source: string, file: string, groupSlug?: string): Promise<Preview> {
