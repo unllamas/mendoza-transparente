@@ -146,9 +146,9 @@ export function buildMunicipalBudgets(
   return out;
 }
 
-/** The last full year (or, without one, the latest) for the municipality's main page. */
+/** The latest year for the municipality's main page, even if it is still in progress (it says up to which month). */
 export function budgetSummary(b: MunicipalBudget): MunicipalBudgetSummary {
-  const y = b.years.find((x) => !x.partial) ?? b.years[0]!;
+  const y = b.years[0]!;
   return {
     year: y.year,
     partial: y.partial,

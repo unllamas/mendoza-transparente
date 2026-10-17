@@ -138,7 +138,7 @@ Fuente: los anexos de la Ley de Responsabilidad Fiscal (Ley 7314) que cada munic
 
 **Datos personales:** los anexos 22 y 23 traen deudores con nombre y nunca se bajan. De una planilla con todos los anexos (San Martín) se archivan solo las hojas de los anexos 1 a 5.
 
-**En la web** (`/municipios/<slug>/presupuesto/<año>`; sin año, abre el último año completo). Cálculo en `apps/web/scripts/temas/municipal-budget.ts`:
+**En la web** (`/municipios/<slug>/presupuesto/<año>`; sin año, abre el último año publicado, aunque esté en curso; la ficha del municipio muestra ese mismo año con hasta qué mes llega). Cálculo en `apps/web/scripts/temas/municipal-budget.ts`:
 
 - **Cada año** se muestra con su último trimestre publicado. Si no es el cuarto, la página avisa hasta qué mes llegan las cifras y el gráfico lo marca con asterisco. Si el año ya terminó pero falta el informe de diciembre (no se publicó o no se pudo leer, como Tupungato 2024), el aviso lo dice así y no "el año todavía no terminó".
 - **Aprobado, autorizado, gastado y pagado** son las sumas del crédito votado, el crédito vigente, el devengado y el pagado del anexo 2. "Gastado" es lo devengado, y la página lo explica (glosario: `devengado`, `credito-vigente`).

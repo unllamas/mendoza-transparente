@@ -1,15 +1,20 @@
 import { useReducedMotion } from "./use-reduced-motion.ts";
 
-/** Horizontal bars of a single series, sorted, with label and value visible on every row. */
+/**
+ * Horizontal bars of a single series, sorted, with label and value visible on every row. With `total`, each bar is its
+ * share of that total (a composition: the full bar is 100 %); without it, bars are relative to the largest (a ranking).
+ */
 export function BarList({
   items,
   formatValue,
+  total,
 }: {
   items: { nombre: string; valor: number; detalle?: string; destacado?: boolean }[];
   formatValue: (v: number) => string;
+  total?: number;
 }) {
   const reducedMotion = useReducedMotion();
-  const max = Math.max(...items.map((i) => i.valor));
+  const max = total || Math.max(...items.map((i) => i.valor));
   const hasHighlight = items.some((i) => i.destacado);
   return (
     <ul className="flex flex-col gap-3">

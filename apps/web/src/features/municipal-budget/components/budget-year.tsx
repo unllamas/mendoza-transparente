@@ -94,24 +94,29 @@ export function BudgetYear({ budget, year }: { budget: MunicipalBudget; year: Mu
 
       <Section title="En qué se gasta">
         <p className="-mt-2 text-body-regular text-text-tertiary">
-          Lo gastado en el año, por tipo de gasto. Es la misma clasificación para todos los municipios.
+          Lo gastado en el año, por tipo de gasto. Cada barra es su parte del total gastado, y es la misma clasificación para todos los
+          municipios.
         </p>
         <BarList
           items={y.byObject
             .filter((o) => o.accrued > 0)
             .map((o) => ({ nombre: o.name, valor: o.accrued, detalle: share(o.accrued, y.accrued) }))}
           formatValue={money}
+          total={y.accrued}
         />
       </Section>
 
       {y.byArea && (
         <Section title="Por área de gobierno">
-          <p className="-mt-2 text-body-regular text-text-tertiary">Lo gastado por cada área, con los nombres que usa el municipio.</p>
+          <p className="-mt-2 text-body-regular text-text-tertiary">
+            Lo gastado por cada área, como parte del total, con los nombres que usa el municipio.
+          </p>
           <BarList
             items={y.byArea
               .filter((a) => a.accrued > 0)
               .map((a) => ({ nombre: a.name, valor: a.accrued, detalle: share(a.accrued, y.accrued) }))}
             formatValue={money}
+            total={y.accrued}
           />
         </Section>
       )}
@@ -134,10 +139,13 @@ export function BudgetYear({ budget, year }: { budget: MunicipalBudget; year: Mu
               />
             )}
           </div>
-          <p className="text-body-regular text-text-tertiary">Los recursos que más aportaron en el año.</p>
+          <p className="text-body-regular text-text-tertiary">
+            Los recursos que más aportaron en el año. Cada barra es su parte de lo que ingresó.
+          </p>
           <BarList
             items={y.revenue.top.map((r) => ({ nombre: r.name, valor: r.collected, detalle: share(r.collected, ownRevenue) }))}
             formatValue={money}
+            total={ownRevenue}
           />
         </Section>
       )}

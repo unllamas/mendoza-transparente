@@ -211,13 +211,13 @@ const municipalBudgetRoute = createRoute({
   component: page(() => import("./pages/municipal-budget.tsx"), "MunicipalBudgetPage"),
 });
 
-/** Without a year, the budget opens on the last full year (or the latest, if none is full yet). */
+/** Without a year, the budget opens on the latest year, even if it is still in progress. */
 const municipalBudgetLatestRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/municipios/$slug/presupuesto",
   beforeLoad: async ({ params }) => {
     const budget = await loadTema<MunicipalBudget>(`municipios/${params.slug}/presupuesto`).catch(() => null);
-    const year = budget?.years.find((y) => !y.partial) ?? budget?.years[0];
+    const year = budget?.years[0];
     if (!year) throw notFound();
     throw redirect({ to: "/municipios/$slug/presupuesto/$anio", params: { slug: params.slug, anio: String(year.year) }, replace: true });
   },
