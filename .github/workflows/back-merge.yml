@@ -1,10 +1,9 @@
 # Back merge automático: cada push a main (un release, un hotfix o un commit de datos) se lleva a dev,
 # para que dev nunca quede atrás de producción. Ver docs/procesos/ramas-y-releases.md.
 #
-# Pushea con el secreto BOT_TOKEN, que puede saltear la protección de dev; sin él, con el token del workflow.
-# Los commits de datos lo piden con `gh workflow run`, porque sus push no disparan workflows.
+# Pushea con la deploy key del secreto DEPLOY_KEY, que puede saltear la protección de dev.
 #
-# Si main y dev chocan, o si la protección de dev no deja pushear al bot, abre un PR main → dev
+# Si main y dev chocan, o si la deploy key falla, abre un PR main → dev
 # con la etiqueta back-merge para resolverlo a mano.
 
 name: Back merge a dev
@@ -31,7 +30,7 @@ jobs:
         with:
           ref: dev
           fetch-depth: 0
-          token: ${{ secrets.BOT_TOKEN || github.token }}
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
 
       - name: Llevar main a dev
         env:

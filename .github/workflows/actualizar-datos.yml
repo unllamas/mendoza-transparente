@@ -19,9 +19,8 @@
 #
 # Los datos se publican directo en main, aunque la rama por defecto sea dev: todos los checkouts fijan
 # `ref: main`. El workflow back-merge.yml los lleva después a dev (ver docs/procesos/ramas-y-releases.md).
-# Los push usan el secreto BOT_TOKEN (token de quien administra el repo, que puede saltear la protección de
-# main); sin él, el token del workflow. Un push con el token del workflow no dispara otros workflows, por
-# eso cada push pide el back merge a mano con `gh workflow run`.
+# Los push salen con la deploy key del secreto DEPLOY_KEY, que puede saltear la protección de main y, a
+# diferencia del token del workflow, dispara el back merge.
 #
 # Las fotos de funcionarios no se actualizan acá: usan `sips` (macOS) y cambian poco.
 
@@ -39,7 +38,6 @@ on:
         default: ""
 
 permissions:
-  actions: write
   contents: write
   issues: write
 
@@ -192,7 +190,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
-          token: ${{ secrets.BOT_TOKEN || github.token }}
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.2
@@ -245,14 +243,13 @@ jobs:
         if: steps.aplicar.outputs.hay == 'true'
         env:
           FUENTES: ${{ steps.aplicar.outputs.fuentes }}
-          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A data
           git commit -m "Datos: actualización automática ($FUENTES)" -m "$(date -u +%F)"
           for intento in 1 2 3; do
-            git pull --rebase --autostash && git push && { gh workflow run back-merge.yml --ref main || true; exit 0; }
+            git pull --rebase --autostash && git push && exit 0
             sleep $((intento * 10))
           done
           exit 1
@@ -290,7 +287,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
-          token: ${{ secrets.BOT_TOKEN || github.token }}
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
       - if: steps.claves.outputs.hay == 'true'
         uses: oven-sh/setup-bun@v2
         with:
@@ -307,8 +304,6 @@ jobs:
 
       - name: Commit y push de los registros
         if: always() && steps.claves.outputs.hay == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -316,7 +311,7 @@ jobs:
           if git diff --cached --quiet; then echo "Sin copias nuevas."; exit 0; fi
           git commit -m "Datos: copias en archive.org" -m "$(date -u +%F)"
           for intento in 1 2 3; do
-            git pull --rebase --autostash && git push && { gh workflow run back-merge.yml --ref main || true; exit 0; }
+            git pull --rebase --autostash && git push && exit 0
             sleep $((intento * 10))
           done
           exit 1
