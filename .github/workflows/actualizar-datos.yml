@@ -309,7 +309,9 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A data/raw # archivar solo escribe los archive-org.jsonl
           if git diff --cached --quiet; then echo "Sin copias nuevas."; exit 0; fi
-          git commit -m "chore(data): copias en archive.org" -m "$(date -u +%F)"
+          # [CF-Pages-Skip]: este commit solo suma registros de archive.org y no dispara un build en Cloudflare.
+          # Los links a las copias aparecen en el sitio con el próximo build (otro commit de datos o una publicación).
+          git commit -m "chore(data): copias en archive.org [CF-Pages-Skip]" -m "$(date -u +%F)"
           for intento in 1 2 3; do
             git pull --rebase --autostash && git push && exit 0
             sleep $((intento * 10))

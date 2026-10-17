@@ -32,4 +32,14 @@ describe("buildNotes", () => {
     const notes = buildNotes([commit("feat(data)!: monto_total pasa a monto_pesos", "BREAKING CHANGE: usar monto_pesos.")]);
     expect(notes.startsWith("### Cambios que rompen un contrato\n\n- monto_total pasa a monto_pesos: usar monto_pesos.")).toBe(true);
   });
+
+  test("drops the Cloudflare skip marker, and the back merges that carry it", () => {
+    const notes = buildNotes([
+      commit("chore(data): copias en archive.org [CF-Pages-Skip]"),
+      commit("chore: back merge main → dev [CF-Pages-Skip]"),
+    ]);
+    expect(notes).toContain("copias en archive.org");
+    expect(notes).not.toContain("CF-Pages-Skip");
+    expect(notes).not.toContain("back merge");
+  });
 });

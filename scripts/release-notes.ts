@@ -37,6 +37,8 @@ type Group = (typeof GROUPS)[number];
 const CONVENTIONAL = /^(feat|fix|docs|refactor|perf|test|build|ci|style|chore|revert)(?:\(([\w-]+)\))?(!)?: (.+)$/;
 const AUTO_DATA = /actualizaci[oó]n autom[aá]tica \(([^)]+)\)/i;
 const PR_SUFFIX = /\s*\(#(\d+)\)$/;
+/** Tells Cloudflare Pages not to build that push (docs/procesos/web.md#publicar); it never goes into the notes. */
+const CF_SKIP = /\s*\[cf-pages-skip\]/gi;
 
 function classify(type: string, scope: string | undefined): Group {
   if (scope === "data" || scope === "scrapers") return "Datos y fuentes";
@@ -52,7 +54,8 @@ export function buildNotes(commits: Commit[], changedData: string[] = []): strin
   const breaking: string[] = [];
   let autoCount = 0;
 
-  for (const { subject, body } of commits) {
+  for (const { subject: raw, body } of commits) {
+    const subject = raw.replace(CF_SKIP, "");
     const auto = subject.match(AUTO_DATA);
     if (auto) {
       autoCount++;

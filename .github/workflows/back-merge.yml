@@ -42,7 +42,9 @@ jobs:
           git fetch origin main
           if git merge-base --is-ancestor origin/main HEAD; then echo "dev ya tiene todo lo de main."; exit 0; fi
 
-          if git merge --no-edit -m "chore: back merge main → dev" origin/main && git push origin HEAD:dev; then
+          # [CF-Pages-Skip]: Cloudflare no arma la vista previa de dev por un back merge. Gastaría un build del plan
+          # gratis sin nada nuevo para probar; la próxima rama que entre a dev la arma con todo.
+          if git merge --no-edit -m "chore: back merge main → dev [CF-Pages-Skip]" origin/main && git push origin HEAD:dev; then
             echo "main quedó integrado en dev."
             exit 0
           fi
