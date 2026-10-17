@@ -249,27 +249,33 @@ export function AgencyPage() {
 
       {yearly.length > 1 && (
         <Section id="cargos-por-anio" title="Cargos de planta por año">
-          <ColumnChart
-            columnas={yearly.map((p) => ({
-              etiqueta: p.period.slice(0, 4),
-              valor: p.permanent + p.temporary,
-              detalle: `${formatNumber(p.contracts)} contratados`,
-            }))}
-            formatValue={(v) => `${formatNumber(v)} cargos`}
-            ariaLabel={`Cargos de planta de ${a.name} por año`}
-          />
-          <p className="text-caption-1-regular text-text-tertiary">
-            Al cierre de cada año (cuarto trimestre); el último es el trimestre más reciente.
-          </p>
-          <StaffChange
-            changes={a.quarterlyChange}
-            subject={a.name}
-            note={
-              a.before.length > 0
-                ? "Este organismo cambió de áreas entre gestiones: un salto grande puede ser un traspaso desde o hacia otro organismo."
-                : undefined
-            }
-          />
+          <div className="grid items-start gap-8 lg:grid-cols-2">
+            <div className="flex flex-col gap-3 only:col-span-full">
+              <h3 className="pt-2 text-body-semibold">Al cierre de cada año</h3>
+              <ColumnChart
+                columnas={yearly.map((p) => ({
+                  etiqueta: p.period.slice(0, 4),
+                  valor: p.permanent + p.temporary,
+                  detalle: `${formatNumber(p.contracts)} contratados`,
+                }))}
+                formatValue={(v) => `${formatNumber(v)} cargos`}
+                ariaLabel={`Cargos de planta de ${a.name} por año`}
+              />
+              <p className="text-caption-1-regular text-text-tertiary">
+                Cuarto trimestre de cada año; el último es el trimestre más reciente.
+              </p>
+            </div>
+            <StaffChange
+              changes={a.quarterlyChange}
+              subject={a.name}
+              className="only:col-span-full"
+              note={
+                a.before.length > 0
+                  ? "Este organismo cambió de áreas entre gestiones: un salto grande puede ser un traspaso desde o hacia otro organismo."
+                  : undefined
+              }
+            />
+          </div>
         </Section>
       )}
 
@@ -558,17 +564,22 @@ function Overview({ overview: o }: { overview: GobiernoOverview }) {
           De {formatNumber(first.staff)} cargos de planta en el {periodLabel(first.period)} a {formatNumber(last.staff)} en el{" "}
           {periodLabel(last.period)}. Los contratos de locación pasaron de {formatNumber(first.contracts)} a {formatNumber(last.contracts)}.
         </p>
-        <StaffChange
-          changes={o.quarterlyChange}
-          subject="el Estado provincial"
-          note="Las designaciones y renuncias con nombre y apellido que salen en el Boletín Oficial están en la ficha de cada organismo."
-        />
-        <h3 className="pt-2 text-body-semibold">Contratos de locación al cierre de cada año</h3>
-        <ColumnChart
-          columnas={yearEnds.map((p) => ({ etiqueta: p.period.slice(0, 4), valor: p.contracts }))}
-          formatValue={(v) => `${formatNumber(v)} contratados`}
-          ariaLabel="Contratos de locación del Estado provincial por año"
-        />
+        <div className="grid items-start gap-8 lg:grid-cols-2">
+          <StaffChange
+            changes={o.quarterlyChange}
+            subject="el Estado provincial"
+            className="only:col-span-full"
+            note="Las designaciones y renuncias con nombre y apellido que salen en el Boletín Oficial están en la ficha de cada organismo."
+          />
+          <div className="flex flex-col gap-3 only:col-span-full">
+            <h3 className="pt-2 text-body-semibold">Contratos de locación al cierre de cada año</h3>
+            <ColumnChart
+              columnas={yearEnds.map((p) => ({ etiqueta: p.period.slice(0, 4), valor: p.contracts }))}
+              formatValue={(v) => `${formatNumber(v)} contratados`}
+              ariaLabel="Contratos de locación del Estado provincial por año"
+            />
+          </div>
+        </div>
       </Section>
 
       <Section id="para-mirar" title="Para mirar de cerca">

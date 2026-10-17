@@ -346,18 +346,23 @@ export function MunicipioPage() {
               <StatTile label="Contratos" value={formatNumber(st.contracts)} note="De locación, sin cargo" />
               <StatTile label="Cada 1.000 hab." value={perThousand(st.perThousand)} note={`Puesto ${st.rank} de ${st.withData}`} />
             </div>
-            {yearly.length > 2 && (
-              <ColumnChart
-                columnas={yearly.map((s) => ({
-                  etiqueta: s.cutoff.slice(0, 4),
-                  valor: s.positions + s.contracts,
-                  detalle: `${s.label.replace("T", ".º trim.")}: ${formatNumber(s.positions)} de planta y ${formatNumber(s.contracts)} contratos`,
-                }))}
-                formatValue={formatNumber}
-                ariaLabel={`Cargos y contratos de ${m.nombre}, por año`}
-              />
-            )}
-            <StaffChange changes={st.quarterlyChange} subject={m.nombre} />
+            <div className="grid items-start gap-8 lg:grid-cols-2">
+              {yearly.length > 2 && (
+                <div className="flex flex-col gap-3 only:col-span-full">
+                  <h3 className="pt-2 text-body-semibold">Cargos y contratos por año</h3>
+                  <ColumnChart
+                    columnas={yearly.map((s) => ({
+                      etiqueta: s.cutoff.slice(0, 4),
+                      valor: s.positions + s.contracts,
+                      detalle: `${s.label.replace("T", ".º trim.")}: ${formatNumber(s.positions)} de planta y ${formatNumber(s.contracts)} contratos`,
+                    }))}
+                    formatValue={formatNumber}
+                    ariaLabel={`Cargos y contratos de ${m.nombre}, por año`}
+                  />
+                </div>
+              )}
+              <StaffChange changes={st.quarterlyChange} subject={m.nombre} className="only:col-span-full" />
+            </div>
             {st.note && <Alert variant="note">{st.note}</Alert>}
             <a
               href={st.sourceUrl}

@@ -37,6 +37,7 @@ La gente describe lo que siente. Buscar la regla (detalle en `docs/procesos/dise
 | "Se repite arriba del título", "dos líneas que dicen lo mismo" | Una sola línea arriba del título: la ruta termina en la página actual con su ícono | `diseno` |
 | "Queda un espacio de más arriba del título", "sobra lugar" | El link para atrás va pegado al encabezado (`WithBreadcrumbs`) | `diseno` |
 | "El gráfico no es proporcional", "¿qué es el 100 %?" | En una composición, la barra llena es el total | `diseno` |
+| "Ocupa toda la pantalla", "en la compu sobra espacio" | Dos gráficos chicos seguidos, en dos columnas en desktop | `diseno` |
 | "No se ve igual que lo otro" | Componente de `@mt/ui`, no clases sueltas | `diseno`, `arquitectura` |
 | "Quiero mandar directo a esta parte", "no puedo compartir una sección" | Cada sección tiene su link (`Section id`) | `diseno` |
 | "No aparece en Google", "se ve mal al compartir" | Títulos, descripciones, imágenes para compartir | `seo-y-geo` |
