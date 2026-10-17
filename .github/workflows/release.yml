@@ -1,0 +1,51 @@
+# Release de GitHub una vez por día: junta lo que llegó a main ese día (publicaciones de dev,
+# hotfixes y actualizaciones de datos) en un solo release con etiqueta por fecha (2026-10-17).
+# Si no cambió nada desde el release anterior, no crea nada.
+# Ver docs/procesos/ramas-y-releases.md#releases-de-github-uno-por-día.
+
+name: Release del día
+
+on:
+  schedule:
+    - cron: "30 2 * * *" # 23:30 en Mendoza
+  workflow_dispatch:
+    inputs:
+      desde:
+        description: "Ref desde la que arranca el release (vacío: el último release o el comienzo del día)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          fetch-tags: true
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+
+      - name: Armar las notas
+        id: notas
+        env:
+          DESDE: ${{ inputs.desde }}
+        run: bun scripts/release-notes.ts --release --out notas.md ${DESDE:+--from "$DESDE"}
+
+      - name: Crear el release
+        if: steps.notas.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.notas.outputs.tag }}
+          TITULO: ${{ steps.notas.outputs.title }}
+        run: gh release create "$TAG" --target "$(git rev-parse HEAD)" --title "$TITULO" --notes-file notas.md

@@ -38,7 +38,7 @@ Las skills del proyecto (`.claude/skills/<nombre>/SKILL.md`) son la puerta de en
 | Publicar o tocar Cloudflare, D1 o PostHog; diagnosticar el sitio en vivo | `produccion` |
 | Tocar el panel interno (`apps/panel`), el registro público (`/registro`), la API de participación o el acceso del equipo | `panel` |
 | Lanzar un subagente o integrar lo que devolvió | `delegar-en-agentes` |
-| Crear una rama, commitear, pushear, abrir o mergear un PR, hacer un release o un hotfix | `ramas-y-releases` |
+| Crear una rama, commitear, pushear, abrir o mergear un PR, publicar `dev` en `main`, tocar los releases de GitHub o hacer un hotfix | `ramas-y-releases` |
 
 **Proceso nuevo = documento en `docs/procesos/` + skill (o sección en una existente) + fila en esta tabla, en el mismo commit.**
 
@@ -51,7 +51,7 @@ Cuando alguien pide mejorar o arreglar algo, lo describe como lo siente ("no se 
 - La sesión principal orquesta. Las tareas acotadas (un scraper, un parser, una verificación) van a subagentes en Sonnet, en paralelo y sobre archivos distintos.
 - Cada subagente trabaja solo en los archivos de su fuente: `packages/scrapers/src/sources/<id>.ts` y `data/*/<id>/`. Si necesita tocar `packages/core/` o agregar dependencias, lo propone en vez de hacerlo (varios agentes en paralelo pisarían `bun.lock`).
 - Los subagentes no commitean. La sesión principal revisa, commitea y **cierra cada tarea con push y PR a `dev` sin esperar que se lo pidan**.
-- Nada se pushea directo a `main`: lo nuevo va en una rama que sale de `dev`, con PR a `dev`, y llega a producción en un release. Ver la skill `ramas-y-releases`.
+- Nada se pushea directo a `main`: lo nuevo va en una rama que sale de `dev`, con PR a `dev`, y llega a producción en una publicación (PR `dev → main`). Los releases de GitHub se crean solos, uno por día. Ver la skill `ramas-y-releases`.
 
 ## Convenciones de datos
 

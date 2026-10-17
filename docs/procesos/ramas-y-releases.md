@@ -1,12 +1,12 @@
 # Ramas y releases
 
-Hasta octubre de 2026 todo iba directo a `main`, que publica el sitio en cada push. Con una sola persona funcionaba; con más gente, no: nadie revisa nada antes de que llegue a producción. Desde ahora lo nuevo entra por `dev`, se prueba ahí y llega a `main` en un **release**.
+Hasta octubre de 2026 todo iba directo a `main`, que publica el sitio en cada push. Con una sola persona funcionaba; con más gente, no: nadie revisa nada antes de que llegue a producción. Desde ahora lo nuevo entra por `dev`, se prueba ahí y llega a `main` en una **publicación** (un PR `dev → main`). Una vez por día, un **release de GitHub** junta todo lo que llegó a producción ese día: ver [Releases de GitHub](#releases-de-github-uno-por-día).
 
 ## Las ramas
 
 | Rama | Qué es | Quién escribe |
 |---|---|---|
-| `main` | Producción. Cada push publica mendoza-transparente.com (Cloudflare Pages). | Solo releases, hotfixes y los commits automáticos de datos |
+| `main` | Producción. Cada push publica mendoza-transparente.com (Cloudflare Pages). | Solo publicaciones desde `dev`, hotfixes y los commits automáticos de datos |
 | `dev` | Integración. Lo que va a salir en el próximo release. Cloudflare la publica como vista previa en `dev.mendoza-transparente.pages.dev`. | PRs de las ramas de trabajo |
 | `<tipo>/<tema>` | Una rama por tarea, que sale de `dev`: `feat/pedidos-por-municipio`, `fix/menu-movil`, `datos/fuente-nueva`. | Quien hace la tarea |
 | `hotfix/<tema>` | Un arreglo urgente de producción, que sale de `main`. | Quien arregla |
@@ -56,7 +56,7 @@ Desde octubre de 2026 seguimos [Conventional Commits 1.0.0](https://www.conventi
 | `build` | Dependencias, Vite, Turborepo, la configuración del monorepo |
 | `ci` | Workflows de GitHub Actions y hooks de git |
 | `style` | Formato del código, sin cambiar lo que hace (no es el diseño de la web: eso es `feat` o `fix`) |
-| `chore` | Mantenimiento: las actualizaciones de datos, los releases, el back merge |
+| `chore` | Mantenimiento: las actualizaciones de datos, las publicaciones, el back merge |
 | `revert` | Deshace un commit anterior |
 
 | Ámbito | Qué cubre |
@@ -117,22 +117,50 @@ La plantilla y la CI son la validación de todos los días. Una aprobación de o
 | Alguien del equipo, o un agente trabajando a su pedido | Plantilla completa y CI en verde. Lo mergea quien lo abrió, sin esperar a nadie |
 | Alguien de afuera del equipo (un fork o una persona nueva) | Además, la revisión y aprobación de alguien del equipo, que también lee el diff contra la plantilla |
 
-El release sigue la misma lógica: si la persona que pidió el trabajo dijo que se publique cuando funcione, el agente mergea el release apenas la CI y la vista previa están bien.
+La publicación sigue la misma lógica: si la persona que pidió el trabajo dijo que se publique cuando funcione, el agente mergea el PR de publicación apenas la CI y la vista previa están bien.
 
-## Release: de `dev` a `main`
+## Publicar: de `dev` a `main`
 
 Cuando lo que está en `dev` está probado en su vista previa:
 
 ```bash
-gh pr create --base main --head dev --title "chore(release): $(date +%F)" --body "$(git log --oneline origin/main..origin/dev)"
+git fetch origin
+gh pr create --base main --head dev --title "chore(release): $(date +%F)" --body "$(bun scripts/release-notes.ts --from origin/main --to origin/dev)"
 ```
 
-1. **Revisar el PR**: la lista de commits es el registro de lo que sale. La CI tiene que estar verde. Si `dev` trae PRs de alguien de afuera del equipo, tienen que haber pasado su revisión (ver [Quién aprueba](#quién-aprueba)).
+El cuerpo lo arma `scripts/release-notes.ts`: los commits de `dev` que todavía no están en `main`, agrupados por tipo (ver [Releases de GitHub](#releases-de-github-uno-por-día)).
+
+1. **Revisar el PR**: la lista es el registro de lo que sale. La CI tiene que estar verde. Si `dev` trae PRs de alguien de afuera del equipo, tienen que haber pasado su revisión (ver [Quién aprueba](#quién-aprueba)).
 2. **Probar `dev.mendoza-transparente.pages.dev`** en celular y escritorio, en las pantallas que cambiaron.
-3. **Mergear con «Create a merge commit»**, nunca con squash ni rebase: así `main` y `dev` comparten la historia y el próximo release no repite commits ni trae conflictos falsos.
+3. **Mergear con «Create a merge commit»**, nunca con squash ni rebase: así `main` y `dev` comparten la historia y la próxima publicación no repite commits ni trae conflictos falsos.
 4. **Seguir el despliegue** en Cloudflare (skill `produccion`) y probar el sitio real.
 
-No hay calendario fijo: se hace un release cuando hay algo listo para publicar. Mejor seguido y chico que de a meses.
+No hay calendario fijo: se publica cuando hay algo listo. Mejor seguido y chico que de a meses; puede haber varias publicaciones en un día, y el release de GitHub las junta.
+
+## Releases de GitHub: uno por día
+
+Una publicación no es un release. El release de GitHub ([unllamas/mendoza-transparente/releases](https://github.com/unllamas/mendoza-transparente/releases)) es el registro de lo que llegó a producción **en un día**: todas las publicaciones desde `dev`, los hotfixes y las cargas de datos, juntos y explicados en español. Sirve para que alguien de afuera (un periodista, quien reutiliza los CSV) siga los cambios sin leer commits.
+
+**Cómo se arma.** El workflow **«Release del día»** (`.github/workflows/release.yml`) corre todos los días a las 23:30 de Mendoza sobre `main`:
+
+1. Busca el último release (la etiqueta más reciente con forma de fecha). Si todavía no hay ninguno, arranca desde el primer commit del día.
+2. Si `main` no cambió desde entonces, no hace nada: los días sin cambios no tienen release.
+3. Si cambió, corre `bun scripts/release-notes.ts --release` y crea el release con `gh release create`, con la etiqueta del día en hora de Mendoza (`2026-10-17`; si ya existe, `2026-10-17.2`) y la fecha larga como título («17 de octubre de 2026»).
+
+**Qué dice cada release:**
+
+- Las publicaciones del día (los PRs `dev → main`, con su número).
+- Los cambios agrupados: **Cambios que rompen un contrato** (los que llevan `!` o `BREAKING CHANGE:`), **Nuevo** (`feat`), **Datos y fuentes** (ámbito `data` o `scrapers`), **Arreglos** (`fix`), **Documentación** (`docs`, o ámbito `docs` o `skills`), **Mantenimiento** (el resto) y **Otros cambios** (commits viejos, de antes de Conventional Commits).
+- Las actualizaciones automáticas de datos resumidas en una línea («3 actualizaciones automáticas: `indices` (2), `dnap`»), y la lista de los datos publicados que cambiaron (`data/processed/<id>` y `data/curado/<archivo>`).
+- El link para comparar contra el release anterior.
+
+Se saltean los merges, los back merges y los `chore(release)`. Cada línea es el título del PR que quedó como commit con squash: por eso importa que el título [se entienda solo](#mensajes-de-commit-y-títulos-de-pr).
+
+**A mano.** Desde Actions → «Release del día» → *Run workflow*. El campo `desde` arranca el release desde otra ref (una etiqueta o un commit), por ejemplo para el primero o para rehacer uno. Para ver las notas sin crear nada: `bun scripts/release-notes.ts --release --to origin/main`.
+
+**Si un release salió mal**, se corrige el texto en la web de GitHub, o se borra con `gh release delete <etiqueta> --cleanup-tag` y se vuelve a correr el workflow.
+
+**Las pruebas** del script están en `scripts/release-notes.test.ts` (`bun test scripts`).
 
 ## Hotfix: un arreglo urgente
 
@@ -151,10 +179,10 @@ gh pr create --base main
 
 ## Back merge automático
 
-`main` recibe commits que no pasan por `dev`: los hotfixes y las actualizaciones de datos (las automáticas de GitHub Actions y las manuales con `bun run actualizar`, que se publican directo en `main` para no esperar un release). Para que `dev` no quede atrás, el workflow **«Back merge a dev»** corre en cada push a `main`:
+`main` recibe commits que no pasan por `dev`: los hotfixes y las actualizaciones de datos (las automáticas de GitHub Actions y las manuales con `bun run actualizar`, que se publican directo en `main` para no esperar una publicación). Para que `dev` no quede atrás, el workflow **«Back merge a dev»** corre en cada push a `main`:
 
 - Si `dev` ya tiene todo, no hace nada.
-- Si puede, mergea `main` en `dev` y pushea (después de un release es un fast-forward).
+- Si puede, mergea `main` en `dev` y pushea (después de una publicación es un fast-forward).
 - Si hay un conflicto, o la deploy key falla, abre un PR `main → dev` con la etiqueta `back-merge`. Se resuelve a mano y **se mergea con merge commit**, nunca con squash.
 
 Si alguna vez hace falta a mano:
@@ -167,7 +195,7 @@ git push
 
 ## Datos
 
-Los datos no esperan un release: se publican en `main` apenas se descargan y el back merge los lleva a `dev`.
+Los datos no esperan una publicación: se publican en `main` apenas se descargan y el back merge los lleva a `dev`.
 
 - `.github/workflows/actualizar-datos.yml` fija `ref: main` en todos sus checkouts, así que publica en `main` aunque la rama por defecto sea `dev`.
 - `bun run actualizar` solo publica desde `main`: en otra rama, frena antes del commit y deja los cambios en `data/`.
@@ -205,5 +233,5 @@ Para ver o cambiar las reglas: Settings → Rules → Rulesets, o `gh api repos/
 ## Agentes
 
 - Un agente **nunca pushea a `main`**. Trabaja en una rama que sale de `dev` y abre el PR a `dev`, salvo que le pidan un hotfix.
-- Mergea sus propios PRs a `dev` cuando la plantilla está completa y la CI en verde, y el release cuando se lo pidieron (ver [Quién aprueba](#quién-aprueba)). Un PR de alguien de afuera del equipo no lo mergea: lo revisa y deja la aprobación a una persona del equipo.
+- Mergea sus propios PRs a `dev` cuando la plantilla está completa y la CI en verde, y el PR de publicación cuando se lo pidieron (ver [Quién aprueba](#quién-aprueba)). Un PR de alguien de afuera del equipo no lo mergea: lo revisa y deja la aprobación a una persona del equipo.
 - Para comparar los cambios de una rama, la base es `origin/dev` (en un hotfix, `origin/main`).
