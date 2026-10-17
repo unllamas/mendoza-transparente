@@ -10,7 +10,7 @@ import * as cheerio from "cheerio";
 import { unzipSync } from "fflate";
 import { getDocumentProxy } from "unpdf";
 import { headerAnnex, type Period } from "./annexes.ts";
-import { htmlTables, type Item, pageItems, pdfTables, rowsOf, sheetTables, type Table } from "./read.ts";
+import { cellRows, htmlTables, type Item, type Layout, pageItems, pdfTables, rowsOf, sheetTables, type Table } from "./read.ts";
 
 export const LRF_SOURCE = "municipios-lrf";
 /** The site shows the last four years. */
@@ -135,12 +135,14 @@ export function documentExt(bytes: Uint8Array): DocumentExt | null {
   return null;
 }
 
-/** An archived annex as tables, whatever its format. PDFs and report pages along the given axis. */
-export async function documentTables(bytes: Uint8Array, ext: DocumentExt, axis: "h" | "v" = "h"): Promise<Table[]> {
-  if (ext === "pdf") return pdfTables(bytes, axis);
+/** An archived annex as tables, whatever its format. PDFs and report pages with the given layout. */
+export async function documentTables(bytes: Uint8Array, ext: DocumentExt, layout: Layout = "h"): Promise<Table[]> {
+  if (ext === "pdf") return pdfTables(bytes, layout);
   if (ext === "html" || ext === "mht") return htmlTables(bytes);
   if (ext === "json")
-    return (JSON.parse(new TextDecoder().decode(bytes)) as { pages: { items: Item[] }[] }).pages.map((p) => rowsOf(p.items, axis));
+    return (JSON.parse(new TextDecoder().decode(bytes)) as { pages: { items: Item[] }[] }).pages.map((p) =>
+      layout === "cells" ? cellRows(p.items) : rowsOf(p.items, layout),
+    );
   return sheetTables(bytes, { blankAsZero: true }).map((s) => s.rows);
 }
 

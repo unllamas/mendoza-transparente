@@ -1,8 +1,8 @@
 import { describe, expect, test } from "bun:test";
 
 import { headerAnnex, headerPeriod, parseDebtAnnex, parseRevenueAnnex, parseSpendingAnnex, splitRow } from "./annexes.ts";
-import { spendingObjectCode } from "./classify.ts";
-import { htmlTables, type Table, type Tok, tokenize } from "./read.ts";
+import { revenueKind, spendingObjectCode } from "./classify.ts";
+import { cellRows, htmlTables, type Table, type Tok, tokenize } from "./read.ts";
 
 const row = (text: string): Tok[] => tokenize(text);
 const table = (...lines: string[]): Table => lines.map(row);
@@ -79,6 +79,7 @@ describe("lrf: classification", () => {
     expect(spendingObjectCode("040101")).toBe("4.1.1");
     expect(spendingObjectCode("72100")).toBe("7.2.1");
     expect(spendingObjectCode("060201")).toBe("7.2.1");
+    expect(spendingObjectCode("4110000")).toBe("4.1.1");
     expect(spendingObjectCode("PERSONAL")).toBeNull();
   });
 });
@@ -354,5 +355,46 @@ describe("lrf: Las Heras 2026", () => {
     ]);
     if ("error" in parsed) throw new Error(parsed.error);
     expect(parsed.lines[0]!.closingBalance).toBe(653700777.56);
+  });
+});
+
+describe("lrf: Junín", () => {
+  test("a row whose cells wrap: the amount's tail on the next line and figures on a line of their own", () => {
+    const at = (x: number, y: number, s: string) => ({ x, y, s, h: 8 });
+    const rows = cellRows([
+      at(100, 32, "4110000"),
+      at(100.5, 32, "-"),
+      at(101, 32, "PERSONAL"),
+      at(100, 120, "1.000,"),
+      at(108, 150, "00"),
+      at(104, 200, "5,00"),
+    ]);
+    expect(rows.map((r) => r.map((t) => t.text))).toEqual([["4110000", "-", "PERSONAL", "1.000,00", "5,00"]]);
+  });
+
+  test("seven-digit codes with the subtotal of each group, which are not items", () => {
+    const parsed = parseSpendingAnnex([
+      table(`4000000 - EROGACIONES CORRIENTES ${OK}`, `4100000 - OPERACION ${OK}`, `4110000 - PERSONAL ${OK}`, `TOTALES ${OK}`),
+    ]);
+    if ("error" in parsed) throw new Error(parsed.error);
+    expect(parsed.lines.map((l) => l.objectCode)).toEqual(["4.1.1"]);
+  });
+
+  test("nine-digit revenue codes and no totals row: the first group is the total", () => {
+    const parsed = parseRevenueAnnex([
+      table(
+        "500000000 - RECURSOS 100,00 0,00 0,00 100,00 40,00 60,00 15,00",
+        "510000000 - RECURSOS CORRIENTES 60,00 0,00 0,00 60,00 30,00 30,00 10,00",
+        "511000000 - DE ORIGEN PROVINCIAL 60,00 0,00 0,00 60,00 30,00 30,00 10,00",
+        "570000000 - FINANCIAMIENTO 40,00 0,00 0,00 40,00 10,00 30,00 5,00",
+        "574000000 - REMANENTE DEL EJERCICIO ANTERIOR 40,00 0,00 0,00 40,00 10,00 30,00 5,00",
+      ),
+    ]);
+    if ("error" in parsed) throw new Error(parsed.error);
+    expect(parsed.lines.map((l) => [l.code, revenueKind(l.code)])).toEqual([
+      ["511000000", "corriente"],
+      ["574000000", "financiamiento"],
+    ]);
+    expect(parsed.totals.collected).toBe(40);
   });
 });

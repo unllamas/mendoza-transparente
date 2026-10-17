@@ -7,6 +7,7 @@
  *   - San Rafael: "040101" (two digits per level), after the jurisdiction and unit ("1.00.040101.PERSONAL").
  *   - Infogov (General Alvear, Malargüe and others): "41100000" (one digit per level and five trailing zeros).
  *   - Las Heras (2026): "411000" (one digit per level and three trailing zeros).
+ *   - Junín: "4110000" (one digit per level and four trailing zeros).
  * Both become "4.1.1". When two municipalities use different codes for the same concept, `EQUIVALENT_CODES` maps one
  * onto the other. The original code and label are always kept next to the normalized ones.
  */
@@ -50,6 +51,11 @@ const EQUIVALENT_CODES: Record<string, string> = {
   "4.2.2": "4.2.1",
   "7.2.0": "7.2.1",
   "7.4.0": "7.4.1",
+  // Junín splits the advances to suppliers: "6310000 ADELANTO PARA EROGACIONES CORRIENTES" and "6320000 … DE CAPITAL".
+  "6.3.1": "6.3",
+  "6.3.2": "6.3",
+  // San Carlos also has "63300000 ADELANTOS P/EROGACIONES DE CAPITAL".
+  "6.3.3": "6.3",
 };
 
 /** Each way of writing the code, with the three levels it carries. */
@@ -58,9 +64,10 @@ const CODE_FORMATS: [RegExp, (m: RegExpExecArray) => string][] = [
   [/^(\d)(\d)(\d)00000$/, (m) => m.slice(1, 4).join(".")], // "41100000"
   [/^(0\d)(\d\d)(\d\d)$/, (m) => m.slice(1, 4).map(Number).join(".")], // "040101": two digits per level, leading zero
   [/^(\d)(\d)(\d)000$/, (m) => m.slice(1, 4).join(".")], // "411000"
+  [/^(\d)(\d)(\d)0000$/, (m) => m.slice(1, 4).join(".")], // "4110000"
 ];
 
-/** "41100", "41100000", "040101" or "411000" → "4.1.1"; anything else → null. */
+/** "41100", "41100000", "040101", "411000" or "4110000" → "4.1.1"; anything else → null. */
 export function spendingObjectCode(raw: string): string | null {
   for (const [re, toCode] of CODE_FORMATS) {
     const m = re.exec(raw);
@@ -85,10 +92,10 @@ const REVENUE_KINDS: Record<string, string> = {
 
 export function revenueKind(code: string): string | null {
   // Infogov writes revenue with 4 digits and a leading 5: "51xx" current, "52xx" capital ("7xxx" is financing).
-  const infogov = /^5([12])\d\d$/.exec(code);
-  if (infogov) return infogov[1] === "1" ? "corriente" : "capital";
-  // Guaymallén writes financing with 5 digits and a leading 57 ("57120 Uso del Crédito a corto plazo").
-  if (/^57\d{3}$/.test(code)) return "financiamiento";
+  // Guaymallén writes financing with 5 digits and a leading 57 ("57120 Uso del Crédito a corto plazo"), and Junín the
+  // three kinds with 9 digits ("511000000", "521000000", "572000000").
+  const leadingFive = /^5([12])\d\d$/.exec(code) ?? /^5(7)\d{3}$/.exec(code) ?? /^5([127])\d{7}$/.exec(code);
+  if (leadingFive) return REVENUE_KINDS[leadingFive[1]!]!;
   return REVENUE_KINDS[code[0] ?? ""] ?? null;
 }
 
