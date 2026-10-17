@@ -25,7 +25,7 @@ Los componentes base y los tokens están en `packages/ui` (`@mt/ui`). **La base 
    - Toda fila que lleva a otra página tiene la flecha en `text-text-link` siempre.
    - En listas de navegación, el nombre del destino también va en `text-text-link`.
    - Los CTA principales van en `Button` primary (relleno azul, liso).
-4. **44 px mínimos** (`min-h-11`) para tocar filas y botones; **botones de solo ícono, cuadrados de 44 × 44** (`IconButton` de `@mt/ui/components/base/buttons/icon-button`); **encabezados de 48 a 60 px** (`h-14`).
+4. **44 px mínimos** (`min-h-11`) para tocar filas y botones; **botones de solo ícono, cuadrados de 44 × 44** (`IconButton` de `@mt/ui/components/base/buttons/icon-button`); **encabezados de 48 a 60 px** (`h-14`). La acción de la página (compartir) va en columna a la derecha del encabezado, solo ícono y con `Tooltip`, nunca en una fila propia.
 5. **Una sola línea** para cifras, títulos de tarjetas, fechas y montos (`truncate`, `whitespace-nowrap`, `min-w-0`). La unidad va aparte y en chico ("$ 965.709" + "millones").
 6. **Nunca scroll horizontal**, en ningún ancho. Lo controla `bun run verificar`.
 7. **Toda persona lleva su cara:** `PersonAvatar` (`@mt/ui`) con la foto oficial, o con iniciales mientras falte. Una foto faltante es un pendiente: se busca en sitios oficiales (`bun run scrape fotos`).
