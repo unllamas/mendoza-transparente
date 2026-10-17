@@ -25,6 +25,7 @@ import {
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
+import { track } from "@/analytics.ts";
 import { MapaMendoza } from "@/charts/mapa.tsx";
 import { Sparkline } from "@/charts/sparkline.tsx";
 import { CountUp } from "@/components/count-up.tsx";
@@ -52,47 +53,72 @@ export function HomePage() {
   const fuente = (id: string) => index.sources.find((s) => s.id === id);
 
   return (
-    <div className="flex flex-col gap-20">
-      {/* Portada */}
-      <section className="flex flex-col gap-8">
-        <LandscapePhoto id="cordon-del-plata" className="h-52 sm:h-80" />
-        <p className="flex items-center gap-2 text-body-medium text-text-secondary">
-          <span className="size-1.5 shrink-0 rounded-full bg-highlight" aria-hidden />
-          {formatNumber(registros)} registros de {fuentesConDatos} fuentes oficiales
-        </p>
-        <div className="flex max-w-3xl flex-col gap-5">
-          <h1 className="text-display-3-semibold tracking-tight text-balance sm:text-display-1-semibold">
-            Mendoza, con los números sobre la mesa.
-          </h1>
-          <p className="max-w-2xl text-title-3-regular text-text-secondary text-pretty sm:text-title-2-regular">
-            Mirá en qué se gasta la plata de Mendoza, quién decide y qué falta publicar. Todos los datos oficiales de la provincia en un
-            solo lugar, explicados en simple y con la fuente de cada número.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4">
-          <SearchTrigger />
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-            <DepartmentPicker />
-            <Link
-              to="/como-leer"
-              data-track="home.hero.reading_guide"
-              className="inline-flex items-center gap-1.5 text-body-regular text-text-link hover:underline"
-            >
-              <RiBookOpenLine className="size-4" aria-hidden /> ¿Primera vez? Empezá por acá
-            </Link>
+    <div className="flex flex-col gap-14 sm:gap-20">
+      {/* Portada y preguntas juntas: las preguntas entran en la primera pantalla */}
+      <div className="flex flex-col gap-10 sm:gap-12">
+        <section className="flex flex-col gap-5 sm:gap-6">
+          <LandscapePhoto id="cordon-del-plata" className="h-24 sm:h-32" />
+          <div className="flex max-w-3xl flex-col gap-3 sm:gap-4">
+            <p className="flex items-center gap-2 text-body-medium text-text-secondary">
+              <span className="size-1.5 shrink-0 rounded-full bg-highlight" aria-hidden />
+              {formatNumber(registros)} registros de {fuentesConDatos} fuentes oficiales
+            </p>
+            <h1 className="text-display-4-semibold tracking-tight text-balance sm:text-display-2-semibold">
+              Mendoza, con los números sobre la mesa.
+            </h1>
+            <p className="max-w-2xl text-body-regular text-text-secondary text-pretty sm:text-title-3-regular">
+              En qué se gasta la plata, quién decide y qué falta publicar, con la fuente de cada número.
+            </p>
           </div>
-        </div>
-      </section>
+          <div className="flex max-w-3xl flex-col gap-3">
+            <SearchTrigger />
+            <DepartmentPicker />
+          </div>
+        </section>
 
-      {guide && (
+        {guide && (
+          <section className="flex flex-col gap-5">
+            <Encabezado id="preguntas" icon={RiQuestionLine} titulo="Empezá por una pregunta" />
+            <StartingQuestions guide={guide} oneOfferEvery={compras ? Math.round(100 / compras.pctUnaOferta) : null} />
+          </section>
+        )}
+      </div>
+
+      {/* Señales: lo que más interesa desde el menú, ahora arriba */}
+      {compras && (
         <section className="flex flex-col gap-6">
           <Encabezado
-            id="preguntas"
-            icon={RiQuestionLine}
-            titulo="Empezá por una pregunta"
-            bajada="Las preguntas que más nos hacen, con la respuesta a un clic."
+            id="para-mirar"
+            icon={RiScales3Line}
+            titulo="Para mirar de cerca"
+            bajada="No son acusaciones: son patrones en los datos oficiales que merecen una explicación."
           />
-          <StartingQuestions guide={guide} />
+          <div className="grid gap-3 md:grid-cols-3">
+            <Senal
+              valor={`${Math.round(compras.pctDirectas)} %`}
+              texto="de los procesos de compra fueron contrataciones directas, sin licitación."
+              matiz={`Pero representan el ${Math.round(compras.pctMontoDirectas)} % de la plata: muchas son compras chicas.`}
+            />
+            <Senal
+              valor={`1 de cada ${Math.round(100 / compras.pctUnaOferta)}`}
+              texto="procesos de compra recibió una sola oferta."
+              matiz={`${decimal.format(compras.pctUnaOferta)} % de los procesos con dato de oferentes.`}
+            />
+            {deuda && (
+              <Senal
+                valor={`US$ ${entero(deuda.maximo.usd)} M`}
+                texto={`fue el máximo de la deuda provincial, en ${deuda.maximo.fecha.slice(0, 4)}.`}
+                matiz={`Hoy está en US$ ${entero(deuda.totalUsd)} M. Medida en dólares, la deuda en pesos baja cuando hay devaluación.`}
+              />
+            )}
+          </div>
+          <Link
+            to="/senales"
+            data-track="home.signals.open"
+            className={buttonClassName({ variant: "primary", className: "w-full sm:w-fit" })}
+          >
+            Ver todas las señales y sus casos <RiArrowRightLine className="size-5" aria-hidden />
+          </Link>
         </section>
       )}
 
@@ -104,14 +130,89 @@ export function HomePage() {
             titulo="Lo nuevo"
             bajada="Las últimas leyes, nombramientos y datos actualizados."
           />
-          <WhatsNew guide={guide} />
+          <WhatsNew guide={{ ...guide, news: guide.news.slice(0, 5) }} />
+        </section>
+      )}
+
+      {/* Mapa: el mismo interés que «¿Dónde vivís?», ahora antes de las cifras */}
+      {coparticipacion && mapa && (
+        <section className="flex flex-col gap-6">
+          <Encabezado
+            id="tu-departamento"
+            icon={RiMapLine}
+            titulo="Tu departamento"
+            bajada={`Cuánto recibió cada municipio por habitante en ${coparticipacion.anio}. Tocá uno para ver su detalle.`}
+          />
+          <div>
+            <MapaMendoza
+              mapa={mapa}
+              valores={coparticipacion.porMunicipio}
+              formatValue={pesos}
+              seleccionado={null}
+              onSelect={(m) => {
+                if (!m) return;
+                track("home.map_department.open", { municipality: slug(m) });
+                void navigate({ to: "/municipios/$slug", params: { slug: slug(m) } });
+              }}
+              leyenda={`Pesos por habitante (de ${coparticipacion.referencia})`}
+            />
+          </div>
         </section>
       )}
 
       {/* Las cifras principales */}
       <section className="flex flex-col gap-6">
         <Encabezado id="numeros" titulo="Mendoza en números" bajada="Tocá cualquier cifra para ver el detalle, la evolución y la fuente." />
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {/* En el celular, una fila por cifra (la evolución y la fuente están en su página) */}
+        <ul className={cx(listVariants(), "sm:hidden")}>
+          {deuda && <FigureRow id="deuda" icon={RiBankLine} title="Deuda" value={`US$ ${entero(deuda.totalUsd)}`} unit="M" to="/deuda" />}
+          {coparticipacion && (
+            <FigureRow
+              id="coparticipacion"
+              icon={RiCoinsLine}
+              title="Coparticipación"
+              value={millones(coparticipacion.totalReal)}
+              unit="M"
+              to="/coparticipacion"
+            />
+          )}
+          {empleo && (
+            <FigureRow
+              id="empleo-publico"
+              icon={RiTeamLine}
+              title="Empleo público"
+              value={decimal.format(empleo.cadaMil)}
+              unit="cada mil"
+              to="/empleo-publico"
+            />
+          )}
+          {compras && (
+            <FigureRow
+              id="compras-ocds"
+              icon={RiShoppingCartLine}
+              title="Compras"
+              value={millones(compras.totalAdjudicado)}
+              unit="M"
+              to="/datos/$fuente"
+              params={{ fuente: "compras-ocds" }}
+            />
+          )}
+          {poblacion && (
+            <FigureRow id="poblacion" icon={RiGroupLine} title="Población" value={entero(poblacion.actual)} unit="hab." to="/poblacion" />
+          )}
+          {boletin && (
+            <FigureRow
+              id="boletin-oficial"
+              icon={RiFileTextLine}
+              title="Boletín"
+              value={entero(boletin.normas)}
+              unit="normas"
+              to="/datos/$fuente"
+              params={{ fuente: "boletin-oficial" }}
+            />
+          )}
+        </ul>
+        <div className="hidden gap-3 sm:grid sm:grid-cols-2 lg:grid-cols-3">
           {deuda && (
             <Cifra
               fuente={fuente("hacienda-deuda-stock")}
@@ -188,34 +289,66 @@ export function HomePage() {
         </div>
 
         {(inflacion || dolar) && (
-          <div className={cx(tileVariants({ size: "sm" }), "flex flex-wrap gap-x-8 gap-y-3 text-body-regular")}>
+          <div className="grid grid-cols-2 gap-3">
             {inflacion && (
-              <Link to="/datos/$fuente" params={{ fuente: "indices" }} className="flex flex-wrap items-center gap-x-2 hover:text-text-link">
-                <RiLineChartLine className="size-4 text-foreground-icon-secondary" aria-hidden />
-                <span className="text-text-secondary">Inflación en Cuyo ({inflacion.periodo}):</span>
-                <span className="font-medium tabular-nums">{decimal.format(inflacion.mensual)} % mensual</span>
-                <span className="text-text-tertiary tabular-nums">· {decimal.format(inflacion.interanual)} % en 12 meses</span>
-                <RiArrowRightSLine className="size-4 text-text-link" aria-hidden />
-              </Link>
+              <Indicador
+                id="inflacion"
+                icon={RiLineChartLine}
+                titulo="Inflación"
+                valor={`${decimal.format(inflacion.mensual)} %`}
+                unidad="mensual"
+                detalle={`${decimal.format(inflacion.interanual)} % en 12 meses`}
+                periodo={`Cuyo, ${inflacion.periodo}`}
+              />
             )}
             {dolar && (
-              <Link to="/datos/$fuente" params={{ fuente: "indices" }} className="flex items-center gap-2 hover:text-text-link">
-                <RiCoinsLine className="size-4 text-foreground-icon-secondary" aria-hidden />
-                <span className="text-text-secondary">Dólar oficial ({dolar.periodo}):</span>
-                <span className="font-medium tabular-nums">{pesos(dolar.oficial)}</span>
-                <RiArrowRightSLine className="size-4 text-text-link" aria-hidden />
-              </Link>
+              <Indicador id="dolar" icon={RiCoinsLine} titulo="Dólar oficial" valor={pesos(dolar.oficial)} periodo={dolar.periodo} />
             )}
           </div>
         )}
       </section>
+
+      {/* Lo que no se publica */}
+      {noPublicado.length > 0 && (
+        <section className="flex flex-col gap-6">
+          <Encabezado
+            id="no-publicado"
+            icon={RiEyeOffLine}
+            titulo="Lo que el Estado no publica"
+            bajada={`${noPublicado.length} datos que deberían ser públicos y no encontramos en ningún sitio oficial. Podés pedirlos vos.`}
+          />
+          <ul className={listVariants()}>
+            {noPublicado.slice(0, 4).map((item) => (
+              <li key={item.id}>
+                <Link
+                  to="/no-publicado"
+                  search={{ dato: item.id } as never}
+                  data-track="home.missing_data.open"
+                  data-track-item={item.id}
+                  className={cx(listRowVariants(), "items-start text-body-regular")}
+                >
+                  <RiEyeOffLine className="mt-0.5 size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
+                  <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                    <span className="font-medium">{item.titulo}</span>
+                    <span className="text-text-tertiary">{item.organismo}</span>
+                  </span>
+                  <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link to="/no-publicado" className={buttonClassName({ variant: "secondary", className: "w-full sm:w-fit" })}>
+            Ver los {noPublicado.length} y cómo pedirlos <RiArrowRightLine className="size-5" aria-hidden />
+          </Link>
+        </section>
+      )}
 
       {guide && (
         <section className="flex flex-col gap-6">
           <Encabezado
             id="temas"
             icon={RiLayoutGridLine}
-            titulo="Todo lo que hay en Mendoza Transparente"
+            titulo="Todo lo que hay"
             bajada={`${formatNumber(guide.counts.records)} registros ordenados en cuatro preguntas. Elegí por dónde seguir.`}
           />
           <EcosystemMap guide={guide} />
@@ -231,95 +364,6 @@ export function HomePage() {
         />
         <ReadingRules />
       </section>
-
-      {/* Lo que no se publica */}
-      {noPublicado.length > 0 && (
-        <section className="flex flex-col gap-6">
-          <Encabezado
-            id="no-publicado"
-            icon={RiEyeOffLine}
-            titulo="Lo que el Estado no publica"
-            bajada={`${noPublicado.length} datos que deberían ser públicos y no encontramos en ningún sitio oficial. Podés pedirlos vos.`}
-          />
-          <ul className={listVariants()}>
-            {noPublicado.slice(0, 6).map((item) => (
-              <li key={item.id}>
-                <Link
-                  to="/no-publicado"
-                  search={{ dato: item.id } as never}
-                  className={cx(listRowVariants(), "items-start text-body-regular")}
-                >
-                  <RiEyeOffLine className="mt-0.5 size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
-                  <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                    <span className="font-medium">{item.titulo}</span>
-                    <span className="text-text-tertiary">{item.organismo}</span>
-                  </span>
-                  <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <Link to="/no-publicado" className={buttonClassName({ variant: "primary", className: "w-fit" })}>
-            Ver todos y cómo pedirlos <RiArrowRightLine className="size-5" aria-hidden />
-          </Link>
-        </section>
-      )}
-
-      {/* Mapa */}
-      {coparticipacion && mapa && (
-        <section className="flex flex-col gap-6">
-          <Encabezado
-            id="tu-departamento"
-            icon={RiMapLine}
-            titulo="Tu departamento"
-            bajada={`Cuánto recibió cada municipio por habitante en ${coparticipacion.anio}. Tocá uno para ver su detalle.`}
-          />
-          <div>
-            <MapaMendoza
-              mapa={mapa}
-              valores={coparticipacion.porMunicipio}
-              formatValue={pesos}
-              seleccionado={null}
-              onSelect={(m) => m && navigate({ to: "/municipios/$slug", params: { slug: slug(m) } })}
-              leyenda={`Pesos por habitante (de ${coparticipacion.referencia})`}
-            />
-          </div>
-        </section>
-      )}
-
-      {/* Señales */}
-      {compras && (
-        <section className="flex flex-col gap-6">
-          <Encabezado
-            id="para-mirar"
-            icon={RiScales3Line}
-            titulo="Para mirar de cerca"
-            bajada="No son acusaciones: son patrones en los datos oficiales que merecen una explicación."
-          />
-          <div className="grid gap-3 md:grid-cols-3">
-            <Senal
-              valor={`${Math.round(compras.pctDirectas)} %`}
-              texto="de los procesos de compra fueron contrataciones directas, sin licitación."
-              matiz={`Pero representan el ${Math.round(compras.pctMontoDirectas)} % de la plata: muchas son compras chicas.`}
-            />
-            <Senal
-              valor={`1 de cada ${Math.round(100 / compras.pctUnaOferta)}`}
-              texto="procesos de compra recibió una sola oferta."
-              matiz={`${decimal.format(compras.pctUnaOferta)} % de los procesos con dato de oferentes.`}
-            />
-            {deuda && (
-              <Senal
-                valor={`US$ ${entero(deuda.maximo.usd)} M`}
-                texto={`fue el máximo de la deuda provincial, en ${deuda.maximo.fecha.slice(0, 4)}.`}
-                matiz={`Hoy está en US$ ${entero(deuda.totalUsd)} M. Medida en dólares, la deuda en pesos baja cuando hay devaluación.`}
-              />
-            )}
-          </div>
-          <Link to="/senales" className={buttonClassName({ variant: "primary", className: "w-fit" })}>
-            Ver todas las señales y sus casos <RiArrowRightLine className="size-5" aria-hidden />
-          </Link>
-        </section>
-      )}
     </div>
   );
 }
@@ -358,11 +402,11 @@ function Cifra({ icon: Icon, titulo, valor, unidad, detalle, serie, fuente, to, 
   const linkClass = "after:absolute after:inset-0 after:rounded-xl";
   const tituloLink =
     to === "/datos/$fuente" ? (
-      <Link to={to} params={params} className={linkClass}>
+      <Link to={to} params={params} data-track="home.figure.open" data-track-figure={params.fuente} className={linkClass}>
         {titulo}
       </Link>
     ) : (
-      <Link to={to} className={linkClass}>
+      <Link to={to} data-track="home.figure.open" data-track-figure={to.slice(1)} className={linkClass}>
         {titulo}
       </Link>
     );
@@ -406,5 +450,76 @@ function Senal({ valor, texto, matiz }: { valor: string; texto: string; matiz: s
       <span className="text-text-primary text-pretty">{texto}</span>
       <span className="text-body-regular text-text-tertiary text-pretty">{matiz}</span>
     </div>
+  );
+}
+
+/** Índice del mes (inflación, dólar): media fila cada uno, con la cifra en grande. */
+function Indicador({
+  id,
+  icon: Icon,
+  titulo,
+  valor,
+  unidad,
+  detalle,
+  periodo,
+}: {
+  id: string;
+  icon: RemixiconComponentType;
+  titulo: string;
+  valor: string;
+  unidad?: string;
+  detalle?: string;
+  periodo: string;
+}) {
+  return (
+    <Link
+      to="/datos/$fuente"
+      params={{ fuente: "indices" }}
+      data-track="home.figure.open"
+      data-track-figure={id}
+      className={cx(cardVariants(), "flex min-w-0 flex-col gap-2")}
+    >
+      <span className="flex items-center gap-2 text-body-regular text-text-secondary">
+        <Icon className="hidden size-4 shrink-0 text-foreground-icon-secondary sm:block" aria-hidden />
+        <span className="min-w-0 flex-1 truncate">{titulo}</span>
+        <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
+      </span>
+      <span className="flex items-baseline gap-1.5 whitespace-nowrap">
+        <span className="text-title-1-semibold tracking-tight tabular-nums">{valor}</span>
+        {unidad && <span className="text-body-regular text-text-tertiary">{unidad}</span>}
+      </span>
+      <span className="flex flex-col text-caption-1-regular text-text-tertiary tabular-nums">
+        {detalle && <span className="text-pretty">{detalle}</span>}
+        <span className="truncate">{periodo}</span>
+      </span>
+    </Link>
+  );
+}
+
+type FigureLink =
+  | { to: "/deuda" | "/coparticipacion" | "/empleo-publico" | "/poblacion"; params?: never }
+  | { to: "/datos/$fuente"; params: { fuente: string } };
+
+/** Cifra en una fila, para el celular: la evolución y la fuente están en su página. */
+function FigureRow({
+  id,
+  icon: Icon,
+  title,
+  value,
+  unit,
+  ...link
+}: { id: string; icon: RemixiconComponentType; title: string; value: string; unit: string } & FigureLink) {
+  return (
+    <li>
+      <Link {...link} data-track="home.figure.open" data-track-figure={id} className={listRowVariants()}>
+        <Icon className="size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
+        <span className="min-w-0 flex-1 truncate text-body-regular text-text-secondary">{title}</span>
+        <span className="flex items-baseline gap-1 whitespace-nowrap">
+          <span className="font-semibold tabular-nums">{value}</span>
+          <span className="text-caption-1-regular text-text-tertiary">{unit}</span>
+        </span>
+        <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
+      </Link>
+    </li>
   );
 }

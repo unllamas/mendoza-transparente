@@ -39,6 +39,12 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["navegación"],
   },
   {
+    event: "nav.link.open",
+    description:
+      "Tocó un destino principal del menú (hoy, «Para mirar de cerca»), en la computadora o en el celular. Propiedades to y place (header o mobile_menu).",
+    tags: ["navegación"],
+  },
+  {
     event: "footer.report_error",
     description: "Tocó «Reportar un error» en la franja de arriba del pie. Propiedad path: la página donde lo vio.",
     tags: ["participación"],
@@ -330,7 +336,23 @@ export const EVENT_CATALOG: EventDoc[] = [
   },
   { event: "home.map.open", description: "Abrió una sección desde «Todo lo que hay». Propiedad section.", tags: ["portada"] },
   { event: "home.reading_guide.open", description: "Abrió la guía «Cómo leer estos datos» desde la portada.", tags: ["portada"] },
-  { event: "home.hero.reading_guide", description: "Tocó «¿Primera vez? Empezá por acá» en la portada.", tags: ["portada"] },
+  {
+    event: "home.figure.open",
+    description:
+      "Abrió una cifra de «Mendoza en números» (tarjeta, fila del celular, inflación o dólar). Propiedad figure (deuda, coparticipacion, compras-ocds, inflacion…).",
+    tags: ["portada"],
+  },
+  { event: "home.signals.open", description: "Tocó «Ver todas las señales y sus casos» en «Para mirar de cerca».", tags: ["portada"] },
+  {
+    event: "home.missing_data.open",
+    description: "Abrió un dato de «Lo que el Estado no publica» desde la portada. Propiedad item.",
+    tags: ["portada"],
+  },
+  {
+    event: "home.map_department.open",
+    description: "Tocó un departamento en el mapa de «Tu departamento». Propiedad municipality.",
+    tags: ["portada"],
+  },
   { event: "landscape.credit", description: "Abrió el crédito de una foto de paisaje. Propiedad photo.", tags: ["portada"] },
   { event: "landscape.propose", description: "Tocó «Proponé tu foto» bajo una foto de paisaje. Propiedad photo.", tags: ["portada"] },
 
@@ -339,6 +361,11 @@ export const EVENT_CATALOG: EventDoc[] = [
     event: "municipality.index.open",
     description:
       "Ya no se envía. Abría un índice de transparencia de otra organización (Municipios Argentinos, IERAL) desde un municipio; se quitaron el 16/10/2026.",
+    tags: ["en desuso"],
+  },
+  {
+    event: "home.hero.reading_guide",
+    description: "Ya no se envía. Tocaba «¿Primera vez? Empezá por acá» en la portada; se quitó el 17/10/2026 (1 clic en 6 días).",
     tags: ["en desuso"],
   },
   {

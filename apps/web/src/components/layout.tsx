@@ -131,6 +131,9 @@ export function Layout() {
                 <Link
                   key={item.to}
                   to={item.to}
+                  data-track="nav.link.open"
+                  data-track-to={item.to}
+                  data-track-place="header"
                   className={buttonClassName({ variant: "tertiary", className: "[&.active]:text-text-link" })}
                 >
                   {item.label}
@@ -182,6 +185,9 @@ export function Layout() {
                   <Link
                     key={item.to}
                     to={item.to}
+                    data-track="nav.link.open"
+                    data-track-to={item.to}
+                    data-track-place="mobile_menu"
                     className="flex items-center justify-between min-h-11 border-b border-separator-border py-4 text-title-3-regular text-text-primary [&.active]:font-medium [&.active]:text-text-link"
                   >
                     {item.label}

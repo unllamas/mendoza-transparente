@@ -28,6 +28,7 @@ Las skills del proyecto (`.claude/skills/<nombre>/SKILL.md`) son la puerta de en
 | Crear un archivo, un paquete o una app; mover código; agregar una dependencia | `arquitectura` |
 | Crear o retocar una pantalla, un componente, un gráfico o un texto visible | `diseno` |
 | Resolver un pedido de mejora o arreglo sobre algo existente (una nota de Agentation, una captura, "esto se ve mal") | `mejoras` |
+| Ver cómo quedaría una pantalla o un componente antes de tocar el código real («quiero verlo antes», comparar opciones, reordenar una página) | `vista-previa` |
 | Revisar un cambio de interfaz antes de commitear, o lo que entregó un subagente | `revisar-interfaz` |
 | Probar un componente con datos extremos (nombres largos, listas vacías, sin foto) | `estresar-interfaz` |
 | Agregar un botón, un link, un formulario o una interacción; tocar PostHog | `analitica` |
