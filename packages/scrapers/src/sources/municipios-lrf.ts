@@ -49,6 +49,7 @@ import { find as generalAlvear } from "../lrf/finders/general-alvear.ts";
 import { find as godoyCruz } from "../lrf/finders/godoy-cruz.ts";
 import { find as guaymallen } from "../lrf/finders/guaymallen.ts";
 import { find as laPaz } from "../lrf/finders/la-paz.ts";
+import { find as lasHeras } from "../lrf/finders/las-heras.ts";
 import { find as lavalle } from "../lrf/finders/lavalle.ts";
 import { find as maipu } from "../lrf/finders/maipu.ts";
 import { find as malargue } from "../lrf/finders/malargue.ts";
@@ -83,6 +84,7 @@ const FINDERS: Record<string, Finder> = {
   "Godoy Cruz": godoyCruz,
   Guaymallén: guaymallen,
   "La Paz": laPaz,
+  "Las Heras": lasHeras,
   Lavalle: lavalle,
   Maipú: maipu,
   Malargüe: malargue,

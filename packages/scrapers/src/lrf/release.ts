@@ -32,6 +32,8 @@ export interface Release extends Period {
   zip?: string;
   workbook?: string;
   report?: string;
+  /** Headers the downloads need, such as the session cookie of an application whose links expire (Las Heras). */
+  headers?: Record<string, string>;
 }
 
 /** A municipality's finder: every quarter it publishes (the source drops those before FIRST_YEAR). */
@@ -180,13 +182,13 @@ export async function downloadRelease(r: Release, skip: Set<Annex>): Promise<{ d
   const problems: string[] = [];
   if (r.report) {
     if (ANNEXES.every((a) => skip.has(a))) return { docs, problems };
-    const bytes = new Uint8Array(await (await get(r.report)).arrayBuffer());
+    const bytes = new Uint8Array(await (await get(r.report, { headers: r.headers })).arrayBuffer());
     await sleep(1000);
     return { docs: await reportPages(bytes, r.report, skip), problems };
   }
   if (r.zip) {
     if (ANNEXES.every((a) => skip.has(a))) return { docs, problems };
-    const bytes = new Uint8Array(await (await get(r.zip)).arrayBuffer());
+    const bytes = new Uint8Array(await (await get(r.zip, { headers: r.headers })).arrayBuffer());
     await sleep(1000);
     let entries: Record<string, Uint8Array>;
     try {
@@ -207,7 +209,7 @@ export async function downloadRelease(r: Release, skip: Set<Annex>): Promise<{ d
     const url = r.files[annex];
     if (!url || skip.has(annex)) continue;
     try {
-      const bytes = new Uint8Array(await (await get(driveDownload(url))).arrayBuffer());
+      const bytes = new Uint8Array(await (await get(driveDownload(url), { headers: r.headers })).arrayBuffer());
       const ext = documentExt(bytes);
       if (ext) docs.push({ annex, bytes, ext, url });
       else problems.push(`anexo ${annexName(annex)}: el archivo no es PDF ni planilla`);
