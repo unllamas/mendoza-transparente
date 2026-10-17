@@ -1,6 +1,6 @@
 <!--
 Plantilla de PR (docs/procesos/ramas-y-releases.md). Vale para personas y agentes.
-- Base: `dev` para todo lo nuevo; `main` solo para un release (desde `dev`) o un hotfix.
+- Base: `dev` para todo lo nuevo; `main` solo para una publicación (desde `dev`) o un hotfix. Los releases de GitHub los crea solo el workflow «Release del día».
 - Título en Conventional Commits, `<tipo>(<ámbito>): <descripción en español>` (por ejemplo `feat(web): …`, `fix(scrapers): …`, `chore(release): 2026-10-17`). Con squash es el commit que queda en `dev`, y la CI lo valida.
 - Marcá [x] lo que revisaste y tachá con ~~…~~ lo que no aplica, diciendo por qué. No borres ítems.
 - Un agente completa cada punto mirando el diff (`git diff origin/dev...HEAD`) y corriendo los comandos, no de memoria.
@@ -14,7 +14,7 @@ Plantilla de PR (docs/procesos/ramas-y-releases.md). Vale para personas y agente
 
 **Alcance**
 - [ ] El diff tiene solo lo de esta tarea: nada de otra rama, ni archivos sueltos, ni `bun.lock` sin una dependencia nueva.
-- [ ] La rama sale de `dev` (o de `main` si es un hotfix) y el PR apunta a esa base. Un hotfix necesita confirmar después el back merge a `dev`; un release (`dev → main`) se mergea con merge commit.
+- [ ] La rama sale de `dev` (o de `main` si es un hotfix) y el PR apunta a esa base. Un hotfix necesita confirmar después el back merge a `dev`; una publicación (`dev → main`) se mergea con merge commit.
 - [ ] El título sigue Conventional Commits, y si rompe un contrato (una columna de un CSV publicado) lleva `!` y explica la migración.
 
 **Documentación**
