@@ -8,7 +8,7 @@ description: Convenciones de código de Mendoza Transparente. Cubre idioma (cód
 ## Idioma
 
 - **En inglés:** el código. Variables, funciones, tipos, nombres de archivos de código, ids de eventos y comentarios técnicos breves.
-- **En español:** la documentación (`docs/`, README, `AGENTS.md`, skills), los textos que ve la gente, las rutas públicas (`/leyes`, `/municipios`) y los mensajes de commit.
+- **En español:** la documentación (`docs/`, README, `AGENTS.md`, skills), los textos que ve la gente, las rutas públicas (`/leyes`, `/municipios`) y la descripción de los commits (el tipo y el ámbito de Conventional Commits van en inglés).
 - **Columnas de CSV publicados:** snake_case en español. Son un contrato público y **no se renombran** sin un plan de migración.
 - **Código viejo en español:** lo que se toca, se pasa al inglés, sin refactors masivos de pasada.
 
@@ -51,7 +51,8 @@ bun run verificar                     # (desde la raíz) sin scroll horizontal y
 
 ## Commits
 
-- **Contenido:** un commit por entrega, con el mensaje en español que explique qué cambia y por qué, y la línea `Co-Authored-By` que indique el sistema.
+- **Formato:** Conventional Commits, `<tipo>(<ámbito>): <descripción en español>`, por ejemplo `feat(web): …` o `fix(scrapers): …`. Tipos, ámbitos y ejemplos en la skill `ramas-y-releases`. El hook `commit-msg` rechaza lo que no cumple.
+- **Contenido:** un commit por entrega, con un cuerpo en español que explique qué cambia y por qué, y la línea `Co-Authored-By` que indique el sistema.
 - **Qué agregar:** solo los archivos de la tarea, con `git add <rutas>` y nunca `git add -A`, porque puede haber trabajo de un agente en curso.
 - **Dónde:** en una rama que sale de `dev`, con PR a `dev`. Nunca directo a `main`, que publica el sitio en cada push (ver la skill `ramas-y-releases`).
 - **Secretos:** `.env.cloudflare`, `.env.posthog` y cualquier token nunca se commitean ni se imprimen. Ya están en `.gitignore`, y un hook bloquea leerlos.

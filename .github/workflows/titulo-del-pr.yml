@@ -1,0 +1,22 @@
+# Valida que el título del PR siga Conventional Commits: con squash, el título es el commit que queda en dev.
+# Ver docs/procesos/ramas-y-releases.md#mensajes-de-commit-y-títulos-de-pr.
+name: Título del PR
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  titulo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+      - run: bun install --frozen-lockfile
+      - name: Conventional Commits (commitlint)
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: printf '%s\n' "$TITLE" | bunx commitlint --verbose

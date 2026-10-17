@@ -11,3 +11,9 @@ pre-commit:
     tipos:
       glob: "*.{ts,tsx}"
       run: bun run typecheck
+
+# Conventional Commits (docs/procesos/ramas-y-releases.md#mensajes-de-commit-y-títulos-de-pr).
+commit-msg:
+  commands:
+    commitlint:
+      run: bunx commitlint --edit {1}
