@@ -78,7 +78,7 @@ for (const r of releases) {
     for (const layout of ["v", "cells"] as const) {
       if (!("error" in parsed) || (d.ext !== "pdf" && d.ext !== "json")) break;
       const retry = PARSERS[annex]!(await read(layout));
-      if (!("error" in retry)) parsed = retry;
+      if (!("error" in retry) || / no da | no cumple /.test(retry.error)) parsed = retry;
     }
     const checks = [
       period && (period.year !== r.year || period.quarter !== r.quarter) ? `dice ${period.year}-T${period.quarter}` : "",

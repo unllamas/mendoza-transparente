@@ -52,6 +52,7 @@ import { find as junin } from "../lrf/finders/junin.ts";
 import { find as laPaz } from "../lrf/finders/la-paz.ts";
 import { find as lasHeras } from "../lrf/finders/las-heras.ts";
 import { find as lavalle } from "../lrf/finders/lavalle.ts";
+import { find as lujanDeCuyo } from "../lrf/finders/lujan-de-cuyo.ts";
 import { find as maipu } from "../lrf/finders/maipu.ts";
 import { find as malargue } from "../lrf/finders/malargue.ts";
 import { find as rivadavia } from "../lrf/finders/rivadavia.ts";
@@ -88,6 +89,7 @@ const FINDERS: Record<string, Finder> = {
   "La Paz": laPaz,
   "Las Heras": lasHeras,
   Lavalle: lavalle,
+  "Luján de Cuyo": lujanDeCuyo,
   Maipú: maipu,
   Malargüe: malargue,
   Rivadavia: rivadavia,
@@ -368,7 +370,8 @@ export async function run(_args: string[]): Promise<void> {
           if (!("error" in parsed) || r.workbook) break;
           const sideways = await annexTables(r, annex, layout);
           const retry = sideways ? reader.parse(sideways) : parsed;
-          if (!("error" in retry)) parsed = retry;
+          // A failed check of the document's own arithmetic says more than a layout that was not recognized.
+          if (!("error" in retry) || / no da | no cumple /.test(retry.error)) parsed = retry;
         }
         if ("error" in parsed) {
           record(r, annex, "error", parsed.error);

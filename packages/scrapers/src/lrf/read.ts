@@ -35,12 +35,15 @@ export type Table = Tok[][];
 const NUM_ES = /^(?:-|-?\d[\d.]*(?:,\d+)?)$/;
 const NUM_EN = /^-?(?:\d{1,3}(?:,\d{3})+(?:\.\d{1,2})?|\d+\.\d{2})$/;
 const NUM_PARENS = /^\((\d[\d.]*,\d+)\)$/;
+// Commas for both the thousands and the decimals ("35,522,500,000,00", the totals of Luján de Cuyo).
+const NUM_COMMAS = /^-?\d{1,3}(?:,\d{3})+,\d{2}$/;
 
-/** "1.234,56" → 1234.56; "1,234.56" → 1234.56; "(1.234,56)" → -1234.56; "5626739118" → 5626739118; "-" → 0. */
+/** "1.234,56" → 1234.56; "1,234.56" → 1234.56; "1,234,56" → 1234.56; "(1.234,56)" → -1234.56; "5626739118" → 5626739118; "-" → 0. */
 export function parseNum(s: string): number {
   if (s === "-") return 0;
   const parens = NUM_PARENS.exec(s);
   if (parens) return -parseNum(parens[1]!);
+  if (NUM_COMMAS.test(s)) return Number(s.slice(0, -3).replace(/,/g, "") + "." + s.slice(-2));
   if (NUM_EN.test(s)) return Number(s.replace(/,/g, ""));
   return Number(s.replace(/\./g, "").replace(",", "."));
 }
@@ -50,7 +53,7 @@ export function tokenize(text: string): Tok[] {
     .replace(/\$/g, " ")
     .split(/\s+/)
     .filter(Boolean)
-    .map((t) => ({ text: t, num: NUM_EN.test(t) || NUM_ES.test(t) || NUM_PARENS.test(t) ? parseNum(t) : null }));
+    .map((t) => ({ text: t, num: NUM_EN.test(t) || NUM_ES.test(t) || NUM_PARENS.test(t) || NUM_COMMAS.test(t) ? parseNum(t) : null }));
 }
 
 /** The texts of a PDF page with their position (a text with several tokens is spread along x). */

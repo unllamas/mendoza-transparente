@@ -6,7 +6,7 @@
  * per annex enough for all of them and lets each document be checked against itself.
  */
 
-import { objectCodeFromLevels, spendingObjectCode } from "./classify.ts";
+import { objectCodeFromLabel, objectCodeFromLevels, spendingObjectCode } from "./classify.ts";
 import type { Table, Tok } from "./read.ts";
 
 export interface Period {
@@ -184,6 +184,68 @@ const AREA_ITEM = /(?:^|\s)(\d+)\.(\d{2})\.(\d{6})\.?\s*(.*)$/;
 const UNIT_ROW = /(?:^|\s)(\d+)\.(\d{2})\.\s*(\D.*)$/;
 const JURISDICTION_ROW = /(?:^|\s)(\d+)\.\s*(\D.*)$/;
 const TOTALS_ROW = /(?:^|\s)total(?:es)?\s*:?$/i;
+
+/**
+ * A row of a table exported from a database (Luján de Cuyo): the header is the field names ("ejercicio trimestre
+ * nomenclador partida descripcion creautori …") and each row starts with the year, the quarter and the nomenclator:
+ * "2024 1 060209 4.1.1 PERSONAL …". The Concejo Deliberante's items end in "HCD".
+ */
+const EXPORT_ROW = /^(\d{4})\s+([1-4])\s+(\d{6})\s+(\S+)\s+(\D.*)$/;
+const isExportLayout = (texts: string[]) => texts.some((t) => /^ejercicio trimestre nomenclador\b/i.test(t));
+
+/** Rows of an exported table with n figures: code, name and figures of each item, and the totals row. */
+function readExportTable(
+  tables: Table[],
+  n: number,
+): { items: { code: string; label: string; values: number[] }[]; totals: number[] | null } | { error: string } {
+  const items: { code: string; label: string; values: number[] }[] = [];
+  let totals: number[] | null = null;
+  const unknown: string[] = [];
+  let last: (typeof items)[number] | null = null;
+  for (const row of tables.flat()) {
+    const split = splitRow(row, n);
+    if (!split) {
+      // A name that does not fit in its cell goes on below the row ("INTERESES Y GASTOS DE" + "LA DEUDA").
+      if (last && row.length && row.every((t) => t.num === null)) last.label = `${last.label} ${rowText(row)}`;
+      last = null;
+      continue;
+    }
+    last = null;
+    if (TOTALS_ROW.test(split.label)) totals = split.values;
+    else {
+      const m = EXPORT_ROW.exec(split.label);
+      if (m) items.push((last = { code: m[4]!, label: m[5]!.trim(), values: split.values }));
+      else unknown.push(split.label);
+    }
+  }
+  if (unknown.length) return { error: `filas sin reconocer: ${unknown.slice(0, 3).join(" | ")}` };
+  return { items, totals };
+}
+
+/** Spending items of an exported table, classified by their name (the codes change scheme between years). */
+function readExportSpending(tables: Table[]): { lines: SpendingLine[]; totals: SpendingFigures | null } | { error: string } {
+  const read = readExportTable(tables, SPENDING_COLUMNS.length);
+  if ("error" in read) return read;
+  const lines = read.items.map((i) => ({
+    jurisdiction: /hcd\.?$/i.test(i.label) ? "Concejo Deliberante" : "Departamento Ejecutivo",
+    unit: "",
+    code: i.code,
+    label: i.label,
+    objectCode: objectCodeFromLabel(i.label) ?? "",
+    ...figures(i.values),
+  }));
+  const unnamed = lines.filter((l) => !l.objectCode).map((l) => `${l.code} ${l.label}`);
+  if (unnamed.length) return { error: `partidas sin clasificar: ${unnamed.slice(0, 3).join(" | ")}` };
+  return { lines, totals: read.totals && figures(read.totals) };
+}
+
+/** Revenue of an exported table: the code with a decimal comma ("1,1") becomes dotted ("1.1"). */
+function readExportRevenue(tables: Table[]): { lines: RevenueLine[]; totals: RevenueFigures | null } | { error: string } {
+  const read = readExportTable(tables, REVENUE_COLUMNS.length);
+  if ("error" in read) return read;
+  const lines = read.items.map((i) => ({ code: i.code.replace(/,/g, "."), label: i.label, ...revenueFigures(i.values) }));
+  return { lines, totals: read.totals && revenueFigures(read.totals) };
+}
 
 /** One row per item with the code and its 11 figures: San Martín ("41100 PERSONAL") and San Rafael (by area). */
 function readItemRows(tables: Table[]): { lines: SpendingLine[]; totals: SpendingFigures | null } | { error: string } {
@@ -432,11 +494,13 @@ function readInfogov(tables: Table[]): { lines: SpendingLine[]; totals: Spending
 export function parseSpendingAnnex(tables: Table[]): SpendingAnnex | { error: string } {
   if (isScanned(tables)) return SCANNED;
   const texts = tables.flat().map(rowText);
-  const read = texts.some((t) => INFOGOV_ITEM.test(t))
-    ? readInfogov(tables)
-    : texts.some((t) => isDottedLayout(t) || isThreeDigitLayout(t))
-      ? readHierarchicalRows(tables)
-      : readItemRows(tables);
+  const read = isExportLayout(texts)
+    ? readExportSpending(tables)
+    : texts.some((t) => INFOGOV_ITEM.test(t))
+      ? readInfogov(tables)
+      : texts.some((t) => isDottedLayout(t) || isThreeDigitLayout(t))
+        ? readHierarchicalRows(tables)
+        : readItemRows(tables);
   if ("error" in read) return read;
   const { lines, totals } = read;
   if (!totals) return { error: "no se encontró la fila de totales" };
@@ -666,11 +730,13 @@ function readShortCodedRevenue(tables: Table[]): { lines: RevenueLine[]; totals:
 export function parseRevenueAnnex(tables: Table[]): RevenueAnnex | { error: string } {
   if (isScanned(tables)) return SCANNED;
   const texts = tables.flat().map(rowText);
-  const read = texts.some((t) => INFOGOV_REVENUE_ITEM.test(t))
-    ? readInfogovRevenue(tables)
-    : texts.some((t) => /^\d\.\d\.\s/.test(t) || SHORT_REVENUE.test(t) || /^\d\.\d\.+\d{2}\.\d{2}\.\d{3,4}\b/.test(t))
-      ? readShortCodedRevenue(tables)
-      : readRevenueRows(tables);
+  const read = isExportLayout(texts)
+    ? readExportRevenue(tables)
+    : texts.some((t) => INFOGOV_REVENUE_ITEM.test(t))
+      ? readInfogovRevenue(tables)
+      : texts.some((t) => /^\d\.\d\.\s/.test(t) || SHORT_REVENUE.test(t) || /^\d\.\d\.+\d{2}\.\d{2}\.\d{3,4}\b/.test(t))
+        ? readShortCodedRevenue(tables)
+        : readRevenueRows(tables);
   if ("error" in read) return read;
   const { lines, totals } = read;
   if (!totals) return { error: "no se encontró la fila de totales" };
@@ -839,9 +905,10 @@ function readDebt(tables: Table[], signAfterLabel: boolean | null): DebtAnnex | 
     const codeOnly = /^\d{6,}\s*-?$/.test(split.label);
     if (!/\p{L}/u.test(split.label) && !/^(19|20)\d\d$/.test(split.label) && !codeOnly) continue;
     if (DEBT_COLUMNS.every((c) => values[c] === 0)) continue;
-    // Rivadavia opens each row with the year, the quarter and its nomenclator ("2026 2 60212 2117020000 PRESTAMO …").
+    // Rivadavia opens each row with the year, the quarter and its nomenclator ("2026 2 60212 2117020000 PRESTAMO …"), and
+    // Luján de Cuyo too, with an empty code ("2024 1 060209 0 ALUMBRADO PUBLICO …").
     const label = split.label
-      .replace(/^\d{4}\s+[1-4]\s+\d{5,6}\s+/, "")
+      .replace(/^\d{4}\s+[1-4]\s+\d{5,6}\s+(?:0\s+(?=\D))?/, "")
       .replace(/\s+-$/, "")
       .replace(/\s+/g, " ");
     last = { label, currency, ...values };

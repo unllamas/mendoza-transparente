@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 
 import { headerAnnex, headerPeriod, parseDebtAnnex, parseRevenueAnnex, parseSpendingAnnex, splitRow } from "./annexes.ts";
-import { revenueKind, spendingObjectCode } from "./classify.ts";
+import { objectCodeFromLabel, revenueKind, spendingObjectCode } from "./classify.ts";
 import { cellRows, htmlTables, type Table, type Tok, tokenize } from "./read.ts";
 
 const row = (text: string): Tok[] => tokenize(text);
@@ -396,5 +396,34 @@ describe("lrf: Junín", () => {
       ["574000000", "financiamiento"],
     ]);
     expect(parsed.totals.collected).toBe(40);
+  });
+});
+
+describe("lrf: Luján de Cuyo", () => {
+  const HEADER =
+    "ejercicio trimestre nomenclador partida descripcion creautori modacufinaum modacufindis creautdeffin cocon devengado manpag pagado respas salnouti deuexi";
+
+  test("a table exported from a database, classified by name, with the Concejo Deliberante apart", () => {
+    const parsed = parseSpendingAnnex([
+      table(
+        HEADER,
+        `2024 1 060209 4.2 INTERESES Y GASTOS DE ${OK}`,
+        "LA DEUDA",
+        `2024 1 060209 8.1.1 PERSONAL HCD ${OK}`,
+        "TOTALES 200,00 20,00 0,00 220,00 180,00 160,00 140,00 120,00 20,00 40,00 20,00",
+      ),
+    ]);
+    if ("error" in parsed) throw new Error(parsed.error);
+    expect(parsed.lines.map((l) => [l.objectCode, l.jurisdiction, l.label])).toEqual([
+      ["4.2.1", "Departamento Ejecutivo", "INTERESES Y GASTOS DE LA DEUDA"],
+      ["4.1.1", "Concejo Deliberante", "PERSONAL HCD"],
+    ]);
+  });
+
+  test("names of the 2024 and 2026 schemes, and totals with commas for thousands and decimals", () => {
+    expect(objectCodeFromLabel("TRANSF.P/FINANC.EROG.DE CAPIT.")).toBe("4.3.2");
+    expect(objectCodeFromLabel("CONSTRUCCIONES")).toBe("5.1.2");
+    expect(objectCodeFromLabel("BIENES DE CONSUMO-HCD")).toBe("4.1.2");
+    expect(row("35,522,500,000,00")[0]!.num).toBe(35522500000);
   });
 });
