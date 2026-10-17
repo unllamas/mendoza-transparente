@@ -67,7 +67,7 @@ Cualquier vista se puede pasar por link tal como está: la pestaña de una pági
 
 ## Botón «Compartir»
 
-Cada página con encabezado (`PageHeader`) lleva abajo de la bajada el botón **Compartir** (`src/components/share-button.tsx`). Arma la publicación sola, para que nadie tenga que escribirla:
+Cada página con encabezado (`PageHeader`) lleva el botón **Compartir** en una columna a la derecha del encabezado, alineado con la primera línea: solo el ícono, con un tooltip que dice «Compartir» al pasar el mouse o llegar con el teclado (`src/components/share-button.tsx`). Arma la publicación sola, para que nadie tenga que escribirla:
 
 - **Texto:** la descripción de la página (la misma que muestran buscadores y vistas previas; en las páginas de detalle ya trae sus cifras principales) seguida de `#MendozaTransparente`. Se recorta en una palabra para que entre en X con el link.
 - **Link:** la dirección completa, con sus parámetros: si había una hoja abierta (`?dato=`, `?proceso=`) se comparte abierta.

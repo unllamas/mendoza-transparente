@@ -4,12 +4,15 @@
  *   passes its own (a request in "Lo que no se publica").
  * - The link keeps the URL parameters, so an open sheet (`?dato=`, `?proceso=`) is shared as it is.
  * - On a phone it opens the system share sheet; elsewhere, a menu with X, WhatsApp and copy.
+ * - Icon only (44 × 44), named by `aria-label`; with a mouse or the keyboard a tooltip says "Compartir".
  * Documented in docs/procesos/web.md.
  */
 
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
+import { IconButton } from "@mt/ui/components/base/buttons/icon-button";
 import { Dropdown, DropdownPopover, DropdownTrigger } from "@mt/ui/components/base/dropdown/dropdown";
 import { MENU_ITEM, MENU_ITEM_INTERACTIVE } from "@mt/ui/components/base/dropdown/menu-styles";
+import { Tooltip, TooltipTrigger } from "@mt/ui/components/base/tooltip/tooltip";
 import { cx } from "@mt/ui/lib/cx";
 import { RiCheckLine, RiFileCopyLine, RiShareForwardLine, RiTwitterXLine, RiWhatsappLine } from "@remixicon/react";
 import { useRouterState } from "@tanstack/react-router";
@@ -52,29 +55,34 @@ export function ShareButton({ text, id = "compartir", context }: { text?: string
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const label = (
-    <>
-      <RiShareForwardLine className="size-5" aria-hidden /> Compartir
-    </>
-  );
-  const triggerClass = buttonClassName({ variant: "secondary", className: "w-fit shrink-0" });
-
   // Phones get the system sheet (WhatsApp, X, Instagram… whatever the person has installed).
   if (typeof navigator !== "undefined" && "share" in navigator && window.matchMedia("(pointer: coarse)").matches) {
     return (
-      <button type="button" id={id} onClick={nativeShare} data-track="share.native" data-track-context={where} className={triggerClass}>
-        {label}
-      </button>
+      <IconButton
+        id={id}
+        icon={RiShareForwardLine}
+        aria-label="Compartir"
+        onClick={nativeShare}
+        data-track="share.native"
+        data-track-context={where}
+      />
     );
   }
 
   const row = cx(MENU_ITEM, MENU_ITEM_INTERACTIVE, "min-h-11 text-body-medium");
   return (
     <Dropdown onOpenChange={(open) => open && setBody(compose())}>
-      <DropdownTrigger id={id} className={triggerClass}>
-        {label}
-      </DropdownTrigger>
-      <DropdownPopover aria-label="Compartir">
+      <TooltipTrigger>
+        <DropdownTrigger
+          id={id}
+          aria-label="Compartir"
+          className={buttonClassName({ variant: "secondary", iconOnly: true, className: "shrink-0" })}
+        >
+          <RiShareForwardLine className="size-5" aria-hidden />
+        </DropdownTrigger>
+        <Tooltip placement="left">Compartir</Tooltip>
+      </TooltipTrigger>
+      <DropdownPopover aria-label="Compartir" placement="bottom end">
         <a
           href={`https://x.com/intent/post?text=${encodeURIComponent(body)}&url=${encodeURIComponent(url)}`}
           target="_blank"

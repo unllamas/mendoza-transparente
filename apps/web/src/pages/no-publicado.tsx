@@ -200,13 +200,15 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
 
   return (
     <TrackedSheet title="Pedir este dato" onClose={onClose} trackId="missing_data.request">
-      <div className="flex flex-col gap-2">
-        <span className="inline-flex w-fit items-center gap-1.5 text-caption-1-regular text-text-tertiary">
-          <span className={`size-2 rounded-full ${ESTADOS[item.estado].dot}`} aria-hidden />
-          {ESTADOS[item.estado].label}
-        </span>
-        <h3 className="text-title-2-semibold tracking-tight text-balance">{item.titulo}</h3>
-        <p className="text-text-secondary text-pretty">{item.que_es}</p>
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex min-w-0 flex-col gap-2">
+          <span className="inline-flex w-fit items-center gap-1.5 text-caption-1-regular text-text-tertiary">
+            <span className={`size-2 rounded-full ${ESTADOS[item.estado].dot}`} aria-hidden />
+            {ESTADOS[item.estado].label}
+          </span>
+          <h3 className="text-title-2-semibold tracking-tight text-balance">{item.titulo}</h3>
+          <p className="text-text-secondary text-pretty">{item.que_es}</p>
+        </div>
         <ShareButton id="pedido-compartir" context="missing_data" text={shareText(item, stats)} />
       </div>
 

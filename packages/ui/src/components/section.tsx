@@ -57,8 +57,9 @@ export function SectionTitle({ id, className, children }: { id: string; classNam
 }
 
 /**
- * Header of the topic pages: icon and topic name above the title, then a short plain-language intro and, below
- * it, the page's action (the share button).
+ * Header of the topic pages: icon and topic name above the title, then a short plain-language intro. The page's
+ * action (the share button, icon only) sits in its own column at the right, aligned with the first line, so it never
+ * takes a row of its own.
  * Pages with breadcrumbs leave out `icon` and `topic`: the last breadcrumb carries them, so there is one line above the title.
  */
 export function PageHeader({
@@ -75,16 +76,18 @@ export function PageHeader({
   children: ReactNode;
 }) {
   return (
-    <div className="flex max-w-2xl flex-col gap-3">
-      {Icon && topic && (
-        <span className="flex items-center gap-2 text-body-regular text-text-secondary">
-          <Icon className="size-4 text-foreground-icon-secondary" aria-hidden />
-          {topic}
-        </span>
-      )}
-      <h1 className="text-display-4-semibold tracking-tight text-balance text-text-primary sm:text-display-3-semibold">{title}</h1>
-      <p className="text-headline-regular text-text-secondary text-pretty">{children}</p>
-      {action && <div className="pt-1">{action}</div>}
+    <div className="flex items-start justify-between gap-4">
+      <div className="flex max-w-2xl min-w-0 flex-col gap-3">
+        {Icon && topic && (
+          <span className="flex items-center gap-2 text-body-regular text-text-secondary">
+            <Icon className="size-4 text-foreground-icon-secondary" aria-hidden />
+            {topic}
+          </span>
+        )}
+        <h1 className="text-display-4-semibold tracking-tight text-balance text-text-primary sm:text-display-3-semibold">{title}</h1>
+        <p className="text-headline-regular text-text-secondary text-pretty">{children}</p>
+      </div>
+      {action && <div className="shrink-0">{action}</div>}
     </div>
   );
 }
