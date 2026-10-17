@@ -167,8 +167,14 @@ function brokenDerived(f: SpendingFigures): string[] {
   return broken;
 }
 
-/** Item row with the object code alone: "41100 PERSONAL" (San Martín) or "411000 PERSONAL" (Las Heras 2026). */
-const FLAT_ITEM = /^(\d{5,6})\s+(\D.*)$/;
+/**
+ * Item row with the object code alone: "41100 PERSONAL" (San Martín), "411000 PERSONAL" (Las Heras 2026) or
+ * "4110000 - PERSONAL" (Junín, which also prints the subtotals of each group: "4000000", "4100000"; up to 2023 with
+ * eight digits, "41100000 - PERSONAL").
+ */
+const FLAT_ITEM = /^(\d{5,8})\s+(?:-\s*)?(\D.*)$/;
+/** A Junín group subtotal: the third level at zero ("4100000 - OPERACION"; up to 2023, "41000000 - OPERACION"). */
+const isGroupCode = (code: string) => /^\d\d0{5,6}$/.test(code);
 /**
  * Item, unit and jurisdiction rows inside an area (San Rafael): "1.00.040101.PERSONAL" (jurisdiction.unit.object),
  * "1.01.INTENDENCIA - ADMINIST.CENTRAL" (unit subtotal) and "1.INTENDENCIA" (jurisdiction subtotal). Not anchored at
@@ -223,6 +229,7 @@ function readItemRows(tables: Table[]): { lines: SpendingLine[]; totals: Spendin
     const flat = area ? null : FLAT_ITEM.exec(label);
     if (area || flat) {
       const raw = area ? area[3]! : flat![1]!;
+      if (isGroupCode(raw)) continue;
       const objectCode = spendingObjectCode(raw);
       if (!objectCode) {
         unknown.push(label);
@@ -582,8 +589,11 @@ function readInfogovRevenue(tables: Table[]): { lines: RevenueLine[]; totals: Re
 const DOTTED_REVENUE = /^((?:\d\.){1,3})\s+(\D.*)$/;
 /** Revenue with a grouped code: "1.1.00.00.0000 DE ORIGEN PROVINCIAL" (Godoy Cruz; up to 2025 with a double dot, "1.1..00.00.0000"). */
 const GROUPED_REVENUE = /^(\d)\.(\d)\.+(\d{2})\.(\d{2})\.(\d{3,4})(?:\s+(\D.*))?$/;
-/** Revenue with a code of 4 to 6 digits: "5110 Rec. Ctes. de Origen Provincial", "57120 Uso del Crédito…" (Guaymallén). */
-const SHORT_REVENUE = /^(\d{4,6})\s+(\D.*)$/;
+/**
+ * Revenue with a code of 4 to 6 digits: "5110 Rec. Ctes. de Origen Provincial", "57120 Uso del Crédito…" (Guaymallén);
+ * or 9 digits with a dash, "511000000 - DE ORIGEN PROVINCIAL" (Junín).
+ */
+const SHORT_REVENUE = /^(\d{4,6}|\d{9})\s+(?:-\s*)?(\D.*)$/;
 
 /**
  * Revenue with short codes (Capital, Guaymallén): only a few groups, no detail per tax. The items are the codes with no
@@ -640,6 +650,10 @@ function readShortCodedRevenue(tables: Table[]): { lines: RevenueLine[]; totals:
     !!c.code && candidates.some((o) => o !== c && !!o.code && o.code !== c.code && o.code.startsWith(stem(c.code)));
   const leaves = candidates.filter((c) => !isParent(c));
   const lines = leaves.map((c) => ({ code: c.code, label: c.label.replace(/\s+/g, " ").trim(), ...revenueFigures(c.values) }));
+  // Junín prints no totals row: its first group ("500000000 - RECURSOS") holds every other code and is the total.
+  const root = candidates[0];
+  if (!totals && root?.code && candidates.every((c) => c === root || c.code.startsWith(stem(root.code))))
+    return { lines, totals: revenueFigures(root.values) };
   return { lines, totals };
 }
 
