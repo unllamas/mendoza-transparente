@@ -1,10 +1,14 @@
 import { Alert } from "@mt/ui/components/alert";
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
+import { Dropdown, DropdownItem, DropdownPopover, DropdownTrigger } from "@mt/ui/components/base/dropdown/dropdown";
 import { cardVariants, listRowVariants, listVariants } from "@mt/ui/components/card";
 import { PageHeader } from "@mt/ui/components/section";
 import { cx } from "@mt/ui/lib/cx";
-import { RiArrowRightSLine, RiBuilding2Line, RiFileTextLine, RiScalesLine } from "@remixicon/react";
+import { RiArrowRightSLine, RiArrowUpDownLine, RiBuilding2Line, RiCheckLine, RiFileTextLine, RiScalesLine } from "@remixicon/react";
 import { getRouteApi, Link, useRouter, useRouterState } from "@tanstack/react-router";
+import { useState } from "react";
+
+import { track } from "@/analytics.ts";
 
 import { formatMoneda } from "@/celdas.ts";
 import { useDetail } from "@/components/detail-sheet.tsx";
@@ -12,7 +16,8 @@ import { FuentesOficiales } from "@/components/official-sources.tsx";
 import { ShareButton } from "@/components/share-button.tsx";
 import { TrackedSheet } from "@/components/tracked-sheet.tsx";
 import { formatDate } from "@/lib.ts";
-import type { Senal } from "@/types.ts";
+import type { Caso, Senal } from "@/types.ts";
+import { useUrlOption } from "@/url-state.ts";
 
 const route = getRouteApi("/senales");
 
@@ -26,6 +31,7 @@ export function SenalesPage() {
     const url = new URL(window.location.href);
     url.searchParams.delete("proceso");
     url.searchParams.delete("proveedor");
+    url.searchParams.delete("orden");
     if (id) url.searchParams.set("senal", id);
     else url.searchParams.delete("senal");
     return `${url.pathname}${url.search}`;
@@ -72,9 +78,71 @@ export function SenalesPage() {
   );
 }
 
+type CaseOrder = "relevantes" | "mayor" | "menor" | "reciente" | "antiguo";
+const CASE_ORDERS: readonly CaseOrder[] = ["relevantes", "mayor", "menor", "reciente", "antiguo"];
+const CASE_ORDER_LABELS: Record<CaseOrder, string> = {
+  relevantes: "Relevantes",
+  mayor: "Mayor monto",
+  menor: "Menor monto",
+  reciente: "Más reciente",
+  antiguo: "Más antiguo",
+};
+
+/** Sorts the cases; those without the amount or date being sorted by go last. "relevantes" keeps the signal's own order. */
+function sortCases(cases: Caso[], order: CaseOrder): Caso[] {
+  if (order === "relevantes") return cases;
+  const byAmount = order === "mayor" || order === "menor";
+  const key = (c: Caso) => (byAmount ? c.monto : c.fecha ? Date.parse(c.fecha) : null);
+  const sign = order === "mayor" || order === "reciente" ? -1 : 1;
+  return [...cases].sort((a, b) => {
+    const ka = key(a);
+    const kb = key(b);
+    if (ka === null || Number.isNaN(ka)) return kb === null || Number.isNaN(kb) ? 0 : 1;
+    if (kb === null || Number.isNaN(kb)) return -1;
+    return sign * (ka - kb);
+  });
+}
+
+/** "Ordenar" button next to the list title: a menu instead of an extra row of options. */
+function CaseOrderMenu({ orders, value, onChange }: { orders: CaseOrder[]; value: CaseOrder; onChange: (o: CaseOrder) => void }) {
+  const [open, setOpen] = useState(false);
+  const select = (o: CaseOrder) => {
+    if (o !== value) track("signal.cases_sort.change", { value: o });
+    onChange(o);
+    setOpen(false);
+  };
+  return (
+    <Dropdown isOpen={open} onOpenChange={setOpen}>
+      <DropdownTrigger
+        aria-label={`Ordenar los casos: ${CASE_ORDER_LABELS[value]}`}
+        className={buttonClassName({ variant: "secondary", className: "shrink-0" })}
+      >
+        <RiArrowUpDownLine className="size-5" aria-hidden />
+        <span className="whitespace-nowrap">{value === "relevantes" ? "Ordenar" : CASE_ORDER_LABELS[value]}</span>
+      </DropdownTrigger>
+      <DropdownPopover aria-label="Ordenar los casos" placement="bottom end">
+        {orders.map((o) => (
+          <DropdownItem key={o} selected={o === value} onSelect={() => select(o)} className="min-h-11 justify-between text-body-medium">
+            {CASE_ORDER_LABELS[o]}
+            {o === value && <RiCheckLine className="size-5 text-text-link" aria-hidden />}
+          </DropdownItem>
+        ))}
+      </DropdownPopover>
+    </Dropdown>
+  );
+}
+
 function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }) {
   // Cases open the URL-driven process/supplier sheet on top (?proceso= / ?proveedor=).
   const detail = useDetail();
+  // Only the orders that make sense for this signal: no amount or date options when no case has one.
+  const hasAmount = s.casos.some((c) => c.monto !== null);
+  const hasDate = s.casos.some((c) => c.fecha);
+  const orders = CASE_ORDERS.filter(
+    (o) => o === "relevantes" || ((o === "mayor" || o === "menor") && hasAmount) || ((o === "reciente" || o === "antiguo") && hasDate),
+  );
+  const [order, setOrder] = useUrlOption("orden", orders, "relevantes");
+  const casos = sortCases(s.casos, order);
 
   return (
     <TrackedSheet title={s.tema} onClose={onClose}>
@@ -90,12 +158,15 @@ function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }
 
           {s.casos.length > 0 && (
             <section className="flex flex-col gap-2">
-              <div className="flex flex-col gap-0.5">
-                <h4 className="text-body-semibold">{s.casosTitulo}</h4>
-                <span className="text-caption-1-regular text-text-tertiary">Tocá un caso para ver el detalle completo</span>
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex min-w-0 flex-col gap-0.5">
+                  <h4 className="text-body-semibold">{s.casosTitulo}</h4>
+                  <span className="text-caption-1-regular text-text-tertiary">Tocá un caso para ver el detalle completo</span>
+                </div>
+                {s.casos.length > 3 && orders.length > 1 && <CaseOrderMenu orders={orders} value={order} onChange={setOrder} />}
               </div>
               <ul className={listVariants()}>
-                {s.casos.map((c) => (
+                {casos.map((c) => (
                   <li key={`${c.tipo}-${c.id}-${c.titulo}`}>
                     <button type="button" onClick={() => detail.open(c.tipo, c.id)} className={listRowVariants()}>
                       {c.tipo === "proveedor" ? (
