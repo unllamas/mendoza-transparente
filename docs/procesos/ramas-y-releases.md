@@ -24,7 +24,7 @@ gh pr create --base dev          # abre el editor con la plantilla
 ```
 
 1. **El PR usa la plantilla** (`.github/pull_request_template.md`); ver [abajo](#la-plantilla-de-pr).
-2. **Cada PR a `dev` pasa la CI** (`.github/workflows/ci.yml`: Biome, arquitectura, tipos, pruebas, build y verificación visual) y, cuando haya más de una persona, la revisión de otra.
+2. **Cada PR a `dev` pasa la CI** (`.github/workflows/ci.yml`: Biome, arquitectura, tipos, pruebas, build y verificación visual). Quién más lo revisa depende de quién lo manda: ver [Quién aprueba](#quién-aprueba).
 3. **Se mergea con squash**: un commit por tarea en `dev`, con el mensaje en español que explica qué cambia y por qué.
 4. **Cloudflare publica la vista previa** de cada rama y de `dev`: se prueba ahí, no en producción.
 5. Si `dev` avanzó mientras tanto, se actualiza la rama con `git pull --rebase origin dev`.
@@ -43,6 +43,17 @@ Lo que no aplica se tacha diciendo por qué, en vez de borrarlo: así quien revi
 
 **Un agente** no abre el PR sin hacer esa revisión de verdad: mira el diff (`git diff origin/dev...HEAD`), corre los comandos y busca las referencias viejas antes de marcar cada punto. Si algo falla o falta, lo arregla antes de abrir el PR o lo deja escrito en «Riesgos y pendientes». Escribe el cuerpo en un archivo temporal siguiendo la plantilla y abre el PR con `gh pr create --base dev --title "…" --body-file <archivo>`.
 
+## Quién aprueba
+
+La plantilla y la CI son la validación de todos los días. Una aprobación de otra persona solo hace falta cuando el cambio viene de afuera:
+
+| Quién manda el PR | Qué hace falta para mergear |
+|---|---|
+| Alguien del equipo, o un agente trabajando a su pedido | Plantilla completa y CI en verde. Lo mergea quien lo abrió, sin esperar a nadie |
+| Alguien de afuera del equipo (un fork o una persona nueva) | Además, la revisión y aprobación de alguien del equipo, que también lee el diff contra la plantilla |
+
+El release sigue la misma lógica: si la persona que pidió el trabajo dijo que se publique cuando funcione, el agente mergea el release apenas la CI y la vista previa están bien.
+
 ## Release: de `dev` a `main`
 
 Cuando lo que está en `dev` está probado en su vista previa:
@@ -51,7 +62,7 @@ Cuando lo que está en `dev` está probado en su vista previa:
 gh pr create --base main --head dev --title "Release $(date +%F)" --body "$(git log --oneline origin/main..origin/dev)"
 ```
 
-1. **Revisar el PR**: la lista de commits es el registro de lo que sale. La CI tiene que estar verde.
+1. **Revisar el PR**: la lista de commits es el registro de lo que sale. La CI tiene que estar verde. Si `dev` trae PRs de alguien de afuera del equipo, tienen que haber pasado su revisión (ver [Quién aprueba](#quién-aprueba)).
 2. **Probar `dev.mendoza-transparente.pages.dev`** en celular y escritorio, en las pantallas que cambiaron.
 3. **Mergear con «Create a merge commit»**, nunca con squash ni rebase: así `main` y `dev` comparten la historia y el próximo release no repite commits ni trae conflictos falsos.
 4. **Seguir el despliegue** en Cloudflare (skill `produccion`) y probar el sitio real.
@@ -79,7 +90,7 @@ gh pr create --base main
 
 - Si `dev` ya tiene todo, no hace nada.
 - Si puede, mergea `main` en `dev` y pushea (después de un release es un fast-forward).
-- Si hay un conflicto, o la protección de `dev` no deja pushear al bot, abre un PR `main → dev` con la etiqueta `back-merge`. Se resuelve a mano y **se mergea con merge commit**, nunca con squash.
+- Si hay un conflicto, o la deploy key falla, abre un PR `main → dev` con la etiqueta `back-merge`. Se resuelve a mano y **se mergea con merge commit**, nunca con squash.
 
 Si alguna vez hace falta a mano:
 
@@ -99,17 +110,33 @@ Los datos no esperan un release: se publican en `main` apenas se descargan y el 
 
 ## Configuración en GitHub
 
-Se hace una vez, desde **Settings** del repo (`unllamas/mendoza-transparente`):
+Configurado por API el 17/10/2026 en `unllamas/mendoza-transparente`:
 
-| Qué | Dónde | Cómo |
-|---|---|---|
-| Rama por defecto `dev` | Settings → General → Default branch | Así los PRs apuntan a `dev` sin pensarlo |
-| Proteger `main` | Settings → Rules → Rulesets | Pedir PR y la CI (`verificar`) en verde; prohibir force push y borrado. Excepción (*bypass*) para quienes administran el repo y para GitHub Actions, que pushea los datos |
-| Proteger `dev` | Settings → Rules → Rulesets | Pedir PR y la CI en verde; prohibir force push y borrado. Excepción para GitHub Actions, que hace el back merge |
-| Merges permitidos | Settings → General → Pull Requests | Squash y merge commit habilitados; rebase deshabilitado |
+| Qué | Estado |
+|---|---|
+| Rama por defecto | `dev`: los PRs apuntan ahí sin pensarlo, y los workflows programados corren desde ahí (por eso el de datos fija `ref: main`) |
+| Merges permitidos | Squash y merge commit; rebase deshabilitado |
+| Ruleset «main: producción» | Prohíbe borrar la rama y el force push; pide PR y la CI (`verificar`) en verde |
+| Ruleset «dev: integración» | Lo mismo |
+| Aprobaciones | Las reglas piden 0: la revisión de PRs de afuera del equipo es una regla de este documento ([Quién aprueba](#quién-aprueba)) |
+| Excepciones (*bypass*) | Quien administra el repo y las deploy keys, en las dos reglas |
+| Deploy key «Bot de GitHub Actions (datos y back merge)» | Clave SSH con escritura, guardada en el secreto **`DEPLOY_KEY`** |
+
+**Por qué una deploy key.** En un repo personal, GitHub no deja que GitHub Actions saltee las reglas (eso solo se puede en organizaciones), así que con el token del workflow el bot no podría publicar datos en `main` ni hacer el back merge en `dev`. Una deploy key sí puede ser excepción, se crea por API y no vence. Además, a diferencia del token del workflow, sus push disparan otros workflows: por eso el back merge corre solo después de cada commit de datos. Los dos workflows la usan en `actions/checkout` con `ssh-key: ${{ secrets.DEPLOY_KEY }}`.
+
+**Rotar la clave** (si se filtra, o para cambiarla):
+
+```bash
+D=$(mktemp -d) && ssh-keygen -q -t ed25519 -N "" -C mendoza-transparente-bot -f $D/key
+gh api -X POST repos/unllamas/mendoza-transparente/keys -f title="Bot de GitHub Actions (datos y back merge)" -f key="$(cat $D/key.pub)" -F read_only=false
+gh secret set DEPLOY_KEY -R unllamas/mendoza-transparente < $D/key && rm -rf $D
+gh api repos/unllamas/mendoza-transparente/keys            # borrar la vieja con -X DELETE …/keys/<id>
+```
+
+Para ver o cambiar las reglas: Settings → Rules → Rulesets, o `gh api repos/unllamas/mendoza-transparente/rulesets`.
 
 ## Agentes
 
 - Un agente **nunca pushea a `main`**. Trabaja en una rama que sale de `dev` y abre el PR a `dev`, salvo que le pidan un hotfix.
-- El release lo decide una persona: el agente puede abrir el PR `dev → main`, pero no lo mergea sin que se lo pidan.
+- Mergea sus propios PRs a `dev` cuando la plantilla está completa y la CI en verde, y el release cuando se lo pidieron (ver [Quién aprueba](#quién-aprueba)). Un PR de alguien de afuera del equipo no lo mergea: lo revisa y deja la aprobación a una persona del equipo.
 - Para comparar los cambios de una rama, la base es `origin/dev` (en un hotfix, `origin/main`).

@@ -19,6 +19,8 @@
 #
 # Los datos se publican directo en main, aunque la rama por defecto sea dev: todos los checkouts fijan
 # `ref: main`. El workflow back-merge.yml los lleva después a dev (ver docs/procesos/ramas-y-releases.md).
+# Los push salen con la deploy key del secreto DEPLOY_KEY, que puede saltear la protección de main y, a
+# diferencia del token del workflow, dispara el back merge.
 #
 # Las fotos de funcionarios no se actualizan acá: usan `sips` (macOS) y cambian poco.
 
@@ -188,6 +190,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.2
@@ -284,6 +287,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
       - if: steps.claves.outputs.hay == 'true'
         uses: oven-sh/setup-bun@v2
         with:
