@@ -30,6 +30,7 @@ La gente describe lo que siente. Buscar la regla (detalle en `docs/procesos/dise
 | "No entiendo este número" | Unidad aparte, pesos de hoy, `Alert note`, glosario | `diseno`, `contenido-y-metodologia` |
 | "Parece una acusación" | Señales, no acusaciones | `contenido-y-metodologia` |
 | "Hay demasiado", "no sé dónde mirar" | Lista corta, detalle en hoja, lo informativo antes que lo crudo | `diseno` |
+| "Están desordenadas", "se siente disperso", "no tienen sentido juntas" | Agrupar por la pregunta que responden, sin etiqueta de tema en cada tarjeta; lo que limita al resto, primero | `diseno` |
 | "Quedó vacío", "no sé qué hacer acá" | Pantallas vacías que orientan | `diseno` |
 | "Parece hecho por una IA", "parece un template" | Lo que no hacemos | `diseno` |
 | "Unos se ven más chicos que otros", "salta el layout" | Misma altura en una fila; lo que se toca solo cambia el fondo | `diseno` |

@@ -293,8 +293,13 @@ export interface Caso {
   fecha: string | null;
 }
 
+/** Block of /senales where a signal goes; also the section id (`/senales#precios`). */
+export type SignalGroup = "datos" | "competencia" | "precios" | "proveedores";
+
 export interface Senal {
   id: string;
+  group: SignalGroup;
+  /** Title of its block ("Cuánto se paga"). */
   tema: string;
   cifra: string;
   titulo: string;

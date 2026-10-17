@@ -53,7 +53,8 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
     .map((p) => casoProceso(p.ocid!));
   senales.push({
     id: "contratacion-directa",
-    tema: "Compras",
+    group: "competencia",
+    tema: "Cuánta competencia hay",
     cifra: `${Math.round(pct(directas.length, procesos.length))} %`,
     titulo: "de los procesos de compra se hicieron por contratación directa, sin licitación",
     matiz: `Representan el ${Math.round(pct(montoDirectas, totalAdjudicado))} % de la plata adjudicada: muchas son compras chicas, que la ley permite hacer así. Las grandes son las que conviene mirar.`,
@@ -70,7 +71,8 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
   const montoUnaOferta = unaOferta.reduce((s, p) => s + (montoPorOcid.get(p.ocid!) ?? 0), 0);
   senales.push({
     id: "una-sola-oferta",
-    tema: "Compras",
+    group: "competencia",
+    tema: "Cuánta competencia hay",
     cifra: `1 de cada ${Math.round(100 / pct(unaOferta.length, conOferentes.length))}`,
     titulo: "procesos de compra recibió una sola oferta",
     matiz: `Son ${unaOferta.length.toLocaleString("es-AR")} procesos, por un total adjudicado de $ ${Math.round(montoUnaOferta / 1e6).toLocaleString("es-AR")} millones.`,
@@ -107,7 +109,8 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
   const topOverrunBuyer = [...overrunBuyers].sort((a, b) => b[1] - a[1])[0];
   senales.push({
     id: "adjudicado-sobre-estimado",
-    tema: "Compras",
+    group: "precios",
+    tema: "Cuánto se paga",
     cifra: overruns.length.toLocaleString("es-AR"),
     titulo: "procesos de compra se adjudicaron por más del doble de lo que el propio organismo había estimado",
     matiz: `En total, $ ${Math.round(excess / 1e6).toLocaleString("es-AR")} millones por encima de lo estimado.${
@@ -129,7 +132,8 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
     const [topBuyer, topCount] = [...byBuyer].sort((a, b) => b[1] - a[1])[0]!;
     senales.push({
       id: "estimado-simbolico",
-      tema: "Compras",
+      group: "precios",
+      tema: "Cuánto se paga",
       cifra: symbolic.length.toLocaleString("es-AR"),
       titulo: "procesos se cargaron con un monto estimado simbólico ($ 1, $ 2…) y se adjudicaron por cientos de miles o millones",
       matiz: `${topCount} de ellos son de ${topBuyer}. Sin un estimado real no se puede saber si el precio pagado fue razonable.`,
@@ -172,7 +176,8 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
   nuevas.sort((a, b) => (b.monto ?? 0) - (a.monto ?? 0));
   senales.push({
     id: "empresas-nuevas",
-    tema: "Proveedores",
+    group: "proveedores",
+    tema: "A quién se le compra",
     cifra: String(nuevas.length),
     titulo: "empresas ganaron su primera adjudicación antes de cumplir un año de vida",
     matiz: `Entre todas suman $ ${Math.round(nuevas.reduce((s, c) => s + (c.monto ?? 0), 0) / 1e6).toLocaleString("es-AR")} millones adjudicados.`,
@@ -214,7 +219,8 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
   concentrados.sort((a, b) => (b.monto ?? 0) - (a.monto ?? 0));
   senales.push({
     id: "concentracion",
-    tema: "Compras",
+    group: "proveedores",
+    tema: "A quién se le compra",
     cifra: String(concentrados.length),
     titulo: "organismos le compraron más de la mitad de todo a un solo proveedor",
     matiz: "Solo se cuentan organismos con más de $ 500 millones adjudicados y al menos tres proveedores.",
@@ -229,7 +235,8 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
   const fracasados = procesos.filter((p) => p.estado === "unsuccessful");
   senales.push({
     id: "fracasados",
-    tema: "Compras",
+    group: "competencia",
+    tema: "Cuánta competencia hay",
     cifra: `1 de cada ${Math.round(100 / pct(fracasados.length, procesos.length))}`,
     titulo: "procesos de compra terminó desierto o fracasado",
     matiz: `Son ${fracasados.length.toLocaleString("es-AR")} procesos que no se adjudicaron: hay que volver a empezar.`,
@@ -247,10 +254,11 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
   const mesesAtraso = Math.floor((Date.now() - Date.parse(ultimaFecha)) / (30.44 * 24 * 3600 * 1000));
   senales.push({
     id: "datos-desactualizados",
-    tema: "Transparencia",
+    group: "datos",
+    tema: "Lo que falta para poder mirar",
     cifra: `${mesesAtraso} meses`,
     titulo: "sin datos abiertos de las compras del Estado",
-    matiz: `El último archivo publicado de COMPR.AR llega al ${ultimaFecha.split("-").reverse().join("/")}. Todo lo que se compró después no se puede analizar.`,
+    matiz: `El último archivo publicado de COMPR.AR llega al ${ultimaFecha.split("-").reverse().join("/")}. Todas las señales de esta página se calculan hasta esa fecha: lo que se compró después no se puede revisar.`,
     porQueImporta:
       "Sin datos actualizados no hay control ciudadano a tiempo: los patrones de esta página solo se pueden detectar meses después, cuando ya no hay margen para corregir.",
     metodo: "Fecha del último proceso incluido en el conjunto de datos de contrataciones abiertas publicado por el Gobierno de Mendoza.",
@@ -259,5 +267,17 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
     pedido: "compras-2026",
   });
 
+  // Order of the page: first what is missing (it limits everything else), then each question in the order people read it.
+  const order = [
+    "datos-desactualizados",
+    "contratacion-directa",
+    "una-sola-oferta",
+    "fracasados",
+    "adjudicado-sobre-estimado",
+    "estimado-simbolico",
+    "concentracion",
+    "empresas-nuevas",
+  ];
+  senales.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
   return { generado: new Date().toISOString(), senales };
 }
