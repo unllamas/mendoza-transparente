@@ -276,6 +276,25 @@ const senalesRoute = createRoute({
   component: page(() => import("./pages/senales.tsx"), "SenalesPage"),
 });
 
+// Development only: /vista-previa/<name> shows apps/web/src/previews/<name>.tsx, a gitignored throwaway page
+// to review a UI change before touching the real one. Process: docs/procesos/vista-previa.md.
+type PreviewModule = { Preview: (props: { data: unknown }) => ReactNode; loader?: () => Promise<unknown> };
+const previews = import.meta.glob<PreviewModule>("./previews/*.tsx");
+const previewRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/vista-previa/$name",
+  loader: async ({ params }) => {
+    const load = previews[`./previews/${params.name}.tsx`];
+    if (!load) throw notFound();
+    const preview = await load();
+    return { Preview: preview.Preview, data: await preview.loader?.() };
+  },
+  component: function PreviewPage() {
+    const { Preview, data } = previewRoute.useLoaderData();
+    return <Preview data={data} />;
+  },
+});
+
 const router = createRouter({
   routeTree: rootRoute.addChildren([
     homeRoute,
@@ -305,6 +324,7 @@ const router = createRouter({
     comoLeerRoute,
     fuentesRoute,
     datosRoute,
+    ...(import.meta.env.DEV ? [previewRoute] : []),
   ]),
   defaultPreload: "intent",
   // A page that fails shows RouteError (and reports it to PostHog) inside the layout; the rest keeps working.
