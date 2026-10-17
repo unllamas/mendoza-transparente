@@ -1,16 +1,19 @@
 import { Alert } from "@mt/ui/components/alert";
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
+import { Dropdown, DropdownItem, DropdownPopover, DropdownTrigger } from "@mt/ui/components/base/dropdown/dropdown";
 import { cardVariants, listRowVariants, listVariants } from "@mt/ui/components/card";
 import { PageHeader } from "@mt/ui/components/section";
 import { cx } from "@mt/ui/lib/cx";
-import { RiArrowRightSLine, RiBuilding2Line, RiFileTextLine, RiScalesLine } from "@remixicon/react";
+import { RiArrowRightSLine, RiArrowUpDownLine, RiBuilding2Line, RiCheckLine, RiFileTextLine, RiScalesLine } from "@remixicon/react";
 import { getRouteApi, Link, useRouter, useRouterState } from "@tanstack/react-router";
+import { useState } from "react";
+
+import { track } from "@/analytics.ts";
 
 import { formatMoneda } from "@/celdas.ts";
 import { useDetail } from "@/components/detail-sheet.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
 import { ShareButton } from "@/components/share-button.tsx";
-import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
 import { TrackedSheet } from "@/components/tracked-sheet.tsx";
 import { formatDate } from "@/lib.ts";
 import type { Caso, Senal } from "@/types.ts";
@@ -100,6 +103,35 @@ function sortCases(cases: Caso[], order: CaseOrder): Caso[] {
   });
 }
 
+/** "Ordenar" button next to the list title: a menu instead of an extra row of options. */
+function CaseOrderMenu({ orders, value, onChange }: { orders: CaseOrder[]; value: CaseOrder; onChange: (o: CaseOrder) => void }) {
+  const [open, setOpen] = useState(false);
+  const select = (o: CaseOrder) => {
+    if (o !== value) track("signal.cases_sort.change", { value: o });
+    onChange(o);
+    setOpen(false);
+  };
+  return (
+    <Dropdown isOpen={open} onOpenChange={setOpen}>
+      <DropdownTrigger
+        aria-label={`Ordenar los casos: ${CASE_ORDER_LABELS[value]}`}
+        className={buttonClassName({ variant: "secondary", className: "shrink-0" })}
+      >
+        <RiArrowUpDownLine className="size-5" aria-hidden />
+        <span className="whitespace-nowrap">{value === "relevantes" ? "Ordenar" : CASE_ORDER_LABELS[value]}</span>
+      </DropdownTrigger>
+      <DropdownPopover aria-label="Ordenar los casos" placement="bottom end">
+        {orders.map((o) => (
+          <DropdownItem key={o} selected={o === value} onSelect={() => select(o)} className="min-h-11 justify-between text-body-medium">
+            {CASE_ORDER_LABELS[o]}
+            {o === value && <RiCheckLine className="size-5 text-text-link" aria-hidden />}
+          </DropdownItem>
+        ))}
+      </DropdownPopover>
+    </Dropdown>
+  );
+}
+
 function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }) {
   // Cases open the URL-driven process/supplier sheet on top (?proceso= / ?proveedor=).
   const detail = useDetail();
@@ -126,19 +158,13 @@ function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }
 
           {s.casos.length > 0 && (
             <section className="flex flex-col gap-2">
-              <div className="flex flex-col gap-0.5">
-                <h4 className="text-body-semibold">{s.casosTitulo}</h4>
-                <span className="text-caption-1-regular text-text-tertiary">Tocá un caso para ver el detalle completo</span>
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex min-w-0 flex-col gap-0.5">
+                  <h4 className="text-body-semibold">{s.casosTitulo}</h4>
+                  <span className="text-caption-1-regular text-text-tertiary">Tocá un caso para ver el detalle completo</span>
+                </div>
+                {s.casos.length > 3 && orders.length > 1 && <CaseOrderMenu orders={orders} value={order} onChange={setOrder} />}
               </div>
-              {s.casos.length > 3 && orders.length > 1 && (
-                <TrackedSegmented
-                  label="Ordenar los casos"
-                  options={orders.map((o) => ({ value: o, label: CASE_ORDER_LABELS[o] }))}
-                  value={order}
-                  onChange={setOrder}
-                  trackId="signal.cases_sort"
-                />
-              )}
               <ul className={listVariants()}>
                 {casos.map((c) => (
                   <li key={`${c.tipo}-${c.id}-${c.titulo}`}>

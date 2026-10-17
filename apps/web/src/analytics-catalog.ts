@@ -99,7 +99,7 @@ export const EVENT_CATALOG: EventDoc[] = [
   {
     event: "signal.cases_sort.change",
     description:
-      "Cambió el orden de los casos de una señal (relevantes, mayor o menor monto, más reciente o más antiguo). Propiedad value.",
+      "Cambió el orden de los casos de una señal desde el botón «Ordenar» (relevantes, mayor o menor monto, más reciente o más antiguo). Propiedad value.",
     tags: ["compras"],
   },
   {
