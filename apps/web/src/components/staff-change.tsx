@@ -1,3 +1,4 @@
+import { cx } from "@mt/ui/lib/cx";
 import type { ReactNode } from "react";
 import { ChangeChart } from "@/charts/change-chart.tsx";
 import { formatNumber } from "@/lib.ts";
@@ -29,14 +30,25 @@ function summary(rises: number, falls: number, total: number): string {
 
 /**
  * How much the planta rose or fell each quarter, with its summary and what it counts. Shared by the whole
- * provincial State, each agency and each municipality; `note` adds what is specific to each one.
+ * provincial State, each agency and each municipality; `note` adds what is specific to each one. On desktop it sits
+ * in a two-column grid next to another chart, and takes the whole row when it is alone there.
  */
-export function StaffChange({ changes, subject, note }: { changes: QuarterlyChange[]; subject: string; note?: ReactNode }) {
+export function StaffChange({
+  changes,
+  subject,
+  note,
+  className,
+}: {
+  changes: QuarterlyChange[];
+  subject: string;
+  note?: ReactNode;
+  className?: string;
+}) {
   if (changes.length < 4) return null;
   const rises = changes.filter((q) => q.change > 0).length;
   const falls = changes.filter((q) => q.change < 0).length;
   return (
-    <div className="flex flex-col gap-3">
+    <div className={cx("flex flex-col gap-3", className)}>
       <h3 className="pt-2 text-body-semibold">Cuánto subió o bajó cada trimestre</h3>
       <ChangeChart
         columnas={changes.map((q) => ({
