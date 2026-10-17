@@ -97,6 +97,12 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["compras"],
   },
   {
+    event: "signal.cases_sort.change",
+    description:
+      "Cambió el orden de los casos de una señal (relevantes, mayor o menor monto, más reciente o más antiguo). Propiedad value.",
+    tags: ["compras"],
+  },
+  {
     event: "purchase.flag.toggle",
     description:
       "Tocó una alerta de un proceso de compra (sobre lo estimado, una sola oferta, contratación directa) para leer su explicación. Propiedad flag.",
