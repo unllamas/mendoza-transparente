@@ -23,11 +23,12 @@ git push -u origin feat/mi-cambio
 gh pr create --base dev          # abre el editor con la plantilla
 ```
 
-1. **El PR usa la plantilla** (`.github/pull_request_template.md`); ver [abajo](#la-plantilla-de-pr).
-2. **Cada PR a `dev` pasa la CI** (`.github/workflows/ci.yml`: Biome, arquitectura, tipos, pruebas, build y verificación visual). Quién más lo revisa depende de quién lo manda: ver [Quién aprueba](#quién-aprueba).
-3. **Se mergea con squash**: un commit por tarea en `dev`, con el mensaje en español que explica qué cambia y por qué.
-4. **Cloudflare publica la vista previa** de cada rama y de `dev`: se prueba ahí, no en producción.
-5. Si `dev` avanzó mientras tanto, se actualiza la rama con `git pull --rebase origin dev`.
+1. **Los agentes abren el PR solos:** toda tarea termina con commit, push y PR a `dev`, sin esperar un pedido aparte; lo siguiente que se pida en la misma conversación va a la misma rama y al mismo PR.
+2. **El PR usa la plantilla** (`.github/pull_request_template.md`); ver [abajo](#la-plantilla-de-pr).
+3. **Cada PR a `dev` pasa la CI** (`.github/workflows/ci.yml`: Biome, arquitectura, tipos, pruebas, build y verificación visual). Quién más lo revisa depende de quién lo manda: ver [Quién aprueba](#quién-aprueba).
+4. **Se mergea con squash**: un commit por tarea en `dev`, con el mensaje en español que explica qué cambia y por qué.
+5. **Cloudflare publica la vista previa** de cada rama y de `dev`: se prueba ahí, no en producción.
+6. Si `dev` avanzó mientras tanto, se actualiza la rama con `git pull --rebase origin dev`.
 
 ## La plantilla de PR
 

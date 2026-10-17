@@ -61,7 +61,7 @@ export function CoparticipacionPage() {
       </div>
 
       <Section id="por-habitante" title={`Por habitante, ${tema.anioCompleto}`}>
-        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_22rem]">
+        <div className="grid items-start gap-8 lg:grid-cols-2">
           <MapaMendoza
             mapa={mapa}
             valores={Object.fromEntries(tema.municipios.map((m) => [m.municipio, m.perCapita]))}
@@ -157,7 +157,7 @@ function DetalleMunicipio({
       </div>
       <div className="grid grid-cols-2 gap-2">
         <StatTile label="Por habitante" value={pesos(m.perCapita)} note={`Puesto ${puesto} de 18`} />
-        <StatTile label="Total del año" value={formatMoneda(m.real, "ARS")} note={String(tema.anioCompleto)} />
+        <StatTile label="Total del año" value={`$ ${formatNumber(Math.round(m.real / 1e6))} M`} note={String(tema.anioCompleto)} />
       </div>
       <p className="text-body-regular text-text-secondary">{formatNumber(m.poblacion)} habitantes (proyección INDEC).</p>
       <div className="flex flex-col gap-2">
