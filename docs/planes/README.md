@@ -8,3 +8,4 @@ Cuando una parte de un plan queda funcionando, su proceso se documenta en `docs/
 |---|---|
 | [El Estado por dentro](el-estado-por-dentro.md) | Etapas 1 a 4 hechas; falta el histórico de designaciones |
 | [Agentes sobre los datos](agentes-sobre-los-datos.md) | Propuesta, sin empezar |
+| [Consentimiento de cookies](consentimiento-de-cookies.md) | Propuesta, sin empezar |

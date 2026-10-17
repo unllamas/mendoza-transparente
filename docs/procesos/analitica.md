@@ -5,7 +5,7 @@ Para entender cómo se usa el sitio: qué páginas se visitan, qué se busca y q
 ## Proveedor y privacidad
 
 - **PostHog**, en modo sin cookies (`cookieless_mode: "always"`): no guarda nada en el navegador, así que no hace falta banner de cookies. Tampoco graba sesiones.
-  - **Cómo cuenta visitantes:** el servidor de PostHog arma el identificador con `hash(proyecto, sal diaria, IP, navegador, dominio)` y después borra la IP. La sal cambia todos los días: la misma persona cuenta como una por día. En semanas o meses, los visitantes únicos quedan inflados, y dos personas con la misma red y el mismo navegador pueden contar como una.
+  - **Cómo cuenta visitantes:** el servidor de PostHog arma el identificador con `hash(proyecto, sal diaria, IP, navegador, dominio)` y después borra la IP. La sal cambia todos los días: la misma persona cuenta como una por día. En semanas o meses, los visitantes únicos quedan inflados, y dos personas con la misma red y el mismo navegador pueden contar como una. Por lo mismo, «Returning visitors» en Web analytics queda siempre en cero: todo visitante es «nuevo» cada día. Para medir quién vuelve hace falta consentimiento (plan en `docs/planes/consentimiento-de-cookies.md`).
   - **Requisito en el proyecto:** "Cookieless server hash mode" activado (`cookieless_server_hash_mode = 2`, en Project settings > Web analytics). Sin eso, PostHog descarta los eventos.
   - **No usar `ip: false`:** el hash necesita la IP; los eventos sin IP se descartan.
   - **Sin ubicación:** en este modo PostHog no agrega país ni ciudad, así que el mapa del panel queda vacío.
