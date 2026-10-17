@@ -74,6 +74,25 @@ function figuresOnly(row: Tok[], n: number): number[] | null {
   return toks.length === n && toks.every((t) => t.num !== null) ? toks.map((t) => t.num!) : null;
 }
 
+/**
+ * Rows whose last figure spilled alone onto the next line (Godoy Cruz 2026: "1.1.00.00.0000 DE ORIGEN PROVINCIAL" with
+ * six figures, and the seventh below) are joined back, so the row ends in its `n` figures.
+ */
+function joinSpilledFigures(rows: Tok[][], n: number): Tok[][] {
+  const out: Tok[][] = [];
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i]!;
+    const next = rows[i + 1];
+    let figures = 0;
+    while (figures < row.length && row[row.length - 1 - figures]!.num !== null) figures++;
+    if (next?.length === 1 && isAmount(next[0]) && figures === n - 1 && figures < row.length) {
+      out.push([...row, next[0]!]);
+      i++;
+    } else out.push(row);
+  }
+  return out;
+}
+
 /** Splits a row into its label and its last `n` figures; null if it does not end in `n` figures. */
 export function splitRow(row: Tok[], n: number): { label: string; values: number[] } | null {
   const toks = withSigns(row);
@@ -226,7 +245,13 @@ function readItemRows(tables: Table[]): { lines: SpendingLine[]; totals: Spendin
  */
 const DOTTED_ROW = /^((?:\d\.){1,3})\s*(\D.*)$/;
 const THREE_DIGIT_ROW = /^(?:##\s*)?(\d)(\d)(\d)\s*-\s*(\D.*)$/;
-const isDottedLayout = (text: string) => /^\d\.\d\.\d\.\S/.test(text);
+/**
+ * Godoy Cruz: "4.1.01.00.0000 PERSONAL" (five groups, six in some years: "4.2.01.00.00.0000"), with the name after the
+ * code, before it ("Interes y gast 4.2.01…", 2025) or missing (2024). The fourth group splits the debt: 6.2.01.01 is the
+ * consolidated debt and 6.2.01.02 the floating one.
+ */
+const GROUPED_CODE = /(?:^|\s)(\d)\.(\d)\.(\d{2})\.(\d{2})(?:\.\d{2})?(?:\.\d{4})?(?=\s|$)/;
+const isDottedLayout = (text: string) => /^\d\.\d\.\d\.\S/.test(text) || GROUPED_CODE.test(text);
 const isThreeDigitLayout = (text: string) => /^##\s*\d{3}\s*-/.test(text);
 
 /**
@@ -246,6 +271,12 @@ function readHierarchicalRows(tables: Table[]): { lines: SpendingLine[]; totals:
     if (dotted) return { levels: dotted[1]!.split(".").filter(Boolean), label: dotted[2]! };
     const three = THREE_DIGIT_ROW.exec(text);
     if (three) return { levels: [three[1]!, three[2]!, three[3]!], label: three[4]! };
+    const grouped = GROUPED_CODE.exec(text);
+    if (grouped) {
+      const levels = [grouped[1]!, grouped[2]!, String(Number(grouped[3]))];
+      if (grouped[4] !== "00") levels.push(String(Number(grouped[4])));
+      return { levels, label: text.replace(grouped[0], " ").trim() };
+    }
     return null;
   };
   for (const row of tables.flat()) {
@@ -396,6 +427,9 @@ export function parseSpendingAnnex(tables: Table[]): SpendingAnnex | { error: st
   const { lines, totals } = read;
   if (!totals) return { error: "no se encontró la fila de totales" };
   if (!lines.length) return { error: "no se encontraron partidas" };
+  // Godoy Cruz prints the decreases as negative amounts: they are turned positive, as the identity (5) = (2)+(3)-(4) reads.
+  const negativeDecreases = totals.decreases < 0 && lines.every((l) => l.decreases <= 0);
+  if (negativeDecreases) for (const f of [...lines, totals]) f.decreases = Math.abs(f.decreases);
   const broken = lines.filter(breaksCredit).map((l) => l.code);
   if (broken.length) return { error: `partidas donde (5) no da (2)+(3)-(4): ${broken.slice(0, 3).join(", ")}` };
   const notes: string[] = [];
@@ -411,6 +445,7 @@ export function parseSpendingAnnex(tables: Table[]): SpendingAnnex | { error: st
     .filter((x) => x.broken.length)
     .map((x) => `${x.code} ${x.broken.join(", ")}`);
   if (derived.length) notes.push(`el documento no cumple sus cuentas en columnas que no se publican: ${derived.join("; ")}`);
+  if (negativeDecreases) notes.push("el documento anota las disminuciones en negativo: se toman en positivo");
   return { lines, totals, notes };
 }
 
@@ -531,6 +566,8 @@ function readInfogovRevenue(tables: Table[]): { lines: RevenueLine[]; totals: Re
 
 /** Revenue groups with dotted codes: "1. RECURSOS CORRIENTES", "1.1. De Jurisdiccion Municipal" (Capital). */
 const DOTTED_REVENUE = /^((?:\d\.){1,3})\s+(\D.*)$/;
+/** Revenue with a grouped code: "1.1.00.00.0000 DE ORIGEN PROVINCIAL" (Godoy Cruz; up to 2025 with a double dot, "1.1..00.00.0000"). */
+const GROUPED_REVENUE = /^(\d)\.(\d)\.+(\d{2})\.(\d{2})\.(\d{3,4})(?:\s+(\D.*))?$/;
 /** Revenue with a code of 4 to 6 digits: "5110 Rec. Ctes. de Origen Provincial", "57120 Uso del Crédito…" (Guaymallén). */
 const SHORT_REVENUE = /^(\d{4,6})\s+(\D.*)$/;
 
@@ -545,13 +582,23 @@ function readShortCodedRevenue(tables: Table[]): { lines: RevenueLine[]; totals:
   let totals: RevenueFigures | null = null;
   const unknown: string[] = [];
   let pending = "";
+  const rows = joinSpilledFigures(tables.flat(), REVENUE_COLUMNS.length);
   const parse = (label: string): { code: string; label: string } | null => {
     const dotted = DOTTED_REVENUE.exec(label);
     if (dotted) return { code: dotted[1]!.replace(/\.$/, ""), label: dotted[2]! };
+    const grouped = GROUPED_REVENUE.exec(label);
+    if (grouped) {
+      // Trailing zero groups are not levels: "1.1.00.00.0000" is "1.1".
+      const code = [grouped[1], grouped[2], grouped[3], grouped[4], grouped[5]]
+        .map(Number)
+        .join(".")
+        .replace(/(\.0)+$/, "");
+      return { code, label: grouped[6] ?? "" };
+    }
     const short = SHORT_REVENUE.exec(label);
     return short ? { code: short[1]!, label: short[2]! } : null;
   };
-  for (const row of tables.flat()) {
+  for (const row of rows) {
     const bare = pending ? figuresOnly(row, REVENUE_COLUMNS.length) : null;
     const split = splitRow(row, REVENUE_COLUMNS.length) ?? (bare ? { label: "", values: bare } : null);
     if (!split) {
@@ -593,14 +640,16 @@ export function parseRevenueAnnex(tables: Table[]): RevenueAnnex | { error: stri
   const texts = tables.flat().map(rowText);
   const read = texts.some((t) => INFOGOV_REVENUE_ITEM.test(t))
     ? readInfogovRevenue(tables)
-    : texts.some((t) => /^\d\.\d\.\s/.test(t) || SHORT_REVENUE.test(t))
+    : texts.some((t) => /^\d\.\d\.\s/.test(t) || SHORT_REVENUE.test(t) || /^\d\.\d\.+\d{2}\.\d{2}\.\d{3,4}\b/.test(t))
       ? readShortCodedRevenue(tables)
       : readRevenueRows(tables);
   if ("error" in read) return read;
   const { lines, totals } = read;
-
   if (!totals) return { error: "no se encontró la fila de totales" };
   if (!lines.length) return { error: "no se encontraron recursos" };
+  // As in Annex 2, Godoy Cruz prints the decreases as negative amounts.
+  const negativeDecreases = totals.decreases < 0 && lines.every((l) => l.decreases <= 0);
+  if (negativeDecreases) for (const f of [...lines, totals]) f.decreases = Math.abs(f.decreases);
   const broken = lines.filter((l) => !close(l.originalEstimate + l.increases - l.decreases, l.finalEstimate)).map((l) => l.code);
   if (broken.length) return { error: `recursos donde (5) no da (2)+(3)-(4): ${broken.slice(0, 3).join(", ")}` };
   const notes: string[] = [];
@@ -613,6 +662,7 @@ export function parseRevenueAnnex(tables: Table[]): RevenueAnnex | { error: stri
   }
   const derived = lines.filter((l) => !close(l.finalEstimate - l.collected, l.difference)).map((l) => l.code);
   if (derived.length) notes.push(`el documento no cumple (7) = (5)-(6) en: ${derived.join(", ")}`);
+  if (negativeDecreases) notes.push("el documento anota las disminuciones en negativo: se toman en positivo");
   return { lines, totals, notes };
 }
 

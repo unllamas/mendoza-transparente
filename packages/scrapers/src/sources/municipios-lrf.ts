@@ -46,6 +46,7 @@ import {
 import { revenueKind, SPENDING_OBJECTS } from "../lrf/classify.ts";
 import { find as capital } from "../lrf/finders/capital.ts";
 import { find as generalAlvear } from "../lrf/finders/general-alvear.ts";
+import { find as godoyCruz } from "../lrf/finders/godoy-cruz.ts";
 import { find as guaymallen } from "../lrf/finders/guaymallen.ts";
 import { find as laPaz } from "../lrf/finders/la-paz.ts";
 import { find as lavalle } from "../lrf/finders/lavalle.ts";
@@ -79,6 +80,7 @@ const warn = (msg: string) => console.log(`::warning title=${SOURCE}::${msg}`);
 const FINDERS: Record<string, Finder> = {
   Capital: capital,
   "General Alvear": generalAlvear,
+  "Godoy Cruz": godoyCruz,
   Guaymallén: guaymallen,
   "La Paz": laPaz,
   Lavalle: lavalle,
