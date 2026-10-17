@@ -45,7 +45,7 @@ Cada pedido a un subagente incluye:
 - Correr y mirar los CSV: conteos, totales contra el original, escalas.
 - Revisar los casos que el agente marcó como dudosos (por ejemplo, la adjudicación de $54.137 M que resultó ser real, o el intendente de Rivadavia que no coincidía entre fuentes).
 - Tipos (`bunx tsc --noEmit`) y, si toca la web, `bun run verificar`.
-- Un commit por entrega, con un mensaje que explique qué datos trae.
+- Un commit por entrega, con un mensaje en [Conventional Commits](ramas-y-releases.md#mensajes-de-commit-y-títulos-de-pr) que explique qué datos trae.
 
 ## Cosas que aprendimos
 

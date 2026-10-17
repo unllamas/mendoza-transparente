@@ -65,4 +65,4 @@ Todo el código va en inglés y toda la documentación en español. La tabla com
 | `bun run verificar` | Verificación visual de la web (ver `web.md`) |
 | `bun run hooks` | Instala los hooks de git (una vez por clon) |
 
-**Antes de cada commit** (lefthook, `lefthook.yml`): Biome sobre los archivos del commit, reglas de arquitectura y tipos. **En cada PR y en cada push a `dev` o `main`** (`.github/workflows/ci.yml`): todo lo anterior, las pruebas, el build de la web y la verificación visual.
+**Antes de cada commit** (lefthook, `lefthook.yml`): Biome sobre los archivos del commit, reglas de arquitectura y tipos; y al escribir el mensaje, commitlint (`commitlint.config.mjs`), que pide [Conventional Commits](ramas-y-releases.md#mensajes-de-commit-y-títulos-de-pr). **En cada PR y en cada push a `dev` o `main`** (`.github/workflows/ci.yml`): todo lo anterior, las pruebas, el build de la web y la verificación visual; y en cada PR, además, el título (`.github/workflows/titulo-del-pr.yml`).

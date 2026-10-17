@@ -42,7 +42,7 @@ jobs:
           git fetch origin main
           if git merge-base --is-ancestor origin/main HEAD; then echo "dev ya tiene todo lo de main."; exit 0; fi
 
-          if git merge --no-edit -m "Back merge de main a dev" origin/main && git push origin HEAD:dev; then
+          if git merge --no-edit -m "chore: back merge main → dev" origin/main && git push origin HEAD:dev; then
             echo "main quedó integrado en dev."
             exit 0
           fi
@@ -54,5 +54,5 @@ jobs:
             exit 0
           fi
           gh pr create --base dev --head main --label back-merge \
-            --title "Back merge: main → dev" \
+            --title "chore: back merge main → dev" \
             --body "El back merge automático no pudo integrar main en dev (conflicto o rama protegida). Resolverlo con un merge commit, sin squash, para que las dos ramas compartan la historia. Registro: $RUN"
