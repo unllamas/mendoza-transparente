@@ -23,7 +23,8 @@ const QUARTER_WORDS: Record<string, number> = { primer: 1, segund: 2, tercer: 3,
 export function headerPeriod(tables: Table[]): Period | null {
   const text = headerText(tables);
   const year = /EJERCICIO[ \t]*:?[ \t]*(\d{4})/i.exec(text);
-  const quarter = /TRIMESTRE[ \t]*:?[ \t]*([1-4]\b|primer|segund|tercer|cuart)/i.exec(text);
+  // "2", "2do" (Las Heras 2026), or in words ("Segundo", Infogov).
+  const quarter = /TRIMESTRE[ \t]*:?[ \t]*([1-4](?=\s*(?:ro|do|er|to|°|º)?\b)|primer|segund|tercer|cuart)/i.exec(text);
   if (!year || !quarter) return null;
   const q = quarter[1]!.toLowerCase();
   return { year: +year[1]!, quarter: QUARTER_WORDS[q] ?? +q };
@@ -166,8 +167,8 @@ function brokenDerived(f: SpendingFigures): string[] {
   return broken;
 }
 
-/** Item row with the object code alone: "41100 PERSONAL" (San Martín). */
-const FLAT_ITEM = /^(\d{5})\s+(.+)$/;
+/** Item row with the object code alone: "41100 PERSONAL" (San Martín) or "411000 PERSONAL" (Las Heras 2026). */
+const FLAT_ITEM = /^(\d{5,6})\s+(\D.*)$/;
 /**
  * Item, unit and jurisdiction rows inside an area (San Rafael): "1.00.040101.PERSONAL" (jurisdiction.unit.object),
  * "1.01.INTENDENCIA - ADMINIST.CENTRAL" (unit subtotal) and "1.INTENDENCIA" (jurisdiction subtotal). Not anchored at
@@ -196,6 +197,12 @@ function readItemRows(tables: Table[]): { lines: SpendingLine[]; totals: Spendin
 
   for (const row of tables.flat()) {
     const split = splitRow(row, SPENDING_COLUMNS.length);
+    // Las Heras 2026 prints the totals row without the word: only its 11 figures, after the items.
+    const bare = !split && lines.length && !totals ? figuresOnly(row, SPENDING_COLUMNS.length) : null;
+    if (bare) {
+      totals = figures(bare);
+      continue;
+    }
     if (!split) {
       // Area subtotals only give the name of the area: it is read even when the row lost figures (San Rafael 2024-T4,
       // where the page footer falls on top of a subtotal). A missing item row is caught by the TOTALES check.
@@ -490,14 +497,21 @@ function readRevenueRows(tables: Table[]): { lines: RevenueLine[]; totals: Reven
   const unknown: string[] = [];
   for (const table of tables) {
     let last: RevenueLine | null = null;
+    /** A line of words: the label of figures that come alone on the next line (Las Heras 2026: "607 04 1110101000 …"). */
+    let pending = "";
     for (const row of table) {
-      const split = splitRow(row, REVENUE_COLUMNS.length);
+      const bare = pending ? figuresOnly(row, REVENUE_COLUMNS.length) : null;
+      const split = splitRow(row, REVENUE_COLUMNS.length) ?? (bare ? { label: pending, values: bare } : null);
       if (!split) {
-        // A wrapped label: a row with words and at most a number inside the label ("LEY 26075").
-        if (last && row.length && row.filter((t) => t.num !== null).length <= 1) last.label = `${last.label} ${rowText(row)}`;
+        const text = rowText(row);
+        // A wrapped label: a row with words and at most a number inside the label ("LEY 26075"), never a totals row.
+        if (last && row.length && row.filter((t) => t.num !== null).length <= 1 && !TOTALS_ROW.test(text))
+          last.label = `${last.label} ${text}`;
         else last = null;
+        pending = row.some(isAmount) ? "" : text;
         continue;
       }
+      pending = "";
       const { label, values } = split;
       last = null;
       if (TOTALS_ROW.test(label)) {
@@ -707,6 +721,10 @@ function debtSplit(row: Tok[]): { label: string; values: number[] } | null {
     // Lone "-" after the balances are the empty legal norm columns (Capital: "253.543.257,85 - - Gobierno").
     let end = j;
     while (end > i && row[end - 1]!.text === "-") end--;
+    // A legal norm number right after the balances (Las Heras: "653.700.777,56 34162 M 2022") is not a figure.
+    // Only a whole number of four or more digits, after amounts with decimals: zeros and amounts stay.
+    const withDecimals = row.slice(i, end).some((t) => /[.,]\d{1,2}$/.test(t.text));
+    while (end - i > DEBT_COLUMNS.length && withDecimals && /^\d{4,}$/.test(row[end - 1]!.text)) end--;
     // A year closing the label ("ACUERDO II 2019", "DESEQUILIBRIO FINANCIERO 2020") is not a figure.
     if (i > 0 && /^(19|20)\d\d$/.test(row[i]!.text)) i++;
     if (end - i >= DEBT_COLUMNS.length && (!best || end - i > best[1] - best[0])) best = [i, end];
@@ -797,8 +815,9 @@ function readDebt(tables: Table[], signAfterLabel: boolean | null): DebtAnnex | 
       totals = values;
       continue;
     }
-    // Subtotals of a group (Infogov: "Subtotal OTROS PASIVOS CORRIENTES") would count the debts twice.
-    if (/^subtotal\b/i.test(split.label)) continue;
+    // Subtotals of a group (Infogov: "Subtotal OTROS PASIVOS CORRIENTES", Las Heras: "TOTAL EN MONEDA NACIONAL") would count
+    // the debts twice.
+    if (/^(sub)?total\b/i.test(split.label)) continue;
     // Section rows ("Moneda Extranjera 0 0 0 0 0") carry the currency, not a debt.
     if (/^(en\s+)?moneda\s+(nacional|extranjera)$/i.test(split.label)) continue;
     // Rows without words are the column numbers ("1 2 3 4 5 6=2-o+3+4+o-5 7 8"), not a debt.

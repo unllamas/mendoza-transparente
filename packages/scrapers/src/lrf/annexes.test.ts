@@ -310,3 +310,49 @@ describe("lrf: grouped codes (Godoy Cruz)", () => {
     expect(parsed.lines.map((l) => l.code)).toEqual(["1.1", "7.1"]);
   });
 });
+
+describe("lrf: Las Heras 2026", () => {
+  test("six-digit codes, a totals row without the word, and the quarter as «2do»", () => {
+    const t = [
+      table(
+        "EJERCICIO: 2026 TRIMESTRE: 2do",
+        "411000 PERSONAL 100,00 10,00 0,00 110,00 90,00 80,00 70,00 60,00 10,00 20,00 10,00",
+        "740000 AMORT DE LA D. FL. 10,00 0,00 0,00 10,00 0,00 0,00 0,00 0,00 0,00 10,00 0,00",
+        "110,00 10,00 0,00 120,00 90,00 80,00 70,00 60,00 10,00 30,00 10,00",
+      ),
+    ];
+    expect(headerPeriod(t)).toEqual({ year: 2026, quarter: 2 });
+    const parsed = parseSpendingAnnex(t);
+    if ("error" in parsed) throw new Error(parsed.error);
+    expect(parsed.lines.map((l) => l.objectCode)).toEqual(["4.1.1", "7.4.1"]);
+  });
+
+  test("revenue with the label on one line and the figures alone on the next, also for TOTALES", () => {
+    const parsed = parseRevenueAnnex([
+      table(
+        "607 04 1110101000 Impuestos sobre los Ingresos Brutos",
+        "60,00 0,00 0,00 60,00 30,00 30,00 10,00",
+        "607 04 7400000000 Remanente del Ejercicio Anterior",
+        "40,00 0,00 0,00 40,00 10,00 30,00 5,00",
+        "TOTALES:",
+        "100,00 0,00 0,00 100,00 40,00 60,00 15,00",
+      ),
+    ]);
+    if ("error" in parsed) throw new Error(parsed.error);
+    expect(parsed.lines.map((l) => [l.code, l.label])).toEqual([
+      ["1110101000", "Impuestos sobre los Ingresos Brutos"],
+      ["7400000000", "Remanente del Ejercicio Anterior"],
+    ]);
+  });
+
+  test("debt: a legal norm number after the balances is not a figure", () => {
+    const parsed = parseDebtAnnex([
+      table(
+        "PRÉSTAMO OBRA DE AGUA EN PEDEMONTE N. 653.700.777,56 0,00 0,00 0,00 653.700.777,56 34162 M 2022 Gobierno de Mendoza",
+        "TOTALES 653.700.777,56 0,00 0,00 0,00 653.700.777,56",
+      ),
+    ]);
+    if ("error" in parsed) throw new Error(parsed.error);
+    expect(parsed.lines[0]!.closingBalance).toBe(653700777.56);
+  });
+});

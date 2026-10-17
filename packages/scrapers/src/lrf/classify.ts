@@ -44,6 +44,12 @@ const EQUIVALENT_CODES: Record<string, string> = {
   "6.2.2": "7.4.1",
   // Guaymallén "Adelantos a Proveed. de Ejercicios Ants." (670) = Capital "ADELANTOS A PROVEEDORES Y CONTRATISTAS" (6.3).
   "6.7.0": "6.3",
+  // Las Heras: "6.3.0.EROGACIONES PARA ATENDER ADELANTOS…" (up to 2025), and in 2026 "422000 INTERESES",
+  // "720000 POR OTRAS DEUDAS" / "AMORTIZAC DE LA DEUDA" and "740000 AMORT DE LA D. FL.".
+  "6.3.0": "6.3",
+  "4.2.2": "4.2.1",
+  "7.2.0": "7.2.1",
+  "7.4.0": "7.4.1",
 };
 
 /** Each way of writing the code, with the three levels it carries. */
@@ -98,7 +104,8 @@ export function objectCodeFromLevels(levels: string[], label: string): string {
   const code = levels.slice(0, 3).join(".");
   if (/trabajos?\s+p[uú]blicos/i.test(label)) return "5.1.2";
   if (/^pr[eé]stamos$/i.test(label.trim())) return "5.2.2";
-  if (code === "5.4.1" && /transferencia/i.test(label)) return "4.3.2";
+  // Capital's 5.4.1 and Las Heras' 5.4.2 are capital transfers.
+  if (code.startsWith("5.4.") && /transferencia/i.test(label)) return "4.3.2";
   if (code === "6.2.1" && levels[3] === "2") return "7.4.1";
   return EQUIVALENT_CODES[code] ?? code;
 }
