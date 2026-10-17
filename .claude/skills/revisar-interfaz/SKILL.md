@@ -13,7 +13,7 @@ La pregunta es "¿este cambio empeoró algo?", no "¿qué está mal en el sitio?
 
 Sin un objetivo dado, en este orden:
 
-1. Si la rama tiene commits que `main` no tiene: `git diff $(git merge-base origin/main HEAD)` más lo no commiteado. Decir cuántos commits y cuántos archivos sin commitear.
+1. Si la rama tiene commits que `dev` no tiene: `git diff $(git merge-base origin/dev HEAD)` (en un hotfix, `origin/main`) más lo no commiteado. Decir cuántos commits y cuántos archivos sin commitear.
 2. Si solo hay cambios sin commitear: esos.
 3. Si no hay nada: **preguntar** (el PR abierto de la rama, el último commit con su título, otra rama). Nunca revisar el último commit por cuenta propia.
 

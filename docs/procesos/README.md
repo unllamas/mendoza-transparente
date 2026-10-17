@@ -17,6 +17,7 @@ Cómo se trabaja en Mendoza Transparente, para poder replicarlo, retomarlo o sum
 | [Participación](participacion.md) | Pedidos de información, respuestas, errores y sugerencias: API, base y moderación |
 | [Panel interno](panel.md) | La app del equipo para revisar y publicar lo que llega: login, publicación, seguridad y casos límite |
 | [Trabajo con agentes](trabajo-con-agentes.md) | Cómo se orquesta el trabajo con Claude y subagentes |
+| [Ramas y releases](ramas-y-releases.md) | Ramas de trabajo, PRs a `dev`, releases a `main`, hotfixes y back merge |
 
 Comandos de todos los días (desde la raíz):
 

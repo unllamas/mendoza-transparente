@@ -17,6 +17,9 @@
 # capturas de la Wayback Machine de las URLs oficiales). Necesita los secretos IA_ACCESS_KEY e IA_SECRET_KEY;
 # sin ellos se saltea. Ver docs/procesos/datos-y-archivo.md.
 #
+# Los datos se publican directo en main, aunque la rama por defecto sea dev: todos los checkouts fijan
+# `ref: main`. El workflow back-merge.yml los lleva después a dev (ver docs/procesos/ramas-y-releases.md).
+#
 # Las fotos de funcionarios no se actualizan acá: usan `sips` (macOS) y cambian poco.
 
 name: Actualizar datos
@@ -67,6 +70,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - name: Controlar que el Boletín Oficial no quede viejo
         env:
           GH_TOKEN: ${{ github.token }}
@@ -97,6 +102,8 @@ jobs:
         fuente: ${{ fromJson(needs.plan.outputs.fuentes) }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.2
@@ -179,6 +186,8 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.2

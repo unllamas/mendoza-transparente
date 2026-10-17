@@ -4,7 +4,7 @@ El proyecto se construye con Claude Code. La guía para agentes es `AGENTS.md`, 
 
 ## Roles
 
-- **Sesión principal (Opus)**: decide, diseña, integra, revisa todo lo que entregan los subagentes y hace los commits.
+- **Sesión principal (Opus)**: decide, diseña, integra, revisa todo lo que entregan los subagentes y hace los commits, en una rama que sale de `dev` (ver [Ramas y releases](ramas-y-releases.md)).
 - **Subagentes (Sonnet)**: tareas acotadas y largas: un scraper, un relevamiento, un diccionario de datos, una búsqueda de fotos. Corren en paralelo y en segundo plano. Configurado en `~/.claude/settings.json` con `CLAUDE_CODE_SUBAGENT_MODEL`.
 
 ## Harness: skills, hooks y permisos

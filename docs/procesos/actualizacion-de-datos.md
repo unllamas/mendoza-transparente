@@ -20,6 +20,8 @@ Cómo funciona:
 4. **frescura** controla que el Boletín Oficial no pase más de 10 días sin actualizarse (solo si hay proxy configurado).
 5. **archivo-externo** copia en archive.org los archivos crudos que todavía no tienen copia y pide a la Wayback Machine que capture sus URLs oficiales. Corre después del commit y commitea solo los registros `archive-org.jsonl`. Necesita los secretos **`IA_ACCESS_KEY`** e **`IA_SECRET_KEY`**; sin ellos, se saltea. Ver [Datos y archivo](datos-y-archivo.md#copias-fuera-del-repo-archiveorg).
 
+Los commits de datos van directo a `main` (todos los checkouts fijan `ref: main`) y el workflow «Back merge a dev» los lleva a `dev`. Ver [Ramas y releases](ramas-y-releases.md#datos).
+
 Correrlo a mano: pestaña **Actions → Actualizar datos → Run workflow**, con las fuentes separadas por coma (vacío = todas).
 
 ### Avisos
@@ -62,7 +64,7 @@ Qué hace (`scripts/actualizar.ts`):
 1. Corre cada scraper con los mismos argumentos que el workflow.
 2. Muestra un resumen: estado, archivos nuevos y tiempo por fuente.
 3. Comprueba que la web compile con los datos nuevos.
-4. **Pregunta antes de publicar** y hace commit y push **solo de `data/`**: nunca sube código que se esté editando.
+4. **Pregunta antes de publicar** y hace commit y push **solo de `data/`**: nunca sube código que se esté editando. Solo publica desde `main`: en otra rama, frena antes del commit y deja los cambios en `data/`.
 
 ### Completar años anteriores del Boletín Oficial
 

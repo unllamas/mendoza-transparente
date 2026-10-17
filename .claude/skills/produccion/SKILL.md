@@ -16,7 +16,7 @@ Fuentes completas: `docs/procesos/web.md` (Publicar), `participacion.md` y `anal
 
 ## Publicar
 
-- **Cómo se publica:** cada push a `main` dispara el build en Cloudflare Pages (proyecto `mendoza-transparente`, root `apps/web`, comando en `wrangler.toml` y en el panel).
+- **Cómo se publica:** cada push a `main` (un release desde `dev`, un hotfix o un commit de datos; ver la skill `ramas-y-releases`) dispara el build en Cloudflare Pages (proyecto `mendoza-transparente`, root `apps/web`, comando en `wrangler.toml` y en el panel).
 - **Seguir el despliegue:** con un Monitor que consulte `GET /accounts/$ID/pages/projects/mendoza-transparente/deployments?per_page=1` hasta `deploy:success` o `failure`. Si falla, leer los logs en `…/deployments/<id>/history/logs`.
 - **Después de publicar:** probar en el sitio real, con `playwright` y `--host-resolver-rules` si el DNS local está cacheado. Revisar páginas clave, `/api/pedidos/stats` y la consola.
 - **Variables:** las públicas van en `apps/web/.env.production`; las de build en `[vars]` de `wrangler.toml` (Pages ignora las del panel cuando existe ese archivo); los secretos (`TURNSTILE_SECRET`, `IP_SALT`) en el panel como `secret_text`.

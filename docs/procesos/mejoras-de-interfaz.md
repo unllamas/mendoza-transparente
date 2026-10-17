@@ -63,7 +63,7 @@ La conexión es opcional a propósito: si la barra apunta al servidor y el servi
 
 Antes de commitear un cambio de interfaz grande, o al integrar lo que hizo un subagente, se revisa **el cambio**, no todo el sitio (skill `revisar-interfaz`):
 
-1. **Alcance:** lo que está en la rama y no en `main`, más lo que no está commiteado. Si no hay cambios, preguntar qué revisar; nunca revisar el último commit por cuenta propia.
+1. **Alcance:** lo que está en la rama y no en `dev` (en un hotfix, `main`), más lo que no está commiteado. Si no hay cambios, preguntar qué revisar; nunca revisar el último commit por cuenta propia.
 2. **Radio de impacto:** un archivo cambiado es una pista. Se revisan las pantallas donde aparece: un salto (quién lo importa) y dos si es un token o un componente de `@mt/ui`, que llega a todo el sitio.
 3. **Leer también lo que se borró:** un `aria-label`, un `min-h-11`, un `truncate` o un `min-w-0` que desaparece sin reemplazo es una regresión.
 4. **¿Hace lo que dice?** Contra el pedido o el mensaje del commit: ¿faltan estados (vacío, cargando, error, sin foto, ancho de 320 px)? ¿Se agregó algo en una pantalla y no en sus hermanas?

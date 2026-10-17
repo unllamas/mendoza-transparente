@@ -99,6 +99,15 @@ if (!build) {
 }
 console.log("La web compila.");
 
+// Data is published straight to main (docs/procesos/ramas-y-releases.md); the back merge carries it to dev.
+const branch = (await sh(["git", "branch", "--show-current"], ROOT, true)).salida.trim();
+if (branch !== "main") {
+  console.error(
+    `Los datos se publican desde main y estás en «${branch}». Los cambios quedan en data/: pasate a main (git switch main) y volvé a correrlo.`,
+  );
+  process.exit(1);
+}
+
 if (!flags.has("--si")) {
   process.stdout.write("\n¿Publicar estos datos (commit y push de data/)? [s/N] ");
   const respuesta = (await new Promise<string>((r) => process.stdin.once("data", (d) => r(String(d))))).trim().toLowerCase();

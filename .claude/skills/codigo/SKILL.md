@@ -53,5 +53,5 @@ bun run verificar                     # (desde la raíz) sin scroll horizontal y
 
 - **Contenido:** un commit por entrega, con el mensaje en español que explique qué cambia y por qué, y la línea `Co-Authored-By` que indique el sistema.
 - **Qué agregar:** solo los archivos de la tarea, con `git add <rutas>` y nunca `git add -A`, porque puede haber trabajo de un agente en curso.
-- **Cómo subir:** `git pull --rebase --autostash` y después `git push`. Cada push a `main` publica el sitio (ver la skill `produccion`).
+- **Dónde:** en una rama que sale de `dev`, con PR a `dev`. Nunca directo a `main`, que publica el sitio en cada push (ver la skill `ramas-y-releases`).
 - **Secretos:** `.env.cloudflare`, `.env.posthog` y cualquier token nunca se commitean ni se imprimen. Ya están en `.gitignore`, y un hook bloquea leerlos.

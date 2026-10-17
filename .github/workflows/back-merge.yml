@@ -1,0 +1,55 @@
+# Back merge automático: cada push a main (un release, un hotfix o un commit de datos) se lleva a dev,
+# para que dev nunca quede atrás de producción. Ver docs/procesos/ramas-y-releases.md.
+#
+# Si main y dev chocan, o si la protección de dev no deja pushear al bot, abre un PR main → dev
+# con la etiqueta back-merge para resolverlo a mano.
+
+name: Back merge a dev
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: back-merge
+  cancel-in-progress: false
+
+jobs:
+  back-merge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dev
+          fetch-depth: 0
+
+      - name: Llevar main a dev
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          if git merge-base --is-ancestor origin/main HEAD; then echo "dev ya tiene todo lo de main."; exit 0; fi
+
+          if git merge --no-edit -m "Back merge de main a dev" origin/main && git push origin HEAD:dev; then
+            echo "main quedó integrado en dev."
+            exit 0
+          fi
+          git merge --abort 2>/dev/null || true
+
+          gh label create back-merge --color 0E8A16 --description "main tiene cambios que dev todavía no" --force || true
+          if [ -n "$(gh pr list --base dev --head main --state open --json number -q '.[].number')" ]; then
+            echo "Ya hay un PR main → dev abierto."
+            exit 0
+          fi
+          gh pr create --base dev --head main --label back-merge \
+            --title "Back merge: main → dev" \
+            --body "El back merge automático no pudo integrar main en dev (conflicto o rama protegida). Resolverlo con un merge commit, sin squash, para que las dos ramas compartan la historia. Registro: $RUN"
