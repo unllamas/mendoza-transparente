@@ -70,20 +70,37 @@ Cada fuente tiene su propio recolector, que es idempotente (correrlo dos veces n
 
 Monorepo con Bun workspaces y Turborepo, en TypeScript estricto.
 
-```
-apps/web/               el sitio (mendoza-transparente.com) y su API pública de participación
-apps/panel/             panel interno del equipo, detrás de Cloudflare Access
-packages/ui/            @mt/ui: componentes y tokens de diseño
-packages/participation/ @mt/participation: API de participación y del panel, migraciones de D1
-packages/core/          @mt/core: descarga, archivado, CSV, municipios
-packages/scrapers/      @mt/scrapers: un recolector por fuente en src/sources/<id>.ts
-sources.yaml            catálogo de fuentes (id, organismo, url, formato, estado)
-data/raw/<id>/          archivos originales, por fecha de descarga, más un manifest.jsonl
-data/processed/<id>/    datos normalizados (CSV) listos para analizar
-data/curado/            contenido escrito o revisado a mano
-docs/procesos/          cómo se trabaja: fuentes, datos, web, diseño, metodología, releases
-docs/planes/            la hoja de ruta: lo que todavía no funciona del todo
-```
+**Apps**
+
+| Carpeta | Qué es |
+|---|---|
+| [`apps/web`](apps/web) | El sitio (mendoza-transparente.com) y su API pública de participación |
+| [`apps/panel`](apps/panel) | Panel interno del equipo, detrás de Cloudflare Access |
+
+**Paquetes**
+
+| Carpeta | Qué es |
+|---|---|
+| [`packages/ui`](packages/ui) | `@mt/ui`: componentes y tokens de diseño |
+| [`packages/core`](packages/core) | `@mt/core`: descarga, archivado, CSV y municipios |
+| [`packages/scrapers`](packages/scrapers) | `@mt/scrapers`: un recolector por fuente, en `src/sources/<id>.ts` |
+| [`packages/participation`](packages/participation) | `@mt/participation`: API de participación y del panel, y migraciones de D1 |
+
+**Datos**
+
+| Carpeta | Qué es |
+|---|---|
+| [`sources.yaml`](sources.yaml) | Catálogo de fuentes: id, organismo, URL, formato y estado |
+| [`data/raw`](data/raw) | Archivos originales por fecha de descarga, con su `manifest.jsonl` |
+| [`data/processed`](data/processed) | Datos normalizados en CSV, listos para analizar |
+| [`data/curado`](data/curado) | Contenido escrito o revisado a mano |
+
+**Documentación**
+
+| Carpeta | Qué es |
+|---|---|
+| [`docs/procesos`](docs/procesos/README.md) | Cómo se trabaja: fuentes, datos, web, diseño, metodología y releases |
+| [`docs/planes`](docs/planes/README.md) | La hoja de ruta: lo que todavía no funciona del todo |
 
 ## Para empezar
 
