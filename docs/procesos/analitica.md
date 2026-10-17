@@ -58,6 +58,8 @@ Todo error del sitio llega a PostHog como `$exception` y se ve agrupado en **Err
 
 La descripción en español de cada evento vive en `apps/web/src/analytics-catalog.ts`. Al sumar un `data-track` o un `track()`, se agrega ahí su evento.
 
+**Eventos que se dejan de enviar:** no se borran del catálogo. Pasan al final, con la etiqueta `en desuso` y una descripción que empieza con «Ya no se envía» y dice qué los reemplaza, porque PostHog conserva su historia. Si `posthog-sync` avisa de eventos sin descripción, es que falta uno nuevo o uno en desuso.
+
 **`bun run posthog-sync`** (necesita `.env.posthog` en la raíz, que no se versiona):
 - Copia las descripciones del catálogo a PostHog.
 - Crea o actualiza el tablero **"Uso de Mendoza Transparente"** y sus gráficos, con título y descripción en español.

@@ -18,6 +18,12 @@ export const EVENT_CATALOG: EventDoc[] = [
     description: "Tocó algo que parece tocable y no pasó nada (clic sin respuesta). Propiedad $pathname con la página.",
     tags: ["navegación"],
   },
+  {
+    event: "$dead_swipe",
+    description:
+      "En el celular, deslizó sobre algo que parece deslizable y no pasó nada (gesto sin respuesta). Propiedad $pathname con la página.",
+    tags: ["navegación"],
+  },
   { event: "$web_vitals", description: "Medición de velocidad de carga de la página (Core Web Vitals).", tags: ["rendimiento"] },
   {
     event: "$exception",
@@ -293,4 +299,22 @@ export const EVENT_CATALOG: EventDoc[] = [
   { event: "home.hero.reading_guide", description: "Tocó «¿Primera vez? Empezá por acá» en la portada.", tags: ["portada"] },
   { event: "landscape.credit", description: "Abrió el crédito de una foto de paisaje. Propiedad photo.", tags: ["portada"] },
   { event: "landscape.propose", description: "Tocó «Proponé tu foto» bajo una foto de paisaje. Propiedad photo.", tags: ["portada"] },
+
+  // Retired: the site no longer sends these, but PostHog keeps their history. Described so it can still be read.
+  {
+    event: "municipality.index.open",
+    description:
+      "Ya no se envía. Abría un índice de transparencia de otra organización (Municipios Argentinos, IERAL) desde un municipio; se quitaron el 16/10/2026.",
+    tags: ["en desuso"],
+  },
+  {
+    event: "home.search.select",
+    description: "Ya no se envía. Elegía un resultado del buscador anterior de la portada; hoy lo cubre search.select.",
+    tags: ["en desuso"],
+  },
+  {
+    event: "home.search.no_results",
+    description: "Ya no se envía. Búsqueda sin resultados en el buscador anterior de la portada; hoy lo cubre search.no_results.",
+    tags: ["en desuso"],
+  },
 ];

@@ -183,6 +183,71 @@ const INSIGHTS: { name: string; description: string; query: unknown }[] = [
     query: ranking("sheet.open", "sheet"),
   },
   {
+    name: "Portada: qué usa la gente",
+    description:
+      "Cuántas veces se usa cada parte de la portada: preguntas, «¿Dónde vivís?», mapa de secciones, novedades, buscador y guía de lectura.",
+    query: trends(
+      [
+        ev("home.question.open", { custom_name: "Preguntas" }),
+        ev("home.department.select", { custom_name: "¿Dónde vivís?" }),
+        ev("home.map.open", { custom_name: "Todo lo que hay" }),
+        ev("home.news.open", { custom_name: "Novedades" }),
+        ev("search.open", { custom_name: "Abrió el buscador" }),
+        ev("home.reading_guide.open", { custom_name: "Guía de lectura" }),
+      ],
+      { trendsFilter: { display: "ActionsBarValue" } },
+    ),
+  },
+  {
+    name: "Menú: grupos que más se abren",
+    description:
+      "Qué grupos del menú abre o cierra la gente (Gobierno, Datos, Compras del Estado, Transparencia). Muestra por dónde busca.",
+    query: ranking("nav.group.toggle", "group"),
+  },
+  {
+    name: "Buscador: de abrirlo a elegir un resultado",
+    description: "Por semana: cuántas veces se abre el buscador, se escribe una búsqueda, se elige un resultado y no se encuentra nada.",
+    query: trends(
+      [
+        ev("search.open", { custom_name: "Abrió el buscador" }),
+        ev("search.query", { custom_name: "Buscó" }),
+        ev("search.select", { custom_name: "Eligió un resultado" }),
+        ev("search.no_results", { custom_name: "Sin resultados" }),
+      ],
+      { interval: "week", dateRange: { date_from: "-90d" } },
+    ),
+  },
+  {
+    name: "Municipios más consultados",
+    description: "Páginas de municipio con más visitas (incluye sus subpáginas, como el presupuesto).",
+    query: ranking("$pageview", "$pathname", {
+      properties: [{ key: "$pathname", operator: "icontains", value: "/municipios/", type: "event" }],
+    }),
+  },
+  {
+    name: "Municipios: qué se usa",
+    description:
+      "Cuántas veces se usa cada herramienta de las páginas de municipio: presupuesto, anexos originales, leyes, qué publica cada uno y sus fuentes.",
+    query: trends(
+      [
+        ev("municipality.budget.open", { custom_name: "Abrió el presupuesto" }),
+        ev("municipality.budget.year.change", { custom_name: "Cambió el año del presupuesto" }),
+        ev("municipality.budget_source.open", { custom_name: "Abrió un anexo original" }),
+        ev("municipality.law.open", { custom_name: "Abrió una ley" }),
+        ev("municipality.transparency_item.open", { custom_name: "Abrió qué publica" }),
+        ev("municipality.transparency_source.open", { custom_name: "Fue a la fuente" }),
+        ev("municipality.transparency_request.open", { custom_name: "Fue a pedir el dato" }),
+        ev("municipality.staff_source.open", { custom_name: "Abrió la fuente de personal" }),
+      ],
+      { trendsFilter: { display: "ActionsBarValue" } },
+    ),
+  },
+  {
+    name: "Errores del sitio por día",
+    description: "Errores que le aparecieron a la gente mientras usaba el sitio. El detalle de cada uno está en Error tracking.",
+    query: trends([ev("$exception")]),
+  },
+  {
     name: "Clics sin respuesta",
     description:
       "Páginas donde la gente toca algo que parece tocable y no pasa nada. Cada caso es un botón que falta o un texto que confunde.",
