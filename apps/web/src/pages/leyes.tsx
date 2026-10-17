@@ -43,7 +43,6 @@ export function LeyesPage() {
       <PageHeader action={<ShareButton />} icon={RiScalesLine} topic="Leyes" title="Las leyes que sanciona Mendoza">
         Qué dice cada ley provincial, explicado en pocas palabras, con el enlace al documento oficial.
       </PageHeader>
-      <FuentesOficiales ids={["boletin-oficial"]} />
       <div className="flex flex-col gap-4">
         <ListSearch
           value={q}
@@ -81,6 +80,8 @@ export function LeyesPage() {
           </Button>
         )}
       </div>
+
+      <FuentesOficiales ids={["boletin-oficial"]} />
     </div>
   );
 }

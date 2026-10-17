@@ -74,7 +74,7 @@ Reglas para editarlos: citar siempre la fuente oficial, no inferir lo que no est
 
 ## Catálogo: `sources.yaml`
 
-Una entrada por fuente. La web lo usa para `/fuentes`, para la línea «Fuente: … · Ver en el sitio oficial · Copia archivada» y para el SEO de las páginas de datos.
+Una entrada por fuente. La web lo usa para `/fuentes`, para la sección «Fuentes» del final de cada página (organismo · Sitio oficial · Copia del <fecha>) y para el SEO de las páginas de datos.
 
 ## Tamaño del repo
 

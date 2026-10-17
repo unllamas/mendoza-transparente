@@ -39,8 +39,6 @@ export function PoblacionPage() {
         Población de la provincia y de cada departamento según los censos 2010 y 2022, y las proyecciones oficiales de INDEC para los años
         sin censo.
       </PageHeader>
-      <FuentesOficiales ids={["poblacion"]} />
-
       <div className="grid gap-3 md:grid-cols-3">
         <StatTile icon={RiGroupLine} label={`Habitantes en ${tema.anioActual}`} value={personas(tema.actual)} note="Proyección INDEC" />
         <StatTile icon={RiLineChartLine} label="Crecimiento entre censos" value={porcentaje(variacionProv)} note="De 2010 a 2022" />
@@ -129,13 +127,7 @@ export function PoblacionPage() {
         </div>
       </Section>
 
-      <p className="text-body-regular text-text-tertiary">
-        Fuente: INDEC, censos y proyecciones de población. Datos completos en{" "}
-        <Link to="/datos/$fuente" params={{ fuente: "poblacion" }} className="underline hover:text-text-primary">
-          Datos › Población
-        </Link>
-        .
-      </p>
+      <FuentesOficiales ids={["poblacion"]} />
     </div>
   );
 }
