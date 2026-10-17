@@ -1,6 +1,6 @@
 ---
 name: ramas-y-releases
-description: Flujo de ramas de Mendoza Transparente. Lo nuevo entra por dev con un PR desde una rama de trabajo; dev llega a main (producción) en un release con merge commit; los hotfixes salen de main y vuelven a dev con el back merge automático; los datos se publican directo en main. Cargar antes de crear una rama, commitear, pushear, abrir o mergear un PR, hacer un release o un hotfix.
+description: Flujo de ramas de Mendoza Transparente. Lo nuevo entra por dev con un PR desde una rama de trabajo; dev llega a main (producción) en una publicación con merge commit; un release de GitHub por día junta lo publicado; los hotfixes salen de main y vuelven a dev con el back merge automático; los datos se publican directo en main. Cargar antes de crear una rama, commitear, pushear, abrir o mergear un PR, publicar, hacer un release o un hotfix.
 ---
 
 # Ramas y releases
@@ -14,7 +14,8 @@ Detalle completo: `docs/procesos/ramas-y-releases.md`.
 - **Todo lo nuevo sale de `dev`**: `git switch dev && git pull && git switch -c <tipo>/<tema>` (`feat/`, `fix/`, `datos/`, `docs/`).
 - **Mensajes de commit y títulos de PR en Conventional Commits**: `<tipo>(<ámbito>): <descripción en español>`. Tipos: `feat`, `fix`, `docs`, `refactor`, `perf`, `test`, `build`, `ci`, `style`, `chore`, `revert`. Ámbitos por carpeta: `web`, `panel`, `ui`, `core`, `scrapers`, `participation`, `data`, `docs`, `skills`, `scripts`, `ci`, `release` (o ninguno si cruza todo el repo). Lo que rompe una columna de un CSV publicado lleva `!` y un pie `BREAKING CHANGE:`. Lo controlan el hook `commit-msg` y, sobre el título del PR, la CI. Tabla y ejemplos en el documento.
 - **PR a `dev`** con la plantilla `.github/pull_request_template.md` completa, CI verde y **squash**. El agente lo mergea él mismo; no espera aprobación salvo que el PR venga de alguien de afuera del equipo, que necesita la revisión de alguien del equipo.
-- **Release**: PR `dev → main` titulado `chore(release): <fecha>`, probado en `dev.mendoza-transparente.pages.dev`, mergeado con **merge commit** (nunca squash ni rebase). Si la persona pidió que se publique cuando funcione, el agente lo mergea con la CI y la vista previa bien.
+- **Publicación**: PR `dev → main` titulado `chore(release): <fecha>`, con el cuerpo de `bun scripts/release-notes.ts --from origin/main --to origin/dev`, probado en `dev.mendoza-transparente.pages.dev`, mergeado con **merge commit** (nunca squash ni rebase). Si la persona pidió que se publique cuando funcione, el agente lo mergea con la CI y la vista previa bien.
+- **Release de GitHub**: uno por día, lo crea solo el workflow «Release del día» (23:30 de Mendoza) con todo lo que llegó a `main` ese día: publicaciones, hotfixes y datos, agrupados por tipo. Etiqueta por fecha (`2026-10-17`). No se crea a mano por cada publicación; para el primero o para rehacer uno, *Run workflow* con el campo `desde`.
 - **Hotfix**: rama `hotfix/<tema>` desde `main`, PR a `main` con squash. Después, **confirmar el back merge a `dev`** (workflow «Back merge a dev»); si abrió un PR `main → dev` con la etiqueta `back-merge`, resolverlo con merge commit.
 - **Datos**: se publican en `main` (workflow de actualización y `bun run actualizar`, que solo publica desde `main`). Un scraper nuevo o cambiado es código y va por `dev`.
 
