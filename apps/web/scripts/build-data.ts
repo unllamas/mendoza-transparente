@@ -1,7 +1,8 @@
 /**
  * Prepara los datos del sitio antes de compilar. Lee sources.yaml,
  * data/raw/<id>/manifest.jsonl, data/raw/<id>/archive-org.jsonl y data/processed/<id>/*.csv, y escribe en public/data:
- *   index.json                    catálogo de fuentes y datasets
+ *   index.json                    catálogo de fuentes y datasets (para /fuentes y /datos)
+ *   fuentes.json                  solo las fuentes y dos totales: lo que necesitan el footer, la portada y cada «Fuentes»
  *   <id>/<archivo>.csv            el CSV completo, para descargar
  *   <id>/<archivo>.preview.json   las primeras filas, para mostrar en la web
  */
@@ -11,7 +12,7 @@ import { join } from "node:path";
 import { parse as parseYaml } from "yaml";
 
 import { NO_PUBLICADO_CATEGORIES } from "../src/no-publicado-categories.ts";
-import type { DataIndex, DatasetMeta, Diccionario, NoPublicado, Preview, SourceMeta } from "../src/types.ts";
+import type { DataIndex, DatasetMeta, Diccionario, NoPublicado, Preview, SourceCatalog, SourceMeta } from "../src/types.ts";
 import { construirPaginas } from "./paginas.ts";
 import { buildCompras } from "./temas/compras.ts";
 import { buildCoparticipacion } from "./temas/coparticipacion.ts";
@@ -413,6 +414,14 @@ if (normasBoletin) {
 
 const index: DataIndex = { generatedAt: new Date().toISOString(), sources, datasets };
 writeFileSync(join(OUT, "index.json"), JSON.stringify(index));
+// El índice completo pesa más de 100 KB por la lista de datasets; casi todas las páginas solo necesitan las fuentes.
+const sourceCatalog: SourceCatalog = {
+  generatedAt: index.generatedAt,
+  sources,
+  records: datasets.reduce((sum, d) => sum + d.rowCount, 0),
+  sourcesWithData: sources.filter((s) => datasets.some((d) => d.source === s.id)).length,
+};
+writeFileSync(join(OUT, "fuentes.json"), JSON.stringify(sourceCatalog));
 
 // Título, descripción e imagen de cada página, para actualizar los metadatos al navegar sin recargar
 // (el HTML de cada ruta ya los trae; ver scripts/seo.ts).

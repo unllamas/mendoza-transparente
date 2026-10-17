@@ -32,7 +32,7 @@ import { trackPageview } from "@/analytics.ts";
 import { formatDate } from "@/lib.ts";
 import { usePageMeta } from "@/seo.ts";
 import { DetailSheet } from "./detail-sheet.tsx";
-import { REPO, useDataIndex } from "./official-sources.tsx";
+import { REPO, useSourceCatalog } from "./official-sources.tsx";
 import { ReportErrorBand } from "./report-error.tsx";
 import { HeaderSearchButton, SearchDialog } from "./search-dialog.tsx";
 import { UiProviders } from "./ui-providers.tsx";
@@ -109,7 +109,7 @@ function withUtm(url: string) {
 
 export function Layout() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const dataIndex = useDataIndex();
+  const sourceCatalog = useSourceCatalog();
   usePageMeta(pathname);
   useEffect(() => trackPageview(pathname), [pathname]);
   const [abierto, setAbierto] = useState(false);
@@ -131,6 +131,9 @@ export function Layout() {
                 <Link
                   key={item.to}
                   to={item.to}
+                  data-track="nav.link.open"
+                  data-track-to={item.to}
+                  data-track-place="header"
                   className={buttonClassName({ variant: "tertiary", className: "[&.active]:text-text-link" })}
                 >
                   {item.label}
@@ -182,6 +185,9 @@ export function Layout() {
                   <Link
                     key={item.to}
                     to={item.to}
+                    data-track="nav.link.open"
+                    data-track-to={item.to}
+                    data-track-place="mobile_menu"
                     className="flex items-center justify-between min-h-11 border-b border-separator-border py-4 text-title-3-regular text-text-primary [&.active]:font-medium [&.active]:text-text-link"
                   >
                     {item.label}
@@ -235,7 +241,10 @@ export function Layout() {
               >
                 <RiGitBranchLine className="size-4" aria-hidden /> Código y datos abiertos en GitHub
               </a>
-              {dataIndex && <p className="text-text-tertiary">Datos actualizados al {formatDate(dataIndex.generatedAt)}</p>}
+              {/* The line is always there (empty while it loads), so the footer does not grow when the date arrives. */}
+              <p className="min-h-[1lh] text-text-tertiary">
+                {sourceCatalog && `Datos actualizados al ${formatDate(sourceCatalog.generatedAt)}`}
+              </p>
               <div className="flex items-center gap-2 pt-4">
                 <span className="text-text-tertiary">Tema</span>
                 <ThemeToggle appearance="segmented" size="compact" />

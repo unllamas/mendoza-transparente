@@ -5,7 +5,7 @@ import { installClickTracking } from "./analytics.ts";
 import { DevFeedback } from "./components/dev-feedback.tsx";
 import { Layout } from "./components/layout.tsx";
 import { RouteError, RouteNotFound } from "./components/route-states.tsx";
-import { loadIndex, loadJson, loadTema } from "./lib.ts";
+import { loadIndex, loadJson, loadSources, loadTema } from "./lib.ts";
 import { cuitDeSlug } from "./slug.ts";
 import "./styles.css";
 import type {
@@ -41,14 +41,15 @@ const homeRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
   loader: async () => {
-    const [index, home, mapa, noPublicado, guide] = await Promise.all([
-      loadIndex(),
+    // Third layer: not awaited, the page shows its place and fills it when it arrives (docs/procesos/web.md).
+    const noPublicado = loadTema<NoPublicado[]>("no-publicado").catch(() => [] as NoPublicado[]);
+    const [sources, home, mapa, guide] = await Promise.all([
+      loadSources(),
       loadTema<HomeTema>("home"),
       loadTema<MapaMendoza>("mapa").catch(() => null),
-      loadTema<NoPublicado[]>("no-publicado").catch(() => [] as NoPublicado[]),
       loadTema<HomeGuide>("guia").catch(() => null),
     ]);
-    return { index, home, mapa, noPublicado, guide };
+    return { sources, home, mapa, noPublicado, guide };
   },
   component: page(() => import("./pages/home.tsx"), "HomePage"),
 });
@@ -84,20 +85,22 @@ const empleoRoute = createRoute({
 const coparticipacionRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/coparticipacion",
-  loader: async () => ({
-    tema: await loadTema<CoparticipacionTema>("coparticipacion"),
-    mapa: await loadTema<MapaMendoza>("mapa"),
-  }),
+  loader: async () => {
+    // In parallel: one after the other, the map waited for the topic.
+    const [tema, mapa] = await Promise.all([loadTema<CoparticipacionTema>("coparticipacion"), loadTema<MapaMendoza>("mapa")]);
+    return { tema, mapa };
+  },
   component: page(() => import("./pages/coparticipacion.tsx"), "CoparticipacionPage"),
 });
 
 const poblacionRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/poblacion",
-  loader: async () => ({
-    tema: await loadTema<PoblacionTema>("poblacion"),
-    mapa: await loadTema<MapaMendoza>("mapa"),
-  }),
+  loader: async () => {
+    // In parallel: one after the other, the map waited for the topic.
+    const [tema, mapa] = await Promise.all([loadTema<PoblacionTema>("poblacion"), loadTema<MapaMendoza>("mapa")]);
+    return { tema, mapa };
+  },
   component: page(() => import("./pages/poblacion.tsx"), "PoblacionPage"),
 });
 
@@ -276,6 +279,25 @@ const senalesRoute = createRoute({
   component: page(() => import("./pages/senales.tsx"), "SenalesPage"),
 });
 
+// Development only: /vista-previa/<name> shows apps/web/src/previews/<name>.tsx, a gitignored throwaway page
+// to review a UI change before touching the real one. Process: docs/procesos/vista-previa.md.
+type PreviewModule = { Preview: (props: { data: unknown }) => ReactNode; loader?: () => Promise<unknown> };
+const previews = import.meta.glob<PreviewModule>("./previews/*.tsx");
+const previewRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/vista-previa/$name",
+  loader: async ({ params }) => {
+    const load = previews[`./previews/${params.name}.tsx`];
+    if (!load) throw notFound();
+    const preview = await load();
+    return { Preview: preview.Preview, data: await preview.loader?.() };
+  },
+  component: function PreviewPage() {
+    const { Preview, data } = previewRoute.useLoaderData();
+    return <Preview data={data} />;
+  },
+});
+
 const router = createRouter({
   routeTree: rootRoute.addChildren([
     homeRoute,
@@ -305,6 +327,7 @@ const router = createRouter({
     comoLeerRoute,
     fuentesRoute,
     datosRoute,
+    ...(import.meta.env.DEV ? [previewRoute] : []),
   ]),
   defaultPreload: "intent",
   // A page that fails shows RouteError (and reports it to PostHog) inside the layout; the rest keeps working.

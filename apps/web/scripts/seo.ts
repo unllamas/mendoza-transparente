@@ -6,8 +6,8 @@
  * - una imagen para compartir por página;
  * - sitemap.xml con la fecha real de cada página, robots.txt y llms.txt.
  */
-import { readFileSync } from "node:fs";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { existsSync, readFileSync } from "node:fs";
+import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
 import { Resvg } from "@resvg/resvg-js";
@@ -15,6 +15,7 @@ import { Resvg } from "@resvg/resvg-js";
 import { DEFAULT_PHOTO, PHOTOS, type Photo, type PhotoId } from "../src/photos.ts";
 import { canonicalUrl, OG_SIZE, ogImageUrl, SITE_NAME, SITE_URL } from "../src/seo.ts";
 import { construirPaginas, type Pagina } from "./paginas.ts";
+import { preloadTags } from "./preload.ts";
 
 const WEB = join(import.meta.dirname, "..");
 const DIST = join(WEB, "dist");
@@ -71,9 +72,9 @@ function stripBase(html: string): string {
     .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>\s*/g, "");
 }
 
-function render(base: string, p: Pagina): string {
+function render(base: string, p: Pagina, preload: string[]): string {
   return stripBase(base)
-    .replace("</head>", `${headTags(p)}\n  </head>`)
+    .replace("</head>", `${[headTags(p), ...preload.map((l) => `    ${l}`)].join("\n")}\n  </head>`)
     .replace(/<div id="root">\s*<\/div>/, `<div id="root">${p.html}</div>`);
 }
 
@@ -210,12 +211,20 @@ if (stylesheet) {
   base = base.replace(stylesheet[0], () => `<style>${css}</style>`);
 }
 
+// First layer of each page (scripts/preload.ts): its chunk and its JSON start with the HTML. Vite's manifest says which
+// chunks each page imports; it is only for this script, so it does not get published.
+const manifestFile = join(DIST, ".vite", "manifest.json");
+const manifest = JSON.parse(await readFile(manifestFile, "utf8"));
+await rm(join(DIST, ".vite"), { recursive: true, force: true });
+const entryChunks = new Set([...base.matchAll(/(?:src|href)="\/(assets\/[^"]+\.js)"/g)].map((m) => m[1]!));
+const dataExists = (file: string) => existsSync(join(DIST, "data", file));
+
 const slugsOg = new Set<string>();
 for (const p of paginas) {
   // "/deuda" → dist/deuda.html: Cloudflare Pages lo sirve en /deuda sin redirigir a /deuda/.
   const file = p.path === "/" ? join(DIST, "index.html") : join(DIST, `${p.path}.html`);
   await mkdir(dirname(file), { recursive: true });
-  await writeFile(file, render(base, p));
+  await writeFile(file, render(base, p, preloadTags(p.path, manifest, entryChunks, dataExists)));
   if (!slugsOg.has(p.og.slug)) {
     slugsOg.add(p.og.slug);
     await writeOg(p.og.slug, p.og);

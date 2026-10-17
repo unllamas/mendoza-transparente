@@ -47,17 +47,22 @@ El detalle de los cálculos (pesos de hoy, por habitante, deuda en dólares, com
 
 ## Cómo funciona por dentro
 
+```mermaid
+flowchart TD
+    A[Sitio oficial] --> B[Recolector]
+    B --> C[(Archivo original)]
+    C --> D[(Copia en archive.org)]
+    C --> E[Datos normalizados]
+    F[Contenido curado] --> G
+    E --> G[mendoza-transparente.com]
 ```
- sitio oficial ──▶ scraper ──▶ data/raw/<fuente>/<fecha>/   archivo original + manifest con sha256
-                                       │
-                                       ├──▶ archive.org     copia fuera del repo y captura en la Wayback Machine
-                                       ▼
-                               data/processed/<fuente>/      CSV normalizados, con diccionario de datos
-                                       │
-                         data/curado/ ─┤                     leyes resumidas, correcciones, lo que no se publica
-                                       ▼
-                               mendoza-transparente.com      páginas prerenderizadas, cada cifra con su fuente
-```
+
+1. **Recolector.** Un script por fuente descarga cada archivo del sitio oficial.
+2. **Archivo original.** Se guarda tal cual llegó en `data/raw/<fuente>/<fecha>/`, con su sha256 en un `manifest.jsonl`.
+3. **Copia en archive.org.** El archivo se sube a archive.org y la Wayback Machine captura la URL oficial: si el organismo lo borra, la prueba queda afuera del repo.
+4. **Datos normalizados.** CSV limpios y comparables en `data/processed/<fuente>/`.
+5. **Contenido curado.** Lo escrito o revisado a mano en `data/curado/`: resúmenes de leyes, correcciones y lo que no se publica.
+6. **La web.** Páginas prerenderizadas, cada cifra con su fuente.
 
 Cada fuente tiene su propio recolector, que es idempotente (correrlo dos veces no duplica nada) y amable con los servidores del Estado (pedidos en secuencia, con pausas). El catálogo completo de fuentes está en [`sources.yaml`](sources.yaml) y el relevamiento, en [`docs/relevamiento-fuentes.md`](docs/relevamiento-fuentes.md). Las columnas de cada CSV se explican en el [diccionario de datos](docs/diccionario-de-datos.md).
 
@@ -65,20 +70,37 @@ Cada fuente tiene su propio recolector, que es idempotente (correrlo dos veces n
 
 Monorepo con Bun workspaces y Turborepo, en TypeScript estricto.
 
-```
-apps/web/               el sitio (mendoza-transparente.com) y su API pública de participación
-apps/panel/             panel interno del equipo, detrás de Cloudflare Access
-packages/ui/            @mt/ui: componentes y tokens de diseño
-packages/participation/ @mt/participation: API de participación y del panel, migraciones de D1
-packages/core/          @mt/core: descarga, archivado, CSV, municipios
-packages/scrapers/      @mt/scrapers: un recolector por fuente en src/sources/<id>.ts
-sources.yaml            catálogo de fuentes (id, organismo, url, formato, estado)
-data/raw/<id>/          archivos originales, por fecha de descarga, más un manifest.jsonl
-data/processed/<id>/    datos normalizados (CSV) listos para analizar
-data/curado/            contenido escrito o revisado a mano
-docs/procesos/          cómo se trabaja: fuentes, datos, web, diseño, metodología, releases
-docs/planes/            la hoja de ruta: lo que todavía no funciona del todo
-```
+**Apps**
+
+| Carpeta | Qué es |
+|---|---|
+| [`apps/web`](apps/web) | El sitio (mendoza-transparente.com) y su API pública de participación |
+| [`apps/panel`](apps/panel) | Panel interno del equipo, detrás de Cloudflare Access |
+
+**Paquetes**
+
+| Carpeta | Qué es |
+|---|---|
+| [`packages/ui`](packages/ui) | `@mt/ui`: componentes y tokens de diseño |
+| [`packages/core`](packages/core) | `@mt/core`: descarga, archivado, CSV y municipios |
+| [`packages/scrapers`](packages/scrapers) | `@mt/scrapers`: un recolector por fuente, en `src/sources/<id>.ts` |
+| [`packages/participation`](packages/participation) | `@mt/participation`: API de participación y del panel, y migraciones de D1 |
+
+**Datos**
+
+| Carpeta | Qué es |
+|---|---|
+| [`sources.yaml`](sources.yaml) | Catálogo de fuentes: id, organismo, URL, formato y estado |
+| [`data/raw`](data/raw) | Archivos originales por fecha de descarga, con su `manifest.jsonl` |
+| [`data/processed`](data/processed) | Datos normalizados en CSV, listos para analizar |
+| [`data/curado`](data/curado) | Contenido escrito o revisado a mano |
+
+**Documentación**
+
+| Carpeta | Qué es |
+|---|---|
+| [`docs/procesos`](docs/procesos/README.md) | Cómo se trabaja: fuentes, datos, web, diseño, metodología y releases |
+| [`docs/planes`](docs/planes/README.md) | La hoja de ruta: lo que todavía no funciona del todo |
 
 ## Para empezar
 

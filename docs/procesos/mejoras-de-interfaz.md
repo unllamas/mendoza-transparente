@@ -44,6 +44,7 @@ La conexión es opcional a propósito: si la barra apunta al servidor y el servi
 | «No entiendo qué es este número» | Unidad aparte, pesos de hoy, aviso `note`, glosario | `diseno.md`, Avisos; `metodologia.md` |
 | «Esto parece una acusación» | Señales, no acusaciones | `metodologia.md` |
 | «Hay demasiado», «no sé dónde mirar» | La gente no lee: lista corta, detalle en hoja, lo informativo antes que lo crudo | `diseno.md`, Contenido |
+| «Están desordenadas», «se siente disperso» | Tarjetas agrupadas por la pregunta que responden, sin etiqueta de tema en cada una; lo que limita al resto, primero | `diseno.md`, Contenido |
 | «No sé qué hacer acá», «quedó vacío» | Pantallas vacías que dicen qué hacer | `diseno.md`, Textos de la interfaz |
 | «Parece hecho por una IA», «parece un template» | Lo que no hacemos | `diseno.md`, Lo que no hacemos |
 | «Quiero mandar a alguien directo a esta parte» | Cada sección tiene su link (`Section` con `id`) | `diseno.md`, Contenido; `web.md`, Link a cada sección |

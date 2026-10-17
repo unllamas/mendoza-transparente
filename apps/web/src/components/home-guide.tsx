@@ -64,9 +64,22 @@ export function DepartmentPicker() {
 
 // ------------------------------------------------------------------ starting questions
 
-export function StartingQuestions({ guide }: { guide: HomeGuide }) {
+type Question = { id: string; icon: RemixiconComponentType; question: string; fact: string; to: string };
+
+/**
+ * The six starting questions, ordered by use (PostHog, Oct 2026). On phones a compact list, so all six fit
+ * in the first screen; from sm up, cards.
+ */
+export function StartingQuestions({ guide, oneOfferEvery }: { guide: HomeGuide; oneOfferEvery: number | null }) {
   const { facts, counts } = guide;
-  const questions: { id: string; icon: RemixiconComponentType; question: string; fact: string; to: string }[] = [
+  const questions: Question[] = [
+    {
+      id: "compras",
+      icon: RiShoppingCartLine,
+      question: "¿A quién le compra el Estado?",
+      fact: facts.topSupplier ?? "Las empresas y cada contrato.",
+      to: "/proveedores",
+    },
     {
       id: "municipio",
       icon: RiMapPinLine,
@@ -82,55 +95,63 @@ export function StartingQuestions({ guide }: { guide: HomeGuide }) {
       to: "/deuda",
     },
     {
-      id: "compras",
-      icon: RiShoppingCartLine,
-      question: "¿A quién le compra el Estado?",
-      fact: facts.topSupplier ?? "Las empresas y cada contrato.",
-      to: "/proveedores",
-    },
-    {
-      id: "leyes",
+      id: "senales",
       icon: RiScales3Line,
-      question: "¿Qué leyes se aprobaron?",
-      fact: facts.latestLaw ?? `${counts.laws} leyes, explicadas en simple.`,
-      to: "/leyes",
+      question: "¿Qué hay para mirar de cerca en las compras?",
+      fact: oneOfferEvery ? `1 de cada ${oneOfferEvery} procesos recibió una sola oferta.` : "Patrones que merecen una explicación.",
+      to: "/senales",
     },
     {
       id: "personal",
       icon: RiTeamLine,
-      question: "¿Cuánta gente trabaja en el Estado y cuánto cuesta?",
+      question: "¿Cuánta gente trabaja en el Estado?",
       fact: facts.staff ?? "Cargos y costo de cada organismo.",
       to: "/gobierno",
     },
     {
       id: "no-publicado",
       icon: RiEyeOffLine,
-      question: "¿Qué datos no se publican y cómo los pido?",
+      question: "¿Qué datos no se publican?",
       fact: `${counts.missing} datos que deberían ser públicos, con el pedido listo.`,
       to: "/no-publicado",
     },
   ];
   return (
-    <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-      {questions.map(({ id, icon: Icon, question, fact, to }) => (
-        <li key={id} className="min-w-0">
-          <Link
-            to={to}
-            id={`pregunta-${id}`}
-            data-track="home.question.open"
-            data-track-question={id}
-            className={cx(cardVariants({ size: "lg" }), "flex h-full flex-col gap-3")}
-          >
-            <Icon className="size-6 text-foreground-icon-secondary group-hover:text-text-link" aria-hidden />
-            <span className="text-title-3-semibold tracking-tight text-balance group-hover:text-text-link">{question}</span>
-            <span className="text-body-regular text-text-secondary text-pretty">{fact}</span>
-            <span className="mt-auto inline-flex items-center gap-1 pt-1 text-body-medium text-text-link">
-              Ver la respuesta <RiArrowRightLine className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
-            </span>
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul className={cx(listVariants(), "sm:hidden")}>
+        {questions.map(({ id, icon: Icon, question, fact, to }) => (
+          <li key={id}>
+            <Link to={to} data-track="home.question.open" data-track-question={id} className={cx(listRowVariants(), "items-start")}>
+              <Icon className="mt-0.5 size-5 shrink-0 text-foreground-icon-secondary" aria-hidden />
+              <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                <span className="font-medium text-text-link">{question}</span>
+                <span className="line-clamp-1 text-body-regular text-text-tertiary">{fact}</span>
+              </span>
+              <RiArrowRightSLine className="mt-0.5 size-5 shrink-0 text-text-link" aria-hidden />
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <ul className="hidden gap-3 sm:grid sm:grid-cols-2 lg:grid-cols-3">
+        {questions.map(({ id, icon: Icon, question, fact, to }) => (
+          <li key={id} className="min-w-0">
+            <Link
+              to={to}
+              data-track="home.question.open"
+              data-track-question={id}
+              className={cx(cardVariants(), "flex h-full items-start gap-3")}
+            >
+              <Icon className="mt-0.5 size-5 shrink-0 text-foreground-icon-secondary" aria-hidden />
+              <span className="flex min-w-0 flex-1 flex-col gap-1">
+                <span className="text-body-medium text-text-link">{question}</span>
+                <span className="line-clamp-2 text-body-regular text-text-tertiary text-pretty">{fact}</span>
+              </span>
+              <RiArrowRightSLine className="mt-0.5 size-5 shrink-0 text-text-link" aria-hidden />
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
 

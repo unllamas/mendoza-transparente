@@ -113,7 +113,8 @@ export default defineConfig({
   // `@/…` is apps/web/src (same alias as tsconfig.json): imports do not break when a file moves.
   resolve: { alias: { "@": join(import.meta.dirname, "src") } },
   // Source maps: the repo is public, and they let anyone (and Lighthouse) read the production code.
-  build: { sourcemap: true },
+  // manifest: which chunks each page imports, for the preloads that scripts/seo.ts writes in each page's HTML.
+  build: { sourcemap: true, manifest: true },
   server: {
     // public/data se regenera entero: que Vite no recargue por cada archivo que escribe el script.
     watch: { ignored: ["**/public/data/**"] },

@@ -312,6 +312,9 @@ export function usePageMeta(pathname: string): void {
       return;
     }
     const p = normalizePath(pathname);
+    // The page the visit landed on already has its title and description in the prerendered HTML (scripts/seo.ts):
+    // meta.json (all pages, ~45 KB) is only needed after navigating.
+    if (document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.href === canonicalUrl(p)) return;
     loadMetaJson()
       .then(async (todas) => {
         const m = todas[p];

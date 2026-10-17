@@ -44,6 +44,7 @@ description: Convenciones de código de Mendoza Transparente. Cubre idioma (cód
 cd apps/web && bunx tsc --noEmit      # tipos
 bun run data                          # que el build de datos corra
 bun run verificar                     # (desde la raíz) sin scroll horizontal y consola limpia, 6 anchos
+bun run medir                         # (desde la raíz, sobre el build) LCP, FCP y CLS si cambió cómo carga una página
 ```
 
 - Cambios de interfaz: además, captura con `playwright-core` en 375 px y 1280 px, mirada por vos antes de entregar.
