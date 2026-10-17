@@ -15,7 +15,7 @@ Cómo funciona:
 
 1. **plan** decide qué fuentes corren según el calendario (o las elegidas a mano).
 2. **scrape** corre cada fuente en su propio job; si una falla, las demás siguen. Empaqueta los cambios de `data/`.
-3. **commit** junta todos los cambios, comprueba que la web compile con ellos (`bun run data`, tipos, build y SEO) y hace **un único commit**. Si la web no compila, no publica y abre un issue.
+3. **commit** junta todos los cambios, comprueba que la web compile con ellos (`bun run data`, tipos, build y SEO) y hace **un único commit** (`chore(data): actualización automática (<fuentes>)`). Si la web no compila, no publica y abre un issue.
    Antes, si se actualizó el Boletín Oficial, extrae las designaciones de las normas nuevas (`designaciones`, fuente derivada que no descarga nada) y escribe los resúmenes en lenguaje simple de las leyes nuevas (`apps/web/scripts/resumir-leyes.ts`). Necesita el secreto **`ANTHROPIC_API_KEY`**: sin él, las leyes nuevas se publican igual, sin resumen. Si ese paso falla, no frena la publicación. Ver [Metodología](metodologia.md#resumenes-de-leyes).
 4. **frescura** controla que el Boletín Oficial no pase más de 10 días sin actualizarse (solo si hay proxy configurado).
 5. **archivo-externo** copia en archive.org los archivos crudos que todavía no tienen copia y pide a la Wayback Machine que capture sus URLs oficiales. Corre después del commit y commitea solo los registros `archive-org.jsonl`. Necesita los secretos **`IA_ACCESS_KEY`** e **`IA_SECRET_KEY`**; sin ellos, se saltea. Ver [Datos y archivo](datos-y-archivo.md#copias-fuera-del-repo-archiveorg).

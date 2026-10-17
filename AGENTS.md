@@ -11,7 +11,8 @@ Proyecto cívico: recopilar los datos públicos de Mendoza, normalizarlos y publ
 | Qué | Idioma | Ejemplos |
 |---|---|---|
 | **Todo el código**: variables, funciones, tipos, componentes, nombres de archivo y carpeta, ids de eventos, comentarios en el código | **Inglés** | `buildMunicipalStaff`, `list-search.tsx`, `purchase.flag.toggle` |
-| **Toda la documentación**: `docs/`, `README`, `AGENTS.md`, skills, mensajes de commit | **Español** | `docs/procesos/web.md` |
+| **Toda la documentación**: `docs/`, `README`, `AGENTS.md`, skills, descripción de los commits | **Español** | `docs/procesos/web.md` |
+| **Tipo y ámbito de los commits** ([Conventional Commits](docs/procesos/ramas-y-releases.md#mensajes-de-commit-y-títulos-de-pr)) | **Inglés** | `feat(web): botón «Compartir»` |
 | **Lo que ve la gente**: textos de la web, rutas públicas, nombres de eventos en PostHog | **Español** | `/leyes`, "Lo que no se publica" |
 | **Contratos públicos de datos**: columnas de los CSV publicados | Español, `snake_case` | `fecha_corte`, `tipo_personal` |
 
@@ -49,7 +50,7 @@ Cuando alguien pide mejorar o arreglar algo, lo describe como lo siente ("no se 
 
 - La sesión principal orquesta. Las tareas acotadas (un scraper, un parser, una verificación) van a subagentes en Sonnet, en paralelo y sobre archivos distintos.
 - Cada subagente trabaja solo en los archivos de su fuente: `packages/scrapers/src/sources/<id>.ts` y `data/*/<id>/`. Si necesita tocar `packages/core/` o agregar dependencias, lo propone en vez de hacerlo (varios agentes en paralelo pisarían `bun.lock`).
-- Los subagentes no commitean. La sesión principal revisa y commitea.
+- Los subagentes no commitean. La sesión principal revisa, commitea y **cierra cada tarea con push y PR a `dev` sin esperar que se lo pidan**.
 - Nada se pushea directo a `main`: lo nuevo va en una rama que sale de `dev`, con PR a `dev`, y llega a producción en un release. Ver la skill `ramas-y-releases`.
 
 ## Convenciones de datos

@@ -123,7 +123,7 @@ const commit = await sh([
   "git",
   "commit",
   "-m",
-  `Datos: actualización manual (${actualizadas.join(", ") || fuentes.join(", ")})`,
+  `chore(data): actualización manual (${actualizadas.join(", ") || fuentes.join(", ")})`,
   "-m",
   hace(0),
   "--",

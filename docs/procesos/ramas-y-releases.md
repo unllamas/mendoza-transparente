@@ -20,28 +20,93 @@ git switch dev && git pull
 git switch -c feat/mi-cambio
 # … commits …
 git push -u origin feat/mi-cambio
-gh pr create --base dev          # abre el editor con la plantilla
+gh pr create --base dev --title "feat(web): …"   # abre el editor con la plantilla
 ```
 
-1. **El PR usa la plantilla** (`.github/pull_request_template.md`); ver [abajo](#la-plantilla-de-pr).
-2. **Cada PR a `dev` pasa la CI** (`.github/workflows/ci.yml`: Biome, arquitectura, tipos, pruebas, build y verificación visual). Quién más lo revisa depende de quién lo manda: ver [Quién aprueba](#quién-aprueba).
-3. **Se mergea con squash**: un commit por tarea en `dev`, con el mensaje en español que explica qué cambia y por qué.
-4. **Cloudflare publica la vista previa** de cada rama y de `dev`: se prueba ahí, no en producción.
-5. Si `dev` avanzó mientras tanto, se actualiza la rama con `git pull --rebase origin dev`.
+1. **Los agentes abren el PR solos:** toda tarea termina con commit, push y PR a `dev`, sin esperar un pedido aparte; lo siguiente que se pida en la misma conversación va a la misma rama y al mismo PR.
+2. **El PR usa la plantilla** (`.github/pull_request_template.md`); ver [abajo](#la-plantilla-de-pr).
+3. **Cada PR a `dev` pasa la CI** (`.github/workflows/ci.yml`: Biome, arquitectura, tipos, pruebas, build y verificación visual). Quién más lo revisa depende de quién lo manda: ver [Quién aprueba](#quién-aprueba).
+4. **Se mergea con squash**: un commit por tarea en `dev`, con el mensaje en español que explica qué cambia y por qué.
+5. **Cloudflare publica la vista previa** de cada rama y de `dev`: se prueba ahí, no en producción.
+6. Si `dev` avanzó mientras tanto, se actualiza la rama con `git pull --rebase origin dev`.
+
+## Mensajes de commit y títulos de PR
+
+Desde octubre de 2026 seguimos [Conventional Commits 1.0.0](https://www.conventionalcommits.org/es/v1.0.0/). Antes cada commit empezaba con un área libre (`Municipios: …`, `Web: …`) y llegamos a tener unas cuarenta distintas; el historial viejo no se reescribe.
+
+```
+<tipo>(<ámbito>): <descripción en español>
+
+<cuerpo opcional: qué cambia y por qué>
+
+<pies opcionales: BREAKING CHANGE: …, Co-Authored-By: …>
+```
+
+- **Tipo y ámbito van en inglés** (son palabras fijas que leen las herramientas, como el código); **la descripción y el cuerpo, en español**. La descripción empieza en minúscula, salvo que arranque con un nombre propio, y no termina en punto.
+- **El ámbito es opcional**: se omite cuando el cambio cruza todo el repo.
+
+| Tipo | Cuándo |
+|---|---|
+| `feat` | Algo nuevo que se ve o se usa: una página, una sección, una fuente de datos, un comando |
+| `fix` | Un arreglo de algo que andaba mal |
+| `docs` | Solo documentación, procesos o skills |
+| `refactor` | Cambia el código sin cambiar lo que hace |
+| `perf` | Más rápido o más liviano |
+| `test` | Solo pruebas |
+| `build` | Dependencias, Vite, Turborepo, la configuración del monorepo |
+| `ci` | Workflows de GitHub Actions y hooks de git |
+| `style` | Formato del código, sin cambiar lo que hace (no es el diseño de la web: eso es `feat` o `fix`) |
+| `chore` | Mantenimiento: las actualizaciones de datos, los releases, el back merge |
+| `revert` | Deshace un commit anterior |
+
+| Ámbito | Qué cubre |
+|---|---|
+| `web`, `panel` | `apps/web`, `apps/panel` |
+| `ui`, `core`, `scrapers`, `participation` | Cada paquete de `packages/` |
+| `data` | `data/` (crudos, procesados y curado) |
+| `docs` | `docs/`, `README.md`, `AGENTS.md` |
+| `skills` | `.claude/skills/` |
+| `scripts` | `scripts/` de la raíz |
+| `ci` | `.github/` y `lefthook.yml` |
+| `release` | Solo para el PR de release |
+
+Un ámbito nuevo se suma a `commitlint.config.mjs` y a esta tabla en el mismo commit.
+
+**Ejemplos:**
+
+- `feat(web): botón «Compartir» con el texto armado y #MendozaTransparente`
+- `feat(scrapers): Capital y Guaymallén en el anexo 19`
+- `fix(web): el link para atrás va pegado al encabezado`
+- `docs(skills): la regla de una sola línea en diseno`
+- `chore(data): actualización automática (indices)`, el mensaje del bot de datos y de `bun run actualizar`
+- `chore(release): 2026-10-17` y `chore: back merge main → dev`
+
+**Lo que rompe un contrato** lleva `!` después del ámbito y un pie `BREAKING CHANGE:` que explica la migración. Pasa sobre todo al renombrar o sacar una columna de un CSV publicado, que solo se hace con un plan de migración (ver [Datos y archivo](datos-y-archivo.md)):
+
+```
+feat(data)!: monto_total pasa a llamarse monto_pesos en compras
+
+BREAKING CHANGE: la columna monto_total de data/processed/compras deja de existir; usar monto_pesos.
+```
+
+**Quién lo controla:**
+
+- **Al commitear**: el hook `commit-msg` de lefthook (`lefthook.yml`) corre commitlint con `commitlint.config.mjs`. Se instala con `bun run hooks`, igual que el de antes de commitear.
+- **En cada PR**: el workflow «Título del PR» (`.github/workflows/titulo-del-pr.yml`) valida el título con la misma configuración. Si falla, se edita el título del PR y el control vuelve a correr solo.
+- Los merges (`Merge pull request …`) los saltea commitlint.
 
 ## La plantilla de PR
 
 `.github/pull_request_template.md` la carga GitHub al abrir un PR desde la web, y `gh pr create` sin `--fill` ni `--body`. Pide:
 
 - **Qué cambia y por qué**, para alguien que no vio la conversación.
-- **Tipo**: funcionalidad, arreglo, hotfix, datos, documentación o release.
 - **Revisión del propio cambio**: alcance del diff, documentación al día (procesos, skills, `AGENTS.md` y referencias viejas a comandos o rutas), convenciones de idioma, secretos, reglas de `data/` y, si hay interfaz, la revisión con `revisar-interfaz`, la analítica y las capturas.
 - **Cómo se verificó**: cada comando corrido con su resultado (`bun run lint`, `bun run typecheck`, `bun test`, `bun run verificar`…) y el link a la vista previa.
 - **Riesgos y pendientes**.
 
 Lo que no aplica se tacha diciendo por qué, en vez de borrarlo: así quien revisa ve que se pensó.
 
-**Un agente** no abre el PR sin hacer esa revisión de verdad: mira el diff (`git diff origin/dev...HEAD`), corre los comandos y busca las referencias viejas antes de marcar cada punto. Si algo falla o falta, lo arregla antes de abrir el PR o lo deja escrito en «Riesgos y pendientes». Escribe el cuerpo en un archivo temporal siguiendo la plantilla y abre el PR con `gh pr create --base dev --title "…" --body-file <archivo>`.
+**Un agente** no abre el PR sin hacer esa revisión de verdad: mira el diff (`git diff origin/dev...HEAD`), corre los comandos y busca las referencias viejas antes de marcar cada punto. Si algo falla o falta, lo arregla antes de abrir el PR o lo deja escrito en «Riesgos y pendientes». Escribe el cuerpo en un archivo temporal siguiendo la plantilla y abre el PR con `gh pr create --base dev --title "<tipo>(<ámbito>): …" --body-file <archivo>`.
 
 ## Quién aprueba
 
@@ -59,7 +124,7 @@ El release sigue la misma lógica: si la persona que pidió el trabajo dijo que 
 Cuando lo que está en `dev` está probado en su vista previa:
 
 ```bash
-gh pr create --base main --head dev --title "Release $(date +%F)" --body "$(git log --oneline origin/main..origin/dev)"
+gh pr create --base main --head dev --title "chore(release): $(date +%F)" --body "$(git log --oneline origin/main..origin/dev)"
 ```
 
 1. **Revisar el PR**: la lista de commits es el registro de lo que sale. La CI tiene que estar verde. Si `dev` trae PRs de alguien de afuera del equipo, tienen que haber pasado su revisión (ver [Quién aprueba](#quién-aprueba)).
@@ -116,8 +181,10 @@ Configurado por API el 17/10/2026 en `unllamas/mendoza-transparente`:
 |---|---|
 | Rama por defecto | `dev`: los PRs apuntan ahí sin pensarlo, y los workflows programados corren desde ahí (por eso el de datos fija `ref: main`) |
 | Merges permitidos | Squash y merge commit; rebase deshabilitado |
-| Ruleset «main: producción» | Prohíbe borrar la rama y el force push; pide PR y la CI (`verificar`) en verde |
+| Título del commit con squash | El título del PR (`squash_merge_commit_title: PR_TITLE`), para que el commit que queda en `dev` siga [Conventional Commits](#mensajes-de-commit-y-títulos-de-pr) aunque el PR tenga un solo commit |
+| Ruleset «main: producción» | Prohíbe borrar la rama y el force push; pide PR y los checks obligatorios en verde |
 | Ruleset «dev: integración» | Lo mismo |
+| Checks obligatorios | `verificar` (CI) y `titulo` (Título del PR), en las dos reglas |
 | Aprobaciones | Las reglas piden 0: la revisión de PRs de afuera del equipo es una regla de este documento ([Quién aprueba](#quién-aprueba)) |
 | Excepciones (*bypass*) | Quien administra el repo y las deploy keys, en las dos reglas |
 | Deploy key «Bot de GitHub Actions (datos y back merge)» | Clave SSH con escritura, guardada en el secreto **`DEPLOY_KEY`** |

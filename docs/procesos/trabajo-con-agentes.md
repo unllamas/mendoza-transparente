@@ -4,7 +4,7 @@ El proyecto se construye con Claude Code. La guía para agentes es `AGENTS.md`, 
 
 ## Roles
 
-- **Sesión principal (Opus)**: decide, diseña, integra, revisa todo lo que entregan los subagentes y hace los commits, en una rama que sale de `dev` (ver [Ramas y releases](ramas-y-releases.md)).
+- **Sesión principal (Opus)**: decide, diseña, integra, revisa todo lo que entregan los subagentes y hace los commits, en una rama que sale de `dev` (ver [Ramas y releases](ramas-y-releases.md)). **Toda tarea termina con commit, push y PR a `dev`, sin esperar un pedido aparte**: lo que queda sin commitear en un worktree se pierde. Los cambios que llegan después en la misma conversación van a la misma rama y al mismo PR.
 - **Subagentes (Sonnet)**: tareas acotadas y largas: un scraper, un relevamiento, un diccionario de datos, una búsqueda de fotos. Corren en paralelo y en segundo plano. Configurado en `~/.claude/settings.json` con `CLAUDE_CODE_SUBAGENT_MODEL`.
 
 ## Harness: skills, hooks y permisos
@@ -45,7 +45,7 @@ Cada pedido a un subagente incluye:
 - Correr y mirar los CSV: conteos, totales contra el original, escalas.
 - Revisar los casos que el agente marcó como dudosos (por ejemplo, la adjudicación de $54.137 M que resultó ser real, o el intendente de Rivadavia que no coincidía entre fuentes).
 - Tipos (`bunx tsc --noEmit`) y, si toca la web, `bun run verificar`.
-- Un commit por entrega, con un mensaje que explique qué datos trae.
+- Un commit por entrega, con un mensaje en [Conventional Commits](ramas-y-releases.md#mensajes-de-commit-y-títulos-de-pr) que explique qué datos trae.
 
 ## Cosas que aprendimos
 

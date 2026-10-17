@@ -60,4 +60,4 @@ En `.github/workflows/actualizar-datos.yml`, agregar el id a `SEMANAL` o `MENSUA
 
 ## 8. Commit
 
-Un commit por fuente con el scraper, `data/raw/<id>`, `data/processed/<id>` (CSV y meta.json) y `sources.yaml`. El mensaje dice qué datos trae y su cobertura.
+Un commit por fuente con el scraper, `data/raw/<id>`, `data/processed/<id>` (CSV y meta.json) y `sources.yaml`. El mensaje, en [Conventional Commits](ramas-y-releases.md#mensajes-de-commit-y-títulos-de-pr), dice qué datos trae y su cobertura: `feat(scrapers): <fuente> con <qué datos> (<cobertura>)`.

@@ -81,7 +81,7 @@ export function PoblacionPage() {
             { value: "crecimiento", label: "Crecimiento 2010–2022" },
           ]}
         />
-        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_22rem]">
+        <div className="grid items-start gap-8 lg:grid-cols-2">
           <MapaMendoza
             mapa={mapa}
             valores={Object.fromEntries(tema.departamentos.map((d) => [d.municipio, medida === "habitantes" ? d.actual : d.variacion]))}
