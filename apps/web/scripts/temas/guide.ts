@@ -51,8 +51,6 @@ export function buildGuide(outDir: string, appointments: Row[]): HomeGuide {
 
   const records = index.datasets.reduce((s, d) => s + d.rowCount, 0);
   const latestLaw = [...laws].sort((a, b) => (b.publicada ?? "").localeCompare(a.publicada ?? ""))[0];
-  // Only agencies that kept their structure: a restructured ministry's change is not like for like.
-  const biggestCut = government?.changes.filter((c) => !c.restructured && c.pct <= -1).sort((a, b) => a.pct - b.pct)[0];
   const lastQuarter = government?.series.at(-1);
 
   // What is new: dated by the data itself (when a law was published, the date of the debt figure…).
@@ -102,14 +100,16 @@ export function buildGuide(outDir: string, appointments: Row[]): HomeGuide {
       appointments: appointments.length,
     },
     facts: {
-      debt: debt ? `US$ ${nf1.format(debt.totalUsd)} millones al ${shortDate(debt.corte)}` : null,
+      debt: debt
+        ? {
+            figure: `US$ ${nf.format(Math.round(debt.totalUsd))} M`,
+            text: `de deuda, US$ ${nf.format(Math.round(debt.porHabitanteUsd))} por persona`,
+          }
+        : null,
       latestLaw: latestLaw
         ? `La última: Ley ${nf.format(Number(latestLaw.numero))}, ${latestLaw.titulo.charAt(0).toLowerCase()}${latestLaw.titulo.slice(1)}`
         : null,
-      topSupplier: suppliers[0] ? `${suppliers.length} empresas con todos sus contratos` : null,
-      staff: lastQuarter
-        ? `${nf.format(lastQuarter.staff)} cargos de planta${biggestCut ? `. Mayor baja desde 2023: ${biggestCut.name} (−${Math.abs(Math.round(biggestCut.pct))} %)` : ""}`
-        : null,
+      staff: lastQuarter ? { figure: nf.format(lastQuarter.staff), text: "cargos de planta" } : null,
     },
     news: news.slice(0, 8),
   };
