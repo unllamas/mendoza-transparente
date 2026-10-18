@@ -153,11 +153,14 @@ export function SearchDialog() {
   const [kind, setKind] = useState<string | null>(null);
   const [entries, setEntries] = useState<SearchEntry[] | null>(null);
   const [active, setActive] = useState(0);
+  // Where it was opened from (home, header, keyboard, guide), so a result can be credited to its entry point.
+  const sourceRef = useRef("unknown");
 
   // Open from the custom event and with "/" or Ctrl/⌘+K (not while typing in a field).
   useEffect(() => {
     const show = (source: string) => {
       setOpen(true);
+      sourceRef.current = source;
       track("search.open", { source });
       void loadSearchIndex().then(setEntries);
     };
@@ -200,7 +203,7 @@ export function SearchDialog() {
   useEffect(() => setActive(0), [q, kind]);
   useEffect(() => {
     if (!entries || q.length < 3 || matches.length) return;
-    const t = setTimeout(() => track("search.no_results", { query: q.slice(0, 80) }), 1200);
+    const t = setTimeout(() => track("search.no_results", { query: q.slice(0, 80), source: sourceRef.current }), 1200);
     return () => clearTimeout(t);
   }, [entries, q, matches.length]);
 
@@ -210,7 +213,7 @@ export function SearchDialog() {
     setKind(null);
   };
   const go = (e: SearchEntry, position: number) => {
-    track("search.select", { query: q.slice(0, 80), kind: e.k, path: e.p, position, filter: kind ?? "todo" });
+    track("search.select", { query: q.slice(0, 80), kind: e.k, path: e.p, position, filter: kind ?? "todo", source: sourceRef.current });
     close();
     // `href`, not `to`: some results carry parameters (/senales?senal=…, /no-publicado?dato=…).
     void navigate({ href: e.p });

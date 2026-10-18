@@ -1,4 +1,5 @@
 import { Chip } from "@mt/ui/components/base/badges/chip";
+import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { Select, SelectItem } from "@mt/ui/components/base/select/select";
 import { cardVariants, listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
 import { cx } from "@mt/ui/lib/cx";
@@ -30,34 +31,61 @@ import { formatNumber } from "@/lib.ts";
 import { SECCION_ELECTORAL, slug } from "@/slug.ts";
 import type { HomeGuide } from "@/types.ts";
 
-/** "¿Dónde vivís?" → the municipality page. */
-export function DepartmentPicker() {
+/**
+ * "Elegí tu departamento" → the municipality page. In the home hero, with the same height and weight as the
+ * search box next to it: on phones it is used more than search (PostHog, Oct 2026).
+ */
+export function DepartmentPicker({ className }: { className?: string }) {
   const navigate = useNavigate();
   const names = Object.keys(SECCION_ELECTORAL).sort((a, b) => a.localeCompare(b, "es"));
   return (
-    <div className="flex min-w-0 items-center gap-2 text-body-regular text-text-secondary">
-      <RiMapPinLine className="size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
-      <span className="whitespace-nowrap" id="selector-departamento-label">
-        ¿Dónde vivís?
-      </span>
-      <Select
-        id="selector-departamento"
-        aria-labelledby="selector-departamento-label"
-        placeholder="Elegí tu departamento"
-        onChange={(key) => {
-          if (key == null) return;
-          const municipality = String(key);
-          track("home.department.select", { municipality });
-          void navigate({ to: "/municipios/$slug", params: { slug: municipality } });
-        }}
-        className="min-w-0"
-      >
-        {names.map((n) => (
-          <SelectItem key={n} id={slug(n)}>
-            {n}
-          </SelectItem>
+    <Select
+      id="selector-departamento"
+      aria-label="Tu departamento"
+      placeholder="Elegí tu departamento"
+      onChange={(key) => {
+        if (key == null) return;
+        const municipality = String(key);
+        track("home.department.select", { municipality });
+        void navigate({ to: "/municipios/$slug", params: { slug: municipality } });
+      }}
+      className={className}
+      triggerClassName="min-h-14 rounded-xl px-4 text-headline-medium"
+    >
+      {names.map((n) => (
+        <SelectItem key={n} id={slug(n)}>
+          {n}
+        </SelectItem>
+      ))}
+    </Select>
+  );
+}
+
+/** Three of the starting questions as shortcuts in the hero, which takes the whole first screen on phones. */
+const HERO_QUESTIONS = [
+  { id: "compras", label: "¿A quién le compra el Estado?", to: "/proveedores" },
+  { id: "deuda", label: "¿Cuánto debe Mendoza?", to: "/deuda" },
+  { id: "no-publicado", label: "¿Qué no se publica?", to: "/no-publicado" },
+] as const;
+
+export function HeroQuestions() {
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <span className="text-body-regular text-text-secondary">O empezá por una pregunta</span>
+      <div className="flex flex-wrap justify-center gap-2">
+        {HERO_QUESTIONS.map((q) => (
+          <Link
+            key={q.id}
+            to={q.to}
+            data-track="home.question.open"
+            data-track-question={q.id}
+            data-track-place="hero"
+            className={buttonClassName({ variant: "secondary", size: "medium", className: "min-h-11" })}
+          >
+            {q.label}
+          </Link>
         ))}
-      </Select>
+      </div>
     </div>
   );
 }
@@ -145,7 +173,7 @@ export function StartingQuestions({
       <ul className={cx(listVariants(), "sm:hidden")}>
         {questions.map(({ id, icon: Icon, question, figure, fact, to }) => (
           <li key={id}>
-            <Link to={to} data-track="home.question.open" data-track-question={id} className={listRowVariants()}>
+            <Link to={to} data-track="home.question.open" data-track-question={id} data-track-place="list" className={listRowVariants()}>
               <Icon className="size-5 shrink-0 text-foreground-icon-secondary" aria-hidden />
               <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                 <span className="font-medium text-text-link">{question}</span>
@@ -165,6 +193,7 @@ export function StartingQuestions({
               to={to}
               data-track="home.question.open"
               data-track-question={id}
+              data-track-place="list"
               className={cx(cardVariants(), "flex h-full items-start gap-3")}
             >
               <Icon className="mt-0.5 size-5 shrink-0 text-foreground-icon-secondary" aria-hidden />

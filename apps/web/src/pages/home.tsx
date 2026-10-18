@@ -30,7 +30,7 @@ import { track } from "@/analytics.ts";
 import { MapaMendoza } from "@/charts/mapa.tsx";
 import { Sparkline } from "@/charts/sparkline.tsx";
 import { CountUp } from "@/components/count-up.tsx";
-import { DepartmentPicker, EcosystemMap, ReadingRules, StartingQuestions, WhatsNew } from "@/components/home-guide.tsx";
+import { DepartmentPicker, EcosystemMap, HeroQuestions, ReadingRules, StartingQuestions, WhatsNew } from "@/components/home-guide.tsx";
 import { LandscapePhoto } from "@/components/landscape-photo.tsx";
 import { SearchTrigger } from "@/components/search-dialog.tsx";
 import { formatDate, formatNumber } from "@/lib.ts";
@@ -52,12 +52,16 @@ export function HomePage() {
   const fuente = (id: string) => sources.sources.find((s) => s.id === id);
 
   return (
-    <div className="flex flex-col gap-14 sm:gap-20">
-      {/* Portada y preguntas juntas: las preguntas entran en la primera pantalla */}
-      <div className="flex flex-col gap-10 sm:gap-12">
-        <section className="flex flex-col gap-5 sm:gap-6">
-          <LandscapePhoto id="cordon-del-plata" className="h-24 sm:h-32" />
-          <div className="flex max-w-3xl flex-col gap-3 sm:gap-4">
+    <>
+      {/*
+        Hero: the whole first screen on phones and desktop, full width and under the transparent header
+        (-mt-14 = the header height; the layout gives the home page no padding). Search and department side by
+        side with the same weight, and three questions as shortcuts. The content is centered on the whole screen
+        below the header (pt-24 = header + the same 2.5rem as pb-10); the photo is decoration behind it, at the bottom.
+      */}
+      <section className="relative -mt-14 flex min-h-svh flex-col">
+        <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center-safe gap-6 px-4 pt-24 pb-10 text-center sm:px-5">
+          <div className="flex flex-col items-center gap-3 sm:gap-4">
             <p className="flex items-center gap-2 text-body-medium text-text-secondary">
               <span className="size-1.5 shrink-0 rounded-full bg-highlight" aria-hidden />
               {formatNumber(sources.records)} registros de {sources.sourcesWithData} fuentes oficiales
@@ -65,16 +69,29 @@ export function HomePage() {
             <h1 className="text-display-4-semibold tracking-tight text-balance sm:text-display-2-semibold">
               Mendoza, con los números sobre la mesa.
             </h1>
-            <p className="max-w-2xl text-body-regular text-text-secondary text-pretty sm:text-title-3-regular">
+            <p className="max-w-xl text-body-regular text-text-secondary text-pretty sm:text-title-3-regular">
               En qué se gasta la plata, quién decide y qué falta publicar, con la fuente de cada número.
             </p>
           </div>
-          <div className="flex max-w-3xl flex-col gap-3">
-            <SearchTrigger />
-            <DepartmentPicker />
+          <div className="flex w-full max-w-2xl flex-col gap-3 text-left sm:flex-row">
+            <div className="min-w-0 flex-1">
+              <SearchTrigger />
+            </div>
+            <DepartmentPicker className="w-full sm:w-60 sm:shrink-0" />
           </div>
-        </section>
+          <HeroQuestions />
+        </div>
+        <div className="absolute inset-x-0 bottom-0">
+          <LandscapePhoto
+            id="cordon-del-plata"
+            flush={false}
+            fade={false}
+            className="h-[22svh] mask-t-from-35% mask-b-from-80% sm:h-[28svh]"
+          />
+        </div>
+      </section>
 
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-14 px-4 pt-6 pb-8 sm:gap-20 sm:px-5 sm:pt-8 sm:pb-10">
         {guide && (
           <section className="flex flex-col gap-5">
             <Encabezado id="preguntas" icon={RiQuestionLine} titulo="Empezá por una pregunta" />
@@ -85,250 +102,250 @@ export function HomePage() {
             />
           </section>
         )}
-      </div>
 
-      {/* Señales: lo que más interesa desde el menú, ahora arriba */}
-      {compras && (
-        <section className="flex flex-col gap-6">
-          <Encabezado
-            id="para-mirar"
-            icon={RiScales3Line}
-            titulo="Para mirar de cerca"
-            bajada="Patrones en los datos oficiales que merecen una explicación. No son acusaciones."
-          />
-          <div className="grid gap-3 md:grid-cols-3">
-            <Senal valor={`${Math.round(compras.pctDirectas)} %`} texto="de las compras se hicieron sin licitación" />
-            <Senal valor={`1 de cada ${Math.round(100 / compras.pctUnaOferta)}`} texto="compras tuvo un solo oferente" />
-            {deuda && (
-              <Senal
-                valor={`US$ ${entero(deuda.maximo.usd)} M`}
-                texto={`fue el pico de la deuda provincial, en ${deuda.maximo.fecha.slice(0, 4)}`}
-              />
-            )}
-          </div>
-          <Link
-            to="/senales"
-            data-track="home.signals.open"
-            className={buttonClassName({ variant: "primary", className: "w-full sm:w-fit" })}
-          >
-            Ver todas las señales y sus casos <RiArrowRightLine className="size-5" aria-hidden />
-          </Link>
-        </section>
-      )}
-
-      {guide && guide.news.length > 0 && (
-        <section className="flex flex-col gap-6">
-          <Encabezado
-            id="lo-nuevo"
-            icon={RiSparklingLine}
-            titulo="Lo nuevo"
-            bajada="Leyes, nombramientos y datos de las últimas semanas."
-          />
-          <WhatsNew guide={{ ...guide, news: guide.news.slice(0, 5) }} />
-        </section>
-      )}
-
-      {/* Mapa: el mismo interés que «¿Dónde vivís?», ahora antes de las cifras */}
-      {coparticipacion && mapa && (
-        <section className="flex flex-col gap-6">
-          <Encabezado
-            id="tu-departamento"
-            icon={RiMapLine}
-            titulo="Tu departamento"
-            bajada={`Cuánto recibió cada municipio por habitante en ${coparticipacion.anio}.`}
-          />
-          <div>
-            <MapaMendoza
-              mapa={mapa}
-              valores={coparticipacion.porMunicipio}
-              formatValue={pesos}
-              seleccionado={null}
-              onSelect={(m) => {
-                if (!m) return;
-                track("home.map_department.open", { municipality: slug(m) });
-                void navigate({ to: "/municipios/$slug", params: { slug: slug(m) } });
-              }}
-              leyenda={`Pesos por habitante (de ${coparticipacion.referencia})`}
+        {/* Señales: lo que más interesa desde el menú, ahora arriba */}
+        {compras && (
+          <section className="flex flex-col gap-6">
+            <Encabezado
+              id="para-mirar"
+              icon={RiScales3Line}
+              titulo="Para mirar de cerca"
+              bajada="Patrones en los datos oficiales que merecen una explicación. No son acusaciones."
             />
-          </div>
-        </section>
-      )}
-
-      {/* Las cifras principales */}
-      <section className="flex flex-col gap-6">
-        <Encabezado id="numeros" titulo="Mendoza en números" bajada="Cada cifra lleva a su evolución y su fuente." />
-        {/* En el celular, una fila por cifra (la evolución y la fuente están en su página) */}
-        <ul className={cx(listVariants(), "sm:hidden")}>
-          {deuda && <FigureRow id="deuda" icon={RiBankLine} title="Deuda" value={`US$ ${entero(deuda.totalUsd)}`} unit="M" to="/deuda" />}
-          {coparticipacion && (
-            <FigureRow
-              id="coparticipacion"
-              icon={RiCoinsLine}
-              title="Coparticipación"
-              value={millones(coparticipacion.totalReal)}
-              unit="M"
-              to="/coparticipacion"
-            />
-          )}
-          {empleo && (
-            <FigureRow
-              id="empleo-publico"
-              icon={RiTeamLine}
-              title="Empleo público"
-              value={decimal.format(empleo.cadaMil)}
-              unit="cada mil"
-              to="/empleo-publico"
-            />
-          )}
-          {compras && (
-            <FigureRow
-              id="compras-ocds"
-              icon={RiShoppingCartLine}
-              title="Compras"
-              value={millones(compras.totalAdjudicado)}
-              unit="M"
-              to="/datos/$fuente"
-              params={{ fuente: "compras-ocds" }}
-            />
-          )}
-          {poblacion && (
-            <FigureRow id="poblacion" icon={RiGroupLine} title="Población" value={entero(poblacion.actual)} unit="hab." to="/poblacion" />
-          )}
-          {boletin && (
-            <FigureRow
-              id="boletin-oficial"
-              icon={RiFileTextLine}
-              title="Boletín"
-              value={entero(boletin.normas)}
-              unit="normas"
-              to="/datos/$fuente"
-              params={{ fuente: "boletin-oficial" }}
-            />
-          )}
-        </ul>
-        <div className="hidden gap-3 sm:grid sm:grid-cols-2 lg:grid-cols-3">
-          {deuda && (
-            <Cifra
-              fuente={fuente("hacienda-deuda-stock")}
-              to="/deuda"
-              icon={RiBankLine}
-              titulo="Deuda pública"
-              valor={<CountUp value={deuda.totalUsd} format={(v) => `US$ ${entero(v)}`} />}
-              unidad="millones"
-              detalle={`US$ ${entero(deuda.porHabitanteUsd)} por habitante.`}
-              serie={deuda.serie}
-            />
-          )}
-          {coparticipacion && (
-            <Cifra
-              fuente={fuente("hacienda-participacion-municipal")}
-              to="/coparticipacion"
-              icon={RiCoinsLine}
-              titulo={`Coparticipación ${coparticipacion.anio}`}
-              valor={<CountUp value={coparticipacion.totalReal} format={millones} />}
-              unidad="millones"
-              detalle={`A los 18 municipios, en pesos de ${coparticipacion.referencia}.`}
-              serie={coparticipacion.serie}
-            />
-          )}
-          {empleo && (
-            <Cifra
-              fuente={fuente("dnap-ocupacion")}
-              to="/empleo-publico"
-              icon={RiTeamLine}
-              titulo="Empleo público"
-              valor={<CountUp value={empleo.cadaMil} format={(v) => decimal.format(v)} />}
-              unidad="cada mil hab."
-              detalle={`Empleados provinciales. El promedio del país: ${decimal.format(empleo.promedioPais)}.`}
-              serie={empleo.serie}
-            />
-          )}
-          {compras && (
-            <Cifra
-              fuente={fuente("compras-ocds")}
-              to="/datos/$fuente"
-              params={{ fuente: "compras-ocds" }}
-              icon={RiShoppingCartLine}
-              titulo="Compras del Estado"
-              valor={<CountUp value={compras.totalAdjudicado} format={millones} />}
-              unidad="millones"
-              detalle={`A ${formatNumber(compras.proveedores)} proveedores, ${compras.desde.slice(0, 4)}–${compras.hasta.slice(0, 4)}. Montos nominales.`}
-              serie={compras.serie}
-            />
-          )}
-          {poblacion && (
-            <Cifra
-              fuente={fuente("poblacion")}
-              to="/poblacion"
-              icon={RiGroupLine}
-              titulo={`Población ${poblacion.anio}`}
-              valor={<CountUp value={poblacion.actual} format={entero} />}
-              unidad="hab."
-              detalle={`${decimal.format(poblacion.variacionCensos)} % más que en el censo 2010.`}
-              serie={poblacion.serie}
-            />
-          )}
-          {boletin && (
-            <Cifra
-              fuente={fuente("boletin-oficial")}
-              to="/datos/$fuente"
-              params={{ fuente: "boletin-oficial" }}
-              icon={RiFileTextLine}
-              titulo="Boletín Oficial"
-              valor={<CountUp value={boletin.normas} format={entero} />}
-              unidad="normas"
-              detalle={`${formatNumber(boletin.designaciones)} designaciones desde el ${formatDate(boletin.desde)}.`}
-            />
-          )}
-        </div>
-
-        {(inflacion || dolar) && (
-          <div className="grid grid-cols-2 gap-3">
-            {inflacion && (
-              <Indicador
-                id="inflacion"
-                icon={RiLineChartLine}
-                titulo="Inflación"
-                valor={`${decimal.format(inflacion.mensual)} %`}
-                unidad="mensual"
-                detalle={`${decimal.format(inflacion.interanual)} % en 12 meses`}
-                periodo={`Cuyo, ${inflacion.periodo}`}
-              />
-            )}
-            {dolar && (
-              <Indicador id="dolar" icon={RiCoinsLine} titulo="Dólar oficial" valor={pesos(dolar.oficial)} periodo={dolar.periodo} />
-            )}
-          </div>
+            <div className="grid gap-3 md:grid-cols-3">
+              <Senal valor={`${Math.round(compras.pctDirectas)} %`} texto="de las compras se hicieron sin licitación" />
+              <Senal valor={`1 de cada ${Math.round(100 / compras.pctUnaOferta)}`} texto="compras tuvo un solo oferente" />
+              {deuda && (
+                <Senal
+                  valor={`US$ ${entero(deuda.maximo.usd)} M`}
+                  texto={`fue el pico de la deuda provincial, en ${deuda.maximo.fecha.slice(0, 4)}`}
+                />
+              )}
+            </div>
+            <Link
+              to="/senales"
+              data-track="home.signals.open"
+              className={buttonClassName({ variant: "primary", className: "w-full sm:w-fit" })}
+            >
+              Ver todas las señales y sus casos <RiArrowRightLine className="size-5" aria-hidden />
+            </Link>
+          </section>
         )}
-      </section>
 
-      {/* Lo que no se publica: tercera capa, llega después y mientras tanto guarda su lugar */}
-      <Await promise={noPublicado} fallback={<MissingDataSkeleton />}>
-        {(items) => <MissingData items={items} />}
-      </Await>
+        {guide && guide.news.length > 0 && (
+          <section className="flex flex-col gap-6">
+            <Encabezado
+              id="lo-nuevo"
+              icon={RiSparklingLine}
+              titulo="Lo nuevo"
+              bajada="Leyes, nombramientos y datos de las últimas semanas."
+            />
+            <WhatsNew guide={{ ...guide, news: guide.news.slice(0, 5) }} />
+          </section>
+        )}
 
-      {guide && (
+        {/* Mapa: el mismo interés que «¿Dónde vivís?», ahora antes de las cifras */}
+        {coparticipacion && mapa && (
+          <section className="flex flex-col gap-6">
+            <Encabezado
+              id="tu-departamento"
+              icon={RiMapLine}
+              titulo="Tu departamento"
+              bajada={`Cuánto recibió cada municipio por habitante en ${coparticipacion.anio}.`}
+            />
+            <div>
+              <MapaMendoza
+                mapa={mapa}
+                valores={coparticipacion.porMunicipio}
+                formatValue={pesos}
+                seleccionado={null}
+                onSelect={(m) => {
+                  if (!m) return;
+                  track("home.map_department.open", { municipality: slug(m) });
+                  void navigate({ to: "/municipios/$slug", params: { slug: slug(m) } });
+                }}
+                leyenda={`Pesos por habitante (de ${coparticipacion.referencia})`}
+              />
+            </div>
+          </section>
+        )}
+
+        {/* Las cifras principales */}
+        <section className="flex flex-col gap-6">
+          <Encabezado id="numeros" titulo="Mendoza en números" bajada="Cada cifra lleva a su evolución y su fuente." />
+          {/* En el celular, una fila por cifra (la evolución y la fuente están en su página) */}
+          <ul className={cx(listVariants(), "sm:hidden")}>
+            {deuda && <FigureRow id="deuda" icon={RiBankLine} title="Deuda" value={`US$ ${entero(deuda.totalUsd)}`} unit="M" to="/deuda" />}
+            {coparticipacion && (
+              <FigureRow
+                id="coparticipacion"
+                icon={RiCoinsLine}
+                title="Coparticipación"
+                value={millones(coparticipacion.totalReal)}
+                unit="M"
+                to="/coparticipacion"
+              />
+            )}
+            {empleo && (
+              <FigureRow
+                id="empleo-publico"
+                icon={RiTeamLine}
+                title="Empleo público"
+                value={decimal.format(empleo.cadaMil)}
+                unit="cada mil"
+                to="/empleo-publico"
+              />
+            )}
+            {compras && (
+              <FigureRow
+                id="compras-ocds"
+                icon={RiShoppingCartLine}
+                title="Compras"
+                value={millones(compras.totalAdjudicado)}
+                unit="M"
+                to="/datos/$fuente"
+                params={{ fuente: "compras-ocds" }}
+              />
+            )}
+            {poblacion && (
+              <FigureRow id="poblacion" icon={RiGroupLine} title="Población" value={entero(poblacion.actual)} unit="hab." to="/poblacion" />
+            )}
+            {boletin && (
+              <FigureRow
+                id="boletin-oficial"
+                icon={RiFileTextLine}
+                title="Boletín"
+                value={entero(boletin.normas)}
+                unit="normas"
+                to="/datos/$fuente"
+                params={{ fuente: "boletin-oficial" }}
+              />
+            )}
+          </ul>
+          <div className="hidden gap-3 sm:grid sm:grid-cols-2 lg:grid-cols-3">
+            {deuda && (
+              <Cifra
+                fuente={fuente("hacienda-deuda-stock")}
+                to="/deuda"
+                icon={RiBankLine}
+                titulo="Deuda pública"
+                valor={<CountUp value={deuda.totalUsd} format={(v) => `US$ ${entero(v)}`} />}
+                unidad="millones"
+                detalle={`US$ ${entero(deuda.porHabitanteUsd)} por habitante.`}
+                serie={deuda.serie}
+              />
+            )}
+            {coparticipacion && (
+              <Cifra
+                fuente={fuente("hacienda-participacion-municipal")}
+                to="/coparticipacion"
+                icon={RiCoinsLine}
+                titulo={`Coparticipación ${coparticipacion.anio}`}
+                valor={<CountUp value={coparticipacion.totalReal} format={millones} />}
+                unidad="millones"
+                detalle={`A los 18 municipios, en pesos de ${coparticipacion.referencia}.`}
+                serie={coparticipacion.serie}
+              />
+            )}
+            {empleo && (
+              <Cifra
+                fuente={fuente("dnap-ocupacion")}
+                to="/empleo-publico"
+                icon={RiTeamLine}
+                titulo="Empleo público"
+                valor={<CountUp value={empleo.cadaMil} format={(v) => decimal.format(v)} />}
+                unidad="cada mil hab."
+                detalle={`Empleados provinciales. El promedio del país: ${decimal.format(empleo.promedioPais)}.`}
+                serie={empleo.serie}
+              />
+            )}
+            {compras && (
+              <Cifra
+                fuente={fuente("compras-ocds")}
+                to="/datos/$fuente"
+                params={{ fuente: "compras-ocds" }}
+                icon={RiShoppingCartLine}
+                titulo="Compras del Estado"
+                valor={<CountUp value={compras.totalAdjudicado} format={millones} />}
+                unidad="millones"
+                detalle={`A ${formatNumber(compras.proveedores)} proveedores, ${compras.desde.slice(0, 4)}–${compras.hasta.slice(0, 4)}. Montos nominales.`}
+                serie={compras.serie}
+              />
+            )}
+            {poblacion && (
+              <Cifra
+                fuente={fuente("poblacion")}
+                to="/poblacion"
+                icon={RiGroupLine}
+                titulo={`Población ${poblacion.anio}`}
+                valor={<CountUp value={poblacion.actual} format={entero} />}
+                unidad="hab."
+                detalle={`${decimal.format(poblacion.variacionCensos)} % más que en el censo 2010.`}
+                serie={poblacion.serie}
+              />
+            )}
+            {boletin && (
+              <Cifra
+                fuente={fuente("boletin-oficial")}
+                to="/datos/$fuente"
+                params={{ fuente: "boletin-oficial" }}
+                icon={RiFileTextLine}
+                titulo="Boletín Oficial"
+                valor={<CountUp value={boletin.normas} format={entero} />}
+                unidad="normas"
+                detalle={`${formatNumber(boletin.designaciones)} designaciones desde el ${formatDate(boletin.desde)}.`}
+              />
+            )}
+          </div>
+
+          {(inflacion || dolar) && (
+            <div className="grid grid-cols-2 gap-3">
+              {inflacion && (
+                <Indicador
+                  id="inflacion"
+                  icon={RiLineChartLine}
+                  titulo="Inflación"
+                  valor={`${decimal.format(inflacion.mensual)} %`}
+                  unidad="mensual"
+                  detalle={`${decimal.format(inflacion.interanual)} % en 12 meses`}
+                  periodo={`Cuyo, ${inflacion.periodo}`}
+                />
+              )}
+              {dolar && (
+                <Indicador id="dolar" icon={RiCoinsLine} titulo="Dólar oficial" valor={pesos(dolar.oficial)} periodo={dolar.periodo} />
+              )}
+            </div>
+          )}
+        </section>
+
+        {/* Lo que no se publica: tercera capa, llega después y mientras tanto guarda su lugar */}
+        <Await promise={noPublicado} fallback={<MissingDataSkeleton />}>
+          {(items) => <MissingData items={items} />}
+        </Await>
+
+        {guide && (
+          <section className="flex flex-col gap-6">
+            <Encabezado
+              id="temas"
+              icon={RiLayoutGridLine}
+              titulo="Todo lo que hay"
+              bajada={`${formatNumber(guide.counts.records)} registros, en cuatro preguntas.`}
+            />
+            <EcosystemMap guide={guide} />
+          </section>
+        )}
+
         <section className="flex flex-col gap-6">
           <Encabezado
-            id="temas"
-            icon={RiLayoutGridLine}
-            titulo="Todo lo que hay"
-            bajada={`${formatNumber(guide.counts.records)} registros, en cuatro preguntas.`}
+            id="como-leer"
+            icon={RiBookOpenLine}
+            titulo="Cómo leer estos datos"
+            bajada="Cuatro reglas antes de sacar conclusiones."
           />
-          <EcosystemMap guide={guide} />
+          <ReadingRules />
         </section>
-      )}
-
-      <section className="flex flex-col gap-6">
-        <Encabezado
-          id="como-leer"
-          icon={RiBookOpenLine}
-          titulo="Cómo leer estos datos"
-          bajada="Cuatro reglas antes de sacar conclusiones."
-        />
-        <ReadingRules />
-      </section>
-    </div>
+      </div>
+    </>
   );
 }
 
