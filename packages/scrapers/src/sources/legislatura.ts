@@ -30,9 +30,9 @@
  * Uso: bun run scrape legislatura
  */
 
-import { archive, get, type Row, readProcessed, writeProcessed } from "@mt/core";
+import { archive, collapseSpaces, get, parseArNumber, type Row, readProcessed, writeProcessed } from "@mt/core";
 import * as cheerio from "cheerio";
-import { extractText, getDocumentProxy } from "unpdf";
+import { pdfText } from "../lib/pdf.ts";
 
 const SOURCE = "legislatura";
 const HCD = "https://www.hcdmza.gob.ar";
@@ -62,7 +62,6 @@ async function fetchBytes(url: string, filename: string): Promise<Uint8Array> {
 }
 const fetchText = async (url: string, filename: string) => new TextDecoder().decode(await fetchBytes(url, filename));
 
-const clean = (s: string) => s.replace(/\s+/g, " ").trim();
 const fold = (s: string) =>
   s
     .normalize("NFD")
@@ -89,7 +88,7 @@ async function diputados(): Promise<Leg[]> {
   // Autoridades: se cruzan por nombre (la página las nombra sin segundo nombre).
   const $a = cheerio.load(await fetchText(`${HCD}/site/institucional/autoridades`, "hcd-autoridades.html"));
   const autoridades: { nombre: string; cargo: string }[] = [];
-  const lines = $a("#sp-main-body").text().split("\n").map(clean).filter(Boolean);
+  const lines = $a("#sp-main-body").text().split("\n").map(collapseSpaces).filter(Boolean);
   for (let k = 0; k < lines.length - 1; k++) {
     const c = lines[k]!;
     if (/^Presidente de la C/i.test(c)) autoridades.push({ cargo: "presidente de la cámara", nombre: lines[k + 1]! });
@@ -101,11 +100,11 @@ async function diputados(): Promise<Leg[]> {
   for (const path of [...blockPaths].sort()) {
     const url = HCD + path;
     const $ = cheerio.load(await fetchText(url, `hcd-bloque-${path.split("/").pop()}.html`));
-    const bloque = clean($(".sppb-addon-title").first().text());
+    const bloque = collapseSpaces($(".sppb-addon-title").first().text());
     $(".flip-container").each((_, el) => {
-      const nombre = clean($(el).find(".front .sppb-person-name").text());
+      const nombre = collapseSpaces($(el).find(".front .sppb-person-name").text());
       const back = $(el).find(".back .sppb-person-introtext");
-      const info = clean(back.text());
+      const info = collapseSpaces(back.text());
       const dist = info.match(/(\d)ª\s*distrito/i);
       const per = info.match(/(\d{4})\s+(\d{4})/);
       const email = info.match(/[\w.+-]+@hcdmza\.gov\.ar/i)?.[0].toLowerCase() ?? "";
@@ -113,7 +112,7 @@ async function diputados(): Promise<Leg[]> {
         .find("a[href*='autor=']")
         .attr("href")
         ?.match(/autor=([^&]+)/)?.[1];
-      const [apellido, nom] = autor ? decodeURIComponent(autor).split(",").map(clean) : ["", ""];
+      const [apellido, nom] = autor ? decodeURIComponent(autor).split(",").map(collapseSpaces) : ["", ""];
       const key = apellido && nom ? `${apellido} ${nom}` : nombre;
       const auth = autoridades.find((x) => {
         const t = fold(x.nombre).split(" ");
@@ -191,8 +190,8 @@ async function senado(): Promise<Leg[]> {
       .replace(/&#8211;/g, "–");
   const out: Leg[] = [];
   for (const s of senadores.filter((x) => x.status === "publish")) {
-    const [apellido, nom] = decode(s.title.rendered).split(",").map(clean);
-    const nombre = clean(`${nom} ${apellido}`);
+    const [apellido, nom] = decode(s.title.rendered).split(",").map(collapseSpaces);
+    const nombre = collapseSpaces(`${nom} ${apellido}`);
     const per = periodos.get(s.periodo_legislativo[0]!)?.match(/(\d{4})-(\d{4})/);
     const dist = distritos.get(s.distrito[0]!)?.match(/(\d)/);
     const auth = autoridades.find((x) => {
@@ -229,14 +228,6 @@ async function senado(): Promise<Leg[]> {
 
 // ------------------------------------------------- Viáticos y pasajes (montos)
 
-async function pdfText(bytes: Uint8Array): Promise<string> {
-  const pdf = await getDocumentProxy(bytes);
-  const { text } = await extractText(pdf, { mergePages: true });
-  return text as string;
-}
-
-const arNum = (s: string) => Number(s.replace(/\./g, "").replace(",", "."));
-
 async function diputadosViaticos(): Promise<Row[]> {
   const pageUrl = `${HCD}/site/informacion-publica/informacion-economica/viaticos-y-pasajes`;
   const $ = cheerio.load(await fetchText(pageUrl, "hcd-viaticos-pasajes.html"));
@@ -260,7 +251,7 @@ async function diputadosViaticos(): Promise<Row[]> {
         : `20${per[3]}-${per[2]}/20${per[6]}-${per[5]}`;
     const legisladores = (text.match(/^Legislador$/gm) ?? []).length;
     const sinConsumo = (text.match(/^SIN CONSUMO$/gm) ?? []).length;
-    const montos = (text.match(/^\d[\d.]*,\d{2}$/gm) ?? []).map(arNum);
+    const montos = (text.match(/^\d[\d.]*,\d{2}$/gm) ?? []).map(parseArNumber);
     if (sinConsumo !== legisladores || montos.some((m) => m !== 0)) {
       console.warn(`${h}: hay consumos (${legisladores} legisladores, ${sinConsumo} sin consumo); no se extraen, revisar el PDF`);
       continue;
@@ -280,7 +271,7 @@ async function senadoViaticos(): Promise<Row[]> {
   $("tr").each((_, tr) => {
     const td = $(tr)
       .find("td")
-      .map((_, c) => clean($(c).text()))
+      .map((_, c) => collapseSpaces($(c).text()))
       .get();
     const href = $(tr).find("a[href$='.pdf']").attr("href");
     const t = td[0]?.match(/^(Primer|Segundo|Tercer|Cuarto) Trimestre$/i);
@@ -289,11 +280,11 @@ async function senadoViaticos(): Promise<Row[]> {
       items.push({ trim: String({ primer: 1, segundo: 2, tercer: 3, cuarto: 4 }[t[1]!.toLowerCase() as "primer"]), anio, url: href });
   });
   for (const it of items) {
-    const text = clean(await pdfText(await fetchBytes(encodeURI(it.url), `hcs-viaticos-${it.anio}-T${it.trim}.pdf`)));
+    const text = collapseSpaces(await pdfText(await fetchBytes(encodeURI(it.url), `hcs-viaticos-${it.anio}-T${it.trim}.pdf`)));
     const iP = text.search(/\bPASAJES\b/);
     const viat = iP >= 0 ? text.slice(0, iP) : text;
     const pasa = iP >= 0 ? text.slice(iP) : "";
-    const sum = (s: string) => [...s.matchAll(/\bHL\s+(\d{1,3}(?:\.\d{3})*,\d{2})\b/g)].reduce((a, m) => a + arNum(m[1]!), 0);
+    const sum = (s: string) => [...s.matchAll(/\bHL\s+(\d{1,3}(?:\.\d{3})*,\d{2})\b/g)].reduce((a, m) => a + parseArNumber(m[1]!), 0);
     const nV = [...viat.matchAll(/\bHL\s+\d{1,3}(?:\.\d{3})*,\d{2}\b/g)].length;
     const nP = [...pasa.matchAll(/\bHL\s+\d{1,3}(?:\.\d{3})*,\d{2}\b/g)].length;
     console.log(`Senado ${it.anio}-T${it.trim}: ${nV} viáticos, ${nP} pasajes`);

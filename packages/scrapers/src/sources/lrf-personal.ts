@@ -37,14 +37,14 @@
 import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { archive, fetchAndArchive, get, RAW_DIR, ROOT, type Row, readRaw, writeProcessed } from "@mt/core";
+import { archive, collapseSpaces, fetchAndArchive, get, RAW_DIR, ROOT, type Row, readRaw, sleep, writeProcessed } from "@mt/core";
 import * as cheerio from "cheerio";
 import { unzipSync } from "fflate";
-import { extractText, getDocumentProxy } from "unpdf";
+import { getDocumentProxy } from "unpdf";
+import { pdfText } from "../lib/pdf.ts";
 
 const SOURCE = "lrf-personal";
 const INDEX = "https://sitios.mendoza.gob.ar/haciendayfinanzas/ley-de-responsabilidad-fiscal/";
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 // ---------------------------------------------------------------- descarga
 
@@ -182,8 +182,7 @@ async function pdfLines(bytes: Uint8Array): Promise<string[][]> {
 
 /** Líneas de texto de un PDF en el orden de lectura que da unpdf (más fiel que la posición en los anexos con columnas). */
 async function pdfTextLines(bytes: Uint8Array): Promise<string[][]> {
-  const { text } = await extractText(await getDocumentProxy(new Uint8Array(bytes)), { mergePages: true });
-  return text
+  return (await pdfText(bytes))
     .split("\n")
     .map((l) => l.trim().split(/\s+/).filter(Boolean))
     .filter((t) => t.length);
@@ -216,8 +215,6 @@ function parseNum(s: string): number {
   if (s === "-") return 0;
   return Number(s.replace(/\./g, "").replace(",", "."));
 }
-
-const clean = (s: string) => s.replace(/\s+/g, " ").trim();
 
 // ---------------------------------------------------------------- anexo 19
 
@@ -286,7 +283,7 @@ function parseAnnex19(lines: string[][]): Annex19 {
     }
     // Si el nombre termina en un número ("Ley 8845"), quedó pegado a las cifras: se le devuelve.
     const extra = nums.length - 11;
-    const name = clean([...toks.slice(0, k), ...nums.slice(0, extra)].join(" ").replace("Ley_8845", "Ley 8845"));
+    const name = collapseSpaces([...toks.slice(0, k), ...nums.slice(0, extra)].join(" ").replace("Ley_8845", "Ley 8845"));
     const cells = nums.slice(extra).map(parseNum);
     const raw = nums.slice(extra);
     if (/^TOTALES$/i.test(name)) {
@@ -392,7 +389,7 @@ function parseAnnex20(
       unmatched.push(`${file}: ${text}`);
       continue;
     }
-    const name = clean(toks.slice(first, k).join(" "));
+    const name = collapseSpaces(toks.slice(first, k).join(" "));
     const [start, hires, exits, end, amount] = nums.slice(-5) as [number, number, number, number, number];
     rows.push({
       group: CHARACTER_GROUP[m[1]!] ?? `Carácter ${m[1]}`,

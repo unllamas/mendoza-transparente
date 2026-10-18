@@ -43,7 +43,7 @@ import { createHash } from "node:crypto";
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { archive, get, latestRaw, PROCESSED_DIR, parseCsv, type Row, readRaw, toCsv, writeProcessed } from "@mt/core";
+import { archive, get, latestRaw, PROCESSED_DIR, parseCsv, type Row, readRaw, sleep, toCsv, writeProcessed } from "@mt/core";
 import { Unzip, UnzipInflate } from "fflate";
 
 const SOURCE = "universidades-presupuesto";
@@ -57,8 +57,6 @@ const UNIVERSITIES: Record<string, { id: "uncuyo" | "utn"; name: string; scope: 
   "811": { id: "uncuyo", name: "Universidad Nacional de Cuyo", scope: "mendoza" },
   "835": { id: "utn", name: "Universidad Tecnológica Nacional", scope: "nacional" },
 };
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // ---------------------------------------------------------------------------
 // Catálogo y descarga

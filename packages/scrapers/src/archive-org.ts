@@ -28,6 +28,7 @@ import {
   readArchiveOrgRecords,
   readManifest,
   savePageNow,
+  sleep,
   uploadToItem,
 } from "@mt/core";
 
@@ -47,8 +48,6 @@ const WAYBACK_EXCLUDED: Record<string, string> = {
 const CAPTURE_PAUSE_MS = 9000;
 // A failed capture is retried after this long (the page may have been down).
 const RETRY_FAILED_AFTER_DAYS = 30;
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function itemMetadata(source: string, identifier: string): Record<string, string | string[]> {
   const month = identifier.slice(-7);

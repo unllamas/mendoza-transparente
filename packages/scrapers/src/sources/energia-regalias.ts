@@ -6,7 +6,7 @@
  * provincia (o cuenca, en el caso de GLP). Se pasa a formato largo.
  */
 
-import { archive, get, writeProcessed } from "@mt/core";
+import { archive, get, sleep, writeProcessed } from "@mt/core";
 import { unzipSync } from "fflate";
 import * as XLSX from "xlsx";
 
@@ -19,8 +19,6 @@ interface Resource {
   url: string;
   format: string;
 }
-
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 const norm = (s: unknown) =>
   String(s ?? "")

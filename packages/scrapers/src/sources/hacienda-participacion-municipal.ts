@@ -16,13 +16,12 @@
  * Financiamiento Educativo. No hay desglose por recurso en estos archivos.
  */
 
-import { fetchAndArchive, get, latestRaw, normalizeMunicipio, type Row, readRaw, writeProcessed } from "@mt/core";
+import { fetchAndArchive, finiteNumber, get, latestRaw, normalizeMunicipio, type Row, readRaw, sleep, writeProcessed } from "@mt/core";
 import * as cheerio from "cheerio";
 import * as XLSX from "xlsx";
 
 const SOURCE = "hacienda-participacion-municipal";
 const INDEX_URL = "https://sitios.mendoza.gob.ar/haciendayfinanzas/participacion-municipal/";
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 const MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "setiembre", "octubre", "noviembre", "diciembre"];
 
@@ -68,8 +67,6 @@ function sheetRows(buf: Buffer): unknown[][] {
   return XLSX.utils.sheet_to_json<unknown[]>(wb.Sheets[wb.SheetNames[0]!]!, { header: 1, raw: true, defval: null });
 }
 
-const num = (v: unknown): number | null => (typeof v === "number" && Number.isFinite(v) ? v : null);
-
 function parseMensual(rows: unknown[][], file: string, out: Row[]): void {
   const title = String(rows[0]?.[0] ?? "");
   const anio = Number(title.match(/(\d{4})/)?.[1]);
@@ -105,14 +102,14 @@ function parseMensual(rows: unknown[][], file: string, out: Row[]): void {
     }
     let sum = 0;
     for (const [mes, c] of monthCol) {
-      const v = num(r[c]);
+      const v = finiteNumber(r[c]);
       if (v === null) continue;
       out.push({ anio, mes, municipio: muni, concepto: "participacion_total", monto_pesos: v });
       sum += v;
       n++;
     }
     sumMonthsByMuni.set(muni, sum);
-    const t = totalCol >= 0 ? num(r[totalCol]) : null;
+    const t = totalCol >= 0 ? finiteNumber(r[totalCol]) : null;
     if (t !== null && Math.abs(t - sum) > 1) console.warn(`  ${file}: ${muni} suma de meses ${sum} != TOTAL ${t}`);
   }
   const note = rows.map((r) => String(r[0] ?? "")).find((s) => /^Los datos surgen/i.test(s));
@@ -142,7 +139,7 @@ function parseAnual(rows: unknown[][], file: string, out: Row[]): void {
       continue;
     }
     for (const { c, anio, parcial } of cols) {
-      const v = num(r[c]);
+      const v = finiteNumber(r[c]);
       if (v === null) continue;
       out.push({ anio, municipio: muni, concepto: "participacion_total", monto_pesos: v, parcial: parcial ? 1 : 0 });
       n++;

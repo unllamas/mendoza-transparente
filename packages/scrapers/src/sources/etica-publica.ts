@@ -45,7 +45,7 @@ import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
-import { archive, get, type ManifestEntry, RAW_DIR, ROOT, type Row, readRaw, USER_AGENT, writeProcessed } from "@mt/core";
+import { archive, get, type ManifestEntry, RAW_DIR, ROOT, type Row, readRaw, sleep, USER_AGENT, writeProcessed } from "@mt/core";
 
 const SOURCE = "etica-publica";
 const BASE = "https://eticapublica.mendoza.gov.ar/api/v1/public";
@@ -54,8 +54,6 @@ const BASE = "https://eticapublica.mendoza.gov.ar/api/v1/public";
 const EXCLUDED_BY_DEFAULT = new Set([1, 36, 35, 29, 21, 82, 84, 79]);
 const HIERARCHICAL =
   /ministr|secretari|subsecretari|director|presidente|vicepresidente|gobernador|vicegobernador|intendente|concejal|diputad|senador|fiscal|juez|jueza|vocal|interventor|gerente|administrador|titular|jefe de gabinete|asesor|coordinador|tesorero|contador|auditor|defensor|procurador/i;
-
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 // ---------- Redacción ----------
 

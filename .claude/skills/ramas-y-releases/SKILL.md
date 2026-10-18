@@ -5,7 +5,7 @@ description: Flujo de ramas de Mendoza Transparente. Lo nuevo entra por dev con 
 
 # Ramas y releases
 
-Detalle completo: `docs/procesos/ramas-y-releases.md`.
+Detalle completo: `docs/procesos/ramas-y-releases.md` (índice con `bun run seccion ramas-y-releases`).
 
 ## Reglas
 
