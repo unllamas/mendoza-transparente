@@ -28,7 +28,7 @@ export function LandscapePhoto({
   return (
     <figure className={cx("relative", flush && "-mx-4 -mt-8 sm:-mx-5 sm:-mt-10")}>
       <DotImage src={photo.src} focus={photo.focus} fade={fade} className={cx("pointer-events-none w-full", className)} />
-      <figcaption className="absolute right-4 bottom-2 flex items-center gap-2 sm:right-5">
+      <figcaption className="absolute right-4 bottom-2 z-20 flex items-center gap-2 sm:right-5">
         <Popover>
           <PopoverTrigger
             aria-label="Autoría de la foto"

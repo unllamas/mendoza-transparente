@@ -54,11 +54,12 @@ export function HomePage() {
   return (
     <>
       {/*
-        Hero: the whole first screen on phones (82% on desktop), full width and under the transparent header
+        Hero: the whole first screen on phones and desktop, full width and under the transparent header
         (-mt-14 = the header height; the layout gives the home page no padding). Search and department side by
-        side with the same weight, and three questions as shortcuts. The photo closes it at the bottom.
+        side with the same weight, and three questions as shortcuts. The content is centered on the whole screen
+        below the header (pt-24 = header + the same 2.5rem as pb-10); the photo is decoration behind it, at the bottom.
       */}
-      <section className="-mt-14 flex min-h-svh flex-col sm:min-h-[82svh]">
+      <section className="relative -mt-14 flex min-h-svh flex-col">
         <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center-safe gap-6 px-4 pt-24 pb-10 text-center sm:px-5">
           <div className="flex flex-col items-center gap-3 sm:gap-4">
             <p className="flex items-center gap-2 text-body-medium text-text-secondary">
@@ -80,12 +81,14 @@ export function HomePage() {
           </div>
           <HeroQuestions />
         </div>
-        <LandscapePhoto
-          id="cordon-del-plata"
-          flush={false}
-          fade={false}
-          className="-mt-16 h-[26svh] mask-t-from-55% mask-b-from-80% sm:h-[32svh]"
-        />
+        <div className="absolute inset-x-0 bottom-0">
+          <LandscapePhoto
+            id="cordon-del-plata"
+            flush={false}
+            fade={false}
+            className="h-[22svh] mask-t-from-35% mask-b-from-80% sm:h-[28svh]"
+          />
+        </div>
       </section>
 
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-14 px-4 pt-6 pb-8 sm:gap-20 sm:px-5 sm:pt-8 sm:pb-10">

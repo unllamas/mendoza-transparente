@@ -21,9 +21,9 @@ En desarrollo (`bun run dev`), el plugin de `vite.config.ts` regenera todo y rec
 
 La portada está pensada para quien llega sin saber por dónde empezar. Los componentes están en `src/components/home-guide.tsx` y los datos en `temas/guia.json` y `data/search.json` (`scripts/temas/guide.ts`):
 
-0. **Hero:** ocupa toda la primera pantalla en el celular y el 82 % en escritorio, de borde a borde y debajo del header.
+0. **Hero:** ocupa toda la primera pantalla, en el celular y en escritorio, de borde a borde y debajo del header.
    - **Header:** en la portada, mientras la página está arriba de todo, el header no tiene fondo ni borde; al bajar vuelve a ser el de siempre (`useAtTop` en `layout.tsx`). El layout no le pone márgenes a la portada: la página arma su propio ancho después del hero.
-   - **Qué tiene:** el título; el buscador y «Elegí tu departamento», uno al lado del otro y con el mismo peso; y tres preguntas como accesos («O empezá por una pregunta»). La cordillera en puntos lo cierra abajo.
+   - **Qué tiene:** el título; el buscador y «Elegí tu departamento», uno al lado del otro y con el mismo peso; y tres preguntas como accesos («O empezá por una pregunta»). La cordillera en puntos va de fondo, abajo y detrás del contenido; el contenido se centra en toda la pantalla, entre el header y el borde de abajo.
    - **Por qué así:** en octubre de 2026, el buscador y el departamento los usaba un 6 % de las visitas cada uno (el departamento, más en el celular) y las preguntas un 15 %. Como el hero tapa la lista de preguntas en el celular, tres de ellas van adentro.
    - **Medición:** gráfico «Portada: uso del hero» del tablero de PostHog. `home.question.open` lleva `place` (`hero` o `list`) y `search.select` lleva `source` (`home` es el buscador del hero).
 1. **Buscador avanzado** (`src/components/search-dialog.tsx`):
