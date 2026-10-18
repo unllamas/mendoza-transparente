@@ -14,23 +14,19 @@ const limpiar = (s: string) => s.replace(/^[\d-]+\s*-\s*/, "").trim();
 export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], proveedores: CsvRow[]): SenalesTema {
   const porOcid = new Map(procesos.map((p) => [p.ocid!, p]));
   const montoPorOcid = new Map<string, number>();
-  const proveedoresPorOcid = new Map<string, string[]>();
   for (const a of adjudicaciones) {
     montoPorOcid.set(a.ocid!, (montoPorOcid.get(a.ocid!) ?? 0) + (Number(a.monto) || 0));
-    proveedoresPorOcid.set(a.ocid!, [...(proveedoresPorOcid.get(a.ocid!) ?? []), a.proveedor_nombre!]);
   }
   const totalAdjudicado = [...montoPorOcid.values()].reduce((s, v) => s + v, 0);
 
-  const casoProceso = (ocid: string, extra?: string): Caso => {
+  // A case says what was bought and who bought it; suppliers and amounts are in the process sheet.
+  const casoProceso = (ocid: string): Caso => {
     const p = porOcid.get(ocid);
-    const provs = [...new Set(proveedoresPorOcid.get(ocid) ?? [])];
     return {
       tipo: "proceso",
       id: ocid,
       titulo: p?.titulo?.trim() || "Sin título",
-      detalle: [limpiar(p?.comprador ?? ""), provs.length ? provs.slice(0, 2).join(", ") + (provs.length > 2 ? "…" : "") : null, extra]
-        .filter(Boolean)
-        .join(" · "),
+      detalle: limpiar(p?.comprador ?? ""),
       monto: montoPorOcid.get(ocid) ?? (Number(p?.monto_estimado) || null),
       fecha: p?.fecha || null,
     };
@@ -56,8 +52,8 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
     group: "competencia",
     tema: "Cuánta competencia hay",
     cifra: `${Math.round(pct(directas.length, procesos.length))} %`,
-    titulo: "de los procesos de compra se hicieron por contratación directa, sin licitación",
-    matiz: `Representan el ${Math.round(pct(montoDirectas, totalAdjudicado))} % de la plata adjudicada: muchas son compras chicas, que la ley permite hacer así. Las grandes son las que conviene mirar.`,
+    titulo: "de las compras se hicieron sin licitación",
+    matiz: `Son el ${Math.round(pct(montoDirectas, totalAdjudicado))} % de la plata. Muchas son compras chicas, que la ley permite hacer así; las grandes son las que conviene mirar.`,
     porQueImporta:
       "La licitación obliga a competir y a publicar. La contratación directa es legal para montos chicos o urgencias, pero cuando se usa para contratos grandes hay menos competencia y menos control.",
     metodo: `Procesos de COMPR.AR Mendoza con modalidad «Contratación Directa», sobre ${procesos.length.toLocaleString("es-AR")} procesos entre 2020 y ${ultimaFecha.slice(0, 4)}. Montos adjudicados nominales.`,
@@ -74,8 +70,8 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
     group: "competencia",
     tema: "Cuánta competencia hay",
     cifra: `1 de cada ${Math.round(100 / pct(unaOferta.length, conOferentes.length))}`,
-    titulo: "procesos de compra recibió una sola oferta",
-    matiz: `Son ${unaOferta.length.toLocaleString("es-AR")} procesos, por un total adjudicado de $ ${Math.round(montoUnaOferta / 1e6).toLocaleString("es-AR")} millones.`,
+    titulo: "compras tuvo un solo oferente",
+    matiz: `${unaOferta.length.toLocaleString("es-AR")} compras, por $ ${Math.round(montoUnaOferta / 1e6).toLocaleString("es-AR")} millones.`,
     porQueImporta:
       "Sin competencia, el Estado no puede comparar precios. Puede deberse a rubros muy específicos, pero también a pliegos armados a medida o a poca difusión del llamado.",
     metodo: "Procesos con el dato de cantidad de oferentes informado en el estándar de contrataciones abiertas (OCDS) de COMPR.AR Mendoza.",
@@ -84,7 +80,7 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
       .filter((p) => montoPorOcid.has(p.ocid!))
       .sort((a, b) => montoPorOcid.get(b.ocid!)! - montoPorOcid.get(a.ocid!)!)
       .slice(0, 15)
-      .map((p) => casoProceso(p.ocid!, p.metodo_contratacion)),
+      .map((p) => casoProceso(p.ocid!)),
   });
 
   // 2b. Award far above a real estimate, and symbolic estimates ($1, $2…) that make the comparison impossible.
@@ -100,7 +96,6 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
       symbolic.push({ ocid, awarded, buyer: limpiar(p?.comprador ?? "") });
   }
   const excess = overruns.reduce((sum, o) => sum + (o.awarded - o.estimate), 0);
-  const times = (x: number) => (x >= 10 ? Math.round(x).toLocaleString("es-AR") : x.toLocaleString("es-AR", { maximumFractionDigits: 1 }));
   const overrunBuyers = new Map<string, number>();
   for (const o of overruns) {
     const b = limpiar(porOcid.get(o.ocid)?.comprador ?? "");
@@ -112,8 +107,8 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
     group: "precios",
     tema: "Cuánto se paga",
     cifra: overruns.length.toLocaleString("es-AR"),
-    titulo: "procesos de compra se adjudicaron por más del doble de lo que el propio organismo había estimado",
-    matiz: `En total, $ ${Math.round(excess / 1e6).toLocaleString("es-AR")} millones por encima de lo estimado.${
+    titulo: "compras se adjudicaron por más del doble de lo estimado",
+    matiz: `$ ${Math.round(excess / 1e6).toLocaleString("es-AR")} millones por encima de lo que el propio organismo había calculado.${
       topOverrunBuyer ? ` El organismo con más diferencia: ${topOverrunBuyer[0]}.` : ""
     }`,
     porQueImporta:
@@ -123,7 +118,7 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
     casos: overruns
       .sort((a, b) => b.awarded - b.estimate - (a.awarded - a.estimate))
       .slice(0, 20)
-      .map((o) => casoProceso(o.ocid, `${times(o.awarded / o.estimate)} veces lo estimado`)),
+      .map((o) => casoProceso(o.ocid)),
   });
 
   if (symbolic.length) {
@@ -135,8 +130,8 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
       group: "precios",
       tema: "Cuánto se paga",
       cifra: symbolic.length.toLocaleString("es-AR"),
-      titulo: "procesos se cargaron con un monto estimado simbólico ($ 1, $ 2…) y se adjudicaron por cientos de miles o millones",
-      matiz: `${topCount} de ellos son de ${topBuyer}. Sin un estimado real no se puede saber si el precio pagado fue razonable.`,
+      titulo: "compras se estimaron en menos de $ 1.000 y se adjudicaron por $ 100.000 o más",
+      matiz: `${topCount} son de ${topBuyer}. Sin un estimado real no se puede saber si el precio fue razonable.`,
       porQueImporta:
         "El estimado obliga al organismo a calcular cuánto debería costar lo que compra antes de comprarlo. Cargar $ 1 vacía ese control y hace imposible comparar.",
       metodo: `Procesos con monto estimado menor a $ ${SYMBOLIC_ESTIMATE.toLocaleString("es-AR")} y adjudicados por al menos $ ${REAL_ESTIMATE.toLocaleString("es-AR")} (y más de 100 veces lo estimado). COMPR.AR Mendoza (OCDS).`,
@@ -144,7 +139,7 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
       casos: symbolic
         .sort((a, b) => b.awarded - a.awarded)
         .slice(0, 20)
-        .map((x) => casoProceso(x.ocid, `estimado: $ ${Number(porOcid.get(x.ocid)?.monto_estimado ?? 0).toLocaleString("es-AR")}`)),
+        .map((x) => casoProceso(x.ocid)),
     });
   }
 
@@ -167,7 +162,7 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
       tipo: "proveedor",
       id: cuit,
       titulo: e.razon_social || filas[0]!.proveedor_nombre!,
-      detalle: `Constituida en ${e.fecha_constitucion.slice(0, 7)} · primera adjudicación a los ${meses} ${meses === 1 ? "mes" : "meses"}${e.actividad ? ` · ${e.actividad}` : ""}`,
+      detalle: `Primer contrato a ${meses === 0 ? "menos de un mes" : `los ${meses} ${meses === 1 ? "mes" : "meses"}`} de crearse`,
       monto: filas.reduce((s, a) => s + (Number(a.monto) || 0), 0),
       fecha: primera,
       meses,
@@ -179,8 +174,8 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
     group: "proveedores",
     tema: "A quién se le compra",
     cifra: String(nuevas.length),
-    titulo: "empresas ganaron su primera adjudicación antes de cumplir un año de vida",
-    matiz: `Entre todas suman $ ${Math.round(nuevas.reduce((s, c) => s + (c.monto ?? 0), 0) / 1e6).toLocaleString("es-AR")} millones adjudicados.`,
+    titulo: "empresas ganaron su primer contrato antes de cumplir un año",
+    matiz: `Entre todas, $ ${Math.round(nuevas.reduce((s, c) => s + (c.monto ?? 0), 0) / 1e6).toLocaleString("es-AR")} millones adjudicados.`,
     porQueImporta:
       "Una empresa recién creada puede ser un emprendimiento legítimo, pero también es uno de los patrones que los organismos de control usan para detectar sociedades armadas para un contrato.",
     metodo:
@@ -211,7 +206,7 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
       tipo: "proveedor",
       id: cuit,
       titulo: `${limpiar(comprador)}`,
-      detalle: `${top.nombre} se llevó el ${Math.round(share)} % de lo que compró este organismo`,
+      detalle: `${top.nombre} se llevó el ${Math.round(share)} %`,
       monto: top.monto,
       fecha: null,
     });
@@ -222,8 +217,8 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
     group: "proveedores",
     tema: "A quién se le compra",
     cifra: String(concentrados.length),
-    titulo: "organismos le compraron más de la mitad de todo a un solo proveedor",
-    matiz: "Solo se cuentan organismos con más de $ 500 millones adjudicados y al menos tres proveedores.",
+    titulo: "organismos le compraron más de la mitad a un solo proveedor",
+    matiz: "Entre los que compraron más de $ 500 millones y a por lo menos tres proveedores.",
     porQueImporta:
       "Cuando un proveedor concentra casi todo lo que compra un organismo, el Estado depende de él para negociar precios. A veces se explica por un servicio único (por ejemplo, la comida de un hospital), pero vale la pena preguntar.",
     metodo: "Suma de montos adjudicados por organismo comprador y proveedor en COMPR.AR Mendoza, 2020 a enero de 2026.",
@@ -238,8 +233,8 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
     group: "competencia",
     tema: "Cuánta competencia hay",
     cifra: `1 de cada ${Math.round(100 / pct(fracasados.length, procesos.length))}`,
-    titulo: "procesos de compra terminó desierto o fracasado",
-    matiz: `Son ${fracasados.length.toLocaleString("es-AR")} procesos que no se adjudicaron: hay que volver a empezar.`,
+    titulo: "compras quedó desierta o fracasó",
+    matiz: `${fracasados.length.toLocaleString("es-AR")} compras que no se adjudicaron y hubo que volver a empezar.`,
     porQueImporta:
       "Cada proceso que fracasa demora la compra y obliga a repetir el trámite, muchas veces por contratación directa. Un porcentaje alto puede indicar pliegos mal armados o precios de referencia irreales.",
     metodo: "Procesos con estado «unsuccessful» (desierto o fracasado) en el estándar OCDS de COMPR.AR Mendoza.",
@@ -257,8 +252,8 @@ export function buildSenales(procesos: CsvRow[], adjudicaciones: CsvRow[], prove
     group: "datos",
     tema: "Lo que falta para poder mirar",
     cifra: `${mesesAtraso} meses`,
-    titulo: "sin datos abiertos de las compras del Estado",
-    matiz: `El último archivo publicado de COMPR.AR llega al ${ultimaFecha.split("-").reverse().join("/")}. Todas las señales de esta página se calculan hasta esa fecha: lo que se compró después no se puede revisar.`,
+    titulo: "sin datos de las compras del Estado",
+    matiz: `Lo que se compró después del ${ultimaFecha.split("-").reverse().join("/")} no se puede revisar.`,
     porQueImporta:
       "Sin datos actualizados no hay control ciudadano a tiempo: los patrones de esta página solo se pueden detectar meses después, cuando ya no hay margen para corregir.",
     metodo: "Fecha del último proceso incluido en el conjunto de datos de contrataciones abiertas publicado por el Gobierno de Mendoza.",

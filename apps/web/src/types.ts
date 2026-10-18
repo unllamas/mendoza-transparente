@@ -660,6 +660,11 @@ export interface GobiernoOverview {
 
 // ------------------------------------------------------------------ Home guide and search
 
+export interface GuideFact {
+  figure: string;
+  text: string;
+}
+
 export interface HomeGuide {
   counts: {
     records: number;
@@ -673,8 +678,8 @@ export interface HomeGuide {
     missing: number;
     appointments: number;
   };
-  /** One line per starting question, with a real figure. */
-  facts: { debt: string | null; latestLaw: string | null; topSupplier: string | null; staff: string | null };
+  /** One line per starting question: the figure (in bold) and a short text after it. */
+  facts: { debt: GuideFact | null; latestLaw: string | null; staff: GuideFact | null };
   /** What is new, dated by the data itself. */
   news: { date: string; kind: string; title: string; href: string }[];
 }

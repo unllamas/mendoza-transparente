@@ -78,7 +78,11 @@ export function HomePage() {
         {guide && (
           <section className="flex flex-col gap-5">
             <Encabezado id="preguntas" icon={RiQuestionLine} titulo="Empezá por una pregunta" />
-            <StartingQuestions guide={guide} oneOfferEvery={compras ? Math.round(100 / compras.pctUnaOferta) : null} />
+            <StartingQuestions
+              guide={guide}
+              oneOfferEvery={compras ? Math.round(100 / compras.pctUnaOferta) : null}
+              purchases={compras ? { total: `${millones(compras.totalAdjudicado)} M`, suppliers: compras.proveedores } : null}
+            />
           </section>
         )}
       </div>
@@ -90,24 +94,15 @@ export function HomePage() {
             id="para-mirar"
             icon={RiScales3Line}
             titulo="Para mirar de cerca"
-            bajada="No son acusaciones: son patrones en los datos oficiales que merecen una explicación."
+            bajada="Patrones en los datos oficiales que merecen una explicación. No son acusaciones."
           />
           <div className="grid gap-3 md:grid-cols-3">
-            <Senal
-              valor={`${Math.round(compras.pctDirectas)} %`}
-              texto="de los procesos de compra fueron contrataciones directas, sin licitación."
-              matiz={`Pero representan el ${Math.round(compras.pctMontoDirectas)} % de la plata: muchas son compras chicas.`}
-            />
-            <Senal
-              valor={`1 de cada ${Math.round(100 / compras.pctUnaOferta)}`}
-              texto="procesos de compra recibió una sola oferta."
-              matiz={`${decimal.format(compras.pctUnaOferta)} % de los procesos con dato de oferentes.`}
-            />
+            <Senal valor={`${Math.round(compras.pctDirectas)} %`} texto="de las compras se hicieron sin licitación" />
+            <Senal valor={`1 de cada ${Math.round(100 / compras.pctUnaOferta)}`} texto="compras tuvo un solo oferente" />
             {deuda && (
               <Senal
                 valor={`US$ ${entero(deuda.maximo.usd)} M`}
-                texto={`fue el máximo de la deuda provincial, en ${deuda.maximo.fecha.slice(0, 4)}.`}
-                matiz={`Hoy está en US$ ${entero(deuda.totalUsd)} M. Medida en dólares, la deuda en pesos baja cuando hay devaluación.`}
+                texto={`fue el pico de la deuda provincial, en ${deuda.maximo.fecha.slice(0, 4)}`}
               />
             )}
           </div>
@@ -127,7 +122,7 @@ export function HomePage() {
             id="lo-nuevo"
             icon={RiSparklingLine}
             titulo="Lo nuevo"
-            bajada="Las últimas leyes, nombramientos y datos actualizados."
+            bajada="Leyes, nombramientos y datos de las últimas semanas."
           />
           <WhatsNew guide={{ ...guide, news: guide.news.slice(0, 5) }} />
         </section>
@@ -140,7 +135,7 @@ export function HomePage() {
             id="tu-departamento"
             icon={RiMapLine}
             titulo="Tu departamento"
-            bajada={`Cuánto recibió cada municipio por habitante en ${coparticipacion.anio}. Tocá uno para ver su detalle.`}
+            bajada={`Cuánto recibió cada municipio por habitante en ${coparticipacion.anio}.`}
           />
           <div>
             <MapaMendoza
@@ -161,7 +156,7 @@ export function HomePage() {
 
       {/* Las cifras principales */}
       <section className="flex flex-col gap-6">
-        <Encabezado id="numeros" titulo="Mendoza en números" bajada="Tocá cualquier cifra para ver el detalle, la evolución y la fuente." />
+        <Encabezado id="numeros" titulo="Mendoza en números" bajada="Cada cifra lleva a su evolución y su fuente." />
         {/* En el celular, una fila por cifra (la evolución y la fuente están en su página) */}
         <ul className={cx(listVariants(), "sm:hidden")}>
           {deuda && <FigureRow id="deuda" icon={RiBankLine} title="Deuda" value={`US$ ${entero(deuda.totalUsd)}`} unit="M" to="/deuda" />}
@@ -220,7 +215,7 @@ export function HomePage() {
               titulo="Deuda pública"
               valor={<CountUp value={deuda.totalUsd} format={(v) => `US$ ${entero(v)}`} />}
               unidad="millones"
-              detalle={`US$ ${entero(deuda.porHabitanteUsd)} por habitante. Máximo: US$ ${entero(deuda.maximo.usd)} M en ${deuda.maximo.fecha.slice(0, 4)}.`}
+              detalle={`US$ ${entero(deuda.porHabitanteUsd)} por habitante.`}
               serie={deuda.serie}
             />
           )}
@@ -232,7 +227,7 @@ export function HomePage() {
               titulo={`Coparticipación ${coparticipacion.anio}`}
               valor={<CountUp value={coparticipacion.totalReal} format={millones} />}
               unidad="millones"
-              detalle={`Repartido a los 18 municipios, en pesos de ${coparticipacion.referencia}. ${coparticipacion.top.municipio} es el que más recibe por habitante.`}
+              detalle={`A los 18 municipios, en pesos de ${coparticipacion.referencia}.`}
               serie={coparticipacion.serie}
             />
           )}
@@ -244,7 +239,7 @@ export function HomePage() {
               titulo="Empleo público"
               valor={<CountUp value={empleo.cadaMil} format={(v) => decimal.format(v)} />}
               unidad="cada mil hab."
-              detalle={`Empleados provinciales cada mil habitantes: el ${empleo.posicion}.º más bajo de 24 jurisdicciones. Promedio del país: ${decimal.format(empleo.promedioPais)}.`}
+              detalle={`Empleados provinciales. El promedio del país: ${decimal.format(empleo.promedioPais)}.`}
               serie={empleo.serie}
             />
           )}
@@ -257,7 +252,7 @@ export function HomePage() {
               titulo="Compras del Estado"
               valor={<CountUp value={compras.totalAdjudicado} format={millones} />}
               unidad="millones"
-              detalle={`Adjudicado en ${formatNumber(compras.procesos)} procesos a ${formatNumber(compras.proveedores)} proveedores, ${compras.desde.slice(0, 4)}–${compras.hasta.slice(0, 4)}. Montos nominales.`}
+              detalle={`A ${formatNumber(compras.proveedores)} proveedores, ${compras.desde.slice(0, 4)}–${compras.hasta.slice(0, 4)}. Montos nominales.`}
               serie={compras.serie}
             />
           )}
@@ -269,7 +264,7 @@ export function HomePage() {
               titulo={`Población ${poblacion.anio}`}
               valor={<CountUp value={poblacion.actual} format={entero} />}
               unidad="hab."
-              detalle={`La provincia creció ${decimal.format(poblacion.variacionCensos)} % entre los censos 2010 y 2022.`}
+              detalle={`${decimal.format(poblacion.variacionCensos)} % más que en el censo 2010.`}
               serie={poblacion.serie}
             />
           )}
@@ -282,7 +277,7 @@ export function HomePage() {
               titulo="Boletín Oficial"
               valor={<CountUp value={boletin.normas} format={entero} />}
               unidad="normas"
-              detalle={`Del ${formatDate(boletin.desde)} al ${formatDate(boletin.hasta)}: ${boletin.designaciones} designaciones, ${boletin.contrataciones} contrataciones y ${boletin.presupuesto} cambios de presupuesto.`}
+              detalle={`${formatNumber(boletin.designaciones)} designaciones desde el ${formatDate(boletin.desde)}.`}
             />
           )}
         </div>
@@ -318,7 +313,7 @@ export function HomePage() {
             id="temas"
             icon={RiLayoutGridLine}
             titulo="Todo lo que hay"
-            bajada={`${formatNumber(guide.counts.records)} registros ordenados en cuatro preguntas. Elegí por dónde seguir.`}
+            bajada={`${formatNumber(guide.counts.records)} registros, en cuatro preguntas.`}
           />
           <EcosystemMap guide={guide} />
         </section>
@@ -329,7 +324,7 @@ export function HomePage() {
           id="como-leer"
           icon={RiBookOpenLine}
           titulo="Cómo leer estos datos"
-          bajada="Cuatro reglas para entender lo que vas a ver."
+          bajada="Cuatro reglas antes de sacar conclusiones."
         />
         <ReadingRules />
       </section>
@@ -346,7 +341,7 @@ function MissingData({ items }: { items: NoPublicado[] }) {
         id="no-publicado"
         icon={RiEyeOffLine}
         titulo="Lo que el Estado no publica"
-        bajada={`${items.length} datos que deberían ser públicos y no encontramos en ningún sitio oficial. Podés pedirlos vos.`}
+        bajada={`${items.length} datos que deberían ser públicos y no están. Podés pedirlos vos.`}
       />
       <ul className={listVariants()}>
         {items.slice(0, 4).map((item) => (
@@ -467,12 +462,12 @@ function Cifra({ icon: Icon, titulo, valor, unidad, detalle, serie, fuente, to, 
   );
 }
 
-function Senal({ valor, texto, matiz }: { valor: string; texto: string; matiz: string }) {
+/** A figure and one sentence: the nuance and the cases live in /senales. */
+function Senal({ valor, texto }: { valor: string; texto: string }) {
   return (
     <div className={cx(tileVariants({ size: "lg" }), "flex flex-col gap-2")}>
-      <span className="text-display-4-semibold tracking-tight tabular-nums">{valor}</span>
-      <span className="text-text-primary text-pretty">{texto}</span>
-      <span className="text-body-regular text-text-tertiary text-pretty">{matiz}</span>
+      <span className="text-display-4-semibold tracking-tight whitespace-nowrap tabular-nums">{valor}</span>
+      <span className="text-title-3-medium text-balance">{texto}</span>
     </div>
   );
 }

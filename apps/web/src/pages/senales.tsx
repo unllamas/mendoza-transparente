@@ -49,8 +49,8 @@ export function SenalesPage() {
         topic="Para mirar de cerca"
         title="Lo que los datos muestran y nadie explica"
       >
-        Patrones en los datos oficiales que merecen una explicación. No son acusaciones: son preguntas que cualquier ciudadano puede hacerle
-        al Estado, con los casos concretos para revisar.
+        Patrones en los datos oficiales que merecen una explicación. No son acusaciones: son preguntas al Estado, con los casos para
+        revisar.
       </PageHeader>
 
       {lead && (
@@ -105,16 +105,27 @@ export function SenalesPage() {
 /** Blocks of the page, in reading order; "datos" goes above them, without a title. */
 const GROUPS: SignalGroup[] = ["competencia", "precios", "proveedores"];
 
+/** The figure and one sentence; the nuance, why it matters and the cases open in the sheet. */
 function SignalCard({ signal: s, onOpen }: { signal: Senal; onOpen: (s: Senal) => void }) {
   return (
-    <button type="button" onClick={() => onOpen(s)} className={cx(cardVariants({ size: "lg" }), "flex h-full w-full flex-col gap-3")}>
+    <button type="button" onClick={() => onOpen(s)} className={cx(cardVariants({ size: "lg" }), "flex h-full w-full flex-col gap-2")}>
       <span className="text-display-3-semibold tracking-tight whitespace-nowrap tabular-nums">{s.cifra}</span>
-      <span className="text-body-regular text-pretty">{s.titulo}</span>
-      <span className="text-body-regular text-text-tertiary text-pretty">{s.matiz}</span>
+      <span className="text-title-3-medium text-balance">{s.titulo}</span>
       <span className="mt-auto inline-flex items-center gap-1 pt-1 text-body-medium text-text-link">
         {s.casos.length ? `Ver los ${s.casos.length} casos` : "Por qué importa"} <RiArrowRightSLine className="size-5" aria-hidden />
       </span>
     </button>
+  );
+}
+
+/** "$ 1.673 M": the unit apart and small, so the case title keeps the room on a phone. */
+function Amount({ value }: { value: number }) {
+  if (value < 1e6) return <span className="text-body-medium">{formatMoneda(value, "ARS")}</span>;
+  return (
+    <span className="flex items-baseline gap-1">
+      <span className="text-body-medium">{formatMoneda(value, "ARS").replace(" millones", "")}</span>
+      <span className="text-caption-1-regular text-text-tertiary">M</span>
+    </span>
   );
 }
 
@@ -199,10 +210,7 @@ function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }
           {s.casos.length > 0 && (
             <section className="flex flex-col gap-2">
               <div className="flex items-center justify-between gap-3">
-                <div className="flex min-w-0 flex-col gap-0.5">
-                  <h4 className="text-body-semibold">{s.casosTitulo}</h4>
-                  <span className="text-caption-1-regular text-text-tertiary">Tocá un caso para ver el detalle completo</span>
-                </div>
+                <h4 className="min-w-0 text-body-semibold">{s.casosTitulo}</h4>
                 {s.casos.length > 3 && orders.length > 1 && <CaseOrderMenu orders={orders} value={order} onChange={setOrder} />}
               </div>
               <ul className={listVariants()}>
@@ -216,13 +224,13 @@ function SenalSheet({ senal: s, onClose }: { senal: Senal; onClose: () => void }
                       )}
                       <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                         <span className="line-clamp-2 text-body-regular group-hover:text-text-link">{c.titulo}</span>
-                        <span className="line-clamp-2 text-caption-1-regular text-text-tertiary">
-                          {c.fecha ? `${formatDate(c.fecha)} · ` : ""}
-                          {c.detalle}
-                        </span>
+                        <span className="truncate text-caption-1-regular text-text-tertiary">{c.detalle}</span>
                       </span>
-                      {c.monto !== null && (
-                        <span className="text-body-medium whitespace-nowrap tabular-nums">{formatMoneda(c.monto, "ARS")}</span>
+                      {(c.monto !== null || c.fecha) && (
+                        <span className="flex shrink-0 flex-col items-end gap-0.5 whitespace-nowrap tabular-nums">
+                          {c.monto !== null && <Amount value={c.monto} />}
+                          {c.fecha && <span className="text-caption-1-regular text-text-tertiary">{formatDate(c.fecha)}</span>}
+                        </span>
                       )}
                       <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
                     </button>
