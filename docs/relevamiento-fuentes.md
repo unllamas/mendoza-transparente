@@ -261,7 +261,7 @@ No hay universidad provincial. Lo más parecido es el **Instituto Universitario 
 | UTN FRM y FRSR | `https://frm.utn.edu.ar/` · `https://www.frsr.utn.edu.ar/` | Solo institucional, sin sección de transparencia. Sus compras van por COMPR.AR nacional | — | — | — |
 | Universidades privadas (Universidad de Mendoza, Maza, Aconcagua, Congreso, Champagnat, UCA) | Sitios de cada una | Autoridades, becas y carreras. **Ninguna publica cifras ni gastos**; no están obligadas. Sus estudiantes figuran en el Anuario nacional | HTML | — | 🟡 |
 
-**Pedidos de información.** La UNCuyo está alcanzada por la Ley 27.275. Responsable de acceso a la información: Coordinación Legal y Técnica (`rec.cglyt@uncuyo.edu.ar`). No tiene formulario propio: se pide por la Agencia de Acceso a la Información Pública (`https://www.argentina.gob.ar/solicitar-informacion-publica`). La UTN tiene un formulario propio en su página de transparencia.
+**Pedidos de información.** La UNCuyo está alcanzada por la Ley 27.275. Responsable de acceso a la información: Coordinación Legal y Técnica (`rec.cglyt@uncuyo.edu.ar`). No tiene formulario propio: el pedido se manda a ese correo (verificado el 18/10/2026 en `/transparencia/guia_contactos`). La UTN tiene un formulario propio, `https://forms.office.com/r/ePbdW5KjRK`, enlazado desde su página de transparencia.
 
 **Preguntas que se pueden responder:** cuántos estudiantes tiene la UNCuyo y cómo evolucionó, cuántos ingresan y egresan, cuánto le manda la Nación y en qué se gasta (casi todo es sueldo: el 99,8 % del gasto del Tesoro en 2024), cuánto cuesta cada estudiante, cuánto recibe el hospital universitario, qué becas da y qué obras hace. **No se pueden responder:** cuántos estudiantes o cuánta plata tiene la UTN en Mendoza, ni los sueldos y la planta de la UNCuyo con su costo.
 
@@ -349,7 +349,7 @@ Las ordenanzas tarifarias fijan los valores en **Unidades Tributarias Municipale
 10. Financiamiento de campañas provinciales.
 11. Turnos y esperas en salud, estadísticas propias de seguridad, matrícula descargable de la DGE, datos del IPV.
 12. Datos de San Martín y Lavalle.
-13. Universidades nacionales (ver 2.11): la ejecución de la UNCuyo en un formato descargable (hoy solo PDF y Power BI); qué compró y a quién (adjudicatario y monto); la planta con su costo; el presupuesto de cada regional de la UTN en Mendoza; estudiantes y egresados por facultad desde la Nación. **Todavía no están en `data/curado/no-publicado.yaml`** porque la página `/no-publicado` arma todos los pedidos con la Ley provincial 9070 y su formulario, y a las universidades nacionales se les pide por la Ley 27.275 en `https://www.argentina.gob.ar/solicitar-informacion-publica`. Antes de cargarlos, la página tiene que elegir la ley y el formulario según el organismo.
+13. Universidades nacionales (ver 2.11): la ejecución de la UNCuyo en un formato descargable (hoy solo PDF y Power BI); qué compró y a quién (adjudicatario y monto); la planta con su costo; los estudiantes y el presupuesto de las regionales de la UTN en Mendoza y San Rafael. Están en `data/curado/no-publicado.yaml` con `ley: "27275"` y el lugar donde se presentan (formulario propio de la UTN; correo de la UNCuyo).
 
 Cada punto puede llevar un botón **"Pedilo vos"**, que arme un pedido de acceso a la información con la Ley 9070 (formulario: `https://ticketsform.mendoza.gov.ar/ticketsform/servlet/responderformulario?AIP_SOLICITUDINFORMACIONPUBLICA`, plazo de 15 días hábiles), y un contador público de pedidos hechos y respondidos.
 

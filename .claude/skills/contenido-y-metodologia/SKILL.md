@@ -32,7 +32,7 @@ Fuente completa: `docs/procesos/metodologia.md`. Glosario público: `apps/web/sr
 
 | Archivo | Qué es | Regla |
 |---|---|---|
-| `no-publicado.yaml` | Datos que el Estado debería publicar | Cada entrada lleva `categoria` (el build falla sin ella), organismo, marco legal, dónde se buscó y el pedido. Todo dato que no se encuentra se suma acá. |
+| `no-publicado.yaml` | Datos que el Estado debería publicar | Cada entrada lleva `categoria` (el build falla sin ella), organismo, marco legal, dónde se buscó y el pedido. Todo dato que no se encuentra se suma acá. Los organismos nacionales (UNCuyo, UTN) llevan `ley: "27275"` y su `formulario`. Si un dato no se puede separar para Mendoza (la UTN), se avisa en la página con el link al pedido: ver `metodologia.md#fuentes-y-acceso-a-la-información`. |
 | `correcciones.yaml` | Cuando dos fuentes oficiales no coinciden | Se explica la diferencia y se cita la fuente. Se muestra como nota visible. |
 | `leyes.yaml` | Resúmenes de leyes en lenguaje simple | Hechos con IA a partir del texto oficial (criterios en `resumir-leyes.ts`). Siempre se presentan como hechos con IA, y revisados (`revisado:`) cuando corresponde. |
 | `transparencia-municipal.yaml` | Qué publica cada municipio (9 cosas) | Una lista verificable, no un puntaje: estado, último dato, link y `fecha_verificacion`. Lo que ya bajamos (anexo 19, declaraciones juradas) manda sobre el relevamiento. Se revisa cada trimestre con el proceso de `docs/procesos/relevamiento-municipal.md`; criterios en `metodologia.md#transparencia-municipal`. |

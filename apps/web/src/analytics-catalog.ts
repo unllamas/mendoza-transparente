@@ -156,7 +156,8 @@ export const EVENT_CATALOG: EventDoc[] = [
   },
   {
     event: "missing_data.request.official_form",
-    description: "Fue al formulario oficial del Gobierno para presentar el pedido. Propiedad item.",
+    description:
+      "Fue a presentar el pedido: el formulario oficial de la provincia o de la Nación, o el correo del organismo. Propiedad item.",
     tags: ["no publicado", "embudo de pedidos"],
   },
   {
@@ -169,7 +170,11 @@ export const EVENT_CATALOG: EventDoc[] = [
     description: "Abrió uno de los sitios oficiales donde buscamos el dato. Propiedad item.",
     tags: ["no publicado"],
   },
-  { event: "missing_data.law.open", description: "Abrió el texto de la Ley 9070 de acceso a la información.", tags: ["no publicado"] },
+  {
+    event: "missing_data.law.open",
+    description: "Abrió el texto de una ley de acceso a la información. Propiedad law: 9070 (provincial) o 27275 (nacional).",
+    tags: ["no publicado"],
+  },
   { event: "law.official_pdf.open", description: "Abrió el PDF oficial de una ley. Propiedad law: número.", tags: ["leyes"] },
   { event: "law.full_text.toggle", description: "Desplegó o plegó el texto completo de una ley. Propiedad law.", tags: ["leyes"] },
   {
