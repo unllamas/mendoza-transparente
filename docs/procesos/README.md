@@ -30,6 +30,7 @@ bun run panel                    # panel interno en desarrollo (misma base local
 bun run scrape <fuente> [args]   # correr un scraper
 bun run actualizar               # actualización manual de las fuentes bloqueadas en la nube
 bun run verificar                # controles de la web (scroll horizontal y consola)
+bun run hallazgo                 # cargar un hallazgo de seguridad en el panel (JSON por la entrada estándar, ver seguridad.md)
 bun run vista-previa <ruta>      # capturas en 375 y 1280 px para revisar una vista previa
 bun run typecheck                # tipos de todo el monorepo
 ```

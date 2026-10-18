@@ -13,6 +13,7 @@
     "typecheck": "turbo run typecheck",
     "actualizar": "bun scripts/actualizar.ts",
     "archivar": "bun packages/scrapers/src/archive-org.ts",
+    "hallazgo": "bun packages/participation/src/report-finding.ts",
     "verificar": "bun scripts/verificar-web.ts",
     "medir": "bun scripts/measure-vitals.ts",
     "vista-previa": "bun scripts/vista-previa.ts",

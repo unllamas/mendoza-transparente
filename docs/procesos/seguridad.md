@@ -17,19 +17,42 @@ Acceder sin autorización a un sistema o a datos de acceso restringido es delito
 
 1. **Parar.** No seguir navegando por ahí ni descargar nada más.
 2. **Si un scraper ya lo bajó,** ese crudo no se commitea ni se sube a archive.org: es la única excepción a «`data/raw/` es de solo agregar». Si ya está en el repositorio, avisar al responsable del repositorio para decidir cómo sacarlo de la historia. Si la fuente puede volver a traerlo, el scraper se corrige o la fuente se pausa en el mismo cambio.
-3. **Cargarlo en el panel:** [Seguridad → Nuevo hallazgo](https://panel.mendoza-transparente.com/seguridad). Ver «Qué se carga» más abajo.
+3. **Cargarlo en el panel:** una persona, desde [Seguridad → Nuevo hallazgo](https://panel.mendoza-transparente.com/seguridad); un agente, con `bun run hallazgo` (ver «Agentes»). Ver «Qué se carga» más abajo.
 4. **Reportarlo** a quien corresponde, ver abajo, y anotar en el panel a quién, cuándo y con qué número de ticket o expediente.
 5. **Seguirlo:** si en 30 días no hay respuesta, se vuelve a reportar. Cuando se corrige, se anota la fecha.
 
 ### Agentes
 
-Un agente no tiene acceso al panel de producción y no carga hallazgos. Si encuentra algo:
+Quien mejor ve el problema es el agente o el subagente que lo encontró, así que lo carga él mismo con un script local, sin pasar por la persona:
 
-- para;
-- se lo cuenta a la persona en el chat con lo mínimo (dónde, qué tipo de dato, sin copiarlo);
-- no lo escribe en archivos del repositorio, commits, PR ni issues.
+```bash
+bun run hallazgo <<'JSON'
+{
+  "title": "Carpeta de subidas con planillas de beneficiarios",
+  "kind": "personal_data",
+  "exposesPersonalData": true,
+  "severity": "high",
+  "agency": "Municipalidad de …",
+  "location": "https://…/wp-content/uploads/",
+  "description": "El listado de la carpeta está abierto y muestra planillas con nombres y DNI de beneficiarios. No se abrió ningún archivo."
+}
+JSON
+```
 
-Un subagente lo pone en su reporte final como **hallazgo de seguridad**, con las mismas reglas, y la sesión principal se lo pasa a la persona, que lo carga en el panel.
+- **Campos:** los de «Qué se carga». `kind` puede ser `personal_data`, `vulnerability`, `misconfiguration`, `compromised_site` u `other`, y `severity`, `high`, `medium` o `low`. El reporte (a quién, cuándo) no lo carga el agente: es un paso de una persona, desde el panel.
+- **Qué controla el script:**
+  - la misma validación que el panel;
+  - si el texto tiene un correo, un teléfono, un CUIL o un número de DNI, no lo carga (nombrar el tipo de dato, «nombres y DNI», sí se puede);
+  - si ya hay un hallazgo abierto en la misma dirección, no lo duplica y devuelve su código, así varias sesiones en paralelo lo cargan una sola vez;
+  - imprime solo el código;
+  - queda en la auditoría como `agente (<correo de git>)`;
+  - no corre en CI.
+- **Credenciales:** usa `CLOUDFLARE_ACCOUNT_ID` y `CLOUDFLARE_API_TOKEN`. Las toma del shell, o del `.env.cloudflare` de esta copia o de la principal. Si faltan, el script dice cómo cargarlas.
+- **Para probar,** `bun run hallazgo --local` escribe en la base de desarrollo.
+- **Después de cargarlo,** el agente le avisa a la persona en el chat con el código `S-…` y nada más. Nunca lo escribe en archivos del repositorio, commits, PR ni issues.
+- **Un subagente** lo carga igual y pone el código en su reporte final.
+
+Código: `packages/participation/src/report-finding.ts`, sobre la API HTTP de D1 (`remote-d1.ts`).
 
 ## A quién se reporta y cómo
 
@@ -56,7 +79,7 @@ Cada reporte sale por escrito y queda anotado en el panel: a quién, en qué fec
 
 ### Sin nada de esto en los scrapers
 
-Los scrapers corren en GitHub Actions, con logs públicos, y sus resultados van a un repositorio público. Un scraper nunca detecta, describe ni imprime un problema de seguridad: si una fuente devuelve algo raro, falla con un mensaje genérico («la fuente devolvió algo inesperado, revisar a mano») y una persona lo mira. Los hallazgos los carga siempre una persona en el panel; nada escribe solo en esa tabla.
+Los scrapers corren en GitHub Actions, con logs públicos, y sus resultados van a un repositorio público. Un scraper nunca detecta, describe ni imprime un problema de seguridad: si una fuente devuelve algo raro, falla con un mensaje genérico («la fuente devolvió algo inesperado, revisar a mano») y una persona lo mira. Los hallazgos los carga una persona desde el panel o un agente con `bun run hallazgo` en una máquina del equipo, nunca un proceso automático.
 
 ## Qué se carga
 

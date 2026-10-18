@@ -124,3 +124,18 @@ export async function updateFinding(db: Db, code: string, patch: FindingInput, a
     .run();
   return res.meta.changes;
 }
+
+/**
+ * An open finding about the same thing: the same address or, without one, the same title for the same agency.
+ * Several sessions can run into the same problem; it is loaded once.
+ */
+export async function openDuplicate(db: Db, f: Pick<FindingInput, "location" | "title" | "agency">): Promise<string | null> {
+  const open = "status IN ('new', 'reported', 'acknowledged')";
+  const r = f.location
+    ? await db.prepare(`SELECT code FROM security_findings WHERE ${open} AND location = ?`).bind(f.location).first<{ code: string }>()
+    : await db
+        .prepare(`SELECT code FROM security_findings WHERE ${open} AND lower(title) = lower(?) AND lower(COALESCE(agency, '')) = lower(?)`)
+        .bind(f.title ?? "", f.agency ?? "")
+        .first<{ code: string }>();
+  return r?.code ?? null;
+}

@@ -59,7 +59,7 @@ const csvCell = (v: unknown) => {
  * Reads the fields of a security finding present in `body`. A field sent empty clears it; a field not sent
  * is left alone. Returns a message when something is invalid.
  */
-function findingInput(body: Record<string, unknown>): FindingInput | string {
+export function findingInput(body: Record<string, unknown>): FindingInput | string {
   const f: FindingInput = {};
   if ("title" in body) {
     const v = text(body.title, 200);

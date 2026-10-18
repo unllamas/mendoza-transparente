@@ -21,7 +21,7 @@ Fuentes completas: `docs/procesos/agregar-una-fuente.md`, `datos-y-archivo.md` y
 
 ## Si aparece un problema de seguridad
 
-Una carpeta abierta con datos de la gente, un sitio hackeado, un sistema que muestra lo que no debería: **parar**, no descargar nada más y no commitear ni subir a archive.org un crudo que lo traiga. Se carga en el panel (Seguridad) y se reporta. Nunca buscar fallas, pasar un login o captcha, ni contarlo en el repositorio, un commit, un PR o un issue. Un agente se lo cuenta a la persona en el chat, sin copiar los datos. Proceso completo: `docs/procesos/seguridad.md`.
+Una carpeta abierta con datos de la gente, un sitio hackeado, un sistema que muestra lo que no debería: **parar**, no descargar nada más y no commitear ni subir a archive.org un crudo que lo traiga. El agente lo carga en el panel con `bun run hallazgo` (JSON por la entrada estándar, sin copiar los datos) y le pasa el código `S-…` a la persona, que lo reporta. Nunca buscar fallas, pasar un login o captcha, ni contarlo en el repositorio, un commit, un PR o un issue. Proceso completo: `docs/procesos/seguridad.md`.
 
 ## Pasos para una fuente nueva
 

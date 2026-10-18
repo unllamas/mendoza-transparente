@@ -279,6 +279,24 @@ describe("security findings", () => {
   });
 });
 
+describe("security findings from the script", () => {
+  test("an open finding at the same address is found, so several sessions load it once", async () => {
+    const { addFinding, openDuplicate, updateFinding } = await import("./security.ts");
+    const f = {
+      title: "Carpeta abierta",
+      kind: "personal_data" as const,
+      description: "Planillas",
+      location: "https://a.example.gob.ar/x/",
+    };
+    expect(await openDuplicate(db, f)).toBeNull();
+    const code = await addFinding(db, f, "agente", "2026-10-18T00:00:00Z");
+    expect(await openDuplicate(db, f)).toBe(code);
+    expect(await openDuplicate(db, { title: "carpeta abierta", agency: null })).toBeNull();
+    await updateFinding(db, code, { status: "fixed" }, "equipo", "2026-10-19T00:00:00Z");
+    expect(await openDuplicate(db, f)).toBeNull();
+  });
+});
+
 describe("access", () => {
   const config = { teamDomain: "equipo.cloudflareaccess.com", audience: "aud-123", allowedEmails: ["equipo@example.com"] };
   let keys: CryptoKeyPair;

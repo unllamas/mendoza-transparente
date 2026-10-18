@@ -47,7 +47,7 @@ Las skills del proyecto (`.claude/skills/<nombre>/SKILL.md`) son la puerta de en
 
 ## Seguridad y legalidad (regla sin excepciones)
 
-Solo se usa lo que el Estado publica. Nunca buscar fallas, pasar un login o un captcha, ni descargar o guardar datos personales expuestos por error. Si aparece un problema de seguridad: parar, contárselo a la persona en el chat sin copiar los datos, y que ella lo cargue en el panel (Seguridad) para reportarlo al organismo, a CERT.ar y, si hay datos personales, a la AAIP. Nunca se escribe en el repositorio, en commits, PR o issues. Proceso completo: `docs/procesos/seguridad.md`.
+Solo se usa lo que el Estado publica. Nunca buscar fallas, pasar un login o un captcha, ni descargar o guardar datos personales expuestos por error. Si aparece un problema de seguridad: parar, cargarlo en el panel con `bun run hallazgo` (JSON por la entrada estándar, sin copiar los datos) y avisarle a la persona con el código `S-…`, para que lo reporte al organismo, a CERT.ar y, si hay datos personales, a la AAIP. Nunca se escribe en el repositorio, en commits, PR o issues. Proceso completo: `docs/procesos/seguridad.md`.
 
 ## Pedidos de mejora
 
