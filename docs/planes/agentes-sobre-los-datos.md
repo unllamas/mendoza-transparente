@@ -7,7 +7,7 @@ Fecha: 16/10/2026. Estado: propuesta, sin empezar. Falta decidir las preguntas a
 ## Por qué así y no un chat en la web
 
 - **La responsabilidad de la respuesta.** Si el modelo inventa o adjetiva dentro de nuestra web, la frase queda atribuida a Mendoza Transparente. Con un servidor MCP, nosotros entregamos datos verificables y el asistente de cada persona redacta. Es el mismo criterio de "señales, no acusaciones" (`docs/procesos/metodologia.md`), llevado a la IA.
-- **Costo y abuso.** Un servidor MCP no paga tokens de modelo: solo lee datos. Un chat público paga cada consulta y es un blanco fácil en época electoral.
+- **Costo y abuso.** Un servidor MCP no paga tokens de modelo: solo lee datos. Un chat público paga cada consulta y es un blanco fácil para el abuso.
 - **El stack.** Todo vive en Cloudflare (Pages, Functions, D1). Un MCP sobre Workers con el Agents SDK de Cloudflare no suma otra plataforma.
 
 ### Por qué no eve de Vercel

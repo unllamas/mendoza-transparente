@@ -14,8 +14,6 @@ El Estado de Mendoza publica mucho: presupuesto, deuda, compras, Boletín Oficia
 
 Mendoza Transparente hace el trabajo pesado una sola vez, para que nadie más tenga que hacerlo: descarga cada archivo, lo guarda tal cual, lo ordena y lo muestra de forma que se entienda. Si un vecino quiere saber cuánto debe la Provincia, a quién le compra o qué ley lo afecta, no debería necesitar un contador ni un abogado para averiguarlo.
 
-Lo construimos de cara a las elecciones de 2027, para que la discusión pública arranque desde los mismos datos.
-
 ## Qué vas a encontrar
 
 | Sección | La pregunta que contesta |
