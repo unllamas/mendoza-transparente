@@ -116,13 +116,13 @@ export function ProveedorPage() {
   }
   const nombre = ficha.empresa?.razonSocial ?? ficha.nombre;
   return (
-    <div className="flex max-w-2xl flex-col gap-8">
+    <div className="flex flex-col gap-8">
       <WithBreadcrumbs items={[{ label: "Proveedores", to: "/proveedores" }]} current={{ label: `CUIT ${cuit}`, icon: RiBuilding2Line }}>
         <div className="flex flex-col gap-2">
           <h1 className="text-title-1-semibold tracking-tight text-balance break-words sm:text-display-4-semibold">{nombre}</h1>
         </div>
       </WithBreadcrumbs>
-      <Proveedor cuit={cuit} initial={ficha} sinTitulo onProceso={(ocid) => detail.open("proceso", ocid)} />
+      <Proveedor cuit={cuit} initial={ficha} sinTitulo columns onProceso={(ocid) => detail.open("proceso", ocid)} />
       <FuentesOficiales ids={FUENTES} />
     </div>
   );
