@@ -15,6 +15,8 @@ El activo principal del proyecto es la credibilidad. Estos criterios se aplican 
 - **Por habitante**: proyecciones de población de INDEC (base Censo 2010 hasta 2021 y base Censo 2022 desde 2022).
 - **Deuda en dólares**: para comparar años con distinta inflación; se aclara que la deuda en pesos baja medida en dólares cuando hay devaluación.
 - **Comparación por mandato**: el corte más cercano a la asunción contra el más cercano a la salida (o el último, si el mandato sigue).
+- **Año en curso contra el anterior**: los mismos meses de los dos años (de enero al último mes publicado), en pesos de hoy; nunca un año parcial contra uno completo. Para un presupuesto del año, lo vigente a la fecha de corte contra lo recibido el año anterior, aclarando que puede ampliarse. Los años sin IPC (antes de 1997) no se pasan a pesos de hoy y quedan afuera de los gráficos.
+- **Egreso y duración de las carreras**: solo con seguimiento por camada (cuántos de los que entraron un año se recibieron, y en cuántos años). Los egresados de un año divididos por los ingresantes de años antes no son una tasa de graduación: mezclan camadas, cambios de carrera y carreras de distinta duración (en la UNCuyo, Medicina da 98 % porque tiene cupo de ingreso). No se publica; se muestra la falta con el pedido (`uncuyo-carreras` en `no-publicado.yaml`).
 - **Compras**: montos adjudicados nominales; si una adjudicación tiene varios proveedores, el monto se reparte en partes iguales.
 
 ## Cruces entre fuentes

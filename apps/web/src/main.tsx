@@ -29,7 +29,9 @@ import type {
   PoblacionTema,
   ProveedorDetalle,
   ProveedorResumen,
+  RecaudacionTema,
   SenalesTema,
+  UniversidadesTema,
 } from "./types.ts";
 
 // Each page is its own chunk: the first visit downloads only the layout and the page it lands on.
@@ -73,6 +75,27 @@ const deudaRoute = createRoute({
   path: "/deuda",
   loader: () => loadTema<DeudaTema>("deuda"),
   component: page(() => import("./pages/deuda.tsx"), "DeudaPage"),
+});
+
+const recaudacionRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/recaudacion",
+  loader: () => loadTema<RecaudacionTema>("recaudacion"),
+  component: page(() => import("./pages/recaudacion.tsx"), "RecaudacionPage"),
+});
+
+const universidadesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/universidades",
+  loader: () => loadTema<UniversidadesTema>("universidades"),
+  component: page(() => import("./pages/universidades.tsx"), "UniversidadesPage"),
+});
+
+const uncuyoRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/universidades/uncuyo",
+  loader: () => loadTema<UniversidadesTema>("universidades"),
+  component: page(() => import("./pages/universidades.tsx"), "UncuyoPage"),
 });
 
 const empleoRoute = createRoute({
@@ -295,6 +318,9 @@ const router = createRouter({
     homeRoute,
     deudaRoute,
     coparticipacionRoute,
+    recaudacionRoute,
+    universidadesRoute,
+    uncuyoRoute,
     empleoRoute,
     poblacionRoute,
     funcionariosRoute,

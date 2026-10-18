@@ -1,0 +1,38 @@
+{
+  "titulo": "Estudiantes de la UNCuyo y la UTN por rama de estudio y disciplina",
+  "descripcion": "Cada fila es una universidad nacional, un año, una rama de estudio y una disciplina (o el total de la rama), con estudiantes, nuevos inscriptos, reinscriptos y egresados de pregrado y grado del Anuario de Estadísticas Universitarias (cuadros por disciplina del capítulo 2.1). Solo están los años con detalle por disciplina: 2018, 2020, 2021, 2023 y 2024 (no hay anuario con este detalle para 2019 ni 2022). Cada año sale del anuario de ese año; las filas con disciplina «total» suman las disciplinas de la rama y, sumadas entre ramas, dan el total de pregrado y grado de estudiantes.csv. Las disciplinas con todo en cero no se publican. La UNCuyo es de Mendoza; la UTN reporta como una sola universidad para todo el país y no se puede separar Mendoza ni San Rafael. El último año viene de un adelanto del Anuario que puede corregirse. No hay datos por carrera: la disciplina agrupa carreras (por ejemplo «Ingeniería» o «Derecho»).",
+  "columnas": {
+    "anio": { "etiqueta": "Año", "tipo": "anio" },
+    "universidad_id": {
+      "etiqueta": "Universidad",
+      "tipo": "texto",
+      "valores": { "uncuyo": "UNCuyo", "utn": "UTN" },
+      "oculta": true
+    },
+    "universidad": { "etiqueta": "Universidad", "tipo": "texto" },
+    "rama": {
+      "etiqueta": "Rama de estudio",
+      "tipo": "texto",
+      "descripcion": "Clasificación del Anuario: Ciencias Aplicadas, Ciencias Básicas, Ciencias de la Salud, Ciencias Humanas, Ciencias Sociales y Sin rama (títulos que el Anuario no ubicó en una rama)."
+    },
+    "disciplina": {
+      "etiqueta": "Disciplina",
+      "tipo": "texto",
+      "descripcion": "Disciplina de la clasificación del Anuario. «total» es el total de la rama (la suma de sus disciplinas); en «Sin rama» solo hay total."
+    },
+    "estudiantes": { "etiqueta": "Estudiantes", "tipo": "numero", "descripcion": "Estudiantes del año (nuevos inscriptos más reinscriptos)." },
+    "nuevos_inscriptos": { "etiqueta": "Nuevos inscriptos", "tipo": "numero" },
+    "reinscriptos": { "etiqueta": "Reinscriptos", "tipo": "numero" },
+    "egresados": { "etiqueta": "Egresados", "tipo": "numero", "descripcion": "Egresados del año de títulos de pregrado y grado." },
+    "alcance": {
+      "etiqueta": "Alcance",
+      "tipo": "texto",
+      "valores": { "mendoza": "Mendoza", "nacional": "Todo el país" },
+      "descripcion": "La UTN es una sola universidad nacional: su cifra incluye todas sus facultades regionales, no solo las de Mendoza."
+    },
+    "anuario": { "etiqueta": "Anuario", "tipo": "anio", "descripcion": "Año del Anuario de donde sale el dato." },
+    "fuente_archivo": { "etiqueta": "Archivo de origen", "tipo": "texto", "oculta": true },
+    "cuadro": { "etiqueta": "Cuadro", "tipo": "texto", "descripcion": "Cuadro del Anuario de donde sale la fila (un cuadro por rama; el número cambia entre anuarios)." }
+  },
+  "orden": ["anio", "universidad", "rama", "disciplina", "estudiantes", "nuevos_inscriptos", "reinscriptos", "egresados", "alcance", "anuario", "cuadro"]
+}

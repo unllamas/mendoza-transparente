@@ -33,7 +33,9 @@ import type {
   OrganismoResumen,
   PoblacionTema,
   ProveedorResumen,
+  RecaudacionTema,
   SenalesTema,
+  UniversidadesTema,
 } from "../src/types.ts";
 
 export interface Pagina {
@@ -97,6 +99,8 @@ const NAV = [
   ["/organismos", "Organismos que compran"],
   ["/deuda", "Deuda"],
   ["/coparticipacion", "Coparticipación"],
+  ["/recaudacion", "Recaudación"],
+  ["/universidades", "Universidades"],
   ["/empleo-publico", "Empleo público"],
   ["/poblacion", "Población"],
   ["/no-publicado", "Lo que no se publica"],
@@ -169,6 +173,8 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
   const copa = await json<CoparticipacionTema | null>("temas/coparticipacion.json", null);
   const empleo = await json<EmpleoTema | null>("temas/empleo.json", null);
   const poblacion = await json<PoblacionTema | null>("temas/poblacion.json", null);
+  const recaudacion = await json<RecaudacionTema | null>("temas/recaudacion.json", null);
+  const universidades = await json<UniversidadesTema | null>("temas/universidades.json", null);
   const funcionarios = await json<FuncionariosTema>("temas/funcionarios.json", { personas: [] });
   const municipios = await json<MunicipioPagina[]>("temas/municipios.json", []);
   const organismos = await json<OrganismoResumen[]>("temas/organismos.json", []);
@@ -390,6 +396,84 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
         fuente: { nombre: "INDEC, censos y proyecciones de población", url: fuente("poblacion")?.url },
       }),
       lastmod: lastFetch("poblacion"),
+      prioridad: 0.6,
+    });
+  }
+
+  if (recaudacion) {
+    const r = recaudacion;
+    const change = ((r.total.actual - r.total.anterior) / r.total.anterior) * 100;
+    const resumen = `De ${r.periodo} de ${r.anio} la Administración Tributaria Mendoza recaudó ${pesos(r.total.actual)} (en pesos de ${r.referencia}), ${nf1.format(Math.abs(change))} % ${change >= 0 ? "más" : "menos"} que en los mismos meses de ${r.anio - 1}, descontada la inflación. Ingresos Brutos es el impuesto que más recauda.`;
+    const migas: Miga[] = [
+      ["/", "Inicio"],
+      ["/recaudacion", "Recaudación"],
+    ];
+    estatica("/recaudacion", {
+      figura: pesosCorto(r.total.actual),
+      bajada: `Recaudado de ${r.periodo} de ${r.anio}, en pesos de ${r.referencia}.`,
+      ld: [breadcrumb(migas), faq([["¿Cuánto recauda Mendoza con sus impuestos?", resumen]])],
+      html: cuerpo({
+        migas,
+        h1: "¿Cuánto recauda Mendoza con sus impuestos?",
+        resumen,
+        datos: r.porImpuesto.map((i) => [i.nombre, pesos(i.actual)]),
+        fuente: { nombre: "Administración Tributaria Mendoza (ATM)", url: fuente("atm-recaudacion")?.url },
+        actualizado: lastFetch("atm-recaudacion"),
+      }),
+      lastmod: lastFetch("atm-recaudacion"),
+      prioridad: 0.7,
+    });
+  }
+
+  if (universidades) {
+    const u = universidades;
+    const students = u.estudiantes.at(-1);
+    const hubMigas: Miga[] = [
+      ["/", "Inicio"],
+      ["/universidades", "Universidades"],
+    ];
+    const hubResumen = `En Mendoza hay dos universidades nacionales: la UNCuyo, que tiene presupuestados ${pesos(u.enCurso.presupuestado)} de Nación para ${u.enCurso.anio}, y la UTN, que informa una sola cifra para todo el país y no permite saber cuánto queda en sus facultades de Mendoza y San Rafael.`;
+    estatica("/universidades", {
+      figura: "UNCuyo y UTN",
+      bajada: "Cuánto les transfiere Nación y qué datos faltan.",
+      ld: [breadcrumb(hubMigas), faq([["¿Cuánta plata reciben las universidades nacionales en Mendoza?", hubResumen]])],
+      html: cuerpo({
+        migas: hubMigas,
+        h1: "Universidades nacionales en Mendoza",
+        resumen: hubResumen,
+        secciones: [{ titulo: "Universidades", items: [{ texto: "Universidad Nacional de Cuyo", href: "/universidades/uncuyo" }] }],
+        fuente: { nombre: "Presupuesto Abierto, Ministerio de Economía", url: fuente("universidades-presupuesto")?.url },
+        actualizado: lastFetch("universidades-presupuesto"),
+      }),
+      lastmod: lastFetch("universidades-presupuesto"),
+      prioridad: 0.6,
+    });
+
+    const migas: Miga[] = [...hubMigas, ["/universidades/uncuyo", "UNCuyo"]];
+    const resumen = `Para ${u.enCurso.anio} la Universidad Nacional de Cuyo tiene presupuestados ${pesos(u.enCurso.presupuestado)} del Tesoro nacional (en pesos de ${u.referencia}), y al ${fechaLarga(u.enCurso.corte)} ya recibió ${pesos(u.enCurso.devengado)}.${students ? ` En ${students.anio} tuvo ${nf.format(students.estudiantes)} estudiantes de pregrado y grado y ${nf.format(students.egresados)} egresados.` : ""}`;
+    estatica("/universidades/uncuyo", {
+      figura: pesosCorto(u.enCurso.presupuestado),
+      bajada: `Presupuesto de Nación para ${u.enCurso.anio}, en pesos de ${u.referencia}.`,
+      ld: [breadcrumb(migas), faq([["¿Cuánta plata recibe la UNCuyo?", resumen]])],
+      html: cuerpo({
+        migas,
+        h1: "¿Cuánto recibe la UNCuyo y a cuántos forma?",
+        resumen,
+        datos: u.transferencias.map((t) => [`Recibido en ${t.anio}`, pesos(t.real)]),
+        secciones: u.disciplinas
+          ? [
+              {
+                titulo: `Estudiantes por disciplina (${u.disciplinas.anio})`,
+                items: u.disciplinas.items.map((d) => ({
+                  texto: `${d.disciplina}: ${nf.format(d.estudiantes)} estudiantes y ${nf.format(d.egresados)} egresados`,
+                })),
+              },
+            ]
+          : [],
+        fuente: { nombre: "Presupuesto Abierto y Anuario de Estadísticas Universitarias", url: fuente("universidades-presupuesto")?.url },
+        actualizado: lastFetch("universidades-presupuesto"),
+      }),
+      lastmod: lastFetch("universidades-presupuesto"),
       prioridad: 0.6,
     });
   }

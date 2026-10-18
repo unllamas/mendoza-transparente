@@ -694,3 +694,59 @@ export interface SearchEntry {
   /** Extra text to match against, not shown (party, CUIT, description). */
   q?: string;
 }
+
+export interface RecaudacionTema {
+  /** Mes al que están expresados los pesos de hoy ("sep 2026"). */
+  referencia: string;
+  /** Latest year with data and its last month (1-12). */
+  anio: number;
+  hastaMes: number;
+  /** Months covered ("ene–sep"), the same for every year so they can be compared. */
+  periodo: string;
+  /** Same months of each of the last years, in today's pesos (at most 8, the last one is `anio`). */
+  serie: { anio: number; real: number }[];
+  total: { actual: number; anterior: number };
+  perCapita: number;
+  poblacion: number;
+  /** By tax for the same months of `anio` and of the previous year, largest first. */
+  porImpuesto: { id: string; nombre: string; actual: number; anterior: number }[];
+  /** What the province collected against what Nación sent it automatically, same months of `anio`. */
+  frenteANacion: { propios: number; nacion: number } | null;
+}
+
+export interface UniversidadesTema {
+  referencia: string;
+  /** Current year of the national budget, up to its cut-off date. */
+  enCurso: {
+    anio: number;
+    corte: string;
+    presupuestado: number;
+    devengado: number;
+    /** Last full year received, to compare with what is budgeted for the current one. */
+    anterior: { anio: number; real: number };
+    destino: { nombre: string; real: number }[];
+  };
+  /** Tesoro nacional transfers to the UNCuyo (devengado), last full years (at most 8), in today's pesos. */
+  transferencias: { anio: number; real: number; nominal: number }[];
+  /** UNCuyo undergraduate students and graduates, last years of the Anuario (at most 8). */
+  estudiantes: { anio: number; estudiantes: number; nuevos: number; egresados: number; posgrado: number | null }[];
+  /** Transfers divided by undergraduate and graduate students, per year, in today's pesos. */
+  porEstudiante: { anio: number; real: number }[];
+  personal: {
+    anio: number;
+    docentes: { cargos: number; personas: number };
+    dedicacion: { id: string; nombre: string; cargos: number }[];
+    noDocentes: { cargos: number; personas: number };
+    preuniversitario: { cargos: number; personas: number };
+    autoridades: number;
+  } | null;
+  /** UNCuyo students by discipline (groups of similar degrees), latest year of the Anuario, largest first. */
+  disciplinas: {
+    anio: number;
+    items: { disciplina: string; rama: string; estudiantes: number; nuevos: number; egresados: number }[];
+  } | null;
+  /** Passed subjects in the year, latest year of the Anuario, in percent. */
+  rendimiento: { anio: number; nuevosSinMaterias: number; reinscriptosDosOMas: number; reinscriptosSinMaterias: number } | null;
+  /** UTN figures for the whole country (they cannot be split for Mendoza). */
+  utn: { anioEstudiantes: number; estudiantes: number; anio: number; presupuestado: number } | null;
+}

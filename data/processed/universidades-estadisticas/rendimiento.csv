@@ -1,0 +1,141 @@
+anio,universidad_id,universidad,poblacion,materias_aprobadas,cantidad,porcentaje,alcance,anuario,fuente_archivo,cuadro
+2018,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,0,2239,29.12,mendoza,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.22a
+2018,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,1,778,10.12,mendoza,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.22a
+2018,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,2,681,8.86,mendoza,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.22a
+2018,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,3,676,8.79,mendoza,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.22a
+2018,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,4,711,9.25,mendoza,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.22a
+2018,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,5,580,7.54,mendoza,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.22a
+2018,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,6_o_mas,2023,26.31,mendoza,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.22a
+2020,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,0,1661,21.36,mendoza,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.22a
+2020,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,1,998,12.83,mendoza,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.22a
+2020,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,2,802,10.31,mendoza,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.22a
+2020,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,3,683,8.78,mendoza,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.22a
+2020,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,4,638,8.2,mendoza,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.22a
+2020,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,5,570,7.33,mendoza,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.22a
+2020,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,6_o_mas,2425,31.18,mendoza,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.22a
+2021,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,0,1625,20.88,mendoza,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.22a
+2021,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,1,828,10.64,mendoza,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.22a
+2021,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,2,762,9.79,mendoza,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.22a
+2021,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,3,788,10.12,mendoza,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.22a
+2021,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,4,693,8.9,mendoza,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.22a
+2021,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,5,840,10.79,mendoza,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.22a
+2021,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,6_o_mas,2248,28.88,mendoza,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.22a
+2023,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,0,1313,20.77,mendoza,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.28a
+2023,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,1,616,9.74,mendoza,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.28a
+2023,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,2,586,9.27,mendoza,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.28a
+2023,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,3,553,8.75,mendoza,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.28a
+2023,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,4,472,7.47,mendoza,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.28a
+2023,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,5,574,9.08,mendoza,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.28a
+2023,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,6_o_mas,2208,34.93,mendoza,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.28a
+2024,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,0,1085,16.44,mendoza,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.28a
+2024,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,1,611,9.26,mendoza,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.28a
+2024,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,2,608,9.21,mendoza,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.28a
+2024,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,3,624,9.46,mendoza,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.28a
+2024,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,4,526,7.97,mendoza,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.28a
+2024,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,5,681,10.32,mendoza,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.28a
+2024,uncuyo,Universidad Nacional de Cuyo,nuevos_inscriptos,6_o_mas,2464,37.34,mendoza,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.28a
+2018,uncuyo,Universidad Nacional de Cuyo,reinscriptos,0,8531,30.9,mendoza,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.7
+2018,uncuyo,Universidad Nacional de Cuyo,reinscriptos,1,4512,16.34,mendoza,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.7
+2018,uncuyo,Universidad Nacional de Cuyo,reinscriptos,2,3446,12.48,mendoza,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.7
+2018,uncuyo,Universidad Nacional de Cuyo,reinscriptos,3,2521,9.13,mendoza,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.7
+2018,uncuyo,Universidad Nacional de Cuyo,reinscriptos,4,2221,8.04,mendoza,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.7
+2018,uncuyo,Universidad Nacional de Cuyo,reinscriptos,5,1584,5.74,mendoza,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.7
+2018,uncuyo,Universidad Nacional de Cuyo,reinscriptos,6_o_mas,4797,17.37,mendoza,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.7
+2020,uncuyo,Universidad Nacional de Cuyo,reinscriptos,0,8506,30.31,mendoza,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.7
+2020,uncuyo,Universidad Nacional de Cuyo,reinscriptos,1,4935,17.59,mendoza,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.7
+2020,uncuyo,Universidad Nacional de Cuyo,reinscriptos,2,3378,12.04,mendoza,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.7
+2020,uncuyo,Universidad Nacional de Cuyo,reinscriptos,3,2412,8.6,mendoza,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.7
+2020,uncuyo,Universidad Nacional de Cuyo,reinscriptos,4,1759,6.27,mendoza,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.7
+2020,uncuyo,Universidad Nacional de Cuyo,reinscriptos,5,1310,4.67,mendoza,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.7
+2020,uncuyo,Universidad Nacional de Cuyo,reinscriptos,6_o_mas,5762,20.53,mendoza,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.7
+2021,uncuyo,Universidad Nacional de Cuyo,reinscriptos,0,9725,32.06,mendoza,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.7
+2021,uncuyo,Universidad Nacional de Cuyo,reinscriptos,1,5312,17.51,mendoza,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.7
+2021,uncuyo,Universidad Nacional de Cuyo,reinscriptos,2,3755,12.38,mendoza,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.7
+2021,uncuyo,Universidad Nacional de Cuyo,reinscriptos,3,2635,8.69,mendoza,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.7
+2021,uncuyo,Universidad Nacional de Cuyo,reinscriptos,4,1923,6.34,mendoza,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.7
+2021,uncuyo,Universidad Nacional de Cuyo,reinscriptos,5,1560,5.14,mendoza,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.7
+2021,uncuyo,Universidad Nacional de Cuyo,reinscriptos,6_o_mas,5427,17.89,mendoza,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.7
+2023,uncuyo,Universidad Nacional de Cuyo,reinscriptos,0,9587,34.75,mendoza,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.10
+2023,uncuyo,Universidad Nacional de Cuyo,reinscriptos,1,4222,15.3,mendoza,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.10
+2023,uncuyo,Universidad Nacional de Cuyo,reinscriptos,2,2818,10.21,mendoza,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.10
+2023,uncuyo,Universidad Nacional de Cuyo,reinscriptos,3,1950,7.07,mendoza,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.10
+2023,uncuyo,Universidad Nacional de Cuyo,reinscriptos,4,1545,5.6,mendoza,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.10
+2023,uncuyo,Universidad Nacional de Cuyo,reinscriptos,5,1332,4.83,mendoza,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.10
+2023,uncuyo,Universidad Nacional de Cuyo,reinscriptos,6_o_mas,6133,22.23,mendoza,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.10
+2024,uncuyo,Universidad Nacional de Cuyo,reinscriptos,0,8684,31.58,mendoza,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.10
+2024,uncuyo,Universidad Nacional de Cuyo,reinscriptos,1,4394,15.98,mendoza,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.10
+2024,uncuyo,Universidad Nacional de Cuyo,reinscriptos,2,3009,10.94,mendoza,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.10
+2024,uncuyo,Universidad Nacional de Cuyo,reinscriptos,3,2132,7.75,mendoza,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.10
+2024,uncuyo,Universidad Nacional de Cuyo,reinscriptos,4,1723,6.27,mendoza,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.10
+2024,uncuyo,Universidad Nacional de Cuyo,reinscriptos,5,1369,4.98,mendoza,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.10
+2024,uncuyo,Universidad Nacional de Cuyo,reinscriptos,6_o_mas,6188,22.5,mendoza,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.10
+2018,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,0,6423,33.01,nacional,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.22a
+2018,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,1,2171,11.16,nacional,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.22a
+2018,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,2,1918,9.86,nacional,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.22a
+2018,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,3,1729,8.89,nacional,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.22a
+2018,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,4,1569,8.06,nacional,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.22a
+2018,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,5,1201,6.17,nacional,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.22a
+2018,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,6_o_mas,4444,22.84,nacional,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.22a
+2020,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,0,8631,37.17,nacional,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.22a
+2020,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,1,2177,9.38,nacional,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.22a
+2020,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,2,1930,8.31,nacional,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.22a
+2020,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,3,1780,7.67,nacional,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.22a
+2020,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,4,1720,7.41,nacional,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.22a
+2020,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,5,1561,6.72,nacional,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.22a
+2020,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,6_o_mas,5420,23.34,nacional,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.22a
+2021,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,0,11597,46.23,nacional,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.22a
+2021,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,1,2497,9.95,nacional,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.22a
+2021,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,2,1808,7.21,nacional,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.22a
+2021,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,3,1601,6.38,nacional,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.22a
+2021,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,4,1534,6.11,nacional,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.22a
+2021,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,5,1379,5.5,nacional,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.22a
+2021,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,6_o_mas,4671,18.62,nacional,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.22a
+2023,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,0,12120,38.52,nacional,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.28a
+2023,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,1,3014,9.58,nacional,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.28a
+2023,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,2,2689,8.55,nacional,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.28a
+2023,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,3,2166,6.88,nacional,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.28a
+2023,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,4,2128,6.76,nacional,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.28a
+2023,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,5,1861,5.91,nacional,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.28a
+2023,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,6_o_mas,7485,23.79,nacional,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.28a
+2024,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,0,10914,34.33,nacional,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.28a
+2024,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,1,3156,9.93,nacional,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.28a
+2024,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,2,2663,8.38,nacional,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.28a
+2024,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,3,2919,9.18,nacional,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.28a
+2024,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,4,3344,10.52,nacional,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.28a
+2024,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,5,1566,4.93,nacional,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.28a
+2024,utn,Universidad Tecnológica Nacional,nuevos_inscriptos,6_o_mas,7225,22.73,nacional,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.28a
+2018,utn,Universidad Tecnológica Nacional,reinscriptos,0,19881,28.7,nacional,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.7
+2018,utn,Universidad Tecnológica Nacional,reinscriptos,1,11071,15.98,nacional,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.7
+2018,utn,Universidad Tecnológica Nacional,reinscriptos,2,8243,11.9,nacional,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.7
+2018,utn,Universidad Tecnológica Nacional,reinscriptos,3,6341,9.15,nacional,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.7
+2018,utn,Universidad Tecnológica Nacional,reinscriptos,4,5295,7.64,nacional,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.7
+2018,utn,Universidad Tecnológica Nacional,reinscriptos,5,4293,6.2,nacional,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.7
+2018,utn,Universidad Tecnológica Nacional,reinscriptos,6_o_mas,14144,20.42,nacional,2018,anuario_2018.zip/2.1 - Pregrado y Grado Gestión Estatal 2018.xlsx,2.1.7
+2020,utn,Universidad Tecnológica Nacional,reinscriptos,0,20892,29.3,nacional,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.7
+2020,utn,Universidad Tecnológica Nacional,reinscriptos,1,11296,15.84,nacional,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.7
+2020,utn,Universidad Tecnológica Nacional,reinscriptos,2,8524,11.95,nacional,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.7
+2020,utn,Universidad Tecnológica Nacional,reinscriptos,3,6467,9.07,nacional,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.7
+2020,utn,Universidad Tecnológica Nacional,reinscriptos,4,5302,7.44,nacional,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.7
+2020,utn,Universidad Tecnológica Nacional,reinscriptos,5,4395,6.16,nacional,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.7
+2020,utn,Universidad Tecnológica Nacional,reinscriptos,6_o_mas,14430,20.24,nacional,2020,anuario_2020.zip/2.1 Pregrado y Grado Gestión Estatal 2020.xlsx,2.1.7
+2021,utn,Universidad Tecnológica Nacional,reinscriptos,0,26923,35.06,nacional,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.7
+2021,utn,Universidad Tecnológica Nacional,reinscriptos,1,13018,16.95,nacional,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.7
+2021,utn,Universidad Tecnológica Nacional,reinscriptos,2,8699,11.33,nacional,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.7
+2021,utn,Universidad Tecnológica Nacional,reinscriptos,3,6349,8.27,nacional,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.7
+2021,utn,Universidad Tecnológica Nacional,reinscriptos,4,5085,6.62,nacional,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.7
+2021,utn,Universidad Tecnológica Nacional,reinscriptos,5,4146,5.4,nacional,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.7
+2021,utn,Universidad Tecnológica Nacional,reinscriptos,6_o_mas,12562,16.36,nacional,2021,anuario_2021.zip/2.1 Pregrado y Grado Gestión Estatal 2021.xlsx,2.1.7
+2023,utn,Universidad Tecnológica Nacional,reinscriptos,0,26119,33.69,nacional,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.10
+2023,utn,Universidad Tecnológica Nacional,reinscriptos,1,13807,17.81,nacional,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.10
+2023,utn,Universidad Tecnológica Nacional,reinscriptos,2,8908,11.49,nacional,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.10
+2023,utn,Universidad Tecnológica Nacional,reinscriptos,3,6213,8.01,nacional,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.10
+2023,utn,Universidad Tecnológica Nacional,reinscriptos,4,4995,6.44,nacional,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.10
+2023,utn,Universidad Tecnológica Nacional,reinscriptos,5,4036,5.21,nacional,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.10
+2023,utn,Universidad Tecnológica Nacional,reinscriptos,6_o_mas,13445,17.34,nacional,2023,anuario_2023.zip/2.1 Pregrado y Grado Gestión Estatal 2023.xlsx,2.1.10
+2024,utn,Universidad Tecnológica Nacional,reinscriptos,0,25816,30.95,nacional,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.10
+2024,utn,Universidad Tecnológica Nacional,reinscriptos,1,14035,16.83,nacional,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.10
+2024,utn,Universidad Tecnológica Nacional,reinscriptos,2,9459,11.34,nacional,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.10
+2024,utn,Universidad Tecnológica Nacional,reinscriptos,3,7407,8.88,nacional,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.10
+2024,utn,Universidad Tecnológica Nacional,reinscriptos,4,6016,7.21,nacional,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.10
+2024,utn,Universidad Tecnológica Nacional,reinscriptos,5,4786,5.74,nacional,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.10
+2024,utn,Universidad Tecnológica Nacional,reinscriptos,6_o_mas,15890,19.05,nacional,2024,anuario_2024_adelanto.zip/Z 2.1 Pregrado y Grado Gestión Estatal 24.xlsx,2.1.10

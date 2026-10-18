@@ -27,8 +27,10 @@ import { deflactor } from "./temas/inflacion.ts";
 import type { ResumenLey } from "./temas/leyes.ts";
 import { budgetSummary, buildMunicipalBudgets } from "./temas/municipal-budget.ts";
 import { buildPoblacion } from "./temas/poblacion.ts";
+import { buildRecaudacion } from "./temas/recaudacion.ts";
 import { buildSenales } from "./temas/senales.ts";
 import type { TransparencySurvey } from "./temas/transparency.ts";
+import { buildUniversidades } from "./temas/universidades.ts";
 
 const ROOT = join(import.meta.dir, "..", "..", "..");
 const RAW_DIR = join(ROOT, "data", "raw");
@@ -269,6 +271,28 @@ const copaTema = copaAnual && ipcNacional && pobDeptos ? buildCoparticipacion(co
 if (copaTema) writeFileSync(join(OUT, "temas", "coparticipacion.json"), JSON.stringify(copaTema));
 const poblacionTema = pobDeptos && poblacionProv.length ? buildPoblacion(pobDeptos, poblacionProv) : undefined;
 if (poblacionTema) writeFileSync(join(OUT, "temas", "poblacion.json"), JSON.stringify(poblacionTema));
+
+const recaudacion = readTable("atm-recaudacion", "recaudacion_mensual.csv");
+const recaudacionTema =
+  recaudacion && ipcNacional
+    ? buildRecaudacion(recaudacion, ipcNacional, poblacionProv, readTable("dnap-ron", "ron_mensual.csv") ?? [])
+    : undefined;
+if (recaudacionTema) writeFileSync(join(OUT, "temas", "recaudacion.json"), JSON.stringify(recaudacionTema));
+
+const uniTransfers = readTable("universidades-presupuesto", "transferencias_anuales.csv");
+const uniStudents = readTable("universidades-estadisticas", "estudiantes.csv");
+const universidadesTema =
+  uniTransfers && uniStudents && ipcNacional
+    ? buildUniversidades(
+        uniTransfers,
+        uniStudents,
+        readTable("universidades-estadisticas", "personal.csv") ?? [],
+        readTable("universidades-estadisticas", "disciplinas.csv") ?? [],
+        readTable("universidades-estadisticas", "rendimiento.csv") ?? [],
+        ipcNacional,
+      )
+    : undefined;
+if (universidadesTema) writeFileSync(join(OUT, "temas", "universidades.json"), JSON.stringify(universidadesTema));
 
 const legisladores = readTable("legislatura", "legisladores.csv");
 const autoridades = readTable("autoridades", "autoridades.csv");
