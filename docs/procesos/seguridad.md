@@ -47,7 +47,16 @@ JSON
   - imprime solo el código;
   - queda en la auditoría como `agente (<correo de git>)`;
   - no corre en CI.
-- **Credenciales:** usa `CLOUDFLARE_ACCOUNT_ID` y `CLOUDFLARE_API_TOKEN`. Las toma del shell, o del `.env.cloudflare` de esta copia o de la principal. Si faltan, el script dice cómo cargarlas.
+- **Credenciales: siempre a mano, en el mismo comando.** El script no abre ningún archivo de credenciales: solo usa `CLOUDFLARE_ACCOUNT_ID` y `CLOUDFLARE_API_TOKEN` del shell. El agente las carga para esa única ejecución, desde la copia que las tiene, sin imprimirlas ni copiarlas a otro lado:
+
+  ```bash
+  (cd <copia con las credenciales> && set -a && . ./.env.cloudflare && set +a && cd - >/dev/null && bun run hallazgo <<'JSON'
+  { … }
+  JSON
+  )
+  ```
+
+  Entre paréntesis, las variables viven solo en ese subshell y desaparecen al terminar.
 - **Para probar,** `bun run hallazgo --local` escribe en la base de desarrollo.
 - **Después de cargarlo,** el agente le avisa a la persona en el chat con el código `S-…` y nada más. Nunca lo escribe en archivos del repositorio, commits, PR ni issues.
 - **Un subagente** lo carga igual y pone el código en su reporte final.

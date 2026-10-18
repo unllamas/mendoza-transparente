@@ -14,8 +14,7 @@
  */
 
 import { execFileSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { join } from "node:path";
 import type { Db } from "./db.ts";
 import { openDevDb } from "./local-db.ts";
 import { findingInput } from "./panel-api.ts";
@@ -31,40 +30,18 @@ const fail = (message: string): never => {
   process.exit(1);
 };
 
-/** The main checkout: worktrees do not have the ignored `.env.cloudflare`, the main copy does. */
-function repoRoots(): string[] {
-  const here = join(import.meta.dir, "..", "..", "..");
-  try {
-    const common = execFileSync("git", ["rev-parse", "--path-format=absolute", "--git-common-dir"], { cwd: here, encoding: "utf8" }).trim();
-    return [here, dirname(common)];
-  } catch {
-    return [here];
-  }
-}
-
-/** Reads KEY=VALUE lines without printing anything. */
-function readEnvFile(): Record<string, string> {
-  const file = repoRoots()
-    .map((root) => join(root, ".env.cloudflare"))
-    .find((f) => existsSync(f));
-  if (!file) return {};
-  return Object.fromEntries(
-    readFileSync(file, "utf8")
-      .split("\n")
-      .map((line) => line.match(/^\s*(?:export\s+)?([A-Z0-9_]+)\s*=\s*["']?(.*?)["']?\s*$/))
-      .filter((m): m is RegExpMatchArray => !!m)
-      .map((m) => [m[1]!, m[2]!]),
-  );
-}
-
+/**
+ * Production credentials come only from the shell: the agent loads them by hand for this run. The script
+ * never opens the credentials file, so nothing here can read, copy or print it.
+ */
 async function openDb(local: boolean): Promise<Db> {
-  if (local) return openDevDb(join(repoRoots()[0]!, ".dev", "participation.sqlite"));
-  const env = { ...readEnvFile(), ...process.env };
-  if (!env.CLOUDFLARE_ACCOUNT_ID || !env.CLOUDFLARE_API_TOKEN)
+  if (local) return openDevDb(join(import.meta.dir, "..", "..", "..", ".dev", "participation.sqlite"));
+  const { CLOUDFLARE_ACCOUNT_ID: accountId, CLOUDFLARE_API_TOKEN: apiToken } = process.env;
+  if (!accountId || !apiToken)
     return fail(
-      "Faltan CLOUDFLARE_ACCOUNT_ID y CLOUDFLARE_API_TOKEN. Cargalos en el shell desde la copia que tiene .env.cloudflare (`set -a && . ./.env.cloudflare && set +a`) y volvé a correrlo.",
+      "Faltan CLOUDFLARE_ACCOUNT_ID y CLOUDFLARE_API_TOKEN en el shell. Cargalos a mano en el mismo comando, desde la copia que tiene las credenciales (ver docs/procesos/seguridad.md).",
     );
-  return remoteD1({ accountId: env.CLOUDFLARE_ACCOUNT_ID, apiToken: env.CLOUDFLARE_API_TOKEN, databaseId: DATABASE_ID });
+  return remoteD1({ accountId, apiToken, databaseId: DATABASE_ID });
 }
 
 /** Who loaded it, for the panel and the audit: the agent and the person whose machine ran it. */
