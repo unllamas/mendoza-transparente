@@ -265,6 +265,7 @@ Cada push a `main` publica solo, incluidos los commits automáticos de datos. A 
 - Base D1 con las tablas de participación aplicadas.
 - Secretos `TURNSTILE_SECRET` e `IP_SALT` cifrados.
 - Dominio con HTTPS obligatorio y TLS 1.2 como mínimo.
+- `www.mendoza-transparente.com` redirige con 301 a `mendoza-transparente.com`, con la misma ruta y la misma query (Redirect Rule de la zona, «www a dominio principal (301)»). Sin ella, `www` servía el sitio entero con 200: dos direcciones para el mismo contenido, links compartidos de las dos formas y métricas repartidas entre dos hosts. El `www` sigue como dominio del proyecto de Pages para que tenga certificado; la regla actúa antes.
 - Bot Fight Mode activado. La protección contra robots de IA está apagada a propósito: queremos que nos lean y citen.
 - Límite de pedidos: `POST /api/*`, 10 cada 10 segundos por IP; si se supera, bloqueo de 10 segundos (máximo del plan gratis).
 - Analítica: PostHog en un proyecto propio, separado de cualquier otra organización (`.env.production`).

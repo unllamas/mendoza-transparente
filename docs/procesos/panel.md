@@ -72,6 +72,7 @@ El token de `.env.cloudflare` tiene, además de Pages y D1:
 - *Account → Access: Apps and Policies → Edit*;
 - *Account → Access: Organizations, Identity Providers, and Groups → Edit*;
 - *Zone → DNS → Edit*, para `mendoza-transparente.com`.
+- *Zone → Single Redirect → Edit*, para `mendoza-transparente.com` (la redirección de `www`, ver [Web](web.md#publicar)).
 
 **Indexación:** el panel no aparece en buscadores. Access manda a su login a cualquiera sin sesión, robots incluidos, y además el panel tiene `noindex` (cabecera y meta) y un `robots.txt` que bloquea todo.
 
