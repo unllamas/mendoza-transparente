@@ -39,10 +39,15 @@ Las skills del proyecto (`.claude/skills/<nombre>/SKILL.md`) son la puerta de en
 | Crear una página o un tipo de entidad; títulos, rutas, buscador o previsualizaciones | `seo-y-geo` |
 | Publicar o tocar Cloudflare, D1 o PostHog; diagnosticar el sitio en vivo | `produccion` |
 | Tocar el panel interno (`apps/panel`), el registro público (`/registro`), la API de participación o el acceso del equipo | `panel` |
+| Encontrar un problema de seguridad en un sitio del Estado (datos de la gente expuestos, un sitio hackeado) | `panel` y `docs/procesos/seguridad.md` |
 | Lanzar un subagente o integrar lo que devolvió | `delegar-en-agentes` |
 | Crear una rama, commitear, pushear o abrir un PR (incluido el de publicación `dev → main`), tocar los releases de GitHub o hacer un hotfix | `ramas-y-releases` |
 
 **Proceso nuevo = documento en `docs/procesos/` + skill (o sección en una existente) + fila en esta tabla, en el mismo commit.**
+
+## Seguridad y legalidad (regla sin excepciones)
+
+Solo se usa lo que el Estado publica. Nunca buscar fallas, pasar un login o un captcha, ni descargar o guardar datos personales expuestos por error. Si aparece un problema de seguridad: parar, cargarlo en el panel con `bun run hallazgo` (JSON por la entrada estándar, sin copiar los datos) y avisarle a la persona con el código `S-…`, para que lo reporte al organismo, a CERT.ar y, si hay datos personales, a la AAIP. Nunca se escribe en el repositorio, en commits, PR o issues. Proceso completo: `docs/procesos/seguridad.md`.
 
 ## Pedidos de mejora
 

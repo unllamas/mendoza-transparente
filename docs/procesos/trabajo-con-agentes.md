@@ -39,6 +39,7 @@ Cada pedido a un subagente incluye:
 4. **Nunca hacer commit**: lo hace la sesión principal después de revisar.
 5. Qué verificar antes de terminar (conteos, totales, escalas, que corra dos veces sin duplicar).
 6. Un reporte final breve: archivos, cobertura, problemas y datos dudosos.
+7. Si aparece un problema de seguridad: parar, no descargar nada más y cargarlo con `bun run hallazgo`, sin copiar los datos ni escribirlo en archivos, y poner el código `S-…` en el reporte (ver [Hallazgos de seguridad](seguridad.md)).
 
 ## Revisión de lo que entregan
 

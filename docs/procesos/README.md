@@ -17,6 +17,7 @@ Cómo se trabaja en Mendoza Transparente, para poder replicarlo, retomarlo o sum
 | [Analítica](analitica.md) | Qué se mide del uso del sitio, cómo se nombran los eventos, cómo se suma uno y cómo se decide un cambio con los datos |
 | [Participación](participacion.md) | Pedidos de información, respuestas, errores y sugerencias: API, base y moderación |
 | [Panel interno](panel.md) | La app del equipo para revisar y publicar lo que llega: login, publicación, seguridad y casos límite |
+| [Hallazgos de seguridad](seguridad.md) | Qué hacer si al relevar aparece un problema de seguridad en un sitio del Estado: límites legales, carga en el panel y a quién se reporta |
 | [Trabajo con agentes](trabajo-con-agentes.md) | Cómo se orquesta el trabajo con Claude y subagentes |
 | [Ramas y releases](ramas-y-releases.md) | Ramas de trabajo, PRs a `dev`, publicaciones a `main`, releases de GitHub por día, hotfixes, back merge y hasta dónde llevar cada pedido |
 
@@ -29,6 +30,7 @@ bun run panel                    # panel interno en desarrollo (misma base local
 bun run scrape <fuente> [args]   # correr un scraper
 bun run actualizar               # actualización manual de las fuentes bloqueadas en la nube
 bun run verificar                # controles de la web (scroll horizontal y consola)
+bun run hallazgo                 # cargar un hallazgo de seguridad en el panel (JSON por la entrada estándar, ver seguridad.md)
 bun run vista-previa <ruta>      # capturas en 375 y 1280 px para revisar una vista previa
 bun run typecheck                # tipos de todo el monorepo
 ```

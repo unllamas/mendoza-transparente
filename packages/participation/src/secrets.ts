@@ -8,9 +8,12 @@ function randomBase32(length: number): string {
   return [...crypto.getRandomValues(new Uint8Array(length))].map((b) => ALPHABET[b % 32]).join("");
 }
 
-export type CodePrefix = "P" | "R";
+export type CodePrefix = "P" | "R" | "S";
 
-/** Public code of a submission: "P-" for requests, "R-" for reports. 40 random bits: not sequential, not guessable in bulk. */
+/**
+ * Code of a submission: "P-" for requests, "R-" for reports (both public), "S-" for security findings (panel
+ * only). 40 random bits: not sequential, not guessable in bulk.
+ */
 export const newCode = (prefix: CodePrefix) => `${prefix}-${randomBase32(8)}`;
 
 /** Accepts what people type: lowercase, spaces, and the letters Crockford reads as digits. */
@@ -23,6 +26,13 @@ export const normalizeCode = (v: unknown): string | null => {
     .replace(/O/g, "0")
     .replace(/^([PR])-?/, "$1-");
   return /^[PR]-[0-9A-HJKMNP-TV-Z]{8}$/.test(t) ? t : null;
+};
+
+/** Code of a security finding ("S-…"). Separate from `normalizeCode`, so no public path ever accepts one. */
+export const normalizeFindingCode = (v: unknown): string | null => {
+  if (typeof v !== "string") return null;
+  const t = v.toUpperCase().replace(/\s+/g, "").replace(/[IL]/g, "1").replace(/O/g, "0").replace(/^S-?/, "S-");
+  return /^S-[0-9A-HJKMNP-TV-Z]{8}$/.test(t) ? t : null;
 };
 
 /** Edit key shown once to whoever registers a request: 100 random bits, in groups of five. */
