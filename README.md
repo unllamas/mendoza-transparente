@@ -27,7 +27,6 @@ Mendoza Transparente hace el trabajo pesado una sola vez, para que nadie más te
 | [Municipios](https://mendoza-transparente.com/municipios) | ¿Qué publica, cuánto gasta y cuánta gente emplea cada departamento? |
 | [Señales](https://mendoza-transparente.com/senales) | ¿Qué patrones en los datos merecen una explicación? |
 | [Lo que no se publica](https://mendoza-transparente.com/no-publicado) | ¿Qué debería ser público y no está, y cómo pedirlo por la Ley 9070? |
-| [Registro](https://mendoza-transparente.com/registro) | ¿Qué pedidos de información hizo la gente y qué respondió el Estado? |
 
 ## Cómo trabajamos
 
@@ -132,7 +131,7 @@ Las fotos de funcionarios y el mapa se actualizan a mano (`bun run scrape fotos`
 ## Cómo sumarte
 
 - **¿Encontraste un error o falta un dato?** Contalo en [/participar](https://mendoza-transparente.com/participar). Cada envío lo revisa una persona del equipo.
-- **¿Pediste información por la Ley 9070?** Registrá el pedido en [/participar](https://mendoza-transparente.com/participar): así sabemos cuánto responde el Estado y lo publicamos en el [registro](https://mendoza-transparente.com/registro).
+- **¿Pediste información por la Ley 9070?** Registrá el pedido en [/participar](https://mendoza-transparente.com/participar): así sabemos cuánto responde el Estado.
 - **¿Querés programar?** Empezá por [`docs/procesos/`](docs/procesos/README.md): ahí está cómo se agrega una fuente, cómo se arma una página y las reglas de diseño. Las ramas salen de `dev` y vuelven a `dev` con un PR ([Ramas y releases](docs/procesos/ramas-y-releases.md)).
 - **¿Trabajás con agentes de IA?** [`AGENTS.md`](AGENTS.md) es la guía para Claude Code, Codex o Cursor, con las skills que corresponde cargar según la tarea.
 

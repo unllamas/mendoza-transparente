@@ -49,7 +49,7 @@ El workflow de datos ya compila la web completa para comprobarla, y después Clo
 
 ### 6. Funciones y D1
 
-`/api/pedidos/stats` y `/api/registro` leen D1 en cada visita a `/no-publicado` y `/participar`: el `max-age=60` solo cachea en el navegador. Guardar la respuesta en la Cache API del Worker por 60 segundos deja una lectura de D1 por minuto, sin importar cuánta gente entre. Hoy el volumen es bajo: hacerlo cuando el tráfico lo pida.
+`/api/pedidos/stats` lee D1 en cada visita a `/no-publicado` y `/participar` (`/api/registro` ya no lo pide ninguna página): el `max-age=60` solo cachea en el navegador. Guardar la respuesta en la Cache API del Worker por 60 segundos deja una lectura de D1 por minuto, sin importar cuánta gente entre. Hoy el volumen es bajo: hacerlo cuando el tráfico lo pida.
 
 ## Lo que no hacemos
 
