@@ -231,7 +231,7 @@ export function EcosystemMap({ guide }: { guide: HomeGuide }) {
       icon: RiEyeOffLine,
       items: [
         { label: "Lo que no se publica", count: c.missing, to: "/no-publicado" },
-        { label: "Registrá tu pedido", to: "/participar" },
+        { label: "Participá", to: "/participar" },
         { label: "Fuentes oficiales", count: c.sources, to: "/fuentes" },
       ],
     },
