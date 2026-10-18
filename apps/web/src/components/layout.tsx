@@ -123,7 +123,7 @@ export function Layout() {
   return (
     <UiProviders>
       <div className="flex min-h-dvh flex-col">
-        <header className="sticky top-0 z-20 border-b border-separator-border bg-background-full/90 backdrop-blur">
+        <header className="sticky top-0 z-20 border-b border-separator-border bg-background-surface/90 backdrop-blur">
           <div className="mx-auto flex h-14 max-w-6xl items-center gap-6 px-4 sm:px-5">
             <Link to="/" className="mr-auto text-headline-semibold tracking-tight whitespace-nowrap">
               Mendoza Transparente

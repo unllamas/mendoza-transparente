@@ -75,7 +75,7 @@ Cada página con encabezado (`PageHeader`) lleva el botón **Compartir** en una 
 - **En el celular** abre el menú de compartir del teléfono; en la computadora, un menú con «Publicar en X», «Enviar por WhatsApp» y «Copiar texto y link».
 - **Texto propio:** se le pasa `text`. La hoja de cada dato de «Lo que no se publica» comparte el pedido: «Pido que se publique <dato> (<organismo>). Cualquier persona puede pedirlo por la Ley 9070.», y suma «Ya hay N pedidos registrados» cuando hay más de uno.
 - **Página nueva:** `<PageHeader action={<ShareButton />} …>`.
-- **Eventos:** `share.x`, `share.whatsapp`, `share.copy` y `share.native`, con `context` (`page` o `missing_data`).
+- **Eventos:** `share.open` (abrió el menú en la computadora), `share.x`, `share.whatsapp`, `share.copy` y `share.native`, con `context` (`page` o `missing_data`).
 
 ## Link a cada sección
 

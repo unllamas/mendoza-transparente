@@ -24,6 +24,10 @@
   --color-accent-900: #143c63;
   --color-accent-950: #0c2540;
 
+  /* Sombra de lo que se toca (tarjetas y listas accionables): blanco que se despega del gris de la página. */
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.06), 0 2px 8px rgb(0 0 0 / 0.08);
+  --shadow-card-hover: 0 2px 4px rgb(0 0 0 / 0.08), 0 6px 16px rgb(0 0 0 / 0.1);
+
   /* Fuentes del sistema: carga instantánea y sin pedidos extra (BoardUI espera Inter vía next/font). */
   --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
@@ -55,16 +59,23 @@
    día); `.dark` lo pone el selector de tema del footer. Lo demás (texto, superficies, bordes, íconos) se escribe con
    los semánticos de BoardUI: text-text-primary, bg-background-primary-default, border-separator-border… */
 :root {
-  /* Texto secundario y terciario un paso más oscuros que en BoardUI: el sitio es de lectura y tienen que pasar AA. */
+  /* Texto secundario y terciario más oscuros que en BoardUI: el sitio es de lectura y tienen que pasar AA (4,5:1)
+     también sobre el fondo gris de la página y el celeste de los botones. Terciario #666: 5,2:1 sobre la página. */
   --color-text-secondary: var(--color-neutral-600);
-  --color-text-tertiary: var(--color-neutral-500);
-  /* Fondo de lo que se toca (botón secundario, campos, selects, tarjetas y filas clickeables): un gris entre el
-     fondo y el borde, para que se distinga de lo informativo (que va en la superficie) y se lea como "acá se hace clic". */
-  /* Superficie de lo informativo (bloques, tarjetas sin acción, hojas): el mismo color del fondo, en los dos modos.
-     Solo lo que se toca se despega del fondo; lo informativo se marca apenas con su borde. */
-  --color-background-surface: var(--color-background-full);
-  --color-background-interactive: #f2f2f2;
-  --color-background-interactive-hover: var(--color-neutral-200);
+  --color-text-tertiary: #666666;
+  /* Fondo de la página: un gris muy tenue. Lo que se toca se despega en blanco con sombra; lo informativo queda
+     plano sobre este gris, con su borde. */
+  --color-background-full: #f3f4f6;
+  /* Superficie de las hojas, el encabezado y los menús. */
+  --color-background-surface: var(--color-white);
+  /* Tarjetas, filas y campos que se tocan: blancos (con sombra en tarjetas y listas). Al pasar, celeste apenas. */
+  --color-background-interactive: var(--color-white);
+  --color-background-interactive-hover: var(--color-accent-50);
+  /* Botón secundario y de ícono (compartir, buscar, menú, selects): fondo celeste claro y texto azul oscuro
+     (6,2:1), sin borde. Así toda acción se ve azul, no solo el botón principal. */
+  --color-background-action: var(--color-accent-100);
+  --color-background-action-hover: var(--color-accent-200);
+  --color-text-action: var(--color-accent-700);
   /* Links y lo que lleva a otra página: azul de la marca. */
   --color-text-link: var(--color-accent-600);
   --color-border-link: var(--color-accent-600);
@@ -92,8 +103,13 @@
 
 .dark {
   /* En oscuro, lo que se toca va dos pasos por encima del fondo (#121212); lo informativo, igual que el fondo. */
+  --color-background-full: var(--color-neutral-925);
+  --color-background-surface: var(--color-neutral-925);
   --color-background-interactive: #2c2c2c;
   --color-background-interactive-hover: #363636;
+  --color-background-action: var(--color-accent-950);
+  --color-background-action-hover: var(--color-accent-900);
+  --color-text-action: var(--color-accent-200);
   --color-text-secondary: var(--color-neutral-300);
   --color-text-tertiary: var(--color-neutral-400);
   --color-text-link: var(--color-accent-300);
@@ -120,6 +136,9 @@
   --color-background-surface: var(--color-background-surface);
   --color-background-interactive: var(--color-background-interactive);
   --color-background-interactive-hover: var(--color-background-interactive-hover);
+  --color-background-action: var(--color-background-action);
+  --color-background-action-hover: var(--color-background-action-hover);
+  --color-text-action: var(--color-text-action);
   --color-text-link: var(--color-text-link);
   --color-border-link: var(--color-border-link);
   --color-highlight: var(--color-highlight);

@@ -109,10 +109,10 @@ export function Select<T extends object>({
             ref={triggerRef}
             className={cx(
               "flex w-full cursor-pointer items-center justify-between rounded-2lg",
-              "border border-border-button-default bg-background-interactive shadow-xs",
-              "text-text-primary",
+              "border border-transparent bg-background-action",
+              "text-text-action",
               "transition-[background-color,border-color,box-shadow,padding,font-size] duration-200 ease",
-              "hover:bg-background-interactive-hover hover:border-border-button-hover",
+              "hover:bg-background-action-hover",
               "outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-border-focus-ring",
               "disabled:cursor-not-allowed disabled:bg-background-primary-disabled disabled:text-text-tertiary disabled:shadow-none",
               size === "sm"
@@ -128,7 +128,7 @@ export function Select<T extends object>({
             </AriaSelectValue>
             <ChevronDownSmall
               className={cx(
-                "shrink-0 text-text-secondary transition-transform duration-200 ease",
+                "shrink-0 text-text-action transition-transform duration-200 ease",
                 size === "sm" ? "size-3.5" : "size-4",
                 isOpen && "rotate-180",
               )}

@@ -50,6 +50,12 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["participación"],
   },
   {
+    event: "share.open",
+    description:
+      "Abrió el menú del botón Compartir en la computadora (después elige X, WhatsApp o copiar, o lo cierra). Propiedades path y context (page o missing_data).",
+    tags: ["compartir"],
+  },
+  {
     event: "share.x",
     description:
       "Tocó «Publicar en X» en el botón Compartir: se abre X con el texto, el link y #MendozaTransparente. Propiedades path y context (page o missing_data).",

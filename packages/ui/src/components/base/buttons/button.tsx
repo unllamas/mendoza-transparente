@@ -127,10 +127,10 @@ const styles = sortCx({
       "aria-disabled:text-foreground-disabled-danger aria-disabled:shadow-none",
     ].join(" "),
     secondary: [
-      "bg-background-interactive text-text-primary",
-      "border border-border-button-default shadow-xs",
-      "hover:bg-background-interactive-hover hover:border-border-button-hover",
-      "active:bg-background-primary-active active:border-border-button-active",
+      // Mendoza Transparente: light primary background and dark primary text, no border (docs/procesos/diseno.md).
+      "bg-background-action text-text-action",
+      "border border-transparent",
+      "hover:bg-background-action-hover active:bg-background-action-hover",
       "disabled:bg-background-primary-disabled disabled:border-border-button-default disabled:text-text-tertiary disabled:shadow-none",
       "aria-disabled:bg-background-primary-disabled aria-disabled:border-border-button-default aria-disabled:text-text-tertiary aria-disabled:shadow-none",
     ].join(" "),
