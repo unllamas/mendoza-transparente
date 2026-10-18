@@ -263,9 +263,12 @@ const BOTS_IA = [
   "CCBot",
   "meta-externalagent",
 ];
+// SEO tools crawl the whole site (with every JS file) in bursts and bring no readers: welcome, but slower.
+// All of them honor Crawl-delay; Google ignores it and is not on the list.
+const SEO_CRAWLERS = ["AhrefsBot", "SemrushBot", "MJ12bot", "DotBot", "BLEXBot", "DataForSeoBot", "SeekportBot", "serpstatbot"];
 await writeFile(
   join(DIST, "robots.txt"),
-  `User-agent: *\nAllow: /\n\n${BOTS_IA.map((b) => `User-agent: ${b}\nAllow: /\n`).join("\n")}\nSitemap: ${SITE_URL}/sitemap.xml\n`,
+  `User-agent: *\nAllow: /\n\n${BOTS_IA.map((b) => `User-agent: ${b}\nAllow: /\n`).join("\n")}\n${SEO_CRAWLERS.map((b) => `User-agent: ${b}`).join("\n")}\nAllow: /\nCrawl-delay: 10\n\nSitemap: ${SITE_URL}/sitemap.xml\n`,
 );
 
 // llms.txt (llmstxt.org): mapa del sitio para modelos de lenguaje.
