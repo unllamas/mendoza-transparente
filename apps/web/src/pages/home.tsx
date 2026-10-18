@@ -351,14 +351,14 @@ function MissingData({ items }: { items: NoPublicado[] }) {
               search={{ dato: item.id } as never}
               data-track="home.missing_data.open"
               data-track-item={item.id}
-              className={cx(listRowVariants(), "items-start text-body-regular")}
+              className={cx(listRowVariants(), "text-body-regular")}
             >
-              <RiEyeOffLine className="mt-0.5 size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
+              <RiEyeOffLine className="size-5 shrink-0 text-foreground-icon-secondary" aria-hidden />
               <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                 <span className="font-medium">{item.titulo}</span>
                 <span className="text-text-tertiary">{item.organismo}</span>
               </span>
-              <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
+              <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
             </Link>
           </li>
         ))}
