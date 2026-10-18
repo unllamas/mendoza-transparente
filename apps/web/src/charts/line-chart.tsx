@@ -135,7 +135,7 @@ export function LineChart({ data, bands = [], formatValue, formatAxis = formatVa
               const point = active ? (payload?.[0]?.payload as Point | undefined) : undefined;
               if (!point) return null;
               return (
-                <div className={cx(tileVariants({ size: "sm" }), "pointer-events-none px-3 py-2 text-body-regular")}>
+                <div className={cx(tileVariants({ size: "sm", floating: true }), "pointer-events-none px-3 py-2 text-body-regular")}>
                   <div className="text-text-tertiary">{formatDate(point.fecha)}</div>
                   <div className="font-semibold tabular-nums">{formatValue(point.valor)}</div>
                 </div>

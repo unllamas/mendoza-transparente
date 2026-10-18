@@ -119,7 +119,7 @@ function Bloques({ personas }: { personas: Funcionario[] }) {
   for (const p of personas) conteo.set(p.bloque ?? "Sin bloque", (conteo.get(p.bloque ?? "Sin bloque") ?? 0) + 1);
   const items = [...conteo].sort((a, b) => b[1] - a[1]).map(([nombre, valor]) => ({ nombre, valor }));
   return (
-    <details className={cx(tileVariants(), "group")}>
+    <details className={cx(cardVariants(), "group")}>
       <summary className="cursor-pointer list-none text-body-medium [&::-webkit-details-marker]:hidden">
         <span className="inline-flex items-center gap-1.5">
           <RiArrowRightSLine className="size-5 transition-transform group-open:rotate-90" aria-hidden />

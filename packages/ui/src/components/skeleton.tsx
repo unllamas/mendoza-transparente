@@ -7,9 +7,7 @@ import type { CSSProperties } from "react";
  * Hidden from screen readers; the block that loads announces itself.
  */
 export function Skeleton({ className, style }: { className?: string; style?: CSSProperties }) {
-  return (
-    <div aria-hidden style={style} className={cx("rounded-lg bg-background-secondary-default motion-safe:animate-pulse", className)} />
-  );
+  return <div aria-hidden style={style} className={cx("rounded-lg bg-background-tertiary-default motion-safe:animate-pulse", className)} />;
 }
 
 /**
@@ -19,7 +17,7 @@ export function Skeleton({ className, style }: { className?: string; style?: CSS
 export function SkeletonText({ className }: { className?: string }) {
   return (
     <span aria-hidden className={cx("flex h-[1lh] w-1/2 items-center", className)}>
-      <span className="h-[0.75em] w-full rounded-md bg-background-secondary-default motion-safe:animate-pulse" />
+      <span className="h-[0.75em] w-full rounded-md bg-background-tertiary-default motion-safe:animate-pulse" />
     </span>
   );
 }

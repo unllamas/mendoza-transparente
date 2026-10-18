@@ -44,13 +44,12 @@ export interface IconLinkButtonProps extends Omit<AnchorHTMLAttributes<HTMLAncho
 const styles = sortCx({
   base: [
     "relative inline-flex shrink-0 items-center justify-center overflow-visible rounded-2lg",
-    "bg-background-interactive text-foreground-icon-primary",
-    "border border-border-button-default shadow-xs",
+    "bg-background-action text-text-action",
+    "border border-transparent",
     "select-none cursor-pointer",
     "transition-[background-color,border-color,box-shadow,color] duration-150 ease",
     "outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-border-focus-ring",
-    "hover:bg-background-interactive-hover hover:border-border-button-hover",
-    "active:bg-background-primary-active active:border-border-button-active",
+    "hover:bg-background-action-hover active:bg-background-action-hover",
     "disabled:cursor-not-allowed disabled:bg-background-primary-disabled disabled:border-border-button-default disabled:text-icon-button-disabled-foreground disabled:opacity-60 disabled:shadow-none",
   ].join(" "),
   size: {
