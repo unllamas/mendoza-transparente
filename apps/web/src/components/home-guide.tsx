@@ -64,68 +64,94 @@ export function DepartmentPicker() {
 
 // ------------------------------------------------------------------ starting questions
 
-type Question = { id: string; icon: RemixiconComponentType; question: string; fact: string; to: string };
+type Question = { id: string; icon: RemixiconComponentType; question: string; figure?: string; fact: string; to: string };
+
+/** The figure in bold and a short text after it: the line has to be read at a glance. */
+function Fact({ figure, fact }: { figure?: string; fact: string }) {
+  return (
+    <span className="text-body-regular text-text-secondary">
+      {figure && <span className="font-semibold whitespace-nowrap text-text-primary tabular-nums">{figure}</span>} {fact}
+    </span>
+  );
+}
 
 /**
- * The six starting questions, ordered by use (PostHog, Oct 2026). On phones a compact list, so all six fit
- * in the first screen; from sm up, cards.
+ * The six starting questions, ordered by use (PostHog, Oct 2026). Each one answers with a figure, not a
+ * description. On phones a compact list, so all six fit in the first screen; from sm up, cards.
  */
-export function StartingQuestions({ guide, oneOfferEvery }: { guide: HomeGuide; oneOfferEvery: number | null }) {
+export function StartingQuestions({
+  guide,
+  oneOfferEvery,
+  purchases,
+}: {
+  guide: HomeGuide;
+  oneOfferEvery: number | null;
+  /** Total awarded, already formatted ("$ 965.709 M"), and how many suppliers got it. */
+  purchases: { total: string; suppliers: number } | null;
+}) {
   const { facts, counts } = guide;
   const questions: Question[] = [
     {
       id: "compras",
       icon: RiShoppingCartLine,
       question: "¿A quién le compra el Estado?",
-      fact: facts.topSupplier ?? "Las empresas y cada contrato.",
+      ...(purchases
+        ? { figure: purchases.total, fact: `a ${formatNumber(purchases.suppliers)} proveedores` }
+        : { fact: "Las empresas y cada contrato." }),
       to: "/proveedores",
     },
     {
       id: "municipio",
       icon: RiMapPinLine,
       question: "¿Quién gobierna mi departamento?",
-      fact: `Intendente, legisladores, habitantes y coparticipación de los ${counts.municipalities}.`,
+      figure: String(counts.municipalities),
+      fact: "intendentes y cuánto reciben",
       to: "/municipios",
     },
     {
       id: "deuda",
       icon: RiBankLine,
       question: "¿Cuánto debe Mendoza y a quién?",
-      fact: facts.debt ?? "Bonos, préstamos y acreedores.",
+      ...(facts.debt ? { figure: facts.debt.figure, fact: facts.debt.text } : { fact: "Bonos, préstamos y acreedores." }),
       to: "/deuda",
     },
     {
       id: "senales",
       icon: RiScales3Line,
       question: "¿Qué hay para mirar de cerca en las compras?",
-      fact: oneOfferEvery ? `1 de cada ${oneOfferEvery} procesos recibió una sola oferta.` : "Patrones que merecen una explicación.",
+      ...(oneOfferEvery
+        ? { figure: `1 de cada ${oneOfferEvery}`, fact: "compras con un solo oferente" }
+        : { fact: "Patrones que merecen una explicación." }),
       to: "/senales",
     },
     {
       id: "personal",
       icon: RiTeamLine,
       question: "¿Cuánta gente trabaja en el Estado?",
-      fact: facts.staff ?? "Cargos y costo de cada organismo.",
+      ...(facts.staff ? { figure: facts.staff.figure, fact: facts.staff.text } : { fact: "Cargos y costo de cada organismo." }),
       to: "/gobierno",
     },
     {
       id: "no-publicado",
       icon: RiEyeOffLine,
       question: "¿Qué datos no se publican?",
-      fact: `${counts.missing} datos que deberían ser públicos, con el pedido listo.`,
+      figure: String(counts.missing),
+      fact: "datos que deberían ser públicos",
       to: "/no-publicado",
     },
   ];
   return (
     <>
       <ul className={cx(listVariants(), "sm:hidden")}>
-        {questions.map(({ id, icon: Icon, question, fact, to }) => (
+        {questions.map(({ id, icon: Icon, question, figure, fact, to }) => (
           <li key={id}>
             <Link to={to} data-track="home.question.open" data-track-question={id} className={cx(listRowVariants(), "items-start")}>
               <Icon className="mt-0.5 size-5 shrink-0 text-foreground-icon-secondary" aria-hidden />
               <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                 <span className="font-medium text-text-link">{question}</span>
-                <span className="line-clamp-1 text-body-regular text-text-tertiary">{fact}</span>
+                <span className="line-clamp-2">
+                  <Fact figure={figure} fact={fact} />
+                </span>
               </span>
               <RiArrowRightSLine className="mt-0.5 size-5 shrink-0 text-text-link" aria-hidden />
             </Link>
@@ -133,7 +159,7 @@ export function StartingQuestions({ guide, oneOfferEvery }: { guide: HomeGuide; 
         ))}
       </ul>
       <ul className="hidden gap-3 sm:grid sm:grid-cols-2 lg:grid-cols-3">
-        {questions.map(({ id, icon: Icon, question, fact, to }) => (
+        {questions.map(({ id, icon: Icon, question, figure, fact, to }) => (
           <li key={id} className="min-w-0">
             <Link
               to={to}
@@ -144,7 +170,9 @@ export function StartingQuestions({ guide, oneOfferEvery }: { guide: HomeGuide; 
               <Icon className="mt-0.5 size-5 shrink-0 text-foreground-icon-secondary" aria-hidden />
               <span className="flex min-w-0 flex-1 flex-col gap-1">
                 <span className="text-body-medium text-text-link">{question}</span>
-                <span className="line-clamp-2 text-body-regular text-text-tertiary text-pretty">{fact}</span>
+                <span className="line-clamp-2 text-pretty">
+                  <Fact figure={figure} fact={fact} />
+                </span>
               </span>
               <RiArrowRightSLine className="mt-0.5 size-5 shrink-0 text-text-link" aria-hidden />
             </Link>
