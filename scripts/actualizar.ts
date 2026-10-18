@@ -28,6 +28,7 @@ const TODAS = [
   "etica-publica",
   "indices",
   "deie-ipc",
+  "atm-recaudacion",
   "hacienda-deuda-stock",
   "hacienda-participacion-municipal",
   "energia-regalias",

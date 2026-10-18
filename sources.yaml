@@ -22,6 +22,16 @@
   dificultad: facil
   estado: activo
 
+- id: atm-recaudacion
+  nombre: Recaudación mensual por impuesto provincial
+  descripcion: "Cuánto recauda la provincia cada mes por Ingresos Brutos, Sellos, Automotor e Inmobiliario, desde el año 2000."
+  organismo: Administración Tributaria Mendoza (ATM)
+  url: https://atm.mendoza.gov.ar/portalatm/zoneBottom/datosInteres/recaudacion/recaudacion.jsp
+  formato: html
+  frecuencia: mensual
+  dificultad: facil
+  estado: activo
+
 - id: dnap-ron
   nombre: Recursos de origen nacional (transferencias automáticas de Nación a provincias)
   descripcion: "Cuánto dinero le transfiere Nación a cada provincia por coparticipación y otros regímenes, mes a mes."

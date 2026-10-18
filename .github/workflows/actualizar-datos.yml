@@ -46,7 +46,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  SEMANAL: "boletin-oficial,compras-ocds,dnap,etica-publica,indices,deie-ipc"
+  SEMANAL: "boletin-oficial,compras-ocds,dnap,etica-publica,indices,deie-ipc,atm-recaudacion"
   MENSUAL: "hacienda-deuda-stock,hacienda-participacion-municipal,energia-regalias,poblacion,legislatura,autoridades,proveedores,lrf-personal,presupuesto-planta,municipios-personal,municipios-lrf"
 
 jobs:
