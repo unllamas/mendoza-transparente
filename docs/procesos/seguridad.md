@@ -31,15 +31,32 @@ Un agente no tiene acceso al panel de producción y no carga hallazgos. Si encue
 
 Un subagente lo pone en su reporte final como **hallazgo de seguridad**, con las mismas reglas, y la sesión principal se lo pasa a la persona, que lo carga en el panel.
 
-## A quién se reporta
+## A quién se reporta y cómo
 
-| A quién | Cuándo |
-|---|---|
-| El **organismo responsable** (su área de sistemas, o el contacto de transparencia o de acceso a la información) | Siempre |
-| **CERT.ar**, de la Dirección Nacional de Ciberseguridad, por sus canales de reporte de incidentes | Siempre que sea un sistema público |
-| La **AAIP** (Agencia de Acceso a la Información Pública), autoridad de la Ley 25.326 | Si hay datos personales expuestos |
+Cada reporte sale por escrito y queda anotado en el panel: a quién, en qué fecha y con qué número de ticket, correo o expediente.
 
-El reporte dice dónde está el problema, qué tipo de dato queda expuesto, cuándo se vio y que no se descargó ni se difundió nada. No lleva los datos ni capturas que los muestren. Los de gravedad alta se reportan en el día.
+| A quién | Cuándo | Cómo |
+|---|---|---|
+| El **organismo responsable** | Siempre, primero | Un correo a su área de sistemas o al contacto de transparencia del sitio. Si en 7 días no contesta, una nota por mesa de entradas, que da un número de expediente |
+| **CERT.ar**, el equipo nacional de respuesta a incidentes de la Dirección Nacional de Ciberseguridad | Siempre que sea un sistema público | Correo a `reportes@cert.ar` o el formulario de [argentina.gob.ar/cert-ar](https://www.argentina.gob.ar/cert-ar). Atiende de 9 a 17, y lo crítico las 24 horas |
+| La **AAIP**, autoridad de control de la Ley 25.326 | Si hay datos personales expuestos | Una nota a la Dirección Nacional de Protección de Datos Personales que avise la exposición, para que actúe de oficio. La «denuncia por incumplimiento» de Trámites a Distancia no sirve: es para quien ya reclamó por **sus propios** datos y no le respondieron |
+
+**Mendoza todavía no tiene un equipo provincial de respuesta a incidentes.** En julio de 2026 entró a la Legislatura un proyecto de ley de ciberseguridad que crea un registro provincial de incidentes y un canal para reportar vulnerabilidades. Cuando se apruebe y el canal funcione, se suma a esta tabla. Mientras tanto, para un organismo provincial o municipal, el reporte va al organismo y a CERT.ar con copia.
+
+### Qué dice el reporte
+
+> **Asunto:** Aviso de un problema de seguridad en [sitio]
+>
+> Al relevar datos públicos para Mendoza Transparente vimos, el [fecha], que [dónde: la página o la carpeta] [qué pasa: por ejemplo, «lista planillas con nombres y documentos de beneficiarios»]. No descargamos ni difundimos nada, y no vamos a hacerlo público. Les avisamos para que lo corrijan. Para cualquier consulta, nuestro código de seguimiento es [S-…].
+
+- **Sin los datos expuestos** y sin capturas que los muestren.
+- **Sin pasos para reproducirlo** más allá de dónde está.
+- **Desde la cuenta del proyecto,** no desde una personal.
+- Los de gravedad alta se reportan en el día.
+
+### Sin nada de esto en los scrapers
+
+Los scrapers corren en GitHub Actions, con logs públicos, y sus resultados van a un repositorio público. Un scraper nunca detecta, describe ni imprime un problema de seguridad: si una fuente devuelve algo raro, falla con un mensaje genérico («la fuente devolvió algo inesperado, revisar a mano») y una persona lo mira. Los hallazgos los carga siempre una persona en el panel; nada escribe solo en esa tabla.
 
 ## Qué se carga
 
