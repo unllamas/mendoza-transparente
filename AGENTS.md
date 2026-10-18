@@ -2,7 +2,7 @@
 
 Este archivo es la guía única para cualquier agente (Claude Code, Codex, Cursor…). `CLAUDE.md` solo lo importa.
 
-Proyecto cívico: recopilar los datos públicos de Mendoza, normalizarlos y publicarlos curados de cara a las elecciones de 2027. Ver `README.md` y `docs/relevamiento-fuentes.md`.
+Proyecto cívico: recopilar los datos públicos de Mendoza, normalizarlos y publicarlos curados. Ver `README.md` y `docs/relevamiento-fuentes.md`.
 
 **Los procesos internos están documentados en `docs/procesos/`** (agregar una fuente, actualización de datos, reglas de `data/`, la web, diseño, metodología y trabajo con agentes). Leer el que corresponda antes de empezar. **Todo proceso nuevo o cambio en uno existente se documenta ahí en el mismo commit.** Lo que todavía es una idea o un proyecto en curso va en `docs/planes/` (la hoja de ruta) y pasa a `docs/procesos/` cuando queda funcionando.
 

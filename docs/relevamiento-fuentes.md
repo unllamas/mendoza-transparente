@@ -27,7 +27,6 @@
   - Los anexos trimestrales de la **Ley de Responsabilidad Fiscal 7314**, con el mismo formato en todos los municipios, aunque en PDF.
   - La **coparticipación** que la provincia transfiere a cada municipio.
   - San Martín (sitio hackeado) y Lavalle (sin sitio) no publican nada.
-- **Elecciones:** Cornejo ratificó PASO provinciales en 2027, y en 2027 se elige gobernador. Al 11/10/2026 todavía no hay fecha oficial ni está decidido si se separa de la elección nacional. Se puede vigilar con la API del Boletín Oficial.
 - **Detalle técnico:** la provincia migró de `mendoza.gov.ar` a `mendoza.gob.ar` / `sitios.mendoza.gob.ar`, y el firewall devuelve **403 si no se manda un User-Agent de navegador**. Para listar el contenido de los sitios WordPress conviene usar `wp-sitemap.xml` (la API `wp-json` está bloqueada).
 
 ---
@@ -178,7 +177,7 @@ Qué se puede sacar de ahí: designaciones ("DESIGNA…"), adjudicaciones, ampli
 | Financiamiento nacional (CNE) | https://www.electoral.gob.ar/nuevo/paginas/cne/financiamiento.php · https://aportantes.electoral.gob.ar/ | Informes de campaña por agrupación y aportantes | 🟡/🔴 (captcha) |
 | Financiamiento provincial | Ley 7005: se rinde ante la Junta Electoral | **No se publica online** → hay que pedirlo por acceso a la información | — |
 
-**Calendario:** la última elección fue la municipal del 22/02/2026 (La Paz, Luján, Maipú, Rivadavia, Santa Rosa y San Rafael). Para 2027 hay PASO ratificadas y elección de gobernador, con fecha a definir. La Ley 8967 fija el desdoblamiento como regla, pero el gobernador puede unificar con la nacional, como hizo en 2025 con el Decreto 1480.
+**Calendario:** la última elección fue la municipal del 22/02/2026 (La Paz, Luján, Maipú, Rivadavia, Santa Rosa y San Rafael). La Ley 8967 fija el desdoblamiento como regla, pero el gobernador puede unificar con la nacional, como hizo en 2025 con el Decreto 1480.
 
 ### 2.8 Indicadores sociales y económicos
 
@@ -270,7 +269,7 @@ Cada punto puede llevar un botón **"Pedilo vos"**, que arme un pedido de acceso
 6. **Funcionarios:** ficha con cargo, declaración jurada (evolución del patrimonio), sanciones y designaciones en el Boletín.
 7. **Hoy en el Boletín:** resumen diario en lenguaje llano, posiblemente generado con un LLM: "hoy el gobierno designó a X, adjudicó Y por $Z".
 8. **¿Mejoró la vida?:** pobreza, empleo, delito, mortalidad infantil y Aprender, comparando **Mendoza contra el país y contra Cuyo**, por mandato.
-9. **Elecciones 2027:** calendario, resultados históricos, Legislatura y promesómetro.
+9. **Elecciones:** resultados históricos y Legislatura.
 10. **Lo que no sabemos:** el índice de opacidad con el botón "Pedilo vos".
 11. **Preguntale a Mendoza** (más adelante): un chat que responde sobre los datos ya cargados, o que usa el MCP de OpenArg.
 
@@ -296,5 +295,5 @@ Cada punto puede llevar un botón **"Pedilo vos"**, que arme un pedido de acceso
 - **Endpoints que cambian:** varias APIs (Boletín, Ética Pública) no están documentadas y pueden cambiar sin aviso. Conviene un monitoreo que avise cuando un scraper se rompe.
 - **Firewall del gobierno:** devuelve 403 sin User-Agent y bloquea `wp-json`. Hay que pedir con poca frecuencia y cachear.
 - **Pesos que pierden valor:** siempre hay que mostrar los montos **en valores reales** y por habitante.
-- **Neutralidad en año electoral:** usar la misma metodología para todos los gobiernos y partidos, citar siempre la fuente y no editorializar. La credibilidad es el activo principal.
+- **Neutralidad:** usar la misma metodología para todos los gobiernos y partidos, citar siempre la fuente y no editorializar. La credibilidad es el activo principal.
 - **Datos personales:** las declaraciones juradas y las sanciones son públicas, pero hay que mostrarlas con criterio (por ejemplo, no exponer DNI).
