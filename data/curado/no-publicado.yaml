@@ -470,3 +470,39 @@
     - https://www.uncuyo.edu.ar/transparencia/instructivos-salariales
   pedido: La cantidad de cargos docentes y no docentes por categoría, dedicación y unidad académica, y su costo mensual, desde 2023, en CSV o XLSX.
   pedidos: []
+
+- id: uncuyo-estudiantes-al-dia
+  titulo: Cuántos estudiantes tiene hoy la UNCuyo y cuántos se reciben
+  categoria: personal
+  que_es: Los estudiantes, ingresantes, reinscriptos y egresados de la UNCuyo del año en curso y del anterior, por facultad y por carrera.
+  por_que_importa: La única serie descargable es el Anuario de Estadísticas Universitarias de la Nación, que sale con casi dos años de atraso. Por eso no se puede saber cuántos estudiantes tiene la UNCuyo hoy ni comparar la plata de este año con la cantidad de estudiantes.
+  organismo: Universidad Nacional de Cuyo (Coordinación Legal y Técnica)
+  marco_legal: Ley 27.275 de Acceso a la Información Pública
+  ley: "27275"
+  formulario: mailto:rec.cglyt@uncuyo.edu.ar
+  estado: desactualizado
+  donde_buscamos:
+    - https://www.argentina.gob.ar/educacion/universidades/informacion/publicaciones/anuarios
+    - https://www.uncuyo.edu.ar/transparencia
+  detalle_estado: Al 18/10/2026 el último dato descargable es de 2024, en el adelanto del Anuario publicado en agosto de 2026.
+  pedido: La cantidad de estudiantes, nuevos inscriptos, reinscriptos y egresados de 2025 y 2026, por unidad académica y carrera, en CSV o XLSX.
+  pedidos: []
+
+- id: uncuyo-carreras
+  titulo: Cuántos se inscriben y cuántos se reciben en cada carrera de la UNCuyo, y en cuánto tiempo
+  categoria: personal
+  que_es: Para cada carrera de la UNCuyo, los inscriptos, estudiantes y egresados por año, y cuánto tardan en promedio en recibirse quienes empezaron juntos.
+  por_que_importa: El Anuario de la Nación agrupa las carreras en disciplinas y no sigue a cada camada, así que no se puede saber cuántos de los que entran a una carrera se reciben ni en cuánto tiempo. La UNCuyo tiene esos datos en su sistema de gestión de alumnos y los muestra en tableros que no se pueden descargar.
+  organismo: Universidad Nacional de Cuyo (Coordinación Legal y Técnica)
+  marco_legal: Ley 27.275 de Acceso a la Información Pública
+  ley: "27275"
+  formulario: mailto:rec.cglyt@uncuyo.edu.ar
+  estado: sin_publicar
+  donde_buscamos:
+    - https://www.uncuyo.edu.ar/academica/estadisticas/
+    - https://www.uncuyo.edu.ar/academica/estadisticas/repositorio
+    - https://www.uncuyo.edu.ar/academica/estadisticas/datos-academicos
+    - https://www.argentina.gob.ar/educacion/universidades/informacion/publicaciones/anuarios
+  detalle_estado: Al 18/10/2026 el repositorio de estadísticas de la UNCuyo tiene cinco informes en PDF (censos, encuestas y un relevamiento de egresados) y un tablero, sin tablas por carrera ni por camada para descargar.
+  pedido: Por carrera y unidad académica, desde 2018, los nuevos inscriptos, estudiantes, reinscriptos y egresados de cada año, y para cada camada de ingreso cuántos se recibieron y en cuántos años, en CSV o XLSX.
+  pedidos: []

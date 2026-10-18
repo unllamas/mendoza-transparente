@@ -18,6 +18,15 @@
  *   - estudiantes.csv: nivel pregrado_grado (cuadros 2.1.1 estudiantes, 2.1.2 nuevos inscriptos, 2.1.3 reinscriptos, 2.1.4 egresados;
  *     en 2018 a 2021 no hay cuadro de reinscriptos y el de egresados es el 2.1.3) y posgrado (3.1.1 a 3.1.3, sin reinscriptos).
  *     Son series de varios años: cada anuario trae 10 o 11 años y se queda el dato del anuario más nuevo que lo trae.
+ *   - disciplinas.csv: pregrado y grado por rama de estudio y disciplina (cuadros por disciplina del capítulo 2.1: 2.1.10 a 2.1.14a en
+ *     2018 a 2021, 2.1.14 a 2.1.18a en 2023 y 2024; se ubican por título "por disciplina segun institucion. rama de estudio ..."). Cada
+ *     cuadro tiene grupos de cuatro columnas (estudiantes, nuevos inscriptos, reinscriptos, egresados). Solo es del año de cada anuario
+ *     (no hay series). La fila "total" de cada rama sale del grupo "Total ..." del cuadro o, si no lo trae (Ciencias Sociales), de sumar las
+ *     disciplinas; se controla que la suma de ramas dé el total de estudiantes.csv. En el anuario 2018 el subencabezado de Historia está
+ *     mal escrito ("MA_t", "NI_t"...): los grupos se ubican por el nombre de arriba y no por el texto "EST".
+ *   - rendimiento.csv: reinscriptos (2.1.7 o 2.1.10) y nuevos inscriptos (2.1.22a o 2.1.28a) por cantidad de materias aprobadas en el año
+ *     (0 a 5 y 6 o más), solo el año de cada anuario. Los indicadores de egreso o de duración de la carrera no existen en el Anuario
+ *     (el cuadro 1.2.1a solo trae el % de reinscriptos con 2 o más materias aprobadas) y no se leen.
  *   - personal.csv (capítulo 4): docentes universitarios por dedicación (4.4: total, exclusiva, semiexclusiva, simple y otro), docentes
  *     preuniversitarios (4.9), autoridades superiores y personal no docente por categoría (4.20 en 2020 a 2024; 4.21 en 2018).
  *     `cargos` es la cantidad de cargos; `personas` sale del cuadro 4.1 (personas por escalafón, una por escalafón) y solo está en
@@ -39,6 +48,8 @@
  * Cobertura: anuarios 2018, 2020, 2021, 2023 y 2024. No hay anuario 2019 ni 2022 en formato XLSX (2022 solo está en CSV, solo con
  * los capítulos 2 y 3, que no agregan nada). El 2024 es un ADELANTO parcial (capítulos 1 a 5) que puede corregirse: cuando salga el
  * definitivo el link cambia y el scraper lo archiva como una versión nueva.
+ *
+ * Para volver a parsear sin bajar nada: `bun run scrape universidades-estadisticas --solo-parsear` (usa la página y los ZIP archivados).
  *
  * Datos personales: ninguno. Son totales por universidad.
  */
@@ -95,7 +106,7 @@ export interface Table {
   year: number | null;
 }
 
-const TITLE_RE = /^\s*(?:cuadro\s+)?(\d+(?:\.\d+)+)\s*\.?\s*[a-z]?\s*[-–]\s*(.*)$/is;
+const TITLE_RE = /^\s*(?:cuadro\s+)?(?:c\s+)?(\d+(?:\.\d+)+)\s*\.?\s*[a-z]?\s*[-–]\s*(.*)$/is;
 
 export function tableOf(sheet: string, grid: Grid): Table | null {
   for (const row of grid.slice(0, 8)) {
@@ -325,6 +336,94 @@ export function parseGastoPorEstudiante(grid: Grid): ByInst {
   );
 }
 
+/** Measures of each column group in the tables by discipline: EST, NI, RE (R in 2018) and EGR(E). */
+const DISCIPLINE_MEASURES = ["estudiantes", "nuevos_inscriptos", "reinscriptos", "egresados"] as const;
+type DisciplineMeasure = (typeof DISCIPLINE_MEASURES)[number];
+export type DisciplineValues = Record<DisciplineMeasure, number | null>;
+
+/**
+ * Tables 2.1.9 to 2.1.18a: institutions in rows and, in columns, groups of four (EST, NI, RE, EGR) with the name of the branch or
+ * discipline in the row above. Returns, per university, the values of each group with its name. A "-" is zero.
+ */
+export function parseDisciplineGroups(grid: Grid): Partial<Record<InstId, { name: string; values: DisciplineValues }[]>> {
+  const subIdx = grid.slice(0, 10).findIndex((r) => {
+    const cells = r.map(norm);
+    return (
+      cells.includes("est") && cells.includes("ni") && cells.some((c) => c === "re" || c === "r") && cells.some((c) => /^egre?$/.test(c))
+    );
+  });
+  if (subIdx < 1) return {};
+  const sub = grid[subIdx]!.map(norm);
+  const names = grid[subIdx - 1]!;
+  // Groups start where there is a name above and a header below. They are not found by the text "EST": in the 2018 yearbook the
+  // Historia group (Ciencias Humanas) has a misspelled subheader ("MA_t", "NI_t", "R_t", "E_t").
+  const starts = names
+    .map((n, i) => [n, i] as const)
+    .filter(([n, i]) => String(n ?? "").trim() !== "" && sub[i] !== "")
+    .map(([, i]) => i);
+  const rows = institutionRows(grid);
+  const out: Partial<Record<InstId, { name: string; values: DisciplineValues }[]>> = {};
+  for (const id of INST_IDS) {
+    const row = rows[id];
+    if (!row) continue;
+    out[id] = starts.map((c) => {
+      const name = String(names[c] ?? "")
+        .replace(/\s+/g, " ")
+        .trim();
+      const values = Object.fromEntries(DISCIPLINE_MEASURES.map((m, k) => [m, numOrZero(row[c + k])])) as DisciplineValues;
+      const { estudiantes: e, nuevos_inscriptos: n, reinscriptos: r } = values;
+      if (e !== null && n !== null && r !== null && n + r !== e) throw new Error(`"${name}": nuevos + reinscriptos != estudiantes`);
+      return { name, values };
+    });
+  }
+  return out;
+}
+
+/** Branch of study named in the title of a table by discipline ("rama de estudio ciencias aplicadas"). */
+export function branchOfTitle(title: string): string | null {
+  if (/\bsin rama\b/.test(title)) return "Sin rama";
+  const m = /rama de estudio\s+(.*?)(?:\.|$)/.exec(title);
+  const t = m ? m[1]! : "";
+  if (/^sin rama/.test(t)) return "Sin rama";
+  if (t.startsWith("ciencias aplicadas")) return "Ciencias Aplicadas";
+  if (t.startsWith("ciencias basicas")) return "Ciencias Básicas";
+  if (t.startsWith("ciencias de la salud")) return "Ciencias de la Salud";
+  if (t.startsWith("ciencias humanas")) return "Ciencias Humanas";
+  if (t.startsWith("ciencias sociales")) return "Ciencias Sociales";
+  return null;
+}
+
+export const MATERIAS_BUCKETS = ["0", "1", "2", "3", "4", "5", "6_o_mas"] as const;
+export interface MateriasRow {
+  total: number | null;
+  buckets: (number | null)[];
+}
+
+/**
+ * Tables of subjects passed in the year (returning students: 2.1.7 or 2.1.10; new students: 2.1.22a or 2.1.28a): total and seven
+ * columns (0, 1, 2, 3, 4, 5 and "6 o más"). The percentage columns that follow, if any, are ignored.
+ */
+export function parseMaterias(grid: Grid): Partial<Record<InstId, MateriasRow>> {
+  const idx = grid.slice(0, 10).findIndex((r) => {
+    const cells = r.map(norm);
+    return cells.includes("6 o mas") && ["0", "1", "2", "3", "4", "5"].every((c) => cells.includes(c));
+  });
+  if (idx < 0) return {};
+  const head = grid[idx]!.map(norm);
+  const first = head.indexOf("0");
+  if (first < 1) return {};
+  const cols = [...MATERIAS_BUCKETS.keys()].map((k) => first + k);
+  if (head[first + 6] !== "6 o mas") return {};
+  const out: Partial<Record<InstId, MateriasRow>> = {};
+  const rows = institutionRows(grid);
+  for (const id of INST_IDS) {
+    const row = rows[id];
+    if (!row) continue;
+    out[id] = { total: numOrZero(row[first - 1]), buckets: cols.map((c) => numOrZero(row[c])) };
+  }
+  return out;
+}
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Descubrimiento y descarga
 // ---------------------------------------------------------------------------------------------------------------------
@@ -392,6 +491,8 @@ interface Extraction {
   year: number;
   zip: string;
   students: Candidate[];
+  disciplines: Candidate[];
+  performance: Candidate[];
   staff: Candidate[];
   budget: Candidate[];
   notes: string[];
@@ -403,7 +504,17 @@ const near = (a: number, b: number, tol = 0.001) => Math.abs(a - b) <= Math.max(
 
 export function extractAnuario(link: AnuarioLink, zipBytes: Uint8Array): Extraction {
   const files = unzipSync(zipBytes, { filter: (f) => wantedFile(f.name) });
-  const ex: Extraction = { year: link.year, zip: link.filename, students: [], staff: [], budget: [], notes: [], info: [] };
+  const ex: Extraction = {
+    year: link.year,
+    zip: link.filename,
+    students: [],
+    disciplines: [],
+    performance: [],
+    staff: [],
+    budget: [],
+    notes: [],
+    info: [],
+  };
   const warn = (m: string) => ex.notes.push(`${link.filename}: ${m}`);
 
   // Tablas de cada capítulo: { archivo, tabla }
@@ -486,6 +597,126 @@ export function extractAnuario(link: AnuarioLink, zipBytes: Uint8Array): Extract
           },
         });
       }
+    }
+  }
+
+  // --- Disciplines (2.1.9 to 2.1.18a) --------------------------------------------------------------------------------
+  // One table per branch of study (plus one "sin rama"). Found by title, not by number: they move between yearbooks.
+  // A branch table has the branch total as its first group ("Total general", "Total Ciencias Aplicadas") except Ciencias Sociales
+  // and "sin rama"; when missing, it is summed from the disciplines.
+  const label = (t: Table) => `${t.num}${/\d\s*([a-z])\.?\s*$/i.exec(t.sheet)?.[1]?.toLowerCase() ?? ""}`;
+  const disciplineTables = tables.filter(
+    ({ t }) =>
+      t.num.startsWith("2.1") &&
+      /por disciplina segun institucion\. (?:sin )?rama de estudio/.test(t.title) &&
+      Object.keys(institutionRows(t.grid)).length > 0,
+  );
+  if (!disciplineTables.length) warn("sin cuadros por disciplina");
+  const branchSums = new Map<string, number>();
+  for (const { file, t } of disciplineTables) {
+    const branch = branchOfTitle(t.title);
+    if (!branch) {
+      warn(`cuadro ${label(t)}: no se reconoce la rama del título`);
+      continue;
+    }
+    const groups = parseDisciplineGroups(t.grid);
+    for (const id of INST_IDS) {
+      const gs = groups[id];
+      if (!gs) {
+        warn(`${id} no está en el cuadro ${label(t)}`);
+        continue;
+      }
+      const isTotal = (n: string) => /^total/i.test(n);
+      const parts = gs.filter((g) => !isTotal(g.name));
+      const listed = gs.find((g) => isTotal(g.name));
+      const sum = (m: DisciplineMeasure) => parts.reduce((a, g) => a + (g.values[m] ?? 0), 0);
+      const summed = Object.fromEntries(DISCIPLINE_MEASURES.map((m) => [m, sum(m)])) as DisciplineValues;
+      if (listed)
+        for (const m of DISCIPLINE_MEASURES)
+          if (parts.length && listed.values[m] !== null && listed.values[m] !== summed[m])
+            warn(`${id} ${branch}: ${m} del total (${listed.values[m]}) != suma de disciplinas (${summed[m]}) en el cuadro ${label(t)}`);
+      // "Sin rama" and "Sin Disciplina" are a single group without disciplines: it is the branch total.
+      const total = listed?.values ?? (parts.length === 1 && /^sin /i.test(parts[0]!.name) ? parts[0]!.values : summed);
+      const emit = (disciplina: string, v: DisciplineValues) => {
+        if (DISCIPLINE_MEASURES.every((m) => !v[m])) return;
+        ex.disciplines.push({
+          key: `${id}|${link.year}|${branch}|${disciplina}`,
+          rank: prio(true),
+          row: {
+            anio: link.year,
+            universidad_id: id,
+            universidad: INSTITUTIONS[id].name,
+            rama: branch,
+            disciplina,
+            ...v,
+            alcance: INSTITUTIONS[id].alcance,
+            ...base,
+            fuente_archivo: `${link.filename}/${file}`,
+            cuadro: label(t),
+          },
+        });
+      };
+      emit("total", total);
+      if (!(parts.length === 1 && /^sin /i.test(parts[0]!.name))) for (const g of parts) emit(g.name, g.values);
+      branchSums.set(`${id}|${branch}`, total.estudiantes ?? 0);
+    }
+  }
+  // Cross-check: the branches must add up to the total of undergraduate students (table 2.1.1).
+  for (const id of INST_IDS) {
+    const all = [...branchSums].filter(([k]) => k.startsWith(`${id}|`)).reduce((a, [, v]) => a + v, 0);
+    const reported = ex.students.find((c) => c.row.universidad_id === id && c.row.anio === link.year && c.row.nivel === "pregrado_grado");
+    if (branchSums.size && reported && reported.row.estudiantes !== all)
+      warn(`${id}: la suma de ramas (${all}) != estudiantes de pregrado y grado (${reported.row.estudiantes})`);
+  }
+
+  // --- Performance: subjects passed in the year (returning and new students) --------------------------------------------------
+  const materiasSets: [string, RegExp][] = [
+    ["reinscriptos", /^reinscript\S* de titulos de pregrado y grado por cantidad de materias aprobadas en el ano informado/],
+    [
+      "nuevos_inscriptos",
+      /^nuev\S* insc\s*ript\S* de titulos de pregrado y grado (?:segun|por) cantidad de materias aprobadas(?!.*porcentaje)/,
+    ],
+  ];
+  for (const [poblacion, re] of materiasSets) {
+    const f = tables.find(({ t }) => t.num.startsWith("2.1") && re.test(t.title) && Object.keys(institutionRows(t.grid)).length > 0);
+    if (!f) {
+      warn(`falta el cuadro de materias aprobadas de ${poblacion}`);
+      continue;
+    }
+    const m = parseMaterias(f.t.grid);
+    for (const id of INST_IDS) {
+      const r = m[id];
+      if (!r) {
+        warn(`${id} no está en el cuadro ${label(f.t)} (materias aprobadas de ${poblacion})`);
+        continue;
+      }
+      const sum = r.buckets.reduce<number>((a, v) => a + (v ?? 0), 0);
+      if (r.total !== null && sum !== r.total) warn(`${id}: materias aprobadas de ${poblacion} suman ${sum} != total ${r.total}`);
+      const own = ex.students.find((c) => c.row.universidad_id === id && c.row.anio === link.year && c.row.nivel === "pregrado_grado");
+      const expected = own?.row[poblacion];
+      if (typeof expected === "number" && r.total !== null && expected !== r.total)
+        warn(`${id}: total de materias aprobadas de ${poblacion} (${r.total}) != ${poblacion} del cuadro de estudiantes (${expected})`);
+      MATERIAS_BUCKETS.forEach((bucket, k) => {
+        const v = r.buckets[k] ?? null;
+        if (v === null) return;
+        ex.performance.push({
+          key: `${id}|${link.year}|${poblacion}|${bucket}`,
+          rank: prio(true),
+          row: {
+            anio: link.year,
+            universidad_id: id,
+            universidad: INSTITUTIONS[id].name,
+            poblacion,
+            materias_aprobadas: bucket,
+            cantidad: v,
+            porcentaje: r.total ? round2((v / r.total) * 100) : null,
+            alcance: INSTITUTIONS[id].alcance,
+            ...base,
+            fuente_archivo: `${link.filename}/${f.file}`,
+            cuadro: label(f.t),
+          },
+        });
+      });
     }
   }
 
@@ -783,14 +1014,53 @@ const STAFF_COLS = [
   "fuente_archivo",
   "cuadro",
 ];
+const DISCIPLINE_COLS = [
+  "anio",
+  "universidad_id",
+  "universidad",
+  "rama",
+  "disciplina",
+  "estudiantes",
+  "nuevos_inscriptos",
+  "reinscriptos",
+  "egresados",
+  "alcance",
+  "anuario",
+  "fuente_archivo",
+  "cuadro",
+];
+const PERFORMANCE_COLS = [
+  "anio",
+  "universidad_id",
+  "universidad",
+  "poblacion",
+  "materias_aprobadas",
+  "cantidad",
+  "porcentaje",
+  "alcance",
+  "anuario",
+  "fuente_archivo",
+  "cuadro",
+];
 const BUDGET_COLS = ["anio", "universidad_id", "universidad", "concepto", "monto", "alcance", "anuario", "fuente_archivo", "cuadro"];
 
-export async function run(_args: string[]): Promise<void> {
-  // 1) Página de anuarios: se archiva y se leen los links.
-  const resp = await get(PAGE);
-  const html = await resp.text();
-  await archive(SOURCE, "anuarios.html", html, { url: resp.url });
-  const links = parseAnuarioLinks(html, resp.url).filter((l) => l.year >= MIN_YEAR);
+export async function run(args: string[]): Promise<void> {
+  // --solo-parsear: no network; reads the page and the ZIPs already archived in data/raw/ (archives nothing new).
+  const offline = args.includes("--solo-parsear");
+  let html: string;
+  let baseUrl = PAGE;
+  if (offline) {
+    const archived = await latestRaw(SOURCE, "anuarios.html");
+    if (!archived) throw new Error("--solo-parsear: no hay anuarios.html archivado");
+    html = (await readRaw(archived)).toString("utf8");
+  } else {
+    // 1) Yearbooks page: archived, and its links are read.
+    const resp = await get(PAGE);
+    html = await resp.text();
+    baseUrl = resp.url;
+    await archive(SOURCE, "anuarios.html", html, { url: resp.url });
+  }
+  const links = parseAnuarioLinks(html, baseUrl).filter((l) => l.year >= MIN_YEAR);
   if (!links.length) throw new Error("No se encontró ningún ZIP de anuario en la página");
   console.log(
     `Anuarios en la página (${MIN_YEAR} en adelante): ${links.map((l) => `${l.year}${l.adelanto ? " (adelanto)" : ""}`).join(", ")}`,
@@ -801,7 +1071,7 @@ export async function run(_args: string[]): Promise<void> {
   const extractions: Extraction[] = [];
   for (const link of links) {
     let path = await latestRaw(SOURCE, link.filename);
-    if (!path || recent.has(link.year)) {
+    if (!offline && (!path || recent.has(link.year))) {
       try {
         const saved = await fetchAndArchive(SOURCE, link.url, link.filename);
         console.log(saved ? `Archivado ${link.filename}` : `Sin cambios ${link.filename}`);
@@ -819,7 +1089,7 @@ export async function run(_args: string[]): Promise<void> {
     const ex = extractAnuario(link, new Uint8Array(await readRaw(path)));
     extractions.push(ex);
     console.log(
-      `  ${link.filename}: ${ex.students.length} candidatos de estudiantes, ${ex.staff.length} de personal, ${ex.budget.length} de presupuesto`,
+      `  ${link.filename}: ${ex.students.length} candidatos de estudiantes, ${ex.disciplines.length} de disciplinas, ${ex.performance.length} de rendimiento, ${ex.staff.length} de personal, ${ex.budget.length} de presupuesto`,
     );
   }
   if (!extractions.length) throw new Error("No se pudo leer ningún anuario");
@@ -830,9 +1100,18 @@ export async function run(_args: string[]): Promise<void> {
   const students = pickBest(extractions.flatMap((e) => e.students));
   const staff = pickBest(extractions.flatMap((e) => e.staff));
   const budget = pickBest(extractions.flatMap((e) => e.budget));
+  const disciplines = pickBest(extractions.flatMap((e) => e.disciplines));
+  const performance = pickBest(extractions.flatMap((e) => e.performance));
   const outputs: [string, Row[], string[], string[]][] = [
     ["estudiantes.csv", students.rows.sort(bySort(["universidad_id", "nivel", "anio"])), STUDENT_COLS, ["anio"]],
     ["personal.csv", staff.rows.sort(bySort(["universidad_id", "tipo", "dedicacion", "categoria", "anio"])), STAFF_COLS, ["anio"]],
+    ["disciplinas.csv", disciplines.rows.sort(bySort(["universidad_id", "anio", "rama", "disciplina"])), DISCIPLINE_COLS, ["anio"]],
+    [
+      "rendimiento.csv",
+      performance.rows.sort(bySort(["universidad_id", "poblacion", "anio", "materias_aprobadas"])),
+      PERFORMANCE_COLS,
+      ["anio"],
+    ],
     ["presupuesto.csv", budget.rows.sort(bySort(["universidad_id", "concepto", "anio"])), BUDGET_COLS, ["anio"]],
   ];
   for (const [file, rows, cols] of outputs) {

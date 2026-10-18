@@ -53,6 +53,33 @@ export const PAGES: Record<string, PageMeta> = {
     eyebrow: "COPARTICIPACIÓN",
     activa: true,
   },
+  "/recaudacion": {
+    title: `Recaudación de impuestos en Mendoza${TITLE_SUFFIX}`,
+    description:
+      "Recaudación de Mendoza: cuánto cobra la ATM por Ingresos Brutos, Sellos, Automotor e Inmobiliario este año, en pesos de hoy y contra el año anterior.",
+    ogSlug: "recaudacion",
+    ogTitle: "Recaudación de Mendoza",
+    eyebrow: "RECAUDACIÓN",
+    activa: true,
+  },
+  "/universidades": {
+    title: `Universidades nacionales en Mendoza${TITLE_SUFFIX}`,
+    description:
+      "Universidades nacionales en Mendoza: cuánta plata les transfiere Nación a la UNCuyo y a la UTN, y qué datos faltan para saber cuánto queda en la provincia.",
+    ogSlug: "universidades",
+    ogTitle: "Universidades en Mendoza",
+    eyebrow: "UNIVERSIDADES",
+    activa: true,
+  },
+  "/universidades/uncuyo": {
+    title: `UNCuyo: presupuesto y estudiantes${TITLE_SUFFIX}`,
+    description:
+      "Presupuesto de la UNCuyo: cuánto le transfiere Nación este año, en qué se usa, cómo cambió descontada la inflación, y sus estudiantes, egresados y docentes.",
+    ogSlug: "uncuyo",
+    ogTitle: "Universidad Nacional de Cuyo",
+    eyebrow: "UNIVERSIDADES",
+    activa: true,
+  },
   "/empleo-publico": {
     title: `Empleo público en Mendoza${TITLE_SUFFIX}`,
     description:

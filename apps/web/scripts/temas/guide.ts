@@ -223,6 +223,11 @@ export function writeSearchIndex(paginas: Pagina[], outDir: string) {
       i: a.head?.photo ?? undefined,
       q: "organismo ministerio gobierno personal",
     });
+  byPath.set("/universidades/uncuyo", {
+    t: "Universidad Nacional de Cuyo (UNCuyo)",
+    s: "Cuánto recibe de Nación, estudiantes y egresados",
+    q: "uncuyo universidad cuyo facultad carreras estudiantes egresados docentes presupuesto",
+  });
   for (const src of index.sources)
     byPath.set(`/datos/${src.id}`, { t: src.nombre, s: `Datos abiertos de ${src.organismo}`, q: src.descripcion });
 

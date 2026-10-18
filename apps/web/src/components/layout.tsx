@@ -20,7 +20,9 @@ import {
   RiMapPinLine,
   RiMenuLine,
   RiQuillPenLine,
+  RiReceiptLine,
   RiScales3Line,
+  RiSchoolLine,
   RiStore2Line,
   RiTeamLine,
   RiUserLine,
@@ -61,6 +63,8 @@ const GRUPOS: Grupo[] = [
     items: [
       { to: "/deuda", label: "Deuda", descripcion: "Cuánto debe la provincia y a quién", icon: RiBankLine },
       { to: "/coparticipacion", label: "Coparticipación", descripcion: "Cuánto recibe cada municipio", icon: RiCoinsLine },
+      { to: "/recaudacion", label: "Recaudación", descripcion: "Cuánto cobra la provincia de impuestos", icon: RiReceiptLine },
+      { to: "/universidades", label: "Universidades", descripcion: "Cuánto reciben de Nación y a cuántos forman", icon: RiSchoolLine },
       { to: "/empleo-publico", label: "Empleo público", descripcion: "Empleados por habitante y por provincia", icon: RiTeamLine },
       { to: "/poblacion", label: "Población", descripcion: "Cuántos somos en cada departamento", icon: RiGroupLine },
       { to: "/municipios", label: "Municipios", descripcion: "Una página por cada uno de los 18", icon: RiMapPinLine },
