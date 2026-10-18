@@ -35,6 +35,7 @@ description: Convenciones de código de Mendoza Transparente. Cubre idioma (cód
    - Para elementos visuales: los de `@mt/ui` (`Alert`, `StatTile`, `Section`, `Sheet`…) y, con router o analítica, `Breadcrumbs`, `TrackedSheet`, `TrackedSegmented` y `ListSearch` de `src/components/`.
    - Para comparar personas entre fuentes: `samePerson` (en `scripts/temas/gobierno.ts` y `entidades.ts`).
    - Para URLs: `slug` y `ROLES` (`src/slug.ts`).
+   - En scrapers: `sleep`, `collapseSpaces`, `parseArNumber`, `finiteNumber` y `fetchOrReuse()` de `@mt/core`; `pdfText` y `pdfPages` de `packages/scrapers/src/lib/pdf.ts`.
 3. **Datos derivados:** se calculan en `build-data`, nunca en el navegador. La web lee JSON chico ya armado.
 4. **Si cambia algo de un proceso,** se actualiza su documento en `docs/procesos/` en el mismo commit.
 

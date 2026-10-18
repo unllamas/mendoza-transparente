@@ -13,6 +13,7 @@ import { join, relative } from "node:path";
 import { gunzipSync, gzipSync } from "node:zlib";
 
 import { RAW_DIR, ROOT } from "./paths.ts";
+import { sleep } from "./util.ts";
 
 // Los sitios del gobierno devuelven 403 sin un User-Agent de navegador.
 export const USER_AGENT =
@@ -38,8 +39,6 @@ const proxyPara = (url: string) =>
 
 // Por encima de este tamaño el archivo se guarda comprimido con gzip.
 const GZIP_THRESHOLD = 1_000_000;
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export interface ManifestEntry {
   filename: string;
@@ -166,6 +165,20 @@ export async function archive(
 export async function fetchAndArchive(source: string, url: string, filename: string, init?: RequestInit): Promise<string | null> {
   const resp = await get(url, init);
   return archive(source, filename, new Uint8Array(await resp.arrayBuffer()), { url });
+}
+
+/**
+ * Devuelve los bytes de la última versión archivada de `filename` y, si todavía no hay ninguna, la descarga,
+ * la archiva y hace una pausa de cortesía. Para fuentes cuyo contenido no cambia (PDF de un mes cerrado,
+ * planillas de un censo): evita volver a pedir lo que ya está en data/raw.
+ */
+export async function fetchOrReuse(source: string, url: string, filename: string, init?: RequestInit): Promise<Buffer> {
+  const prev = await latestRaw(source, filename);
+  if (prev && existsSync(prev)) return readRaw(prev);
+  const bytes = new Uint8Array(await (await get(url, init)).arrayBuffer());
+  await archive(source, filename, bytes, { url });
+  await sleep(1000);
+  return Buffer.from(bytes);
 }
 
 /** Lee un archivo crudo, descomprimiendo si hace falta. */

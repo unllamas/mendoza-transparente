@@ -58,6 +58,7 @@ import {
   ROOT,
   type Row,
   readRaw,
+  sleep,
   USER_AGENT,
   writeProcessed,
 } from "@mt/core";
@@ -69,7 +70,6 @@ import { allPageItems, type Item, pageItems, rowsOf, sheetRows, type Tok, tokeni
 
 const SOURCE = "municipios-personal";
 const FIRST_YEAR = 2018;
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const warn = (msg: string) => console.log(`::warning title=${SOURCE}::${msg}`);
 
 // ---------------------------------------------------------------- lectura del anexo 19 (el formato se lee en lrf/read.ts)

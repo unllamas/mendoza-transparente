@@ -1,29 +1,6 @@
-/**
- * Población (INDEC) para calcular valores por habitante.
- *
- * Salidas (data/processed/poblacion/):
- *  - poblacion_departamentos.csv: 18 departamentos de Mendoza.
- *      * censo 2010 y 2022 (resultados definitivos, cuadro 1.13 de Mendoza).
- *      * proyeccion 2010-2021: INDEC "Estimaciones de población por sexo, departamento y año
- *        calendario 2010-2025" (base censo 2010, al 1 de julio).
- *      * proyeccion 2022-2035: INDEC "Estimaciones de población por departamento y sexo
- *        2022-2035" (base censo 2022, feb 2026).
- *  - poblacion_provincias.csv: 24 jurisdicciones.
- *      * censo 2010 y 2022 (resultados definitivos, cuadro 1 total país).
- *      * proyeccion 2010-2021: INDEC proyecciones provinciales 2010-2040 (base censo 2010).
- *      * proyeccion 2022-2040: INDEC proyecciones jurisdicciones 2022-2040 (base censo 2022,
- *        oct 2025), suma de sexo y grupos quinquenales de edad.
- *
- * Ojo: hay un quiebre metodológico entre 2021 y 2022. Las proyecciones base 2010 parten de la
- * población corregida por evaluación demográfica (Mendoza 2010 = 1.774.737 vs. censo 1.738.929);
- * las base 2022 salen del censo 2022. Una misma (anio, municipio) puede tener una fila censo y
- * una proyeccion: filtrar por `tipo`. No hace falta estimación propia: hay proyecciones oficiales.
- */
-
-import { existsSync } from "node:fs";
-import { archive, get, latestRaw, normalizeMunicipio, readRaw, writeProcessed } from "@mt/core";
-import { extractText, getDocumentProxy } from "unpdf";
+import { fetchOrReuse, normalizeMunicipio, writeProcessed } from "@mt/core";
 import * as XLSX from "xlsx";
+import { pdfPages } from "../lib/pdf.ts";
 
 const SOURCE = "poblacion";
 const CENSO = "https://censo.gob.ar/wp-content/uploads";
@@ -76,26 +53,13 @@ function provFromPdfTitle(title: string): string | null {
   return PROV_BY_KEY.get(k) ?? null;
 }
 
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const arNum = (s: string) => Number(s.replaceAll(".", ""));
 
-async function fetchCached(url: string): Promise<Buffer> {
-  const filename = url.split("/").pop()!;
-  const prev = await latestRaw(SOURCE, filename);
-  if (prev && existsSync(prev)) return readRaw(prev);
+function fetchCached(url: string): Promise<Buffer> {
   // censo.gob.ar sirve la cadena de certificados incompleta (UNABLE_TO_VERIFY_LEAF_SIGNATURE):
   // se relaja la verificación TLS sólo para ese host (datos públicos, verificados por sha256 y cifras).
   const init = (new URL(url).hostname === "censo.gob.ar" ? { tls: { rejectUnauthorized: false } } : {}) as RequestInit;
-  const bytes = new Uint8Array(await (await get(url, init)).arrayBuffer());
-  await archive(SOURCE, filename, bytes, { url });
-  await sleep(1000);
-  return Buffer.from(bytes);
-}
-
-async function pdfPages(buf: Buffer): Promise<string[]> {
-  const pdf = await getDocumentProxy(new Uint8Array(buf));
-  const { text } = await extractText(pdf, { mergePages: false });
-  return text as string[];
+  return fetchOrReuse(SOURCE, url, url.split("/").pop()!, init);
 }
 
 function sheetRows(buf: Buffer): unknown[][] {

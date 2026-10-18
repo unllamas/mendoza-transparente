@@ -5,6 +5,8 @@
       "Bash(bun run verificar)",
       "Bash(bun run data)",
       "Bash(bunx tsc --noEmit)",
+      "Bash(bun run crudo:*)",
+      "Bash(bun run seccion:*)",
       "Bash(git status:*)",
       "Bash(git diff:*)",
       "Bash(git log:*)"

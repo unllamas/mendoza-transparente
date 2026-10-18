@@ -5,7 +5,7 @@ description: SEO y GEO de Mendoza Transparente (buscadores y motores de IA). Cub
 
 # SEO y GEO
 
-Fuente completa: `docs/procesos/web.md` (sección "SEO y GEO" y "La portada como guía").
+Fuente completa: `docs/procesos/web.md`, secciones "SEO y GEO" y "La portada como guía" (`bun run seccion web "SEO y GEO"`; no hace falta leer el archivo entero).
 
 ## Cada página nueva
 

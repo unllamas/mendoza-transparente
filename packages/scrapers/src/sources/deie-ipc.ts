@@ -1,14 +1,5 @@
-/**
- * DEIE Mendoza: IPC Gran Mendoza (variación mensual, acumulada e interanual,
- * por capítulo) y canasta básica (CBA, CBT, inversa del coeficiente de Engel).
- *
- * Fuente: RSS de WordPress (sitios.mendoza.gob.ar/deie). El feed de IPC trae sólo
- * el último post; el feed padre "precios-e-indices" enlaza los PDF de todos los meses.
- */
-
-import { existsSync } from "node:fs";
-import { archive, get, latestRaw, readRaw, writeProcessed } from "@mt/core";
-import { extractText, getDocumentProxy } from "unpdf";
+import { archive, fetchOrReuse, get, parseArNumber, sleep, writeProcessed } from "@mt/core";
+import { pdfText } from "../lib/pdf.ts";
 
 const SOURCE = "deie-ipc";
 const BASE = "https://sitios.mendoza.gob.ar/deie/category/economia/precios-e-indices/";
@@ -26,7 +17,6 @@ const mesNum = (s: string) =>
       .normalize("NFD")
       .replace(/\p{Diacritic}/gu, ""),
   ) + 1;
-const num = (s: string) => Number(s.replaceAll(".", "").replace(",", "."));
 
 const CAPITULOS = [
   "Alimentos y bebidas",
@@ -39,24 +29,6 @@ const CAPITULOS = [
   "Educación",
   "Otros bienes y servicios",
 ];
-
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-
-async function pdfText(bytes: Uint8Array): Promise<string> {
-  const pdf = await getDocumentProxy(new Uint8Array(bytes));
-  const { text } = await extractText(pdf, { mergePages: true });
-  return String(text);
-}
-
-/** Descarga (o reutiliza lo archivado) y devuelve los bytes. */
-async function fetchCached(url: string, filename: string): Promise<Uint8Array> {
-  const prev = await latestRaw(SOURCE, filename);
-  if (prev && existsSync(prev)) return new Uint8Array(await readRaw(prev));
-  const bytes = new Uint8Array(await (await get(url)).arrayBuffer());
-  await archive(SOURCE, filename, bytes, { url });
-  await sleep(1000);
-  return bytes;
-}
 
 export async function run(_args: string[]) {
   // 1. Feeds: siempre se piden de nuevo (cambian con cada publicación).
@@ -83,7 +55,7 @@ export async function run(_args: string[]) {
   const capitulos = new Map<string, Record<string, string | number>>();
   for (const url of ipcUrls.sort()) {
     const filename = url.split("/").pop()!;
-    const text = await pdfText(await fetchCached(url, filename));
+    const text = await pdfText(await fetchOrReuse(SOURCE, url, filename));
     const head = text.match(/registr[oó] en (\p{L}+)\s+(\d{4})/u);
     const row = text.match(/^(\d[\d.]*,\d)\s+(\d[\d.]*,\d)\s+(-?\d+,\d)\s+(-?\d+,\d)\s+(-?\d+,\d)\s*$/m);
     if (!head || !row) {
@@ -96,11 +68,11 @@ export async function run(_args: string[]) {
     mensual.set(key, {
       anio,
       mes,
-      variacion_mensual: num(row[3]!),
-      variacion_acumulada: num(row[4]!),
-      variacion_interanual: num(row[5]!),
-      indice_nivel_general: num(row[1]!),
-      indice_mes_anterior: num(row[2]!),
+      variacion_mensual: parseArNumber(row[3]!),
+      variacion_acumulada: parseArNumber(row[4]!),
+      variacion_interanual: parseArNumber(row[5]!),
+      indice_nivel_general: parseArNumber(row[1]!),
+      indice_mes_anterior: parseArNumber(row[2]!),
       fuente_url: url,
     });
     for (const cap of CAPITULOS) {
@@ -112,10 +84,10 @@ export async function run(_args: string[]) {
           anio,
           mes,
           capitulo: cap,
-          indice: num(m[1]!),
-          variacion_mensual: num(m[3]!),
-          variacion_acumulada: num(m[4]!),
-          variacion_interanual: num(m[5]!),
+          indice: parseArNumber(m[1]!),
+          variacion_mensual: parseArNumber(m[3]!),
+          variacion_acumulada: parseArNumber(m[4]!),
+          variacion_interanual: parseArNumber(m[5]!),
           fuente_url: url,
         });
     }
@@ -149,7 +121,7 @@ export async function run(_args: string[]) {
   const canasta = new Map<string, Record<string, string | number>>();
   for (const url of canastaUrls.sort()) {
     const filename = url.split("/").pop()!;
-    const text = await pdfText(await fetchCached(url, filename));
+    const text = await pdfText(await fetchOrReuse(SOURCE, url, filename));
     const start = text.indexOf("Cuadro 1. Canasta");
     const end = text.indexOf("Cuadro 2.", start);
     if (start < 0) continue;
@@ -162,9 +134,9 @@ export async function run(_args: string[]) {
       canasta.set(`${anio}-${mes}`, {
         anio,
         mes,
-        cba_adulto_equivalente: num(m[3]!),
-        inversa_coef_engel: num(m[4]!),
-        cbt_adulto_equivalente: num(m[5]!),
+        cba_adulto_equivalente: parseArNumber(m[3]!),
+        inversa_coef_engel: parseArNumber(m[4]!),
+        cbt_adulto_equivalente: parseArNumber(m[5]!),
         fuente_url: url,
       });
     }

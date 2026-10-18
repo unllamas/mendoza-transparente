@@ -24,7 +24,7 @@
  * completar acreedor_grupo y acreedor (BID, BIRF dentro de Multilateral).
  */
 
-import { fetchAndArchive, get, latestRaw, type Row, readRaw, writeProcessed } from "@mt/core";
+import { fetchAndArchive, finiteNumber, get, latestRaw, type Row, readRaw, sleep, writeProcessed } from "@mt/core";
 import * as cheerio from "cheerio";
 import { unzipSync } from "fflate";
 import * as XLSX from "xlsx";
@@ -34,7 +34,6 @@ const PAGES = [
   "https://sitios.mendoza.gob.ar/haciendayfinanzas/stock-vigente/",
   "https://sitios.mendoza.gob.ar/haciendayfinanzas/14619-2/",
 ];
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 type Cell = unknown;
 type Grid = Cell[][];
@@ -43,7 +42,6 @@ const clean = (v: Cell): string =>
   String(v ?? "")
     .replace(/\s+/g, " ")
     .trim();
-const num = (v: Cell): number | null => (typeof v === "number" && Number.isFinite(v) ? v : null);
 
 /** Serial de Excel a YYYY-MM-DD. Si ya es texto, lo devuelve tal cual. */
 function isoDate(v: Cell): string {
@@ -196,7 +194,7 @@ function parseStock(wb: XLSX.WorkBook, archivo: string): Corte {
     const label = clean(r[cols.acreedor!]);
     if (/^TOTAL DEUDA CONSOLIDADA\s*\+/i.test(label)) break;
     if (/^TOTAL DEUDA/i.test(label)) {
-      totalUsd ??= num(get(r, "usd"));
+      totalUsd ??= finiteNumber(get(r, "usd"));
       zona = "despues";
       continue;
     }
@@ -204,7 +202,7 @@ function parseStock(wb: XLSX.WorkBook, archivo: string): Corte {
       tipoCambio =
         r
           .slice(cols.acreedor! + 1)
-          .map(num)
+          .map(finiteNumber)
           .find((v) => v !== null && v > 0) ?? null;
       continue;
     }
@@ -219,7 +217,7 @@ function parseStock(wb: XLSX.WorkBook, archivo: string): Corte {
     const idStr = clean(get(r, "id"));
     if (!moneda && !idStr) {
       // fila de grupo o subgrupo (solo con saldo USD)
-      if (num(get(r, "usd")) === null) continue;
+      if (finiteNumber(get(r, "usd")) === null) continue;
       if (/^\d+\.\d+\.?\s/.test(label)) sub = label.replace(/^\d+\.\d+\.?\s*/, "").trim();
       else {
         grupo = normGrupo(label);
@@ -228,10 +226,10 @@ function parseStock(wb: XLSX.WorkBook, archivo: string): Corte {
       continue;
     }
 
-    const usd = num(get(r, "usd"));
+    const usd = finiteNumber(get(r, "usd"));
     const monedaN = normMoneda(moneda);
-    let origen = formato === "B" ? num(get(r, "origen")) : monedaN === "USD" ? usd : num(get(r, "ars"));
-    if (origen === null && formato === "A") origen = num(get(r, "ars"));
+    let origen = formato === "B" ? finiteNumber(get(r, "origen")) : monedaN === "USD" ? usd : finiteNumber(get(r, "ars"));
+    if (origen === null && formato === "A") origen = finiteNumber(get(r, "ars"));
     rows.push({
       fecha_corte: fecha,
       consolidada: zona === "consol" ? 1 : 0,
@@ -245,7 +243,7 @@ function parseStock(wb: XLSX.WorkBook, archivo: string): Corte {
       tasa: tasaTexto(get(r, "tasa")),
       vencimiento: isoDate(get(r, "vto")),
       fecha_inicio: isoDate(get(r, "inicio")),
-      duracion_meses: num(get(r, "duracion")),
+      duracion_meses: finiteNumber(get(r, "duracion")),
       frecuencia_pago: normFrec(clean(get(r, "frecuencia"))),
       garantia: normGarantia(clean(get(r, "garantia"))),
       forma_pago: clean(get(r, "pago")),
@@ -277,20 +275,20 @@ function parseEvolucion(wb: XLSX.WorkBook): Row[] {
   const out: Row[] = [];
   dates.forEach((d, c) => {
     if (typeof d !== "number" || d < 40000) return;
-    const tc = num(rTc[c]);
-    const consol = num(rConsol[c]);
+    const tc = finiteNumber(rTc[c]);
+    const consol = finiteNumber(rConsol[c]);
     out.push({
       fecha_corte: isoDate(d),
       deuda_consolidada_ars_mill: consol,
-      deuda_flotante_ars_mill: num(rFlot?.[c]),
-      deuda_total_ars_mill: num(rTotal[c]),
+      deuda_flotante_ars_mill: finiteNumber(rFlot?.[c]),
+      deuda_total_ars_mill: finiteNumber(rTotal[c]),
       tipo_cambio_com3500: tc,
       deuda_consolidada_usd_mill: consol !== null && tc ? +(consol / tc).toFixed(3) : null,
-      deuda_total_usd_mill: num(rUsd[c]),
-      deuda_flotante_descentralizadas_ars_mill: num(rFlotDesc?.[c]),
-      factor_ipc: num(rIpc?.[c]),
-      deuda_total_ars_reales_mill: num(rReal?.[c]),
-      deuda_total_sobre_pbg: num(rPbg?.[c]),
+      deuda_total_usd_mill: finiteNumber(rUsd[c]),
+      deuda_flotante_descentralizadas_ars_mill: finiteNumber(rFlotDesc?.[c]),
+      factor_ipc: finiteNumber(rIpc?.[c]),
+      deuda_total_ars_reales_mill: finiteNumber(rReal?.[c]),
+      deuda_total_sobre_pbg: finiteNumber(rPbg?.[c]),
     });
   });
   return out;

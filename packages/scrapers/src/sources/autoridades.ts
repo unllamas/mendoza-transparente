@@ -23,12 +23,23 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
-import { archive, fetchAndArchive, get, latestRaw, normalizeMunicipio, PROCESSED_DIR, type Row, readRaw, writeProcessed } from "@mt/core";
+import {
+  archive,
+  collapseSpaces,
+  fetchAndArchive,
+  get,
+  latestRaw,
+  normalizeMunicipio,
+  PROCESSED_DIR,
+  type Row,
+  readRaw,
+  sleep,
+  writeProcessed,
+} from "@mt/core";
 import { load } from "cheerio";
-import { extractText, getDocumentProxy } from "unpdf";
+import { pdfText } from "../lib/pdf.ts";
 
 const ID = "autoridades";
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // El WAF del Senado bloquea el User-Agent con sufijo; con uno de navegador común responde.
 const UA_NAVEGADOR = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36";
@@ -43,7 +54,6 @@ const slug = (s: string) =>
   norm(s)
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
-const clean = (s: string) => s.replace(/\s+/g, " ").trim();
 
 /** "dd/mm/yyyy" a "yyyy-mm-dd". */
 function isoFecha(s: string): string {
@@ -54,12 +64,12 @@ function isoFecha(s: string): string {
 /** "Apellido, Nombre Nombre" a "Nombre Nombre Apellido". */
 function nombreApellido(s: string): string {
   const [ape, ...resto] = s.split(",");
-  return resto.length ? clean(`${resto.join(",")} ${ape}`) : clean(s);
+  return resto.length ? collapseSpaces(`${resto.join(",")} ${ape}`) : collapseSpaces(s);
 }
 
 /** Pasa a "Título" un texto en mayúsculas o minúsculas, respetando partículas. */
 function titulo(s: string): string {
-  return clean(s)
+  return collapseSpaces(s)
     .toLowerCase()
     .split(" ")
     .map((w, i) => (i > 0 && ["de", "del", "la", "las", "los", "y", "por"].includes(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)))
@@ -70,9 +80,7 @@ async function textoRaw(path: string | null): Promise<string> {
   if (!path) return "";
   const data = await readRaw(path);
   if (path.replace(/\.gz$/, "").endsWith(".pdf")) {
-    const pdf = await getDocumentProxy(new Uint8Array(data));
-    const { text } = await extractText(pdf, { mergePages: true });
-    return text;
+    return pdfText(data);
   }
   const html = data.toString("utf8");
   return load(html).text();
@@ -393,15 +401,15 @@ async function diputados(): Promise<Autoridad[]> {
   const perfiles = new Map<string, string>();
   $('a[href^="/diputados/"]').each((_, a) => {
     const href = $(a).attr("href") ?? "";
-    const t = clean($(a).text());
+    const t = collapseSpaces($(a).text());
     if (/^\/diputados\/[a-z0-9]+\/$/.test(href) && t.includes(",")) perfiles.set(norm(t), `https://www.hcdn.gob.ar${href}`);
   });
 
   const out: Autoridad[] = [];
   for (const r of rows) {
     if (norm(r[idx("DISTRITO")] ?? "") !== "mendoza") continue;
-    const ape = clean(r[idx("APELLIDO")]!);
-    const nom = clean(r[idx("NOMBRE")]!);
+    const ape = collapseSpaces(r[idx("APELLIDO")]!);
+    const nom = collapseSpaces(r[idx("NOMBRE")]!);
     const mandato = r[idx("MANDATO")]!; // "2023-2027"
     const finAnio = mandato.split("-")[1] ?? "";
     out.push({
@@ -453,7 +461,7 @@ async function senadores(): Promise<Autoridad[]> {
           bloquePorId.set(id, bloqueActual);
         });
     } else {
-      bloqueActual = clean(celdas.first().text());
+      bloqueActual = collapseSpaces(celdas.first().text());
     }
   });
 
@@ -461,12 +469,12 @@ async function senadores(): Promise<Autoridad[]> {
   lista("#senadoresTabla tbody tr").each((_, tr) => {
     const td = lista(tr).children("td");
     if (td.length < 5) return;
-    const distrito = clean(td.eq(2).text());
+    const distrito = collapseSpaces(td.eq(2).text());
     if (norm(distrito) !== "mendoza") return;
     const link = td.eq(1).find("a").first();
     const href = link.attr("href") ?? "";
     const sid = href.split("/").pop() ?? "";
-    const nombre = nombreApellido(clean(link.text()));
+    const nombre = nombreApellido(collapseSpaces(link.text()));
     const fechas = td
       .eq(4)
       .text()
@@ -478,7 +486,7 @@ async function senadores(): Promise<Autoridad[]> {
       cargo: "Senador/a nacional",
       poder: "legislativo_nacional",
       organismo: "Senado de la Nación",
-      partido: clean(td.eq(3).text()),
+      partido: collapseSpaces(td.eq(3).text()),
       bloque: bloquePorId.get(sid) ?? "",
       mandato_desde: isoFecha(fechas[0] ?? ""),
       mandato_hasta: isoFecha(fechas[1] ?? ""),
@@ -527,7 +535,7 @@ async function remuneraciones(): Promise<Row[]> {
     const ci = head!.findIndex((h) => norm(h).startsWith("concepto"));
     const ii = head!.findIndex((h) => norm(h) === "importe");
     for (const row of rows) {
-      let concepto = clean(row[ci]!);
+      let concepto = collapseSpaces(row[ci]!);
       if (nombre === "Desarraigo") concepto += " (corresponde solo a quienes lo perciben)";
       if (nombre === "Movilidad") concepto += " (según la opción elegida)";
       out.push({

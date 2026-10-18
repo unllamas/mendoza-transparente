@@ -5,7 +5,7 @@ description: Principios de diseño, UI y UX de Mendoza Transparente. Cubre color
 
 # Diseño de Mendoza Transparente
 
-Fuente completa: `docs/procesos/diseno.md`. Público: cualquier persona de Mendoza, sobre todo desde el celular, que **no lee**: escanea.
+Fuente completa: `docs/procesos/diseno.md`, que pasa los 30 KB: se lee por secciones (`bun run seccion diseno` muestra el índice; `bun run seccion diseno "Gráficos"`, una sección). Público: cualquier persona de Mendoza, sobre todo desde el celular, que **no lee**: escanea.
 
 ## Sistema de diseño
 

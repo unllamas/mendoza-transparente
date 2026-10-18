@@ -11,7 +11,7 @@
 
 import { createReadStream } from "node:fs";
 import { createGunzip } from "node:zlib";
-import { archive, get, latestRaw, writeProcessed } from "@mt/core";
+import { archive, get, latestRaw, sleep, writeProcessed } from "@mt/core";
 import { parser } from "stream-json";
 import { pick } from "stream-json/filters/pick.js";
 import { streamArray } from "stream-json/streamers/stream-array.js";
@@ -23,8 +23,6 @@ const TRAMOS = [
   { filename: "20250810_release.json", url: `${BASE}/02/20250810_release.json` },
   { filename: "20260104_release.json", url: `${BASE}/03/20260104_release.json` },
 ];
-
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 interface Proceso {
   ocid: string;

@@ -15,7 +15,7 @@ Todo el código va en inglés y toda la documentación en español. La tabla com
 | `packages/ui` (`@mt/ui`) | Design system: tokens, componentes y hooks genéricos. No conoce el router, la analítica ni los datos del sitio |
 | `packages/core` (`@mt/core`) | Utilidades de datos compartidas por los scrapers: archivo, CSV, municipios |
 | `packages/participation` (`@mt/participation`) | API de participación y del panel, consultas a la base, migraciones de D1 y login. Lo usan `apps/web` y `apps/panel` |
-| `packages/scrapers` (`@mt/scrapers`) | Un scraper por fuente (`src/sources/`) y las capas compartidas que leen los anexos de Responsabilidad Fiscal de cualquier formato (`src/lrf/`) |
+| `packages/scrapers` (`@mt/scrapers`) | Un scraper por fuente (`src/sources/`) las capas compartidas que leen los anexos de Responsabilidad Fiscal de cualquier formato (`src/lrf/`), utilidades de lectura (`src/lib/`) y `bun run crudo` (`src/inspect.ts`) |
 
 ## Dentro de `apps/web/src`
 

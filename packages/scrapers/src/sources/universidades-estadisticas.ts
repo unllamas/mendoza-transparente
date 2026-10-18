@@ -43,7 +43,7 @@
  * Datos personales: ninguno. Son totales por universidad.
  */
 
-import { archive, fetchAndArchive, get, latestRaw, type Row, readRaw, writeProcessed } from "@mt/core";
+import { archive, fetchAndArchive, finiteNumber, get, latestRaw, type Row, readRaw, sleep, writeProcessed } from "@mt/core";
 import * as cheerio from "cheerio";
 import { unzipSync } from "fflate";
 import * as XLSX from "xlsx";
@@ -52,7 +52,6 @@ const SOURCE = "universidades-estadisticas";
 const PAGE = "https://www.argentina.gob.ar/educacion/universidades/informacion/publicaciones/anuarios";
 /** Los anuarios de 2014 a 2017 usan otros libros (por ejemplo "Cuadros_pregrado_grado_estatal_2016.xlsx") y no se leen. */
 const MIN_YEAR = 2018;
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export type InstId = "uncuyo" | "utn";
 export const INSTITUTIONS: Record<InstId, { name: string; alcance: "mendoza" | "nacional"; match: RegExp }> = {
@@ -77,9 +76,8 @@ const asYear = (v: Cell): number | null => {
   return typeof n === "number" && Number.isInteger(n) && n >= 1990 && n <= 2040 ? n : null;
 };
 /** Número del cuadro; "-" y vacío son sin dato (null). */
-const num = (v: Cell): number | null => (typeof v === "number" && Number.isFinite(v) ? v : null);
 /** En los cuadros de desglose un "-" significa cero. */
-const numOrZero = (v: Cell): number | null => (typeof v === "string" && v.trim() === "-" ? 0 : num(v));
+const numOrZero = (v: Cell): number | null => (typeof v === "string" && v.trim() === "-" ? 0 : finiteNumber(v));
 const round2 = (x: number) => Math.round(x * 100) / 100;
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -153,7 +151,7 @@ export function parseSeries(grid: Grid): Partial<Record<InstId, Map<number, numb
     if (!row) continue;
     const m = new Map<number, number>();
     for (const [col, year] of cols) {
-      const v = num(row[col]);
+      const v = finiteNumber(row[col]);
       if (v !== null) m.set(year, v);
     }
     out[id] = m;
@@ -185,7 +183,7 @@ function valuesBy(grid: Grid, cols: Cols, zero = false): Partial<Record<InstId, 
     const row = rows[id];
     if (!row) continue;
     const rec: Record<string, number | null> = {};
-    for (const [k, c] of Object.entries(cols)) rec[k] = c < 0 ? null : zero ? numOrZero(row[c]) : num(row[c]);
+    for (const [k, c] of Object.entries(cols)) rec[k] = c < 0 ? null : zero ? numOrZero(row[c]) : finiteNumber(row[c]);
     out[id] = rec;
   }
   return out;
