@@ -21,6 +21,11 @@ En desarrollo (`bun run dev`), el plugin de `vite.config.ts` regenera todo y rec
 
 La portada está pensada para quien llega sin saber por dónde empezar. Los componentes están en `src/components/home-guide.tsx` y los datos en `temas/guia.json` y `data/search.json` (`scripts/temas/guide.ts`):
 
+0. **Hero:** ocupa toda la primera pantalla, en el celular y en escritorio, de borde a borde y debajo del header.
+   - **Header:** en la portada, mientras la página está arriba de todo, el header no tiene fondo ni borde; al bajar vuelve a ser el de siempre (`useAtTop` en `layout.tsx`). El layout no le pone márgenes a la portada: la página arma su propio ancho después del hero.
+   - **Qué tiene:** el título; el buscador y «Elegí tu departamento», uno al lado del otro y con el mismo peso; y tres preguntas como accesos («O empezá por una pregunta»). La cordillera en puntos va de fondo, abajo y detrás del contenido; el contenido se centra en toda la pantalla, entre el header y el borde de abajo.
+   - **Por qué así:** en octubre de 2026, el buscador y el departamento los usaba un 6 % de las visitas cada uno (el departamento, más en el celular) y las preguntas un 15 %. Como el hero tapa la lista de preguntas en el celular, tres de ellas van adentro.
+   - **Medición:** gráfico «Portada: uso del hero» del tablero de PostHog. `home.question.open` lleva `place` (`hero` o `list`) y `search.select` lleva `source` (`home` es el buscador del hero).
 1. **Buscador avanzado** (`src/components/search-dialog.tsx`):
    - **Formato:** un panel por encima de todo. En el celular ocupa la pantalla completa; en escritorio es un panel centrado.
    - **Cómo se abre:** desde el campo de la portada, desde la lupa del header (en todas las páginas) o con `/` y Ctrl/⌘+K.
@@ -33,7 +38,7 @@ La portada está pensada para quien llega sin saber por dónde empezar. Los comp
    - **Antes de escribir:** muestra ejemplos para probar y accesos directos.
    - **Índice:** `data/search.json`, con nombre (`t`), línea de detalle (`s`), tipo (`k`), foto (`i`) y texto oculto para buscar (`q`: partido, CUIT, descripción). Se descarga la primera vez que se abre el buscador.
    - **Medición:** las búsquedas sin resultados se registran (`search.no_results`); son la lista de lo que falta.
-   - **Selector:** al lado del campo de la portada está "¿Dónde vivís?", que lleva a la página del departamento.
+   - **Selector:** al lado del campo de la portada está «Elegí tu departamento», que lleva a la página del departamento.
 2. **Empezá por una pregunta:** seis preguntas frecuentes, cada una con un dato real y un link a la respuesta.
    - Para la pregunta del personal, el dato se elige entre los organismos que no cambiaron de estructura, para que la comparación sea justa.
 3. **Lo nuevo:** leyes recién publicadas, designaciones del Boletín y las últimas cifras de deuda y personal. Cada ítem va fechado por el dato, no por la descarga.
@@ -269,7 +274,15 @@ Cada push a `main` publica solo, incluidos los commits automáticos de datos. A 
 - Dominio con HTTPS obligatorio y TLS 1.2 como mínimo.
 - `www.mendoza-transparente.com` redirige con 301 a `mendoza-transparente.com`, con la misma ruta y la misma query (Redirect Rule de la zona, «www a dominio principal (301)»). Sin ella, `www` servía el sitio entero con 200: dos direcciones para el mismo contenido, links compartidos de las dos formas y métricas repartidas entre dos hosts. El `www` sigue como dominio del proyecto de Pages para que tenga certificado; la regla actúa antes.
 - Bot Fight Mode activado. La protección contra robots de IA está apagada a propósito: queremos que nos lean y citen.
-- Límite de pedidos: `POST /api/*`, 10 cada 10 segundos por IP; si se supera, bloqueo de 10 segundos (máximo del plan gratis).
+- Límite de pedidos: `/api/*` en el sitio público (no en `panel.`), 10 cada 10 segundos por IP con cualquier método; si se supera, bloqueo de 10 segundos (máximo del plan gratis, que permite una sola regla).
+- Regla de WAF «Escáneres» (18/10/2026): bloquea las rutas que el sitio no tiene y que solo piden los escáneres (`.php`, `/wp-`, `/.env`, `/.git`, `/cgi-bin`) y los puertos que no son 80 ni 443. Sin ella, `/api/.env` y parecidas invocaban la función.
+
+**Robots y consumo.** Leer el sitio es gratis y queremos que lo lean, así que no se bloquea a nadie por ser robot. Lo que se cuida es lo que tiene cupo:
+
+- **Lo estático no tiene límite.** Un rastreador que baja las 800 páginas con todo su JavaScript (AhrefsBot hizo 16.800 pedidos en tres horas el 18/10/2026) no gasta nada.
+- **`/api/*` sí.** Cada pedido invoca la función (100.000 por día) y puede leer D1. Lo protegen el límite por IP, la regla de escáneres y dos cachés de 60 s para las lecturas públicas: la Cache Rule de la zona «API pública de lectura» (`GET /api/pedidos/stats` y `/api/registro*`), que responde sin invocar la función, y la Cache API dentro de la función, por si la regla falta. Así D1 se lee como mucho una vez por minuto. El 18/10/2026 la API usaba entre 30 y 185 invocaciones por día.
+- **Las herramientas de SEO van más lento.** `robots.txt` les pide `Crawl-delay: 10` (Ahrefs, Semrush, Majestic y otras; la lista está en `scripts/seo.ts`). Google lo ignora y los motores de IA no están en la lista.
+- **Para mirar el tráfico:** la API GraphQL de analíticas (`httpRequestsAdaptiveGroups`, últimos días) por `userAgent`, `clientRequestPath` y `datetimeHour`, comparada con las páginas vistas de PostHog, que casi no cuenta robots. El token necesita *Zone → Analytics → Read*; para las invocaciones de funciones (`pagesFunctionsInvocationsAdaptiveGroups`), *Account → Account Analytics → Read*. Las Cache Rules piden *Zone → Cache Rules → Edit*.
 - Analítica: PostHog en un proyecto propio, separado de cualquier otra organización (`.env.production`).
 
 **Buscadores:** Google Search Console verifica el dominio con `apps/web/public/google9fb9587f2a5c020a.html`, servido por la función `functions/google9fb9587f2a5c020a.html.ts`: Pages redirige `/x.html` a `/x`, y la verificación necesita la URL exacta. No hay que borrarlos, porque Google vuelve a revisar el archivo. Después de verificar, enviar `https://mendoza-transparente.com/sitemap.xml`.

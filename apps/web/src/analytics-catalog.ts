@@ -362,12 +362,14 @@ export const EVENT_CATALOG: EventDoc[] = [
   },
   {
     event: "search.select",
-    description: "Eligió un resultado del buscador. Propiedades query, kind (ley, funcionario, municipio…), path, position y filter.",
+    description:
+      "Eligió un resultado del buscador. Propiedades query, kind (ley, funcionario, municipio…), path, position, filter y source (desde dónde se abrió el buscador, desde el 18/10/2026).",
     tags: ["búsqueda"],
   },
   {
     event: "search.no_results",
-    description: "Buscó algo y no encontró nada. Propiedad query: sirve para saber qué contenido falta.",
+    description:
+      "Buscó algo y no encontró nada. Propiedades query (sirve para saber qué contenido falta) y source (desde dónde se abrió el buscador, desde el 18/10/2026).",
     tags: ["búsqueda"],
   },
   {
@@ -378,10 +380,16 @@ export const EVENT_CATALOG: EventDoc[] = [
   { event: "search.example", description: "Tocó una búsqueda de ejemplo en el buscador vacío. Propiedad query.", tags: ["búsqueda"] },
   { event: "search.shortcut", description: "Fue a una sección desde los accesos del buscador vacío. Propiedad to.", tags: ["búsqueda"] },
   { event: "search.close", description: "Cerró el buscador sin elegir un resultado.", tags: ["búsqueda"] },
-  { event: "home.department.select", description: "Eligió su departamento en «¿Dónde vivís?». Propiedad municipality.", tags: ["portada"] },
+  {
+    event: "home.department.select",
+    description:
+      "Eligió su departamento en «Elegí tu departamento», en el hero de la portada (antes «¿Dónde vivís?»). Propiedad municipality.",
+    tags: ["portada"],
+  },
   {
     event: "home.question.open",
-    description: "Tocó una de las preguntas de «Empezá por una pregunta». Propiedad question.",
+    description:
+      "Tocó una de las preguntas de la portada. Propiedades question y place: hero (los tres accesos del hero, desde el 18/10/2026) o list («Empezá por una pregunta»; sin place antes de esa fecha).",
     tags: ["portada"],
   },
   {
@@ -408,8 +416,18 @@ export const EVENT_CATALOG: EventDoc[] = [
     description: "Tocó un departamento en el mapa de «Tu departamento». Propiedad municipality.",
     tags: ["portada"],
   },
-  { event: "landscape.credit", description: "Abrió el crédito de una foto de paisaje. Propiedad photo.", tags: ["portada"] },
-  { event: "landscape.propose", description: "Tocó «Proponé tu foto» bajo una foto de paisaje. Propiedad photo.", tags: ["portada"] },
+  {
+    event: "landscape.credit",
+    description:
+      "Tocó el botón de autoría (i) sobre una foto de paisaje y vio el crédito. Propiedad photo. Antes del 18/10/2026 era el link del crédito bajo la foto.",
+    tags: ["portada"],
+  },
+  {
+    event: "landscape.credit_source",
+    description: "Desde la autoría de una foto de paisaje, abrió la foto original y su licencia. Propiedad photo.",
+    tags: ["portada"],
+  },
+  { event: "landscape.propose", description: "Tocó «Proponé tu foto» sobre una foto de paisaje. Propiedad photo.", tags: ["portada"] },
 
   // Retired: the site no longer sends these, but PostHog keeps their history. Described so it can still be read.
   {
