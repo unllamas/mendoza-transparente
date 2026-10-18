@@ -31,8 +31,6 @@ export function routePreload(path: string): RoutePreload | null {
       return page("poblacion", tema("poblacion"), tema("mapa"));
     case "no-publicado":
       return page("no-publicado", tema("no-publicado"));
-    case "registro":
-      return page("registro", tema("no-publicado"));
     case "participar":
       return page("participar", tema("no-publicado"));
     case "como-leer":
