@@ -29,7 +29,7 @@ Fuentes completas: `docs/procesos/web.md` (Publicar), `participacion.md` y `anal
 
 ## Protección
 
-- **Activo:** HTTPS obligatorio, TLS 1.2 mínimo, Bot Fight Mode, Turnstile en formularios y límite de 10 POST cada 10 s por IP en `/api/*`.
+- **Activo:** HTTPS obligatorio, TLS 1.2 mínimo, `www` redirigido con 301 al dominio principal, Bot Fight Mode, Turnstile en formularios y límite de 10 POST cada 10 s por IP en `/api/*`.
 - **Robots de IA:** su protección queda **apagada** a propósito, para que nos lean y nos citen.
 - **Ante un ataque:** activar "I'm Under Attack" en Security → Settings mientras dure, y avisarle al usuario.
 
