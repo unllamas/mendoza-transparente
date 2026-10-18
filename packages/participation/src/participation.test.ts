@@ -291,7 +291,9 @@ describe("security findings from the script", () => {
     expect(await openDuplicate(db, f)).toBeNull();
     const code = await addFinding(db, f, "agente", "2026-10-18T00:00:00Z");
     expect(await openDuplicate(db, f)).toBe(code);
-    expect(await openDuplicate(db, { title: "carpeta abierta", agency: null })).toBeNull();
+    // Without an address, the same title for the same agency is the same finding; another title is not.
+    expect(await openDuplicate(db, { title: "carpeta abierta", agency: null })).toBe(code);
+    expect(await openDuplicate(db, { title: "Otra carpeta", agency: null })).toBeNull();
     await updateFinding(db, code, { status: "fixed" }, "equipo", "2026-10-19T00:00:00Z");
     expect(await openDuplicate(db, f)).toBeNull();
   });
