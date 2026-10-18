@@ -30,7 +30,7 @@
 import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { archive, get, PROCESSED_DIR, type Row, writeProcessed } from "@mt/core";
+import { archive, collapseSpaces, get, PROCESSED_DIR, type Row, sleep, writeProcessed } from "@mt/core";
 import * as cheerio from "cheerio";
 
 const SOURCE = "boletin-oficial";
@@ -64,10 +64,6 @@ interface IndexItem {
   organismo: string;
   tema: string;
 }
-
-const clean = (s: string) => s.replace(/\s+/g, " ").trim();
-
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 /** POST con pausa (~1 s en total con la de get) y espera larga ante 429 (el gateway limita la tasa). */
 async function post(path: string, params: Record<string, string>): Promise<string> {
@@ -107,8 +103,8 @@ function parseIndex(html: string, supplement: boolean): IndexItem[] {
       .find(supplement ? "a.supplement-detail" : "a.boe-detail")
       .first();
     if (!a.length) return;
-    const text = clean($(li).text());
-    const heading = clean($(li).closest(".accordion-item").children("h2").text());
+    const text = collapseSpaces($(li).text());
+    const heading = collapseSpaces($(li).closest(".accordion-item").children("h2").text());
     const label = text.match(/(Decreto|Resoluci[oó]n|Ley|[A-Za-zñÑáéíóúÁÉÍÓÚ ]+?)\s*Nro\.\s*(\S+)/);
     items.push({
       kind: supplement ? "norma" : ((a.attr("data-type") as "norma" | "edicto") ?? "norma"),
@@ -121,7 +117,7 @@ function parseIndex(html: string, supplement: boolean): IndexItem[] {
         .replace(/^resoluciones$/, "resolucion"),
       numero: label?.[2] ?? "",
       organismo: text.match(/Origen:\s*(.+)$/)?.[1] ?? "",
-      tema: clean(a.text()),
+      tema: collapseSpaces(a.text()),
     });
   });
   return items.filter((i) => i.id);
@@ -129,7 +125,7 @@ function parseIndex(html: string, supplement: boolean): IndexItem[] {
 
 function classify(tipo: string, sumario: string, texto: string): Categoria {
   const art1 = texto.search(/art[ií]culo\s*1\s*[º°o.]/i);
-  const t = clean(`${sumario} ${texto.slice(0, 700)} ${art1 >= 0 ? texto.slice(art1, art1 + 700) : ""}`);
+  const t = collapseSpaces(`${sumario} ${texto.slice(0, 700)} ${art1 >= 0 ? texto.slice(art1, art1 + 700) : ""}`);
   if (
     /convoc\w+\s+(a|al)\s+(el\s+)?(cuerpo\s+)?(elecciones|comicios|electoral)|convoc[aá]se[^.]{0,80}(elecciones|comicios)|convocatoria a elecciones/i.test(
       t,
@@ -172,7 +168,7 @@ function parseDetail(html: string) {
     $("#detail-header a")
       .filter((_, a) => /pdf_pedido/.test($(a).attr("href") ?? ""))
       .attr("href") ?? "";
-  const tema = clean(
+  const tema = collapseSpaces(
     $("#detail-sub-header .col")
       .filter((_, c) => /Tema:/.test($(c).text()))
       .first()
@@ -366,7 +362,7 @@ export async function run(args: string[]) {
         await mkdir(join(OUT_DIR, "textos", fecha), { recursive: true });
         await writeFile(txtPath, `${d.texto}\n`);
 
-        const sumario = clean(d.texto.replace(/^\s*MENDOZA,?[^\n]{0,60}?\d{4}\.?\s*/i, "")).slice(0, 300);
+        const sumario = collapseSpaces(d.texto.replace(/^\s*MENDOZA,?[^\n]{0,60}?\d{4}\.?\s*/i, "")).slice(0, 300);
         const expediente = (d.tema || n.tema).match(/EX-\d{4}-\d+-[\w-]+/)?.[0] ?? "";
         if (!existing.has(n.id)) nuevas++;
         existing.set(n.id, {

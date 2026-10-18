@@ -44,14 +44,13 @@
  *   - No hay datos personales: la planilla es por cargo, no por persona.
  */
 
-import { fetchAndArchive, get, latestRaw, type Row, readRaw, writeProcessed } from "@mt/core";
+import { fetchAndArchive, get, latestRaw, type Row, readRaw, sleep, writeProcessed } from "@mt/core";
 import * as cheerio from "cheerio";
 import { getDocumentProxy } from "unpdf";
 
 const SOURCE = "presupuesto-planta";
 const BASE = "https://sitios.mendoza.gob.ar/haciendayfinanzas";
 const FIRST_YEAR = 2020;
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const warn = (title: string, msg: string) => console.log(`::warning title=presupuesto-planta ${title}::${msg}`);
 
 /* ------------------------------------------------------------------ descarga */

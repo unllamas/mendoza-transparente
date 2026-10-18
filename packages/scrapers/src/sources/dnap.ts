@@ -18,7 +18,7 @@
  * La descarga es idempotente: lo que ya está archivado no se vuelve a bajar (salvo con --refresh).
  */
 
-import { fetchAndArchive, get, latestRaw, type Row, readRaw, writeProcessed } from "@mt/core";
+import { fetchAndArchive, get, latestRaw, type Row, readRaw, sleep, writeProcessed } from "@mt/core";
 import { load } from "cheerio";
 import * as XLSX from "xlsx";
 
@@ -37,8 +37,6 @@ const ID: Record<Fuente, string> = {
   ocupacion: "dnap-ocupacion",
   deuda: "dnap-deuda",
 };
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // ---------------------------------------------------------------------------
 // Descarga

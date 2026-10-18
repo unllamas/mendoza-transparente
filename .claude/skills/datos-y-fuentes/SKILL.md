@@ -25,8 +25,8 @@ Una carpeta abierta con datos de la gente, un sitio hackeado, un sistema que mue
 
 ## Pasos para una fuente nueva
 
-1. **Relevar:** qué trae cada fuente candidata, cobertura y formato. Elegir la mejor y contar por qué.
-2. **Scraper:** `packages/scrapers/src/sources/<id>.ts`, que exporta `run(args)`. Se corre con `bun run scrape <id>`.
+1. **Relevar:** qué trae cada fuente candidata, cobertura y formato. Elegir la mejor y contar por qué. Las páginas y archivos se miran con `bun run crudo <url>` (busca primero en `data/raw/` y en el caché compartido, y muestra una vista compacta), no con `curl`.
+2. **Scraper:** `packages/scrapers/src/sources/<id>.ts`, que exporta `run(args)`. Se corre con `bun run scrape <id>`. Antes de escribir una función auxiliar: `sleep`, `collapseSpaces`, `parseArNumber`, `finiteNumber` y `fetchOrReuse()` de `@mt/core`; `pdfText` y `pdfPages` de `src/lib/pdf.ts`.
 3. **Catálogo:** su bloque en `sources.yaml`, con nombre, organismo, URL, descripción, frecuencia y estado.
 4. **Actualización automática:** sumarla a `SEMANAL` o `MENSUAL` en `.github/workflows/actualizar-datos.yml` y a `TODAS` en `scripts/actualizar.ts`. Las fuentes derivadas (por ejemplo `designaciones`) corren en el job `commit`.
 5. **Web:** cálculo en `apps/web/scripts/temas/`, tipo en `src/types.ts`, página o sección (skills `diseno` y `seo-y-geo`).

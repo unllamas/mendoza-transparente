@@ -10,6 +10,8 @@
     "dev": "turbo run dev --filter=@mt/web",
     "build": "turbo run build --filter=@mt/web",
     "scrape": "bun packages/scrapers/src/cli.ts",
+    "crudo": "bun packages/scrapers/src/inspect.ts",
+    "seccion": "bun scripts/doc-section.ts",
     "typecheck": "turbo run typecheck",
     "actualizar": "bun scripts/actualizar.ts",
     "archivar": "bun packages/scrapers/src/archive-org.ts",

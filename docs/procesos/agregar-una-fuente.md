@@ -7,6 +7,7 @@ De un dato público que existe en algún sitio oficial a una tabla legible en la
 Antes de escribir código:
 
 - Confirmar que la fuente es **oficial** (organismo público) y anotar la URL exacta.
+- Mirar las páginas y los archivos con `bun run crudo <url>`, no con `curl`: si ya están en `data/raw/` no se piden de nuevo, y la vista compacta muestra los links a documentos, las hojas de una planilla o las páginas de un PDF (ver [Cuidar el contexto](trabajo-con-agentes.md#cuidar-el-contexto)).
 - Ver el **formato** (API, CSV, XLSX, PDF, HTML), la **frecuencia** de publicación y desde cuándo hay datos.
 - Probar que responde desde un servidor en la nube: algunos sitios del Gobierno rechazan a GitHub (ver [Actualización de datos](actualizacion-de-datos.md#sitios-que-bloquean-a-la-nube)).
 - Si el dato debería existir y no está publicado, va a [`data/curado/no-publicado.yaml`](datos-y-archivo.md#contenido-curado), no a un scraper.
@@ -19,6 +20,7 @@ Un archivo por fuente: `packages/scrapers/src/sources/<id>.ts`, que exporta `asy
 
 Reglas:
 
+- **Reutilizar antes de escribir:** `sleep`, `collapseSpaces` (junta espacios), `parseArNumber` ("1.234,56"), `finiteNumber` (celda numérica de planilla) y `fetchOrReuse()` (lo archivado o, si no hay, una descarga) están en `@mt/core`; `pdfText` y `pdfPages`, en `packages/scrapers/src/lib/pdf.ts`.
 - Descargar siempre con `fetchAndArchive()` o `get()` + `archive()` de `@mt/core`: mandan User-Agent de navegador, reintentan y archivan el crudo con su sha256 (ver [Datos y archivo](datos-y-archivo.md)).
 - Pedidos en secuencia y con pausa; nunca en paralelo contra un mismo sitio.
 - **Idempotente**: correrlo dos veces seguidas no duplica nada.

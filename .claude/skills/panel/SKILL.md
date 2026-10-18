@@ -5,7 +5,7 @@ description: Panel interno de Mendoza Transparente (apps/panel) y registro públ
 
 # Panel interno y registro público
 
-Fuente completa: `docs/procesos/panel.md` (y `participacion.md` para la API pública).
+Fuente completa: `docs/procesos/panel.md` (índice con `bun run seccion panel`) (y `participacion.md` para la API pública).
 
 ## Reglas que no se negocian
 

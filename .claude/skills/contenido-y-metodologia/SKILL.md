@@ -5,7 +5,7 @@ description: Criterios editoriales y de cálculo de Mendoza Transparente. Cubre 
 
 # Contenido y metodología
 
-Fuente completa: `docs/procesos/metodologia.md`. Glosario público: `apps/web/src/glossary.ts` (`/como-leer`).
+Fuente completa: `docs/procesos/metodologia.md`, que pasa los 30 KB: se lee por secciones (`bun run seccion metodologia` muestra el índice). Glosario público: `apps/web/src/glossary.ts` (`/como-leer`).
 
 ## Neutralidad
 

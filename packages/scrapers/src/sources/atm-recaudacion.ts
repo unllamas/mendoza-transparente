@@ -29,12 +29,11 @@
  * guarda tal cual llegó; se decodifica al procesar).
  */
 
-import { fetchAndArchive, latestRaw, type Row, readRaw, writeProcessed } from "@mt/core";
+import { fetchAndArchive, latestRaw, type Row, readRaw, sleep, writeProcessed } from "@mt/core";
 import * as cheerio from "cheerio";
 
 const SOURCE = "atm-recaudacion";
 const BASE = "https://atm.mendoza.gov.ar/portalatm/zoneBottom/datosInteres/recaudacion";
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 const PAGES = [
   { impuesto: "ingresos_brutos", page: "recaudacion_impuesto_ingresos" },

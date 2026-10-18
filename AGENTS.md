@@ -57,6 +57,7 @@ Cuando alguien pide mejorar o arreglar algo, lo describe como lo siente ("no se 
 
 - La sesión principal orquesta. Las tareas acotadas (un scraper, un parser, una verificación) van a subagentes en Sonnet, en paralelo y sobre archivos distintos.
 - Cada subagente trabaja solo en los archivos de su fuente: `packages/scrapers/src/sources/<id>.ts` y `data/*/<id>/`. Si necesita tocar `packages/core/` o agregar dependencias, lo propone en vez de hacerlo (varios agentes en paralelo pisarían `bun.lock`).
+- **Cuidar el contexto:** una página, un PDF o una planilla se miran con `bun run crudo <url|fuente/archivo>` (busca primero en `data/raw/` y en un caché compartido, y devuelve una vista compacta), nunca con `curl` ni enteros. De los documentos largos se lee la sección que hace falta: `bun run seccion <documento> "<título>"`. El reporte de un subagente entra en una pantalla y los relevamientos van a `tmp/agentes/<tarea>.md`. Las orquestaciones largas se parten en sesiones por etapa. Ver `docs/procesos/trabajo-con-agentes.md#cuidar-el-contexto`.
 - Los subagentes no commitean. La sesión principal revisa, commitea y **cierra cada tarea con push y PR a `dev` sin esperar que se lo pidan**.
 - **Ningún agente mergea un PR, ni a `dev` ni a `main`, salvo que el usuario se lo pida explícitamente** para ese PR. Sin ese pedido, el agente deja el PR abierto con la CI en verde y avisa con el link.
 - Nada se pushea directo a `main`: lo nuevo va en una rama que sale de `dev`, con PR a `dev`, y llega a producción en una publicación (PR `dev → main`). Los releases de GitHub se crean solos, uno por día. Ver la skill `ramas-y-releases`.
@@ -81,6 +82,7 @@ El proyecto no tiene financiación y vive en planes gratis (Cloudflare, GitHub A
 - Un scraper por fuente en `packages/scrapers/src/sources/<id>.ts`, que exporta `async function run(args: string[])`. Se corre con `bun run scrape <id>`.
 - Dependencias ya disponibles en `@mt/scrapers`: `cheerio` (HTML), `xlsx` (SheetJS, para XLS y XLSX), `unpdf` (texto de PDF), `fflate` (ZIP) y `stream-json` (JSON grandes en streaming).
 - CSV con `writeProcessed()` y `readProcessed()`, y municipios con `normalizeMunicipio()`, todos de `@mt/core`.
+- Antes de escribir una función auxiliar en un scraper, usar las que ya existen: `sleep`, `collapseSpaces`, `parseArNumber`, `finiteNumber` y `fetchOrReuse()` (devuelve lo archivado o lo descarga una vez) de `@mt/core`, y `pdfText` y `pdfPages` de `packages/scrapers/src/lib/pdf.ts`.
 - Verificar tipos con `bunx tsc --noEmit` dentro del paquete.
 - Interfaz: los componentes base y los tokens están en `packages/ui` (`@mt/ui`), con BoardUI (React Aria) como base y tema claro por defecto. Solo Tailwind, sin CSS propio. Ver la skill `diseno`.
 - Al terminar una fuente, actualizar su `estado` en `sources.yaml`. Lo hace la sesión principal.
