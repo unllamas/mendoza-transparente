@@ -2,7 +2,7 @@
 
 Objetivo: que el sitio crezca a miles de páginas (leyes, escuelas, Boletín completo) sin salir del plan gratis de Cloudflare y sin que el build y la verificación se vuelvan lentos. El proyecto no tiene financiación: cualquier recurso que no gastamos es mejor.
 
-Fecha: 17/10/2026. Estado: etapa 1 hecha; las demás, sin empezar.
+Fecha: 17/10/2026. Estado: etapas 1 y 6 hechas; las demás, sin empezar.
 
 ## Por qué
 
@@ -47,9 +47,13 @@ Se hace en el panel (Settings → Builds & deployments) o por API con el token d
 
 El workflow de datos ya compila la web completa para comprobarla, y después Cloudflare la vuelve a compilar. Si se publica desde GitHub con `wrangler pages deploy` (Direct Upload), Cloudflare no hace ningún build y el cupo de 500 deja de importar. Cuesta un proyecto de Pages nuevo, porque uno conectado a git no se puede pasar a Direct Upload, y mover el dominio y los bindings (D1, secretos) a ese proyecto.
 
-### 6. Funciones y D1
+### 6. Funciones y D1 (hecha)
 
-`/api/pedidos/stats` lee D1 en cada visita a `/no-publicado` y `/participar` (`/api/registro` ya no lo pide ninguna página): el `max-age=60` solo cachea en el navegador. Guardar la respuesta en la Cache API del Worker por 60 segundos deja una lectura de D1 por minuto, sin importar cuánta gente entre. Hoy el volumen es bajo: hacerlo cuando el tráfico lo pida.
+Hecha el 18/10/2026, después de un rastreo de AhrefsBot: la función guarda las lecturas públicas de la API (`max-age=60`) en la Cache API del centro de datos, así que D1 se lee una vez por minuto, sin importar cuánta gente o cuántos robots entren. La función se sigue invocando en cada pedido.
+
+Además, una Cache Rule de la zona («API pública de lectura», 18/10/2026) guarda `GET /api/pedidos/stats` y `/api/registro*` 60 s en el borde: lo cacheado ni siquiera invoca la función.
+
+Consumo medido el 18/10/2026 (`pagesFunctionsInvocationsAdaptiveGroups`): entre 30 y 185 invocaciones por día, contra un cupo de 100.000.
 
 ## Lo que no hacemos
 
@@ -57,5 +61,5 @@ El workflow de datos ya compila la web completa para comprobarla, y después Clo
 
 ## Preguntas abiertas
 
-- ¿Cuántos builds gastamos por mes hoy? Hace falta el token de Cloudflare para medirlo.
+- ¿Cuántos builds gastamos por mes hoy? El token ya alcanza para medirlo (`.env.cloudflare`).
 - La etapa 5, ¿vale la migración del proyecto? Depende de esa medición.

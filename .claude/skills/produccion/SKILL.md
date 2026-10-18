@@ -29,7 +29,8 @@ Fuentes completas: `docs/procesos/web.md` (Publicar), `participacion.md` y `anal
 
 ## Protección
 
-- **Activo:** HTTPS obligatorio, TLS 1.2 mínimo, `www` redirigido con 301 al dominio principal, Bot Fight Mode, Turnstile en formularios y límite de 10 POST cada 10 s por IP en `/api/*`.
+- **Activo:** HTTPS obligatorio, TLS 1.2 mínimo, `www` redirigido con 301 al dominio principal, Bot Fight Mode, Turnstile en formularios, límite de 10 pedidos cada 10 s por IP en `/api/*` del sitio público, regla de WAF que bloquea escáneres (`.php`, `/wp-`, `/.env`, `/.git`, puertos raros) y caché de 60 s de las lecturas de la API (Cache Rule «API pública de lectura» en el borde y Cache API en la función).
+- **Robots:** leer lo estático es gratis y sin límite, así que no se bloquea a nadie por ser robot; se cuida `/api/*`, que gasta cupo. Las herramientas de SEO tienen `Crawl-delay: 10` en `robots.txt`. Ver `docs/procesos/web.md` (Robots y consumo).
 - **Robots de IA:** su protección queda **apagada** a propósito, para que nos lean y nos citen.
 - **Ante un ataque:** activar "I'm Under Attack" en Security → Settings mientras dure, y avisarle al usuario.
 
