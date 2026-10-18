@@ -139,7 +139,9 @@ export function Select<T extends object>({
             isNonModal
             offset={4}
             className={cx(
+              // Mendoza Transparente: never narrower than its field, so a full-width select opens as wide as itself.
               MENU_POPOVER_WIDTH,
+              "w-[max(266px,var(--trigger-width))]",
               MENU_POPOVER_SURFACE,
               // Listbox rows already space themselves 4px apart, so the
               // surface sits a touch tighter than the action-menu Dropdown.
