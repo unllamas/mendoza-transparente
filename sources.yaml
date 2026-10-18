@@ -32,6 +32,16 @@
   dificultad: facil
   estado: activo
 
+- id: universidades-estadisticas
+  nombre: Anuario de Estadísticas Universitarias (UNCuyo y UTN)
+  descripcion: "Estudiantes, egresados, docentes, no docentes y presupuesto de la UNCuyo y la UTN, año a año. La UTN figura como una sola universidad para todo el país."
+  organismo: Subsecretaría de Políticas Universitarias, Ministerio de Capital Humano
+  url: https://www.argentina.gob.ar/educacion/universidades/informacion/publicaciones/anuarios
+  formato: xlsx
+  frecuencia: anual
+  dificultad: media
+  estado: activo
+
 - id: dnap-ron
   nombre: Recursos de origen nacional (transferencias automáticas de Nación a provincias)
   descripcion: "Cuánto dinero le transfiere Nación a cada provincia por coparticipación y otros regímenes, mes a mes."

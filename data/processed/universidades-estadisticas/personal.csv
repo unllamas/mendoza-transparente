@@ -1,0 +1,157 @@
+anio,universidad_id,universidad,tipo,dedicacion,categoria,cargos,personas,alcance,anuario,fuente_archivo,cuadro
+2018,uncuyo,Universidad Nacional de Cuyo,autoridades_superiores,total,,,93,mendoza,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.1
+2020,uncuyo,Universidad Nacional de Cuyo,autoridades_superiores,total,,,98,mendoza,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.1
+2021,uncuyo,Universidad Nacional de Cuyo,autoridades_superiores,total,,,102,mendoza,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.1
+2023,uncuyo,Universidad Nacional de Cuyo,autoridades_superiores,total,,,92,mendoza,2023,anuario_2023.zip/4. RHUN.xlsx,4.1
+2024,uncuyo,Universidad Nacional de Cuyo,autoridades_superiores,total,,,94,mendoza,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.1
+2014,uncuyo,Universidad Nacional de Cuyo,docente,exclusiva,,766,,mendoza,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.5
+2015,uncuyo,Universidad Nacional de Cuyo,docente,exclusiva,,809,,mendoza,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.5
+2016,uncuyo,Universidad Nacional de Cuyo,docente,exclusiva,,796,,mendoza,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.5
+2017,uncuyo,Universidad Nacional de Cuyo,docente,exclusiva,,780,,mendoza,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.5
+2018,uncuyo,Universidad Nacional de Cuyo,docente,exclusiva,,797,,mendoza,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.4
+2019,uncuyo,Universidad Nacional de Cuyo,docente,exclusiva,,772,,mendoza,2023,anuario_2023.zip/4. RHUN.xlsx,4.5
+2020,uncuyo,Universidad Nacional de Cuyo,docente,exclusiva,,757,,mendoza,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.4
+2021,uncuyo,Universidad Nacional de Cuyo,docente,exclusiva,,754,,mendoza,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.4
+2022,uncuyo,Universidad Nacional de Cuyo,docente,exclusiva,,708,,mendoza,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.5
+2023,uncuyo,Universidad Nacional de Cuyo,docente,exclusiva,,699,,mendoza,2023,anuario_2023.zip/4. RHUN.xlsx,4.4
+2024,uncuyo,Universidad Nacional de Cuyo,docente,exclusiva,,694,,mendoza,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.4
+2018,uncuyo,Universidad Nacional de Cuyo,docente,otro,,0,,mendoza,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.4
+2020,uncuyo,Universidad Nacional de Cuyo,docente,otro,,0,,mendoza,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.4
+2021,uncuyo,Universidad Nacional de Cuyo,docente,otro,,0,,mendoza,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.4
+2023,uncuyo,Universidad Nacional de Cuyo,docente,otro,,0,,mendoza,2023,anuario_2023.zip/4. RHUN.xlsx,4.4
+2024,uncuyo,Universidad Nacional de Cuyo,docente,otro,,0,,mendoza,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.4
+2014,uncuyo,Universidad Nacional de Cuyo,docente,semiexclusiva,,1889,,mendoza,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.6
+2015,uncuyo,Universidad Nacional de Cuyo,docente,semiexclusiva,,2113,,mendoza,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.6
+2016,uncuyo,Universidad Nacional de Cuyo,docente,semiexclusiva,,2130,,mendoza,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.6
+2017,uncuyo,Universidad Nacional de Cuyo,docente,semiexclusiva,,2124,,mendoza,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.6
+2018,uncuyo,Universidad Nacional de Cuyo,docente,semiexclusiva,,2179,,mendoza,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.4
+2019,uncuyo,Universidad Nacional de Cuyo,docente,semiexclusiva,,2233,,mendoza,2023,anuario_2023.zip/4. RHUN.xlsx,4.6
+2020,uncuyo,Universidad Nacional de Cuyo,docente,semiexclusiva,,2226,,mendoza,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.4
+2021,uncuyo,Universidad Nacional de Cuyo,docente,semiexclusiva,,2192,,mendoza,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.4
+2022,uncuyo,Universidad Nacional de Cuyo,docente,semiexclusiva,,2094,,mendoza,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.6
+2023,uncuyo,Universidad Nacional de Cuyo,docente,semiexclusiva,,2111,,mendoza,2023,anuario_2023.zip/4. RHUN.xlsx,4.4
+2024,uncuyo,Universidad Nacional de Cuyo,docente,semiexclusiva,,2129,,mendoza,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.4
+2014,uncuyo,Universidad Nacional de Cuyo,docente,simple,,2252,,mendoza,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.7
+2015,uncuyo,Universidad Nacional de Cuyo,docente,simple,,2595,,mendoza,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.7
+2016,uncuyo,Universidad Nacional de Cuyo,docente,simple,,2849,,mendoza,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.7
+2017,uncuyo,Universidad Nacional de Cuyo,docente,simple,,3192,,mendoza,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.7
+2018,uncuyo,Universidad Nacional de Cuyo,docente,simple,,3425,,mendoza,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.4
+2019,uncuyo,Universidad Nacional de Cuyo,docente,simple,,3641,,mendoza,2023,anuario_2023.zip/4. RHUN.xlsx,4.7
+2020,uncuyo,Universidad Nacional de Cuyo,docente,simple,,3656,,mendoza,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.4
+2021,uncuyo,Universidad Nacional de Cuyo,docente,simple,,3653,,mendoza,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.4
+2022,uncuyo,Universidad Nacional de Cuyo,docente,simple,,3782,,mendoza,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.7
+2023,uncuyo,Universidad Nacional de Cuyo,docente,simple,,3854,,mendoza,2023,anuario_2023.zip/4. RHUN.xlsx,4.4
+2024,uncuyo,Universidad Nacional de Cuyo,docente,simple,,3847,,mendoza,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.4
+2018,uncuyo,Universidad Nacional de Cuyo,docente,total,,6401,4607,mendoza,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,"4.4, 4.1"
+2020,uncuyo,Universidad Nacional de Cuyo,docente,total,,6639,4755,mendoza,2020,anuario_2020.zip/4 RHUN 2020.xlsx,"4.4, 4.1"
+2021,uncuyo,Universidad Nacional de Cuyo,docente,total,,6599,4708,mendoza,2021,anuario_2021.zip/4. RHUN 2021.xlsx,"4.4, 4.1"
+2023,uncuyo,Universidad Nacional de Cuyo,docente,total,,6664,4673,mendoza,2023,anuario_2023.zip/4. RHUN.xlsx,"4.4, 4.1"
+2024,uncuyo,Universidad Nacional de Cuyo,docente,total,,6670,4610,mendoza,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,"4.4, 4.1"
+2018,uncuyo,Universidad Nacional de Cuyo,no_docente,,apoyo,747,,mendoza,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.21
+2020,uncuyo,Universidad Nacional de Cuyo,no_docente,,apoyo,726,,mendoza,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.20
+2021,uncuyo,Universidad Nacional de Cuyo,no_docente,,apoyo,755,,mendoza,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.20
+2023,uncuyo,Universidad Nacional de Cuyo,no_docente,,apoyo,749,,mendoza,2023,anuario_2023.zip/4. RHUN.xlsx,4.20
+2024,uncuyo,Universidad Nacional de Cuyo,no_docente,,apoyo,737,,mendoza,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.20
+2018,uncuyo,Universidad Nacional de Cuyo,no_docente,,directivo,183,,mendoza,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.21
+2020,uncuyo,Universidad Nacional de Cuyo,no_docente,,directivo,181,,mendoza,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.20
+2021,uncuyo,Universidad Nacional de Cuyo,no_docente,,directivo,178,,mendoza,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.20
+2023,uncuyo,Universidad Nacional de Cuyo,no_docente,,directivo,175,,mendoza,2023,anuario_2023.zip/4. RHUN.xlsx,4.20
+2024,uncuyo,Universidad Nacional de Cuyo,no_docente,,directivo,175,,mendoza,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.20
+2018,uncuyo,Universidad Nacional de Cuyo,no_docente,,otros,0,,mendoza,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.21
+2020,uncuyo,Universidad Nacional de Cuyo,no_docente,,otros,0,,mendoza,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.20
+2021,uncuyo,Universidad Nacional de Cuyo,no_docente,,otros,0,,mendoza,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.20
+2023,uncuyo,Universidad Nacional de Cuyo,no_docente,,otros,0,,mendoza,2023,anuario_2023.zip/4. RHUN.xlsx,4.20
+2024,uncuyo,Universidad Nacional de Cuyo,no_docente,,otros,0,,mendoza,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.20
+2018,uncuyo,Universidad Nacional de Cuyo,no_docente,,superior,691,,mendoza,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.21
+2020,uncuyo,Universidad Nacional de Cuyo,no_docente,,superior,675,,mendoza,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.20
+2021,uncuyo,Universidad Nacional de Cuyo,no_docente,,superior,645,,mendoza,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.20
+2023,uncuyo,Universidad Nacional de Cuyo,no_docente,,superior,651,,mendoza,2023,anuario_2023.zip/4. RHUN.xlsx,4.20
+2024,uncuyo,Universidad Nacional de Cuyo,no_docente,,superior,646,,mendoza,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.20
+2018,uncuyo,Universidad Nacional de Cuyo,no_docente,,total,1621,1616,mendoza,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,"4.21, 4.1"
+2020,uncuyo,Universidad Nacional de Cuyo,no_docente,,total,1582,1577,mendoza,2020,anuario_2020.zip/4 RHUN 2020.xlsx,"4.20, 4.1"
+2021,uncuyo,Universidad Nacional de Cuyo,no_docente,,total,1578,1574,mendoza,2021,anuario_2021.zip/4. RHUN 2021.xlsx,"4.20, 4.1"
+2023,uncuyo,Universidad Nacional de Cuyo,no_docente,,total,1575,1568,mendoza,2023,anuario_2023.zip/4. RHUN.xlsx,"4.20, 4.1"
+2024,uncuyo,Universidad Nacional de Cuyo,no_docente,,total,1558,1554,mendoza,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,"4.20, 4.1"
+2018,uncuyo,Universidad Nacional de Cuyo,preuniversitario,total,,3707,1283,mendoza,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,"4.9, 4.1"
+2020,uncuyo,Universidad Nacional de Cuyo,preuniversitario,total,,3641,1250,mendoza,2020,anuario_2020.zip/4 RHUN 2020.xlsx,"4.9, 4.1"
+2021,uncuyo,Universidad Nacional de Cuyo,preuniversitario,total,,3710,1234,mendoza,2021,anuario_2021.zip/4. RHUN 2021.xlsx,"4.9, 4.1"
+2023,uncuyo,Universidad Nacional de Cuyo,preuniversitario,total,,3897,1303,mendoza,2023,anuario_2023.zip/4. RHUN.xlsx,"4.9, 4.1"
+2024,uncuyo,Universidad Nacional de Cuyo,preuniversitario,total,,4056,1314,mendoza,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,"4.9, 4.1"
+2018,utn,Universidad Tecnológica Nacional,autoridades_superiores,total,,,218,nacional,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.1
+2020,utn,Universidad Tecnológica Nacional,autoridades_superiores,total,,,217,nacional,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.1
+2021,utn,Universidad Tecnológica Nacional,autoridades_superiores,total,,,215,nacional,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.1
+2023,utn,Universidad Tecnológica Nacional,autoridades_superiores,total,,,274,nacional,2023,anuario_2023.zip/4. RHUN.xlsx,4.1
+2024,utn,Universidad Tecnológica Nacional,autoridades_superiores,total,,,281,nacional,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.1
+2014,utn,Universidad Tecnológica Nacional,docente,exclusiva,,688,,nacional,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.5
+2015,utn,Universidad Tecnológica Nacional,docente,exclusiva,,702,,nacional,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.5
+2016,utn,Universidad Tecnológica Nacional,docente,exclusiva,,694,,nacional,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.5
+2017,utn,Universidad Tecnológica Nacional,docente,exclusiva,,678,,nacional,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.5
+2018,utn,Universidad Tecnológica Nacional,docente,exclusiva,,657,,nacional,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.4
+2019,utn,Universidad Tecnológica Nacional,docente,exclusiva,,647,,nacional,2023,anuario_2023.zip/4. RHUN.xlsx,4.5
+2020,utn,Universidad Tecnológica Nacional,docente,exclusiva,,647,,nacional,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.4
+2021,utn,Universidad Tecnológica Nacional,docente,exclusiva,,637,,nacional,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.4
+2022,utn,Universidad Tecnológica Nacional,docente,exclusiva,,656,,nacional,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.5
+2023,utn,Universidad Tecnológica Nacional,docente,exclusiva,,653,,nacional,2023,anuario_2023.zip/4. RHUN.xlsx,4.4
+2024,utn,Universidad Tecnológica Nacional,docente,exclusiva,,688,,nacional,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.4
+2018,utn,Universidad Tecnológica Nacional,docente,otro,,131,,nacional,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.4
+2020,utn,Universidad Tecnológica Nacional,docente,otro,,114,,nacional,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.4
+2021,utn,Universidad Tecnológica Nacional,docente,otro,,112,,nacional,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.4
+2023,utn,Universidad Tecnológica Nacional,docente,otro,,91,,nacional,2023,anuario_2023.zip/4. RHUN.xlsx,4.4
+2024,utn,Universidad Tecnológica Nacional,docente,otro,,81,,nacional,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.4
+2014,utn,Universidad Tecnológica Nacional,docente,semiexclusiva,,604,,nacional,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.6
+2015,utn,Universidad Tecnológica Nacional,docente,semiexclusiva,,582,,nacional,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.6
+2016,utn,Universidad Tecnológica Nacional,docente,semiexclusiva,,564,,nacional,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.6
+2017,utn,Universidad Tecnológica Nacional,docente,semiexclusiva,,573,,nacional,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.6
+2018,utn,Universidad Tecnológica Nacional,docente,semiexclusiva,,581,,nacional,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.4
+2019,utn,Universidad Tecnológica Nacional,docente,semiexclusiva,,560,,nacional,2023,anuario_2023.zip/4. RHUN.xlsx,4.6
+2020,utn,Universidad Tecnológica Nacional,docente,semiexclusiva,,560,,nacional,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.4
+2021,utn,Universidad Tecnológica Nacional,docente,semiexclusiva,,554,,nacional,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.4
+2022,utn,Universidad Tecnológica Nacional,docente,semiexclusiva,,522,,nacional,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.6
+2023,utn,Universidad Tecnológica Nacional,docente,semiexclusiva,,541,,nacional,2023,anuario_2023.zip/4. RHUN.xlsx,4.4
+2024,utn,Universidad Tecnológica Nacional,docente,semiexclusiva,,519,,nacional,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.4
+2014,utn,Universidad Tecnológica Nacional,docente,simple,,19487,,nacional,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.7
+2015,utn,Universidad Tecnológica Nacional,docente,simple,,19482,,nacional,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.7
+2016,utn,Universidad Tecnológica Nacional,docente,simple,,19521,,nacional,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.7
+2017,utn,Universidad Tecnológica Nacional,docente,simple,,19533,,nacional,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.7
+2018,utn,Universidad Tecnológica Nacional,docente,simple,,19560,,nacional,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.4
+2019,utn,Universidad Tecnológica Nacional,docente,simple,,19599,,nacional,2023,anuario_2023.zip/4. RHUN.xlsx,4.7
+2020,utn,Universidad Tecnológica Nacional,docente,simple,,19608,,nacional,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.4
+2021,utn,Universidad Tecnológica Nacional,docente,simple,,19645,,nacional,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.4
+2022,utn,Universidad Tecnológica Nacional,docente,simple,,19630,,nacional,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.7
+2023,utn,Universidad Tecnológica Nacional,docente,simple,,19614,,nacional,2023,anuario_2023.zip/4. RHUN.xlsx,4.4
+2024,utn,Universidad Tecnológica Nacional,docente,simple,,19618,,nacional,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.4
+2018,utn,Universidad Tecnológica Nacional,docente,total,,20929,10713,nacional,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,"4.4, 4.1"
+2020,utn,Universidad Tecnológica Nacional,docente,total,,20929,10165,nacional,2020,anuario_2020.zip/4 RHUN 2020.xlsx,"4.4, 4.1"
+2021,utn,Universidad Tecnológica Nacional,docente,total,,20948,10162,nacional,2021,anuario_2021.zip/4. RHUN 2021.xlsx,"4.4, 4.1"
+2023,utn,Universidad Tecnológica Nacional,docente,total,,20899,10172,nacional,2023,anuario_2023.zip/4. RHUN.xlsx,"4.4, 4.1"
+2024,utn,Universidad Tecnológica Nacional,docente,total,,20906,10167,nacional,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,"4.4, 4.1"
+2018,utn,Universidad Tecnológica Nacional,no_docente,,apoyo,1272,,nacional,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.21
+2020,utn,Universidad Tecnológica Nacional,no_docente,,apoyo,1274,,nacional,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.20
+2021,utn,Universidad Tecnológica Nacional,no_docente,,apoyo,1530,,nacional,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.20
+2023,utn,Universidad Tecnológica Nacional,no_docente,,apoyo,1327,,nacional,2023,anuario_2023.zip/4. RHUN.xlsx,4.20
+2024,utn,Universidad Tecnológica Nacional,no_docente,,apoyo,1356,,nacional,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.20
+2018,utn,Universidad Tecnológica Nacional,no_docente,,directivo,152,,nacional,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.21
+2020,utn,Universidad Tecnológica Nacional,no_docente,,directivo,150,,nacional,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.20
+2021,utn,Universidad Tecnológica Nacional,no_docente,,directivo,154,,nacional,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.20
+2023,utn,Universidad Tecnológica Nacional,no_docente,,directivo,211,,nacional,2023,anuario_2023.zip/4. RHUN.xlsx,4.20
+2024,utn,Universidad Tecnológica Nacional,no_docente,,directivo,208,,nacional,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.20
+2018,utn,Universidad Tecnológica Nacional,no_docente,,otros,0,,nacional,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.21
+2020,utn,Universidad Tecnológica Nacional,no_docente,,otros,0,,nacional,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.20
+2021,utn,Universidad Tecnológica Nacional,no_docente,,otros,0,,nacional,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.20
+2023,utn,Universidad Tecnológica Nacional,no_docente,,otros,0,,nacional,2023,anuario_2023.zip/4. RHUN.xlsx,4.20
+2024,utn,Universidad Tecnológica Nacional,no_docente,,otros,0,,nacional,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.20
+2018,utn,Universidad Tecnológica Nacional,no_docente,,superior,1070,,nacional,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,4.21
+2020,utn,Universidad Tecnológica Nacional,no_docente,,superior,1106,,nacional,2020,anuario_2020.zip/4 RHUN 2020.xlsx,4.20
+2021,utn,Universidad Tecnológica Nacional,no_docente,,superior,1080,,nacional,2021,anuario_2021.zip/4. RHUN 2021.xlsx,4.20
+2023,utn,Universidad Tecnológica Nacional,no_docente,,superior,1533,,nacional,2023,anuario_2023.zip/4. RHUN.xlsx,4.20
+2024,utn,Universidad Tecnológica Nacional,no_docente,,superior,1587,,nacional,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,4.20
+2018,utn,Universidad Tecnológica Nacional,no_docente,,total,2494,2494,nacional,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,"4.21, 4.1"
+2020,utn,Universidad Tecnológica Nacional,no_docente,,total,2530,2530,nacional,2020,anuario_2020.zip/4 RHUN 2020.xlsx,"4.20, 4.1"
+2021,utn,Universidad Tecnológica Nacional,no_docente,,total,2764,2764,nacional,2021,anuario_2021.zip/4. RHUN 2021.xlsx,"4.20, 4.1"
+2023,utn,Universidad Tecnológica Nacional,no_docente,,total,3071,3069,nacional,2023,anuario_2023.zip/4. RHUN.xlsx,"4.20, 4.1"
+2024,utn,Universidad Tecnológica Nacional,no_docente,,total,3151,3149,nacional,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,"4.20, 4.1"
+2018,utn,Universidad Tecnológica Nacional,preuniversitario,total,,415,266,nacional,2018,anuario_2018.zip/4 - RHUN 2018.xlsx,"4.9, 4.1"
+2020,utn,Universidad Tecnológica Nacional,preuniversitario,total,,400,259,nacional,2020,anuario_2020.zip/4 RHUN 2020.xlsx,"4.9, 4.1"
+2021,utn,Universidad Tecnológica Nacional,preuniversitario,total,,388,248,nacional,2021,anuario_2021.zip/4. RHUN 2021.xlsx,"4.9, 4.1"
+2023,utn,Universidad Tecnológica Nacional,preuniversitario,total,,441,296,nacional,2023,anuario_2023.zip/4. RHUN.xlsx,"4.9, 4.1"
+2024,utn,Universidad Tecnológica Nacional,preuniversitario,total,,444,300,nacional,2024,anuario_2024_adelanto.zip/Z 4. RHUN 24.xlsx,"4.9, 4.1"

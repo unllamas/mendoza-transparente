@@ -41,6 +41,7 @@ const TODAS = [
   "designaciones",
   "municipios-personal",
   "municipios-lrf",
+  "universidades-estadisticas",
 ];
 
 const hace = (dias: number) => new Date(Date.now() - dias * 864e5).toISOString().slice(0, 10);

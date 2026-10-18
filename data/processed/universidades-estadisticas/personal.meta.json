@@ -1,0 +1,43 @@
+{
+  "titulo": "Personal de la UNCuyo y la UTN",
+  "descripcion": "Cada fila es una universidad nacional, un año y un tipo de personal (docentes universitarios por dedicación, docentes de colegios preuniversitarios, autoridades superiores y personal no docente por categoría). Los cargos no son personas: una persona puede tener varios cargos. Las personas salen del cuadro de personas por escalafón y solo están en la fila de total. Hay detalle completo en 2018, 2020, 2021, 2023 y 2024; en los demás años solo se conocen los cargos docentes por dedicación. La UTN es una sola universidad nacional: no se puede separar Mendoza.",
+  "columnas": {
+    "anio": { "etiqueta": "Año", "tipo": "anio" },
+    "universidad_id": { "etiqueta": "Universidad", "tipo": "texto", "valores": { "uncuyo": "UNCuyo", "utn": "UTN" }, "oculta": true },
+    "universidad": { "etiqueta": "Universidad", "tipo": "texto" },
+    "tipo": {
+      "etiqueta": "Tipo de personal",
+      "tipo": "texto",
+      "valores": {
+        "docente": "Docente universitario",
+        "preuniversitario": "Docente preuniversitario",
+        "autoridades_superiores": "Autoridades superiores",
+        "no_docente": "No docente"
+      }
+    },
+    "dedicacion": {
+      "etiqueta": "Dedicación",
+      "tipo": "texto",
+      "valores": { "total": "Total", "exclusiva": "Exclusiva", "semiexclusiva": "Semiexclusiva", "simple": "Simple", "otro": "Otro" },
+      "descripcion": "Solo para docentes. «Otro» incluye ad honorem, jefes de laboratorio, bedeles y contratos."
+    },
+    "categoria": {
+      "etiqueta": "Categoría",
+      "tipo": "texto",
+      "valores": { "total": "Total", "directivo": "Directivo", "superior": "Superior", "apoyo": "Apoyo", "otros": "Otros" },
+      "descripcion": "Solo para personal no docente."
+    },
+    "cargos": { "etiqueta": "Cargos", "tipo": "numero", "unidad": "cargos" },
+    "personas": { "etiqueta": "Personas", "tipo": "numero", "unidad": "personas", "descripcion": "Personas del escalafón. Solo en la fila de total." },
+    "alcance": {
+      "etiqueta": "Alcance",
+      "tipo": "texto",
+      "valores": { "mendoza": "Mendoza", "nacional": "Todo el país" },
+      "descripcion": "La UTN es una sola universidad nacional: su cifra incluye todas sus facultades regionales, no solo las de Mendoza."
+    },
+    "anuario": { "etiqueta": "Anuario", "tipo": "anio", "descripcion": "Año del Anuario de donde sale el dato." },
+    "fuente_archivo": { "etiqueta": "Archivo de origen", "tipo": "texto", "oculta": true },
+    "cuadro": { "etiqueta": "Cuadros", "tipo": "texto", "descripcion": "Cuadros del Anuario de donde sale la fila." }
+  },
+  "orden": ["anio", "universidad", "tipo", "dedicacion", "categoria", "cargos", "personas", "alcance", "anuario", "cuadro"]
+}
