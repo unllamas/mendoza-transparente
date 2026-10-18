@@ -1,0 +1,30 @@
+{
+  "titulo": "Recaudación mensual de impuestos provinciales (ATM)",
+  "descripcion": "Cada fila es lo que recaudó la Administración Tributaria Mendoza en un mes por un impuesto provincial, desde enero de 2000. No incluye regalías ni coparticipación. Son pesos nominales, sin ajustar por inflación. La ATM puede corregir meses pasados: la tabla se rearma completa en cada actualización. El total publicado coincide con la suma de los cinco impuestos.",
+  "columnas": {
+    "anio": { "etiqueta": "Año", "tipo": "anio" },
+    "mes": { "etiqueta": "Mes", "tipo": "mes" },
+    "impuesto": {
+      "etiqueta": "Impuesto",
+      "tipo": "texto",
+      "valores": {
+        "ingresos_brutos": "Ingresos Brutos",
+        "sellos": "Sellos",
+        "automotor": "Automotor",
+        "inmobiliario": "Inmobiliario",
+        "varios": "Ingresos varios",
+        "total": "Total"
+      },
+      "descripcion": "La fila «Total» es la suma de los otros cinco: no hay que sumarla de nuevo."
+    },
+    "monto": {
+      "etiqueta": "Recaudación",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Pesos nominales del mes, sin ajustar por inflación."
+    },
+    "fuente_url": { "etiqueta": "Fuente", "tipo": "url", "descripcion": "Página de la ATM de donde sale el dato." }
+  },
+  "orden": ["anio", "mes", "impuesto", "monto", "fuente_url"]
+}
