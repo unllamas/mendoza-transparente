@@ -56,6 +56,7 @@ if (unknown.length) console.log(`  Sin descripción en el catálogo (sumarlos a 
 
 const ev = (event: string, extra: Record<string, unknown> = {}) => ({ kind: "EventsNode", event, name: event, ...extra });
 const last30 = { date_from: "-30d" };
+const prop = (key: string, value: string) => ({ key, value, operator: "exact", type: "event" });
 const trends = (series: unknown[], extra: Record<string, unknown> = {}) => ({
   kind: "InsightVizNode",
   source: { kind: "TrendsQuery", series, interval: "day", dateRange: last30, filterTestAccounts: true, ...extra },
@@ -196,6 +197,26 @@ const INSIGHTS: { name: string; description: string; query: unknown }[] = [
         ev("home.reading_guide.open", { custom_name: "Guía de lectura" }),
       ],
       { trendsFilter: { display: "ActionsBarValue" } },
+    ),
+  },
+  {
+    name: "Portada: uso del hero",
+    description:
+      "Por semana, visitas a la portada y cuántas buscan, eligen su departamento o tocan una pregunta (en el hero o en la lista). El hero nuevo se publicó el 18/10/2026: antes, el buscador y el departamento se usaban en un 6 % de las visitas cada uno, y las preguntas en un 15 %.",
+    query: trends(
+      [
+        ev("$pageview", { custom_name: "Visitas a la portada", math: "unique_session", properties: [prop("$pathname", "/")] }),
+        ev("search.open", { custom_name: "Buscó desde el hero", math: "unique_session", properties: [prop("source", "home")] }),
+        ev("search.select", {
+          custom_name: "Eligió un resultado (buscador del hero)",
+          math: "unique_session",
+          properties: [prop("source", "home")],
+        }),
+        ev("home.department.select", { custom_name: "Eligió su departamento", math: "unique_session" }),
+        ev("home.question.open", { custom_name: "Pregunta desde el hero", math: "unique_session", properties: [prop("place", "hero")] }),
+        ev("home.question.open", { custom_name: "Pregunta desde la lista", math: "unique_session", properties: [prop("place", "list")] }),
+      ],
+      { interval: "week", dateRange: { date_from: "-90d" } },
     ),
   },
   {

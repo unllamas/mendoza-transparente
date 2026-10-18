@@ -110,12 +110,29 @@ function withUtm(url: string) {
   return u.href;
 }
 
+/** Whether the page is scrolled to the top. Only listens while `enabled`. */
+function useAtTop(enabled: boolean) {
+  const [atTop, setAtTop] = useState(true);
+  useEffect(() => {
+    if (!enabled) return;
+    const update = () => setAtTop(window.scrollY < 16);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, [enabled]);
+  return atTop;
+}
+
 export function Layout() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const sourceCatalog = useSourceCatalog();
   usePageMeta(pathname);
   useEffect(() => trackPageview(pathname), [pathname]);
   const [abierto, setAbierto] = useState(false);
+  // The home page hero runs full width under the header: there the header has no background or border
+  // until the page scrolls, and the page sets its own width.
+  const isHome = pathname === "/";
+  const atTop = useAtTop(isHome);
 
   // El menú se cierra al navegar y la página no se desplaza detrás mientras está abierto.
   // biome-ignore lint/correctness/useExhaustiveDependencies: close the menu whenever the route changes.
@@ -125,7 +142,12 @@ export function Layout() {
     <UiProviders>
       <NavigationProgress />
       <div className="flex min-h-dvh flex-col">
-        <header className="sticky top-0 z-20 border-b border-separator-border bg-background-surface/90 backdrop-blur">
+        <header
+          className={cx(
+            "sticky top-0 z-20 border-b transition-[background-color,border-color] duration-200",
+            isHome && atTop ? "border-transparent bg-transparent" : "border-separator-border bg-background-surface/90 backdrop-blur",
+          )}
+        >
           <div className="mx-auto flex h-14 max-w-6xl items-center gap-6 px-4 sm:px-5">
             <Link to="/" className="mr-auto text-headline-semibold tracking-tight whitespace-nowrap">
               Mendoza Transparente
@@ -222,7 +244,7 @@ export function Layout() {
           </Dialog>
         )}
 
-        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-5 sm:py-10">
+        <main className={isHome ? "w-full flex-1" : "mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-5 sm:py-10"}>
           <Outlet />
           <SearchDialog />
           <DetailSheet />

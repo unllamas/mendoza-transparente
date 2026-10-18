@@ -119,7 +119,7 @@ Resumen de los eventos:
 | `<id>.click` (`pedido-registrar.click`, etc.) | Participá: botones de envío | — |
 | `participation.credentials.copy` | Participá: copiar el código o la clave recibidos | — |
 | `participation.answer.toggle_key` | Contar la respuesta: con clave o con número de trámite | — |
-| `landscape.credit`, `landscape.propose` | Foto de paisaje: crédito y «Proponé tu foto» | `photo` |
+| `landscape.credit`, `landscape.credit_source`, `landscape.propose` | Foto de paisaje: botón de autoría, link a la foto original y «Proponé tu foto» | `photo` |
 
 **Embudos sugeridos en PostHog:**
 - `missing_data.request.open` → `.copy` → `.official_form` → `participation.request.success`: de leer un dato que falta a presentar el pedido.
