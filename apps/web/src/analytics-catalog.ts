@@ -267,6 +267,37 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["participación"],
   },
   {
+    event: "participation.form.invalid",
+    description:
+      "En «Participá», tocó Enviar pero el navegador lo frenó por un campo obligatorio vacío o mal escrito. Propiedades form y field (el nombre del campo, nunca lo escrito).",
+    tags: ["participación"],
+  },
+  {
+    event: "participation.item_picker.open",
+    description: "Abrió la lista de «Qué dato pediste» al registrar un pedido.",
+    tags: ["participación"],
+  },
+  {
+    event: "participation.item_picker.select",
+    description: "Eligió un dato en «Qué dato pediste». Propiedad item (id del dato que no se publica, u otro).",
+    tags: ["participación"],
+  },
+  {
+    event: "participation.request.how_to",
+    description: "Tocó «¿Todavía no lo pediste? Mirá cómo pedirlo» en el formulario del pedido.",
+    tags: ["participación"],
+  },
+  {
+    event: "participation.done.again",
+    description: "Después de un envío, tocó el botón para mandar otro. Propiedad form.",
+    tags: ["participación"],
+  },
+  {
+    event: "participation.done.missing_data",
+    description: "Después de un envío, fue a «Lo que no se publica». Propiedad form.",
+    tags: ["participación"],
+  },
+  {
     event: "participation.request.success",
     description: "Registró un pedido de acceso a la información con su número de trámite.",
     tags: ["participación", "embudo de pedidos"],

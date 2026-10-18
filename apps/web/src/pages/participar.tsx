@@ -179,7 +179,7 @@ function RequestForm({ items, defaultItem }: { items: NoPublicado[]; defaultItem
   const [itemId, setItemId] = useState(items.some((i) => i.id === defaultItem) ? defaultItem! : (items[0]?.id ?? "otro"));
   if (state.status === "done")
     return (
-      <Done onAgain={reset} again="Registrar otro pedido">
+      <Done onAgain={reset} again="Registrar otro pedido" form="request">
         Registramos tu pedido. Guardá el código y la clave: con los dos nos contás la respuesta cuando llegue (o si pasan 15 días hábiles
         sin respuesta). La clave no se vuelve a mostrar.
         {state.receipt.code && state.receipt.key && (
@@ -214,11 +214,26 @@ function RequestForm({ items, defaultItem }: { items: NoPublicado[]; defaultItem
       <Intro icon={RiFileAddLine}>
         Registrá el pedido con el número de trámite que te dio el formulario oficial. Así contamos cuántos pedidos hay por dato y cuántos
         responde el Estado. Tu número no se publica.{" "}
-        <Link to="/no-publicado" className="text-text-link hover:underline">
+        <Link
+          to="/no-publicado"
+          id="pedido-como-pedir"
+          data-track="participation.request.how_to"
+          className="text-text-link hover:underline"
+        >
           ¿Todavía no lo pediste? Mirá cómo pedirlo
         </Link>
       </Intro>
-      <SearchSelect label="Qué dato pediste" items={pickerItems(items)} value={itemId} onChange={setItemId} id="pedido-dato" />
+      <SearchSelect
+        label="Qué dato pediste"
+        items={pickerItems(items)}
+        value={itemId}
+        onChange={(id) => {
+          if (id !== itemId) track("participation.item_picker.select", { item: id });
+          setItemId(id);
+        }}
+        onOpen={() => track("participation.item_picker.open")}
+        id="pedido-dato"
+      />
       <Input label="A qué organismo se lo pediste" name="agency" defaultValue={item?.organismo ?? ""} key={itemId} maxLength={200} />
       <div className="grid gap-5 sm:grid-cols-2">
         <DateInput label="Fecha en que lo presentaste" name="filedOn" isRequired max={new Date().toISOString().slice(0, 10)} />
@@ -228,7 +243,7 @@ function RequestForm({ items, defaultItem }: { items: NoPublicado[]; defaultItem
       <EmailField />
       <Honeypot />
       <Turnstile onToken={setToken} />
-      <SubmitRow state={state} label="Registrar pedido" id="pedido-registrar" />
+      <SubmitRow state={state} label="Registrar pedido" id="pedido-registrar" form="request" />
     </form>
   );
 }
@@ -241,7 +256,7 @@ function AnswerForm() {
   const [withKey, setWithKey] = useState(true);
   if (state.status === "done")
     return (
-      <Done onAgain={reset} again="Contar otra respuesta">
+      <Done onAgain={reset} again="Contar otra respuesta" form="answer">
         {state.receipt.applied === false
           ? "Gracias. Como llegó sin la clave, la revisamos antes de sumarla. Con tu respuesta sabemos cuánto cumple el Estado con la Ley 9070."
           : "Gracias. Ya la sumamos: con tu respuesta sabemos cuánto cumple el Estado con la Ley 9070."}
@@ -300,7 +315,7 @@ function AnswerForm() {
       <Input label="Link a la respuesta (opcional)" name="url" type="url" maxLength={500} placeholder="https://" />
       <Honeypot />
       <Turnstile onToken={setToken} />
-      <SubmitRow state={state} label="Enviar respuesta" id="respuesta-enviar" />
+      <SubmitRow state={state} label="Enviar respuesta" id="respuesta-enviar" form="answer" />
     </form>
   );
 }
@@ -326,7 +341,7 @@ function FeedbackForm({ kind, context }: { kind: "error" | "dato"; context: Repo
   const [errorType, setErrorType] = useState<ErrorType>("dato_incorrecto");
   if (state.status === "done")
     return (
-      <Done onAgain={reset} again="Enviar otro">
+      <Done onAgain={reset} again="Enviar otro" form={kind === "error" ? "bug" : "data_suggestion"}>
         {kind === "error" ? "Gracias por avisarnos. Lo revisamos y lo corregimos." : "Gracias. Lo sumamos a la lista de datos para buscar."}
         {state.receipt.code && <Credentials items={[{ label: "Código de tu envío", value: state.receipt.code, id: "envio-codigo" }]} />}
       </Done>
@@ -399,7 +414,12 @@ function FeedbackForm({ kind, context }: { kind: "error" | "dato"; context: Repo
       <EmailField />
       <Honeypot />
       <Turnstile onToken={setToken} />
-      <SubmitRow state={state} label="Enviar" id={kind === "error" ? "error-enviar" : "dato-enviar"} />
+      <SubmitRow
+        state={state}
+        label="Enviar"
+        id={kind === "error" ? "error-enviar" : "dato-enviar"}
+        form={kind === "error" ? "bug" : "data_suggestion"}
+      />
     </form>
   );
 }
@@ -443,7 +463,11 @@ function Honeypot() {
   return <input name="website" tabIndex={-1} autoComplete="off" aria-hidden className="absolute -left-[9999px] h-0 w-0 opacity-0" />;
 }
 
-function SubmitRow({ state, label, id }: { state: SubmitState; label: string; id: string }) {
+/**
+ * Submit button. When the browser stops the submission because a required field is empty or a value is wrong, it sends
+ * `participation.form.invalid` with the field's name, never what was typed.
+ */
+function SubmitRow({ state, label, id, form }: { state: SubmitState; label: string; id: string; form: string }) {
   return (
     <div className="flex flex-col gap-3">
       {state.status === "error" && <Alert title="No se pudo enviar">{state.message}</Alert>}
@@ -451,6 +475,12 @@ function SubmitRow({ state, label, id }: { state: SubmitState; label: string; id
         type="submit"
         id={id}
         data-track={`${id}.click`}
+        onClick={(e) => {
+          const el = (e.currentTarget as HTMLButtonElement).form;
+          if (!el || el.checkValidity()) return;
+          const field = el.querySelector("input:invalid, textarea:invalid, select:invalid")?.getAttribute("name");
+          track("participation.form.invalid", { form, field: field ?? "otro" });
+        }}
         disabled={state.status === "sending"}
         leadingIcon={RiSendPlaneLine}
         className="w-fit"
@@ -461,7 +491,7 @@ function SubmitRow({ state, label, id }: { state: SubmitState; label: string; id
   );
 }
 
-function Done({ children, onAgain, again }: { children: ReactNode; onAgain: () => void; again: string }) {
+function Done({ children, onAgain, again, form }: { children: ReactNode; onAgain: () => void; again: string; form: string }) {
   return (
     <div className={cx(tileVariants({ size: "lg" }), "flex flex-col gap-4")}>
       <div className="flex items-start gap-3 text-text-primary">
@@ -469,10 +499,15 @@ function Done({ children, onAgain, again }: { children: ReactNode; onAgain: () =
         <div className="flex min-w-0 flex-col gap-4 text-pretty">{children}</div>
       </div>
       <div className="flex flex-wrap gap-2">
-        <Button variant="secondary" onClick={onAgain}>
+        <Button variant="secondary" onClick={onAgain} data-track="participation.done.again" data-track-form={form}>
           {again}
         </Button>
-        <Link to="/no-publicado" className={buttonClassName({ variant: "tertiary" })}>
+        <Link
+          to="/no-publicado"
+          data-track="participation.done.missing_data"
+          data-track-form={form}
+          className={buttonClassName({ variant: "tertiary" })}
+        >
           Ver lo que el Estado no publica ›
         </Link>
       </div>
@@ -518,7 +553,7 @@ function PhotoForm() {
   const [token, setToken] = useState<string | null>(null);
   if (state.status === "done")
     return (
-      <Done onAgain={reset} again="Proponer otra">
+      <Done onAgain={reset} again="Proponer otra" form="photo">
         Gracias. Si la elegimos, la publicamos con tu nombre y te avisamos si dejaste tu correo.
       </Done>
     );
@@ -546,7 +581,7 @@ function PhotoForm() {
       <EmailField />
       <Honeypot />
       <Turnstile onToken={setToken} />
-      <SubmitRow state={state} label="Enviar foto" id="foto-enviar" />
+      <SubmitRow state={state} label="Enviar foto" id="foto-enviar" form="photo" />
     </form>
   );
 }

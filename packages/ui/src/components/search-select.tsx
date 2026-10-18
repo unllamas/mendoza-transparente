@@ -44,6 +44,7 @@ export function SearchSelect({
   onChange,
   placeholder = "Buscá por nombre",
   id,
+  onOpen,
 }: {
   label: string;
   items: SearchSelectItem[];
@@ -51,18 +52,28 @@ export function SearchSelect({
   onChange: (id: string) => void;
   placeholder?: string;
   id?: string;
+  /** Called each time the list opens (for analytics: this package doesn't send events). */
+  onOpen?: () => void;
 }) {
   const isPhone = useMediaQuery("(max-width: 639px)");
   return isPhone ? (
-    <SheetSelect label={label} items={items} value={value} onChange={onChange} placeholder={placeholder} id={id} />
+    <SheetSelect label={label} items={items} value={value} onChange={onChange} placeholder={placeholder} id={id} onOpen={onOpen} />
   ) : (
-    <ComboSelect label={label} items={items} value={value} onChange={onChange} placeholder={placeholder} id={id} />
+    <ComboSelect label={label} items={items} value={value} onChange={onChange} placeholder={placeholder} id={id} onOpen={onOpen} />
   );
 }
 
-type Props = { label: string; items: SearchSelectItem[]; value: string; onChange: (id: string) => void; placeholder: string; id?: string };
+type Props = {
+  label: string;
+  items: SearchSelectItem[];
+  value: string;
+  onChange: (id: string) => void;
+  placeholder: string;
+  id?: string;
+  onOpen?: () => void;
+};
 
-function ComboSelect({ label, items, value, onChange, placeholder, id }: Props) {
+function ComboSelect({ label, items, value, onChange, placeholder, id, onOpen }: Props) {
   const { contains } = useFilter({ sensitivity: "base" });
   const groupRef = useRef<HTMLDivElement>(null);
   return (
@@ -72,6 +83,7 @@ function ComboSelect({ label, items, value, onChange, placeholder, id }: Props) 
       onSelectionChange={(key) => key != null && onChange(String(key))}
       defaultFilter={contains}
       menuTrigger="focus"
+      onOpenChange={(isOpen) => isOpen && onOpen?.()}
       allowsEmptyCollection
       className="flex flex-col gap-1.5"
     >
@@ -137,7 +149,7 @@ const fold = (s: string) =>
     .replace(/\p{Diacritic}/gu, "")
     .toLowerCase();
 
-function SheetSelect({ label, items, value, onChange, placeholder, id }: Props) {
+function SheetSelect({ label, items, value, onChange, placeholder, id, onOpen }: Props) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const selected = items.find((i) => i.id === value);
@@ -154,7 +166,10 @@ function SheetSelect({ label, items, value, onChange, placeholder, id }: Props) 
         id={id}
         aria-labelledby={id && `${id}-label ${id}`}
         aria-haspopup="dialog"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setOpen(true);
+          onOpen?.();
+        }}
         className="flex min-h-11 w-full cursor-pointer items-center justify-between gap-1.5 rounded-2lg bg-background-action px-3 py-2.5 text-left text-body-medium text-text-action outline-none transition-colors hover:bg-background-action-hover focus-visible:ring-2 focus-visible:ring-border-focus-ring focus-visible:ring-offset-2 active:bg-background-action-hover"
       >
         <span className="min-w-0 truncate">{selected?.label ?? placeholder}</span>
