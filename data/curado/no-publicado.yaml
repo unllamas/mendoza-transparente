@@ -401,3 +401,72 @@
   detalle_estado: Al 18/10/2026 publican la tarifaria 2026 en su sitio Capital, Las Heras, San Rafael, General Alvear, Tupungato y Tunuyán.
   pedido: La ordenanza tarifaria 2026 con todos sus anexos y los decretos que fijan el valor de la Unidad Tributaria Municipal, publicados en el sitio oficial del municipio.
   pedidos: []
+
+- id: utn-por-regional
+  titulo: Cuántos estudiantes tiene y cuánto gasta la UTN en Mendoza
+  categoria: presupuesto
+  que_es: Los estudiantes, egresados, docentes, presupuesto y gasto de las facultades regionales de la UTN en Mendoza y en San Rafael, por separado.
+  por_que_importa: La UTN informa como una sola universidad para todo el país. La Nación le transfiere la plata al Rectorado, en Buenos Aires, y el Anuario de Estadísticas Universitarias da una sola cifra para toda la UTN. Por eso no se puede saber cuánto de eso queda en Mendoza ni comparar sus facultades con la UNCuyo.
+  organismo: Universidad Tecnológica Nacional (Rectorado)
+  marco_legal: Ley 27.275 de Acceso a la Información Pública
+  ley: "27275"
+  formulario: https://forms.office.com/r/ePbdW5KjRK
+  estado: sin_publicar
+  donde_buscamos:
+    - https://www.utn.edu.ar/es/la-universidad/unidad-de-visibilidad-y-transparencia
+    - https://www.argentina.gob.ar/educacion/universidades/informacion/publicaciones/anuarios
+    - https://www.presupuestoabierto.gob.ar/sici/datos-abiertos
+    - https://frm.utn.edu.ar/
+    - https://www.frsr.utn.edu.ar/
+  detalle_estado: Al 18/10/2026 el dato más fino que se publica es la región «Nuevo Cuyo», que junta La Rioja, Mendoza, San Juan y San Luis. La UTN recibe los pedidos de acceso a la información en un formulario propio.
+  pedido: Para las Facultades Regionales Mendoza y San Rafael, desde 2020 y por año, la cantidad de estudiantes, nuevos inscriptos, egresados, cargos docentes y no docentes, y el presupuesto asignado, transferido y ejecutado por inciso y fuente de financiamiento, en CSV o XLSX.
+  pedidos: []
+
+- id: uncuyo-ejecucion-presupuestaria
+  titulo: En qué gasta la UNCuyo, en un archivo para descargar
+  categoria: presupuesto
+  que_es: La ejecución del presupuesto de la Universidad Nacional de Cuyo por facultad, por tipo de gasto y por fuente de la plata.
+  por_que_importa: La Nación publica cuánto le transfiere, pero no en qué lo gasta cada facultad. La UNCuyo muestra su ejecución en tableros que no se pueden descargar y su presupuesto en PDF de más de 30 MB.
+  organismo: Universidad Nacional de Cuyo (Coordinación Legal y Técnica)
+  marco_legal: Ley 27.275 de Acceso a la Información Pública
+  ley: "27275"
+  formulario: mailto:rec.cglyt@uncuyo.edu.ar
+  estado: parcial
+  donde_buscamos:
+    - https://www.uncuyo.edu.ar/transparencia/informacion-presupuestaria
+    - https://www.presupuestoabierto.gob.ar/sici/datos-abiertos
+  detalle_estado: Al 18/10/2026 hay presupuesto anual en PDF y ejecución trimestral en tableros Power BI, sin CSV ni XLSX.
+  pedido: La ejecución presupuestaria trimestral desde 2022, por unidad académica, inciso y fuente de financiamiento, en CSV o XLSX.
+  pedidos: []
+
+- id: uncuyo-compras-adjudicadas
+  titulo: Qué compró la UNCuyo y a quién
+  categoria: compras
+  que_es: El resultado de cada compra de la UNCuyo, sus facultades y el Hospital Universitario, con a quién se le adjudicó y por cuánto.
+  por_que_importa: Los llamados están publicados desde 2017, pero el ganador y el monto aparecen en pocas fichas y como texto suelto, así que no se puede cruzar con los proveedores del Estado.
+  organismo: Universidad Nacional de Cuyo (Coordinación Legal y Técnica)
+  marco_legal: Ley 27.275 de Acceso a la Información Pública
+  ley: "27275"
+  formulario: mailto:rec.cglyt@uncuyo.edu.ar
+  estado: parcial
+  donde_buscamos:
+    - https://licitaciones.uncuyo.edu.ar/
+    - https://www.uncuyo.edu.ar/transparencia/compras-y-contrataciones-uncuyo
+  pedido: El listado de contrataciones desde 2022 con expediente, objeto, tipo de procedimiento, dependencia, adjudicatario, CUIT y monto adjudicado, en CSV o XLSX.
+  pedidos: []
+
+- id: uncuyo-planta-y-costo
+  titulo: Cuánta gente trabaja en la UNCuyo y cuánto cuesta
+  categoria: personal
+  que_es: Los cargos docentes y no docentes de la UNCuyo por categoría y por facultad, y cuánto cuestan por mes.
+  por_que_importa: Casi todo lo que la Nación le gira a la UNCuyo es sueldo, pero solo se publican las escalas por categoría y un tablero con la dotación total, no cuántos cargos hay de cada categoría ni su costo.
+  organismo: Universidad Nacional de Cuyo (Coordinación Legal y Técnica)
+  marco_legal: Ley 27.275 de Acceso a la Información Pública
+  ley: "27275"
+  formulario: mailto:rec.cglyt@uncuyo.edu.ar
+  estado: parcial
+  donde_buscamos:
+    - https://www.uncuyo.edu.ar/transparencia/dotacion
+    - https://www.uncuyo.edu.ar/transparencia/instructivos-salariales
+  pedido: La cantidad de cargos docentes y no docentes por categoría, dedicación y unidad académica, y su costo mensual, desde 2023, en CSV o XLSX.
+  pedidos: []

@@ -228,6 +228,10 @@ export interface NoPublicado {
   por_que_importa: string;
   organismo: string;
   marco_legal: string;
+  /** Access-to-information law the request goes under: provincial 9070 (default) or national 27.275 (universities, national bodies). */
+  ley?: "9070" | "27275";
+  /** Where to file it, when it is not the provincial form: a web form or a mailto: link. */
+  formulario?: string;
   estado: "sin_publicar" | "parcial" | "desactualizado";
   detalle_estado?: string;
   donde_buscamos: string[];

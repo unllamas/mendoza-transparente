@@ -305,6 +305,13 @@ if (existsSync(noPublicado)) {
   const items = parseYaml(readFileSync(noPublicado, "utf8")) as NoPublicado[];
   const invalid = items.filter((i) => !(i.categoria in NO_PUBLICADO_CATEGORIES));
   if (invalid.length) throw new Error(`no-publicado.yaml: categoría faltante o desconocida en ${invalid.map((i) => i.id).join(", ")}`);
+  // A national law needs its own place to file the request: the provincial form would send people to the wrong office.
+  const badFiling = items.filter(
+    (i) =>
+      (i.ley !== undefined && i.ley !== "9070" && i.ley !== "27275") ||
+      (i.formulario !== undefined && !/^(https:\/\/|mailto:)/.test(i.formulario)),
+  );
+  if (badFiling.length) throw new Error(`no-publicado.yaml: ley o formulario inválido en ${badFiling.map((i) => i.id).join(", ")}`);
   writeFileSync(join(OUT, "temas", "no-publicado.json"), JSON.stringify(items));
 }
 

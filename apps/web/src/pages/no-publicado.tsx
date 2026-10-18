@@ -16,8 +16,23 @@ import { useUrlText } from "@/url-state.ts";
 
 const route = getRouteApi("/no-publicado");
 
-const FORMULARIO = "https://ticketsform.mendoza.gov.ar/ticketsform/servlet/responderformulario?AIP_SOLICITUDINFORMACIONPUBLICA";
-const LEY_9070 = "https://media.mendoza.gob.ar/principal/uploads/2025/08/Ley-de-Acceso-a-la-Informacion-Publica-9070-1.pdf";
+// Provincial bodies answer under Ley 9070; national ones (UNCuyo, UTN) under Ley 27.275. Both give 15 business days.
+const LEYES = {
+  "9070": {
+    label: "Ley 9070",
+    name: "Ley provincial 9070",
+    url: "https://media.mendoza.gob.ar/principal/uploads/2025/08/Ley-de-Acceso-a-la-Informacion-Publica-9070-1.pdf",
+    form: "https://ticketsform.mendoza.gov.ar/ticketsform/servlet/responderformulario?AIP_SOLICITUDINFORMACIONPUBLICA",
+  },
+  "27275": {
+    label: "Ley 27.275",
+    name: "Ley nacional 27.275",
+    url: "https://servicios.infoleg.gob.ar/infolegInternet/anexos/265000-269999/265949/norma.htm",
+    form: "https://www.argentina.gob.ar/solicitar-informacion-publica",
+  },
+} as const;
+
+const leyDe = (item: NoPublicado) => LEYES[item.ley ?? "9070"];
 
 // Estado con punto de color y texto: el color nunca va solo.
 const ESTADOS: Record<NoPublicado["estado"], { label: string; dot: string }> = {
@@ -154,10 +169,28 @@ export function NoPublicadoPage() {
       <p className="text-body-regular text-text-tertiary text-pretty">
         Cómo funciona: elegí un dato, copiá el pedido que armamos y presentalo gratis en el formulario oficial. El organismo tiene 15 días
         hábiles para responder (
-        <a href={LEY_9070} target="_blank" rel="noreferrer" data-track="missing_data.law.open" className="underline hover:text-text-link">
+        <a
+          href={LEYES["9070"].url}
+          target="_blank"
+          rel="noreferrer"
+          data-track="missing_data.law.open"
+          data-track-law="9070"
+          className="underline hover:text-text-link"
+        >
           Ley 9070
         </a>
-        ). Revisamos los sitios oficiales el 11 de octubre de 2026.
+        ; para las universidades y otros organismos nacionales,{" "}
+        <a
+          href={LEYES["27275"].url}
+          target="_blank"
+          rel="noreferrer"
+          data-track="missing_data.law.open"
+          data-track-law="27275"
+          className="underline hover:text-text-link"
+        >
+          Ley 27.275
+        </a>
+        ). Revisamos los sitios oficiales entre el 11 y el 18 de octubre de 2026.
       </p>
 
       {abierto && <DetalleSheet item={abierto} stats={stats?.items[abierto.id] ?? null} onClose={() => setAbierto(null)} />}
@@ -168,7 +201,7 @@ export function NoPublicadoPage() {
 function armarPedido(item: NoPublicado) {
   return `Señores ${item.organismo}:
 
-En el marco de la Ley provincial 9070 de Acceso a la Información Pública, solicito la siguiente información:
+En el marco de la ${leyDe(item).name} de Acceso a la Información Pública, solicito la siguiente información:
 
 ${item.pedido}
 
@@ -185,11 +218,13 @@ function shareText(item: NoPublicado, stats: RequestStats["items"][string] | nul
   const what = item.titulo.charAt(0).toLowerCase() + item.titulo.slice(1);
   const count = stats && stats.requests > 1 ? ` Ya hay ${stats.requests} pedidos registrados.` : "";
   const verb = /^(las|los|todas|todos) /i.test(item.titulo) ? "publiquen" : "publique";
-  return `Pido que se ${verb} ${what} (${item.organismo}). Cualquier persona puede pedirlo por la Ley 9070.${count}`;
+  return `Pido que se ${verb} ${what} (${item.organismo}). Cualquier persona puede pedirlo por la ${leyDe(item).label}.${count}`;
 }
 
 function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: RequestStats["items"][string] | null; onClose: () => void }) {
   const [texto, setTexto] = useState(() => armarPedido(item));
+  const formulario = item.formulario ?? leyDe(item).form;
+  const porCorreo = formulario.startsWith("mailto:");
   const [copiado, setCopiado] = useState(false);
 
   async function copiar() {
@@ -236,7 +271,7 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
             {copiado ? "Copiado" : "1. Copiar pedido"}
           </Button>
           <a
-            href={FORMULARIO}
+            href={formulario}
             id="pedido-formulario-oficial"
             data-track="missing_data.request.official_form"
             data-track-item={item.id}
@@ -244,11 +279,15 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
             rel="noreferrer"
             className={buttonClassName({ variant: "primary" })}
           >
-            2. Presentarlo en el formulario oficial <RiExternalLinkLine className="size-5" aria-hidden />
+            {porCorreo ? "2. Enviarlo por correo" : "2. Presentarlo en el formulario oficial"}
+            {!porCorreo && <RiExternalLinkLine className="size-5" aria-hidden />}
           </a>
         </div>
         <p className="text-caption-1-regular text-text-tertiary text-pretty">
-          Para: {item.organismo}. Guardá el número de trámite que te den: si no responden en 15 días hábiles, podés reclamar.
+          Para: {item.organismo}
+          {porCorreo && ` (${formulario.slice("mailto:".length)})`}.{" "}
+          {porCorreo ? "Guardá el correo que mandaste" : "Guardá el número de trámite que te den"}: si no responden en 15 días hábiles,
+          podés reclamar.
         </p>
       </div>
 
