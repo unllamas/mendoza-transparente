@@ -83,7 +83,7 @@ Cada reporte sale por escrito y queda anotado en el panel: a quién, en qué fec
 
 - **Sin los datos expuestos** y sin capturas que los muestren.
 - **Sin pasos para reproducirlo** más allá de dónde está.
-- **Desde la cuenta del proyecto,** no desde una personal.
+- **Desde la cuenta del proyecto,** no desde una personal: las respuestas tienen que llegar a `hola@mendoza-transparente.com`. Esa dirección por ahora solo recibe (se reenvía a la casilla del responsable; ver la skill `produccion`). Hasta que se pueda enviar desde ella, el reporte sale de la casilla del responsable y pide responder a `hola@`.
 - Los de gravedad alta se reportan en el día.
 
 ### Sin nada de esto en los scrapers
