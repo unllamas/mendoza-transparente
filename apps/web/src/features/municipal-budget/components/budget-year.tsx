@@ -180,7 +180,7 @@ export function BudgetYear({ budget, year }: { budget: MunicipalBudget; year: Mu
           {y.debt.loans.length > 0 && (
             <ul className={listVariants()}>
               {y.debt.loans.slice(0, MAX_DEBTS).map((l) => (
-                <li key={l.name} className={listRowVariants()}>
+                <li key={l.name} className={listRowVariants({ interactive: false })}>
                   <span className="min-w-0 flex-1 truncate" title={l.name}>
                     {l.name}
                   </span>
