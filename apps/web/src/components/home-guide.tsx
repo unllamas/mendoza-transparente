@@ -247,20 +247,15 @@ export function EcosystemMap({ guide }: { guide: HomeGuide }) {
               <span className="text-body-regular text-text-tertiary">{description}</span>
             </span>
           </div>
-          <ul className="flex flex-col divide-y divide-separator-border/60">
+          <ul className={listVariants()}>
             {items.map((i) => (
               <li key={i.label}>
-                <Link
-                  to={i.to}
-                  data-track="home.map.open"
-                  data-track-section={i.to}
-                  className="group flex min-h-11 items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-chart-grid/60"
-                >
-                  <span className="min-w-0 flex-1 truncate font-medium text-text-link group-hover:underline">{i.label}</span>
+                <Link to={i.to} data-track="home.map.open" data-track-section={i.to} className={listRowVariants()}>
+                  <span className="min-w-0 flex-1 truncate font-medium group-hover:text-text-link">{i.label}</span>
                   {i.count !== undefined && (
                     <span className="shrink-0 text-body-regular tabular-nums text-text-tertiary">{formatNumber(i.count)}</span>
                   )}
-                  <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
+                  <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
                 </Link>
               </li>
             ))}
