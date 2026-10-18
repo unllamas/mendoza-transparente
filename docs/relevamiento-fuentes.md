@@ -1,6 +1,6 @@
 # Mendoza Transparente: relevamiento de datos públicos
 
-*Relevado el 11/10/2026. Abrimos cada URL ese día con un script (curl) y en las fuentes clave descargamos archivos de muestra para ver si se podían procesar.*
+*Relevado el 11/10/2026. Abrimos cada URL ese día con un script (curl) y en las fuentes clave descargamos archivos de muestra para ver si se podían procesar. Universidades (2.11) e impuestos (2.12), relevados el 18/10/2026.*
 
 ---
 
@@ -36,7 +36,7 @@
 | Pregunta del ciudadano | Fuente principal | Estado |
 |---|---|---|
 | ¿Cuánto gastó la provincia y en qué? | Ejecución AIF mensual (Hacienda), anexos de Responsabilidad Fiscal (LRF), Ley de Presupuesto, DNAP | Hay datos. PDF con texto o XLS |
-| ¿Cuánto recauda y de dónde viene la plata? | Ejecución mensual AIF, DNAP RON (fondos que manda Nación) y TOP (recaudación propia), notas de recaudación | Hay datos |
+| ¿Cuánto recauda y de dónde viene la plata? | Recaudación mensual por impuesto de la ATM (desde 2000), ejecución mensual AIF, DNAP RON (fondos que manda Nación) y TOP (recaudación propia por impuesto) | **Fácil** (ver 2.12) |
 | ¿Cuánto debe Mendoza? | Tablero de deuda en XLSX (2015 a 2026), DNAP deuda | **Fácil** |
 | ¿Cuánta plata recibió cada municipio? | Participación municipal en XLS mensual (Hacienda) | **Fácil** |
 | ¿Qué municipio gastó más o mejor? | Anexos LRF municipales, ejecución municipal consolidada, DNAP para municipios | Difícil (PDF), pero comparable |
@@ -74,11 +74,11 @@ Sitio base: `https://sitios.mendoza.gob.ar/haciendayfinanzas/` (para listar todo
 | **Deuda: stock vigente** | `…/stock-vigente/` | Cada instrumento: acreedor, moneda, saldo en USD, tasa, vencimiento, perfil de pagos | **XLSX** de 7 hojas. Trimestral | 2T 2026 | 🟢 |
 | Deuda: histórico | `…/14619-2/` | Los mismos tableros | ZIP con XLSX | 2015 a 2025 | 🟢 |
 | Informe de deuda | `…/deuda-publica/informe-de-la-deuda/` | Informe narrativo con cuadros | PDF. Semestral | 2015 a 2026 | 🟡 |
-| Recaudación | `…/informes-de-recaudacion/` | Recaudación acumulada y variación real | PDF de 2 páginas. Mensual. **Solo queda el último** (hay que archivarlos uno por uno) | — | 🟡 |
+| Recaudación (informe de prensa) | `…/informes-de-recaudacion/` | Recaudación acumulada y variación real, con el texto que la explica | PDF de 2 páginas. Mensual. **Solo queda el último** (hay que archivarlos uno por uno). La serie por impuesto sí está en la ATM: ver 2.12 | — | 🟡 |
 | **Participación municipal** | `…/participacion-municipal/` | **Coparticipación mensual por municipio**, por recurso, índices de distribución, retenciones | **XLS**. Mensual | 2018 a 2026 (serie desde 1997) | 🟢 |
 | Fideicomiso Fondos de Resarcimiento | `…/fideicomiso-fondos-de-resarcimiento/` | Los USD 1.023 millones que pagó Nación (ex Portezuelo del Viento): ingresos, inversiones y obras | PDF. Trimestral | 2025 a 2026 | 🟡 |
 | Plan Provincial de Inversión Pública | `…/plan-provincial-de-inversion-publica/` | Cartera de obras | PDF. Anual | 2026 | 🟡 |
-| ATM: anexos LRF | https://atm.mendoza.gov.ar/ley-responsabilidad-fiscal/ | **100 mayores deudores de inmobiliario y automotor**, morosidad por municipio, grandes contribuyentes de IIBB, **gasto tributario (exenciones) por municipio** | Unos 1.189 PDF. Trimestral | 2022 a 2026 | 🟡 |
+| ATM: anexos LRF | https://atm.mendoza.gov.ar/ley-responsabilidad-fiscal/ | Morosidad por municipio, grandes contribuyentes de IIBB, **gasto tributario (exenciones) por municipio**, 100 mayores deudores (con nombres: ver 2.12) | 1.189 PDF con texto. Trimestral | 3T 2005 a 2T 2026 | 🟡 |
 | CKAN provincial | https://datosabiertos.mendoza.gov.ar/ (API `/api/3/action/package_search?rows=1000`) | 204 datasets: ejecución 2016 a 2023, deuda, **planta de personal (nov 2023)**, viáticos 2018 a 2021, FTyC | CSV. **Desactualizado** | 2015 a 2024 | 🟢 (histórico) |
 
 ### 2.2 Control y fiscalización
@@ -216,6 +216,123 @@ Qué se puede sacar de ahí: designaciones ("DESIGNA…"), adjudicaciones, ampli
 | Mendoza Fiduciaria | https://mendozafiduciaria.com/ | Reglamentos de crédito | **Balances y lista de fideicomisos con sus saldos** |
 | Todas | Planilla 6.1 del presupuesto | Presupuesto de empresas y fondos fiduciarios | Aportes reales del Tesoro (hay que buscarlos en el Boletín) |
 
+### 2.11 Universidades
+
+*Relevado el 18/10/2026.*
+
+**Alcance.** Las universidades nacionales con sede en Mendoza entran en el proyecto aunque su plata venga de la Nación y no del presupuesto provincial: están en la provincia y forman parte de lo que se paga con impuestos. Todo dato nacional se marca como tal en la web.
+
+**Cuáles son.** Las estatales son solo dos (Anuario 2024, cuadro 1.1.7b):
+- **UNCuyo**, con sedes en Mendoza, San Rafael, General Alvear, Valle de Uco y el Este. Las fuentes nacionales la tratan como una sola institución.
+- **UTN**, con las facultades regionales Mendoza (FRM) y San Rafael (FRSR). La UTN reporta como una sola universidad para todo el país: **ninguna fuente separa las regionales de Mendoza**. Lo más fino es la región CPRES «Nuevo Cuyo» (8.962 estudiantes en 2024), que mezcla cuatro provincias y no sirve como dato de Mendoza.
+
+No hay universidad provincial. Lo más parecido es el **Instituto Universitario de Seguridad Pública** (IUSP, `https://iusp.uncuyo.edu.ar/`), creado en 1998 por un convenio entre la provincia y la UNCuyo y administrado con una fundación mixta, sin presupuesto propio publicado. Los institutos terciarios de la DGE ya aparecen en `presupuesto-planta` (unidad «Dcción. de Educación Superior»: en 2025, 647 cargos permanentes y 61.784 horas cátedra).
+
+#### Fuentes nacionales
+
+| Fuente | URL | Datos | Formato / frecuencia | Cobertura | Dif. |
+|---|---|---|---|---|---|
+| **Presupuesto Abierto: datasets** (Ministerio de Economía) | Catálogo: `https://www.presupuestoabierto.gob.ar/sici/rest-api/catalog/site` · ejecución: `https://dgsiaf-repo.mecon.gob.ar/repository/pa/datasets/<año>/credito-anual-<año>.zip` | Transferencias del Tesoro a cada universidad: crédito inicial, vigente, comprometido, devengado y pagado, por programa, actividad (salario docente, no docente, funcionamiento, hospitales, ciencia y técnica), inciso y fuente | CSV en ZIP de unos 3 MB (80 a 107 MB sin comprimir), **coma decimal y millones de pesos**. Sin token. También hay versión mensual y diaria | 1995 a 2026, corte del 14/10/2026 | 🟢 |
+| Presupuesto Abierto: API | `https://www.presupuestoabierto.gob.ar/api/` (POST `/api/v1/credito`) | Lo mismo que los datasets, con filtros | JSON. Pide token gratuito | Igual | 🟡 |
+| **Anuario de Estadísticas Universitarias** (Subsecretaría de Políticas Universitarias, Capital Humano) | `https://www.argentina.gob.ar/educacion/universidades/informacion/publicaciones/anuarios` (el 2024 es un «adelanto»: `/sites/default/files/2020/04/adelanto_anuario_24_14-08.zip`) | Por universidad: estudiantes, nuevos inscriptos y egresados (serie desde 2014), por rama y disciplina, género, edad, extranjeros; docentes por cargo, dedicación y antigüedad; no docentes; presupuesto por fuente, ejecución por inciso, recursos propios y **gasto por estudiante** (cuadros 5.14 y 5.15) | ZIP de XLSX por capítulo (en 2023, `.xls`). CSV solo para 2020 a 2022. Anual | 1999 a 2024 | 🟡 |
+| Síntesis de Información Universitaria | `…/informacion/publicaciones/sintesis` | Resumen del Anuario, sin abrir por institución | PDF anual | 2015 a 2024 | 🟡 (contexto) |
+| Guía de carreras y nómina de autoridades (SIU) | `http://guiadecarreras.siu.edu.ar/` · `http://nomina.siu.edu.ar/` | Oferta de carreras y autoridades | Consulta web | Actual | 🟡 (sin verificar el detalle) |
+| datos.gob.ar | Dataset `graduados-universitarios-del-sistema-araucano-2016-2018` | Graduados | CKAN | 2016 a 2018 | 🔴 (la API dio 502 todo el día) |
+
+**Cómo se filtra la UNCuyo en Presupuesto Abierto:** `principal_desc` = «Transferencias a universidades nacionales» y `subparcial_id` = 811 («Universidad Nacional de Cuyo»). `entidad_desc` no sirve: ahí figura la Secretaría de Educación. Los nombres cambian de un año a otro (con y sin tilde), así que se filtra por código. Los pagos de la UTN figuran en CABA.
+
+**Validación cruzada:** el devengado 2024 de la UNCuyo en Presupuesto Abierto ($119.730 millones) coincide exacto con el cuadro 5.2.2 del Anuario 2024. Valores de muestra de la UNCuyo en 2024: 34.098 estudiantes, 6.599 nuevos inscriptos, 2.307 egresados, 6.670 cargos docentes universitarios y 1.558 no docentes, $3,57 millones de gasto por estudiante. En 2026 (al 14/10) lleva $152.516 millones devengados, de los que $96.640 millones son salario docente.
+
+#### Lo que publican las propias universidades
+
+| Fuente | URL | Datos | Formato / frecuencia | Cobertura | Dif. |
+|---|---|---|---|---|---|
+| **UNCuyo: Digesto** | `https://digesto.uncuyo.edu.ar/v3/` · API: `https://digesto.uncuyo.edu.ar/digesto/api/v1/search` (VuFind) · PDF: `…/sig/digesto/?archivo=<id>.pdf` | Ordenanzas y resoluciones de la Asamblea, el Consejo Superior y el Rectorado: modificaciones de créditos presupuestarios, pagos, designaciones | JSON + PDF por norma. Continuo | Unos 209 mil registros. Desde 2024 se publican menos de la mitad por año que antes (sin explicar) | 🟢 |
+| UNCuyo: Presupuesto | `https://www.uncuyo.edu.ar/transparencia/informacion-presupuestaria` (y `/presupuesto-2022` a `/presupuesto-2025`) | Presupuesto anual, reajustes y ejecución trimestral | PDF de 34 a 42 MB + Power BI sin descarga. Trimestral | 2022 a 2T 2026 | 🟡 / 🔴 |
+| UNCuyo: Compras | `https://licitaciones.uncuyo.edu.ar/` (fichas `/licitacion/<id>`, correlativas) | Llamados de toda la universidad, también del Hospital Universitario y el IUSP: dependencia, expediente, pliego, actas y a veces la orden de compra. **No usa COMPR.AR** | HTML + PDF. Continuo. El resultado (adjudicatario y monto) aparece poco y como texto libre | 2017 a 2026 (id 100 a unos 3.082) | 🟡 |
+| UNCuyo: Becas | `/transparencia/becas-uncuyo` | Becas por unidad académica y carrera, postulaciones, montos, crédito | XLSX anual | 2022 a 2026 | 🟢 |
+| UNCuyo: Plan de obras | `/transparencia/infraestructura` | Obra, unidad académica, estado, avance, expediente y monto | XLSX (2023 y 2024); 2025 solo en PDF | 2023 a 2025 | 🟡 |
+| UNCuyo: Estadísticas | `/transparencia/informacion-academica` · `/academica/estadisticas/` | Ingresantes, estudiantes y egresados **por unidad académica**, posgrado, Censo Académico 2022 | PDF anual + Power BI | 2022 a 2024 | 🟡 |
+| UNCuyo: Escalas salariales | `/transparencia/instructivos-salariales` · `/escalas-salariales-y-convenios` · `/gestion` | Escalas por cargo y categoría (no sueldos por persona) | PDF mensual | 2024 a 09/2026 | 🟡 |
+| UNCuyo: Dotación y nómina | `/transparencia/dotacion` · `/transparencia/nomina-del-personal` | Dotación agregada; buscador de personal (sin verificar qué trae) | Power BI y aplicación web | 07/2026 | 🔴 |
+| UNCuyo: Auditorías | `/transparencia/auditorias` | Informes semestrales de la Unidad de Auditoría Interna, Cuenta Inversión 2023 y 2024, planes de auditoría | PDF semestral | 2021 a 2025 | 🟡 |
+| UNCuyo: Autoridades y declaraciones juradas | `/transparencia/gobierno` · `/transparencia/declaraciones-juradas` | Autoridades de Rectorado y facultades. Las declaraciones están en la Oficina Anticorrupción (`https://www2.jus.gov.ar/consultaddjj/Home/Busqueda`) | HTML + PDF | Vigente (la página mezcla dos gestiones: confirmar antes de publicar un cargo) | 🟡 |
+| **UTN: Unidad de Visibilidad y Transparencia** | `https://www.utn.edu.ar/es/la-universidad/unidad-de-visibilidad-y-transparencia` | Resoluciones de presupuesto, planilla de créditos 2026 y créditos recibidos (de toda la UTN, sin abrir por regional), informes de auditoría por regional (San Rafael tiene uno en 2025; Mendoza, ninguno), instructivos salariales | PDF | 2022 a 2026 | 🟡 |
+| UTN FRM y FRSR | `https://frm.utn.edu.ar/` · `https://www.frsr.utn.edu.ar/` | Solo institucional, sin sección de transparencia. Sus compras van por COMPR.AR nacional | — | — | — |
+| Universidades privadas (Universidad de Mendoza, Maza, Aconcagua, Congreso, Champagnat, UCA) | Sitios de cada una | Autoridades, becas y carreras. **Ninguna publica cifras ni gastos**; no están obligadas. Sus estudiantes figuran en el Anuario nacional | HTML | — | 🟡 |
+
+**Pedidos de información.** La UNCuyo está alcanzada por la Ley 27.275. Responsable de acceso a la información: Coordinación Legal y Técnica (`rec.cglyt@uncuyo.edu.ar`). No tiene formulario propio: se pide por la Agencia de Acceso a la Información Pública (`https://www.argentina.gob.ar/solicitar-informacion-publica`). La UTN tiene un formulario propio en su página de transparencia.
+
+**Preguntas que se pueden responder:** cuántos estudiantes tiene la UNCuyo y cómo evolucionó, cuántos ingresan y egresan, cuánto le manda la Nación y en qué se gasta (casi todo es sueldo: el 99,8 % del gasto del Tesoro en 2024), cuánto cuesta cada estudiante, cuánto recibe el hospital universitario, qué becas da y qué obras hace. **No se pueden responder:** cuántos estudiantes o cuánta plata tiene la UTN en Mendoza, ni los sueldos y la planta de la UNCuyo con su costo.
+
+**Por dónde empezar:** (1) Presupuesto Abierto, que es abierto, actual y chico una vez filtrado; (2) el Anuario, que trae matrícula, egresados, docentes y gasto por estudiante, validado contra lo anterior; (3) el Digesto de la UNCuyo, con cuidado porque las resoluciones de designación traen nombres (aplicar `WAYBACK_EXCLUDED`); (4) becas y obras en XLSX; (5) licitaciones de la UNCuyo, para sumarlas a compras.
+
+### 2.12 Impuestos provinciales y tasas municipales
+
+*Relevado el 18/10/2026.*
+
+**Lo que ya está en el repo:** la recaudación propia total de la provincia, trimestral, sin abrir por impuesto (`dnap-aif`), y lo que cobró cada municipio por trimestre de 2023 a 2026 (`municipios-lrf/ejecucion_recursos.csv`, 15 de 18 municipios: faltan Las Heras, Luján de Cuyo y Junín; San Rafael y San Martín abren cada tasa, el resto trae unos 11 rubros).
+
+#### Impuestos provinciales
+
+| Fuente | URL | Datos | Formato / frecuencia | Cobertura | Dif. |
+|---|---|---|---|---|---|
+| **ATM: recaudación mensual por impuesto** | `https://atm.mendoza.gov.ar/portalatm/zoneBottom/datosInteres/recaudacion/recaudacion.jsp` y una página por impuesto: `recaudacion_impuesto_{ingresos,sellos,automotor,inmobiliario,varios,total_mensual}.jsp`, `recuadacion_impuesto_total_por_impuesto.jsp` (sic) y `recaudacion_por_impuesto_anual.jsp` | Ingresos Brutos, Sellos, Automotor, Inmobiliario, Ingresos Varios y total, mes a mes (sin regalías ni coparticipación) | Tabla HTML (meses × años), miles con coma, ISO-8859-1. Mensual, cerca del día 7 | 2000 a 09/2026 | 🟢 |
+| **DNAP TOP** | `…/direccion-de-recursos-provinciales/recursos-tributarios-de-origen-provincial-top` (`serie_top_1984_2025.csv`, `top_mensual_2026_<n>.xlsx`, `top_trim_2026_<n>.xlsx`; los href traen el prefijo `blank:#`) | Recaudación por impuesto y por provincia: sirve para comparar Mendoza con el resto | CSV (`;`, millones de pesos) y XLSX. Mensual | Anual desde 1984; mensual desde 2017 | 🟢 |
+| DNAP: alícuotas de Ingresos Brutos | `…/direccion-de-recursos-provinciales/ingresos-brutos` (`2025_ib.xlsx`, `2024_ib.xlsx`) | Alícuota por actividad y provincia («provisorio») | XLSX anual | 2024 y 2025 | 🟢 |
+| ATM: anexos LRF | `https://atm.mendoza.gov.ar/ley-responsabilidad-fiscal/` | Ver la tabla de anexos abajo | 1.189 PDF con texto (13 a 250 KB; los anexos 7, 8 y 12, hasta 4 MB). Trimestral. Faltan 2T 2019; de 2005 a 2012 solo están los anexos de impuestos | 3T 2005 a 2T 2026 | 🟡 |
+| ATM: Ley Impositiva | `https://atm.mendoza.gov.ar/normativas/ley-impositiva/` | Ley anual, planilla de alícuotas de IIBB por actividad, planilla de Automotor y tasas retributivas | PDF escaneado con OCR que rompe códigos y alícuotas (para IIBB, usar los XLSX de DNAP). Anual | 2004 a 2026 (2026: Ley 9680) | 🔴 |
+| ATM: Código Fiscal y Ley de Avalúos | `https://atm.mendoza.gov.ar/codigo-fiscal/` · `…/normativas/ley-de-avaluos/` | Texto ordenado del Código; valores del avalúo | PDF anual | 2001 a 2026 | 🟡 |
+| Informe de prensa de recaudación (Hacienda) | `…/haciendayfinanzas/informes-de-recaudacion/` | Acumulado del año por impuesto y variación real, con el texto que la explica | PDF de 2 páginas, mensual. Solo queda el último y su URL lleva un prefijo de fecha impredecible. En la Wayback Machine hay copias de 07/2020 a 06/2021 y de 04/2024 (`www.mendoza.gov.ar/wp-content/uploads/sites/25/…`) | — | 🟡 |
+| CKAN provincial | `datosabiertos.mendoza.gov.ar` | Sin datasets de recaudación | — | — | — |
+
+**Validación cruzada:** el acumulado de enero a septiembre de 2026 de la tabla de la ATM difiere entre 0,1 % y 1,4 % del informe de prensa (IIBB: $1.035.759 millones contra $1.045.623 millones), y el IIBB anual 2025 difiere un 0,03 % de DNAP TOP. Son bases apenas distintas y la ATM puede corregir meses pasados: el scraper tiene que guardar cada versión.
+
+**Anexos LRF de la ATM.** Los anexos 1 a 6, 20 y 30 son el presupuesto de la ATM como organismo; los que interesan son estos:
+
+| Anexo | Contenido | Datos personales | Qué hacer |
+|---|---|---|---|
+| 9 y 10 | **Morosidad por municipio** de Inmobiliario (por antigüedad) y de Automotor (morosidad inicial, recupero, facturación, saldo) | No | Bajar y procesar 🟢 |
+| 11 | **Grandes contribuyentes de IIBB:** recaudación por sector (16 rubros) | No (agregado) | Bajar y procesar 🟢 |
+| 13 | **Gasto tributario (exenciones)** por municipio e impuesto, del año anterior (solo en el PDF del 1T de cada año) | No | Bajar y procesar 🟢 |
+| 12 | Deuda de grandes contribuyentes: razón social y CUIT (unas 88 de 724 son personas humanas) | Sí | No bajar |
+| 7 y 8 | 100 mayores deudores de Inmobiliario y de Automotor (más de la mitad son personas humanas) | Sí | No bajar |
+| 14 | 100 principales trámites ante el Tribunal Administrativo Fiscal, sin resolución firme | Sí | No bajar |
+| 15 | Residentes con autos patentados en otras provincias: CUIT, dominio y modelo | Sí, alto | No bajar |
+
+Los anexos 7, 8, 12, 14 y 15 siguen la misma regla que los anexos 22 y 23 de los municipios: **nunca se bajan**, porque `data/raw/` no se borra y se copiaría a archive.org. Con solo 9, 10, 11 y 13 son unos 300 PDF chicos.
+
+#### Tasas municipales
+
+Las ordenanzas tarifarias fijan los valores en **Unidades Tributarias Municipales (UTM)**, y cada municipio actualiza el valor de la UTM por decreto durante el año (Capital: decreto 1220/2025; Guaymallén: UTM de $130). Para saber cuánto cuesta una tasa hacen falta la ordenanza y los decretos de la UTM. **Las dos cosas salen en el Boletín Oficial, que ya está indexado en `boletin-oficial/normas.csv`** (buscar «TARIFARI» y «UNIDAD TRIBUTARIA» en `sumario`); falta verificar que el PDF del Boletín traiga los anexos con los valores (en Tunuyán son archivos aparte).
+
+| Municipio | Tarifaria vigente | Dónde está | Dif. |
+|---|---|---|---|
+| Capital | Ord. 4222 (2026) | `https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/12/Ordenanza-Tarifaria-4222.pdf` (PDF con texto, 103 págs.) | 🟢 |
+| Las Heras | Ord. 54/25 (tarifaria 2026) y 55/25 (tributaria) | `https://lasheras.gob.ar/wp-content/uploads/2026/03/ordenanza_tarifaria_-_2026-2.pdf` (128 págs.) | 🟢 |
+| San Rafael | Ord. 15539 (2026) | `https://www.sanrafael.gov.ar/archivos-muni/tarifaria/tarifaria-2026.pdf` (58 págs.) | 🟢 |
+| General Alvear | Tarifaria 2026, segundo semestre | `https://alvearmendoza.gob.ar/wp-content/uploads/2026/08/IIIV-ORDENANZA-TARIFARIA-2026-2do.sem_.pdf` · página `/ordenanza-tarifaria/` | 🟢 |
+| Tupungato | Ord. 11/2026 | `https://tupungato.gov.ar/wp-content/uploads/2026/08/Tarifaria-2026-1.pdf` (listado 2016 a 2026 en `?page_id=3090`) | 🟢 |
+| Tunuyán | Ord. 3351 (2026) | `https://www.tunuyan.gov.ar/site/wp-content/uploads/2026/01/3351.pdf`; los valores, en el anexo del Boletín | 🟡 |
+| Godoy Cruz | Ord. 7497 (2026) | Solo en el Boletín (19/11/2025) | 🟡 |
+| Guaymallén | Ord. 10138 (2025) con cambios (10202, 10298, 10399, 10407) | Boletín; el sitio solo tiene 2021 a 2023; digesto del Concejo en `https://cdguaymallen.gob.ar/digesto` (sin verificar) | 🟡 |
+| Luján de Cuyo | Ord. 15095 (2026), modificada por la 15214 | Boletín; el portal de datos solo tiene la 2025 (Ord. 14831) | 🟡 |
+| San Martín | Ord. 3229/2026 | Boletín | 🟡 |
+| Rivadavia | Ord. 5303 (2026) | Boletín | 🟡 |
+| Santa Rosa | Ord. 34/2026 | Boletín | 🟡 |
+| Lavalle | Proyecto 2026 (decreto 4/2026); la 2025 es la Ord. 1252 | Boletín | 🟡 |
+| Junín | Ord. 967 (2025); no hay 2026 en el Boletín | El link del sitio (`/tarifaria/tarifaria2025.pdf`) da 404 | 🟡 |
+| Malargüe | Ord. 2268/2024 es la última del sitio | `…/wp-content/uploads/2024/04/TARIFARIA-ANO-2024-ORD.N°-2268-2024-1.pdf` | 🟡 |
+| Maipú | No se encontró la 2026 ni en el sitio ni en el Boletín | — | 🔴 |
+| La Paz | No se encontró en el Boletín ni en el sitio | — | 🔴 |
+| San Carlos | Solo la Ord. 2053/2025, que modifica la 2047/2024 | Boletín | 🔴 |
+
+**Ningún municipio publica lo que recauda por tasa mes a mes ni la morosidad por tasa.** Capital la publica en el anexo 23 de sus anexos LRF, que no bajamos porque puede traer nombres.
+
+**Preguntas que se pueden responder:** cuánto recauda la provincia por cada impuesto desde 2000 (en pesos de hoy, con el IPC), qué impuesto crece más, cómo se compara Mendoza con otras provincias, qué municipio tiene más morosidad de Inmobiliario o Automotor, cuánto se deja de cobrar en exenciones en cada municipio, qué sectores pagan más Ingresos Brutos y cuánto cuesta la tasa de la propiedad en cada municipio (con la ordenanza y el valor de la UTM).
+
+**Por dónde empezar:** (1) la tabla de recaudación de la ATM, que son 7 pedidos para toda la serie; (2) archivar cada mes el informe de prensa de Hacienda, que se pierde; (3) los anexos 9, 10, 11 y 13 de la ATM; (4) DNAP TOP y las alícuotas de IIBB; (5) las tarifarias municipales desde el índice del Boletín.
+
 ---
 
 ## 3. Lo que no se publica (posible sección "Lo que no sabemos")
@@ -224,7 +341,7 @@ Qué se puede sacar de ahí: designaciones ("DESIGNA…"), adjudicaciones, ampli
 2. Ejecución detallada por programa y objeto, en formato abierto, posterior a 2023.
 3. Nómina con nombres y escalas salariales vigentes de la provincia.
 4. Flujo de caja de Tesorería.
-5. Serie mensual de recaudación de la ATM por tributo.
+5. Recaudación por departamento y por tasa municipal (la serie provincial por impuesto sí existe: ver 2.12).
 6. Transferencias no automáticas de Nación desde 2019 (hay que reconstruirlas).
 7. Balances de Mendoza Fiduciaria; AYSAM y EMESA 2025.
 8. OCDS de compras posterior a enero de 2026.
@@ -232,6 +349,7 @@ Qué se puede sacar de ahí: designaciones ("DESIGNA…"), adjudicaciones, ampli
 10. Financiamiento de campañas provinciales.
 11. Turnos y esperas en salud, estadísticas propias de seguridad, matrícula descargable de la DGE, datos del IPV.
 12. Datos de San Martín y Lavalle.
+13. Universidades nacionales (ver 2.11): la ejecución de la UNCuyo en un formato descargable (hoy solo PDF y Power BI); qué compró y a quién (adjudicatario y monto); la planta con su costo; el presupuesto de cada regional de la UTN en Mendoza; estudiantes y egresados por facultad desde la Nación. **Todavía no están en `data/curado/no-publicado.yaml`** porque la página `/no-publicado` arma todos los pedidos con la Ley provincial 9070 y su formulario, y a las universidades nacionales se les pide por la Ley 27.275 en `https://www.argentina.gob.ar/solicitar-informacion-publica`. Antes de cargarlos, la página tiene que elegir la ley y el formulario según el organismo.
 
 Cada punto puede llevar un botón **"Pedilo vos"**, que arme un pedido de acceso a la información con la Ley 9070 (formulario: `https://ticketsform.mendoza.gov.ar/ticketsform/servlet/responderformulario?AIP_SOLICITUDINFORMACIONPUBLICA`, plazo de 15 días hábiles), y un contador público de pedidos hechos y respondidos.
 
