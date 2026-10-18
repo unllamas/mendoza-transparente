@@ -5,7 +5,10 @@ import { Label } from "@mt/ui/components/base/input/label";
 import { Select, SelectItem } from "@mt/ui/components/base/select/select";
 import { Textarea } from "@mt/ui/components/base/textarea/textarea";
 import { listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
+import { ChoiceTiles } from "@mt/ui/components/choice-tiles";
+import { SearchSelect, type SearchSelectItem } from "@mt/ui/components/search-select";
 import { PageHeader } from "@mt/ui/components/section";
+import { Segmented } from "@mt/ui/components/segmented";
 import { cx } from "@mt/ui/lib/cx";
 import {
   type RemixiconComponentType,
@@ -23,56 +26,82 @@ import { getRouteApi, Link } from "@tanstack/react-router";
 import { type FormEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import { track } from "@/analytics.ts";
 import { ShareButton } from "@/components/share-button.tsx";
-import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
 import { useRequestStats } from "@/features/participation/api/request-stats.ts";
+import { NO_PUBLICADO_CATEGORIES } from "@/no-publicado-categories.ts";
 import type { NoPublicado } from "@/types.ts";
-import { useUrlOption } from "@/url-state.ts";
+import { useUrlText } from "@/url-state.ts";
 
 const route = getRouteApi("/participar");
 
-type Form = "pedido" | "respuesta" | "error" | "dato" | "foto";
-const FORMS: { value: Form; label: string }[] = [
-  { value: "pedido", label: "Registrar mi pedido" },
-  { value: "respuesta", label: "Contar la respuesta" },
-  { value: "error", label: "Reportar un error" },
-  { value: "dato", label: "Sugerir un dato" },
-  { value: "foto", label: "Proponer una foto" },
+/** The four things you can do here, the easiest first. A filed request has two steps: register it, then tell the answer. */
+type Choice = "error" | "dato" | "pedido" | "foto";
+const CHOICES: { value: Choice; label: string; description: string; icon: RemixiconComponentType }[] = [
+  { value: "error", label: "Reportar un error", description: "Un dato mal, un link roto o algo confuso.", icon: RiBugLine },
+  { value: "dato", label: "Sugerir un dato", description: "Algo público que te gustaría encontrar acá.", icon: RiSendPlaneLine },
+  { value: "pedido", label: "Registrar un pedido", description: "Un pedido de información que presentaste.", icon: RiFileAddLine },
+  { value: "foto", label: "Proponer una foto", description: "Un paisaje de Mendoza para el sitio.", icon: RiCameraLine },
+];
+type Step = "pedido" | "respuesta";
+const STEPS: { value: Step; label: string }[] = [
+  { value: "pedido", label: "Lo presenté" },
+  { value: "respuesta", label: "Me respondieron" },
 ];
 
 export function ParticiparPage() {
   const items = route.useLoaderData();
   const search = route.useSearch();
-  // The open form lives in the URL (?tipo=…), so links from other pages land on the right one.
-  const [form, setForm] = useUrlOption<Form>("tipo", ["pedido", "respuesta", "error", "dato", "foto"], "pedido");
+  // The open form lives in the URL (?tipo=…), so links from other pages land on the right one. Without it, nothing is
+  // open yet: the page is the list of what you can do.
+  const [tipo, setTipo] = useUrlText("tipo");
+  const choice: Choice | null = tipo === "respuesta" ? "pedido" : (CHOICES.find((c) => c.value === tipo)?.value ?? null);
   const stats = useRequestStats();
 
   return (
     <div className="flex max-w-2xl flex-col gap-10">
       <PageHeader action={<ShareButton />} icon={RiContractLine} topic="Participá" title="Sumate a Mendoza Transparente">
-        Registrá los pedidos de información que presentaste y lo que te respondieron, avisanos si encontrás un error o sugerinos datos que
-        falten. Así medimos cuánto se pide y cuánto responde el Estado.
+        Avisanos si algo está mal, sugerinos un dato que falte o contanos qué te respondió el Estado cuando le pediste información.
       </PageHeader>
 
-      {stats && stats.total.requests > 0 && (
-        <div className={cx(tileVariants({ size: "sm" }), "grid grid-cols-3 divide-x divide-separator-border text-center")}>
-          <Counter value={stats.total.requests} label={stats.total.requests === 1 ? "pedido registrado" : "pedidos registrados"} />
-          <Counter value={stats.total.answered} label="con respuesta" />
-          <Counter value={stats.total.denied + stats.total.overdue} label="negados o sin respuesta" />
-        </div>
-      )}
+      <div className="flex flex-col gap-6">
+        <ChoiceTiles
+          label="Qué querés hacer"
+          options={CHOICES}
+          value={choice}
+          onChange={(v) => {
+            if (v !== choice) track("participation.form.change", { value: v, label: "Qué querés hacer" });
+            setTipo(v);
+          }}
+        />
 
-      <TrackedSegmented label="Qué querés hacer" options={FORMS} value={form} onChange={setForm} trackId="participation.form" />
-
-      {form === "pedido" && <RequestForm items={items} defaultItem={search.dato ?? null} />}
-      {form === "respuesta" && <AnswerForm />}
-      {form === "error" && <FeedbackForm kind="error" context={{ page: search.pagina, title: search.titulo, quote: search.cita }} />}
-      {form === "dato" && <FeedbackForm kind="dato" context={{}} />}
-      {form === "foto" && <PhotoForm />}
+        {/* The request counters only matter to whoever is about to register one. */}
+        {choice === "pedido" && stats && stats.total.requests > 0 && (
+          <div className={cx(tileVariants({ size: "sm" }), "grid grid-cols-3 divide-x divide-separator-border text-center")}>
+            <Counter value={stats.total.requests} label={stats.total.requests === 1 ? "pedido registrado" : "pedidos registrados"} />
+            <Counter value={stats.total.answered} label="con respuesta" />
+            <Counter value={stats.total.denied + stats.total.overdue} label="negados o sin respuesta" />
+          </div>
+        )}
+        {choice === "pedido" && (
+          <Segmented
+            label="En qué paso está tu pedido"
+            options={STEPS}
+            value={tipo === "respuesta" ? "respuesta" : "pedido"}
+            onChange={(v) => {
+              track("participation.form.change", { value: v, label: "En qué paso está tu pedido" });
+              setTipo(v);
+            }}
+          />
+        )}
+        {choice === "pedido" && tipo !== "respuesta" && <RequestForm items={items} defaultItem={search.dato ?? null} />}
+        {tipo === "respuesta" && <AnswerForm />}
+        {choice === "error" && <FeedbackForm kind="error" context={{ page: search.pagina, title: search.titulo, quote: search.cita }} />}
+        {choice === "dato" && <FeedbackForm kind="dato" context={{}} />}
+        {choice === "foto" && <PhotoForm />}
+      </div>
 
       <Alert variant="note" title="Qué hacemos con lo que nos mandás">
-        Lo revisamos y lo usamos para contar cuántos pedidos hay por dato y cuánto responde el Estado, o para corregir el error que nos
-        avisaste. Nunca publicamos tu correo, tu número de trámite ni lo que escribiste tal cual. Tu correo es opcional y solo lo usamos
-        para escribirte sobre tu envío. No pedimos tu DNI.
+        Lo leemos en el equipo y lo usamos para corregir errores, sumar datos y contar cuántos pedidos responde el Estado. Nunca publicamos
+        tu correo ni tu número de trámite. El correo es opcional y no pedimos DNI.
       </Alert>
     </div>
   );
@@ -119,8 +148,33 @@ function useSubmit(endpoint: string, trackEvent: string) {
   return { state, submit, reset: () => setState({ status: "idle" }) };
 }
 
+/** The data that are not published, by category, with "Otro dato" at the end for anything else. */
+function pickerItems(items: NoPublicado[]): SearchSelectItem[] {
+  const order = Object.keys(NO_PUBLICADO_CATEGORIES);
+  return [
+    ...[...items]
+      .sort((a, b) => order.indexOf(a.categoria) - order.indexOf(b.categoria))
+      .map((i) => ({ id: i.id, label: i.titulo, group: NO_PUBLICADO_CATEGORIES[i.categoria].label })),
+    { id: "otro", label: "Otro dato", group: "Otro" },
+  ];
+}
+
+/**
+ * Sends `participation.form.start` the first time someone focuses a field of a form, to tell "nobody tried" apart from
+ * "they started and gave up".
+ */
+function useFormStart(form: string) {
+  const started = useRef(false);
+  return () => {
+    if (started.current) return;
+    started.current = true;
+    track("participation.form.start", { form });
+  };
+}
+
 function RequestForm({ items, defaultItem }: { items: NoPublicado[]; defaultItem: string | null }) {
   const { state, submit, reset } = useSubmit("/api/pedidos", "participation.request");
+  const onStart = useFormStart("request");
   const [token, setToken] = useState<string | null>(null);
   const [itemId, setItemId] = useState(items.some((i) => i.id === defaultItem) ? defaultItem! : (items[0]?.id ?? "otro"));
   if (state.status === "done")
@@ -156,27 +210,16 @@ function RequestForm({ items, defaultItem }: { items: NoPublicado[]; defaultItem
   };
   const item = items.find((i) => i.id === itemId);
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-5" id="form-pedido" data-track-form="request">
+    <form onSubmit={onSubmit} onFocus={onStart} className="flex flex-col gap-5" id="form-pedido" data-track-form="request">
       <Intro icon={RiFileAddLine}>
-        ¿Presentaste un pedido de acceso a la información? Registralo con el número de trámite que te dio el formulario oficial. No
-        publicamos tu número: lo usamos para contar los pedidos y para revisar que el pedido exista.
+        Registrá el pedido con el número de trámite que te dio el formulario oficial. Así contamos cuántos pedidos hay por dato y cuántos
+        responde el Estado. Tu número no se publica.{" "}
+        <Link to="/no-publicado" className="text-text-link hover:underline">
+          ¿Todavía no lo pediste? Mirá cómo pedirlo
+        </Link>
       </Intro>
-      <Select label="Qué dato pediste" value={itemId} onChange={(key) => setItemId(String(key))} id="pedido-dato">
-        {items.map((i) => (
-          <SelectItem key={i.id} id={i.id}>
-            {i.titulo}
-          </SelectItem>
-        ))}
-        <SelectItem id="otro">Otro dato</SelectItem>
-      </Select>
-      <Input
-        label="A qué organismo"
-        hint={item ? `Sugerido: ${item.organismo}` : undefined}
-        name="agency"
-        defaultValue={item?.organismo ?? ""}
-        key={itemId}
-        maxLength={200}
-      />
+      <SearchSelect label="Qué dato pediste" items={pickerItems(items)} value={itemId} onChange={setItemId} id="pedido-dato" />
+      <Input label="A qué organismo se lo pediste" name="agency" defaultValue={item?.organismo ?? ""} key={itemId} maxLength={200} />
       <div className="grid gap-5 sm:grid-cols-2">
         <DateInput label="Fecha en que lo presentaste" name="filedOn" isRequired max={new Date().toISOString().slice(0, 10)} />
         <Input label="Número de trámite" name="filingNumber" isRequired placeholder="EX-2026-…" maxLength={60} autoComplete="off" />
@@ -192,6 +235,7 @@ function RequestForm({ items, defaultItem }: { items: NoPublicado[]; defaultItem
 
 function AnswerForm() {
   const { state, submit, reset } = useSubmit("/api/pedidos/respuesta", "participation.answer");
+  const onStart = useFormStart("answer");
   const [token, setToken] = useState<string | null>(null);
   // With the code and key the answer counts right away; with only the filing number, the team checks it first.
   const [withKey, setWithKey] = useState(true);
@@ -219,8 +263,8 @@ function AnswerForm() {
     );
   };
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-5" id="form-respuesta">
-      <Intro icon={RiReplyLine}>Contanos qué pasó con un pedido que registraste antes, con el código y la clave que te dimos.</Intro>
+    <form onSubmit={onSubmit} onFocus={onStart} className="flex flex-col gap-5" id="form-respuesta">
+      <Intro icon={RiReplyLine}>Contanos qué pasó con un pedido que registraste acá, con el código y la clave que te dimos.</Intro>
       {withKey ? (
         <div className="grid gap-5 sm:grid-cols-2">
           <Input label="Código del pedido" name="code" isRequired placeholder="P-…" maxLength={12} autoComplete="off" />
@@ -243,7 +287,7 @@ function AnswerForm() {
         id="respuesta-sin-clave"
         data-track="participation.answer.toggle_key"
       >
-        {withKey ? "No tengo la clave (o registré el pedido antes de que existiera)" : "Tengo el código y la clave"}
+        {withKey ? "No tengo el código ni la clave" : "Tengo el código y la clave"}
       </Button>
       <Select label="Qué pasó" name="status" isRequired defaultValue="respondido">
         <SelectItem id="respondido">Me respondieron con lo que pedí</SelectItem>
@@ -253,13 +297,7 @@ function AnswerForm() {
       </Select>
       <DateInput label="Fecha de la respuesta (si hubo)" name="answeredOn" max={new Date().toISOString().slice(0, 10)} />
       <Textarea label="Qué te respondieron, en pocas palabras (opcional)" name="summary" rows={3} maxLength={2000} />
-      <Input
-        label="Link a la respuesta, si la subiste a algún lado (opcional)"
-        name="url"
-        type="url"
-        maxLength={500}
-        placeholder="https://"
-      />
+      <Input label="Link a la respuesta (opcional)" name="url" type="url" maxLength={500} placeholder="https://" />
       <Honeypot />
       <Turnstile onToken={setToken} />
       <SubmitRow state={state} label="Enviar respuesta" id="respuesta-enviar" />
@@ -283,6 +321,7 @@ type ReportContext = { page?: string; title?: string; quote?: string };
 
 function FeedbackForm({ kind, context }: { kind: "error" | "dato"; context: ReportContext }) {
   const { state, submit, reset } = useSubmit("/api/feedback", `participation.${kind === "error" ? "bug" : "data_suggestion"}`);
+  const onStart = useFormStart(kind === "error" ? "bug" : "data_suggestion");
   const [token, setToken] = useState<string | null>(null);
   const [errorType, setErrorType] = useState<ErrorType>("dato_incorrecto");
   if (state.status === "done")
@@ -311,7 +350,7 @@ function FeedbackForm({ kind, context }: { kind: "error" | "dato"; context: Repo
     });
   };
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-5" id={kind === "error" ? "form-error" : "form-dato"}>
+    <form onSubmit={onSubmit} onFocus={onStart} className="flex flex-col gap-5" id={kind === "error" ? "form-error" : "form-dato"}>
       <Intro icon={kind === "error" ? RiBugLine : RiSendPlaneLine}>
         {kind === "error"
           ? "¿Un número que no cierra, un link roto o algo que se ve mal? Contanos dónde y qué pasó."
@@ -475,6 +514,7 @@ function Credentials({ items }: { items: { label: string; value: string; id: str
  */
 function PhotoForm() {
   const { state, submit, reset } = useSubmit("/api/feedback", "participation.photo");
+  const onStart = useFormStart("photo");
   const [token, setToken] = useState<string | null>(null);
   if (state.status === "done")
     return (
@@ -489,11 +529,10 @@ function PhotoForm() {
     void submit({ kind: "otro", page: "foto", message, email: f.get("email"), website: f.get("website") }, token);
   };
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-5" id="form-foto">
+    <form onSubmit={onSubmit} onFocus={onStart} className="flex flex-col gap-5" id="form-foto">
       <Intro icon={RiCameraLine}>
-        ¿Sacaste una foto que muestre Mendoza: la cordillera, los viñedos, un dique, tu departamento? La usamos arriba de las páginas, en
-        puntos de colores y con tu nombre. Tiene que ser tuya o tener licencia libre: lo más simple es subirla a Wikimedia Commons con
-        licencia CC BY-SA y pegar acá el link.
+        ¿Tenés una foto de Mendoza, como la cordillera, los viñedos o tu departamento? La mostramos arriba de las páginas, con tu nombre.
+        Tiene que ser tuya: subila a Wikimedia Commons con licencia libre (CC BY-SA) y pegá el link.
       </Intro>
       <Input
         label="Link a la foto"

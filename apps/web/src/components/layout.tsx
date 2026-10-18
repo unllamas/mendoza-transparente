@@ -81,7 +81,7 @@ const GRUPOS: Grupo[] = [
     label: "Transparencia",
     items: [
       { to: "/no-publicado", label: "Lo que no se publica", descripcion: "Datos que faltan y cómo pedirlos", icon: RiEyeOffLine },
-      { to: "/participar", label: "Participá", descripcion: "Registrá tu pedido, reportá un error o sugerí un dato", icon: RiQuillPenLine },
+      { to: "/participar", label: "Participá", descripcion: "Reportá un error, sugerí un dato o registrá tu pedido", icon: RiQuillPenLine },
       { to: "/fuentes", label: "Fuentes", descripcion: "De dónde sale cada dato", icon: RiArchiveLine },
       { to: "/como-leer", label: "Cómo leer estos datos", descripcion: "Para qué sirve, cómo empezar y glosario", icon: RiBookOpenLine },
     ],

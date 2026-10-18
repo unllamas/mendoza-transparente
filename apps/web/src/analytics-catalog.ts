@@ -257,7 +257,13 @@ export const EVENT_CATALOG: EventDoc[] = [
   },
   {
     event: "participation.form.change",
-    description: "En «Participá», cambió de formulario (pedido, respuesta, error, dato). Propiedad value.",
+    description: "En «Participá», eligió qué hacer (error, dato, pedido, foto) o el paso del pedido (pedido, respuesta). Propiedad value.",
+    tags: ["participación"],
+  },
+  {
+    event: "participation.form.start",
+    description:
+      "En «Participá», tocó por primera vez un campo de un formulario. Propiedad form (request, answer, bug, data_suggestion, photo).",
     tags: ["participación"],
   },
   {
