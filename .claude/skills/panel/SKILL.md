@@ -15,7 +15,8 @@ Fuente completa: `docs/procesos/panel.md` (y `participacion.md` para la API púb
 4. **La API del panel solo recibe un `Actor`** que viene de `verifyAccess` (producción) o del plugin de desarrollo. No se agrega ningún otro camino de entrada ni un «modo sin login» en las funciones.
 5. **Escrituras del panel:** mismo `Origin` y JSON (CSRF). Cada una deja una fila en `audit_log`.
 6. **Links de terceros:** solo http(s), con `rel="noreferrer noopener nofollow"`. Nunca `dangerouslySetInnerHTML`.
-7. **Fallar cerrado:** sin configuración de Access no entra nadie, y sin los secretos de Turnstile o de la sal no se aceptan envíos.
+7. **Hallazgos de seguridad** (`security_findings`, pantalla Seguridad): nunca públicos. Ninguna consulta pública ni el CSV los leen, y la auditoría guarda qué campos cambiaron, no el texto. Proceso completo, límites legales y a quién se reporta: `docs/procesos/seguridad.md`.
+8. **Fallar cerrado:** sin configuración de Access no entra nadie, y sin los secretos de Turnstile o de la sal no se aceptan envíos.
 
 ## Antes de terminar
 

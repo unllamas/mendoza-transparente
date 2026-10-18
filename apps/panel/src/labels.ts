@@ -1,3 +1,4 @@
+import type { FindingKind, FindingSeverity, FindingStatus } from "@mt/participation/security";
 import type { ReviewStatus, SubmissionType } from "./api.ts";
 
 /** One name per thing, the same in every screen of the panel. */
@@ -55,6 +56,36 @@ export const PRIVACY_LABELS: Record<string, string> = {
   telefono: "un teléfono",
   dni: "un DNI",
   cuil: "un CUIL",
+};
+
+export const FINDING_KIND_LABELS: Record<FindingKind, string> = {
+  personal_data: "Datos personales expuestos",
+  vulnerability: "Falla de seguridad",
+  misconfiguration: "Configuración insegura",
+  compromised_site: "Sitio comprometido",
+  other: "Otro",
+};
+
+export const FINDING_SEVERITY_LABELS: Record<FindingSeverity, string> = {
+  high: "Alta",
+  medium: "Media",
+  low: "Baja",
+};
+
+export const FINDING_STATUS_LABELS: Record<FindingStatus, string> = {
+  new: "Sin reportar",
+  reported: "Reportado",
+  acknowledged: "Confirmado por el organismo",
+  fixed: "Corregido",
+  discarded: "Descartado",
+};
+
+export const FINDING_STATUS_DOT: Record<FindingStatus, "good" | "warning" | "critical" | "neutral"> = {
+  new: "critical",
+  reported: "warning",
+  acknowledged: "warning",
+  fixed: "good",
+  discarded: "neutral",
 };
 
 const MONTHS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];

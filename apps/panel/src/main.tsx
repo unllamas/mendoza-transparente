@@ -5,6 +5,7 @@ import { Layout } from "./components/layout.tsx";
 import { AuditPage } from "./pages/audit.tsx";
 import { HomePage } from "./pages/home.tsx";
 import { InboxPage, type InboxSearch } from "./pages/inbox.tsx";
+import { SecurityPage, type SecuritySearch } from "./pages/security.tsx";
 import { StatsPage } from "./pages/stats.tsx";
 import "./styles.css";
 
@@ -28,6 +29,12 @@ const routes = [
     component: InboxPage,
   }),
   createRoute({ getParentRoute: () => rootRoute, path: "/estadisticas", component: StatsPage }),
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path: "/seguridad",
+    validateSearch: (s: Record<string, unknown>): SecuritySearch => ({ hallazgo: str(s.hallazgo) }),
+    component: SecurityPage,
+  }),
   createRoute({ getParentRoute: () => rootRoute, path: "/auditoria", component: AuditPage }),
 ];
 

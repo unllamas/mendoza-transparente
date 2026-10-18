@@ -1,3 +1,4 @@
+import type { Finding } from "@mt/participation/security";
 import { Alert } from "@mt/ui/components/alert";
 import { listRowVariants, listVariants } from "@mt/ui/components/card";
 import { StatTile } from "@mt/ui/components/stat-tile";
@@ -14,6 +15,8 @@ export function HomePage() {
   const fresh = useApi<{ items: InboxItem[]; counts: Counts }>("/api/panel/inbox?status=new");
   const requests = useApi<{ items: InboxItem[] }>("/api/panel/inbox?type=request");
   const stats = useApi<PanelStats>("/api/panel/stats");
+  const security = useApi<Finding[]>("/api/panel/security");
+  const unreported = (security.data ?? []).filter((f) => f.status === "new");
   const overdue = (requests.data?.items ?? []).filter((i) => i.overdue && i.requestStatus === "presentado");
   const pending = (requests.data?.items ?? []).filter((i) => i.pendingAnswers > 0);
   const error = fresh.error ?? requests.error ?? stats.error;
@@ -33,6 +36,19 @@ export function HomePage() {
             note={stats.data?.requests.medianDays != null ? `en ${stats.data.requests.medianDays} días (mediana)` : undefined}
           />
         </div>
+        {unreported.length > 0 && (
+          <Alert
+            title={
+              unreported.length === 1
+                ? "Hay un hallazgo de seguridad sin reportar"
+                : `Hay ${unreported.length} hallazgos de seguridad sin reportar`
+            }
+          >
+            <Link to="/seguridad" search={{ hallazgo: unreported[0]?.code }} className="font-medium text-text-link hover:underline">
+              Ver en Seguridad ›
+            </Link>
+          </Alert>
+        )}
         <Group title="Respuestas para revisar" items={pending} empty="No hay respuestas esperando revisión." />
         <Group
           title="Nuevos"

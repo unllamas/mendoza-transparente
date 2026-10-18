@@ -8,7 +8,17 @@ import type { Actor } from "./access.ts";
 import type { Db } from "./db.ts";
 import { error, json, pathOf, readBody } from "./http.ts";
 import { privacyWarnings } from "./privacy.ts";
-import { normalizeCode } from "./secrets.ts";
+import { normalizeCode, normalizeFindingCode } from "./secrets.ts";
+import {
+  addFinding,
+  FINDING_KINDS,
+  FINDING_SEVERITIES,
+  FINDING_STATUSES,
+  type FindingInput,
+  finding,
+  findings,
+  updateFinding,
+} from "./security.ts";
 import {
   addNote,
   anonymize,
@@ -24,7 +34,7 @@ import {
   submission,
   updateSubmission,
 } from "./store.ts";
-import { isoDate, longText, pick, tags, text } from "./validation.ts";
+import { isoDate, longText, pick, tags, text, url } from "./validation.ts";
 
 const REQUEST_STATUSES = ["presentado", "respondido", "parcial", "denegado", "sin_respuesta"] as const;
 
@@ -45,6 +55,105 @@ const csvCell = (v: unknown) => {
   return /[",\n\r]/.test(safe) ? `"${safe.replace(/"/g, '""')}"` : safe;
 };
 
+/**
+ * Reads the fields of a security finding present in `body`. A field sent empty clears it; a field not sent
+ * is left alone. Returns a message when something is invalid.
+ */
+function findingInput(body: Record<string, unknown>): FindingInput | string {
+  const f: FindingInput = {};
+  if ("title" in body) {
+    const v = text(body.title, 200);
+    if (!v) return "Falta el título.";
+    f.title = v;
+  }
+  if ("description" in body) {
+    const v = longText(body.description, 4000);
+    if (!v) return "Falta la descripción.";
+    f.description = v;
+  }
+  if ("kind" in body) {
+    const v = pick(body.kind, FINDING_KINDS);
+    if (!v) return "Tipo de problema no válido.";
+    f.kind = v;
+  }
+  if ("severity" in body) {
+    const v = pick(body.severity, FINDING_SEVERITIES);
+    if (!v) return "Gravedad no válida.";
+    f.severity = v;
+  }
+  if ("status" in body) {
+    const v = pick(body.status, FINDING_STATUSES);
+    if (!v) return "Estado no válido.";
+    f.status = v;
+  }
+  if ("exposesPersonalData" in body) {
+    if (typeof body.exposesPersonalData !== "boolean") return "«Expone datos personales» tiene que ser sí o no.";
+    f.exposesPersonalData = body.exposesPersonalData;
+  }
+  if ("location" in body) {
+    f.location = url(body.location);
+    if (body.location && !f.location) return "La dirección tiene que empezar con http:// o https://.";
+  }
+  if ("agency" in body) f.agency = text(body.agency, 200);
+  if ("reportedTo" in body) f.reportedTo = text(body.reportedTo, 200);
+  if ("reportReference" in body) f.reportReference = text(body.reportReference, 100);
+  if ("reportedOn" in body) f.reportedOn = isoDate(body.reportedOn);
+  if ("fixedOn" in body) f.fixedOn = isoDate(body.fixedOn);
+  return f;
+}
+
+/** Security findings (/api/panel/security). Never published; the audit keeps which fields changed, not their text. */
+async function handleSecurity(req: Request, db: Db, actor: Actor, path: string, at: string): Promise<Response> {
+  const code = path === "/api/panel/security" ? null : normalizeFindingCode(path.slice("/api/panel/security/".length));
+  if (path !== "/api/panel/security" && !code) return error("No existe", 404);
+
+  if (req.method === "GET") {
+    if (!code) return json(await findings(db));
+    const f = await finding(db, code);
+    return f ? json(f) : error("No existe ese hallazgo.", 404);
+  }
+
+  const body = await readBody(req);
+  if (!body) return error("El pedido llegó vacío o mal armado.", 400);
+  const input = findingInput(body);
+  if (typeof input === "string") return error(input, 400);
+  const current = code ? await finding(db, code) : null;
+  if (code && !current) return error("No existe ese hallazgo.", 404);
+
+  const next = { ...current, ...Object.fromEntries(Object.entries(input).filter(([, v]) => v !== undefined)) };
+  if (!next.title || !next.description || !next.kind) return error("Faltan el título, el tipo o la descripción.", 400);
+  if ((next.status === "reported" || next.status === "acknowledged") && (!next.reportedTo || !next.reportedOn))
+    return error("Para marcarlo como reportado, cargá a quién se reportó y en qué fecha.", 409);
+
+  // The finding describes where the problem is, never the exposed data itself.
+  const warnings = privacyWarnings(input.title, input.description);
+  if (warnings.length && body.acknowledgeWarnings !== true)
+    return json(
+      {
+        error: "El texto parece tener datos personales. Describí qué tipo de dato queda expuesto, sin copiarlo, o confirmá que no lo es.",
+        warnings,
+      },
+      409,
+    );
+
+  const fields = Object.keys(input).filter((k) => input[k as keyof FindingInput] !== undefined);
+  const detail = {
+    fields,
+    ...(input.status ? { status: input.status } : {}),
+    ...(warnings.length ? { acknowledgedWarnings: warnings } : {}),
+  };
+  if (!code && req.method === "POST") {
+    const created = await addFinding(db, { ...input, title: next.title, kind: next.kind, description: next.description }, actor.email, at);
+    await audit(db, actor.email, "security.create", created, detail, at);
+    return json(await finding(db, created), 201);
+  }
+  if (code && req.method === "PATCH") {
+    if (await updateFinding(db, code, input, actor.email, at)) await audit(db, actor.email, "security.update", code, detail, at);
+    return json(await finding(db, code));
+  }
+  return error("Método no permitido", 405);
+}
+
 export async function handlePanel(req: Request, db: Db, actor: Actor): Promise<Response | null> {
   const path = pathOf(req);
   if (!path.startsWith("/api/panel")) return null;
@@ -53,6 +162,7 @@ export async function handlePanel(req: Request, db: Db, actor: Actor): Promise<R
   const params = new URL(req.url).searchParams;
 
   if (req.method !== "GET" && !sameOrigin(req)) return error("Pedido rechazado: tiene que salir del panel.", 403);
+  if (path === "/api/panel/security" || path.startsWith("/api/panel/security/")) return handleSecurity(req, db, actor, path, at);
 
   if (req.method === "GET") {
     if (path === "/api/panel/me") return json({ email: actor.email });

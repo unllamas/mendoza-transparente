@@ -210,6 +210,75 @@ describe("panel API", () => {
   });
 });
 
+describe("security findings", () => {
+  const newFinding = {
+    title: "Planilla de beneficiarios abierta",
+    kind: "personal_data",
+    exposesPersonalData: true,
+    severity: "high",
+    location: "https://municipio.example.gob.ar/uploads/",
+    description: "La carpeta de subidas lista planillas con nombres y documentos de beneficiarios. No se descargó nada.",
+    acknowledgeWarnings: true,
+  };
+  const create = async (body: Record<string, unknown> = newFinding) => {
+    const r = await panel("/api/panel/security", { method: "POST", body });
+    return { status: r!.status, data: (await r!.json()) as { code: string; error?: string; warnings?: string[] } };
+  };
+
+  test("a finding is created from the panel, with an S- code, and needs the panel's own origin", async () => {
+    const { status, data } = await create();
+    expect(status).toBe(201);
+    expect(data.code).toMatch(/^S-[0-9A-Z]{8}$/);
+    const forged = await panel("/api/panel/security", { method: "POST", body: newFinding, origin: "https://evil.example.com" });
+    expect(forged!.status).toBe(403);
+    const list = (await (await panel("/api/panel/security"))!.json()) as unknown[];
+    expect(list).toHaveLength(1);
+  });
+
+  test("it never reaches the public API, the registry or the export", async () => {
+    const { data } = await create();
+    expect((await get(`/api/registro/${data.code}`))!.status).toBe(404);
+    const registry = await (await get("/api/registro"))!.text();
+    expect(registry).not.toContain(data.code);
+    expect(registry).not.toContain("beneficiarios");
+    expect(await handlePublic(new Request("http://localhost/api/panel/security"), db, env, "1.1.1.1")).toBeNull();
+    const csv = await (await panel("/api/panel/export.csv"))!.text();
+    expect(csv).not.toContain(data.code);
+    expect((await panel(`/api/panel/items/${data.code}`))!.status).toBe(404);
+  });
+
+  test("text that looks like personal data needs confirmation, and the audit keeps fields, not text", async () => {
+    const leaked = { ...newFinding, description: "Aparece Juan Pérez, DNI 30.123.456", acknowledgeWarnings: undefined };
+    const refused = await create(leaked);
+    expect(refused.status).toBe(409);
+    expect(refused.data.warnings).toContain("dni");
+    const { data } = await create();
+    const log = await (await panel("/api/panel/audit"))!.text();
+    expect(log).toContain("security.create");
+    expect(log).toContain(data.code);
+    expect(log).not.toContain("beneficiarios");
+  });
+
+  test("marking it as reported needs who and when", async () => {
+    const { data } = await create();
+    const path = `/api/panel/security/${data.code}`;
+    expect((await panel(path, { method: "PATCH", body: { status: "reported" } }))!.status).toBe(409);
+    const ok = await panel(path, {
+      method: "PATCH",
+      body: { status: "reported", reportedTo: "CERT.ar", reportedOn: "2026-10-18", reportReference: "Ticket 123" },
+    });
+    expect(ok!.status).toBe(200);
+    expect(((await ok!.json()) as { status: string }).status).toBe("reported");
+    expect((await panel(path, { method: "PATCH", body: { location: "javascript:alert(1)" } }))!.status).toBe(400);
+    const reportedAtOnce = await create({ ...newFinding, status: "reported", reportedTo: "AAIP", reportedOn: "2026-10-18" });
+    const saved = (await (await panel(`/api/panel/security/${reportedAtOnce.data.code}`))!.json()) as {
+      status: string;
+      reportedTo: string;
+    };
+    expect(saved).toMatchObject({ status: "reported", reportedTo: "AAIP" });
+  });
+});
+
 describe("access", () => {
   const config = { teamDomain: "equipo.cloudflareaccess.com", audience: "aud-123", allowedEmails: ["equipo@example.com"] };
   let keys: CryptoKeyPair;

@@ -19,6 +19,10 @@ Fuentes completas: `docs/procesos/agregar-una-fuente.md`, `datos-y-archivo.md` y
 6. **Validar** contra los totales impresos en el documento original. Anotar la cobertura (qué períodos faltan y por qué).
 7. **Copias en archive.org:** cada crudo se sube solo a archive.org y su URL oficial se captura en la Wayback Machine (`bun run archivar`, job `archivo-externo`). Si el original de una fuente nueva trae datos personales que no archivamos, la fuente va a `WAYBACK_EXCLUDED` (`packages/scrapers/src/archive-org.ts`) en el mismo commit. Detalle en `datos-y-archivo.md`.
 
+## Si aparece un problema de seguridad
+
+Una carpeta abierta con datos de la gente, un sitio hackeado, un sistema que muestra lo que no debería: **parar**, no descargar nada más y no commitear ni subir a archive.org un crudo que lo traiga. Se carga en el panel (Seguridad) y se reporta. Nunca buscar fallas, pasar un login o captcha, ni contarlo en el repositorio, un commit, un PR o un issue. Un agente se lo cuenta a la persona en el chat, sin copiar los datos. Proceso completo: `docs/procesos/seguridad.md`.
+
 ## Pasos para una fuente nueva
 
 1. **Relevar:** qué trae cada fuente candidata, cobertura y formato. Elegir la mejor y contar por qué.
