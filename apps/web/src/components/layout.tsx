@@ -33,6 +33,7 @@ import { trackPageview } from "@/analytics.ts";
 import { formatDate } from "@/lib.ts";
 import { usePageMeta } from "@/seo.ts";
 import { DetailSheet } from "./detail-sheet.tsx";
+import { NavigationProgress } from "./navigation-progress.tsx";
 import { REPO, useSourceCatalog } from "./official-sources.tsx";
 import { ReportErrorBand } from "./report-error.tsx";
 import { HeaderSearchButton, SearchDialog } from "./search-dialog.tsx";
@@ -122,6 +123,7 @@ export function Layout() {
 
   return (
     <UiProviders>
+      <NavigationProgress />
       <div className="flex min-h-dvh flex-col">
         <header className="sticky top-0 z-20 border-b border-separator-border bg-background-surface/90 backdrop-blur">
           <div className="mx-auto flex h-14 max-w-6xl items-center gap-6 px-4 sm:px-5">
