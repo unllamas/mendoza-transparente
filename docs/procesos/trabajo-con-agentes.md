@@ -11,7 +11,7 @@ El proyecto se construye con Claude Code. La guía para agentes es `AGENTS.md`, 
 
 El repo trae la configuración de Claude Code en `.claude/`. Funciona cuando Claude Code se abre en la carpeta del repo:
 
-- **`skills/<nombre>/SKILL.md`:** una skill por proceso: `codigo`, `arquitectura`, `diseno`, `mejoras`, `revisar-interfaz`, `estresar-interfaz`, `analitica`, `datos-y-fuentes`, `contenido-y-metodologia`, `seo-y-geo`, `produccion` y `delegar-en-agentes`.
+- **`skills/<nombre>/SKILL.md`:** una skill por proceso: `codigo`, `arquitectura`, `diseno`, `mejoras`, `vista-previa`, `revisar-interfaz`, `estresar-interfaz`, `analitica`, `datos-y-fuentes`, `contenido-y-metodologia`, `seo-y-geo`, `produccion`, `panel`, `delegar-en-agentes` y `ramas-y-releases`.
   - Cada una tiene una descripción que dice cuándo cargarla y una checklist corta.
   - El detalle sigue en `docs/procesos/`. Si algo cambia, se actualizan los dos en el mismo commit.
   - El índice de qué cargar según la tarea está en `AGENTS.md`.
@@ -52,3 +52,6 @@ Cada pedido a un subagente incluye:
 - Los subagentes no ven la conversación: el pedido tiene que ser autocontenido.
 - Pedir siempre que verifiquen contra el documento original y que reporten lo dudoso en vez de resolverlo en silencio.
 - Las decisiones de diseño y producto las toma la sesión principal; los subagentes ejecutan.
+- **El turno no termina esperando una CI.** Varias veces la sesión cerró con «espero a que termine la CI» y la persona tuvo que preguntar «¿y?». La CI y el despliegue se siguen en segundo plano hasta el final, y la tarea llega hasta donde se pidió (ver [Hasta dónde llevar cada pedido](ramas-y-releases.md#hasta-dónde-llevar-cada-pedido)).
+- **La captura muestra un lugar, el pedido es de todos.** Un arreglo de interfaz se busca en todas las páginas que tienen el mismo patrón (ver [Mejoras de interfaz](mejoras-de-interfaz.md#2-entender-el-pedido-para-el-agente)).
+- **Cada propuesta dice cuánto gasta.** El proyecto no tiene financiación: una CI nueva, una función o un servicio se evalúa contra los planes gratis (ver [Costo cero](arquitectura.md#costo-cero)).

@@ -26,6 +26,19 @@ Para saber qué contenido se lee, qué se saltea y qué se toca sin que responda
 - **Cómo leer el scroll:** «contenido visto» es la parte de la página que llegó a estar en pantalla; una página corta se ve entera sin scrollear. Una página con mucho tráfico, poco contenido visto y pocos segundos indica que la parte de arriba no invita a seguir.
 - **Ojo con las pruebas propias:** las consultas SQL no aplican el filtro de cuentas de prueba; las páginas en las que se está trabajando quedan infladas.
 
+## Decidir con los datos de uso
+
+Cuando un cambio sale de cómo se usa el sitio («qué es lo que más se usa de la portada», «las tarjetas de señales están desordenadas»), se sigue este orden. Así se hicieron la portada, el orden de las señales y la carga por capas.
+
+1. **Mirar los datos** con el MCP `posthog-mendoza`: páginas vistas, clics por elemento (`data-track`), profundidad de scroll, clics sin respuesta y búsquedas sin resultados, de al menos las últimas dos semanas. Excluir las páginas en las que se estuvo trabajando (ver «Ojo con las pruebas propias»).
+2. **Separar la causa:** ¿algo se usa poco porque está abajo o escondido (posición), o porque no se entiende que se puede tocar o qué muestra (UX)? Un elemento con pocos clics que queda debajo de donde baja la mayoría es un problema de posición; uno que está a la vista y no se toca, de UX. Decirlo con las cifras.
+3. **Plan corto**: qué se mueve, qué se cambia y qué se espera que pase, con la métrica que lo va a mostrar.
+4. **Vista previa** antes del código (skill `vista-previa`), con los datos reales.
+5. **Código, PR y publicación.**
+6. **Anotar el día de la publicación en PostHog** (una anotación con el título del PR) y dejar en «Riesgos y pendientes» del PR qué métrica mirar y cuándo. A las dos semanas se compara el antes y el después, y si no mejoró, se dice.
+
+Con poco tráfico, una diferencia chica no es una conclusión: se dice como señal y se vuelve a mirar con más datos.
+
 ## Errores
 
 Todo error del sitio llega a PostHog como `$exception` y se ve agrupado en **Error tracking**.

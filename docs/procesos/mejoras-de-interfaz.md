@@ -32,8 +32,9 @@ La conexión es opcional a propósito: si la barra apunta al servidor y el servi
 ## 2. Entender el pedido (para el agente)
 
 1. **Ubicar.** De la URL a la página de `apps/web/src/pages/` y de ahí al componente; con Agentation, el selector y el nombre del componente ya lo dicen. Si el componente es compartido (`@mt/ui` o `src/components/`), anotar en qué otras pantallas aparece.
-2. **Ver antes de tocar.** Captura en 375 y 1280 px, en modo oscuro, con `playwright-core` (ver `scripts/verificar-web.ts`).
-3. **Traducir el pedido a una regla.** La gente describe lo que siente, no la regla. Esta tabla une las dos cosas:
+2. **Buscar todas las apariciones.** La captura muestra un lugar, pero el pedido casi nunca es solo de ese lugar: si el botón «Compartir» está mal en una página, está mal en todas las que lo tienen. Antes de tocar nada, buscar cada aparición del componente, del patrón o del texto (`grep -rn "ShareButton\|Fuente" apps/web/src`) y listarlas. Se arreglan todas, de una sola forma y en un componente compartido si hace falta, y la lista va en el PR. Si alguna tiene un motivo para ser distinta, se dice cuál.
+3. **Ver antes de tocar.** Captura en 375 y 1280 px, en modo oscuro, con `playwright-core` (ver `scripts/verificar-web.ts`).
+4. **Traducir el pedido a una regla.** La gente describe lo que siente, no la regla. Esta tabla une las dos cosas:
 
 | Lo que se dice | La regla detrás | Dónde está |
 |---|---|---|
@@ -50,9 +51,9 @@ La conexión es opcional a propósito: si la barra apunta al servidor y el servi
 | «Quiero mandar a alguien directo a esta parte» | Cada sección tiene su link (`Section` con `id`) | `diseno.md`, Contenido; `web.md`, Link a cada sección |
 | «Esto no se ve igual que lo otro» | Usar el componente de `@mt/ui`, no clases sueltas | `diseno.md`, Sistema de diseño |
 
-4. **Si es ambiguo, una sola pregunta** con opciones concretas (por ejemplo: «¿cortar con … o pasar a dos líneas?»). Si no, actuar.
-5. **Arreglar la causa, no el síntoma.** Si el problema está en un componente compartido, se arregla ahí y se avisa qué otras pantallas cambian.
-6. **Si el pedido trae una regla nueva, se escribe.** Va a `diseno.md` (y a la skill `diseno`) en el mismo commit. Así la próxima vez el agente la aplica sin que nadie la pida.
+5. **Si es ambiguo, una sola pregunta** con opciones concretas (por ejemplo: «¿cortar con … o pasar a dos líneas?»). Si no, actuar.
+6. **Arreglar la causa, no el síntoma.** Si el problema está en un componente compartido, se arregla ahí y se avisa qué otras pantallas cambian.
+7. **Si el pedido trae una regla nueva, se escribe.** Va a `diseno.md` (y a la skill `diseno`) en el mismo commit. Así la próxima vez el agente la aplica sin que nadie la pida.
 
 ## 3. Arreglar y comprobar
 
