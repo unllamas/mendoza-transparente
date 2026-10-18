@@ -239,31 +239,29 @@ export function Proveedor({
       )}
 
       <Bloque titulo="Quién le compra" ayuda={agencySlug.size ? "Tocá un organismo para ver todo lo que compra" : undefined}>
-        <ul className="flex flex-col gap-1 text-body-regular">
+        <ul className={listVariants()}>
           {p.organismos.map((o) => {
             const to = agencySlug.get(o.nombre);
-            const body = (
-              <>
-                <div className="flex items-center justify-between gap-3">
-                  <span className={`min-w-0 flex-1 truncate ${to ? "text-text-link" : ""}`} title={o.nombre}>
+            const row = (
+              <span className="flex min-w-0 flex-1 flex-col gap-1.5">
+                <span className="flex items-baseline justify-between gap-3">
+                  <span className="min-w-0 truncate text-body-regular group-hover:text-text-link" title={o.nombre}>
                     {limpiarOrganismo(o.nombre)}
                   </span>
                   <span className="text-body-medium whitespace-nowrap tabular-nums">{formatMoneda(o.monto, "ARS")}</span>
-                  {to && <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />}
-                </div>
-                <div className="flex items-center gap-2">
+                </span>
+                <span className="flex items-center gap-2">
                   <span className="h-1.5 flex-1 rounded-full bg-chart-grid/60">
                     <span
                       className="block h-full rounded-full bg-highlight"
                       style={{ width: `${Math.max((o.monto / p.organismos[0]!.monto) * 100, 1)}%` }}
                     />
                   </span>
-                  <span className="w-20 text-right text-caption-1-regular text-text-tertiary tabular-nums">
+                  <span className="w-20 text-right text-caption-1-regular whitespace-nowrap text-text-tertiary tabular-nums">
                     {o.procesos} {o.procesos === 1 ? "proceso" : "procesos"}
                   </span>
-                  {to && <span className="size-4 shrink-0" aria-hidden />}
-                </div>
-              </>
+                </span>
+              </span>
             );
             return (
               <li key={o.nombre}>
@@ -272,12 +270,13 @@ export function Proveedor({
                     to="/organismos/$slug"
                     params={{ slug: to }}
                     data-track="purchase.supplier.agency_open"
-                    className="-mx-2 flex min-h-11 flex-col justify-center gap-1 rounded-lg px-2 py-2 hover:bg-background-secondary-default"
+                    className={listRowVariants()}
                   >
-                    {body}
+                    {row}
+                    <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
                   </Link>
                 ) : (
-                  <div className="flex flex-col gap-1 py-2">{body}</div>
+                  <div className={listRowVariants({ interactive: false })}>{row}</div>
                 )}
               </li>
             );
