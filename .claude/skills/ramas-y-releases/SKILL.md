@@ -19,11 +19,22 @@ Detalle completo: `docs/procesos/ramas-y-releases.md`.
 - **Hotfix**: rama `hotfix/<tema>` desde `main`, PR a `main` con squash. Después, **confirmar el back merge a `dev`** (workflow «Back merge a dev»); si abrió un PR `main → dev` con la etiqueta `back-merge`, resolverlo con merge commit.
 - **Datos**: se publican en `main` (workflow de actualización y `bun run actualizar`, que solo publica desde `main`). Un scraper nuevo o cambiado es código y va por `dev`.
 
+## Hasta dónde llevar cada pedido
+
+| Lo que se dice | Hasta dónde |
+|---|---|
+| (nada) | PR a `dev`, CI verde, squash |
+| «Que llegue a prod», «llevalo a main», «una vez pasen los CI, a prod» | Lo anterior + publicación `dev → main` con merge commit + despliegue seguido + la página confirmada en `mendoza-transparente.com` |
+| «Sin release» | Igual que «a prod»: el release lo crea solo el workflow diario, no hay nada que evitar |
+
+- **El turno no termina esperando.** Una CI o un despliegue se siguen hasta el final (`gh pr checks <n> --watch` o `gh run watch` en segundo plano; en T3 Code, `watch_pull_request`) y después se hace el paso siguiente. Nunca cerrar con «espero a que termine la CI». Si falta algo que no depende del agente (un permiso, un secreto, una decisión), el último mensaje dice qué y quién.
+- **Al terminar, decir dónde quedó**: link del PR, `dev` o `main`, y la URL donde se ve.
+
 ## Antes de abrir el PR
 
-1. ¿Estoy en una rama de trabajo, no en `main` ni en `dev`? ¿Salió de `dev` (o de `main` si es un hotfix)?
+1. ¿Estoy en una rama de trabajo, no en `main` ni en `dev`? ¿Salió de `dev` (o de `main` si es un hotfix)? **¿Está al día?** `git fetch origin && git rebase origin/dev`; si entraron cambios en `docs/procesos/`, `.claude/skills/` o `AGENTS.md`, leerlos antes de pushear.
 2. **Revisar el propio diff** (`git diff origin/dev...HEAD`; en un hotfix, `origin/main`): solo lo de la tarea, sin secretos ni `bun.lock` de más.
-3. **Documentación**: si cambió un proceso, su documento en `docs/procesos/` y su skill; si cambió un comando, un script o una ruta, buscar el nombre viejo con `grep -rn` en `docs/`, `.claude/skills/`, `AGENTS.md` y `README.md`.
+3. **Documentación**: si cambió un proceso, su documento en `docs/procesos/` y su skill; si cambió un comando, un script o una ruta, buscar el nombre viejo con `grep -rn` en `docs/`, `.claude/skills/`, `AGENTS.md` y `README.md`. Si un documento suma un diagrama o una tabla ancha, mirarlo en GitHub (`gh browse <archivo> --branch <rama>`), también en un ancho de celular: los diagramas van en Mermaid, no en ASCII.
 4. **Correr** `bun run lint`, `bun run typecheck`, `bun test` y, si hay interfaz, `bun run verificar` y la skill `revisar-interfaz`. Anotar cada resultado.
 5. **Escribir el cuerpo** siguiendo `.github/pull_request_template.md` en un archivo temporal: marcar solo lo que se revisó de verdad, tachar con el motivo lo que no aplica, y dejar en «Riesgos y pendientes» lo que falló o quedó afuera.
 6. `gh pr create --base dev --title "<tipo>(<ámbito>): …" --body-file <archivo>`. Con squash, el título del PR es el commit que queda en `dev`.

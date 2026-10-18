@@ -27,6 +27,7 @@ Las skills del proyecto (`.claude/skills/<nombre>/SKILL.md`) son la puerta de en
 | Escribir o cambiar código, en cualquier parte | `codigo` |
 | Crear un archivo, un paquete o una app; mover código; agregar una dependencia | `arquitectura` |
 | Crear o retocar una pantalla, un componente, un gráfico o un texto visible | `diseno` |
+| Decidir un cambio a partir de cómo se usa el sitio («qué es lo que más se usa», «por qué no lo tocan») | `analitica`, después `vista-previa` |
 | Resolver un pedido de mejora o arreglo sobre algo existente (una nota de Agentation, una captura, "esto se ve mal") | `mejoras` |
 | Ver cómo quedaría una pantalla o un componente antes de tocar el código real («quiero verlo antes», comparar opciones, reordenar una página) | `vista-previa` |
 | Revisar un cambio de interfaz antes de commitear, o lo que entregó un subagente | `revisar-interfaz` |
@@ -39,7 +40,7 @@ Las skills del proyecto (`.claude/skills/<nombre>/SKILL.md`) son la puerta de en
 | Publicar o tocar Cloudflare, D1 o PostHog; diagnosticar el sitio en vivo | `produccion` |
 | Tocar el panel interno (`apps/panel`), el registro público (`/registro`), la API de participación o el acceso del equipo | `panel` |
 | Lanzar un subagente o integrar lo que devolvió | `delegar-en-agentes` |
-| Crear una rama, commitear, pushear, abrir o mergear un PR, publicar `dev` en `main`, tocar los releases de GitHub o hacer un hotfix | `ramas-y-releases` |
+| Crear una rama, commitear, pushear, abrir o mergear un PR, publicar `dev` en `main`, tocar los releases de GitHub o hacer un hotfix; llevar un pedido «hasta prod» | `ramas-y-releases` |
 
 **Proceso nuevo = documento en `docs/procesos/` + skill (o sección en una existente) + fila en esta tabla, en el mismo commit.**
 
@@ -53,6 +54,10 @@ Cuando alguien pide mejorar o arreglar algo, lo describe como lo siente ("no se 
 - Cada subagente trabaja solo en los archivos de su fuente: `packages/scrapers/src/sources/<id>.ts` y `data/*/<id>/`. Si necesita tocar `packages/core/` o agregar dependencias, lo propone en vez de hacerlo (varios agentes en paralelo pisarían `bun.lock`).
 - Los subagentes no commitean. La sesión principal revisa, commitea y **cierra cada tarea con push y PR a `dev` sin esperar que se lo pidan**.
 - Nada se pushea directo a `main`: lo nuevo va en una rama que sale de `dev`, con PR a `dev`, y llega a producción en una publicación (PR `dev → main`). Los releases de GitHub se crean solos, uno por día. Ver la skill `ramas-y-releases`.
+
+## Costo cero
+
+El proyecto no tiene financiación y vive en planes gratis (Cloudflare, GitHub Actions, PostHog). Toda propuesta que suma consumo (una CI, un workflow, una función, un servicio) dice cuánto gasta y de qué cupo antes de hacerse. Ver `docs/procesos/arquitectura.md#costo-cero`.
 
 ## Convenciones de datos
 

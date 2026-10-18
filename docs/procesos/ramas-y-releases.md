@@ -28,7 +28,23 @@ gh pr create --base dev --title "feat(web): …"   # abre el editor con la plant
 3. **Cada PR a `dev` pasa la CI** (`.github/workflows/ci.yml`: Biome, arquitectura, tipos, pruebas, build y verificación visual). Quién más lo revisa depende de quién lo manda: ver [Quién aprueba](#quién-aprueba).
 4. **Se mergea con squash**: un commit por tarea en `dev`, con el mensaje en español que explica qué cambia y por qué.
 5. **Cloudflare publica la vista previa** de cada rama y de `dev`: se prueba ahí, no en producción.
-6. Si `dev` avanzó mientras tanto, se actualiza la rama con `git pull --rebase origin dev`.
+6. **Antes de cada push, la rama se pone al día con `dev`**: `git fetch origin && git rebase origin/dev`. Si lo que entró trae cambios en `docs/procesos/`, `.claude/skills/` o `AGENTS.md` (`git diff --stat HEAD@{1} HEAD -- docs/procesos .claude/skills AGENTS.md` después del rebase), se leen antes de pushear: puede haber un proceso nuevo que el cambio tenga que cumplir.
+
+## Hasta dónde llevar cada pedido
+
+Lo que se pide en una conversación define hasta dónde llega el cambio. Si no se dice nada, llega a `dev`.
+
+| Lo que se dice | Hasta dónde | Pasos |
+|---|---|---|
+| (nada) | `dev` | Rama desde `dev` → PR con la plantilla → CI verde → squash a `dev` |
+| «Que llegue a prod», «llevalo hasta main», «subilo a producción» | `main` | Lo anterior + publicación `dev → main` ([Publicar](#publicar-de-dev-a-main)) → CI verde → merge commit → seguir el despliegue de Cloudflare → abrir la página en `mendoza-transparente.com` y confirmar que se ve el cambio |
+| «Sin release», «no generes release» | `main` | Igual que el anterior. No hay nada que evitar: el release de GitHub lo crea solo el workflow una vez por día, y nadie lo crea a mano |
+| «Una vez pasen los CI, llevalo a prod» | `main` | Igual, sin volver a preguntar: el pedido ya autoriza la publicación |
+| «Datos en prod» | `main` | Los datos van directo a `main` ([Datos](#datos)); el scraper nuevo o cambiado, por `dev` |
+
+**El turno no termina esperando.** Si falta que termine una CI o un despliegue, el agente lo sigue hasta el final (`gh pr checks <n> --watch` o `gh run watch` en segundo plano, que avisan al terminar; en T3 Code, `watch_pull_request`) y después hace el paso siguiente. Cerrar con «espero a que termine la CI» deja la tarea a medias y obliga a la persona a preguntar «¿y?». Si de verdad no se puede seguir (falta un permiso, una decisión o un secreto), el último mensaje dice qué falta y quién lo tiene que hacer.
+
+**Al terminar se dice dónde quedó:** el link del PR, si está en `dev` o en `main` y, si se publicó, la URL donde se ve.
 
 ## Mensajes de commit y títulos de PR
 
@@ -100,7 +116,7 @@ BREAKING CHANGE: la columna monto_total de data/processed/compras deja de existi
 `.github/pull_request_template.md` la carga GitHub al abrir un PR desde la web, y `gh pr create` sin `--fill` ni `--body`. Pide:
 
 - **Qué cambia y por qué**, para alguien que no vio la conversación.
-- **Revisión del propio cambio**: alcance del diff, documentación al día (procesos, skills, `AGENTS.md` y referencias viejas a comandos o rutas), convenciones de idioma, secretos, reglas de `data/` y, si hay interfaz, la revisión con `revisar-interfaz`, la analítica y las capturas.
+- **Revisión del propio cambio**: alcance del diff y rama al día con `dev`, documentación al día (procesos, skills, `AGENTS.md`, referencias viejas a comandos o rutas, y diagramas que se lean en GitHub), convenciones de idioma, secretos, costo de lo que suma consumo, reglas de `data/` y, si hay interfaz, la revisión con `revisar-interfaz`, el barrido del patrón en todas las páginas, la analítica y las capturas.
 - **Cómo se verificó**: cada comando corrido con su resultado (`bun run lint`, `bun run typecheck`, `bun test`, `bun run verificar`…) y el link a la vista previa.
 - **Riesgos y pendientes**.
 
@@ -235,3 +251,4 @@ Para ver o cambiar las reglas: Settings → Rules → Rulesets, o `gh api repos/
 - Un agente **nunca pushea a `main`**. Trabaja en una rama que sale de `dev` y abre el PR a `dev`, salvo que le pidan un hotfix.
 - Mergea sus propios PRs a `dev` cuando la plantilla está completa y la CI en verde, y el PR de publicación cuando se lo pidieron (ver [Quién aprueba](#quién-aprueba)). Un PR de alguien de afuera del equipo no lo mergea: lo revisa y deja la aprobación a una persona del equipo.
 - Para comparar los cambios de una rama, la base es `origin/dev` (en un hotfix, `origin/main`).
+- Lleva cada pedido hasta donde se pidió ([Hasta dónde llevar cada pedido](#hasta-dónde-llevar-cada-pedido)) sin cortar el turno mientras espera una CI.

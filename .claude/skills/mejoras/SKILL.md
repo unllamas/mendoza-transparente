@@ -15,7 +15,8 @@ Fuente completa: `docs/procesos/mejoras-de-interfaz.md`. La meta: que nadie teng
 ## 2. Ubicar y ver
 
 1. URL → `apps/web/src/pages/` → componente. Si es compartido (`@mt/ui`, `src/components/`), listar en qué otras pantallas aparece.
-2. Captura **antes** en 375 y 1280 px, en modo oscuro (`playwright-core`).
+2. **Barrido:** la captura muestra un lugar, el pedido es de todos. Buscar cada aparición del componente, patrón o texto (`grep -rn` en `apps/web/src`), arreglarlas todas de una sola forma y listarlas en el PR. Si una queda distinta, decir por qué.
+3. Captura **antes** en 375 y 1280 px, en modo oscuro (`playwright-core`).
 
 ## 3. Traducir a una regla
 
@@ -58,4 +59,4 @@ Cargar la skill de la columna antes de tocar código.
 1. Captura **después** en los mismos anchos; si muestra datos variables, skill `estresar-interfaz`.
 2. `bun run verificar`.
 3. **¿El pedido trajo una regla que no estaba escrita?** Agregarla a `docs/procesos/diseno.md` y a la skill `diseno` en el mismo commit, y sumar la frase a la tabla del paso 3 si es una forma nueva de pedir lo mismo.
-4. Reporte corto: qué cambió, qué regla se aplicó, qué otras pantallas cambian y qué regla nueva quedó escrita.
+4. Reporte corto: qué cambió, qué regla se aplicó, en qué pantallas (la lista del barrido) y qué regla nueva quedó escrita.
