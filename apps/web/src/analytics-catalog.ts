@@ -138,6 +138,22 @@ export const EVENT_CATALOG: EventDoc[] = [
   },
   { event: "data.download", description: "Descargó un archivo de datos (CSV, JSON, XLSX). Propiedad file.", tags: ["datos abiertos"] },
   {
+    event: "missing_data.stale.open",
+    description:
+      "Desde una página con datos viejos o incompletos (por ejemplo, la UNCuyo), tocó el link para ver cómo pedirlos al día. Propiedad item: el pedido en «Lo que no se publica».",
+    tags: ["no publicado", "embudo de pedidos"],
+  },
+  {
+    event: "glossary.term.open",
+    description: "Tocó una palabra subrayada con puntos para ver qué significa (por ejemplo, «dedicación» o «devengado»). Propiedad term.",
+    tags: ["comprensión"],
+  },
+  {
+    event: "university.open",
+    description: "En «Universidades», abrió la ficha de una universidad. Propiedad university.",
+    tags: ["navegación"],
+  },
+  {
     event: "missing_data.theme.toggle",
     description:
       "En «Lo que no se publica», filtró por tema (la plata pública, quiénes trabajan en el Estado…). Propiedades theme y active.",

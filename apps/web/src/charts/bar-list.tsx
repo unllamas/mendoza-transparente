@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { useReducedMotion } from "./use-reduced-motion.ts";
 
 /**
@@ -9,7 +10,8 @@ export function BarList({
   formatValue,
   total,
 }: {
-  items: { nombre: string; valor: number; detalle?: string; destacado?: boolean }[];
+  /** `etiqueta` replaces the visible name (for example, with a glossary term); `nombre` stays as key and title. */
+  items: { nombre: string; etiqueta?: ReactNode; valor: number; detalle?: string; destacado?: boolean }[];
   formatValue: (v: number) => string;
   total?: number;
 }) {
@@ -25,7 +27,7 @@ export function BarList({
               className={`min-w-0 truncate ${item.destacado ? "font-semibold text-text-primary" : "text-text-secondary group-hover:text-text-primary"}`}
               title={item.nombre}
             >
-              {item.nombre}
+              {item.etiqueta ?? item.nombre}
             </span>
             <span className="shrink-0 font-medium whitespace-nowrap tabular-nums">
               {formatValue(item.valor)}

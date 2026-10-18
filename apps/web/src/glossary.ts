@@ -104,6 +104,46 @@ export const GLOSSARY: GlossaryTerm[] = [
     seeAlso: { label: "Lo que no se publica", to: "/no-publicado" },
   },
   {
+    id: "ingresos-brutos",
+    term: "Ingresos Brutos",
+    definition:
+      "El impuesto provincial sobre lo que facturan comercios, industrias y servicios, aunque no tengan ganancia. Es el que más recauda la provincia.",
+    seeAlso: { label: "Recaudación de Mendoza", to: "/recaudacion" },
+  },
+  {
+    id: "impuesto-sellos",
+    term: "Impuesto de Sellos",
+    definition: "El impuesto provincial que se paga al firmar contratos, escrituras, préstamos y otros documentos con valor económico.",
+    seeAlso: { label: "Recaudación de Mendoza", to: "/recaudacion" },
+  },
+  {
+    id: "envios-automaticos",
+    term: "Envíos automáticos de Nación",
+    definition:
+      "La plata que Nación le gira a cada provincia por ley, sin que lo decida el gobierno de turno: sobre todo la coparticipación de impuestos nacionales como el IVA y Ganancias.",
+    seeAlso: { label: "Recaudación de Mendoza", to: "/recaudacion" },
+  },
+  {
+    id: "presupuesto-prorrogado",
+    term: "Presupuesto prorrogado",
+    definition:
+      "Si el Congreso no aprueba el presupuesto del año, sigue el del año anterior y el Poder Ejecutivo lo ajusta por decreto. Pasó con el presupuesto nacional de 2024 y de 2025.",
+  },
+  {
+    id: "pregrado-grado-posgrado",
+    term: "Pregrado, grado y posgrado",
+    definition:
+      "Pregrado son las tecnicaturas cortas; grado, las licenciaturas, profesorados y carreras como Abogacía o Medicina; posgrado, las especializaciones, maestrías y doctorados para quien ya tiene un título.",
+    seeAlso: { label: "Universidades en Mendoza", to: "/universidades" },
+  },
+  {
+    id: "dedicacion-docente",
+    term: "Dedicación docente",
+    definition:
+      "Las horas por semana de un cargo docente universitario: exclusiva son 40, semiexclusiva 20 y simple 10. Una persona puede tener más de un cargo.",
+    seeAlso: { label: "La UNCuyo", to: "/universidades/uncuyo" },
+  },
+  {
     id: "senal",
     term: "Señal",
     definition:

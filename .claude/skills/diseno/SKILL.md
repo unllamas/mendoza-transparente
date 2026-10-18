@@ -34,7 +34,7 @@ Los componentes base y los tokens están en `packages/ui` (`@mt/ui`). **La base 
    - Hojas modales (`Sheet`) en vez de paneles laterales.
    - Pestañas que se desplazan.
    - El buscador ocupa toda la pantalla.
-9. **Lo informativo antes que lo crudo:** primero tarjetas y gráficos, después las tablas. El detalle se abre en una hoja. Muchas tarjetas del mismo tipo se agrupan en secciones por la pregunta que responden, sin etiqueta de tema en cada una; lo que limita al resto (una fuente cortada) va primero, como aviso.
+9. **Lo informativo antes que lo crudo:** primero tarjetas y gráficos, después las tablas. El detalle se abre en una hoja. Muchas tarjetas del mismo tipo se agrupan en secciones por la pregunta que responden, sin etiqueta de tema en cada una; lo que limita al resto (una fuente cortada) va primero, como aviso. Las tarjetas de arriba son del **año en curso**; lo viejo va más abajo, después de `StaleDataAlert` con el link al pedido. **Históricos de 8 años como máximo** (los mismos meses de cada año si el actual no terminó). **Términos difíciles** con `Term` (definición del glosario al tocar), solo los de los que depende la página.
 10. **Fuentes al final** de cada página, en la sección «Fuentes» (`FuentesOficiales`): una fila por organismo con «Sitio oficial», «Copia del <fecha>» y, cuando existe, «archive.org». Sin «Fuente:» repetido ni párrafos de fuente sueltos en la página.
 11. **El link para atrás, pegado al encabezado:** `WithBreadcrumbs` envolviendo el `PageHeader` (o el `<header>` propio), nunca `Breadcrumbs` suelto con el `gap` de la página. La ruta termina en la página actual con su ícono (`current={{ label, icon }}`) y el `PageHeader` va sin `topic`: una sola línea arriba del título.
 
@@ -66,7 +66,7 @@ Tarjetas dentro de tarjetas, etiquetitas sobre los títulos, secciones numeradas
 ## Gráficos
 
 - **Con Recharts, al estilo de BoardUI** (`src/charts/`), solo con tokens (`highlight`, `chart-grid`, `chart-axis`).
-- **Cuál usar:** evolución → línea (`LineChart`) o columnas por año (`ColumnChart`); subas y bajas por período → `ChangeChart`; ranking → `BarList`; partes de un total → `BarList` con `total`, para que la barra mida su porcentaje; mapa → `MapaMendoza` (cuantiles) o `MunicipalityLocator` (un departamento resaltado). El departamento que se mira (hover, foco o elegido) se marca con su color y los demás se apagan a gris, nunca con un borde grueso; el mapa y su detalle se reparten el ancho por mitades.
+- **Cuál usar:** evolución → línea (`LineChart`) o columnas por año (`ColumnChart`); subas y bajas por período → `ChangeChart`; ranking → `BarList`; partes de un total → `BarList` con `total`, para que la barra mida su porcentaje (aunque se muestren solo las primeras: si no, la más grande parece el 100 %); mapa → `MapaMendoza` (cuantiles) o `MunicipalityLocator` (un departamento resaltado). El departamento que se mira (hover, foco o elegido) se marca con su color y los demás se apagan a gris, nunca con un borde grueso; el mapa y su detalle se reparten el ancho por mitades.
 - **Dos gráficos chicos seguidos, en dos columnas en desktop** (`grid items-start gap-8 lg:grid-cols-2`), cada uno con su `h3`; si falta uno, el otro ocupa la fila (`only:col-span-full`). Una línea con bandas de gestiones o el mapa siguen a todo el ancho.
 - **Bandas de gestiones de gobierno:** `GOBIERNOS` (`src/gobiernos.ts`).
 - **Paleta:** está validada (skill `dataviz` del entorno). No inventar colores.

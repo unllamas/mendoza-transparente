@@ -1,0 +1,47 @@
+{
+  "titulo": "Materias aprobadas en el año por los estudiantes de la UNCuyo y la UTN",
+  "descripcion": "Cada fila es una universidad nacional, un año, una población (reinscriptos o nuevos inscriptos de pregrado y grado) y una cantidad de materias aprobadas en ese año (0, 1, 2, 3, 4, 5 o 6 o más), con cuántos estudiantes hay en ese tramo, del Anuario de Estadísticas Universitarias. Sirve como señal de avance en la carrera: quienes aprueban 0 o 1 materia al año avanzan lento o están inactivos. No es la duración real de las carreras ni una tasa de graduación: el Anuario no publica ni indicadores de egreso ni de duración por universidad (el cuadro de indicadores 1.2.1a solo trae el porcentaje de reinscriptos con 2 o más materias aprobadas, que se puede calcular desde esta tabla). Cada año sale del anuario de ese año: 2018, 2020, 2021, 2023 y 2024. La UNCuyo es de Mendoza; la UTN reporta como una sola universidad para todo el país y no se puede separar Mendoza ni San Rafael. El último año viene de un adelanto del Anuario que puede corregirse.",
+  "columnas": {
+    "anio": { "etiqueta": "Año", "tipo": "anio" },
+    "universidad_id": {
+      "etiqueta": "Universidad",
+      "tipo": "texto",
+      "valores": { "uncuyo": "UNCuyo", "utn": "UTN" },
+      "oculta": true
+    },
+    "universidad": { "etiqueta": "Universidad", "tipo": "texto" },
+    "poblacion": {
+      "etiqueta": "Población",
+      "tipo": "texto",
+      "valores": { "reinscriptos": "Reinscriptos", "nuevos_inscriptos": "Nuevos inscriptos" },
+      "descripcion": "Reinscriptos: estudiantes que ya cursaban. Nuevos inscriptos: los que ingresaron en el año. Los cuadros son de pregrado y grado."
+    },
+    "materias_aprobadas": {
+      "etiqueta": "Materias aprobadas en el año",
+      "tipo": "texto",
+      "valores": { "0": "Ninguna", "1": "1", "2": "2", "3": "3", "4": "4", "5": "5", "6_o_mas": "6 o más" },
+      "descripcion": "Cantidad de materias aprobadas durante el año informado."
+    },
+    "cantidad": { "etiqueta": "Estudiantes", "tipo": "numero", "descripcion": "Estudiantes de la población que aprobaron esa cantidad de materias." },
+    "porcentaje": {
+      "etiqueta": "Porcentaje",
+      "tipo": "numero",
+      "unidad": "%",
+      "descripcion": "Parte de la población (reinscriptos o nuevos inscriptos de ese año) que aprobó esa cantidad de materias. Calculado desde las cantidades."
+    },
+    "alcance": {
+      "etiqueta": "Alcance",
+      "tipo": "texto",
+      "valores": { "mendoza": "Mendoza", "nacional": "Todo el país" },
+      "descripcion": "La UTN es una sola universidad nacional: su cifra incluye todas sus facultades regionales, no solo las de Mendoza."
+    },
+    "anuario": { "etiqueta": "Anuario", "tipo": "anio", "descripcion": "Año del Anuario de donde sale el dato." },
+    "fuente_archivo": { "etiqueta": "Archivo de origen", "tipo": "texto", "oculta": true },
+    "cuadro": {
+      "etiqueta": "Cuadro",
+      "tipo": "texto",
+      "descripcion": "Cuadro del Anuario de donde sale la fila (reinscriptos: 2.1.7 o 2.1.10; nuevos inscriptos: 2.1.22a o 2.1.28a; el número cambia entre anuarios)."
+    }
+  },
+  "orden": ["anio", "universidad", "poblacion", "materias_aprobadas", "cantidad", "porcentaje", "alcance", "anuario", "cuadro"]
+}
