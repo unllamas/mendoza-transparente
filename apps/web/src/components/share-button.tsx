@@ -76,6 +76,8 @@ export function ShareButton({ text, id = "compartir", context }: { text?: string
         <DropdownTrigger
           id={id}
           aria-label="Compartir"
+          data-track="share.open"
+          data-track-context={where}
           className={buttonClassName({ variant: "secondary", iconOnly: true, className: "shrink-0" })}
         >
           <RiShareForwardLine className="size-5" aria-hidden />

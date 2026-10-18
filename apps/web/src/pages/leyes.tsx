@@ -1,6 +1,6 @@
 import { PersonAvatar } from "@mt/ui/components/avatar";
 import { Button, buttonClassName } from "@mt/ui/components/base/buttons/button";
-import { listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
+import { cardVariants, listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
 import { PageHeader } from "@mt/ui/components/section";
 import { cx } from "@mt/ui/lib/cx";
 import {
@@ -269,7 +269,7 @@ function Firmantes({ law, signers }: { law: LeyDetalle["numero"]; signers: LeyDe
 function TextoCompleto({ ley }: { ley: LeyDetalle }) {
   const articulos = ley.bloques.filter((b) => b.tipo === "articulo").length;
   return (
-    <details className={cx(tileVariants({ size: "sm" }), "group overflow-hidden p-0")}>
+    <details className={cx(cardVariants(), "group overflow-hidden p-0")}>
       <summary
         id="ley-texto-completo"
         data-track="law.full_text.toggle"
