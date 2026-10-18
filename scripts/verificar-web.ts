@@ -32,7 +32,6 @@ const RUTAS = [
   "/poblacion",
   "/no-publicado",
   "/participar",
-  "/registro",
   "/como-leer",
   "/fuentes",
   "/datos/compras-ocds",

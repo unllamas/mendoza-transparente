@@ -133,6 +133,7 @@ Objetivo: que la gente encuentre el sitio cuando busca "intendente de Maipú", "
 **Qué genera `bun run build`:**
 
 - `scripts/build-data.ts` escribe `public/data/meta.json` (título, descripción e imagen por ruta). `usePageMeta` lo usa para actualizar los metadatos al navegar dentro de la app.
+- `public/_redirects` lo copia Vite tal cual: son las redirecciones 301 de Cloudflare Pages. Cuando se saca una página, su ruta se redirige a la más cercana (por ejemplo, `/registro` a `/participar`) para no dejar links rotos.
 - `scripts/seo.ts` (después de `vite build`) escribe:
   - `404.html`, la app sin contenido y con `noindex`: Cloudflare la sirve con código 404 para las rutas sin HTML propio, y React igual resuelve la ruta.
   - Un HTML por ruta (`dist/leyes/9735.html`, `dist/municipios/capital.html`…) con meta tags, Open Graph, Twitter, canonical, hreflang y JSON-LD, y el `html` de la página dentro de `#root`. Así buscadores, redes y motores de IA leen el contenido sin ejecutar JavaScript; React lo reemplaza al cargar. Van como `ruta.html` (no `ruta/index.html`) para que Cloudflare Pages las sirva sin barra final.

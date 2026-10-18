@@ -70,9 +70,9 @@ export function ParticiparPage() {
       {form === "foto" && <PhotoForm />}
 
       <Alert variant="note" title="Qué hacemos con lo que nos mandás">
-        Después de revisarlo, lo sumamos al <Link to="/registro">registro público</Link>: qué dato se pidió, a qué organismo, las fechas y
-        si hubo respuesta, o qué error se corrigió, con un resumen escrito por nosotros. Nunca publicamos tu correo, tu número de trámite ni
-        lo que escribiste tal cual. Tu correo es opcional y solo lo usamos para escribirte sobre tu envío. No pedimos tu DNI.
+        Lo revisamos y lo usamos para contar cuántos pedidos hay por dato y cuánto responde el Estado, o para corregir el error que nos
+        avisaste. Nunca publicamos tu correo, tu número de trámite ni lo que escribiste tal cual. Tu correo es opcional y solo lo usamos
+        para escribirte sobre tu envío. No pedimos tu DNI.
       </Alert>
     </div>
   );

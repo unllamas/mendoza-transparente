@@ -134,15 +134,6 @@ export const PAGES: Record<string, PageMeta> = {
     eyebrow: "PARTICIPÁ",
     activa: true,
   },
-  "/registro": {
-    title: `Registro de pedidos de información y correcciones${TITLE_SUFFIX}`,
-    description:
-      "Los pedidos de acceso a la información pública presentados en Mendoza, qué organismo respondió y en cuántos días, y los errores del sitio que nos avisaron y corregimos.",
-    ogSlug: "registro",
-    ogTitle: "¿Cuánto responde el Estado?",
-    eyebrow: "REGISTRO",
-    activa: true,
-  },
   "/gobierno": {
     title: `Cómo está organizado el Gobierno de Mendoza${TITLE_SUFFIX}`,
     description:

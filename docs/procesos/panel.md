@@ -1,6 +1,6 @@
 # Panel interno
 
-`apps/panel` es la app del equipo para revisar lo que llega por [Participá](participacion.md), decidir qué se publica en el registro público (`/registro`) y medir cuánto responde el Estado. Corre en su propio proyecto de Cloudflare Pages (`mendoza-transparente-panel`, en `panel.mendoza-transparente.com`), usa la misma base D1 que el sitio y está entero detrás de **Cloudflare Access**.
+`apps/panel` es la app del equipo para revisar lo que llega por [Participá](participacion.md), decidir qué se publica en el registro público (la API `/api/registro`; la página se sacó del sitio, ver [Participación](participacion.md#el-registro-público-sin-página-por-ahora)) y medir cuánto responde el Estado. Corre en su propio proyecto de Cloudflare Pages (`mendoza-transparente-panel`, en `panel.mendoza-transparente.com`), usa la misma base D1 que el sitio y está entero detrás de **Cloudflare Access**.
 
 | Pantalla | Para qué |
 |---|---|
@@ -164,7 +164,7 @@ curl -s -H "$H" "$B/domains" | jq '.result[] | {name, status}'                  
   - Conviene no borrar ids con pedidos.
 - **Pedidos de «otro dato»:** no tienen título; el resumen público hace de título y es obligatorio para publicarlos.
 - **El mismo organismo escrito de varias formas:** el nombre oficial que carga el equipo agrupa las estadísticas y es el que se publica.
-- **Despublicar:** el registro tiene 60 segundos de caché. Un link compartido a un envío despublicado muestra «No hay ningún envío publicado con ese código».
+- **Despublicar:** el registro tiene 60 segundos de caché. Pedir un envío despublicado a la API da la misma respuesta que uno que no existe.
 - **Anonimizar algo publicado:** se despublica solo. El código se mantiene, así los links viejos dicen que no está.
 - **Respuestas que se contradicen** (respondido y después denegado): se guarda cada una en `answers` y vale la última aplicada. El historial muestra quién aplicó cada una.
 - **Sesión vencida a mitad de una edición:** la API responde 401 (o Access redirige) y el panel pide volver a entrar. Lo que no se guardó se pierde: guardar seguido.

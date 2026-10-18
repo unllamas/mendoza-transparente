@@ -1,6 +1,6 @@
 ---
 name: panel
-description: Panel interno de Mendoza Transparente (apps/panel) y registro público (/registro). Cubre login con Cloudflare Access y verificación del token, qué se publica y qué nunca, revisión de envíos, respuestas sin clave, anonimizar, auditoría y las amenazas cubiertas. Cargar al tocar apps/panel, packages/participation, la página /registro, la base D1 de participación o el acceso del equipo.
+description: Panel interno de Mendoza Transparente (apps/panel) y registro público (la API /api/registro; la página /registro se sacó del sitio). Cubre login con Cloudflare Access y verificación del token, qué se publica y qué nunca, revisión de envíos, respuestas sin clave, anonimizar, auditoría y las amenazas cubiertas. Cargar al tocar apps/panel, packages/participation, la API /api/registro, la base D1 de participación o el acceso del equipo.
 ---
 
 # Panel interno y registro público
@@ -23,5 +23,5 @@ Fuente completa: `docs/procesos/panel.md` (índice con `bun run seccion panel`) 
 - Tipos: `bunx tsc --noEmit` en `packages/participation`, `apps/panel` y `apps/web`.
 - `bun run lint:arch`: el sitio y el panel no se importan entre sí, y `local-db.ts` no llega al navegador.
 - Pruebas: `bun test packages/participation`. Piden permiso; si no se pueden correr, decirlo.
-- Interfaz: capturas del panel en 375 px y 1280 px (`bun run panel`) y de `/registro`.
+- Interfaz: capturas del panel en 375 px y 1280 px (`bun run panel`).
 - Cambio de esquema: migración nueva en `packages/participation/migrations/` (nunca editar una aplicada) y avisar que hay que aplicarla con `wrangler d1 migrations apply`.

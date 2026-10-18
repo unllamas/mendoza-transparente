@@ -7,11 +7,13 @@ Página `/participar`. Ahí la gente puede:
 - Sugerir datos.
 - Proponer una foto de paisaje para el sitio (ver [Fotos de paisaje](diseno.md#fotos-de-paisaje)).
 
-Con eso publicamos cuántos pedidos hay por dato y cuánto responde el Estado (en la página y en cada hoja de "Lo que no se publica") y, después de revisar cada envío, el **registro público** en `/registro`. Lo que llega se revisa en el **panel interno** (ver [Panel interno](panel.md)).
+Con eso publicamos cuántos pedidos hay por dato y cuánto responde el Estado (en la página y en cada hoja de "Lo que no se publica"). Lo que llega se revisa en el **panel interno** (ver [Panel interno](panel.md)).
 
-## El registro público (`/registro`)
+## El registro público (sin página por ahora)
 
-Muestra los pedidos y las correcciones que alguien del equipo revisó y marcó para publicar. Nada se publica solo.
+La página `/registro` se sacó del sitio el 18 de octubre de 2026: no había ningún envío publicado y no aportaba nada. La URL redirige a `/participar` (`apps/web/public/_redirects`). La API (`GET /api/registro`) y la marca «Publicar en el registro» del panel siguen, así que si la página vuelve, lo publicado ya está listo. Las reglas de abajo valen para esa API.
+
+El registro son los pedidos y las correcciones que alguien del equipo revisó y marcó para publicar. Nada se publica solo.
 
 | Se publica | No se publica nunca |
 |---|---|
@@ -20,7 +22,7 @@ Muestra los pedidos y las correcciones que alguien del equipo revisó y marcó p
 | El link a la respuesta, si el equipo lo revisó | Notas internas y auditoría |
 
 - Las columnas que salen se eligen una por una en `publicRegistry` (`packages/participation/src/store.ts`): agregar una columna a la tabla no la publica.
-- Cada envío se abre con `?codigo=P-…`; si no está publicado, la página lo dice sin contar si existe.
+- Cada envío se pide con `GET /api/registro/<código>`; si no está publicado, la respuesta es la misma que si no existe.
 - Los errores se publican solo resueltos y con resumen; las fotos y los envíos "otro" no se publican.
 
 ## Código y clave de cada pedido
@@ -63,7 +65,7 @@ Cualquier link puede armar el mismo pedido: `/participar?tipo=error&pagina=/deud
 | `POST /api/pedidos/respuesta` | Con `code` y `key`, aplica la respuesta (200). Con solo `filingNumber`, la deja pendiente de revisión (202). `status` puede ser `respondido`, `parcial`, `denegado` o `sin_respuesta`; lleva además fecha (no anterior a la presentación), resumen y link. |
 | `POST /api/feedback` | Error o sugerencia: `kind` (`error`, `dato` u `otro`), `message`, `page` y `email`. Las fotos propuestas llegan con `kind = 'otro'` y `page = 'foto'`, con el link en la primera línea del mensaje. Devuelve `code`. |
 | `GET /api/pedidos/stats` | Totales por dato: pedidos, respondidos, negados y vencidos, sin lo marcado como spam o descartado. Un pedido vence a los 21 días corridos sin respuesta, que equivalen aproximadamente a los 15 hábiles de la ley. Cache de 60 segundos. |
-| `GET /api/registro` | El registro público: pedidos y correcciones publicados. Cache de 60 segundos. |
+| `GET /api/registro` | El registro público: pedidos y correcciones publicados. Cache de 60 segundos. Hoy ninguna página del sitio lo usa. |
 | `GET /api/registro/<código>` | Un envío publicado; 404 si no existe o no está publicado (la misma respuesta para los dos casos). |
 
 ## Protección

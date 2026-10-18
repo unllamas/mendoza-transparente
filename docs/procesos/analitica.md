@@ -119,9 +119,6 @@ Resumen de los eventos:
 | `<id>.click` (`pedido-registrar.click`, etc.) | Participá: botones de envío | — |
 | `participation.credentials.copy` | Participá: copiar el código o la clave recibidos | — |
 | `participation.answer.toggle_key` | Contar la respuesta: con clave o con número de trámite | — |
-| `registry.view.change` | Registro: pedidos o correcciones | `value` |
-| `registry.request.open`, `registry.correction.open` | Registro: abrir un envío publicado | `item` |
-| `registry.answer.open`, `registry.correction.page` | Registro: ver la respuesta del Estado o la página corregida | — |
 | `landscape.credit`, `landscape.propose` | Foto de paisaje: crédito y «Proponé tu foto» | `photo` |
 
 **Embudos sugeridos en PostHog:**
