@@ -36,7 +36,7 @@ const FEEDBACK_TYPE =
 // ------------------------------------------------------------------ writes from the public API
 
 /** Inserts with a fresh random code, retrying on the (unlikely) collision with an existing one. */
-async function insertWithCode(prefix: CodePrefix, insert: (code: string) => Promise<boolean>): Promise<string> {
+export async function insertWithCode(prefix: CodePrefix, insert: (code: string) => Promise<boolean>): Promise<string> {
   for (let i = 0; i < 5; i++) {
     const code = newCode(prefix);
     try {

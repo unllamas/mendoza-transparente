@@ -23,12 +23,31 @@ git push -u origin feat/mi-cambio
 gh pr create --base dev --title "feat(web): …"   # abre el editor con la plantilla
 ```
 
-1. **Los agentes abren el PR solos:** toda tarea termina con commit, push y PR a `dev`, sin esperar un pedido aparte; lo siguiente que se pida en la misma conversación va a la misma rama y al mismo PR.
+1. **Los agentes abren el PR solos, pero no lo mergean salvo pedido explícito:** toda tarea termina con commit, push y PR a `dev`, sin esperar un pedido aparte; lo siguiente que se pida en la misma conversación va a la misma rama y al mismo PR. El PR queda abierto hasta que una persona lo revisa y lo mergea, o le dice al agente explícitamente que lo mergee (ver [Quién aprueba](#quién-aprueba)).
 2. **El PR usa la plantilla** (`.github/pull_request_template.md`); ver [abajo](#la-plantilla-de-pr).
 3. **Cada PR a `dev` pasa la CI** (`.github/workflows/ci.yml`: Biome, arquitectura, tipos, pruebas, build y verificación visual). Quién más lo revisa depende de quién lo manda: ver [Quién aprueba](#quién-aprueba).
-4. **Se mergea con squash**: un commit por tarea en `dev`, con el mensaje en español que explica qué cambia y por qué.
+4. **Se mergea con squash** (una persona, o el agente si se lo pidieron explícitamente): un commit por tarea en `dev`, con el mensaje en español que explica qué cambia y por qué.
 5. **Cloudflare publica la vista previa** de cada rama y de `dev`: se prueba ahí, no en producción.
-6. Si `dev` avanzó mientras tanto, se actualiza la rama con `git pull --rebase origin dev`.
+6. **Antes de cada push, la rama se pone al día con `dev`**: `git fetch origin && git rebase origin/dev`. Si lo que entró trae cambios en `docs/procesos/`, `.claude/skills/` o `AGENTS.md` (`git diff --stat HEAD@{1} HEAD -- docs/procesos .claude/skills AGENTS.md` después del rebase), se leen antes de pushear: puede haber un proceso nuevo que el cambio tenga que cumplir.
+
+## Hasta dónde llevar cada pedido
+
+Lo que se pide en una conversación define hasta dónde llega el trabajo del agente. **Sin un pedido explícito de merge, el agente llega hasta el PR abierto con la CI en verde y avisa con el link.**
+
+| Lo que dice el usuario | Hasta dónde llega el agente |
+|---|---|
+| (nada sobre mergear) | Rama desde `dev` → PR a `dev` con la plantilla → CI verde → avisa con el link. No mergea: lo revisa y lo mergea una persona |
+| Pide explícitamente mergear ese PR («mergealo», «mergeá el #37») | Lo anterior y el merge a `dev` con squash |
+| Pide explícitamente publicarlo en producción («publicalo en main», «mergealo y llevalo a prod») | Lo anterior, el PR de publicación `dev → main` ([Publicar](#publicar-de-dev-a-main)) con la CI verde, el merge con merge commit, el seguimiento del despliegue de Cloudflare y la confirmación en `mendoza-transparente.com` |
+
+**El permiso vale para lo que se nombró, en esa conversación.** Mergear un PR no autoriza a mergear el siguiente, ni a publicar en `main`. Que la tarea esté terminada, que la CI esté en verde o que el trabajo sea una prueba no cuentan como permiso. Ante la duda, no se mergea y se pregunta.
+| «Sin release», «no generes release» | `main` | Igual que el anterior. No hay nada que evitar: el release de GitHub lo crea solo el workflow una vez por día, y nadie lo crea a mano |
+| «Una vez pasen los CI, llevalo a prod» | `main` | Igual, sin volver a preguntar: el pedido ya autoriza la publicación |
+| «Datos en prod» | `main` | Los datos van directo a `main` ([Datos](#datos)); el scraper nuevo o cambiado, por `dev` |
+
+**El turno no termina esperando.** Si falta que termine una CI o un despliegue, el agente lo sigue hasta el final (`gh pr checks <n> --watch` o `gh run watch` en segundo plano, que avisan al terminar; en T3 Code, `watch_pull_request`) y después hace el paso siguiente. Cerrar con «espero a que termine la CI» deja la tarea a medias y obliga a la persona a preguntar «¿y?». Si de verdad no se puede seguir (falta un permiso, una decisión o un secreto), el último mensaje dice qué falta y quién lo tiene que hacer.
+
+**Al terminar se dice dónde quedó:** el link del PR, si está en `dev` o en `main` y, si se publicó, la URL donde se ve.
 
 ## Mensajes de commit y títulos de PR
 
@@ -100,7 +119,7 @@ BREAKING CHANGE: la columna monto_total de data/processed/compras deja de existi
 `.github/pull_request_template.md` la carga GitHub al abrir un PR desde la web, y `gh pr create` sin `--fill` ni `--body`. Pide:
 
 - **Qué cambia y por qué**, para alguien que no vio la conversación.
-- **Revisión del propio cambio**: alcance del diff, documentación al día (procesos, skills, `AGENTS.md` y referencias viejas a comandos o rutas), convenciones de idioma, secretos, reglas de `data/` y, si hay interfaz, la revisión con `revisar-interfaz`, la analítica y las capturas.
+- **Revisión del propio cambio**: alcance del diff y rama al día con `dev`, documentación al día (procesos, skills, `AGENTS.md`, referencias viejas a comandos o rutas, y diagramas que se lean en GitHub), convenciones de idioma, secretos, costo de lo que suma consumo, reglas de `data/` y, si hay interfaz, la revisión con `revisar-interfaz`, el barrido del patrón en todas las páginas, la analítica y las capturas.
 - **Cómo se verificó**: cada comando corrido con su resultado (`bun run lint`, `bun run typecheck`, `bun test`, `bun run verificar`…) y el link a la vista previa.
 - **Riesgos y pendientes**.
 
@@ -110,14 +129,17 @@ Lo que no aplica se tacha diciendo por qué, en vez de borrarlo: así quien revi
 
 ## Quién aprueba
 
-La plantilla y la CI son la validación de todos los días. Una aprobación de otra persona solo hace falta cuando el cambio viene de afuera:
+La plantilla y la CI son el piso. Encima, **un merge lo decide siempre una persona del equipo**:
 
 | Quién manda el PR | Qué hace falta para mergear |
 |---|---|
-| Alguien del equipo, o un agente trabajando a su pedido | Plantilla completa y CI en verde. Lo mergea quien lo abrió, sin esperar a nadie |
+| Un agente (aunque trabaje a pedido de alguien del equipo) | Plantilla completa, CI en verde y la decisión de una persona: lo mergea ella, o le pide explícitamente al agente que lo mergee. **Sin ese pedido, el agente no mergea**: ni a `dev`, ni a `main`, ni un hotfix, ni un revert |
+| Alguien del equipo | Plantilla completa y CI en verde. Lo mergea quien lo abrió |
 | Alguien de afuera del equipo (un fork o una persona nueva) | Además, la revisión y aprobación de alguien del equipo, que también lee el diff contra la plantilla |
 
-La publicación sigue la misma lógica: si la persona que pidió el trabajo dijo que se publique cuando funcione, el agente mergea el PR de publicación apenas la CI y la vista previa están bien.
+La publicación (`dev → main`) sigue la misma regla: el agente deja el PR de publicación listo y avisa, y solo lo mergea si el usuario se lo pide explícitamente.
+
+Por qué: un agente puede equivocarse de alcance (mergear una prueba exploratoria como si fuera un cambio final) y no tiene forma de saber qué está esperando cada persona. El merge es el punto donde alguien del equipo decide que el cambio llega a la rama compartida.
 
 ## Publicar: de `dev` a `main`
 
@@ -174,7 +196,7 @@ git push -u origin hotfix/mi-arreglo
 gh pr create --base main
 ```
 
-1. El PR va a `main`, con la plantilla completa y la CI verde. Se mergea con squash.
+1. El PR va a `main`, con la plantilla completa y la CI verde. Se mergea con squash: una persona, o el agente si se lo pidieron explícitamente.
 2. **Back merge a `dev`**: lo hace solo el workflow `.github/workflows/back-merge.yml` en cada push a `main` (ver abajo). Hay que **confirmar que corrió**: si `dev` no recibe el arreglo, el próximo release lo pisa y el error vuelve a producción.
 
 ## Back merge automático
@@ -213,7 +235,7 @@ Configurado por API el 17/10/2026 en `unllamas/mendoza-transparente`:
 | Ruleset «main: producción» | Prohíbe borrar la rama y el force push; pide PR y los checks obligatorios en verde |
 | Ruleset «dev: integración» | Lo mismo |
 | Checks obligatorios | `verificar` (CI) y `titulo` (Título del PR), en las dos reglas |
-| Aprobaciones | Las reglas piden 0: la revisión de PRs de afuera del equipo es una regla de este documento ([Quién aprueba](#quién-aprueba)) |
+| Aprobaciones | Las reglas piden 0. Que los agentes no mergeen sin un pedido explícito es una regla de este documento ([Quién aprueba](#quién-aprueba)) |
 | Excepciones (*bypass*) | Quien administra el repo y las deploy keys, en las dos reglas |
 | Deploy key «Bot de GitHub Actions (datos y back merge)» | Clave SSH con escritura, guardada en el secreto **`DEPLOY_KEY`** |
 
@@ -230,8 +252,15 @@ gh api repos/unllamas/mendoza-transparente/keys            # borrar la vieja con
 
 Para ver o cambiar las reglas: Settings → Rules → Rulesets, o `gh api repos/unllamas/mendoza-transparente/rulesets`.
 
+**Opcional: que GitHub frene el merge de un agente.** Hoy los agentes usan la cuenta de quien administra el repo, que está en la lista de excepciones de las dos reglas: nada técnico les impide mergear, y la regla depende de que el agente la lea. Si se quiere un freno técnico, los agentes trabajan con una identidad propia:
+
+1. Una cuenta de GitHub para los agentes (o un *fine-grained token* de otra cuenta), con acceso de escritura al repo y sin rol de administración.
+2. En las dos reglas: pedir 1 aprobación, descartar las aprobaciones viejas cuando llega un commit nuevo, y dejar como excepción solo las deploy keys (no a quien administra).
+3. Configurar `gh` de los agentes con ese token. El pedido explícito pasa a ser la aprobación en GitHub: la persona aprueba el PR y el agente (o ella) lo mergea.
+
 ## Agentes
 
 - Un agente **nunca pushea a `main`**. Trabaja en una rama que sale de `dev` y abre el PR a `dev`, salvo que le pidan un hotfix.
-- Mergea sus propios PRs a `dev` cuando la plantilla está completa y la CI en verde, y el PR de publicación cuando se lo pidieron (ver [Quién aprueba](#quién-aprueba)). Un PR de alguien de afuera del equipo no lo mergea: lo revisa y deja la aprobación a una persona del equipo.
+- **No mergea un PR salvo que el usuario se lo pida explícitamente** para ese PR, en esa conversación: ni los suyos a `dev`, ni la publicación a `main`, ni un hotfix, ni un revert. La CI en verde o la tarea terminada no son permiso. Sin el pedido, deja el PR abierto y avisa con el link (ver [Quién aprueba](#quién-aprueba)). Nunca usa `--admin` ni el auto-merge de GitHub.
 - Para comparar los cambios de una rama, la base es `origin/dev` (en un hotfix, `origin/main`).
+- Lleva cada pedido hasta donde se pidió ([Hasta dónde llevar cada pedido](#hasta-dónde-llevar-cada-pedido)), por defecto un PR abierto con la CI en verde, sin cortar el turno mientras espera una CI.

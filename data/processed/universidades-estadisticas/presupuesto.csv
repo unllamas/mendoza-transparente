@@ -1,0 +1,256 @@
+anio,universidad_id,universidad,concepto,monto,alcance,anuario,fuente_archivo,cuadro
+2018,uncuyo,Universidad Nacional de Cuyo,gasto_capital,786679465.53,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.14
+2020,uncuyo,Universidad Nacional de Cuyo,gasto_capital,82602752.97,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.14
+2021,uncuyo,Universidad Nacional de Cuyo,gasto_capital,135003990.64,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.14
+2023,uncuyo,Universidad Nacional de Cuyo,gasto_capital,484642055.47,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.14
+2024,uncuyo,Universidad Nacional de Cuyo,gasto_capital,1459700863.47,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.14
+2018,uncuyo,Universidad Nacional de Cuyo,gasto_corriente,26404076444.08,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.14
+2020,uncuyo,Universidad Nacional de Cuyo,gasto_corriente,8181848845.85,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.14
+2021,uncuyo,Universidad Nacional de Cuyo,gasto_corriente,11719773820.75,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.14
+2023,uncuyo,Universidad Nacional de Cuyo,gasto_corriente,48250983482.3,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.14
+2024,uncuyo,Universidad Nacional de Cuyo,gasto_corriente,120255021295.1,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.14
+2018,uncuyo,Universidad Nacional de Cuyo,gasto_fuente_otras,734599857.89,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.13
+2020,uncuyo,Universidad Nacional de Cuyo,gasto_fuente_otras,21066606.81,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.13
+2021,uncuyo,Universidad Nacional de Cuyo,gasto_fuente_otras,12979001.55,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.13
+2023,uncuyo,Universidad Nacional de Cuyo,gasto_fuente_otras,15906195.3,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.13
+2024,uncuyo,Universidad Nacional de Cuyo,gasto_fuente_otras,1784930.26,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.13
+2018,uncuyo,Universidad Nacional de Cuyo,gasto_fuente_recursos_propios,319599178.32,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.13
+2020,uncuyo,Universidad Nacional de Cuyo,gasto_fuente_recursos_propios,189538155.44,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.13
+2021,uncuyo,Universidad Nacional de Cuyo,gasto_fuente_recursos_propios,314656609.21,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.13
+2023,uncuyo,Universidad Nacional de Cuyo,gasto_fuente_recursos_propios,843839534.08,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.13
+2024,uncuyo,Universidad Nacional de Cuyo,gasto_fuente_recursos_propios,3390853545.73,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.13
+2018,uncuyo,Universidad Nacional de Cuyo,gasto_fuente_remanente_anterior,2153687035.6,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.13
+2020,uncuyo,Universidad Nacional de Cuyo,gasto_fuente_remanente_anterior,229315229.88,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.13
+2021,uncuyo,Universidad Nacional de Cuyo,gasto_fuente_remanente_anterior,199435982.83,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.13
+2023,uncuyo,Universidad Nacional de Cuyo,gasto_fuente_remanente_anterior,1126517134.21,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.13
+2024,uncuyo,Universidad Nacional de Cuyo,gasto_fuente_remanente_anterior,3872190417.87,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.13
+2018,uncuyo,Universidad Nacional de Cuyo,gasto_fuente_tesoro_nacional,23982869837.8,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.13
+2020,uncuyo,Universidad Nacional de Cuyo,gasto_fuente_tesoro_nacional,7824531606.69,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.13
+2021,uncuyo,Universidad Nacional de Cuyo,gasto_fuente_tesoro_nacional,11327706217.8,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.13
+2023,uncuyo,Universidad Nacional de Cuyo,gasto_fuente_tesoro_nacional,46749362674.18,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.13
+2024,uncuyo,Universidad Nacional de Cuyo,gasto_fuente_tesoro_nacional,114449893264.71,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.13
+2018,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_bienes_consumo,255715611.89,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.6
+2020,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_bienes_consumo,46417135.34,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.6
+2021,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_bienes_consumo,96083396.33,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.6
+2023,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_bienes_consumo,584671385.41,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.6
+2024,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_bienes_consumo,1536611759.79,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.6
+2018,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_bienes_uso,786679465.53,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.6
+2020,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_bienes_uso,82602752.97,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.6
+2021,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_bienes_uso,135003990.64,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.6
+2023,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_bienes_uso,484642055.47,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.6
+2024,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_bienes_uso,1459700863.47,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.6
+2018,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_otros,230034445.55,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.6
+2020,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_otros,9884574.84,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.6
+2021,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_otros,9447687.59,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.6
+2023,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_otros,8573913,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.6
+2024,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_otros,8137025.75,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.6
+2018,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_personal,22731967758.94,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.6
+2020,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_personal,7464467197.38,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.6
+2021,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_personal,10418507603.23,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.6
+2023,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_personal,43811202964.43,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.6
+2024,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_personal,106394839458.08,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.6
+2018,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_servicios_no_personales,1667090036.16,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.6
+2020,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_servicios_no_personales,370272873.12,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.6
+2021,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_servicios_no_personales,630778413.15,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.6
+2023,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_servicios_no_personales,2669129543.64,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.6
+2024,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_servicios_no_personales,8624693215.25,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.6
+2018,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_transferencias,1519268591.54,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.6
+2020,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_transferencias,290807065.17,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.6
+2021,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_transferencias,564956720.45,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.6
+2023,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_transferencias,1177405675.82,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.6
+2024,uncuyo,Universidad Nacional de Cuyo,gasto_inciso_transferencias,3690739836.23,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.6
+2018,uncuyo,Universidad Nacional de Cuyo,gasto_por_estudiante,770276.37,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.14
+2020,uncuyo,Universidad Nacional de Cuyo,gasto_por_estudiante,230599.39,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.14
+2021,uncuyo,Universidad Nacional de Cuyo,gasto_por_estudiante,310977.62,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.14
+2023,uncuyo,Universidad Nacional de Cuyo,gasto_por_estudiante,1437247.5,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.14
+2024,uncuyo,Universidad Nacional de Cuyo,gasto_por_estudiante,3569556.05,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.14
+2018,uncuyo,Universidad Nacional de Cuyo,gasto_por_estudiante_capital,22285.54,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.14
+2020,uncuyo,Universidad Nacional de Cuyo,gasto_por_estudiante_capital,23048.29,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.14
+2021,uncuyo,Universidad Nacional de Cuyo,gasto_por_estudiante_capital,3541.46,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.14
+2023,uncuyo,Universidad Nacional de Cuyo,gasto_por_estudiante_capital,14292.43,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.14
+2024,uncuyo,Universidad Nacional de Cuyo,gasto_por_estudiante_capital,42808.99,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.14
+2018,uncuyo,Universidad Nacional de Cuyo,gasto_por_estudiante_corriente,747990.83,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.14
+2020,uncuyo,Universidad Nacional de Cuyo,gasto_por_estudiante_corriente,228294.56,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.14
+2021,uncuyo,Universidad Nacional de Cuyo,gasto_por_estudiante_corriente,307436.16,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.14
+2023,uncuyo,Universidad Nacional de Cuyo,gasto_por_estudiante_corriente,1422955.07,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.14
+2024,uncuyo,Universidad Nacional de Cuyo,gasto_por_estudiante_corriente,3526747.06,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.14
+2018,uncuyo,Universidad Nacional de Cuyo,gasto_total,27190755909.61,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.13
+2020,uncuyo,Universidad Nacional de Cuyo,gasto_total,8264451598.82,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.13
+2021,uncuyo,Universidad Nacional de Cuyo,gasto_total,11854777811.39,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.13
+2023,uncuyo,Universidad Nacional de Cuyo,gasto_total,48735625537.77,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.13
+2024,uncuyo,Universidad Nacional de Cuyo,gasto_total,121714722158.57,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.13
+2018,uncuyo,Universidad Nacional de Cuyo,inversion_estado_afectacion_especifica,0,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.2.2
+2020,uncuyo,Universidad Nacional de Cuyo,inversion_estado_afectacion_especifica,0,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.2.2
+2021,uncuyo,Universidad Nacional de Cuyo,inversion_estado_afectacion_especifica,0,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.2.2
+2023,uncuyo,Universidad Nacional de Cuyo,inversion_estado_afectacion_especifica,0,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.2.2
+2024,uncuyo,Universidad Nacional de Cuyo,inversion_estado_afectacion_especifica,0,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2.2
+2018,uncuyo,Universidad Nacional de Cuyo,inversion_estado_credito_externo,601280,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.2.2
+2020,uncuyo,Universidad Nacional de Cuyo,inversion_estado_credito_externo,0,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.2.2
+2021,uncuyo,Universidad Nacional de Cuyo,inversion_estado_credito_externo,12908041.47,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.2.2
+2023,uncuyo,Universidad Nacional de Cuyo,inversion_estado_credito_externo,32652330.72,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.2.2
+2024,uncuyo,Universidad Nacional de Cuyo,inversion_estado_credito_externo,2035000,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2.2
+2018,uncuyo,Universidad Nacional de Cuyo,inversion_estado_recursos_propios,0,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.2.2
+2020,uncuyo,Universidad Nacional de Cuyo,inversion_estado_recursos_propios,0,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.2.2
+2021,uncuyo,Universidad Nacional de Cuyo,inversion_estado_recursos_propios,0,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.2.2
+2023,uncuyo,Universidad Nacional de Cuyo,inversion_estado_recursos_propios,0,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.2.2
+2024,uncuyo,Universidad Nacional de Cuyo,inversion_estado_recursos_propios,0,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2.2
+2018,uncuyo,Universidad Nacional de Cuyo,inversion_estado_tesoro_nacional,4264249240,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.2.2
+2020,uncuyo,Universidad Nacional de Cuyo,inversion_estado_tesoro_nacional,7968137747.53,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.2.2
+2021,uncuyo,Universidad Nacional de Cuyo,inversion_estado_tesoro_nacional,11786735720.57,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.2.2
+2023,uncuyo,Universidad Nacional de Cuyo,inversion_estado_tesoro_nacional,50375327375.21,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.2.2
+2024,uncuyo,Universidad Nacional de Cuyo,inversion_estado_tesoro_nacional,119728390187,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2.2
+2012,uncuyo,Universidad Nacional de Cuyo,inversion_estado_total,875403807.55,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.2
+2013,uncuyo,Universidad Nacional de Cuyo,inversion_estado_total,1091558841.14,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.2
+2014,uncuyo,Universidad Nacional de Cuyo,inversion_estado_total,1421654479.23,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.2
+2015,uncuyo,Universidad Nacional de Cuyo,inversion_estado_total,1881370214.48,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2
+2016,uncuyo,Universidad Nacional de Cuyo,inversion_estado_total,2498288135.52,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2
+2017,uncuyo,Universidad Nacional de Cuyo,inversion_estado_total,3503765655.95,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2
+2018,uncuyo,Universidad Nacional de Cuyo,inversion_estado_total,4264850520,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.2.2
+2019,uncuyo,Universidad Nacional de Cuyo,inversion_estado_total,5887517297.96,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2
+2020,uncuyo,Universidad Nacional de Cuyo,inversion_estado_total,7968137747.53,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.2.2
+2021,uncuyo,Universidad Nacional de Cuyo,inversion_estado_total,11799643762.04,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.2.2
+2022,uncuyo,Universidad Nacional de Cuyo,inversion_estado_total,20669100134.11,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2
+2023,uncuyo,Universidad Nacional de Cuyo,inversion_estado_total,50407979705.93,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.2.2
+2024,uncuyo,Universidad Nacional de Cuyo,inversion_estado_total,119730425187,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2.2
+2020,uncuyo,Universidad Nacional de Cuyo,inversion_estado_transferencias_externas,0,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.2.2
+2021,uncuyo,Universidad Nacional de Cuyo,inversion_estado_transferencias_externas,0,mendoza,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.2.2
+2023,uncuyo,Universidad Nacional de Cuyo,inversion_estado_transferencias_externas,0,mendoza,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.2.2
+2024,uncuyo,Universidad Nacional de Cuyo,inversion_estado_transferencias_externas,0,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2.2
+2012,uncuyo,Universidad Nacional de Cuyo,recursos_propios_recaudados,42565232.52,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.4
+2013,uncuyo,Universidad Nacional de Cuyo,recursos_propios_recaudados,51575951.86,mendoza,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.4
+2014,uncuyo,Universidad Nacional de Cuyo,recursos_propios_recaudados,78795678.56,mendoza,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.4
+2015,uncuyo,Universidad Nacional de Cuyo,recursos_propios_recaudados,107944901.09,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.4
+2016,uncuyo,Universidad Nacional de Cuyo,recursos_propios_recaudados,153809257.71,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.4
+2017,uncuyo,Universidad Nacional de Cuyo,recursos_propios_recaudados,121064678.94,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.4
+2018,uncuyo,Universidad Nacional de Cuyo,recursos_propios_recaudados,1298986640.44,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.4
+2019,uncuyo,Universidad Nacional de Cuyo,recursos_propios_recaudados,321437363.85,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.4
+2020,uncuyo,Universidad Nacional de Cuyo,recursos_propios_recaudados,233471879.13,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.4
+2021,uncuyo,Universidad Nacional de Cuyo,recursos_propios_recaudados,494795096.44,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.4
+2022,uncuyo,Universidad Nacional de Cuyo,recursos_propios_recaudados,864651210.02,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.4
+2023,uncuyo,Universidad Nacional de Cuyo,recursos_propios_recaudados,3365239235.76,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.4
+2024,uncuyo,Universidad Nacional de Cuyo,recursos_propios_recaudados,9206196729.25,mendoza,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.4
+2018,utn,Universidad Tecnológica Nacional,gasto_capital,1018828084.77,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.14
+2020,utn,Universidad Tecnológica Nacional,gasto_capital,54314094.94,nacional,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.14
+2021,utn,Universidad Tecnológica Nacional,gasto_capital,288503456.29,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.14
+2023,utn,Universidad Tecnológica Nacional,gasto_capital,2229200715.87,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.14
+2024,utn,Universidad Tecnológica Nacional,gasto_capital,2081282621.52,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.14
+2018,utn,Universidad Tecnológica Nacional,gasto_corriente,58383794350.49,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.14
+2020,utn,Universidad Tecnológica Nacional,gasto_corriente,14704316158.29,nacional,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.14
+2021,utn,Universidad Tecnológica Nacional,gasto_corriente,21890399757.85,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.14
+2023,utn,Universidad Tecnológica Nacional,gasto_corriente,102260090610.26,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.14
+2024,utn,Universidad Tecnológica Nacional,gasto_corriente,246376733706.25,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.14
+2018,utn,Universidad Tecnológica Nacional,gasto_fuente_otras,57569320.44,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.13
+2020,utn,Universidad Tecnológica Nacional,gasto_fuente_otras,0,nacional,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.13
+2021,utn,Universidad Tecnológica Nacional,gasto_fuente_otras,26937393.84,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.13
+2023,utn,Universidad Tecnológica Nacional,gasto_fuente_otras,49061519.34,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.13
+2024,utn,Universidad Tecnológica Nacional,gasto_fuente_otras,0,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.13
+2018,utn,Universidad Tecnológica Nacional,gasto_fuente_recursos_propios,15229448682.72,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.13
+2020,utn,Universidad Tecnológica Nacional,gasto_fuente_recursos_propios,2235731605.34,nacional,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.13
+2021,utn,Universidad Tecnológica Nacional,gasto_fuente_recursos_propios,20673250326.87,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.13
+2023,utn,Universidad Tecnológica Nacional,gasto_fuente_recursos_propios,18595784071.38,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.13
+2024,utn,Universidad Tecnológica Nacional,gasto_fuente_recursos_propios,40747083957.11,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.13
+2018,utn,Universidad Tecnológica Nacional,gasto_fuente_remanente_anterior,2552252248.83,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.13
+2020,utn,Universidad Tecnológica Nacional,gasto_fuente_remanente_anterior,19818673.41,nacional,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.13
+2021,utn,Universidad Tecnológica Nacional,gasto_fuente_remanente_anterior,109892022.51,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.13
+2023,utn,Universidad Tecnológica Nacional,gasto_fuente_remanente_anterior,1479302073.99,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.13
+2024,utn,Universidad Tecnológica Nacional,gasto_fuente_remanente_anterior,2475730901.14,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.13
+2018,utn,Universidad Tecnológica Nacional,gasto_fuente_tesoro_nacional,41563352183.27,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.13
+2020,utn,Universidad Tecnológica Nacional,gasto_fuente_tesoro_nacional,12503079974.48,nacional,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.13
+2021,utn,Universidad Tecnológica Nacional,gasto_fuente_tesoro_nacional,1368823470.92,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.13
+2023,utn,Universidad Tecnológica Nacional,gasto_fuente_tesoro_nacional,84365143661.42,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.13
+2024,utn,Universidad Tecnológica Nacional,gasto_fuente_tesoro_nacional,205235201469.52,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.13
+2018,utn,Universidad Tecnológica Nacional,gasto_inciso_bienes_consumo,555867523.86,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.6
+2020,utn,Universidad Tecnológica Nacional,gasto_inciso_bienes_consumo,74996512.94,nacional,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.6
+2021,utn,Universidad Tecnológica Nacional,gasto_inciso_bienes_consumo,212000703.39,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.6
+2023,utn,Universidad Tecnológica Nacional,gasto_inciso_bienes_consumo,1859889890.77,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.6
+2024,utn,Universidad Tecnológica Nacional,gasto_inciso_bienes_consumo,3086968177.21,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.6
+2018,utn,Universidad Tecnológica Nacional,gasto_inciso_bienes_uso,1018828084.77,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.6
+2020,utn,Universidad Tecnológica Nacional,gasto_inciso_bienes_uso,54314094.94,nacional,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.6
+2021,utn,Universidad Tecnológica Nacional,gasto_inciso_bienes_uso,288503456.29,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.6
+2023,utn,Universidad Tecnológica Nacional,gasto_inciso_bienes_uso,2229200715.87,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.6
+2024,utn,Universidad Tecnológica Nacional,gasto_inciso_bienes_uso,2081282621.52,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.6
+2018,utn,Universidad Tecnológica Nacional,gasto_inciso_otros,307466886.28,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.6
+2020,utn,Universidad Tecnológica Nacional,gasto_inciso_otros,15075508.89,nacional,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.6
+2021,utn,Universidad Tecnológica Nacional,gasto_inciso_otros,14386342.78,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.6
+2023,utn,Universidad Tecnológica Nacional,gasto_inciso_otros,13008010.55,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.6
+2024,utn,Universidad Tecnológica Nacional,gasto_inciso_otros,12318844.43,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.6
+2018,utn,Universidad Tecnológica Nacional,gasto_inciso_personal,37624368911.37,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.6
+2020,utn,Universidad Tecnológica Nacional,gasto_inciso_personal,11657876225.13,nacional,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.6
+2021,utn,Universidad Tecnológica Nacional,gasto_inciso_personal,16877761851.51,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.6
+2023,utn,Universidad Tecnológica Nacional,gasto_inciso_personal,78831540014.85,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.6
+2024,utn,Universidad Tecnológica Nacional,gasto_inciso_personal,196549467726.19,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.6
+2018,utn,Universidad Tecnológica Nacional,gasto_inciso_servicios_no_personales,12004070636.75,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.6
+2020,utn,Universidad Tecnológica Nacional,gasto_inciso_servicios_no_personales,2037634139.89,nacional,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.6
+2021,utn,Universidad Tecnológica Nacional,gasto_inciso_servicios_no_personales,3631312275.58,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.6
+2023,utn,Universidad Tecnológica Nacional,gasto_inciso_servicios_no_personales,16773088971.96,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.6
+2024,utn,Universidad Tecnológica Nacional,gasto_inciso_servicios_no_personales,35888904380.64,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.6
+2018,utn,Universidad Tecnológica Nacional,gasto_inciso_transferencias,7892020392.23,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.6
+2020,utn,Universidad Tecnológica Nacional,gasto_inciso_transferencias,918733771.44,nacional,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.6
+2021,utn,Universidad Tecnológica Nacional,gasto_inciso_transferencias,1154938584.59,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.6
+2023,utn,Universidad Tecnológica Nacional,gasto_inciso_transferencias,4782563722.13,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.6
+2024,utn,Universidad Tecnológica Nacional,gasto_inciso_transferencias,10839074577.78,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.6
+2018,utn,Universidad Tecnológica Nacional,gasto_por_estudiante,669529.01,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.14
+2020,utn,Universidad Tecnológica Nacional,gasto_por_estudiante,156134.68,nacional,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.14
+2021,utn,Universidad Tecnológica Nacional,gasto_por_estudiante,217719.85,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.14
+2023,utn,Universidad Tecnológica Nacional,gasto_por_estudiante,958740.49,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.14
+2024,utn,Universidad Tecnológica Nacional,gasto_por_estudiante,2156828.5,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.14
+2018,utn,Universidad Tecnológica Nacional,gasto_por_estudiante_capital,11483.25,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.14
+2020,utn,Universidad Tecnológica Nacional,gasto_por_estudiante_capital,5746,nacional,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.14
+2021,utn,Universidad Tecnológica Nacional,gasto_por_estudiante_capital,2832.1,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.14
+2023,utn,Universidad Tecnológica Nacional,gasto_por_estudiante_capital,20454.01,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.14
+2024,utn,Universidad Tecnológica Nacional,gasto_por_estudiante_capital,18067.32,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.14
+2018,utn,Universidad Tecnológica Nacional,gasto_por_estudiante_corriente,658045.76,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.14
+2020,utn,Universidad Tecnológica Nacional,gasto_por_estudiante_corriente,155560.08,nacional,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.14
+2021,utn,Universidad Tecnológica Nacional,gasto_por_estudiante_corriente,214887.75,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.14
+2023,utn,Universidad Tecnológica Nacional,gasto_por_estudiante_corriente,938286.48,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.14
+2024,utn,Universidad Tecnológica Nacional,gasto_por_estudiante_corriente,2138761.19,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.14
+2018,utn,Universidad Tecnológica Nacional,gasto_total,59402622435.26,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.13
+2020,utn,Universidad Tecnológica Nacional,gasto_total,14758630253.23,nacional,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.13
+2021,utn,Universidad Tecnológica Nacional,gasto_total,22178903214.14,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.13
+2023,utn,Universidad Tecnológica Nacional,gasto_total,104489291326.13,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.13
+2024,utn,Universidad Tecnológica Nacional,gasto_total,248458016327.77,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.13
+2018,utn,Universidad Tecnológica Nacional,inversion_estado_afectacion_especifica,6585694,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.2.2
+2021,utn,Universidad Tecnológica Nacional,inversion_estado_afectacion_especifica,333527,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.2.2
+2023,utn,Universidad Tecnológica Nacional,inversion_estado_afectacion_especifica,2602496,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.2.2
+2024,utn,Universidad Tecnológica Nacional,inversion_estado_afectacion_especifica,1000000,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2.2
+2018,utn,Universidad Tecnológica Nacional,inversion_estado_credito_externo,5645158.7,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.2.2
+2021,utn,Universidad Tecnológica Nacional,inversion_estado_credito_externo,68523400.67,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.2.2
+2023,utn,Universidad Tecnológica Nacional,inversion_estado_credito_externo,95211128.05,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.2.2
+2024,utn,Universidad Tecnológica Nacional,inversion_estado_credito_externo,0,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2.2
+2018,utn,Universidad Tecnológica Nacional,inversion_estado_recursos_propios,0,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.2.2
+2021,utn,Universidad Tecnológica Nacional,inversion_estado_recursos_propios,0,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.2.2
+2023,utn,Universidad Tecnológica Nacional,inversion_estado_recursos_propios,0,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.2.2
+2024,utn,Universidad Tecnológica Nacional,inversion_estado_recursos_propios,0,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2.2
+2018,utn,Universidad Tecnológica Nacional,inversion_estado_tesoro_nacional,6882426744.54,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.2.2
+2021,utn,Universidad Tecnológica Nacional,inversion_estado_tesoro_nacional,20238745946,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.2.2
+2023,utn,Universidad Tecnológica Nacional,inversion_estado_tesoro_nacional,94577794406.14,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.2.2
+2024,utn,Universidad Tecnológica Nacional,inversion_estado_tesoro_nacional,235295866163,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2.2
+2012,utn,Universidad Tecnológica Nacional,inversion_estado_total,1509384437.65,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.2
+2013,utn,Universidad Tecnológica Nacional,inversion_estado_total,1889937511.27,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.2
+2014,utn,Universidad Tecnológica Nacional,inversion_estado_total,2489018858.66,nacional,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.2
+2015,utn,Universidad Tecnológica Nacional,inversion_estado_total,3326412496.08,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2
+2016,utn,Universidad Tecnológica Nacional,inversion_estado_total,4218902119.25,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2
+2017,utn,Universidad Tecnológica Nacional,inversion_estado_total,5631348959.98,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2
+2018,utn,Universidad Tecnológica Nacional,inversion_estado_total,6894657597.24,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.2.2
+2019,utn,Universidad Tecnológica Nacional,inversion_estado_total,9523872448.74,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2
+2020,utn,Universidad Tecnológica Nacional,inversion_estado_total,13219024951.57,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2
+2021,utn,Universidad Tecnológica Nacional,inversion_estado_total,20307602873.67,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.2.2
+2022,utn,Universidad Tecnológica Nacional,inversion_estado_total,37034647857.17,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2
+2023,utn,Universidad Tecnológica Nacional,inversion_estado_total,94675608030.19,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.2.2
+2024,utn,Universidad Tecnológica Nacional,inversion_estado_total,235296866163,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2.2
+2021,utn,Universidad Tecnológica Nacional,inversion_estado_transferencias_externas,0,nacional,2021,anuario_2021.zip/5. Presupuesto 2021.xlsx,5.2.2
+2023,utn,Universidad Tecnológica Nacional,inversion_estado_transferencias_externas,0,nacional,2023,anuario_2023.zip/5. Presupuesto 2023.xls,5.2.2
+2024,utn,Universidad Tecnológica Nacional,inversion_estado_transferencias_externas,0,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.2.2
+2012,utn,Universidad Tecnológica Nacional,recursos_propios_recaudados,918443057.29,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.4
+2013,utn,Universidad Tecnológica Nacional,recursos_propios_recaudados,1178044431.27,nacional,2018,anuario_2018.zip/5 - Presupuesto 2018.xlsx,5.4
+2014,utn,Universidad Tecnológica Nacional,recursos_propios_recaudados,1719614431.05,nacional,2020,anuario_2020.zip/5. Presupuesto 2020.xlsx,5.4
+2015,utn,Universidad Tecnológica Nacional,recursos_propios_recaudados,2594002290.1,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.4
+2016,utn,Universidad Tecnológica Nacional,recursos_propios_recaudados,1537949803.74,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.4
+2017,utn,Universidad Tecnológica Nacional,recursos_propios_recaudados,2015297342.04,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.4
+2018,utn,Universidad Tecnológica Nacional,recursos_propios_recaudados,22031118557.37,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.4
+2019,utn,Universidad Tecnológica Nacional,recursos_propios_recaudados,3538431418.32,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.4
+2020,utn,Universidad Tecnológica Nacional,recursos_propios_recaudados,4036759556.07,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.4
+2021,utn,Universidad Tecnológica Nacional,recursos_propios_recaudados,6965040312.74,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.4
+2022,utn,Universidad Tecnológica Nacional,recursos_propios_recaudados,13480725584.65,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.4
+2023,utn,Universidad Tecnológica Nacional,recursos_propios_recaudados,33434337899.47,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.4
+2024,utn,Universidad Tecnológica Nacional,recursos_propios_recaudados,74271840552.27,nacional,2024,anuario_2024_adelanto.zip/Z 5. Presupuesto 24.xlsx,5.4

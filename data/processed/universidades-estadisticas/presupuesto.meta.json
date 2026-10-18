@@ -1,0 +1,50 @@
+{
+  "titulo": "Presupuesto de la UNCuyo y la UTN",
+  "descripcion": "Cada fila es una universidad nacional, un año y un concepto del capítulo de presupuesto del Anuario de Estadísticas Universitarias. Todos los montos están en pesos nominales de cada año (sin ajustar por inflación). La plata de las universidades nacionales viene de la Nación, no del presupuesto de Mendoza. La UTN es una sola universidad nacional: no se puede separar Mendoza. El último año viene de un adelanto del Anuario que puede corregirse.",
+  "columnas": {
+    "anio": { "etiqueta": "Año", "tipo": "anio" },
+    "universidad_id": { "etiqueta": "Universidad", "tipo": "texto", "valores": { "uncuyo": "UNCuyo", "utn": "UTN" }, "oculta": true },
+    "universidad": { "etiqueta": "Universidad", "tipo": "texto" },
+    "concepto": {
+      "etiqueta": "Concepto",
+      "tipo": "texto",
+      "valores": {
+        "inversion_estado_total": "Aportes de la Nación (total)",
+        "inversion_estado_tesoro_nacional": "Aportes de la Nación: Tesoro",
+        "inversion_estado_recursos_propios": "Aportes de la Nación: recursos propios",
+        "inversion_estado_afectacion_especifica": "Aportes de la Nación: afectación específica",
+        "inversion_estado_transferencias_externas": "Aportes de la Nación: transferencias externas",
+        "inversion_estado_credito_externo": "Aportes de la Nación: crédito externo",
+        "recursos_propios_recaudados": "Recursos propios recaudados",
+        "gasto_total": "Gasto total ejecutado",
+        "gasto_fuente_tesoro_nacional": "Gasto con fondos del Tesoro",
+        "gasto_fuente_recursos_propios": "Gasto con recursos propios",
+        "gasto_fuente_remanente_anterior": "Gasto con remanentes de años anteriores",
+        "gasto_fuente_otras": "Gasto con otras fuentes",
+        "gasto_inciso_personal": "Gasto en personal",
+        "gasto_inciso_bienes_consumo": "Gasto en bienes de consumo",
+        "gasto_inciso_servicios_no_personales": "Gasto en servicios no personales",
+        "gasto_inciso_bienes_uso": "Gasto en bienes de uso",
+        "gasto_inciso_transferencias": "Gasto en transferencias",
+        "gasto_inciso_otros": "Gasto en otros incisos",
+        "gasto_corriente": "Gasto corriente",
+        "gasto_capital": "Gasto de capital",
+        "gasto_por_estudiante": "Gasto por estudiante",
+        "gasto_por_estudiante_corriente": "Gasto corriente por estudiante",
+        "gasto_por_estudiante_capital": "Gasto de capital por estudiante"
+      },
+      "descripcion": "Los aportes de la Nación son lo que se le transfirió a la universidad (devengado). El gasto es lo que la universidad ejecutó, con todas sus fuentes."
+    },
+    "monto": { "etiqueta": "Monto", "tipo": "moneda", "moneda": "ARS", "escala": 1, "descripcion": "Pesos nominales del año." },
+    "alcance": {
+      "etiqueta": "Alcance",
+      "tipo": "texto",
+      "valores": { "mendoza": "Mendoza", "nacional": "Todo el país" },
+      "descripcion": "La UTN es una sola universidad nacional: su cifra incluye todas sus facultades regionales, no solo las de Mendoza."
+    },
+    "anuario": { "etiqueta": "Anuario", "tipo": "anio", "descripcion": "Año del Anuario de donde sale el dato (el más nuevo que lo trae)." },
+    "fuente_archivo": { "etiqueta": "Archivo de origen", "tipo": "texto", "oculta": true },
+    "cuadro": { "etiqueta": "Cuadro", "tipo": "texto", "descripcion": "Cuadro del Anuario de donde sale la fila." }
+  },
+  "orden": ["anio", "universidad", "concepto", "monto", "alcance", "anuario", "cuadro"]
+}

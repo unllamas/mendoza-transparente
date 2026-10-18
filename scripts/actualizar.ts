@@ -28,6 +28,7 @@ const TODAS = [
   "etica-publica",
   "indices",
   "deie-ipc",
+  "atm-recaudacion",
   "hacienda-deuda-stock",
   "hacienda-participacion-municipal",
   "energia-regalias",
@@ -40,6 +41,8 @@ const TODAS = [
   "designaciones",
   "municipios-personal",
   "municipios-lrf",
+  "universidades-estadisticas",
+  "universidades-presupuesto",
 ];
 
 const hace = (dias: number) => new Date(Date.now() - dias * 864e5).toISOString().slice(0, 10);

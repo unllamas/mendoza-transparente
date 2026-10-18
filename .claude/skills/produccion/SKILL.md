@@ -29,9 +29,17 @@ Fuentes completas: `docs/procesos/web.md` (Publicar), `participacion.md` y `anal
 
 ## Protección
 
-- **Activo:** HTTPS obligatorio, TLS 1.2 mínimo, Bot Fight Mode, Turnstile en formularios y límite de 10 POST cada 10 s por IP en `/api/*`.
+- **Activo:** HTTPS obligatorio, TLS 1.2 mínimo, `www` redirigido con 301 al dominio principal, Bot Fight Mode, Turnstile en formularios y límite de 10 POST cada 10 s por IP en `/api/*`.
 - **Robots de IA:** su protección queda **apagada** a propósito, para que nos lean y nos citen.
 - **Ante un ataque:** activar "I'm Under Attack" en Security → Settings mientras dure, y avisarle al usuario.
+
+## Correo del proyecto
+
+- **`hola@mendoza-transparente.com`** recibe con Cloudflare Email Routing (gratis) y reenvía a la casilla personal del responsable (verificada en la cuenta). Lo demás que llega al dominio se descarta: la regla «catch-all» está apagada.
+- **Configurado el 18/10/2026 por API:** Email Routing activo, los MX `route1/2/3.mx.cloudflare.net` y el SPF `v=spf1 include:_spf.mx.cloudflare.net ~all`, que agrega Cloudflare, y la regla «hola@ al correo del responsable».
+- **El token** necesita *Account → Email Routing Addresses → Edit* y *Zone → Email Routing Rules → Edit*, con la zona incluida en *Zone Resources*. Sin la zona, la API responde `Authentication error`.
+- **Solo recibe.** Para mandar desde `hola@` (los reportes de [seguridad](../../../docs/procesos/seguridad.md)) falta un servicio de envío y sumar su registro al SPF. Mientras tanto se responde desde la casilla personal.
+- **Para cambiar el destino o sumar otra dirección:** dar de alta la casilla en `/accounts/$ID/email/routing/addresses` (le llega un correo de verificación) y editar la regla en `/zones/<zona>/email/routing/rules`.
 
 ## Search Console y redes
 

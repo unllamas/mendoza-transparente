@@ -22,6 +22,36 @@
   dificultad: facil
   estado: activo
 
+- id: atm-recaudacion
+  nombre: Recaudación mensual por impuesto provincial
+  descripcion: "Cuánto recauda la provincia cada mes por Ingresos Brutos, Sellos, Automotor e Inmobiliario, desde el año 2000."
+  organismo: Administración Tributaria Mendoza (ATM)
+  url: https://atm.mendoza.gov.ar/portalatm/zoneBottom/datosInteres/recaudacion/recaudacion.jsp
+  formato: html
+  frecuencia: mensual
+  dificultad: facil
+  estado: activo
+
+- id: universidades-estadisticas
+  nombre: Anuario de Estadísticas Universitarias (UNCuyo y UTN)
+  descripcion: "Estudiantes, egresados, docentes, no docentes y presupuesto de la UNCuyo y la UTN, año a año. La UTN figura como una sola universidad para todo el país."
+  organismo: Subsecretaría de Políticas Universitarias, Ministerio de Capital Humano
+  url: https://www.argentina.gob.ar/educacion/universidades/informacion/publicaciones/anuarios
+  formato: xlsx
+  frecuencia: anual
+  dificultad: media
+  estado: activo
+
+- id: universidades-presupuesto
+  nombre: Transferencias de Nación a la UNCuyo y la UTN
+  descripcion: "Cuánta plata del Tesoro nacional se presupuestó, devengó y pagó cada año para la UNCuyo y la UTN, por programa y actividad, desde 1996. La UTN figura como una sola universidad para todo el país."
+  organismo: Ministerio de Economía de la Nación (Presupuesto Abierto)
+  url: https://www.presupuestoabierto.gob.ar/sici/datos-abiertos
+  formato: zip, csv
+  frecuencia: mensual
+  dificultad: facil
+  estado: activo
+
 - id: dnap-ron
   nombre: Recursos de origen nacional (transferencias automáticas de Nación a provincias)
   descripcion: "Cuánto dinero le transfiere Nación a cada provincia por coparticipación y otros regímenes, mes a mes."

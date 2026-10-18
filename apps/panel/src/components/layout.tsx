@@ -8,15 +8,17 @@ import {
   RiInbox2Line,
   RiLogoutBoxRLine,
   RiShieldKeyholeLine,
+  RiShieldLine,
 } from "@remixicon/react";
 import { Link, Outlet } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { SESSION_EXPIRED_EVENT, useApi } from "../api.ts";
 
-const NAV: { to: "/" | "/bandeja" | "/estadisticas" | "/auditoria"; label: string; icon: RemixiconComponentType }[] = [
+const NAV: { to: "/" | "/bandeja" | "/estadisticas" | "/seguridad" | "/auditoria"; label: string; icon: RemixiconComponentType }[] = [
   { to: "/", label: "Inicio", icon: RiDashboardLine },
   { to: "/bandeja", label: "Bandeja", icon: RiInbox2Line },
   { to: "/estadisticas", label: "Estadísticas", icon: RiBarChart2Line },
+  { to: "/seguridad", label: "Seguridad", icon: RiShieldLine },
   { to: "/auditoria", label: "Auditoría", icon: RiFileList3Line },
 ];
 

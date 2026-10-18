@@ -1,0 +1,104 @@
+{
+  "titulo": "Transferencias de Nación a las universidades nacionales de Mendoza",
+  "descripcion": "Cada fila es lo que el Tesoro nacional presupuestó, devengó y pagó en un año a la UNCuyo o a la UTN, por programa, actividad y fuente de financiamiento. Montos en pesos nominales, sin ajustar por inflación. Ojo con la UTN: figura como una sola universidad para todo el país y no se puede separar lo que va a las facultades regionales de Mendoza y San Rafael (sus pagos figuran en Capital Federal), así que sus filas son un total nacional y no deben leerse como plata de Mendoza. La UNCuyo sí es una institución con sede en la provincia. Los datos del año en curso son parciales: llegan hasta la fecha de corte.",
+  "columnas": {
+    "anio": {
+      "etiqueta": "Año",
+      "tipo": "anio"
+    },
+    "universidad_id": {
+      "etiqueta": "Código de universidad",
+      "tipo": "texto",
+      "oculta": true
+    },
+    "universidad": {
+      "etiqueta": "Universidad",
+      "tipo": "texto"
+    },
+    "alcance": {
+      "etiqueta": "Alcance",
+      "tipo": "texto",
+      "descripcion": "«Mendoza» es una universidad con sede en la provincia. «Nacional» es el total de una universidad que reporta una sola cifra para todo el país (la UTN).",
+      "valores": {
+        "mendoza": "Mendoza",
+        "nacional": "Todo el país"
+      }
+    },
+    "programa_id": {
+      "etiqueta": "Código de programa",
+      "tipo": "texto",
+      "oculta": true
+    },
+    "programa": {
+      "etiqueta": "Programa",
+      "tipo": "texto",
+      "descripcion": "Programa presupuestario del Ministerio de Capital Humano que transfiere el dinero."
+    },
+    "actividad_id": {
+      "etiqueta": "Código de actividad",
+      "tipo": "texto",
+      "oculta": true
+    },
+    "actividad": {
+      "etiqueta": "Actividad",
+      "tipo": "texto",
+      "descripcion": "Para qué se transfiere (salario docente, no docente, funcionamiento, hospitales, ciencia y técnica, etc.)."
+    },
+    "inciso": {
+      "etiqueta": "Tipo de gasto",
+      "tipo": "texto"
+    },
+    "fuente_financiamiento": {
+      "etiqueta": "Fuente de financiamiento",
+      "tipo": "texto",
+      "descripcion": "De dónde sale la plata: Tesoro Nacional, crédito externo, etc."
+    },
+    "credito_inicial": {
+      "etiqueta": "Presupuesto inicial",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Lo que fijó la ley de presupuesto al empezar el año."
+    },
+    "credito_vigente": {
+      "etiqueta": "Presupuesto vigente",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Presupuesto con las modificaciones hechas durante el año, a la fecha de corte."
+    },
+    "devengado": {
+      "etiqueta": "Devengado",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Gasto reconocido (la obligación de pago ya nació), a la fecha de corte."
+    },
+    "pagado": {
+      "etiqueta": "Pagado",
+      "tipo": "moneda",
+      "moneda": "ARS",
+      "escala": 1,
+      "descripcion": "Lo efectivamente transferido, a la fecha de corte."
+    },
+    "fecha_corte": {
+      "etiqueta": "Fecha de corte",
+      "tipo": "fecha",
+      "descripcion": "Última actualización de Presupuesto Abierto para ese ejercicio."
+    }
+  },
+  "orden": [
+    "anio",
+    "universidad",
+    "alcance",
+    "actividad",
+    "devengado",
+    "credito_vigente",
+    "pagado",
+    "credito_inicial",
+    "programa",
+    "fuente_financiamiento",
+    "fecha_corte"
+  ],
+  "agruparPor": "universidad"
+}

@@ -1,0 +1,33 @@
+{
+  "titulo": "Estudiantes de la UNCuyo y la UTN",
+  "descripcion": "Cada fila es una universidad nacional, un año y un nivel (pregrado y grado, o posgrado), con estudiantes, nuevos inscriptos, reinscriptos y egresados del Anuario de Estadísticas Universitarias. La UNCuyo es de Mendoza; la UTN reporta como una sola universidad para todo el país y no se puede separar Mendoza ni San Rafael. Los reinscriptos solo existen en pregrado y grado desde 2013. El último año viene de un adelanto del Anuario que puede corregirse.",
+  "columnas": {
+    "anio": { "etiqueta": "Año", "tipo": "anio" },
+    "universidad_id": {
+      "etiqueta": "Universidad",
+      "tipo": "texto",
+      "valores": { "uncuyo": "UNCuyo", "utn": "UTN" },
+      "oculta": true
+    },
+    "universidad": { "etiqueta": "Universidad", "tipo": "texto" },
+    "nivel": {
+      "etiqueta": "Nivel",
+      "tipo": "texto",
+      "valores": { "pregrado_grado": "Pregrado y grado", "posgrado": "Posgrado" }
+    },
+    "estudiantes": { "etiqueta": "Estudiantes", "tipo": "numero", "descripcion": "Estudiantes del año (nuevos inscriptos más reinscriptos)." },
+    "nuevos_inscriptos": { "etiqueta": "Nuevos inscriptos", "tipo": "numero" },
+    "reinscriptos": { "etiqueta": "Reinscriptos", "tipo": "numero", "descripcion": "Solo se publica en pregrado y grado." },
+    "egresados": { "etiqueta": "Egresados", "tipo": "numero" },
+    "alcance": {
+      "etiqueta": "Alcance",
+      "tipo": "texto",
+      "valores": { "mendoza": "Mendoza", "nacional": "Todo el país" },
+      "descripcion": "La UTN es una sola universidad nacional: su cifra incluye todas sus facultades regionales, no solo las de Mendoza."
+    },
+    "anuario": { "etiqueta": "Anuario", "tipo": "anio", "descripcion": "Año del Anuario de donde sale el dato (el más nuevo que lo trae)." },
+    "fuente_archivo": { "etiqueta": "Archivo de origen", "tipo": "texto", "oculta": true },
+    "cuadro": { "etiqueta": "Cuadros", "tipo": "texto", "descripcion": "Cuadros del Anuario de donde sale la fila." }
+  },
+  "orden": ["anio", "universidad", "nivel", "estudiantes", "nuevos_inscriptos", "reinscriptos", "egresados", "alcance", "anuario", "cuadro"]
+}

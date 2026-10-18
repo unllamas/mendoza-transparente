@@ -1,6 +1,6 @@
 ---
 name: arquitectura
-description: Dónde va cada cosa en el monorepo de Mendoza Transparente (apps, packages, pages, features, components, lib) y las reglas que se controlan solas (Biome, dependency-cruiser, tipos, hooks de git, CI). Cargar antes de crear un archivo, un paquete o una app, de mover código o de agregar una dependencia.
+description: Dónde va cada cosa en el monorepo de Mendoza Transparente (apps, packages, pages, features, components, lib) y las reglas que se controlan solas (Biome, dependency-cruiser, tipos, hooks de git, CI), y el costo cero (todo en planes gratis). Cargar antes de crear un archivo, un paquete o una app, de mover código, de agregar una dependencia, y antes de proponer una CI, un workflow, una función o un servicio nuevo.
 ---
 
 # Arquitectura
@@ -17,6 +17,10 @@ Fuente completa: `docs/procesos/arquitectura.md`.
 6. **¿Es lógica sin interfaz?** Va a la raíz de `src` (`lib.ts`, `url-state.ts`…).
 7. **`pages/`** solo tiene páginas de ruta: archivos cortos que arman componentes.
 8. **Nombres de archivo en kebab-case.** Imports con `@/` y sin barrels.
+
+## Costo cero
+
+El proyecto no tiene financiación. Antes de proponer una CI, un workflow programado, una función, una base o un servicio, decir cuánto gasta y de qué cupo (builds de Cloudflare Pages, pedidos a funciones, D1, cola de GitHub Actions, eventos de PostHog). Lo que puede ser estático, se genera en el build. Una CI nueva corre solo con `paths:` que la justifiquen. Nada pago sin acordarlo. Tabla de cupos en `docs/procesos/arquitectura.md#costo-cero`.
 
 ## Antes de commitear
 

@@ -4,14 +4,14 @@ El proyecto se construye con Claude Code. La guía para agentes es `AGENTS.md`, 
 
 ## Roles
 
-- **Sesión principal (Opus)**: decide, diseña, integra, revisa todo lo que entregan los subagentes y hace los commits, en una rama que sale de `dev` (ver [Ramas y releases](ramas-y-releases.md)). **Toda tarea termina con commit, push y PR a `dev`, sin esperar un pedido aparte**: lo que queda sin commitear en un worktree se pierde. Los cambios que llegan después en la misma conversación van a la misma rama y al mismo PR.
+- **Sesión principal (Opus)**: decide, diseña, integra, revisa todo lo que entregan los subagentes y hace los commits, en una rama que sale de `dev` (ver [Ramas y releases](ramas-y-releases.md)). **Toda tarea termina con commit, push y PR a `dev`, sin esperar un pedido aparte**: lo que queda sin commitear en un worktree se pierde. **El PR no lo mergea el agente salvo que el usuario se lo pida explícitamente**; si no, lo revisa y lo mergea una persona del equipo. Los cambios que llegan después en la misma conversación van a la misma rama y al mismo PR.
 - **Subagentes (Sonnet)**: tareas acotadas y largas: un scraper, un relevamiento, un diccionario de datos, una búsqueda de fotos. Corren en paralelo y en segundo plano. Configurado en `~/.claude/settings.json` con `CLAUDE_CODE_SUBAGENT_MODEL`.
 
 ## Harness: skills, hooks y permisos
 
 El repo trae la configuración de Claude Code en `.claude/`. Funciona cuando Claude Code se abre en la carpeta del repo:
 
-- **`skills/<nombre>/SKILL.md`:** una skill por proceso: `codigo`, `arquitectura`, `diseno`, `mejoras`, `revisar-interfaz`, `estresar-interfaz`, `analitica`, `datos-y-fuentes`, `contenido-y-metodologia`, `seo-y-geo`, `produccion` y `delegar-en-agentes`.
+- **`skills/<nombre>/SKILL.md`:** una skill por proceso: `codigo`, `arquitectura`, `diseno`, `mejoras`, `vista-previa`, `revisar-interfaz`, `estresar-interfaz`, `analitica`, `datos-y-fuentes`, `contenido-y-metodologia`, `seo-y-geo`, `produccion`, `panel`, `delegar-en-agentes` y `ramas-y-releases`.
   - Cada una tiene una descripción que dice cuándo cargarla y una checklist corta.
   - El detalle sigue en `docs/procesos/`. Si algo cambia, se actualizan los dos en el mismo commit.
   - El índice de qué cargar según la tarea está en `AGENTS.md`.
@@ -39,6 +39,7 @@ Cada pedido a un subagente incluye:
 4. **Nunca hacer commit**: lo hace la sesión principal después de revisar.
 5. Qué verificar antes de terminar (conteos, totales, escalas, que corra dos veces sin duplicar).
 6. Un reporte final breve: archivos, cobertura, problemas y datos dudosos.
+7. Si aparece un problema de seguridad: parar, no descargar nada más y cargarlo con `bun run hallazgo`, sin copiar los datos ni escribirlo en archivos, y poner el código `S-…` en el reporte (ver [Hallazgos de seguridad](seguridad.md)).
 
 ## Revisión de lo que entregan
 
@@ -52,3 +53,6 @@ Cada pedido a un subagente incluye:
 - Los subagentes no ven la conversación: el pedido tiene que ser autocontenido.
 - Pedir siempre que verifiquen contra el documento original y que reporten lo dudoso en vez de resolverlo en silencio.
 - Las decisiones de diseño y producto las toma la sesión principal; los subagentes ejecutan.
+- **El turno no termina esperando una CI.** Varias veces la sesión cerró con «espero a que termine la CI» y la persona tuvo que preguntar «¿y?». La CI y el despliegue se siguen en segundo plano hasta el final, y la tarea llega hasta donde se pidió (ver [Hasta dónde llevar cada pedido](ramas-y-releases.md#hasta-dónde-llevar-cada-pedido)).
+- **La captura muestra un lugar, el pedido es de todos.** Un arreglo de interfaz se busca en todas las páginas que tienen el mismo patrón (ver [Mejoras de interfaz](mejoras-de-interfaz.md#2-entender-el-pedido-para-el-agente)).
+- **Cada propuesta dice cuánto gasta.** El proyecto no tiene financiación: una CI nueva, una función o un servicio se evalúa contra los planes gratis (ver [Costo cero](arquitectura.md#costo-cero)).

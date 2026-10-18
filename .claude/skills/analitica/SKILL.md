@@ -1,6 +1,6 @@
 ---
 name: analitica
-description: Eventos y trackeo de uso en Mendoza Transparente. Cubre PostHog sin cookies, data-track, nombres de eventos, catálogo en español, tablero y privacidad. Cargar al agregar un botón, link, formulario, hoja o cualquier interacción nueva en la web, y al tocar PostHog o el tablero.
+description: Eventos y trackeo de uso en Mendoza Transparente. Cubre PostHog sin cookies, data-track, nombres de eventos, catálogo en español, tablero y privacidad. Cubre también cómo decidir un cambio con los datos de uso (datos → posición o UX → plan → vista previa → código → medir después). Cargar al agregar un botón, link, formulario, hoja o cualquier interacción nueva en la web, al tocar PostHog o el tablero, y cuando se pregunta qué se usa más o por qué algo no se usa.
 ---
 
 # Analítica
@@ -20,6 +20,17 @@ Fuente completa: `docs/procesos/analitica.md`. Código: `apps/web/src/analytics.
 4. **Catálogo:** sumar el evento a `apps/web/src/analytics-catalog.ts` con su descripción en español (qué hizo la persona y qué propiedades lleva).
 5. **Sincronizar:** `bun run posthog-sync` desde la raíz (necesita `.env.posthog`). Crea la definición del evento con su descripción y actualiza el tablero "Uso de Mendoza Transparente".
 6. **Gráfico nuevo:** agregarlo en `INSIGHTS` de `apps/web/scripts/posthog-sync.ts`, con nombre y descripción en español. Si se renombra uno, el viejo queda en PostHog: borrarlo.
+
+## Decidir con los datos de uso
+
+1. **Datos** de `posthog-mendoza`, al menos dos semanas: vistas, clics por `data-track`, scroll, clics sin respuesta, búsquedas sin resultados. Sin contar las páginas en las que se estuvo trabajando.
+2. **¿Posición o UX?** Poco usado y debajo de donde baja la mayoría → posición. A la vista y sin clics → UX. Con las cifras.
+3. **Plan corto** con la métrica que va a mostrar si funcionó.
+4. **Vista previa** (skill `vista-previa`) antes del código.
+5. **Código, PR, publicación.**
+6. **Medir después:** anotación en PostHog el día que se publica, y en «Riesgos y pendientes» del PR qué métrica mirar y cuándo (dos semanas). Si no mejoró, se dice.
+
+Con poco tráfico, una diferencia chica es una señal, no una conclusión. Detalle en `docs/procesos/analitica.md#decidir-con-los-datos-de-uso`.
 
 ## Nombres
 

@@ -12,6 +12,8 @@ const ACTIONS: Record<string, string> = {
   "answer.apply": "Aplicó una respuesta a",
   "answer.reject": "Rechazó una respuesta de",
   export: "Exportó la bandeja",
+  "security.create": "Cargó el hallazgo de seguridad",
+  "security.update": "Cambió el hallazgo de seguridad",
 };
 
 /** Who changed what. Only appended to: the panel has no way to edit or delete it. */
@@ -31,10 +33,20 @@ export function AuditPage() {
             <li key={a.id} className="flex min-h-11 flex-col gap-0.5 py-2.5">
               <span className="text-body-regular">
                 <span className="font-medium">{a.actor}</span> {ACTIONS[a.action] ?? a.action}{" "}
-                {a.targetCode && (
-                  <Link to="/bandeja" search={{ estado: "all", envio: a.targetCode }} className="font-mono text-text-link hover:underline">
+                {a.targetCode?.startsWith("S-") ? (
+                  <Link to="/seguridad" search={{ hallazgo: a.targetCode }} className="font-mono text-text-link hover:underline">
                     {a.targetCode}
                   </Link>
+                ) : (
+                  a.targetCode && (
+                    <Link
+                      to="/bandeja"
+                      search={{ estado: "all", envio: a.targetCode }}
+                      className="font-mono text-text-link hover:underline"
+                    >
+                      {a.targetCode}
+                    </Link>
+                  )
                 )}
               </span>
               <span className="truncate text-caption-1-regular text-text-tertiary">

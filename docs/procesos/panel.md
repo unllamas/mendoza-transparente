@@ -7,6 +7,7 @@
 | Inicio | Lo pendiente: nuevos, respuestas para revisar y pedidos vencidos |
 | Bandeja | Lista y detalle, como un correo. Filtros por estado de revisión, tipo, texto y fechas, todos en la URL (`?estado=&tipo=&q=&desde=&hasta=&envio=`). Teclado: `j`/`k` moverse, `e` resolver, `#` descartar, `/` buscar. Exporta CSV |
 | Estadísticas | Pedidos por organismo (respondidos, negados, vencidos y días hasta la respuesta) y envíos por mes |
+| Seguridad | Problemas de seguridad encontrados en sitios del Estado, hasta que se reportan y se corrigen. No se publican nunca. Ver [Hallazgos de seguridad](seguridad.md) |
 | Auditoría | Cada cambio hecho desde el panel, con quién lo hizo |
 
 ## Cómo se entra (login)
@@ -72,6 +73,7 @@ El token de `.env.cloudflare` tiene, además de Pages y D1:
 - *Account → Access: Apps and Policies → Edit*;
 - *Account → Access: Organizations, Identity Providers, and Groups → Edit*;
 - *Zone → DNS → Edit*, para `mendoza-transparente.com`.
+- *Zone → Single Redirect → Edit*, para `mendoza-transparente.com` (la redirección de `www`, ver [Web](web.md#publicar)).
 
 **Indexación:** el panel no aparece en buscadores. Access manda a su login a cualquiera sin sesión, robots incluidos, y además el panel tiene `noindex` (cabecera y meta) y un `robots.txt` que bloquea todo.
 
@@ -124,6 +126,7 @@ curl -s -H "$H" "$B/domains" | jq '.result[] | {name, status}'                  
 | XSS guardado: un envío con HTML o scripts | React escapa todo, nunca se usa `dangerouslySetInnerHTML`. Solo se aceptan links http(s), y la CSP del panel (`public/_headers`) no deja correr scripts de otro origen ni inline |
 | Texto engañoso (caracteres invisibles, inversión de dirección) | `validation.ts` los borra al recibir |
 | Links de terceros que filtran la dirección del panel o abren ventanas | `rel="noreferrer noopener nofollow"` y `Referrer-Policy: no-referrer` |
+| Que se filtre un hallazgo de seguridad | La tabla `security_findings` no tiene campo de publicación, ninguna consulta pública la lee, no sale en el CSV y la auditoría guarda los campos cambiados, no el texto. Detalle en [Hallazgos de seguridad](seguridad.md) |
 | Publicar datos personales | Nada se publica solo. El texto original no se publica nunca, solo el resumen del equipo. `publicRegistry` elige los campos uno por uno. `privacy.ts` avisa si hay correos, teléfonos, DNI o CUIL. Hay pruebas que fallan si sale un correo o un trámite |
 | Cambiar el estado de un pedido ajeno (antes alcanzaba con saber el número de trámite) | Código y clave por pedido (100 bits, se guarda solo el hash). Sin clave, la respuesta queda para revisar |
 | Adivinar códigos para ver lo que todavía no se publicó | Códigos al azar de 40 bits, no correlativos. Un código no publicado responde lo mismo que uno inexistente |

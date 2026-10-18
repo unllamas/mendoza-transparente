@@ -24,6 +24,7 @@ Fuente completa: `docs/procesos/trabajo-con-agentes.md`.
 4. **Objetivo y salida exacta:** archivos, columnas, ids y formato. Si hay que relevar, pedir primero el relevamiento y después la implementación.
 5. **Verificación esperada:** totales contra el original, que corra dos veces sin duplicar, `tsc` y una muestra revisada a mano.
 6. **Reporte:** archivos, cobertura y lo que falta, ejemplos, dudas, y **datos que no se publican** con dónde se buscó.
+7. **Si aparece un problema de seguridad** (datos de la gente expuestos, un sitio hackeado): parar, no descargar nada más, cargarlo con `bun run hallazgo` y poner el código `S-…` en el reporte, sin copiar los datos ni escribirlo en ningún archivo. Ver `docs/procesos/seguridad.md`.
 
 ## Al integrar
 
@@ -32,4 +33,4 @@ Fuente completa: `docs/procesos/trabajo-con-agentes.md`.
 3. **Si son fotos,** mirarlas una por una: que sea la persona y que esté sola.
 4. **Sumar lo que no se publica** a `data/curado/no-publicado.yaml`.
 5. **Un commit por entrega,** con `git add` de sus rutas; si el agente sigue corriendo, nunca `-A`.
-6. **Contarle al usuario** qué llegó, qué falta y qué hay que decidir.
+6. **Contarle al usuario** qué llegó, qué falta y qué hay que decidir. Si el agente cargó un hallazgo de seguridad, pasarle a la persona el código `S-…` para que lo reporte; nunca va al repositorio.

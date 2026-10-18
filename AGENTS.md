@@ -2,7 +2,7 @@
 
 Este archivo es la guía única para cualquier agente (Claude Code, Codex, Cursor…). `CLAUDE.md` solo lo importa.
 
-Proyecto cívico: recopilar los datos públicos de Mendoza, normalizarlos y publicarlos curados de cara a las elecciones de 2027. Ver `README.md` y `docs/relevamiento-fuentes.md`.
+Proyecto cívico: recopilar los datos públicos de Mendoza, normalizarlos y publicarlos curados. Ver `README.md` y `docs/relevamiento-fuentes.md`.
 
 **Los procesos internos están documentados en `docs/procesos/`** (agregar una fuente, actualización de datos, reglas de `data/`, la web, diseño, metodología y trabajo con agentes). Leer el que corresponda antes de empezar. **Todo proceso nuevo o cambio en uno existente se documenta ahí en el mismo commit.** Lo que todavía es una idea o un proyecto en curso va en `docs/planes/` (la hoja de ruta) y pasa a `docs/procesos/` cuando queda funcionando.
 
@@ -27,6 +27,7 @@ Las skills del proyecto (`.claude/skills/<nombre>/SKILL.md`) son la puerta de en
 | Escribir o cambiar código, en cualquier parte | `codigo` |
 | Crear un archivo, un paquete o una app; mover código; agregar una dependencia | `arquitectura` |
 | Crear o retocar una pantalla, un componente, un gráfico o un texto visible | `diseno` |
+| Decidir un cambio a partir de cómo se usa el sitio («qué es lo que más se usa», «por qué no lo tocan») | `analitica`, después `vista-previa` |
 | Resolver un pedido de mejora o arreglo sobre algo existente (una nota de Agentation, una captura, "esto se ve mal") | `mejoras` |
 | Ver cómo quedaría una pantalla o un componente antes de tocar el código real («quiero verlo antes», comparar opciones, reordenar una página) | `vista-previa` |
 | Revisar un cambio de interfaz antes de commitear, o lo que entregó un subagente | `revisar-interfaz` |
@@ -38,10 +39,15 @@ Las skills del proyecto (`.claude/skills/<nombre>/SKILL.md`) son la puerta de en
 | Crear una página o un tipo de entidad; títulos, rutas, buscador o previsualizaciones | `seo-y-geo` |
 | Publicar o tocar Cloudflare, D1 o PostHog; diagnosticar el sitio en vivo | `produccion` |
 | Tocar el panel interno (`apps/panel`), el registro público (`/registro`), la API de participación o el acceso del equipo | `panel` |
+| Encontrar un problema de seguridad en un sitio del Estado (datos de la gente expuestos, un sitio hackeado) | `panel` y `docs/procesos/seguridad.md` |
 | Lanzar un subagente o integrar lo que devolvió | `delegar-en-agentes` |
-| Crear una rama, commitear, pushear, abrir o mergear un PR, publicar `dev` en `main`, tocar los releases de GitHub o hacer un hotfix | `ramas-y-releases` |
+| Crear una rama, commitear, pushear o abrir un PR (incluido el de publicación `dev → main`), tocar los releases de GitHub o hacer un hotfix | `ramas-y-releases` |
 
 **Proceso nuevo = documento en `docs/procesos/` + skill (o sección en una existente) + fila en esta tabla, en el mismo commit.**
+
+## Seguridad y legalidad (regla sin excepciones)
+
+Solo se usa lo que el Estado publica. Nunca buscar fallas, pasar un login o un captcha, ni descargar o guardar datos personales expuestos por error. Si aparece un problema de seguridad: parar, cargarlo en el panel con `bun run hallazgo` (JSON por la entrada estándar, sin copiar los datos) y avisarle a la persona con el código `S-…`, para que lo reporte al organismo, a CERT.ar y, si hay datos personales, a la AAIP. Nunca se escribe en el repositorio, en commits, PR o issues. Proceso completo: `docs/procesos/seguridad.md`.
 
 ## Pedidos de mejora
 
@@ -52,7 +58,12 @@ Cuando alguien pide mejorar o arreglar algo, lo describe como lo siente ("no se 
 - La sesión principal orquesta. Las tareas acotadas (un scraper, un parser, una verificación) van a subagentes en Sonnet, en paralelo y sobre archivos distintos.
 - Cada subagente trabaja solo en los archivos de su fuente: `packages/scrapers/src/sources/<id>.ts` y `data/*/<id>/`. Si necesita tocar `packages/core/` o agregar dependencias, lo propone en vez de hacerlo (varios agentes en paralelo pisarían `bun.lock`).
 - Los subagentes no commitean. La sesión principal revisa, commitea y **cierra cada tarea con push y PR a `dev` sin esperar que se lo pidan**.
+- **Ningún agente mergea un PR, ni a `dev` ni a `main`, salvo que el usuario se lo pida explícitamente** para ese PR. Sin ese pedido, el agente deja el PR abierto con la CI en verde y avisa con el link.
 - Nada se pushea directo a `main`: lo nuevo va en una rama que sale de `dev`, con PR a `dev`, y llega a producción en una publicación (PR `dev → main`). Los releases de GitHub se crean solos, uno por día. Ver la skill `ramas-y-releases`.
+
+## Costo cero
+
+El proyecto no tiene financiación y vive en planes gratis (Cloudflare, GitHub Actions, PostHog). Toda propuesta que suma consumo (una CI, un workflow, una función, un servicio) dice cuánto gasta y de qué cupo antes de hacerse. Ver `docs/procesos/arquitectura.md#costo-cero`.
 
 ## Convenciones de datos
 

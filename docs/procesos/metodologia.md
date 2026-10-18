@@ -32,6 +32,11 @@ El activo principal del proyecto es la credibilidad. Estos criterios se aplican 
 
 - Solo fuentes oficiales. No se usan notas periodísticas como dato (pueden servir para encontrar la fuente oficial).
 - Lo que debería estar publicado y no está va a «Lo que el Estado no publica», con el texto del pedido por la Ley 9070 de Acceso a la Información Pública (el organismo tiene 15 días hábiles para responder).
+- **Organismos nacionales con sede en Mendoza** (la UNCuyo y la UTN): entran en el proyecto aunque los financie la Nación, porque están en la provincia. Sus pedidos van por la Ley nacional 27.275, también con 15 días hábiles. En `no-publicado.yaml` llevan `ley: "27275"` y `formulario:` con el lugar donde se presentan (la UTN tiene un formulario propio; la UNCuyo recibe los pedidos por correo, con un link `mailto:`). Sin `ley`, la página usa la 9070 y el formulario de la provincia. El build falla si `ley` o `formulario` no son válidos.
+- **Cuando un dato no se puede separar para Mendoza**, no se estima ni se reparte. Por ejemplo, la UTN informa como una sola universidad para todo el país, así que sus facultades de Mendoza y San Rafael no aparecen por separado. En ese caso:
+  - la tabla lleva una columna `alcance` (`mendoza` o `nacional`) y el diccionario lo explica;
+  - la página que muestra el dato lo dice al lado: qué cubre la cifra, por qué no se puede separar y un link al pedido en «Lo que no se publica»;
+  - el pedido para conseguir el dato separado está en `no-publicado.yaml` (por ejemplo, `utn-por-regional`).
 
 ## Resúmenes de leyes
 

@@ -14,17 +14,19 @@ Plantilla de PR (docs/procesos/ramas-y-releases.md). Vale para personas y agente
 
 **Alcance**
 - [ ] El diff tiene solo lo de esta tarea: nada de otra rama, ni archivos sueltos, ni `bun.lock` sin una dependencia nueva.
-- [ ] La rama sale de `dev` (o de `main` si es un hotfix) y el PR apunta a esa base. Un hotfix necesita confirmar después el back merge a `dev`; una publicación (`dev → main`) se mergea con merge commit.
+- [ ] La rama sale de `dev` (o de `main` si es un hotfix), está al día (`git rebase origin/dev` justo antes del push) y el PR apunta a esa base. Si entraron cambios en `docs/procesos/`, `.claude/skills/` o `AGENTS.md`, los leí y el cambio los cumple. Un hotfix necesita confirmar después el back merge a `dev`; una publicación (`dev → main`) se mergea con merge commit.
 - [ ] El título sigue Conventional Commits, y si rompe un contrato (una columna de un CSV publicado) lleva `!` y explica la migración.
 
 **Documentación**
 - [ ] Si cambia un proceso, está actualizado su documento en `docs/procesos/` y su skill en `.claude/skills/`.
 - [ ] Si es un proceso nuevo: documento + skill + fila en la tabla de `AGENTS.md`.
 - [ ] Si cambian comandos, scripts o rutas, los busqué en `docs/`, `.claude/skills/`, `AGENTS.md` y `README.md` y no quedó ninguna referencia vieja.
+- [ ] Si un documento suma un diagrama o una tabla ancha, lo miré en GitHub, también en ancho de celular (diagramas en Mermaid).
 
 **Convenciones**
 - [ ] Código en inglés; documentación, descripción de los commits y textos visibles en español.
 - [ ] Ningún secreto ni `.env*` en el diff.
+- [ ] Si suma consumo (una CI, un workflow, una función, un servicio), digo abajo cuánto gasta y de qué cupo gratis ([Costo cero](../docs/procesos/arquitectura.md#costo-cero)).
 
 **Datos** (si toca `data/` o `packages/scrapers`)
 - [ ] `data/raw/` solo suma archivos: no se editó ni se borró ninguno.
@@ -33,6 +35,7 @@ Plantilla de PR (docs/procesos/ramas-y-releases.md). Vale para personas y agente
 
 **Interfaz** (si toca `apps/web`, `apps/panel` o `packages/ui`)
 - [ ] Revisé el cambio con la skill `revisar-interfaz` (veredicto abajo).
+- [ ] Si arregla un patrón (un botón, una sección, un gráfico), lo busqué en todas las páginas y listo abajo dónde quedó aplicado.
 - [ ] Las interacciones nuevas tienen su evento en `apps/web/src/analytics-catalog.ts`.
 - [ ] Capturas en 375 px y 1280 px adjuntas.
 
@@ -52,4 +55,4 @@ Probado en la vista previa de Cloudflare: <!-- link o "no aplica" -->
 
 ## Riesgos y pendientes
 
-<!-- Qué podría romperse, qué quedó afuera y qué hay que mirar después de publicar. "Ninguno" también es una respuesta. -->
+<!-- Qué podría romperse, qué quedó afuera y qué hay que mirar después de publicar. Si el cambio salió de los datos de uso: qué métrica mirar y cuándo. "Ninguno" también es una respuesta. -->
