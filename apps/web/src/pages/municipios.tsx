@@ -10,7 +10,6 @@ import {
   RiBriefcaseLine,
   RiCoinsLine,
   RiFileList3Line,
-  RiFileSearchLine,
   RiGroupLine,
   RiMapPinLine,
 } from "@remixicon/react";
@@ -20,6 +19,7 @@ import { formatMoneda } from "@/celdas.ts";
 import { ColumnChart } from "@/charts/column-chart.tsx";
 import { MapaMendoza, MunicipalityLocator } from "@/charts/mapa.tsx";
 import { Breadcrumbs, WithBreadcrumbs } from "@/components/breadcrumbs.tsx";
+import { EntityColumns } from "@/components/entity-columns.tsx";
 import { LandscapePhoto } from "@/components/landscape-photo.tsx";
 import { MunicipalTransparencySection } from "@/components/municipal-transparency.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
@@ -198,16 +198,68 @@ export function MunicipioPage() {
   const yearly = st ? [...new Map(st.series.map((s) => [s.cutoff.slice(0, 4), s])).values()] : [];
   return (
     <div className="flex flex-col gap-10">
-      <div className="flex flex-col gap-6">
-        <LandscapePhoto id={municipalityPhoto(m.slug)} className={LANDSCAPE_HEIGHT} />
-        <WithBreadcrumbs items={[{ label: "Municipios", to: "/municipios" }]} current={{ label: m.nombre, icon: RiMapPinLine }}>
-          <PageHeader action={<ShareButton />} title={m.nombre}>
-            Quién lo gobierna, qué publica, cuánta coparticipación recibe y quiénes lo representan en la Legislatura.
-          </PageHeader>
-        </WithBreadcrumbs>
-      </div>
+      <LandscapePhoto id={municipalityPhoto(m.slug)} className={LANDSCAPE_HEIGHT} />
 
-      <div className="grid gap-6 md:grid-cols-[2fr_3fr] md:items-start">
+      <EntityColumns
+        aside={
+          <>
+            <WithBreadcrumbs items={[{ label: "Municipios", to: "/municipios" }]} current={{ label: m.nombre, icon: RiMapPinLine }}>
+              <PageHeader action={<ShareButton />} title={m.nombre}>
+                Quién lo gobierna, qué publica, cuánta coparticipación recibe y quiénes lo representan en la Legislatura.
+              </PageHeader>
+            </WithBreadcrumbs>
+            {i && (
+              <Link
+                to="/funcionarios/$role/$slug"
+                params={{ role: i.role, slug: i.slug }}
+                className={cx(cardVariants(), "flex items-center gap-4")}
+              >
+                <PersonAvatar name={i.nombre} photo={i.foto} className="size-14 text-headline-regular" />
+                <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                  <span className="text-body-regular text-text-tertiary">Intendente</span>
+                  <span className="truncate text-title-3-medium group-hover:text-text-link">{i.nombre}</span>
+                  <span className="truncate text-body-regular text-text-secondary">
+                    {[i.partido, i.mandatoHasta && `hasta ${i.mandatoHasta}`].filter(Boolean).join(" · ")}
+                  </span>
+                </span>
+                <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
+              </Link>
+            )}
+            <div className="grid gap-3 sm:grid-cols-2">
+              <StatTile
+                icon={RiGroupLine}
+                label="Habitantes"
+                value={formatNumber(m.poblacion.actual)}
+                note={`Puesto ${m.poblacion.puesto} de 18 en la provincia`}
+              />
+              <StatTile
+                icon={RiCoinsLine}
+                label="Coparticipación"
+                value={c ? pesos(c.perCapita) : "—"}
+                note={c ? `Por habitante · puesto ${c.puesto} de 18 · ${c.anio}, en pesos de ${c.referencia}` : "Sin datos"}
+              />
+              <StatTile
+                icon={RiBriefcaseLine}
+                label="Cargos y contratos"
+                value={st ? formatNumber(st.positions + st.contracts) : staffItem?.url ? "—" : "No lo publica"}
+                note={
+                  st
+                    ? `${perThousand(st.perThousand)} cada 1.000 habitantes · puesto ${st.rank} de ${st.withData}`
+                    : staffItem?.url
+                      ? "Lo publica; todavía no lo sumamos"
+                      : "No publica su planta de personal"
+                }
+              />
+              <StatTile
+                icon={RiAuctionLine}
+                label="Sección electoral"
+                value={m.seccion ?? "—"}
+                note="Define a quiénes eligen sus vecinos en la Legislatura"
+              />
+            </div>
+          </>
+        }
+      >
         {mapa && (
           <MunicipalityLocator
             mapa={mapa}
@@ -215,243 +267,176 @@ export function MunicipioPage() {
             onOpen={(name) => navigate({ to: "/municipios/$slug", params: { slug: slug(name) } })}
           />
         )}
-        <div className="flex min-w-0 flex-col gap-3">
-          {i && (
-            <Link
-              to="/funcionarios/$role/$slug"
-              params={{ role: i.role, slug: i.slug }}
-              className={cx(cardVariants(), "flex items-center gap-4")}
-            >
-              <PersonAvatar name={i.nombre} photo={i.foto} className="size-14 text-headline-regular" />
-              <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                <span className="text-body-regular text-text-tertiary">Intendente</span>
-                <span className="truncate text-title-3-medium group-hover:text-text-link">{i.nombre}</span>
-                <span className="truncate text-body-regular text-text-secondary">
-                  {[i.partido, i.mandatoHasta && `hasta ${i.mandatoHasta}`].filter(Boolean).join(" · ")}
-                </span>
+        {m.budget && (
+          <Link
+            to="/municipios/$slug/presupuesto/$anio"
+            params={{ slug: m.slug, anio: String(m.budget.year) }}
+            className={cx(cardVariants(), "flex flex-col gap-1")}
+            data-track="municipality.budget.open"
+            data-track-municipality={m.nombre}
+          >
+            <span className="flex min-w-0 items-center gap-2 text-body-regular text-text-secondary">
+              <RiFileList3Line className="size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
+              <span className="truncate">
+                Gastado en {m.budget.year}
+                {m.budget.partial ? ` (hasta ${m.budget.cutoff.split(" ")[0]})` : ""}
+              </span>
+            </span>
+            <span className="truncate text-title-1-semibold tracking-tight whitespace-nowrap sm:text-display-4-semibold">
+              {formatMoneda(m.budget.accrued, "ARS")}
+            </span>
+            <span className="flex items-center justify-between gap-2 text-caption-1-regular text-text-secondary">
+              <span className="min-w-0">
+                {m.budget.perCapitaReal && m.budget.reference
+                  ? `${pesos(m.budget.perCapitaReal)} por habitante, en pesos de ${m.budget.reference} · en qué se gasta`
+                  : "En qué se gasta y de dónde sale la plata"}
               </span>
               <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
-            </Link>
-          )}
-          <StatTile
-            icon={RiGroupLine}
-            label="Habitantes"
-            value={formatNumber(m.poblacion.actual)}
-            note={`Puesto ${m.poblacion.puesto} de 18 en la provincia`}
-          />
-          <StatTile
-            icon={RiCoinsLine}
-            label="Coparticipación por habitante"
-            value={c ? pesos(c.perCapita) : "—"}
-            note={c ? `Puesto ${c.puesto} de 18 · ${c.anio}, en pesos de ${c.referencia}` : "Sin datos"}
-          />
-          <StatTile
-            icon={RiBriefcaseLine}
-            label="Cargos y contratos"
-            value={st ? formatNumber(st.positions + st.contracts) : staffItem?.url ? "—" : "No lo publica"}
-            note={
-              st
-                ? `${perThousand(st.perThousand)} cada 1.000 habitantes · puesto ${st.rank} de ${st.withData}`
-                : staffItem?.url
-                  ? "Lo publica; todavía no lo sumamos"
-                  : "No publica su planta de personal"
-            }
-          />
-          {m.budget && (
-            <Link
-              to="/municipios/$slug/presupuesto/$anio"
-              params={{ slug: m.slug, anio: String(m.budget.year) }}
-              className={cx(cardVariants(), "flex flex-col gap-1")}
-              data-track="municipality.budget.open"
-              data-track-municipality={m.nombre}
-            >
-              <span className="flex min-w-0 items-center gap-2 text-body-regular text-text-secondary">
-                <RiFileList3Line className="size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
-                <span className="truncate">
-                  Gastado en {m.budget.year}
-                  {m.budget.partial ? ` (hasta ${m.budget.cutoff.split(" ")[0]})` : ""}
-                </span>
-              </span>
-              <span className="truncate text-title-1-semibold tracking-tight whitespace-nowrap sm:text-display-4-semibold">
-                {formatMoneda(m.budget.accrued, "ARS")}
-              </span>
-              <span className="flex items-center justify-between gap-2 text-caption-1-regular text-text-secondary">
-                <span className="min-w-0">
-                  {m.budget.perCapitaReal && m.budget.reference
-                    ? `${pesos(m.budget.perCapitaReal)} por habitante, en pesos de ${m.budget.reference} · en qué se gasta`
-                    : "En qué se gasta y de dónde sale la plata"}
-                </span>
-                <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
-              </span>
-            </Link>
-          )}
-          {tr && (
-            <a href="#que-publica" className={cx(cardVariants(), "flex flex-col gap-1")} data-track="municipality.transparency.jump">
-              <span className="flex min-w-0 items-center gap-2 text-body-regular text-text-secondary">
-                <RiFileSearchLine className="size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
-                <span className="truncate">Qué publica</span>
-              </span>
-              <span className="truncate text-title-1-semibold tracking-tight whitespace-nowrap sm:text-display-4-semibold">
-                {tr.published} de {tr.items.length}
-              </span>
-              <span className="flex items-center justify-between gap-2 text-caption-1-regular text-text-secondary">
-                <span className="min-w-0">
-                  {tr.current} al día · puesto {tr.rank} de 18 · revisado el {formatDate(tr.checked)}
-                </span>
-                <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
-              </span>
-            </a>
-          )}
-          <StatTile
-            icon={RiAuctionLine}
-            label="Sección electoral"
-            value={m.seccion ?? "—"}
-            note="Define a quiénes eligen sus vecinos en la Legislatura"
-          />
-        </div>
-      </div>
-
-      {tr && (
-        <div id="que-publica" className="scroll-mt-20">
-          <MunicipalTransparencySection name={m.nombre} data={tr} />
-        </div>
-      )}
-
-      {c && c.serie.length > 1 && (
-        <Section id="coparticipacion" title={`Coparticipación por habitante, en pesos de ${c.referencia}`}>
-          <ColumnChart
-            columnas={c.serie.map((s) => ({ etiqueta: String(s.anio), valor: s.perCapita }))}
-            formatValue={pesos}
-            ariaLabel={`Coparticipación por habitante de ${m.nombre} por año`}
-          />
-          {m.poblacion.actual < 20000 && (
-            <Alert variant="note">Los municipios chicos reciben más por habitante porque parte del reparto es un piso fijo.</Alert>
-          )}
-          <Link to="/coparticipacion" className="w-fit text-body-regular text-text-link hover:underline">
-            Comparar con los demás municipios ›
+            </span>
           </Link>
-        </Section>
-      )}
-
-      <Section id="personal" title="Personal del municipio">
-        {st ? (
-          <>
-            <p className="-mt-2 text-body-regular text-text-tertiary">
-              Cargos de planta y contratos según el anexo de personal que el municipio publica por la Ley de Responsabilidad Fiscal,{" "}
-              {st.quarter}. Son cargos, no personas: alguien puede tener más de uno.
-            </p>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-              <StatTile label="Planta permanente" value={formatNumber(st.permanent)} />
-              <StatTile label="Planta temporaria" value={formatNumber(st.temporary)} />
-              <StatTile label="Contratos" value={formatNumber(st.contracts)} note="De locación, sin cargo" />
-              <StatTile label="Cada 1.000 hab." value={perThousand(st.perThousand)} note={`Puesto ${st.rank} de ${st.withData}`} />
-            </div>
-            <div className="grid items-start gap-8 lg:grid-cols-2">
-              {yearly.length > 2 && (
-                <div className="flex flex-col gap-3 only:col-span-full">
-                  <h3 className="pt-2 text-body-semibold">Cargos y contratos por año</h3>
-                  <ColumnChart
-                    columnas={yearly.map((s) => ({
-                      etiqueta: s.cutoff.slice(0, 4),
-                      valor: s.positions + s.contracts,
-                      detalle: `${s.label.replace("T", ".º trim.")}: ${formatNumber(s.positions)} de planta y ${formatNumber(s.contracts)} contratos`,
-                    }))}
-                    formatValue={formatNumber}
-                    ariaLabel={`Cargos y contratos de ${m.nombre}, por año`}
-                  />
-                </div>
-              )}
-              <StaffChange changes={st.quarterlyChange} subject={m.nombre} className="only:col-span-full" />
-            </div>
-            {st.note && <Alert variant="note">{st.note}</Alert>}
-            <a
-              href={st.sourceUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="w-fit text-body-regular text-text-link hover:underline"
-              data-track="municipality.staff_source.open"
-            >
-              Ver el anexo publicado por el municipio ↗
-            </a>
-          </>
-        ) : staffItem?.url && staffItem.status !== "missing" && staffItem.status !== "unreadable" ? (
-          <Alert variant="note" title="Lo publica, todavía no lo sumamos">
-            El municipio publica el anexo de personal de la Ley de Responsabilidad Fiscal, pero todavía no lo procesamos para mostrarlo acá.{" "}
-            <a
-              href={staffItem.url}
-              target="_blank"
-              rel="noreferrer"
-              className="text-text-link hover:underline"
-              data-track="municipality.staff_source.open"
-            >
-              Ver el anexo publicado por el municipio ↗
-            </a>
-          </Alert>
-        ) : (
-          <Alert variant="warning" title="No publica su planta de personal">
-            No encontramos el anexo de personal que exige la Ley de Responsabilidad Fiscal en un formato que se pueda leer.{" "}
-            <Link
-              to="/no-publicado"
-              search={{ dato: MISSING_STAFF[m.nombre] ?? undefined } as never}
-              className="text-text-link hover:underline"
-            >
-              Ver qué falta y cómo pedirlo
-            </Link>
-            .
-          </Alert>
         )}
-      </Section>
 
-      {localLaws.length > 0 && (
-        <Section id="leyes" title={`Leyes que tocan a ${m.nombre}`}>
-          <p className="-mt-2 text-body-regular text-text-tertiary">
-            Leyes provinciales que hacen algo concreto en el departamento: un terreno, una obra, un convenio.
-          </p>
-          <ul className={listVariants()}>
-            {localLaws.map((l) => (
-              <li key={l.numero}>
-                <Link
-                  to="/leyes/$numero"
-                  params={{ numero: l.numero }}
-                  data-track="municipality.law.open"
-                  data-track-law={l.numero}
-                  className={listRowVariants()}
-                >
-                  <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                    <span className="truncate font-medium group-hover:text-text-link" title={l.titulo}>
-                      {l.titulo}
-                    </span>
-                    <span className="truncate text-body-regular whitespace-nowrap text-text-tertiary">
-                      {[`Ley ${l.numero}`, l.fecha && formatDate(l.fecha)].filter(Boolean).join(" · ")}
-                    </span>
-                  </span>
-                  <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </Section>
-      )}
+        {tr && <MunicipalTransparencySection name={m.nombre} data={tr} />}
 
-      {m.legisladores.length > 0 && (
-        <Section id="legisladores" title={`Legisladores provinciales de la ${m.seccion?.toLowerCase() ?? ""} sección`}>
-          <p className="-mt-2 text-body-regular text-text-tertiary">Los eligen los vecinos de {m.nombre} y del resto de la sección.</p>
-          <ul className={listVariants()}>
-            {m.legisladores.map((l) => (
-              <li key={l.id}>
-                <Link to="/funcionarios/$role/$slug" params={{ role: l.role, slug: l.slug }} className={listRowVariants()}>
-                  <PersonAvatar name={l.nombre} photo={l.foto} className="size-10 text-caption-1-regular" />
-                  <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                    <span className="truncate font-medium group-hover:text-text-link">{l.nombre}</span>
-                    <span className="truncate text-body-regular text-text-tertiary">{[l.cargo, l.bloque].filter(Boolean).join(" · ")}</span>
-                  </span>
-                  <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
-                </Link>
-              </li>
-            ))}
-          </ul>
+        {c && c.serie.length > 1 && (
+          <Section id="coparticipacion" title={`Coparticipación por habitante, en pesos de ${c.referencia}`}>
+            <ColumnChart
+              columnas={c.serie.map((s) => ({ etiqueta: String(s.anio), valor: s.perCapita }))}
+              formatValue={pesos}
+              ariaLabel={`Coparticipación por habitante de ${m.nombre} por año`}
+            />
+            {m.poblacion.actual < 20000 && (
+              <Alert variant="note">Los municipios chicos reciben más por habitante porque parte del reparto es un piso fijo.</Alert>
+            )}
+            <Link to="/coparticipacion" className="w-fit text-body-regular text-text-link hover:underline">
+              Comparar con los demás municipios ›
+            </Link>
+          </Section>
+        )}
+
+        <Section id="personal" title="Personal del municipio">
+          {st ? (
+            <>
+              <p className="-mt-2 text-body-regular text-text-tertiary">
+                Cargos de planta y contratos según el anexo de personal que el municipio publica por la Ley de Responsabilidad Fiscal,{" "}
+                {st.quarter}. Son cargos, no personas: alguien puede tener más de uno.
+              </p>
+              <div className="grid grid-cols-2 gap-3">
+                <StatTile label="Planta permanente" value={formatNumber(st.permanent)} />
+                <StatTile label="Planta temporaria" value={formatNumber(st.temporary)} />
+                <StatTile label="Contratos" value={formatNumber(st.contracts)} note="De locación, sin cargo" />
+                <StatTile label="Cada 1.000 hab." value={perThousand(st.perThousand)} note={`Puesto ${st.rank} de ${st.withData}`} />
+              </div>
+              <div className="flex flex-col gap-8">
+                {yearly.length > 2 && (
+                  <div className="flex flex-col gap-3">
+                    <h3 className="pt-2 text-body-semibold">Cargos y contratos por año</h3>
+                    <ColumnChart
+                      columnas={yearly.map((s) => ({
+                        etiqueta: s.cutoff.slice(0, 4),
+                        valor: s.positions + s.contracts,
+                        detalle: `${s.label.replace("T", ".º trim.")}: ${formatNumber(s.positions)} de planta y ${formatNumber(s.contracts)} contratos`,
+                      }))}
+                      formatValue={formatNumber}
+                      ariaLabel={`Cargos y contratos de ${m.nombre}, por año`}
+                    />
+                  </div>
+                )}
+                <StaffChange changes={st.quarterlyChange} subject={m.nombre} />
+              </div>
+              {st.note && <Alert variant="note">{st.note}</Alert>}
+              <a
+                href={st.sourceUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="w-fit text-body-regular text-text-link hover:underline"
+                data-track="municipality.staff_source.open"
+              >
+                Ver el anexo publicado por el municipio ↗
+              </a>
+            </>
+          ) : staffItem?.url && staffItem.status !== "missing" && staffItem.status !== "unreadable" ? (
+            <Alert variant="note" title="Lo publica, todavía no lo sumamos">
+              El municipio publica el anexo de personal de la Ley de Responsabilidad Fiscal, pero todavía no lo procesamos para mostrarlo
+              acá.{" "}
+              <a
+                href={staffItem.url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-text-link hover:underline"
+                data-track="municipality.staff_source.open"
+              >
+                Ver el anexo publicado por el municipio ↗
+              </a>
+            </Alert>
+          ) : (
+            <Alert variant="warning" title="No publica su planta de personal">
+              No encontramos el anexo de personal que exige la Ley de Responsabilidad Fiscal en un formato que se pueda leer.{" "}
+              <Link
+                to="/no-publicado"
+                search={{ dato: MISSING_STAFF[m.nombre] ?? undefined } as never}
+                className="text-text-link hover:underline"
+              >
+                Ver qué falta y cómo pedirlo
+              </Link>
+              .
+            </Alert>
+          )}
         </Section>
-      )}
+
+        {localLaws.length > 0 && (
+          <Section id="leyes" title={`Leyes que tocan a ${m.nombre}`}>
+            <p className="-mt-2 text-body-regular text-text-tertiary">
+              Leyes provinciales que hacen algo concreto en el departamento: un terreno, una obra, un convenio.
+            </p>
+            <ul className={listVariants()}>
+              {localLaws.map((l) => (
+                <li key={l.numero}>
+                  <Link
+                    to="/leyes/$numero"
+                    params={{ numero: l.numero }}
+                    data-track="municipality.law.open"
+                    data-track-law={l.numero}
+                    className={listRowVariants()}
+                  >
+                    <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                      <span className="truncate font-medium group-hover:text-text-link" title={l.titulo}>
+                        {l.titulo}
+                      </span>
+                      <span className="truncate text-body-regular whitespace-nowrap text-text-tertiary">
+                        {[`Ley ${l.numero}`, l.fecha && formatDate(l.fecha)].filter(Boolean).join(" · ")}
+                      </span>
+                    </span>
+                    <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Section>
+        )}
+
+        {m.legisladores.length > 0 && (
+          <Section id="legisladores" title={`Legisladores provinciales de la ${m.seccion?.toLowerCase() ?? ""} sección`}>
+            <p className="-mt-2 text-body-regular text-text-tertiary">Los eligen los vecinos de {m.nombre} y del resto de la sección.</p>
+            <ul className={listVariants()}>
+              {m.legisladores.map((l) => (
+                <li key={l.id}>
+                  <Link to="/funcionarios/$role/$slug" params={{ role: l.role, slug: l.slug }} className={listRowVariants()}>
+                    <PersonAvatar name={l.nombre} photo={l.foto} className="size-10 text-caption-1-regular" />
+                    <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                      <span className="truncate font-medium group-hover:text-text-link">{l.nombre}</span>
+                      <span className="truncate text-body-regular text-text-tertiary">
+                        {[l.cargo, l.bloque].filter(Boolean).join(" · ")}
+                      </span>
+                    </span>
+                    <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Section>
+        )}
+      </EntityColumns>
 
       <FuentesOficiales ids={SOURCES} />
     </div>
