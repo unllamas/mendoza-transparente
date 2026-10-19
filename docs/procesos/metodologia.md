@@ -217,3 +217,17 @@ Fuente: anexo 19 del informe trimestral de Responsabilidad Fiscal (`lrf-personal
 - **En la hoja del proceso:** el desvío se expresa en "veces lo estimado" a partir del doble y en porcentaje por debajo. Lleva aviso en los dos casos de arriba.
 - **Explicaciones posibles** (errores de carga, cambios de alcance, inflación entre el llamado y la adjudicación): se mencionan siempre. Son señales, no acusaciones.
 
+
+## Quién ocupó cada cargo
+
+Página `/funcionarios/historial` y sección de trayectoria en la ficha de cada funcionario (`scripts/temas/history.ts`).
+
+- **Dos fuentes, cada una con lo suyo:**
+  - **Cargos y fechas:** el registro de la Oficina de Ética Pública (`etica-publica/cargos.csv`), un renglón por cargo con su inicio y su fin. Incluye a los ex funcionarios («mandato cumplido») con cargos jerárquicos (la misma lista `HIERARCHICAL` del scraper); de ellos se baja solo el detalle, no la declaración.
+  - **Partido:** solo para los cargos electos, tal como lo dice el acta de proclamación de la Junta Electoral (`junta-electoral/electos.csv`). Las actas publicadas empiezan en 2015.
+- **Nunca se infiere el partido:** un cargo designado (ministro, director) no tiene partido en ninguna fuente oficial, y no se le asigna el del gobierno que lo nombró. Tampoco se cruza con padrones de afiliados: la afiliación política es un dato sensible (Ley 25.326).
+- **Desde agosto de 2018:** el registro de Ética Pública se cargó ese mes, así que muchos cargos figuran desde el 10/08/2018 aunque hayan empezado antes. Se avisa debajo de la lista cuando aparece esa fecha. Antes de 2018, los cargos electos salen solo de las actas.
+- **Fechas imposibles** (año 0025, 2100) se toman como sin fecha.
+- **La misma persona en dos fuentes:** el mismo criterio conservador de [Cruces entre fuentes](#cruces-entre-fuentes), y además la coincidencia tiene que ser única; si dos personas podrían ser la misma, no se unen. Quien tiene un cargo actual con ficha ve su pasado en la ficha y no se repite en el historial.
+- **Electos:** se cuentan solo los titulares. La cuenta por partido es de bancas o cargos ganados en esa elección, no de votos.
+- **Qué falta:** las designaciones anteriores a 2018 y el detalle de los cargos sin declaración jurada salen del Boletín Oficial, que se completa de a poco (ver [Designaciones](#personal-y-costo-de-cada-organismo)).

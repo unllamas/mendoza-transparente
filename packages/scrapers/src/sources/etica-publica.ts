@@ -14,6 +14,8 @@
  *                reparticiones del Ejecutivo, Legislativo, municipios y entes: se excluyen Poder
  *                Judicial, Ministerio Público, Policía, Penitenciaría, gremios, proveedores y
  *                "mandato cumplido" (ex funcionarios), que suman la mayoría de los 7.500 registros.
+ *                De "mandato cumplido" sí se pide el detalle (sin la declaración) de los cargos
+ *                jerárquicos: es la historia de quién ocupó cada cargo (cargos.csv).
  *   --all        pide detalle y declaración de todos (unas 5 horas a 60 pedidos por minuto).
  *   --dist=a,b   restringe el detalle a esas reparticiones.
  *   --limit=N    tope de funcionarios con detalle; se priorizan los cargos jerárquicos.
@@ -52,6 +54,8 @@ const BASE = "https://eticapublica.mendoza.gov.ar/api/v1/public";
 
 // Reparticiones que no entran en el detalle por defecto (ver cabecera).
 const EXCLUDED_BY_DEFAULT = new Set([1, 36, 35, 29, 21, 82, 84, 79]);
+// "Mandato cumplido": ex funcionarios. De los cargos jerárquicos se pide solo el detalle (los cargos con fechas).
+const FORMER_DIST = 79;
 const HIERARCHICAL =
   /ministr|secretari|subsecretari|director|presidente|vicepresidente|gobernador|vicegobernador|intendente|concejal|diputad|senador|fiscal|juez|jueza|vocal|interventor|gerente|administrador|titular|jefe de gabinete|asesor|coordinador|tesorero|contador|auditor|defensor|procurador/i;
 
@@ -365,12 +369,15 @@ export async function run(args: string[]) {
     }
   }
   console.log(`${officials.size} funcionarios en los listados`);
+  const formerDist = dists.find((x) => x.distribution_id === FORMER_DIST)?.description;
+  const isFormer = (o: ListItem) => o.distribution === formerDist;
+  const isFormerOfficial = (o: ListItem) => isFormer(o) && HIERARCHICAL.test(o.actual_job);
 
   // 3. Detalle y última declaración, según alcance y prioridad
   const inScope = [...officials.values()].filter((o) => {
     const d = dists.find((x) => x.description === o.distribution)?.distribution_id;
     if (only) return d !== undefined && only.includes(d);
-    return all || (d !== undefined && !EXCLUDED_BY_DEFAULT.has(d));
+    return all || (d !== undefined && !EXCLUDED_BY_DEFAULT.has(d)) || isFormerOfficial(o);
   });
   inScope.sort((a, b) => Number(HIERARCHICAL.test(b.actual_job)) - Number(HIERARCHICAL.test(a.actual_job)) || a.id - b.id);
   const targets = inScope.slice(0, limit);
@@ -392,7 +399,7 @@ export async function run(args: string[]) {
       }
       details.set(o.id, det);
       const last = det.last_declaration;
-      if (!last) continue;
+      if (!last || (isFormer(o) && !all)) continue;
       const xFile = `declaration-${last.id}.json`;
       let decl = await useCache<Declaration>(xFile);
       if (!decl) {
@@ -443,6 +450,26 @@ export async function run(args: string[]) {
       };
     });
   await writeProcessed(SOURCE, "funcionarios.csv", funcionarios);
+
+  // Un renglón por cargo registrado (actuales y anteriores): la historia de quién ocupó cada cargo.
+  const cargos: Row[] = [...details.values()]
+    .sort((a, b) => a.id - b.id)
+    .flatMap((det) => {
+      const o = officials.get(det.id);
+      if (!o) return [];
+      return det.positions
+        .map((p) => ({
+          official_id: det.id,
+          nombre: `${o.first_name} ${o.last_name}`.trim(),
+          cargo: p.description.trim(),
+          reparticion: p.distribution,
+          fecha_inicio: p.start_date ?? "",
+          fecha_fin: p.end_date ?? "",
+          mandato_cumplido: isFormer(o) ? "si" : "no",
+        }))
+        .sort((a, b) => a.fecha_inicio.localeCompare(b.fecha_inicio));
+    });
+  await writeProcessed(SOURCE, "cargos.csv", cargos);
 
   const declRows = [...declarations.values()]
     .sort((a, b) => a.official_id - b.official_id)

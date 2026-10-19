@@ -10,6 +10,7 @@ import {
   RiBuilding2Line,
   RiExternalLinkLine,
   RiFileTextLine,
+  RiHistoryLine,
   RiMailLine,
   RiMapPinLine,
   RiSurveyLine,
@@ -23,6 +24,7 @@ import { ListSearch } from "@/components/list-search.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
 import { ShareButton } from "@/components/share-button.tsx";
 import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
+import { Career } from "@/features/officials/components/career.tsx";
 import { formatDate, formatNumber, normalizeText } from "@/lib.ts";
 import { ROLES, roleBySlug, slug } from "@/slug.ts";
 import type { Funcionario, FuncionariosTema, GrupoFuncionario } from "@/types.ts";
@@ -108,6 +110,22 @@ export function FuncionariosPage() {
           );
         })
       )}
+
+      <Link
+        to="/funcionarios/historial"
+        id="funcionarios-historial"
+        data-track="officials.history.open"
+        className={cx(cardVariants(), "flex items-center gap-3")}
+      >
+        <RiHistoryLine className="size-6 shrink-0 text-text-tertiary" aria-hidden />
+        <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+          <span className="font-medium text-text-link">¿Quién ocupó cada cargo antes?</span>
+          <span className="text-body-regular text-text-secondary">
+            Gobernadores desde 2015, los cargos que ganó cada partido y los ex funcionarios.
+          </span>
+        </span>
+        <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
+      </Link>
 
       <FuentesOficiales ids={["autoridades", "legislatura"]} />
     </div>
@@ -272,6 +290,8 @@ function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: Fun
       </dl>
 
       <Declaracion persona={p} usd={usd} />
+
+      <Career positions={p.pastPositions ?? []} elected={p.elected ?? []} headingLevel="h4" />
 
       <section className="flex flex-col gap-2">
         <h4 className="text-body-semibold">Cuánto cobra</h4>

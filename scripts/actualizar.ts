@@ -35,6 +35,7 @@ const TODAS = [
   "poblacion",
   "legislatura",
   "autoridades",
+  "junta-electoral",
   "proveedores",
   "lrf-personal",
   "presupuesto-planta",

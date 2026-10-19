@@ -261,3 +261,13 @@
   frecuencia: trimestral
   dificultad: dificil
   estado: activo
+
+- id: junta-electoral
+  nombre: Cargos electos según las actas de proclamación de la Junta Electoral
+  organismo: H. Junta Electoral de la Provincia de Mendoza (Poder Judicial)
+  url: https://jusmendoza.gob.ar/actas-de-proclamacion/
+  descripcion: "Quién fue proclamado gobernador, vicegobernador, senador o diputado provincial, intendente y concejal, y por qué partido, frente o alianza, en las elecciones de 2015, 2017, 2019, 2021 y 2023, según cada acta de proclamación. No dice quién ejerció el cargo (licencias, renuncias, suplentes) ni el mandato. Son escaneos con texto por OCR; las letras corregidas se marcan en el CSV. La página también publica actas de 1983 a 2014, todavía sin procesar."
+  formato: pdf (escaneado con texto)
+  frecuencia: cada elección (cada dos años)
+  dificultad: media
+  estado: activo
