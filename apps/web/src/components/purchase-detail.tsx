@@ -189,11 +189,14 @@ export function Proveedor({
   cuit,
   onProceso,
   sinTitulo,
+  columns,
   initial,
 }: {
   cuit: string;
   onProceso: (ocid: string) => void;
   sinTitulo?: boolean;
+  /** Its own page: on desktop, who it is on a sticky left column and the lists on the right. */
+  columns?: boolean;
   /** The supplier's file when the page already loaded it (its own route); the sheet loads it here. */
   initial?: ProveedorDetalle | null;
 }) {
@@ -204,7 +207,7 @@ export function Proveedor({
   if (error) return <p className="text-body-regular text-text-secondary">No hay más datos de este proveedor.</p>;
   if (!p) return <p className="text-body-regular text-text-tertiary">Cargando proveedor…</p>;
 
-  return (
+  const summary = (
     <>
       {!sinTitulo && (
         <div className="flex flex-col gap-1">
@@ -237,7 +240,11 @@ export function Proveedor({
           />
         </Bloque>
       )}
+    </>
+  );
 
+  const lists = (
+    <>
       <Bloque titulo="Quién le compra" ayuda={agencySlug.size ? "Tocá un organismo para ver todo lo que compra" : undefined}>
         <ul className={listVariants()}>
           {p.organismos.map((o) => {
@@ -308,6 +315,21 @@ export function Proveedor({
         </ul>
       </Bloque>
     </>
+  );
+
+  if (!columns) {
+    return (
+      <>
+        {summary}
+        {lists}
+      </>
+    );
+  }
+  return (
+    <div className="grid gap-8 lg:grid-cols-2 lg:items-start lg:gap-10">
+      <div className="flex flex-col gap-8 lg:sticky lg:top-20">{summary}</div>
+      <div className="flex flex-col gap-8">{lists}</div>
+    </div>
   );
 }
 

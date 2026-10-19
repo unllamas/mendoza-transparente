@@ -1,6 +1,7 @@
 # Release de GitHub una vez por día: junta lo que llegó a main ese día (publicaciones de dev,
 # hotfixes y actualizaciones de datos) en un solo release con etiqueta por fecha (2026-10-17).
-# Si no cambió nada desde el release anterior, no crea nada.
+# Si ese día ya tiene release, lo actualiza (mueve la etiqueta y rehace las notas) en vez de
+# crear otro. Si no cambió nada desde el release anterior, no hace nada.
 # Ver docs/procesos/ramas-y-releases.md#releases-de-github-uno-por-día.
 
 name: Release del día
@@ -11,7 +12,7 @@ on:
   workflow_dispatch:
     inputs:
       desde:
-        description: "Ref desde la que arranca el release (vacío: el último release o el comienzo del día)"
+        description: "Ref desde la que arranca el release (vacío: el último release de un día anterior o el comienzo del día)"
         required: false
         default: ""
 
@@ -27,9 +28,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      # El script sale de la misma rama que este workflow (dev en el cron) y lee origin/main:
+      # así el workflow y el script cambian juntos, sin esperar a la próxima publicación.
       - uses: actions/checkout@v4
         with:
-          ref: main
           fetch-depth: 0
           fetch-tags: true
       - uses: oven-sh/setup-bun@v2
@@ -40,12 +42,22 @@ jobs:
         id: notas
         env:
           DESDE: ${{ inputs.desde }}
-        run: bun scripts/release-notes.ts --release --out notas.md ${DESDE:+--from "$DESDE"}
+        run: bun scripts/release-notes.ts --release --to origin/main --out notas.md ${DESDE:+--from "$DESDE"}
 
-      - name: Crear el release
+      # Lo que se agregó a mano a un release, de la línea <!-- a mano --> para abajo, se conserva.
+      - name: Crear o actualizar el release del día
         if: steps.notas.outputs.skip != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ steps.notas.outputs.tag }}
           TITULO: ${{ steps.notas.outputs.title }}
-        run: gh release create "$TAG" --target "$(git rev-parse HEAD)" --title "$TITULO" --notes-file notas.md
+        run: |
+          TARGET="$(git rev-parse origin/main)"
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            gh release view "$TAG" --json body -q .body | sed -n '/^<!-- a mano -->/,$p' >> notas.md
+            git tag -f "$TAG" "$TARGET"
+            git push -f origin "refs/tags/$TAG"
+            gh release edit "$TAG" --title "$TITULO" --notes-file notas.md --draft=false --latest
+          else
+            gh release create "$TAG" --target "$TARGET" --title "$TITULO" --notes-file notas.md
+          fi

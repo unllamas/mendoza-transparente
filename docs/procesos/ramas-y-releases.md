@@ -163,11 +163,18 @@ No hay calendario fijo: se publica cuando hay algo listo. Mejor seguido y chico 
 
 Una publicación no es un release. El release de GitHub ([unllamas/mendoza-transparente/releases](https://github.com/unllamas/mendoza-transparente/releases)) es el registro de lo que llegó a producción **en un día**: todas las publicaciones desde `dev`, los hotfixes y las cargas de datos, juntos y explicados en español. Sirve para que alguien de afuera (un periodista, quien reutiliza los CSV) siga los cambios sin leer commits.
 
-**Cómo se arma.** El workflow **«Release del día»** (`.github/workflows/release.yml`) corre todos los días a las 23:30 de Mendoza sobre `main`:
+**Cómo se arma.** El workflow **«Release del día»** (`.github/workflows/release.yml`) corre todos los días a las 23:30 de Mendoza y lee `origin/main`. **Hay un solo release por día**: si corre dos veces el mismo día, la segunda actualiza el release en vez de crear otro.
 
-1. Busca el último release (la etiqueta más reciente con forma de fecha). Si todavía no hay ninguno, arranca desde el primer commit del día.
-2. Si `main` no cambió desde entonces, no hace nada: los días sin cambios no tienen release.
-3. Si cambió, corre `bun scripts/release-notes.ts --release` y crea el release con `gh release create`, con la etiqueta del día en hora de Mendoza (`2026-10-17`; si ya existe, `2026-10-17.2`) y la fecha larga como título («17 de octubre de 2026»).
+1. El día del release es la fecha, en hora de Mendoza, del último commit que llegó a `main`, no la hora en que corre el workflow. GitHub a veces demora el cron varias horas, y una corrida de las 23:30 que arranca pasada la medianoche igual cae en el día que corresponde.
+2. Busca el último release de un día anterior (la etiqueta más reciente con forma de fecha). Si no hay ninguno, arranca desde el primer commit de ese día.
+3. Si `main` no cambió desde entonces, no hace nada: los días sin cambios no tienen release.
+4. Si cambió, corre `bun scripts/release-notes.ts --release --to origin/main`. Si el día todavía no tiene release, lo crea con la fecha como etiqueta (`2026-10-17`) y la fecha larga como título («17 de octubre de 2026»). Si ya lo tiene, mueve la etiqueta al último commit de `main` y rehace las notas con todo el día.
+
+El script sale de la misma rama que el workflow (`dev`, que es la rama por defecto y la que usa el cron), no de `main`: así un cambio al workflow y al script vale apenas entra a `dev`, sin esperar a la próxima publicación.
+
+**Lo que se agrega a mano** a un release va debajo de una línea `<!-- a mano -->`. Cuando el workflow rehace las notas, conserva todo lo que está de esa línea para abajo; lo que esté arriba se pisa.
+
+Las etiquetas viejas con número (`2026-10-18.2`) son de antes de esta regla: se aceptan como release anterior, pero no se crean más.
 
 **Qué dice cada release:**
 
@@ -180,7 +187,7 @@ Se saltean los merges, los back merges y los `chore(release)`. Cada línea es el
 
 **A mano.** Desde Actions → «Release del día» → *Run workflow*. El campo `desde` arranca el release desde otra ref (una etiqueta o un commit), por ejemplo para el primero o para rehacer uno. Para ver las notas sin crear nada: `bun scripts/release-notes.ts --release --to origin/main`.
 
-**Si un release salió mal**, se corrige el texto en la web de GitHub, o se borra con `gh release delete <etiqueta> --cleanup-tag` y se vuelve a correr el workflow.
+**Si un release salió mal**, se vuelve a correr el workflow, que lo rehace. Para un agregado que tiene que quedar, se escribe debajo de `<!-- a mano -->` en la web de GitHub. Nunca se crea un segundo release ni un borrador para el mismo día.
 
 **Las pruebas** del script están en `scripts/release-notes.test.ts` (`bun test scripts`).
 
