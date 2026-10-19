@@ -17,6 +17,8 @@ type StatusDotColor = "green" | "yellow" | "indigo" | "red" | "gray";
 
 export interface StatusDotProps extends HTMLAttributes<HTMLSpanElement> {
   color?: StatusDotColor;
+  /** Slow blink of the center dot, to call attention to a live item. Off with reduced motion. */
+  blinking?: boolean;
   ref?: Ref<HTMLSpanElement>;
 }
 
@@ -38,10 +40,10 @@ const styles = sortCx({
   },
 });
 
-export function StatusDot({ color = "green", className, ref, ...props }: StatusDotProps) {
+export function StatusDot({ color = "green", blinking = false, className, ref, ...props }: StatusDotProps) {
   return (
     <span ref={ref} aria-hidden className={cx(styles.base, styles.halo[color], className)} {...props}>
-      <span className={cx("size-1.5 rounded-full", styles.dot[color])} />
+      <span className={cx("size-1.5 rounded-full", styles.dot[color], blinking && "motion-safe:animate-blink")} />
     </span>
   );
 }

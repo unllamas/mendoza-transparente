@@ -35,7 +35,7 @@ export const EVENT_CATALOG: EventDoc[] = [
   { event: "nav.mobile_menu.close", description: "Cerró el menú del celular con la X (sin elegir ninguna página).", tags: ["navegación"] },
   {
     event: "nav.group.toggle",
-    description: "Abrió o cerró un grupo del menú (Gobierno, Datos, Compras del Estado, Transparencia). Propiedades group y open.",
+    description: "Abrió o cerró un grupo del menú (Gobierno, Datos, Transparencia). Propiedades group y open.",
     tags: ["navegación"],
   },
   {
