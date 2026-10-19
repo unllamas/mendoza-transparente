@@ -43,6 +43,7 @@ const RUTAS = [
   "/datos/dnap-ron",
   "/funcionarios/gobierno/alfredo-victor-cornejo",
   "/funcionarios/diputados-provinciales",
+  "/funcionarios/historial",
   "/funcionarios/diputados-provinciales/edgardo-civit-evans",
   "/gobierno",
   "/gobierno/ministerio-de-salud-y-deportes",
@@ -70,6 +71,10 @@ const proveedor = ((await Bun.file(join(temas, "proveedores.json")).json()) as {
 const organismo = ((await Bun.file(join(temas, "organismos.json")).json()) as { slug: string }[])[0];
 if (proveedor) RUTAS.push(`/proveedores/${proveedor.slug}`);
 if (organismo) RUTAS.push(`/organismos/${organismo.slug}`);
+// A person in the history sheet (an ex official with registry positions, if there is one).
+const historial = (await Bun.file(join(temas, "history.json")).json()) as { people: { id: string; positions: unknown[] }[] };
+const persona = historial.people.find((p) => p.positions.length) ?? historial.people[0];
+if (persona) RUTAS.push(`/funcionarios/historial?persona=${persona.id}`);
 const servidor = Bun.spawn(["bunx", "vite", "--port", String(PUERTO), "--strictPort"], {
   cwd: WEB,
   stdout: "ignore",

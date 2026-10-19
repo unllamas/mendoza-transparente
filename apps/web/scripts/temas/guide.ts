@@ -13,6 +13,7 @@ import type {
   DeudaTema,
   FuncionariosTema,
   GobiernoOverview,
+  HistoryTema,
   HomeGuide,
   LeyResumen,
   MunicipioPagina,
@@ -117,6 +118,7 @@ export function buildGuide(outDir: string, appointments: Row[]): HomeGuide {
 
 const KIND_BY_PREFIX: [RegExp, string][] = [
   [/^\/funcionarios\/[^/]+\/[^/]+$/, "Funcionario"],
+  [/^\/funcionarios\/historial$/, "Sección"],
   [/^\/funcionarios\/[^/]+$/, "Cargo"],
   [/^\/municipios\/[^/]+$/, "Municipio"],
   [/^\/leyes\/[^/]+$/, "Ley"],
@@ -184,6 +186,7 @@ export function writeSearchIndex(paginas: Pagina[], outDir: string) {
   const index = read<DataIndex>("index.json", { generatedAt: "", sources: [], datasets: [] });
   const signals = read<SenalesTema>("temas/senales.json", { senales: [] } as unknown as SenalesTema).senales;
   const missing = read<NoPublicado[]>("temas/no-publicado.json", []);
+  const history = read<HistoryTema>("temas/history.json", { people: [], elections: [], formerCount: 0 });
 
   const byPath = new Map<string, Omit<SearchEntry, "p" | "k">>();
   for (const o of officials) {
@@ -252,6 +255,14 @@ export function writeSearchIndex(paginas: Pagina[], outDir: string) {
       t: `${s.cifra} ${s.titulo}`,
       s: `Para mirar de cerca · ${s.tema}`,
       q: `${s.matiz} ${s.casosTitulo}`,
+    });
+  for (const h of history.people)
+    entries.push({
+      p: `/funcionarios/historial?persona=${h.id}`,
+      k: "Ex funcionario",
+      t: h.name,
+      s: [h.role, h.agency, h.to ?? h.from].filter(Boolean).join(" · "),
+      q: [...new Set([...h.positions.map((x) => x.agency), ...h.elected.map((x) => `${x.role} ${x.place} ${x.party ?? ""}`)])].join(" "),
     });
   for (const m of missing)
     entries.push({ p: `/no-publicado?dato=${m.id}`, k: "No se publica", t: m.titulo, s: m.organismo, q: `${m.que_es} ${m.categoria}` });

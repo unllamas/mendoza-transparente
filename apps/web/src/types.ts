@@ -289,6 +289,62 @@ export interface Funcionario {
     /** Items the declaration includes but whose amounts the official site does not publish ("cuentas bancarias"…). */
     declaredWithoutAmount: string[];
   } | null;
+  /** Positions this person held before, from the Ética Pública registry (only ended ones). */
+  pastPositions?: PastPosition[];
+  /** Elections this person won, from the Junta Electoral proclamation records. */
+  elected?: ElectedRecord[];
+}
+
+/** A position registered in the Ética Pública registry, with its dates (YYYY-MM-DD, null when unknown). */
+export interface PastPosition {
+  role: string;
+  agency: string;
+  from: string | null;
+  to: string | null;
+}
+
+/** An election this person won, as the Junta Electoral proclamation record says. */
+export interface ElectedRecord {
+  /** Election date (YYYY-MM-DD). */
+  date: string;
+  role: string;
+  /** Province, municipality or electoral section. */
+  place: string;
+  /** Party, front or list as the record says; null if the record does not say. */
+  party: string | null;
+  sourceUrl: string;
+}
+
+/** Someone who held a public position in Mendoza and no longer does (or whose past we know). */
+export interface HistoryPerson {
+  /** "etica-<official_id>" or "electo-<slug>": the ?persona= value. */
+  id: string;
+  name: string;
+  /** Latest known position and where. */
+  role: string;
+  agency: string;
+  /** Years of that latest position. */
+  from: string | null;
+  to: string | null;
+  positions: PastPosition[];
+  elected: ElectedRecord[];
+}
+
+/** How the elected positions of one election were split among parties. */
+export interface ElectionSummary {
+  date: string;
+  year: number;
+  /** href: the person's page if they hold a current position, else their sheet in /funcionarios/historial. */
+  governor: { name: string; party: string | null; href: string } | null;
+  offices: { key: string; label: string; total: number; parties: { nombre: string; valor: number }[] }[];
+  sourceUrl: string;
+}
+
+export interface HistoryTema {
+  people: HistoryPerson[];
+  elections: ElectionSummary[];
+  /** Ex officials (people whose positions all ended). */
+  formerCount: number;
 }
 
 export interface FuncionariosTema {

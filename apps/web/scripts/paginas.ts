@@ -25,6 +25,7 @@ import type {
   DeudaTema,
   EmpleoTema,
   FuncionariosTema,
+  HistoryTema,
   LeyDetalle,
   LeyResumen,
   MunicipalBudget,
@@ -176,6 +177,7 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
   const recaudacion = await json<RecaudacionTema | null>("temas/recaudacion.json", null);
   const universidades = await json<UniversidadesTema | null>("temas/universidades.json", null);
   const funcionarios = await json<FuncionariosTema>("temas/funcionarios.json", { personas: [] });
+  const historial = await json<HistoryTema>("temas/history.json", { people: [], elections: [], formerCount: 0 });
   const municipios = await json<MunicipioPagina[]>("temas/municipios.json", []);
   const organismos = await json<OrganismoResumen[]>("temas/organismos.json", []);
   const proveedores = (await json<ProveedorResumen[]>("temas/proveedores.json", [])).filter((p) => p.indexable);
@@ -656,6 +658,63 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
     prioridad: 0.9,
   });
 
+  // Who held each position before: /funcionarios/historial (ex officials open in a sheet, so they have no page).
+  if (historial.people.length || historial.elections.length) {
+    const path = "/funcionarios/historial";
+    const migas: Miga[] = [
+      ["/", "Inicio"],
+      ["/funcionarios", "Funcionarios"],
+      [path, "Historial"],
+    ];
+    const governors = historial.elections.filter((e) => e.governor);
+    const firstYear = historial.elections.at(-1)?.year;
+    const resumen = `Quiénes ganaron cada elección en Mendoza${firstYear ? ` desde ${firstYear}` : ""} y por qué partido, según las actas de la Junta Electoral${historial.formerCount ? `, y ${nf.format(historial.formerCount)} ex funcionarios con los cargos que ocuparon y sus fechas, según la Oficina de Ética Pública` : ""}.`;
+    paginas.push({
+      path,
+      title: titulo("Quién ocupó cada cargo en Mendoza"),
+      description: descripcion(resumen),
+      og: {
+        slug: "funcionarios-historial",
+        eyebrow: "FUNCIONARIOS",
+        titulo: "¿Quién ocupó cada cargo?",
+        figura: `${nf.format(historial.people.length)} personas`,
+        bajada: "Gobernadores, elecciones y ex funcionarios de Mendoza, con sus fechas.",
+      },
+      ld: [
+        breadcrumb(migas),
+        faq(
+          governors.map((e) => [
+            `¿Quién ganó la elección a gobernador de Mendoza en ${e.year}?`,
+            `${e.governor!.name}${e.governor!.party ? `, por ${e.governor!.party}` : ""}, según el acta de proclamación de la Junta Electoral.`,
+          ]),
+        ),
+      ],
+      html: cuerpo({
+        migas,
+        h1: "¿Quién ocupó cada cargo?",
+        resumen,
+        secciones: [
+          {
+            titulo: "Gobernadores",
+            items: governors.map((e) => ({
+              texto: `${e.year}: ${e.governor!.name}${e.governor!.party ? ` (${e.governor!.party})` : ""}`,
+              href: e.governor!.href,
+            })),
+          },
+          ...historial.elections.map((e) => ({
+            titulo: `Elección del ${fechaLarga(e.date)}`,
+            items: e.offices.map((o) => ({
+              texto: `${o.label} (${o.total}): ${o.parties.map((x) => `${x.nombre} ${x.valor}`).join(", ")}`,
+            })),
+          })),
+        ],
+        fuente: { nombre: "Junta Electoral de Mendoza y Oficina de Ética Pública" },
+      }),
+      lastmod: hoy,
+      prioridad: 0.7,
+    });
+  }
+
   // One page per role: /funcionarios/diputados-provinciales
   for (const [key, role] of Object.entries(ROLES)) {
     const people = funcionarios.personas.filter((p) => p.grupo === key);
@@ -770,14 +829,28 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
         h1: `${p.nombre}, ${lugar}`,
         resumen,
         datos,
-        secciones: p.municipalities.length
-          ? [
-              {
-                titulo: p.grupo === "intendentes" ? "Gobierna" : `Representa a la ${p.seccion?.toLowerCase() ?? "sección"}`,
-                items: p.municipalities.map((m) => ({ texto: m.name, href: `/municipios/${m.slug}` })),
-              },
-            ]
-          : [],
+        secciones: [
+          ...(p.municipalities.length
+            ? [
+                {
+                  titulo: p.grupo === "intendentes" ? "Gobierna" : `Representa a la ${p.seccion?.toLowerCase() ?? "sección"}`,
+                  items: p.municipalities.map((m) => ({ texto: m.name, href: `/municipios/${m.slug}` })),
+                },
+              ]
+            : []),
+          {
+            titulo: "Elecciones que ganó",
+            items: (p.elected ?? []).map((e) => ({
+              texto: `${e.date.slice(0, 4)}: ${e.role}, ${e.place}${e.party ? ` (${e.party})` : ""}`,
+            })),
+          },
+          {
+            titulo: "Cargos anteriores",
+            items: (p.pastPositions ?? []).map((c) => ({
+              texto: `${c.role}, ${c.agency}${c.from ? ` (${c.from.slice(0, 4)}–${c.to?.slice(0, 4) ?? ""})` : ""}`,
+            })),
+          },
+        ],
         fuente: {
           nombre: "Fuentes oficiales: Legislatura, Gobierno de Mendoza, Junta Electoral, Congreso y Oficina de Ética Pública",
           url: p.fuenteUrl,

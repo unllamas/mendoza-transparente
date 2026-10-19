@@ -16,6 +16,7 @@ import type {
   EmpleoTema,
   FuncionariosTema,
   GobiernoOverview,
+  HistoryTema,
   HomeGuide,
   HomeTema,
   LeyDetalle,
@@ -139,6 +140,14 @@ const funcionariosRoute = createRoute({
   path: "/funcionarios",
   loader: () => loadTema<FuncionariosTema>("funcionarios"),
   component: page(() => import("./pages/funcionarios.tsx"), "FuncionariosPage"),
+});
+
+// Static, so it wins over /funcionarios/$role.
+const historyRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/funcionarios/historial",
+  loader: () => loadTema<HistoryTema>("history"),
+  component: page(() => import("./pages/history.tsx"), "HistoryPage"),
 });
 
 const roleRoute = createRoute({
@@ -324,6 +333,7 @@ const router = createRouter({
     empleoRoute,
     poblacionRoute,
     funcionariosRoute,
+    historyRoute,
     roleRoute,
     funcionarioRoute,
     gobiernoRoute,
