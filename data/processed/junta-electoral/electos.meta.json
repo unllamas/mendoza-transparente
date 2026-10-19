@@ -1,0 +1,105 @@
+{
+  "titulo": "Cargos electos en Mendoza según la Junta Electoral",
+  "descripcion": "Cada fila es una persona proclamada por la H. Junta Electoral de la Provincia en las elecciones de 2015, 2017, 2019, 2021 y 2023: gobernador y vicegobernador, senadores y diputados provinciales, intendentes y concejales, con la alianza, frente o partido que dice el acta. Sirve para saber quién fue electo y por quién, no quién ejerció el cargo: no incluye licencias, renuncias, reemplazos por suplentes ni juramentos. Los actos de 2015 son dos actas (la general y la de Godoy Cruz, que votó el 29 de noviembre) La elección extraordinaria de Santa Rosa del 12 de febrero de 2017 no está: su acta trae el DNI de la persona electa y no archivamos documentos con DNI. El partido figura tal como lo escribe el acta, con las mayúsculas normalizadas; si el acta no lo dice (el vicegobernador de 2015) queda vacío, y vacío no significa sin partido. El mandato queda vacío porque las actas no lo informan. Cuando un acta nombra dos jornadas sin decir cuál corresponde a cada cargo, `eleccion_fecha` es la jornada principal (la última en 2015, 2019 y 2023; la primera en 2017) y están todas en `eleccion_fechas_acta`. Los actos son escaneos con texto por OCR: las correcciones de letras mal leídas están marcadas en `nota`. Los nombres de 2023 vienen en el orden del acta (apellido primero) y sin tildes, porque están en mayúsculas.",
+  "columnas": {
+    "eleccion_fecha": {
+      "etiqueta": "Fecha de la elección",
+      "tipo": "fecha",
+      "descripcion": "Jornada principal; ver `eleccion_fechas_acta` si el acta nombra dos."
+    },
+    "eleccion_fechas_acta": {
+      "etiqueta": "Jornadas que nombra el acta",
+      "tipo": "texto",
+      "oculta": true
+    },
+    "acta_fecha": {
+      "etiqueta": "Fecha del acta",
+      "tipo": "fecha",
+      "descripcion": "Día en que la Junta proclamó a los electos."
+    },
+    "cargo": {
+      "etiqueta": "Cargo",
+      "tipo": "texto",
+      "valores": {
+        "gobernador": "Gobernador",
+        "vicegobernador": "Vicegobernador",
+        "senador_provincial": "Senador provincial",
+        "diputado_provincial": "Diputado provincial",
+        "intendente": "Intendente",
+        "concejal": "Concejal"
+      }
+    },
+    "cargo_texto": {
+      "etiqueta": "Cargo según el acta",
+      "tipo": "texto",
+      "oculta": true
+    },
+    "jurisdiccion": {
+      "etiqueta": "Jurisdicción",
+      "tipo": "texto",
+      "descripcion": "Provincia, sección electoral (Primera a Cuarta) o municipio."
+    },
+    "seccion_electoral": {
+      "etiqueta": "Sección electoral",
+      "tipo": "texto",
+      "descripcion": "Solo senadores y diputados. Las actas no asignan sección a los municipios."
+    },
+    "nombre": {
+      "etiqueta": "Nombre",
+      "tipo": "texto",
+      "descripcion": "Como figura en el acta, sin documento. Ver `nombre_orden`."
+    },
+    "nombre_orden": {
+      "etiqueta": "Orden del nombre",
+      "tipo": "texto",
+      "oculta": true,
+      "valores": {
+        "nombre_apellido": "Nombre y apellido",
+        "apellido_nombre": "Apellido y nombre"
+      }
+    },
+    "partido": {
+      "etiqueta": "Partido, frente o alianza",
+      "tipo": "texto",
+      "descripcion": "Por el que fue proclamado, tal como lo escribe el acta. Vacío no significa sin partido."
+    },
+    "mandato_desde": {
+      "etiqueta": "Mandato desde",
+      "tipo": "fecha",
+      "oculta": true,
+      "descripcion": "Vacío: las actas no lo informan."
+    },
+    "mandato_hasta": {
+      "etiqueta": "Mandato hasta",
+      "tipo": "fecha",
+      "oculta": true,
+      "descripcion": "Vacío: las actas no lo informan."
+    },
+    "titular_suplente": {
+      "etiqueta": "Titular o suplente",
+      "tipo": "texto",
+      "oculta": true,
+      "descripcion": "Las actas solo proclaman titulares."
+    },
+    "orden": {
+      "etiqueta": "Orden en la lista",
+      "tipo": "texto",
+      "descripcion": "Lugar en que el acta nombra a la persona dentro de la lista de su partido para ese cargo y jurisdicción (1 es la primera)."
+    },
+    "fuente_url": {
+      "etiqueta": "Acta",
+      "tipo": "url"
+    },
+    "pagina": {
+      "etiqueta": "Página del acta",
+      "tipo": "texto",
+      "oculta": true
+    },
+    "nota": {
+      "etiqueta": "Nota",
+      "tipo": "texto",
+      "descripcion": "Avisa si el nombre se corrigió por un error de lectura del escaneo."
+    }
+  },
+  "fuente": "https://jusmendoza.gob.ar/actas-de-proclamacion/"
+}

@@ -1,0 +1,34 @@
+{
+  "titulo": "Cargos registrados en Ética Pública, actuales y anteriores",
+  "descripcion": "Un renglón por cada cargo que figura en el registro de la Oficina de Ética Pública, con sus fechas: la historia de quién ocupó cada cargo. Incluye a los ex funcionarios («mandato cumplido») con cargos jerárquicos. El registro arrancó a mediados de 2018: una fecha de inicio del 10/08/2018 suele ser la de la carga en el sistema, no la de la asunción.",
+  "columnas": {
+    "official_id": {
+      "etiqueta": "ID",
+      "tipo": "texto"
+    },
+    "nombre": {
+      "etiqueta": "Nombre",
+      "tipo": "texto"
+    },
+    "cargo": {
+      "etiqueta": "Cargo",
+      "tipo": "texto"
+    },
+    "reparticion": {
+      "etiqueta": "Repartición",
+      "tipo": "texto"
+    },
+    "fecha_inicio": {
+      "etiqueta": "Desde",
+      "tipo": "fecha"
+    },
+    "fecha_fin": {
+      "etiqueta": "Hasta",
+      "tipo": "fecha"
+    },
+    "mandato_cumplido": {
+      "etiqueta": "Ya no está en funciones",
+      "tipo": "texto"
+    }
+  }
+}
