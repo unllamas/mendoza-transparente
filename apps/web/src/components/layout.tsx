@@ -1,4 +1,5 @@
 import { ThemeToggle } from "@mt/ui/components/application/theme/theme-toggle";
+import { StatusDot } from "@mt/ui/components/base/badges/status-dot";
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { IconButton } from "@mt/ui/components/base/buttons/icon-button";
 import { Dialog } from "@mt/ui/components/dialog";
@@ -23,6 +24,7 @@ import {
   RiReceiptLine,
   RiScales3Line,
   RiSchoolLine,
+  RiShoppingBag3Line,
   RiStore2Line,
   RiTeamLine,
   RiUserLine,
@@ -42,8 +44,8 @@ import { UiProviders } from "./ui-providers.tsx";
 type Item = { to: string; label: string; descripcion: string; icon: RemixiconComponentType };
 type Grupo = { label: string; items: Item[] };
 
-/** Navegación: un destino principal y grupos desplegables. */
-const PRINCIPALES: { to: string; label: string }[] = [{ to: "/senales", label: "Para mirar de cerca" }];
+/** Navigation: main destinations and dropdown groups. `live` adds the blinking yellow dot that calls attention to it. */
+const PRINCIPALES: { to: string; label: string; live?: boolean }[] = [{ to: "/senales", label: "Para mirar de cerca", live: true }];
 
 const GRUPOS: Grupo[] = [
   {
@@ -56,6 +58,8 @@ const GRUPOS: Grupo[] = [
         descripcion: "Cada organismo: quién lo conduce, cuántos cargos y cuánto cuesta",
         icon: RiBuilding2Line,
       },
+      { to: "/organismos", label: "Compras por organismo", descripcion: "Quién compra, cuánto y cómo", icon: RiShoppingBag3Line },
+      { to: "/proveedores", label: "Proveedores", descripcion: "A quiénes les compra el Gobierno", icon: RiStore2Line },
       { to: "/leyes", label: "Leyes", descripcion: "Qué dice cada ley, en pocas palabras", icon: RiScales3Line },
     ],
   },
@@ -69,13 +73,6 @@ const GRUPOS: Grupo[] = [
       { to: "/empleo-publico", label: "Empleo público", descripcion: "Empleados por habitante y por provincia", icon: RiTeamLine },
       { to: "/poblacion", label: "Población", descripcion: "Cuántos somos en cada departamento", icon: RiGroupLine },
       { to: "/municipios", label: "Municipios", descripcion: "Una página por cada uno de los 18", icon: RiMapPinLine },
-    ],
-  },
-  {
-    label: "Compras del Estado",
-    items: [
-      { to: "/proveedores", label: "Proveedores", descripcion: "A quiénes les compra el Gobierno", icon: RiStore2Line },
-      { to: "/organismos", label: "Organismos", descripcion: "Quién compra, cuánto y cómo", icon: RiBankLine },
     ],
   },
   {
@@ -162,6 +159,7 @@ export function Layout() {
                   data-track-place="header"
                   className={buttonClassName({ variant: "tertiary", className: "[&.active]:text-text-link" })}
                 >
+                  {item.live && <StatusDot color="yellow" blinking />}
                   {item.label}
                 </Link>
               ))}
@@ -214,10 +212,11 @@ export function Layout() {
                     data-track="nav.link.open"
                     data-track-to={item.to}
                     data-track-place="mobile_menu"
-                    className="flex items-center justify-between min-h-11 border-b border-separator-border py-4 text-title-3-regular text-text-primary [&.active]:font-medium [&.active]:text-text-link"
+                    className="flex items-center gap-2.5 min-h-11 border-b border-separator-border py-4 text-title-3-regular text-text-primary [&.active]:font-medium [&.active]:text-text-link"
                   >
+                    {item.live && <StatusDot color="yellow" blinking />}
                     {item.label}
-                    <RiArrowRightSLine className="size-5 text-text-link" aria-hidden />
+                    <RiArrowRightSLine className="ml-auto size-5 text-text-link" aria-hidden />
                   </Link>
                 ))}
               </div>
