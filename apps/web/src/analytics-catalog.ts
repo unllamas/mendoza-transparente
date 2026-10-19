@@ -215,11 +215,6 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["municipios", "leyes"],
   },
   {
-    event: "municipality.transparency.jump",
-    description: "Tocó la tarjeta «Qué publica» de un departamento para bajar a la lista de lo que publica.",
-    tags: ["municipios", "transparencia"],
-  },
-  {
     event: "municipality.transparency_item.open",
     description:
       "Abrió el detalle de una de las cosas que un municipio debería publicar (presupuesto, deuda, compras…). Propiedades item y status.",

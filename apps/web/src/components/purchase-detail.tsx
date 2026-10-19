@@ -25,6 +25,7 @@ import { type ReactNode, useEffect, useState } from "react";
 
 import { type ColumnaVista, formatMoneda } from "@/celdas.ts";
 import { ColumnChart } from "@/charts/column-chart.tsx";
+import { EntityColumns } from "@/components/entity-columns.tsx";
 import { formatDate, formatNumber, limpiarOrganismo, loadJson } from "@/lib.ts";
 import { procesoShard } from "@/shard.ts";
 import type { DatasetMeta, OrganismoResumen, ProcesoDetalle, ProveedorDetalle } from "@/types.ts";
@@ -189,14 +190,14 @@ export function Proveedor({
   cuit,
   onProceso,
   sinTitulo,
-  columns,
+  header,
   initial,
 }: {
   cuit: string;
   onProceso: (ocid: string) => void;
   sinTitulo?: boolean;
-  /** Its own page: on desktop, who it is on a sticky left column and the lists on the right. */
-  columns?: boolean;
+  /** Its own page's header: on desktop it goes on top of the sticky left column (`EntityColumns`), with who it is. */
+  header?: ReactNode;
   /** The supplier's file when the page already loaded it (its own route); the sheet loads it here. */
   initial?: ProveedorDetalle | null;
 }) {
@@ -226,7 +227,11 @@ export function Proveedor({
         <Dato label="Primera adjudicación" value={p.primera ? formatDate(p.primera) : "—"} />
         <Dato label="Última adjudicación" value={p.ultima ? formatDate(p.ultima) : "—"} />
       </div>
+    </>
+  );
 
+  const lists = (
+    <>
       {p.porAnio.length > 1 && (
         <Bloque titulo={p.referenciaReal ? `Adjudicado por año, en pesos de ${p.referenciaReal}` : "Adjudicado por año"}>
           <ColumnChart
@@ -240,11 +245,7 @@ export function Proveedor({
           />
         </Bloque>
       )}
-    </>
-  );
 
-  const lists = (
-    <>
       <Bloque titulo="Quién le compra" ayuda={agencySlug.size ? "Tocá un organismo para ver todo lo que compra" : undefined}>
         <ul className={listVariants()}>
           {p.organismos.map((o) => {
@@ -317,7 +318,7 @@ export function Proveedor({
     </>
   );
 
-  if (!columns) {
+  if (!header) {
     return (
       <>
         {summary}
@@ -326,10 +327,16 @@ export function Proveedor({
     );
   }
   return (
-    <div className="grid gap-8 lg:grid-cols-2 lg:items-start lg:gap-10">
-      <div className="flex flex-col gap-8 lg:sticky lg:top-20">{summary}</div>
-      <div className="flex flex-col gap-8">{lists}</div>
-    </div>
+    <EntityColumns
+      aside={
+        <>
+          {header}
+          {summary}
+        </>
+      }
+    >
+      {lists}
+    </EntityColumns>
   );
 }
 
