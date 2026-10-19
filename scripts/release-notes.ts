@@ -3,9 +3,11 @@
  *
  * Usage (from the repo root):
  *   bun scripts/release-notes.ts --from origin/main --to origin/dev   body for the dev → main PR
- *   bun scripts/release-notes.ts --release [--from <ref>] [--out notes.md]
- *     daily GitHub release: from the last release tag (or today's first commit) to HEAD.
- *     Writes `tag`, `title` and `skip` to $GITHUB_OUTPUT when it runs in GitHub Actions.
+ *   bun scripts/release-notes.ts --release [--from <ref>] [--to origin/main] [--out notes.md]
+ *     daily GitHub release, one per day: tagged with the Mendoza date of the last commit, it covers
+ *     from the last release of an earlier day (or that day's first commit) to --to. If that day's
+ *     release already exists, the notes replace it. Writes `tag`, `title` and `skip` to
+ *     $GITHUB_OUTPUT when it runs in GitHub Actions.
  *
  * Documented in docs/procesos/ramas-y-releases.md#releases-de-github-uno-por-día.
  */
@@ -132,22 +134,20 @@ function mendozaDate(date = new Date()): string {
   return new Intl.DateTimeFormat("en-CA", { timeZone: TIME_ZONE }).format(date);
 }
 
-function nextTag(date: string): string {
-  const taken = new Set(git("tag", "--list", `${date}*`).split("\n").filter(Boolean));
-  if (!taken.has(date)) return date;
-  let n = 2;
-  while (taken.has(`${date}.${n}`)) n++;
-  return `${date}.${n}`;
+// The day a release belongs to: when its last commit reached main, in Mendoza time. A run that
+// GitHub delays past midnight still lands on the right day.
+function releaseDate(to: string): string {
+  return mendozaDate(new Date(Number(git("log", "-1", "--format=%ct", to)) * 1000));
 }
 
-function lastReleaseTag(to: string): string | undefined {
-  const tags = git("tag", "--merged", to, "--sort=-creatordate").split("\n");
-  return tags.find((t) => TAG_PATTERN.test(t));
+// Last release of an earlier day. Today's own release (and the old `.2` ones) are rebuilt, not stacked.
+export function previousReleaseTag(tags: string[], date: string): string | undefined {
+  return tags.find((t) => TAG_PATTERN.test(t) && t.slice(0, 10) < date);
 }
 
-// Last commit before today's midnight in Mendoza, so the first release covers today.
-function startOfToday(to: string): string | undefined {
-  const midnight = new Date(`${mendozaDate()}T00:00:00-03:00`).toISOString();
+// Last commit before that day's midnight in Mendoza, so the first release covers the whole day.
+function startOfDay(date: string, to: string): string | undefined {
+  const midnight = new Date(`${date}T00:00:00-03:00`).toISOString();
   return git("rev-list", "-1", "--first-parent", `--before=${midnight}`, to) || undefined;
 }
 
@@ -159,7 +159,9 @@ function flag(args: string[], name: string): string | undefined {
 function main(args: string[]) {
   const release = args.includes("--release");
   const to = flag(args, "--to") ?? "HEAD";
-  const from = flag(args, "--from") || (release ? (lastReleaseTag(to) ?? startOfToday(to)) : "origin/main");
+  const date = releaseDate(to);
+  const tags = git("tag", "--merged", to, "--sort=-creatordate").split("\n");
+  const from = flag(args, "--from") || (release ? (previousReleaseTag(tags, date) ?? startOfDay(date, to)) : "origin/main");
   if (!from) throw new Error("No hay un release anterior ni commits antes de hoy: pasar --from <ref>.");
   const range = `${from}..${to}`;
   const commits = readCommits(range);
@@ -177,9 +179,8 @@ function main(args: string[]) {
     return;
   }
 
-  const date = mendozaDate();
-  const tag = nextTag(date);
-  const title = new Intl.DateTimeFormat("es-AR", { timeZone: TIME_ZONE, dateStyle: "long" }).format(new Date());
+  const tag = date;
+  const title = new Intl.DateTimeFormat("es-AR", { timeZone: "UTC", dateStyle: "long" }).format(new Date(`${date}T12:00:00Z`));
   const publications = readPublications(range);
   const intro = publications.length
     ? `Llegó a mendoza-transparente.com en ${publications.length === 1 ? "1 publicación" : `${publications.length} publicaciones`}: ${publications.map((n) => `#${n}`).join(", ")}.`

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { buildNotes, type Commit } from "./release-notes";
+import { buildNotes, type Commit, previousReleaseTag } from "./release-notes";
 
 const commit = (subject: string, body = ""): Commit => ({ sha: "x", subject, body });
 
@@ -41,5 +41,18 @@ describe("buildNotes", () => {
     expect(notes).toContain("copias en archive.org");
     expect(notes).not.toContain("CF-Pages-Skip");
     expect(notes).not.toContain("back merge");
+  });
+});
+
+describe("previousReleaseTag", () => {
+  const tags = ["2026-10-18.2", "2026-10-18", "v1", "2026-10-17"];
+
+  test("skips the day's own releases, so they are rebuilt instead of stacked", () => {
+    expect(previousReleaseTag(tags, "2026-10-18")).toBe("2026-10-17");
+  });
+
+  test("takes the latest release of an earlier day, old suffixed tags included", () => {
+    expect(previousReleaseTag(tags, "2026-10-19")).toBe("2026-10-18.2");
+    expect(previousReleaseTag(tags, "2026-10-17")).toBeUndefined();
   });
 });
