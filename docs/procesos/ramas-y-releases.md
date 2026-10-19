@@ -27,7 +27,7 @@ gh pr create --base dev --title "feat(web): …"   # abre el editor con la plant
 2. **El PR usa la plantilla** (`.github/pull_request_template.md`); ver [abajo](#la-plantilla-de-pr).
 3. **Cada PR a `dev` pasa la CI** (`.github/workflows/ci.yml`: Biome, arquitectura, tipos, pruebas, build y verificación visual). Quién más lo revisa depende de quién lo manda: ver [Quién aprueba](#quién-aprueba).
 4. **Se mergea con squash** (una persona, o el agente si se lo pidieron explícitamente): un commit por tarea en `dev`, con el mensaje en español que explica qué cambia y por qué.
-5. **Cloudflare publica la vista previa** de cada rama y de `dev`: se prueba ahí, no en producción.
+5. **Cloudflare publica la vista previa** solo de `dev` (`dev.mendoza-transparente.pages.dev`): se prueba ahí, no en producción. Las ramas de trabajo se prueban en local y con la CI del PR.
 6. **Antes de cada push, la rama se pone al día con `dev`**: `git fetch origin && git rebase origin/dev`. Si lo que entró trae cambios en `docs/procesos/`, `.claude/skills/` o `AGENTS.md` (`git diff --stat HEAD@{1} HEAD -- docs/procesos .claude/skills AGENTS.md` después del rebase), se leen antes de pushear: puede haber un proceso nuevo que el cambio tenga que cumplir.
 
 ## Hasta dónde llevar cada pedido
