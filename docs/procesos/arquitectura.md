@@ -59,7 +59,7 @@ El proyecto no tiene financiación: todo corre en planes gratis. Por eso cada pr
 
 | Servicio | Lo que cuesta | Qué lo gasta |
 |---|---|---|
-| Cloudflare Pages | 500 builds por mes, 20.000 archivos por deploy, 100.000 pedidos a funciones por día; lo estático es gratis y sin límite | Cada push a `main`, a `dev` y a cada rama; las funciones de `/api/*` |
+| Cloudflare Pages | 500 builds por mes, 20.000 archivos por deploy, 100.000 pedidos a funciones por día; lo estático es gratis y sin límite | Cada push a `main` y a `dev` que toque los archivos de esa app (web y panel son dos proyectos y cada uno construye por su lado); las funciones de `/api/*` |
 | Cloudflare D1 | 5 millones de filas leídas y 100.000 escritas por día | Participación |
 | GitHub Actions | Gratis en un repo público, pero cada job tarda y ocupa cola | CI, actualización de datos, releases, back merge |
 | PostHog | Plan gratis por eventos | Cada evento de `analytics.ts` |
@@ -68,8 +68,9 @@ El proyecto no tiene financiación: todo corre en planes gratis. Por eso cada pr
 
 1. Lo que puede ser estático, se genera en el build y se sirve estático (gratis), no en una función.
 2. Un commit automático que no cambia el sitio no dispara un build (`[CF-Pages-Skip]`).
-3. Una CI nueva corre solo cuando cambian los archivos que controla (`paths:`), no en cada push.
-4. Un servicio pago o con prueba gratis que vence no se suma sin acordarlo antes.
+3. Cada proyecto de Pages construye solo si el push toca sus archivos (*build watch paths*, ver [Publicar](web.md#publicar)). **Si una app empieza a usar un paquete del monorepo o un archivo de la raíz que no usaba, se suma a su lista en el mismo PR**: si no, un cambio en ese paquete no la vuelve a construir.
+4. Una CI nueva corre solo cuando cambian los archivos que controla (`paths:`), no en cada push.
+5. Un servicio pago o con prueba gratis que vence no se suma sin acordarlo antes.
 
 Detalle del consumo de Cloudflare y los próximos pasos en `docs/planes/consumo-de-cloudflare.md`.
 
