@@ -18,6 +18,7 @@ import { formatMoneda } from "@/celdas.ts";
 import { ColumnChart } from "@/charts/column-chart.tsx";
 import { Breadcrumbs, WithBreadcrumbs } from "@/components/breadcrumbs.tsx";
 import { useDetail } from "@/components/detail-sheet.tsx";
+import { EntityColumns } from "@/components/entity-columns.tsx";
 import { ListSearch } from "@/components/list-search.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
 import { Proveedor } from "@/components/purchase-detail.tsx";
@@ -117,12 +118,20 @@ export function ProveedorPage() {
   const nombre = ficha.empresa?.razonSocial ?? ficha.nombre;
   return (
     <div className="flex flex-col gap-8">
-      <WithBreadcrumbs items={[{ label: "Proveedores", to: "/proveedores" }]} current={{ label: `CUIT ${cuit}`, icon: RiBuilding2Line }}>
-        <div className="flex flex-col gap-2">
-          <h1 className="text-title-1-semibold tracking-tight text-balance break-words sm:text-display-4-semibold">{nombre}</h1>
-        </div>
-      </WithBreadcrumbs>
-      <Proveedor cuit={cuit} initial={ficha} sinTitulo columns onProceso={(ocid) => detail.open("proceso", ocid)} />
+      <Proveedor
+        cuit={cuit}
+        initial={ficha}
+        sinTitulo
+        header={
+          <WithBreadcrumbs
+            items={[{ label: "Proveedores", to: "/proveedores" }]}
+            current={{ label: `CUIT ${cuit}`, icon: RiBuilding2Line }}
+          >
+            <h1 className="text-title-1-semibold tracking-tight text-balance break-words sm:text-display-4-semibold">{nombre}</h1>
+          </WithBreadcrumbs>
+        }
+        onProceso={(ocid) => detail.open("proceso", ocid)}
+      />
       <FuentesOficiales ids={FUENTES} />
     </div>
   );
@@ -197,100 +206,106 @@ export function OrganismoPage() {
   const maxProv = o.proveedores[0]?.monto ?? 1;
   return (
     <div className="flex flex-col gap-10">
-      <WithBreadcrumbs items={[{ label: "Organismos", to: "/organismos" }]} current={{ label: nombre, icon: RiBankLine }}>
-        <PageHeader action={<ShareButton />} title={nombre}>
-          Cuánto compró, a quiénes y con qué modalidad.
-        </PageHeader>
-      </WithBreadcrumbs>
+      <EntityColumns
+        aside={
+          <>
+            <WithBreadcrumbs items={[{ label: "Organismos", to: "/organismos" }]} current={{ label: nombre, icon: RiBankLine }}>
+              <PageHeader action={<ShareButton />} title={nombre}>
+                Cuánto compró, a quiénes y con qué modalidad.
+              </PageHeader>
+            </WithBreadcrumbs>
 
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <StatTile icon={RiReceiptLine} label="Total adjudicado" value={formatMoneda(o.total, "ARS")} />
-        <StatTile icon={RiFileTextLine} label="Procesos" value={formatNumber(o.procesos)} />
-        <StatTile icon={RiPercentLine} label="Contratación directa" value={pct(o.pctDirecta)} note="De los procesos" />
-        <StatTile icon={RiGroupLine} label="Una sola oferta" value={pct(o.pctUnaOferta)} note="De los procesos" />
-      </div>
-      {o.pctUnaOferta >= 20 && (
-        <Alert title="Poca competencia">
-          En {pct(o.pctUnaOferta)} de los procesos se presentó una sola oferta: sin competencia, el Estado no puede comparar precios.
-        </Alert>
-      )}
+            <div className="grid grid-cols-2 gap-3">
+              <StatTile icon={RiReceiptLine} label="Total adjudicado" value={formatMoneda(o.total, "ARS")} />
+              <StatTile icon={RiFileTextLine} label="Procesos" value={formatNumber(o.procesos)} />
+              <StatTile icon={RiPercentLine} label="Contratación directa" value={pct(o.pctDirecta)} note="De los procesos" />
+              <StatTile icon={RiGroupLine} label="Una sola oferta" value={pct(o.pctUnaOferta)} note="De los procesos" />
+            </div>
+            {o.pctUnaOferta >= 20 && (
+              <Alert title="Poca competencia">
+                En {pct(o.pctUnaOferta)} de los procesos se presentó una sola oferta: sin competencia, el Estado no puede comparar precios.
+              </Alert>
+            )}
+          </>
+        }
+      >
+        {o.porAnio.length > 1 && (
+          <Section id="por-anio" title={o.referenciaReal ? `Adjudicado por año, en pesos de ${o.referenciaReal}` : "Adjudicado por año"}>
+            <ColumnChart
+              columnas={o.porAnio.map((a) => ({
+                etiqueta: String(a.anio),
+                valor: a.real,
+                detalle: o.referenciaReal ? `${formatMoneda(a.monto, "ARS")} nominales` : undefined,
+              }))}
+              formatValue={(v) => formatMoneda(v, "ARS")}
+              ariaLabel={`Monto adjudicado por año por ${nombre}`}
+            />
+          </Section>
+        )}
 
-      {o.porAnio.length > 1 && (
-        <Section id="por-anio" title={o.referenciaReal ? `Adjudicado por año, en pesos de ${o.referenciaReal}` : "Adjudicado por año"}>
-          <ColumnChart
-            columnas={o.porAnio.map((a) => ({
-              etiqueta: String(a.anio),
-              valor: a.real,
-              detalle: o.referenciaReal ? `${formatMoneda(a.monto, "ARS")} nominales` : undefined,
-            }))}
-            formatValue={(v) => formatMoneda(v, "ARS")}
-            ariaLabel={`Monto adjudicado por año por ${nombre}`}
-          />
+        <Section id="proveedores" title="Principales proveedores">
+          <ul className={listVariants()}>
+            {o.proveedores.map((p) => {
+              const fila = (
+                <span className="flex min-w-0 flex-1 flex-col gap-1.5">
+                  <span className="flex items-baseline justify-between gap-3">
+                    <span className="min-w-0 truncate text-body-regular group-hover:text-text-link" title={p.nombre}>
+                      {p.nombre}
+                    </span>
+                    <span className="text-body-medium whitespace-nowrap tabular-nums">{formatMoneda(p.monto, "ARS")}</span>
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <span className="h-1.5 flex-1 rounded-full bg-chart-grid/60">
+                      <span
+                        className="block h-full rounded-full bg-highlight"
+                        style={{ width: `${Math.max((p.monto / maxProv) * 100, 1)}%` }}
+                      />
+                    </span>
+                    <span className="w-20 text-right text-caption-1-regular whitespace-nowrap text-text-tertiary tabular-nums">
+                      {p.procesos} {p.procesos === 1 ? "proceso" : "procesos"}
+                    </span>
+                  </span>
+                </span>
+              );
+              return (
+                <li key={p.cuit}>
+                  {p.slug ? (
+                    <Link to="/proveedores/$slug" params={{ slug: p.slug }} className={listRowVariants()}>
+                      {fila}
+                      <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
+                    </Link>
+                  ) : (
+                    <div className={listRowVariants({ interactive: false })}>{fila}</div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
         </Section>
-      )}
 
-      <Section id="proveedores" title="Principales proveedores">
-        <ul className={listVariants()}>
-          {o.proveedores.map((p) => {
-            const fila = (
-              <span className="flex min-w-0 flex-1 flex-col gap-1.5">
-                <span className="flex items-baseline justify-between gap-3">
-                  <span className="min-w-0 truncate text-body-regular group-hover:text-text-link" title={p.nombre}>
-                    {p.nombre}
+        <Section id="recientes" title="Procesos recientes">
+          <p className="-mt-2 text-body-regular text-text-tertiary">Tocá uno para ver el proceso completo.</p>
+          <ul className={listVariants()}>
+            {o.recientes.map((r) => (
+              <li key={r.ocid}>
+                <button type="button" onClick={() => detail.open("proceso", r.ocid)} className={listRowVariants()}>
+                  <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                    <span className="truncate text-body-regular group-hover:text-text-link" title={r.titulo}>
+                      {r.titulo || "Sin título"}
+                    </span>
+                    <span className="truncate text-caption-1-regular text-text-tertiary">
+                      {r.fecha ? `${formatDate(r.fecha)} · ` : ""}
+                      {r.metodo}
+                    </span>
                   </span>
-                  <span className="text-body-medium whitespace-nowrap tabular-nums">{formatMoneda(p.monto, "ARS")}</span>
-                </span>
-                <span className="flex items-center gap-2">
-                  <span className="h-1.5 flex-1 rounded-full bg-chart-grid/60">
-                    <span
-                      className="block h-full rounded-full bg-highlight"
-                      style={{ width: `${Math.max((p.monto / maxProv) * 100, 1)}%` }}
-                    />
-                  </span>
-                  <span className="w-20 text-right text-caption-1-regular whitespace-nowrap text-text-tertiary tabular-nums">
-                    {p.procesos} {p.procesos === 1 ? "proceso" : "procesos"}
-                  </span>
-                </span>
-              </span>
-            );
-            return (
-              <li key={p.cuit}>
-                {p.slug ? (
-                  <Link to="/proveedores/$slug" params={{ slug: p.slug }} className={listRowVariants()}>
-                    {fila}
-                    <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
-                  </Link>
-                ) : (
-                  <div className={listRowVariants({ interactive: false })}>{fila}</div>
-                )}
+                  <span className="text-body-medium whitespace-nowrap tabular-nums">{r.monto ? formatMoneda(r.monto, "ARS") : "—"}</span>
+                  <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
+                </button>
               </li>
-            );
-          })}
-        </ul>
-      </Section>
-
-      <Section id="recientes" title="Procesos recientes">
-        <p className="-mt-2 text-body-regular text-text-tertiary">Tocá uno para ver el proceso completo.</p>
-        <ul className={listVariants()}>
-          {o.recientes.map((r) => (
-            <li key={r.ocid}>
-              <button type="button" onClick={() => detail.open("proceso", r.ocid)} className={listRowVariants()}>
-                <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                  <span className="truncate text-body-regular group-hover:text-text-link" title={r.titulo}>
-                    {r.titulo || "Sin título"}
-                  </span>
-                  <span className="truncate text-caption-1-regular text-text-tertiary">
-                    {r.fecha ? `${formatDate(r.fecha)} · ` : ""}
-                    {r.metodo}
-                  </span>
-                </span>
-                <span className="text-body-medium whitespace-nowrap tabular-nums">{r.monto ? formatMoneda(r.monto, "ARS") : "—"}</span>
-                <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
-              </button>
-            </li>
-          ))}
-        </ul>
-      </Section>
+            ))}
+          </ul>
+        </Section>
+      </EntityColumns>
 
       <FuentesOficiales ids={FUENTES} />
     </div>
