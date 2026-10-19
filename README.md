@@ -23,6 +23,7 @@ Mendoza Transparente hace el trabajo pesado una sola vez, para que nadie más te
 | [Compras](https://mendoza-transparente.com/compras) y [proveedores](https://mendoza-transparente.com/proveedores) | ¿Qué compra el Estado, a quién y cómo lo contrata? |
 | [Empleo público](https://mendoza-transparente.com/empleo-publico) | ¿Cuánta gente trabaja en el Estado provincial y en cada municipio? |
 | [Funcionarios](https://mendoza-transparente.com/funcionarios) y [gobierno](https://mendoza-transparente.com/gobierno) | ¿Quién ocupa cada cargo, cuándo lo designaron y qué patrimonio declaró? |
+| [Historial de cargos](https://mendoza-transparente.com/funcionarios/historial) | ¿Quién ocupó cada cargo antes y quién ganó cada elección desde 2015? |
 | [Leyes](https://mendoza-transparente.com/leyes) | ¿Qué cambia en la práctica con cada ley y a quién le toca? |
 | [Municipios](https://mendoza-transparente.com/municipios) | ¿Qué publica, cuánto gasta y cuánta gente emplea cada departamento? |
 | [Señales](https://mendoza-transparente.com/senales) | ¿Qué patrones en los datos merecen una explicación? |
@@ -120,7 +121,7 @@ Los datos se actualizan solos con GitHub Actions ([`actualizar-datos.yml`](.gith
 | Frecuencia | Fuentes |
 |---|---|
 | Semanal (lunes) | Boletín Oficial, compras, transferencias de Nación, Ética Pública, índices e IPC |
-| Mensual (día 3) | Hacienda, energía, población, Legislatura, autoridades y proveedores |
+| Mensual (día 3) | Hacienda, energía, población, Legislatura, autoridades, cargos electos y proveedores |
 
 Cada fuente corre por separado y al final se hace un único commit, después de comprobar que la web compila. Si una fuente falla, se abre un issue con la etiqueta `scraper-roto`, que se cierra solo cuando vuelve a funcionar. Para correrlo a mano: pestaña Actions → «Actualizar datos» → «Run workflow», o `bun run actualizar` desde una máquina en Argentina.
 
