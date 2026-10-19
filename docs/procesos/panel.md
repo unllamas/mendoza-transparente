@@ -58,7 +58,7 @@ Ya hecha: ver el estado en la sección siguiente. Para rehacerla en otra cuenta:
 | Qué | Valor |
 |---|---|
 | Proyecto de Pages | `mendoza-transparente-panel`, separado del sitio (`mendoza-transparente`) |
-| Repositorio | `unllamas/mendoza-transparente`, directorio `apps/panel`, producción desde `main`, vistas previas de todas las ramas |
+| Repositorio | `unllamas/mendoza-transparente`, directorio `apps/panel`, producción desde `main`, vistas previas solo de `dev`. Construye solo si el push toca `apps/panel/*`, `packages/ui/*`, `packages/participation/*` o los archivos de dependencias de la raíz (ver [Publicar](web.md#publicar)) |
 | Build | `cd ../.. && bun install --frozen-lockfile && cd apps/panel && bunx vite build`, salida `dist`. Las variables de build y el binding `DB` salen de `apps/panel/wrangler.toml` |
 | Direcciones | `panel.mendoza-transparente.com` (propia, CNAME con proxy a `mendoza-transparente-panel.pages.dev`) y `mendoza-transparente-panel.pages.dev` |
 | Base | La misma D1 que el sitio (`mendoza-transparente`, binding `DB`), con la migración `0002` aplicada |

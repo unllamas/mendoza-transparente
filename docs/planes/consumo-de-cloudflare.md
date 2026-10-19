@@ -2,7 +2,7 @@
 
 Objetivo: que el sitio crezca a miles de páginas (leyes, escuelas, Boletín completo) sin salir del plan gratis de Cloudflare y sin que el build y la verificación se vuelvan lentos. El proyecto no tiene financiación: cualquier recurso que no gastamos es mejor.
 
-Fecha: 17/10/2026. Estado: etapas 1 y 6 hechas; las demás, sin empezar.
+Fecha: 17/10/2026. Estado: etapas 1, 2 y 6 hechas; las demás, sin empezar.
 
 ## Por qué
 
@@ -26,13 +26,21 @@ Fecha: 17/10/2026. Estado: etapas 1 y 6 hechas; las demás, sin empezar.
 
 El back merge a `dev` y el commit de copias en archive.org llevan `[CF-Pages-Skip]`. Ahora una corrida de datos gasta un solo build. Ver `docs/procesos/web.md#publicar`.
 
-### 2. Configuración del proyecto en Cloudflare (falta hacerla)
+### 2. Configuración de los proyectos en Cloudflare (hecha)
 
-Se hace en el panel (Settings → Builds & deployments) o por API con el token de `.env.cloudflare`, que no está en todas las máquinas:
+Hecha el 18/10/2026 por API, en los dos proyectos (`mendoza-transparente` y `mendoza-transparente-panel`):
 
-- **Vistas previas solo para `dev`** (*Preview branches → Custom branches*, incluir `dev`). Las ramas de trabajo se prueban en local y la CI compila la web igual. Ahorra un build por cada push a una rama.
-- **Build watch paths**: excluir `docs/*`, `.claude/*`, `.github/*`, `apps/panel/*`, `AGENTS.md` y `README.md`. Un cambio solo de documentación no construye el sitio. En el proyecto del panel, lo mismo con `apps/web/*` y `data/*`.
-- Después de configurarlo, contar los builds del último mes (`GET /accounts/$ID/pages/projects/mendoza-transparente/deployments`) para tener la línea de base.
+- **Vistas previas solo de `dev`.** Las ramas de trabajo se prueban en local y la CI compila la web y el panel igual.
+- **Build watch paths** como lista de lo que sí construye (`path_includes`), no de lo que no: un archivo nuevo en la raíz o en `docs/` no dispara builds por olvido. Las listas están en `docs/procesos/web.md#publicar`.
+
+**Línea de base** (deployments del 12 al 18/10/2026, contados con `GET …/deployments`): **454 builds en una semana**, contra un cupo de 500 por mes para toda la cuenta.
+
+| Proyecto | Producción (`main`) | Vista previa de `dev` | Vistas previas de ramas | Total |
+|---|---|---|---|---|
+| Web | 89 | 68 | 93 | 250 |
+| Panel | 56 | 68 | 80 | 204 |
+
+Con la configuración nueva se dejan de gastar los 173 builds de ramas de trabajo y casi todos los del panel, que cambia poco. Medir de nuevo cerca del 01/11/2026.
 
 ### 3. Verificación por muestra
 
@@ -61,5 +69,4 @@ Consumo medido el 18/10/2026 (`pagesFunctionsInvocationsAdaptiveGroups`): entre 
 
 ## Preguntas abiertas
 
-- ¿Cuántos builds gastamos por mes hoy? El token ya alcanza para medirlo (`.env.cloudflare`).
-- La etapa 5, ¿vale la migración del proyecto? Depende de esa medición.
+- La etapa 5, ¿vale la migración del proyecto? Depende de cuántos builds queden después de la etapa 2 (medir cerca del 01/11/2026).
