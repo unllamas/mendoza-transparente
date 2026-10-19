@@ -169,7 +169,7 @@ Qué se puede sacar de ahí: designaciones ("DESIGNA…"), adjudicaciones, ampli
 
 | Fuente | URL | Datos | Dif. |
 |---|---|---|---|
-| Junta Electoral | https://jusmendoza.gob.ar/junta-electoral-de-mendoza/ · `/escrutinios-definitivos-elecciones-generales-de-mendoza/` | Escrutinios definitivos por cargo y departamento (2023, municipales 2026), alianzas, proclamaciones | 🟡/🔴 (PDF) |
+| Junta Electoral | https://jusmendoza.gob.ar/junta-electoral-de-mendoza/ · `/escrutinios-definitivos-elecciones-generales-de-mendoza/` | Escrutinios definitivos por cargo y departamento (2023, municipales 2026), alianzas, proclamaciones. **Las actas de proclamación de 2015 a 2023 ya se leen** (fuente `junta-electoral`) | 🟡/🔴 (PDF) |
 | Portal electoral | https://elecciones.mendoza.gob.ar/ | Calendario, leyes (8967, 7005 de financiamiento, 4746 de partidos) | 🟢 |
 | Resultados provisorios | `https://resultados.mendoza.gov.ar/eleccionAAMMDDpublico/` | Por mesa, departamento y cargo | 🟡 (hay que descubrir los JSON) |
 | Resultados históricos | CKAN: `resultados-elecciones-generales-provinciales-2015/2019` y otros | CSV | 🟢 |
