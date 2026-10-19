@@ -847,7 +847,7 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
           {
             titulo: "Cargos anteriores",
             items: (p.pastPositions ?? []).map((c) => ({
-              texto: `${c.role}, ${c.agency}${c.from ? ` (${c.from.slice(0, 4)}–${c.to?.slice(0, 4) ?? ""})` : ""}`,
+              texto: `${[c.role, c.agency].filter(Boolean).join(", ")}${c.from ? ` (${c.from.slice(0, 4)}–${c.to?.slice(0, 4) ?? ""})` : ""}`,
             })),
           },
         ],

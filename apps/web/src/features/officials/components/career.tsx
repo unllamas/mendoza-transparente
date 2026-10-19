@@ -77,7 +77,7 @@ export function Career({
               <li key={`${p.from}-${p.role}-${p.agency}`} className={listRowVariants({ interactive: false })}>
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                   <span className="truncate font-medium">{p.role}</span>
-                  <span className="truncate text-body-regular text-text-secondary">{p.agency}</span>
+                  {p.agency && <span className="truncate text-body-regular text-text-secondary">{p.agency}</span>}
                   <span className="text-body-regular whitespace-nowrap text-text-tertiary tabular-nums sm:hidden">{period(p, today)}</span>
                 </span>
                 <span className="hidden shrink-0 text-body-regular whitespace-nowrap text-text-tertiary tabular-nums sm:block">

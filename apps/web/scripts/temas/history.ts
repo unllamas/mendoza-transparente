@@ -41,11 +41,24 @@ const tidyName = (n: string) =>
     .trim()
     .replace(/\p{Lu}{2,}/gu, (w) => w[0] + w.slice(1).toLowerCase());
 
-/** Sentence case for registry roles typed in capitals ("DIRECTOR DE RECURSOS HUMANOS"). */
-const tidyRole = (r: string) => {
-  const t = r.replace(/\s+/g, " ").trim();
-  return t === t.toUpperCase() ? t[0] + t.slice(1).toLowerCase() : t;
-};
+// Words that stay lowercase inside a title, and short capitalized words that are words, not acronyms (HCD, OSEP, DGE).
+const SMALL = new Set(["de", "del", "la", "las", "el", "los", "y", "e", "en", "a", "al", "con", "por", "para", "sin"]);
+const SHORT_WORDS = new Set(["jefe", "jefa", "juez", "area", "zona", "sub", "vice", "san", "ente", "obra", "ley", "red", "rio"]);
+
+/** Registry text typed in capitals ("DIRECTOR DE RECURSOS HUMANOS", "SECRETARIA de la Suprema") → "Director de Recursos Humanos". */
+const tidyTitle = (t: string) =>
+  t
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/\p{L}+/gu, (w, offset: number) => {
+      if (w !== w.toUpperCase()) return w;
+      const lower = w.toLowerCase();
+      if (w.length === 1) return SMALL.has(lower) ? lower : w;
+      if (w.length <= 4 && !SMALL.has(lower) && !SHORT_WORDS.has(normalize(lower))) return w;
+      return offset > 0 && SMALL.has(lower) ? lower : lower[0]!.toUpperCase() + lower.slice(1);
+    })
+    // Departments whose name starts with an article.
+    .replace(/\b(las heras|la paz)\b/gi, (m) => m.replace(/^l/, "L"));
 
 /** A real date or null: the registry has placeholders like 0025-12-01 or 2100-01-01. */
 const validDate = (s: string | undefined) => {
@@ -83,8 +96,9 @@ export function buildHistory(cargos: Row[], electos: Row[], funcionarios: Funcio
   for (const r of cargos) {
     const p = registry.get(r.official_id!) ?? { name: tidyName(r.nombre!), former: r.mandato_cumplido === "si", positions: [] };
     p.positions.push({
-      role: tidyRole(r.cargo!),
-      agency: r.reparticion!,
+      role: tidyTitle(r.cargo!),
+      // Ex officials are filed under "Mandato cumplido": that is a status, not where they worked.
+      agency: /^mandato cumplido$/i.test(r.reparticion!.trim()) ? "" : tidyTitle(r.reparticion!),
       from: validDate(r.fecha_inicio),
       to: validDate(r.fecha_fin),
     });
@@ -107,7 +121,7 @@ export function buildHistory(cargos: Row[], electos: Row[], funcionarios: Funcio
     raw ? [...spellings.get(normalize(raw))!].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]![0] : null;
   const electedRecord = (e: Row): ElectedRecord => ({
     date: e.eleccion_fecha!,
-    role: ROLE_NAME[e.cargo!] ?? tidyRole(e.cargo_texto || e.cargo!),
+    role: ROLE_NAME[e.cargo!] ?? tidyTitle(e.cargo_texto || e.cargo!),
     place: e.seccion_electoral ? `${e.seccion_electoral} sección electoral` : e.jurisdiccion || "Mendoza",
     party: party(e.partido),
     sourceUrl: e.fuente_url!,

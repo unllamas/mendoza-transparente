@@ -171,9 +171,7 @@ function People({ people, onOpen }: { people: HistoryPerson[]; onOpen: (p: Histo
                 <PersonAvatar name={p.name} photo={null} className="size-10 text-caption-1-regular" />
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                   <span className="truncate font-medium text-text-link">{p.name}</span>
-                  <span className="truncate text-body-regular text-text-tertiary">
-                    {p.role} · {p.agency}
-                  </span>
+                  <span className="truncate text-body-regular text-text-tertiary">{[p.role, p.agency].filter(Boolean).join(" · ")}</span>
                 </span>
                 <span className="hidden text-body-regular whitespace-nowrap text-text-tertiary tabular-nums sm:block">{years(p)}</span>
                 <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
