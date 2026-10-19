@@ -9,7 +9,7 @@ Workflow: `.github/workflows/actualizar-datos.yml`.
 | Calendario (hora de Mendoza) | Fuentes |
 |---|---|
 | Lunes, 08:00 | Boletín Oficial (últimos 10 días, para solaparse con la semana anterior), compras (OCDS), transferencias de Nación (DNAP), Ética Pública, índices, IPC de la DEIE |
-| Día 3 de cada mes, 09:00 | Hacienda (deuda y coparticipación), energía, población, Legislatura, autoridades, proveedores, personal por organismo (anexo 19 de Responsabilidad Fiscal), planta del Presupuesto |
+| Día 3 de cada mes, 09:00 | Hacienda (deuda y coparticipación), energía, población, Legislatura, autoridades, cargos electos (Junta Electoral), proveedores, personal por organismo (anexo 19 de Responsabilidad Fiscal), planta del Presupuesto |
 
 Cómo funciona:
 
