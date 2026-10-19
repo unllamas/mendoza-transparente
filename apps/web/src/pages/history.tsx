@@ -59,6 +59,9 @@ export function HistoryPage() {
   );
 }
 
+/** "/funcionarios/historial?persona=x" → { persona: "x" } (TanStack takes the query apart from the path). */
+const searchOf = (href: string) => Object.fromEntries(new URLSearchParams(href.split("?")[1] ?? ""));
+
 function Governors({ elections }: { elections: ElectionSummary[] }) {
   const governors = elections.filter((e) => e.governor);
   if (governors.length === 0) return null;
@@ -67,7 +70,7 @@ function Governors({ elections }: { elections: ElectionSummary[] }) {
       <ul className={listVariants()}>
         {governors.map((e) => (
           <li key={e.date}>
-            <Link to={e.governor!.href} className={listRowVariants()}>
+            <Link to={e.governor!.href.split("?")[0]} search={searchOf(e.governor!.href) as never} className={listRowVariants()}>
               <span className="w-11 shrink-0 text-body-semibold tabular-nums">{e.year}</span>
               <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                 <span className="truncate font-medium text-text-link">{e.governor!.name}</span>

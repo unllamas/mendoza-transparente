@@ -114,7 +114,8 @@ try {
         const small = [...document.querySelectorAll<HTMLElement>("button[aria-label]:not([role=listitem]), a[aria-label]")]
           .filter((el) => !el.innerText.trim() && el.offsetParent !== null)
           .map((el) => ({ label: el.getAttribute("aria-label"), r: el.getBoundingClientRect() }))
-          .filter(({ r }) => r.width > 0 && (r.width < 44 || r.height < 44))
+          // 1×1 is React Aria's visually hidden "Dismiss" button inside open sheets, for screen readers only.
+          .filter(({ r }) => r.width > 1 && (r.width < 44 || r.height < 44))
           .map(({ label, r }) => `${label} (${Math.round(r.width)}×${Math.round(r.height)})`);
         const header = document.querySelector("header")?.getBoundingClientRect().height ?? 0;
         return { small, header };
