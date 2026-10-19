@@ -209,6 +209,7 @@ El sitio casi no tiene animaciones, y está bien así: la gente viene a leer dat
 - **Respetar «reducir movimiento»:** desplazamientos y escalas con `motion-safe:`; con la preferencia activa, como mucho un cambio de opacidad.
 - **Nombrar lo que cambia:** `transition-colors`, `transition-opacity`, `transition-transform`; nunca `transition-all`.
 - **El movimiento nunca es la única señal:** además cambia un color, un ícono o un texto.
+- **Una sola cosa titila en todo el sitio:** el punto amarillo de «Para mirar de cerca» en el menú (`StatusDot` con `blinking`), que marca la sección viva. Es un parpadeo lento de opacidad, se apaga con «reducir movimiento» y no se suma a otros lugares: si todo titila, nada llama la atención.
 
 ## Lo que no hacemos
 

@@ -825,6 +825,18 @@
 @theme {
   --button-transition-ms: 150ms;
   --input-transition-ms: 150ms;
+
+  /* Slow blink for a live status dot (StatusDot `blinking`). Opacity only. */
+  --animate-blink: blink 1.6s ease-in-out infinite;
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.2;
+    }
+  }
 }
 
 /* Keep color feedback quick while the physical press motion remains soft.
