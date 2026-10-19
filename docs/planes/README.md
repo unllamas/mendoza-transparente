@@ -11,4 +11,5 @@ Cuando una parte de un plan queda funcionando, su proceso se documenta en `docs/
 | [Consentimiento de cookies](consentimiento-de-cookies.md) | Propuesta, sin empezar |
 | [Consumo de Cloudflare](consumo-de-cloudflare.md) | Etapa 1 hecha; falta la configuración en Cloudflare |
 | [Portada según el uso](portada-segun-el-uso.md) | Etapas 1 y 2 hechas; falta el buscador y volver a medir |
+| [Sellos de tiempo en Bitcoin](sellos-de-tiempo.md) | Propuesta, sin empezar; no se integra en esta etapa |
 | [Carga por capas](carga-por-capas.md) | Etapa 1 hecha; faltan las capas en el resto de las páginas y aliviar Recharts |
