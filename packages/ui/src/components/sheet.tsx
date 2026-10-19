@@ -40,6 +40,7 @@ function useIsTopSheet() {
  * Modal sheet on the right, over the whole page (full width on phones), on React Aria. Mount it to open it, call `onClose` to
  * close it. When two are stacked (a case over a signal), only the top one is shown; Escape, the X and tapping
  * outside close it and the one below comes back. Focus stays inside while it is open. Header of 56 px with the title and the close button.
+ * Same backgrounds as the page (white header, grey body), so the white lifted cards and rows inside read as tappable.
  */
 export function Sheet({
   title,
@@ -69,13 +70,13 @@ export function Sheet({
     >
       <Modal
         className={cx(
-          "fixed inset-y-0 right-0 z-40 flex w-full flex-col overflow-hidden border-l border-separator-border bg-background-surface shadow-2xl outline-none sm:w-[32rem]",
+          "fixed inset-y-0 right-0 z-40 flex w-full flex-col overflow-hidden border-l border-separator-border bg-background-full shadow-2xl outline-none sm:w-[32rem]",
           className,
         )}
       >
         {/* React Aria focuses the panel itself on open, not the close button (it would show its ring every time). */}
         <Dialog aria-label={title} className="flex min-h-0 flex-1 flex-col outline-none">
-          <div className="flex h-14 shrink-0 items-center gap-2 border-b border-separator-border pr-1.5 pl-4">
+          <div className="flex h-14 shrink-0 items-center gap-2 border-b border-separator-border bg-background-surface pr-1.5 pl-4">
             {header}
             <Heading slot="title" className="mr-auto truncate text-headline-medium text-text-primary">
               {title}
