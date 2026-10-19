@@ -22,6 +22,7 @@ import { buildLeyes, buildMunicipios, buildOrganismosYProveedores } from "./tema
 import { buildFuncionarios, type Correccion } from "./temas/funcionarios.ts";
 import { type AgencyTable, buildGobierno } from "./temas/gobierno.ts";
 import { buildGuide, writeSearchIndex } from "./temas/guide.ts";
+import { buildHistory } from "./temas/history.ts";
 import { buildHome } from "./temas/home.ts";
 import { deflactor } from "./temas/inflacion.ts";
 import type { ResumenLey } from "./temas/leyes.ts";
@@ -310,6 +311,16 @@ const funcionariosTema =
         readTable("fotos", "fotos.csv") ?? [],
       )
     : undefined;
+// Who held each position (ex officials and past elections); it also adds the past of each current official.
+if (funcionariosTema) {
+  const history = buildHistory(
+    readTable("etica-publica", "cargos.csv") ?? [],
+    readTable("junta-electoral", "electos.csv") ?? [],
+    funcionariosTema,
+    new Date().toISOString().slice(0, 10),
+  );
+  writeFileSync(join(OUT, "temas", "history.json"), JSON.stringify(history));
+}
 const usdRates = (readTable("indices", "tipo_cambio_mensual.csv") ?? []).filter((r) => Number(r.tipo_cambio_oficial_promedio) > 0);
 const lastUsd = usdRates.at(-1);
 if (funcionariosTema && lastUsd)

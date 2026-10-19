@@ -151,6 +151,7 @@ Objetivo: que la gente encuentre el sitio cuando busca "intendente de Maipú", "
 **URLs y enlaces internos.** Las URLs son legibles y jerárquicas:
 
 - `/funcionarios/<cargo>/<nombre>`, por ejemplo `/funcionarios/diputados-provinciales/edgardo-civit-evans`. Cada cargo tiene su página (`/funcionarios/intendentes`). Los cargos están en `ROLES` (`src/slug.ts`).
+- `/funcionarios/historial`: quién ocupó cada cargo antes (gobernadores, cómo se repartieron los cargos en cada elección y ex funcionarios). Es una ruta fija, así que gana sobre `/funcionarios/<cargo>`: ningún cargo de `ROLES` puede llamarse `historial`. Los ex funcionarios no tienen página propia: se abren en una hoja (`?persona=etica-<id>` o `?persona=electo-<nombre>`), que el buscador enlaza. Criterios en [Metodología](metodologia.md#quién-ocupó-cada-cargo).
 - `/municipios/<nombre>`, `/proveedores/<nombre>-<cuit>`, `/organismos/<nombre>` (áreas que compran) y `/leyes/<número>`.
 - `/gobierno/<organismo>`: un organismo del Estado provincial, con su conducción, cargos, costo del personal, qué hace, compras y designaciones. Los ids salen de `data/curado/jurisdicciones.yaml`; el cálculo está en `scripts/temas/gobierno.ts` y los criterios en [Metodología](metodologia.md#personal-y-costo-de-cada-organismo).
 

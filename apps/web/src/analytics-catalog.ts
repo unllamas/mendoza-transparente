@@ -197,6 +197,11 @@ export const EVENT_CATALOG: EventDoc[] = [
     description: "Abrió el texto de una ley de acceso a la información. Propiedad law: 9070 (provincial) o 27275 (nacional).",
     tags: ["no publicado"],
   },
+  {
+    event: "officials.history.open",
+    description: "Desde la página de funcionarios, abrió el historial: quién ocupó cada cargo antes y quién ganó cada elección.",
+    tags: ["funcionarios"],
+  },
   { event: "law.official_pdf.open", description: "Abrió el PDF oficial de una ley. Propiedad law: número.", tags: ["leyes"] },
   { event: "law.full_text.toggle", description: "Desplegó o plegó el texto completo de una ley. Propiedad law.", tags: ["leyes"] },
   {
