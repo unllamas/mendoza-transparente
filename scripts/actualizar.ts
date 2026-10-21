@@ -1,10 +1,10 @@
 /**
  * Actualización manual de datos desde una computadora en Argentina: respaldo de la actualización
  * automática en GitHub Actions, sobre todo para los sitios que rechazan a los servidores en la nube
- * (Boletín Oficial y Senado de Mendoza).
+ * (Boletín Oficial, Senado de Mendoza y Ética Pública).
  *
  * Uso (desde la raíz del repo):
- *   bun run actualizar                     fuentes bloqueadas en la nube (Boletín Oficial y Legislatura)
+ *   bun run actualizar                     fuentes bloqueadas en la nube (Boletín Oficial, Legislatura y Ética Pública)
  *   bun run actualizar compras-ocds dnap   fuentes puntuales
  *   bun run actualizar --todas             todas las que corre el workflow
  *   bun run actualizar --si                publica sin preguntar
@@ -20,7 +20,7 @@ import { join } from "node:path";
 const ROOT = join(import.meta.dir, "..");
 
 // Mismas fuentes y argumentos que .github/workflows/actualizar-datos.yml.
-const BLOQUEADAS = ["boletin-oficial", "legislatura"];
+const BLOQUEADAS = ["boletin-oficial", "legislatura", "etica-publica"];
 const TODAS = [
   "boletin-oficial",
   "compras-ocds",

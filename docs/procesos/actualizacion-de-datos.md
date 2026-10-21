@@ -39,20 +39,22 @@ Verificado el 12/10/2026 con check-host.net (consultas desde Brasil, Alemania y 
 |---|---|
 | Boletín Oficial (`portalgateway.mendoza.gov.ar`) | No responde a la red de GitHub (Azure). Desde otros proveedores, sí. |
 | Senado de Mendoza (`senadomendoza.gob.ar`, `senadomza.gov.ar`) | Responde 403 a cualquier conexión de fuera de Argentina. |
+| Ética Pública (`eticapublica.mendoza.gov.ar`) | Responde, pero tarda unos 40 segundos por pedido desde GitHub (menos de 1 desde Argentina): la corrida no termina en el límite de 3 horas. Visto el 21/10/2026 en las corridas del 19/10. |
 
 Esos hosts están en `HOSTS_CON_PROXY` (`packages/core/src/fetch.ts`). Si el repositorio tiene el secreto **`PROXY_AR`** (`http://usuario:clave@host:puerto`, un proxy con salida en Argentina), los pedidos a esos sitios pasan por ahí y todo lo demás va directo. Sin el secreto:
 
 - El Boletín Oficial se saltea, sin abrir issues.
 - La Legislatura actualiza Diputados y el Senado conserva sus datos anteriores.
+- Ética Pública se saltea, sin abrir issues.
 
-Para activarlo: contratar un proxy argentino de pago por uso (el consumo es de unos 20 MB por mes) y cargarlo en **Settings → Secrets and variables → Actions → New repository secret** con el nombre `PROXY_AR`.
+Para activarlo: contratar un proxy argentino de pago por uso (el consumo es de unos 20 MB por mes para el Boletín y el Senado, más unos 25 MB por mes para Ética Pública, que baja unos 6 MB por semana) y cargarlo en **Settings → Secrets and variables → Actions → New repository secret** con el nombre `PROXY_AR`.
 
 ## A mano: `bun run actualizar`
 
 Respaldo para cuando la nube no llega (sitios bloqueados) o para confirmar un dato. Se corre desde una computadora en Argentina, en la copia de trabajo del repo:
 
 ```bash
-bun run actualizar                     # Boletín Oficial y Legislatura (las bloqueadas en la nube)
+bun run actualizar                     # Boletín Oficial, Legislatura y Ética Pública (las bloqueadas en la nube)
 bun run actualizar compras-ocds dnap   # fuentes puntuales
 bun run actualizar --todas             # todas las del workflow
 bun run actualizar --sin-publicar      # solo descargar y ver el resumen

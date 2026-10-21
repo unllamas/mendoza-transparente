@@ -116,9 +116,11 @@ jobs:
           FUENTE: ${{ matrix.fuente }}
           PROXY_AR: ${{ secrets.PROXY_AR }}
         run: |
-          if [ "$FUENTE" = "boletin-oficial" ] && [ -z "$PROXY_AR" ]; then
-            echo "::notice title=Boletín Oficial::Se saltea: el Boletín no responde a GitHub y falta el secreto PROXY_AR (proxy con IP argentina)."
-            exit 0
+          if [ -z "$PROXY_AR" ]; then
+            case "$FUENTE" in
+              boletin-oficial) echo "::notice title=Boletín Oficial::Se saltea: el Boletín no responde a GitHub y falta el secreto PROXY_AR (proxy con IP argentina)."; exit 0 ;;
+              etica-publica) echo "::notice title=Ética Pública::Se saltea: la API tarda unos 40 s por pedido desde GitHub y no termina en 3 horas; falta el secreto PROXY_AR (proxy con IP argentina)."; exit 0 ;;
+            esac
           fi
           case "$FUENTE" in
             boletin-oficial) ARGS="--desde $(date -u -d '10 days ago' +%F) --hasta $(date -u +%F)" ;;
