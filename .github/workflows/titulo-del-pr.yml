@@ -5,6 +5,12 @@ name: Título del PR
 on:
   pull_request:
     types: [opened, edited, synchronize, reopened]
+  # Para el PR de datos que abre el bot (ver ci.yml): el título llega como entrada.
+  workflow_dispatch:
+    inputs:
+      titulo:
+        description: "Título del PR"
+        required: true
 
 jobs:
   titulo:
@@ -18,5 +24,5 @@ jobs:
       - run: bun install --frozen-lockfile
       - name: Conventional Commits (commitlint)
         env:
-          TITLE: ${{ github.event.pull_request.title }}
+          TITLE: ${{ github.event.pull_request.title || inputs.titulo }}
         run: printf '%s\n' "$TITLE" | bunx commitlint --verbose

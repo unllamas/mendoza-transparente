@@ -1,4 +1,4 @@
-# Back merge automático: cada push a main (un release, un hotfix o un commit de datos) se lleva a dev,
+# Back merge automático: cada push a main (un release o un hotfix) se lleva a dev,
 # para que dev nunca quede atrás de producción. Ver docs/procesos/ramas-y-releases.md.
 #
 # Pushea con la deploy key del secreto DEPLOY_KEY, que puede saltear la protección de dev.

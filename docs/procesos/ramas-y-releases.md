@@ -6,9 +6,9 @@ Hasta octubre de 2026 todo iba directo a `main`, que publica el sitio en cada pu
 
 | Rama | Qué es | Quién escribe |
 |---|---|---|
-| `main` | Producción. Cada push publica mendoza-transparente.com (Cloudflare Pages). | Solo publicaciones desde `dev`, hotfixes y los commits automáticos de datos |
+| `main` | Producción. Cada push publica mendoza-transparente.com (Cloudflare Pages). | Solo publicaciones desde `dev` y hotfixes |
 | `dev` | Integración. Lo que va a salir en el próximo release. Cloudflare la publica como vista previa en `dev.mendoza-transparente.pages.dev`. | PRs de las ramas de trabajo |
-| `<tipo>/<tema>` | Una rama por tarea, que sale de `dev`: `feat/pedidos-por-municipio`, `fix/menu-movil`, `datos/fuente-nueva`. | Quien hace la tarea |
+| `<tipo>/<tema>` | Una rama por tarea, que sale de `dev`: `feat/pedidos-por-municipio`, `fix/menu-movil`, `datos/fuente-nueva`. Las actualizaciones de datos van en `datos/automatica` (el bot) o `datos/actualizacion-<fecha>` (`bun run actualizar`). | Quien hace la tarea |
 | `hotfix/<tema>` | Un arreglo urgente de producción, que sale de `main`. | Quien arregla |
 
 Los nombres de rama van en inglés o en español sin tildes, cortos y en `kebab-case`.
@@ -43,7 +43,7 @@ Lo que se pide en una conversación define hasta dónde llega el trabajo del age
 **El permiso vale para lo que se nombró, en esa conversación.** Mergear un PR no autoriza a mergear el siguiente, ni a publicar en `main`. Que la tarea esté terminada, que la CI esté en verde o que el trabajo sea una prueba no cuentan como permiso. Ante la duda, no se mergea y se pregunta.
 | «Sin release», «no generes release» | `main` | Igual que el anterior. No hay nada que evitar: el release de GitHub lo crea solo el workflow una vez por día, y nadie lo crea a mano |
 | «Una vez pasen los CI, llevalo a prod» | `main` | Igual, sin volver a preguntar: el pedido ya autoriza la publicación |
-| «Datos en prod» | `main` | Los datos van directo a `main` ([Datos](#datos)); el scraper nuevo o cambiado, por `dev` |
+| «Datos en prod» | `main` | Los datos entran por un PR a `dev` ([Datos](#datos)) y llegan a `main` con la publicación, igual que el código |
 
 **El turno no termina esperando.** Si falta que termine una CI o un despliegue, el agente lo sigue hasta el final (`gh pr checks <n> --watch` o `gh run watch` en segundo plano, que avisan al terminar; en T3 Code, `watch_pull_request`) y después hace el paso siguiente. Cerrar con «espero a que termine la CI» deja la tarea a medias y obliga a la persona a preguntar «¿y?». Si de verdad no se puede seguir (falta un permiso, una decisión o un secreto), el último mensaje dice qué falta y quién lo tiene que hacer.
 
@@ -208,7 +208,7 @@ gh pr create --base main
 
 ## Back merge automático
 
-`main` recibe commits que no pasan por `dev`: los hotfixes y las actualizaciones de datos (las automáticas de GitHub Actions y las manuales con `bun run actualizar`, que se publican directo en `main` para no esperar una publicación). Para que `dev` no quede atrás, el workflow **«Back merge a dev»** corre en cada push a `main`:
+`main` recibe commits que no pasan por `dev`: los hotfixes. Para que `dev` no quede atrás, el workflow **«Back merge a dev»** corre en cada push a `main`:
 
 - Si `dev` ya tiene todo, no hace nada.
 - Si puede, mergea `main` en `dev` y pushea (después de una publicación es un fast-forward). El commit lleva `[CF-Pages-Skip]`, así Cloudflare no gasta un build en la vista previa de `dev` (ver [Web: ahorrar recursos](web.md#publicar)). Si es un fast-forward no hay commit nuevo: la vista previa se arma igual.
@@ -224,10 +224,11 @@ git push
 
 ## Datos
 
-Los datos no esperan una publicación: se publican en `main` apenas se descargan y el back merge los lleva a `dev`.
+Los datos **nunca van directo a `main`**. Entran a `dev` por un PR, como el código, y llegan a producción con la próxima publicación. Una actualización puede borrar filas o archivos (una fuente que responde a medias, un archivo que el organismo reemplazó) y eso dejaría el sitio incongruente: el PR deja verlo antes. Hasta el 22/10/2026 se publicaban directo en `main`.
 
-- `.github/workflows/actualizar-datos.yml` fija `ref: main` en todos sus checkouts, así que publica en `main` aunque la rama por defecto sea `dev`.
-- `bun run actualizar` solo publica desde `main`: en otra rama, frena antes del commit y deja los cambios en `data/`.
+- `.github/workflows/actualizar-datos.yml` commitea en `datos/automatica` y abre un PR a `dev` (o suma el commit al que ya está abierto).
+- `bun run actualizar` commitea en una rama `datos/…` que sale de `dev` y abre un PR a `dev`. En `main` no corre.
+- El cuerpo del PR dice qué filas o archivos se borran. Cómo revisarlo: [Actualización de datos](actualizacion-de-datos.md#revisar-el-pr-de-datos).
 - Un **scraper nuevo o cambiado** es código: va por una rama de trabajo y `dev` como cualquier cambio.
 
 ## Configuración en GitHub
@@ -236,7 +237,7 @@ Configurado por API el 17/10/2026 en `unllamas/mendoza-transparente`:
 
 | Qué | Estado |
 |---|---|
-| Rama por defecto | `dev`: los PRs apuntan ahí sin pensarlo, y los workflows programados corren desde ahí (por eso el de datos fija `ref: main`) |
+| Rama por defecto | `dev`: los PRs apuntan ahí sin pensarlo, y los workflows programados corren desde ahí |
 | Merges permitidos | Squash y merge commit; rebase deshabilitado |
 | Título del commit con squash | El título del PR (`squash_merge_commit_title: PR_TITLE`), para que el commit que queda en `dev` siga [Conventional Commits](#mensajes-de-commit-y-títulos-de-pr) aunque el PR tenga un solo commit |
 | Ruleset «main: producción» | Prohíbe borrar la rama y el force push; pide PR y los checks obligatorios en verde |
@@ -245,8 +246,9 @@ Configurado por API el 17/10/2026 en `unllamas/mendoza-transparente`:
 | Aprobaciones | Las reglas piden 0. Que los agentes no mergeen sin un pedido explícito es una regla de este documento ([Quién aprueba](#quién-aprueba)) |
 | Excepciones (*bypass*) | Quien administra el repo y las deploy keys, en las dos reglas |
 | Deploy key «Bot de GitHub Actions (datos y back merge)» | Clave SSH con escritura, guardada en el secreto **`DEPLOY_KEY`** |
+| Etiqueta `datos-con-borrados` | La pone el bot en el PR de datos cuando se borran filas o archivos; la crea sola si no existe |
 
-**Por qué una deploy key.** En un repo personal, GitHub no deja que GitHub Actions saltee las reglas (eso solo se puede en organizaciones), así que con el token del workflow el bot no podría publicar datos en `main` ni hacer el back merge en `dev`. Una deploy key sí puede ser excepción, se crea por API y no vence. Además, a diferencia del token del workflow, sus push disparan otros workflows: por eso el back merge corre solo después de cada commit de datos. Los dos workflows la usan en `actions/checkout` con `ssh-key: ${{ secrets.DEPLOY_KEY }}`.
+**Por qué una deploy key.** En un repo personal, GitHub no deja que GitHub Actions saltee las reglas (eso solo se puede en organizaciones), así que con el token del workflow el bot no podría hacer el back merge en `dev`. Una deploy key sí puede ser excepción, se crea por API y no vence. Además, a diferencia del token del workflow, sus push disparan otros workflows: por eso el back merge corre solo después de cada hotfix y la CI corre sola en los commits que se suman al PR de datos. Los dos workflows la usan en `actions/checkout` con `ssh-key: ${{ secrets.DEPLOY_KEY }}`.
 
 **Rotar la clave** (si se filtra, o para cambiarla):
 

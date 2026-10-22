@@ -17,10 +17,12 @@
 # capturas de la Wayback Machine de las URLs oficiales). Necesita los secretos IA_ACCESS_KEY e IA_SECRET_KEY;
 # sin ellos se saltea. Ver docs/procesos/datos-y-archivo.md.
 #
-# Los datos se publican directo en main, aunque la rama por defecto sea dev: todos los checkouts fijan
-# `ref: main`. El workflow back-merge.yml los lleva después a dev (ver docs/procesos/ramas-y-releases.md).
-# Los push salen con la deploy key del secreto DEPLOY_KEY, que puede saltear la protección de main y, a
-# diferencia del token del workflow, dispara el back merge.
+# Los datos nunca van directo a main: se commitean en la rama datos/automatica, con un PR a dev, y llegan a
+# producción con la próxima publicación de dev. Si ya hay un PR de datos abierto, la corrida parte de esa rama
+# y suma sus cambios al mismo PR; si no, parte de dev y abre uno nuevo. El cuerpo del PR dice qué filas o
+# archivos se borran (scripts/data-changes.ts), para revisarlo antes de mergear. Los push salen con la deploy
+# key del secreto DEPLOY_KEY: a diferencia del token del workflow, disparan la CI del PR. Ver
+# docs/procesos/actualizacion-de-datos.md y .github/scripts/data-pr.sh.
 #
 # Las fotos de funcionarios no se actualizan acá: usan `sips` (macOS) y cambian poco.
 
@@ -40,12 +42,15 @@ on:
 permissions:
   contents: write
   issues: write
+  pull-requests: write
+  actions: write # dispara la CI del PR de datos (ver .github/scripts/data-pr.sh)
 
 concurrency:
   group: actualizar-datos
   cancel-in-progress: false
 
 env:
+  DATA_BRANCH: datos/automatica
   SEMANAL: "boletin-oficial,compras-ocds,dnap,etica-publica,indices,deie-ipc,atm-recaudacion"
   MENSUAL: "hacienda-deuda-stock,hacienda-participacion-municipal,energia-regalias,poblacion,legislatura,autoridades,junta-electoral,proveedores,lrf-personal,presupuesto-planta,municipios-personal,municipios-lrf,universidades-estadisticas,universidades-presupuesto"
 
@@ -54,7 +59,20 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       fuentes: ${{ steps.plan.outputs.fuentes }}
+      base: ${{ steps.base.outputs.base }}
     steps:
+      - id: base
+        # Si ya hay un PR de datos abierto, esta corrida parte de su rama y suma los cambios al mismo PR.
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          abierto=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$DATA_BRANCH" --base dev --state open --json number -q '.[0].number')
+          if [ -n "$abierto" ]; then
+            echo "Hay un PR de datos abierto (#$abierto): se parte de $DATA_BRANCH."
+            echo "base=$DATA_BRANCH" >> "$GITHUB_OUTPUT"
+          else
+            echo "base=dev" >> "$GITHUB_OUTPUT"
+          fi
       - id: plan
         env:
           ENTRADA: ${{ inputs.fuentes }}
@@ -69,11 +87,12 @@ jobs:
           echo "fuentes=$(echo "$F" | tr -d ' ' | jq -R -c 'split(",") | map(select(length > 0))')" >> "$GITHUB_OUTPUT"
 
   frescura:
+    needs: plan
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ needs.plan.outputs.base }}
       - name: Controlar que el Boletín Oficial no quede viejo
         env:
           GH_TOKEN: ${{ github.token }}
@@ -105,7 +124,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ needs.plan.outputs.base }}
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.2
@@ -189,7 +208,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ needs.plan.outputs.base }}
           ssh-key: ${{ secrets.DEPLOY_KEY }}
       - uses: oven-sh/setup-bun@v2
         with:
@@ -239,20 +258,26 @@ jobs:
           bunx vite build
           bun scripts/seo.ts
 
-      - name: Commit y push
+      - name: Resumir qué cambia contra dev
+        id: informe
+        if: steps.aplicar.outputs.hay == 'true'
+        run: |
+          git add -A data
+          git fetch -q origin dev
+          bun scripts/data-changes.ts --base origin/dev --out /tmp/cambios.md
+
+      - name: Commit y PR a dev
         if: steps.aplicar.outputs.hay == 'true'
         env:
           FUENTES: ${{ steps.aplicar.outputs.fuentes }}
+          ALERTAS: ${{ steps.informe.outputs.alertas }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A data
-          git commit -m "chore(data): actualización automática ($FUENTES)" -m "$(date -u +%F)"
-          for intento in 1 2 3; do
-            git pull --rebase --autostash && git push && exit 0
-            sleep $((intento * 10))
-          done
-          exit 1
+          titulo="chore(data): actualización automática ($FUENTES)"
+          git commit -m "$titulo" -m "$(date -u +%F)"
+          .github/scripts/data-pr.sh "$titulo" /tmp/cambios.md
 
       - name: Avisar si la web no compila
         if: failure()
@@ -265,8 +290,9 @@ jobs:
 
   archivo-externo:
     # Copia en archive.org los archivos crudos nuevos y pide a la Wayback Machine que capture sus URLs oficiales.
-    # Corre después del commit, sobre lo último de main, y commitea solo los registros archive-org.jsonl.
-    needs: commit
+    # Corre después del commit, sobre la rama del PR de datos (o dev si no hay uno abierto), y commitea solo
+    # los registros archive-org.jsonl en el PR de datos.
+    needs: [plan, commit]
     if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     timeout-minutes: 180
@@ -283,10 +309,18 @@ jobs:
             echo "hay=true" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Elegir la rama
+        id: rama
+        if: steps.claves.outputs.hay == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          abierto=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$DATA_BRANCH" --base dev --state open --json number -q '.[0].number')
+          echo "ref=$([ -n "$abierto" ] && echo "$DATA_BRANCH" || echo dev)" >> "$GITHUB_OUTPUT"
       - if: steps.claves.outputs.hay == 'true'
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ steps.rama.outputs.ref }}
           ssh-key: ${{ secrets.DEPLOY_KEY }}
       - if: steps.claves.outputs.hay == 'true'
         uses: oven-sh/setup-bun@v2
@@ -302,8 +336,10 @@ jobs:
           bun install --frozen-lockfile
           bun run archivar --max-minutos=150
 
-      - name: Commit y push de los registros
+      - name: Commit de los registros en el PR de datos
         if: always() && steps.claves.outputs.hay == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -312,8 +348,4 @@ jobs:
           # [CF-Pages-Skip]: este commit solo suma registros de archive.org y no dispara un build en Cloudflare.
           # Los links a las copias aparecen en el sitio con el próximo build (otro commit de datos o una publicación).
           git commit -m "chore(data): copias en archive.org [CF-Pages-Skip]" -m "$(date -u +%F)"
-          for intento in 1 2 3; do
-            git pull --rebase --autostash && git push && exit 0
-            sleep $((intento * 10))
-          done
-          exit 1
+          .github/scripts/data-pr.sh "chore(data): copias en archive.org"
