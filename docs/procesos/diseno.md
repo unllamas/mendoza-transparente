@@ -120,6 +120,7 @@ La mayoría entra desde el teléfono. Estos detalles separan «una página web e
   - Las fotos salen solo de sitios oficiales (`bun run scrape fotos`).
   - Las personas sin página de funcionario se identifican como `etica-<official_id>` en `data/processed/fotos/fotos.csv`.
   - Faltar una foto es un pendiente a resolver, no un estado aceptable.
+  - **Partido en la cara.** A quien ocupa un cargo electo, `PersonAvatar` le suma con `party` una insignia chica abajo a la derecha con su partido, frente o bloque: el logo oficial o, mientras no esté, la sigla o las iniciales en gris neutro (`PartyAvatar`), nunca los colores del partido. Si la fuente no dice el partido de alguien electo, `partyMissing` dibuja la insignia vacía con borde punteado. Los cargos designados (ministros, Fiscal de Estado) no llevan insignia: el cargo no tiene partido. Solo desde 40 px (abajo de eso no se lee) y siempre con el nombre del partido escrito en la fila, porque la insignia es decorativa. La insignia no es un link: la fila ya lo es y un círculo de 16 px no llega a 44 px. El link al partido va en el campo «Bloque» o «Partido o frente» de la ficha. Criterios de qué partido se muestra: `metodologia.md`, «Partidos, frentes y bloques».
 - Todo lo navegable dentro de una hoja lleva flecha › en `text-text-link` y se resalta al pasar el mouse. La flecha alcanza: sin un texto de ayuda («Tocá una para…») que suma una línea más.
 - Castellano rioplatense llano. Títulos como preguntas cuando ayuda («¿Cuánto debe Mendoza?»).
 

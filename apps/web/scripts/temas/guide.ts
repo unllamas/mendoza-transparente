@@ -19,6 +19,8 @@ import type {
   MunicipioPagina,
   NoPublicado,
   OrganismoResumen,
+  PartyDetail,
+  PartySummary,
   ProveedorResumen,
   SearchEntry,
   SenalesTema,
@@ -121,6 +123,7 @@ const KIND_BY_PREFIX: [RegExp, string][] = [
   [/^\/funcionarios\/historial$/, "Sección"],
   [/^\/funcionarios\/[^/]+$/, "Cargo"],
   [/^\/municipios\/[^/]+$/, "Municipio"],
+  [/^\/partidos\/[^/]+$/, "Partido"],
   [/^\/leyes\/[^/]+$/, "Ley"],
   [/^\/proveedores\/[^/]+$/, "Proveedor"],
   [/^\/organismos\/[^/]+$/, "Área que compra"],
@@ -196,6 +199,20 @@ export function writeSearchIndex(paginas: Pagina[], outDir: string) {
       s: [officialPlace(o), party, o.mandatoHasta && `hasta ${o.mandatoHasta}`].filter(Boolean).join(" · "),
       i: o.foto ?? undefined,
       q: [o.cargo, o.organismo, o.seccion, ...o.municipalities.map((m) => m.name)].filter(Boolean).join(" "),
+    });
+  }
+  for (const summary of read<PartySummary[]>("temas/partidos.json", [])) {
+    const party = read<PartyDetail | null>(`temas/partidos/${summary.slug}.json`, null);
+    byPath.set(`/partidos/${summary.slug}`, {
+      t: summary.name,
+      s:
+        [
+          summary.inOffice > 0 && `${nf.format(summary.inOffice)} en funciones`,
+          summary.seatsWon > 0 && `${nf.format(summary.seatsWon)} cargos ganados desde 2015`,
+        ]
+          .filter(Boolean)
+          .join(" · ") || "Partido, frente o bloque",
+      q: [summary.short, "partido frente bloque alianza", ...(party?.aliases.map((a) => a.name) ?? [])].join(" "),
     });
   }
   for (const m of municipalities)

@@ -1,6 +1,6 @@
 import { listRowVariants, listVariants } from "@mt/ui/components/card";
-import { cx } from "@mt/ui/lib/cx";
 import { RiExternalLinkLine } from "@remixicon/react";
+import { Link } from "@tanstack/react-router";
 
 import { mesCorto } from "@/lib.ts";
 import type { ElectedRecord, PastPosition } from "@/types.ts";
@@ -46,9 +46,18 @@ export function Career({
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                   <span className="truncate font-medium">{e.role}</span>
                   <span className="truncate text-body-regular text-text-tertiary">{e.place}</span>
-                  <span className={cx("truncate text-body-regular", e.party ? "text-text-secondary" : "text-text-tertiary")}>
-                    {e.party ?? "El acta no dice el partido"}
-                  </span>
+                  {e.party && e.partySlug ? (
+                    <Link
+                      to="/partidos/$slug"
+                      params={{ slug: e.partySlug }}
+                      data-track="official.party.open"
+                      className="truncate text-body-regular text-text-link hover:underline"
+                    >
+                      {e.party}
+                    </Link>
+                  ) : (
+                    <span className="truncate text-body-regular text-text-tertiary">El acta no dice el partido</span>
+                  )}
                 </span>
               </li>
             ))}

@@ -27,6 +27,8 @@ import type {
   NoPublicado,
   OrganismoDetalle,
   OrganismoResumen,
+  PartyDetail,
+  PartySummary,
   PoblacionTema,
   ProveedorDetalle,
   ProveedorResumen,
@@ -162,6 +164,20 @@ const funcionarioRoute = createRoute({
   path: "/funcionarios/$role/$slug",
   loader: () => loadTema<FuncionariosTema>("funcionarios"),
   component: page(() => import("./pages/funcionarios.tsx"), "FuncionarioPage"),
+});
+
+const partiesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/partidos",
+  loader: () => loadTema<PartySummary[]>("partidos"),
+  component: page(() => import("./pages/partidos.tsx"), "PartiesPage"),
+});
+
+const partyRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/partidos/$slug",
+  loader: ({ params }) => loadTema<PartyDetail>(`partidos/${params.slug}`).catch(() => null),
+  component: page(() => import("./pages/partidos.tsx"), "PartyPage"),
 });
 
 const comoLeerRoute = createRoute({
@@ -336,6 +352,8 @@ const router = createRouter({
     historyRoute,
     roleRoute,
     funcionarioRoute,
+    partiesRoute,
+    partyRoute,
     gobiernoRoute,
     agencyRoute,
     municipiosRoute,

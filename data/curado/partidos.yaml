@@ -1,0 +1,110 @@
+# Partidos, frentes y bloques: las formas en que las fuentes oficiales escriben un mismo nombre.
+#
+# Criterios (docs/procesos/metodologia.md, «Partidos, frentes y bloques»):
+# - Solo se unen formas de escribir EL MISMO nombre: prefijo legal («Partido», «Alianza», «Frente»), sigla,
+#   artículo o errata. Nunca partidos distintos (La Libertad Avanza y PRO quedan separados) ni un frente con
+#   los partidos que lo forman.
+# - Cada alias dice por qué se une. Sin motivo escrito, no se une.
+# - Las mayúsculas, las tildes y los signos ya se ignoran solos («Frente De Todos» = «Frente de Todos»):
+#   no hace falta cargarlos como alias.
+# - Lo que no figura acá queda como entidad propia, con el nombre tal como lo dice la fuente.
+#
+# Campos:
+#   slug        la URL: /partidos/<slug>
+#   nombre      el nombre que se muestra
+#   sigla       opcional; va en la insignia de la cara y en el título
+#   alias       las otras formas en que lo escriben las fuentes, cada una con su motivo
+#   logo        archivo en apps/web/public/partidos/ (null mientras no haya uno de fuente oficial)
+#   logo_fuente URL oficial de donde salió el logo
+#   wikidata    id de Wikidata (Q…), si existe con certeza
+
+- slug: cambia-mendoza
+  nombre: Cambia Mendoza
+  alias:
+    - nombre: Alianza Cambia Mendoza
+      motivo: Mismo nombre con el prefijo legal «Alianza» (actas de 2015 y 2017).
+    - nombre: Frente Cambia Mendoza
+      motivo: Mismo nombre con el prefijo legal «Frente» (actas de 2019 y lista de autoridades).
+
+- slug: ucr
+  nombre: Unión Cívica Radical
+  sigla: UCR
+  alias:
+    - nombre: UCR - Unión Cívica Radical
+      motivo: Sigla y nombre completo juntos (bloque en el Congreso).
+    - nombre: Partido Union Civica Radical
+      motivo: Mismo nombre con el prefijo legal «Partido» y sin tildes (acta de 2015).
+    - nombre: UCR-Cambia Mendoza
+      motivo: Bloque legislativo cuyo nombre empieza con la sigla de la UCR. En la ficha de cada persona se muestra el nombre del bloque tal como lo publica la Legislatura.
+
+- slug: partido-justicialista
+  nombre: Partido Justicialista
+  sigla: PJ
+  alias:
+    - nombre: Justicialista
+      motivo: Mismo nombre sin el prefijo legal «Partido».
+
+- slug: la-libertad-avanza
+  nombre: La Libertad Avanza
+  sigla: LLA
+  alias: []
+
+- slug: pro
+  nombre: PRO
+  sigla: PRO
+  alias:
+    - nombre: PRO Propuesta Republicana
+      motivo: Sigla y nombre completo juntos.
+
+- slug: la-union-mendocina
+  nombre: La Unión Mendocina
+  alias:
+    - nombre: Unión Mendocina
+      motivo: Mismo nombre sin el artículo.
+
+- slug: frente-de-izquierda
+  nombre: Frente de Izquierda y de los Trabajadores
+  sigla: FIT
+  alias:
+    - nombre: Alianza Frente de Izquierda y de los Trabajadores
+      motivo: Mismo nombre con el prefijo legal «Alianza» (acta de 2015, en la misma elección que la forma sin prefijo).
+
+- slug: frente-para-la-victoria-2
+  nombre: Frente para la Victoria 2
+  alias:
+    - nombre: Alianza Frente para la Victoria 2
+      motivo: Mismo nombre con el prefijo legal «Alianza» (acta de junio de 2015, en la misma elección que la forma sin prefijo).
+  # «Alianza Frente para la Victoria» (sin el 2, noviembre de 2015) queda aparte: es otra elección y el acta no dice si es la misma alianza.
+
+- slug: encuentro-por-san-carlos
+  nombre: Encuentro por San Carlos
+  alias:
+    - nombre: Alianza Encuentro por San Carlos
+      motivo: Mismo nombre con el prefijo legal «Alianza» (acta de 2015).
+    - nombre: Frente Encuentro por San Carlos
+      motivo: Mismo nombre con el prefijo legal «Frente» (acta de 2023 y lista de autoridades).
+
+- slug: nuevos-rumbos
+  nombre: Nuevos Rumbos
+  alias:
+    - nombre: Partido Nuevos Rumbos
+      motivo: Mismo nombre con el prefijo legal «Partido» (acta de 2019).
+  # «Cambia Mendoza - Nuevos Rumbos» (2023) queda aparte: es una lista que combina dos nombres.
+
+- slug: frente-libertario-democrata-y-jubilados
+  nombre: Frente Libertario, Demócrata y Jubilados
+  alias:
+    - nombre: Frente Libertario, Demócratas y Jubilados
+      motivo: Errata en el acta de 2023 («Demócratas»), en la misma elección.
+
+- slug: elegi-mendoza
+  nombre: Elegí Mendoza
+  alias:
+    - nombre: Alianza Elegí Mendoza Frente Político y Social
+      motivo: Mismo nombre con el prefijo legal «Alianza» y el subtítulo «Frente Político y Social» (acta de 2019).
+  # «Frente Elegí» (2019) queda aparte: figura en la misma elección como otra lista.
+  # Los «Elegí» de cada municipio (Elegí Gestión Lavalle, Elegí Santa Rosa…) son frentes distintos.
+
+- slug: partido-democrata
+  nombre: Partido Demócrata
+  alias: []

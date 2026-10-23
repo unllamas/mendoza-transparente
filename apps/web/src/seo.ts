@@ -125,6 +125,15 @@ export const PAGES: Record<string, PageMeta> = {
     eyebrow: "FUNCIONARIOS",
     activa: true,
   },
+  "/partidos": {
+    title: `Partidos políticos de Mendoza${TITLE_SUFFIX}`,
+    description:
+      "Partidos, frentes y bloques de Mendoza: quiénes ocupan un cargo hoy con cada uno y cuántas bancas e intendencias ganó cada partido desde 2015.",
+    ogSlug: "partidos",
+    ogTitle: "Partidos, frentes y bloques",
+    eyebrow: "PARTIDOS",
+    activa: true,
+  },
   "/senales": {
     title: `Gasto público en Mendoza: señales${TITLE_SUFFIX}`,
     description:

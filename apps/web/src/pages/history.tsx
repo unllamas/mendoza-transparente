@@ -115,7 +115,23 @@ function Elections({ elections }: { elections: ElectionSummary[] }) {
             <h3 className="text-body-semibold">
               {o.label} <span className="font-normal text-text-tertiary">· {o.total}</span>
             </h3>
-            <BarList items={o.parties} total={o.total} formatValue={(v) => formatNumber(v)} />
+            <BarList
+              items={o.parties.map((x) => ({
+                ...x,
+                etiqueta: x.slug ? (
+                  <Link
+                    to="/partidos/$slug"
+                    params={{ slug: x.slug }}
+                    data-track="officials.history.party.open"
+                    className="text-text-link hover:underline"
+                  >
+                    {x.nombre}
+                  </Link>
+                ) : undefined,
+              }))}
+              total={o.total}
+              formatValue={(v) => formatNumber(v)}
+            />
           </div>
         ))}
       </div>
@@ -168,10 +184,18 @@ function People({ people, onOpen }: { people: HistoryPerson[]; onOpen: (p: Histo
           {shown.map((p) => (
             <li key={p.id}>
               <button type="button" onClick={() => onOpen(p)} className={listRowVariants()}>
-                <PersonAvatar name={p.name} photo={null} className="size-10 text-caption-1-regular" />
+                <PersonAvatar
+                  name={p.name}
+                  photo={null}
+                  party={p.party}
+                  partyMissing={p.partyMissing}
+                  className="size-10 text-caption-1-regular"
+                />
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                   <span className="truncate font-medium text-text-link">{p.name}</span>
-                  <span className="truncate text-body-regular text-text-tertiary">{[p.role, p.agency].filter(Boolean).join(" · ")}</span>
+                  <span className="truncate text-body-regular text-text-tertiary">
+                    {[p.role, p.agency, p.party?.name].filter(Boolean).join(" · ")}
+                  </span>
                 </span>
                 <span className="hidden text-body-regular whitespace-nowrap text-text-tertiary tabular-nums sm:block">{years(p)}</span>
                 <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
@@ -189,7 +213,13 @@ function PersonSheet({ person: p, onClose }: { person: HistoryPerson; onClose: (
     <TrackedSheet title={p.name} trackId="officials.history_person" onClose={onClose}>
       <div className="flex flex-col gap-6">
         <div className="flex items-center gap-3">
-          <PersonAvatar name={p.name} photo={null} className="size-14 text-headline-regular" />
+          <PersonAvatar
+            name={p.name}
+            photo={null}
+            party={p.party}
+            partyMissing={p.partyMissing}
+            className="size-14 text-headline-regular"
+          />
           <div className="flex min-w-0 flex-col gap-0.5">
             <span className="text-title-3-semibold text-balance">{p.name}</span>
             <span className="text-body-regular text-text-secondary">

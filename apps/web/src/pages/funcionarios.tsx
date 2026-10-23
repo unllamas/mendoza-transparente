@@ -27,7 +27,7 @@ import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
 import { Career } from "@/features/officials/components/career.tsx";
 import { formatDate, formatNumber, normalizeText } from "@/lib.ts";
 import { ROLES, roleBySlug, slug } from "@/slug.ts";
-import type { Funcionario, FuncionariosTema, GrupoFuncionario } from "@/types.ts";
+import type { Funcionario, FuncionariosTema, GrupoFuncionario, PartyRef } from "@/types.ts";
 import { useSetUrlParams, useUrlOption, useUrlText } from "@/url-state.ts";
 
 const route = getRouteApi("/funcionarios");
@@ -133,9 +133,14 @@ export function FuncionariosPage() {
 }
 
 function Bloques({ personas }: { personas: Funcionario[] }) {
-  const conteo = new Map<string, number>();
-  for (const p of personas) conteo.set(p.bloque ?? "Sin bloque", (conteo.get(p.bloque ?? "Sin bloque") ?? 0) + 1);
-  const items = [...conteo].sort((a, b) => b[1] - a[1]).map(([nombre, valor]) => ({ nombre, valor }));
+  const conteo = new Map<string, { valor: number; party: PartyRef | null }>();
+  for (const p of personas) {
+    const name = p.bloque ?? "Sin bloque";
+    conteo.set(name, { valor: (conteo.get(name)?.valor ?? 0) + 1, party: p.bloque ? p.party : null });
+  }
+  const items = [...conteo]
+    .sort((a, b) => b[1].valor - a[1].valor)
+    .map(([nombre, { valor, party }]) => ({ nombre, valor, etiqueta: party ? <PartyLink party={party}>{nombre}</PartyLink> : undefined }));
   return (
     <details className={cx(cardVariants(), "group")}>
       <summary className="cursor-pointer list-none text-body-medium [&::-webkit-details-marker]:hidden">
@@ -148,6 +153,15 @@ function Bloques({ personas }: { personas: Funcionario[] }) {
         <BarList items={items} formatValue={(v) => `${v} ${v === 1 ? "banca" : "bancas"}`} />
       </div>
     </details>
+  );
+}
+
+/** The name of a party, front or bloc inside a text, linked to its page. */
+function PartyLink({ party, children }: { party: PartyRef; children: string }) {
+  return (
+    <Link to="/partidos/$slug" params={{ slug: party.slug }} data-track="official.party.open" className="text-text-link hover:underline">
+      {children}
+    </Link>
   );
 }
 
@@ -178,7 +192,13 @@ function Lista({ id, titulo, personas, role }: { id: string; titulo: string; per
         {personas.map((p) => (
           <li key={p.id}>
             <Link to="/funcionarios/$role/$slug" params={{ role: p.role, slug: p.slug }} className={listRowVariants()}>
-              <PersonAvatar name={p.nombre} photo={p.foto} className="size-10 text-caption-1-regular" />
+              <PersonAvatar
+                name={p.nombre}
+                photo={p.foto}
+                party={p.party}
+                partyMissing={p.partyMissing}
+                className="size-10 text-caption-1-regular"
+              />
               <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                 <span className="truncate font-medium group-hover:text-text-link">{p.nombre}</span>
                 <span className="truncate text-body-regular text-text-tertiary">{subtitulo(p)}</span>
@@ -270,7 +290,13 @@ function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: Fun
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center gap-3">
-        <PersonAvatar name={p.nombre} photo={p.foto} className="size-16 text-headline-regular" />
+        <PersonAvatar
+          name={p.nombre}
+          photo={p.foto}
+          party={p.party}
+          partyMissing={p.partyMissing}
+          className="size-16 text-headline-regular"
+        />
         <div className="flex min-w-0 flex-col gap-0.5">
           <h1 className="text-title-2-semibold tracking-tight text-balance sm:text-title-1-regular">{p.nombre}</h1>
           <span className="text-body-regular text-text-secondary">{p.cargo}</span>
@@ -283,8 +309,13 @@ function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: Fun
 
       <dl className={cx(tileVariants(), "grid grid-cols-2 gap-x-3 gap-y-4 text-body-regular")}>
         <Campo label="Organismo" value={p.organismo} wide />
-        {p.bloque && <Campo label="Bloque" value={p.bloque} />}
-        <Campo label="Partido o frente" value={p.partido ?? "No lo informa la fuente oficial"} muted={!p.partido} />
+        {p.bloque && <Campo label="Bloque" value={p.bloque} party={p.party && affiliationIsBloc(p) ? p.party : null} />}
+        <Campo
+          label="Partido o frente"
+          value={p.partido ?? (p.party || p.partyMissing ? "No lo informa la fuente oficial" : "No corresponde: es un cargo designado")}
+          muted={!p.partido}
+          party={p.party && p.partido && !affiliationIsBloc(p) ? p.party : null}
+        />
         {p.seccion && <Campo label="Electo por" value={p.seccion} />}
         {(p.mandatoDesde || p.mandatoHasta) && <Campo label="Mandato" value={`${p.mandatoDesde ?? "?"}–${p.mandatoHasta ?? "?"}`} />}
       </dl>
@@ -498,11 +529,40 @@ const MONTHS = [
 ];
 const formatMonth = (ym: string) => `${MONTHS[Number(ym.slice(5, 7)) - 1]} de ${ym.slice(0, 4)}`;
 
-function Campo({ label, value, wide, muted }: { label: string; value: string; wide?: boolean; muted?: boolean }) {
+/** Legislators show their bloc (what the chamber publishes); the rest, their party or front. */
+const affiliationIsBloc = (p: Funcionario) => /diputados|senado/.test(p.grupo) && Boolean(p.bloque);
+
+function Campo({
+  label,
+  value,
+  wide,
+  muted,
+  party,
+}: {
+  label: string;
+  value: string;
+  wide?: boolean;
+  muted?: boolean;
+  /** Links the value to the page of that party, front or bloc. */
+  party?: PartyRef | null;
+}) {
   return (
     <div className={`flex flex-col gap-0.5 ${wide ? "col-span-2" : ""}`}>
       <dt className="text-caption-1-regular text-text-tertiary">{label}</dt>
-      <dd className={`text-pretty ${muted ? "text-text-tertiary" : ""}`}>{value}</dd>
+      <dd className={`text-pretty ${muted ? "text-text-tertiary" : ""}`}>
+        {party ? (
+          <Link
+            to="/partidos/$slug"
+            params={{ slug: party.slug }}
+            data-track="official.party.open"
+            className="font-medium text-text-link hover:underline"
+          >
+            {value} ›
+          </Link>
+        ) : (
+          value
+        )}
+      </dd>
     </div>
   );
 }

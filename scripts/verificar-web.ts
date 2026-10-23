@@ -45,6 +45,11 @@ const RUTAS = [
   "/funcionarios/diputados-provinciales",
   "/funcionarios/historial",
   "/funcionarios/diputados-provinciales/edgardo-civit-evans",
+  "/partidos",
+  // The most people in office, the most people elected before (with the search) and one with nobody in office.
+  "/partidos/ucr",
+  "/partidos/cambia-mendoza",
+  "/partidos/frente-de-todos",
   "/gobierno",
   "/gobierno/ministerio-de-salud-y-deportes",
   "/gobierno/gobernacion",
