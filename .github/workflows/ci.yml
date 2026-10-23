@@ -5,6 +5,9 @@ on:
   push:
     branches: [main, dev]
   pull_request:
+  # El PR de datos lo abre el bot con el token del workflow, que no dispara pull_request: la actualización de
+  # datos lo corre a mano sobre su rama (.github/scripts/data-pr.sh).
+  workflow_dispatch:
 
 jobs:
   verificar:

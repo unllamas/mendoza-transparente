@@ -22,7 +22,8 @@ export const USER_AGENT =
 
 /**
  * Sitios del Gobierno que rechazan conexiones desde servidores en la nube: el Boletín Oficial no responde
- * a la red de GitHub (Azure) y el Senado de Mendoza solo responde a IPs de Argentina. Si está definido
+ * a la red de GitHub (Azure), el Senado de Mendoza solo responde a IPs de Argentina y la API de Ética Pública
+ * tarda unos 40 segundos por pedido desde GitHub (menos de 1 desde Argentina). Si está definido
  * PROXY_AR (http://usuario:clave@host:puerto, con salida en Argentina), los pedidos a estos sitios pasan
  * por ahí; el resto va directo.
  */
@@ -32,6 +33,7 @@ export const HOSTS_CON_PROXY = [
   "www.senadomendoza.gob.ar",
   "senadomendoza.gob.ar",
   "www.senadomza.gov.ar",
+  "eticapublica.mendoza.gov.ar",
 ];
 
 const proxyPara = (url: string) =>

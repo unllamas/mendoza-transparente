@@ -1,17 +1,19 @@
 /**
  * Actualización manual de datos desde una computadora en Argentina: respaldo de la actualización
  * automática en GitHub Actions, sobre todo para los sitios que rechazan a los servidores en la nube
- * (Boletín Oficial y Senado de Mendoza).
+ * (Boletín Oficial, Senado de Mendoza y Ética Pública).
  *
  * Uso (desde la raíz del repo):
- *   bun run actualizar                     fuentes bloqueadas en la nube (Boletín Oficial y Legislatura)
+ *   bun run actualizar                     fuentes bloqueadas en la nube (Boletín Oficial, Legislatura y Ética Pública)
  *   bun run actualizar compras-ocds dnap   fuentes puntuales
  *   bun run actualizar --todas             todas las que corre el workflow
  *   bun run actualizar --si                publica sin preguntar
- *   bun run actualizar --sin-publicar      solo descarga y muestra el resumen
+ *   bun run actualizar --sin-publicar      solo descarga y muestra el resumen y los cambios contra dev
  *
- * Pasos: corre cada scraper, muestra qué cambió, comprueba que la web compile con los datos nuevos,
- * pide confirmación y hace commit y push solo de data/ (nunca de código que se esté editando).
+ * Pasos: corre cada scraper, muestra qué cambió contra dev (filas nuevas, filas que ya no están, archivos
+ * borrados), comprueba que la web compile con los datos nuevos, pide confirmación y hace commit y push solo
+ * de data/ (nunca de código que se esté editando) en una rama que sale de dev, con un PR a dev. Nunca
+ * publica en main: los datos llegan a producción con la próxima publicación de dev.
  * Documentado en docs/procesos/actualizacion-de-datos.md.
  */
 
@@ -20,7 +22,7 @@ import { join } from "node:path";
 const ROOT = join(import.meta.dir, "..");
 
 // Mismas fuentes y argumentos que .github/workflows/actualizar-datos.yml.
-const BLOQUEADAS = ["boletin-oficial", "legislatura"];
+const BLOQUEADAS = ["boletin-oficial", "legislatura", "etica-publica"];
 const TODAS = [
   "boletin-oficial",
   "compras-ocds",
@@ -92,7 +94,16 @@ if (cambios.length === 0) {
 }
 console.log(`${cambios.length} archivos con cambios en data/.`);
 
-if (flags.has("--sin-publicar")) process.exit(0);
+// What changed against dev, the branch the data PR goes to: new rows, rows that disappear, deleted files.
+await sh(["git", "fetch", "-q", "origin", "dev"], ROOT, true);
+await sh(["git", "add", "-A", "--", "data"]);
+const informe = await sh(["bun", "scripts/data-changes.ts", "--base", "origin/dev", "--out", join(ROOT, "tmp", "cambios-datos.md")]);
+console.log(`\n${informe.salida}`);
+
+if (flags.has("--sin-publicar")) {
+  await sh(["git", "reset", "-q", "--", "data"]);
+  process.exit(0);
+}
 
 console.log("\nComprobando que la web compile con los datos nuevos…");
 const web = join(ROOT, "apps", "web");
@@ -103,17 +114,19 @@ if (!build) {
 }
 console.log("La web compila.");
 
-// Data is published straight to main (docs/procesos/ramas-y-releases.md); the back merge carries it to dev.
-const branch = (await sh(["git", "branch", "--show-current"], ROOT, true)).salida.trim();
-if (branch !== "main") {
-  console.error(
-    `Los datos se publican desde main y estás en «${branch}». Los cambios quedan en data/: pasate a main (git switch main) y volvé a correrlo.`,
-  );
+// Data goes to dev through a PR, never straight to main (docs/procesos/ramas-y-releases.md#datos).
+let branch = (await sh(["git", "branch", "--show-current"], ROOT, true)).salida.trim();
+if (branch === "main") {
+  console.error("Estás en main y los datos no se publican ahí. Pasate a dev (git switch dev && git pull) y volvé a correrlo.");
   process.exit(1);
+}
+if (branch === "dev") {
+  branch = `datos/actualizacion-${hace(0)}`;
+  if (!(await sh(["git", "switch", "-c", branch])).ok) process.exit(1);
 }
 
 if (!flags.has("--si")) {
-  process.stdout.write("\n¿Publicar estos datos (commit y push de data/)? [s/N] ");
+  process.stdout.write(`\n¿Commitear estos datos en «${branch}» y abrir un PR a dev? [s/N] `);
   const respuesta = (await new Promise<string>((r) => process.stdin.once("data", (d) => r(String(d))))).trim().toLowerCase();
   if (respuesta !== "s" && respuesta !== "si" && respuesta !== "sí") {
     console.log("No se publicó. Los cambios quedan en data/ para revisar.");
@@ -122,18 +135,32 @@ if (!flags.has("--si")) {
 }
 
 const actualizadas = resultados.filter((r) => r.ok && r.archivos > 0).map((r) => r.fuente);
-await sh(["git", "add", "--", "data"]);
-const commit = await sh([
-  "git",
-  "commit",
-  "-m",
-  `chore(data): actualización manual (${actualizadas.join(", ") || fuentes.join(", ")})`,
-  "-m",
-  hace(0),
-  "--",
-  "data",
-]);
+const titulo = `chore(data): actualización manual (${actualizadas.join(", ") || fuentes.join(", ")})`;
+const commit = await sh(["git", "commit", "-m", titulo, "-m", hace(0), "--", "data"]);
 if (!commit.ok) process.exit(1);
-const push = (await sh(["git", "pull", "--rebase", "--autostash"])).ok && (await sh(["git", "push"])).ok;
-console.log(push ? "Publicado." : "El commit quedó hecho pero el push falló: corré `git push` a mano.");
-process.exit(push && resultados.every((r) => r.ok) ? 0 : 1);
+if (!(await sh(["git", "push", "-u", "origin", branch])).ok) {
+  console.error("El commit quedó hecho pero el push falló: corré `git push -u origin HEAD` a mano.");
+  process.exit(1);
+}
+const existente = (await sh(["gh", "pr", "view", branch, "--json", "url", "-q", ".url"], ROOT, true)).salida.trim();
+const pr = existente.startsWith("https://")
+  ? { ok: true, salida: existente }
+  : await sh([
+      "gh",
+      "pr",
+      "create",
+      "--base",
+      "dev",
+      "--head",
+      branch,
+      "--title",
+      titulo,
+      "--body-file",
+      join(ROOT, "tmp", "cambios-datos.md"),
+    ]);
+console.log(
+  pr.ok
+    ? `PR a dev: ${pr.salida.trim().split("\n").pop()}`
+    : "El push quedó hecho pero no se pudo abrir el PR: abrilo con `gh pr create --base dev`.",
+);
+process.exit(pr.ok && resultados.every((r) => r.ok) ? 0 : 1);

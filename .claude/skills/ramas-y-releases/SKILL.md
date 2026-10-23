@@ -1,6 +1,6 @@
 ---
 name: ramas-y-releases
-description: Flujo de ramas de Mendoza Transparente. Lo nuevo entra por dev con un PR desde una rama de trabajo; dev llega a main (producción) en una publicación con merge commit; un release de GitHub por día junta lo publicado; los hotfixes salen de main y vuelven a dev con el back merge automático; los datos se publican directo en main. Cargar antes de crear una rama, commitear, pushear, abrir o mergear un PR, publicar, hacer un release o un hotfix.
+description: Flujo de ramas de Mendoza Transparente. Lo nuevo entra por dev con un PR desde una rama de trabajo; dev llega a main (producción) en una publicación con merge commit; un release de GitHub por día junta lo publicado; los hotfixes salen de main y vuelven a dev con el back merge automático; los datos también entran por un PR a dev, nunca directo a main. Cargar antes de crear una rama, commitear, pushear, abrir o mergear un PR, publicar, hacer un release o un hotfix.
 ---
 
 # Ramas y releases
@@ -18,7 +18,7 @@ Detalle completo: `docs/procesos/ramas-y-releases.md` (índice con `bun run secc
 - **Publicación**: PR `dev → main` titulado `chore(release): <fecha>`, con el cuerpo de `bun scripts/release-notes.ts --from origin/main --to origin/dev`, probado en `dev.mendoza-transparente.pages.dev`, mergeado con **merge commit** (nunca squash ni rebase). El agente lo deja listo cuando se lo piden y solo lo mergea si el usuario le pide explícitamente publicar.
 - **Release de GitHub**: uno por día, lo crea solo el workflow «Release del día» (23:30 de Mendoza) con todo lo que llegó a `main` ese día: publicaciones, hotfixes y datos, agrupados por tipo. Etiqueta por fecha (`2026-10-17`), la del último commit de `main` en hora de Mendoza. **Uno solo por día**: si el workflow vuelve a correr ese día, actualiza el release (mueve la etiqueta y rehace las notas), no crea un `.2`. Nunca se crea un release ni un borrador a mano; para rehacer uno, *Run workflow* (con `desde` si hace falta), y lo agregado a mano va debajo de `<!-- a mano -->`, que se conserva.
 - **Hotfix**: rama `hotfix/<tema>` desde `main`, PR a `main` con squash. Después, **confirmar el back merge a `dev`** (workflow «Back merge a dev»); si abrió un PR `main → dev` con la etiqueta `back-merge`, resolverlo con merge commit.
-- **Datos**: se publican en `main` (workflow de actualización y `bun run actualizar`, que solo publica desde `main`). Un scraper nuevo o cambiado es código y va por `dev`.
+- **Datos**: nunca directo a `main`. El workflow de actualización commitea en `datos/automatica` y `bun run actualizar` en una rama `datos/…` desde `dev`; los dos abren un PR a `dev` con el resumen de `scripts/data-changes.ts`. Si el PR avisa «⚠️ Revisar antes de mergear» (etiqueta `datos-con-borrados`), se mira en el sitio del organismo por qué desaparecen filas antes de mergear. Un scraper nuevo o cambiado es código y va por `dev`, como siempre.
 
 ## Hasta dónde llevar cada pedido
 

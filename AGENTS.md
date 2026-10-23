@@ -60,7 +60,7 @@ Cuando alguien pide mejorar o arreglar algo, lo describe como lo siente ("no se 
 - **Cuidar el contexto:** una página, un PDF o una planilla se miran con `bun run crudo <url|fuente/archivo>` (busca primero en `data/raw/` y en un caché compartido, y devuelve una vista compacta), nunca con `curl` ni enteros. De los documentos largos se lee la sección que hace falta: `bun run seccion <documento> "<título>"`. El reporte de un subagente entra en una pantalla y los relevamientos van a `tmp/agentes/<tarea>.md`. Las orquestaciones largas se parten en sesiones por etapa. Ver `docs/procesos/trabajo-con-agentes.md#cuidar-el-contexto`.
 - Los subagentes no commitean. La sesión principal revisa, commitea y **cierra cada tarea con push y PR a `dev` sin esperar que se lo pidan**.
 - **Ningún agente mergea un PR, ni a `dev` ni a `main`, salvo que el usuario se lo pida explícitamente** para ese PR. Sin ese pedido, el agente deja el PR abierto con la CI en verde y avisa con el link.
-- Nada se pushea directo a `main`: lo nuevo va en una rama que sale de `dev`, con PR a `dev`, y llega a producción en una publicación (PR `dev → main`). Los releases de GitHub se crean solos, uno por día. Ver la skill `ramas-y-releases`.
+- Nada se pushea directo a `main`, tampoco los datos: lo nuevo va en una rama que sale de `dev`, con PR a `dev`, y llega a producción en una publicación (PR `dev → main`). Los releases de GitHub se crean solos, uno por día. Ver la skill `ramas-y-releases`.
 
 ## Costo cero
 

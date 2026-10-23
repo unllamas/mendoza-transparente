@@ -7,6 +7,7 @@
 
 import { slug } from "../../src/slug.ts";
 import type { ElectedRecord, ElectionSummary, FuncionariosTema, HistoryPerson, HistoryTema, PastPosition } from "../../src/types.ts";
+import type { PartyRegistry } from "./parties.ts";
 
 type Row = Record<string, string>;
 
@@ -90,7 +91,13 @@ const NO_PARTY = "No lo dice el acta";
 
 const byDate = (a: { from: string | null }, b: { from: string | null }) => (a.from ?? "").localeCompare(b.from ?? "");
 
-export function buildHistory(cargos: Row[], electos: Row[], funcionarios: FuncionariosTema, today: string): HistoryTema {
+export function buildHistory(
+  cargos: Row[],
+  electos: Row[],
+  funcionarios: FuncionariosTema,
+  today: string,
+  parties: PartyRegistry,
+): HistoryTema {
   // ---------------------------------------------------------------- registry positions, by person
   const registry = new Map<string, { name: string; former: boolean; positions: PastPosition[] }>();
   for (const r of cargos) {
@@ -108,22 +115,15 @@ export function buildHistory(cargos: Row[], electos: Row[], funcionarios: Funcio
 
   // ---------------------------------------------------------------- elections, by person
   const titulares = electos.filter((e) => e.titular_suplente !== "suplente" && e.nombre);
-  // The same name written with other capitals ("Frente De Todos") counts as one: the most frequent spelling wins.
-  // Different names ("Cambia Mendoza", "Frente Cambia Mendoza") stay apart: that would be inferring.
-  const spellings = new Map<string, Map<string, number>>();
-  for (const e of titulares) {
-    if (!e.partido) continue;
-    const m = spellings.get(normalize(e.partido)) ?? new Map<string, number>();
-    m.set(e.partido, (m.get(e.partido) ?? 0) + 1);
-    spellings.set(normalize(e.partido), m);
-  }
-  const party = (raw: string | undefined) =>
-    raw ? [...spellings.get(normalize(raw))!].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]![0] : null;
+  // One name per party however the record writes it ("Frente De Todos", "Alianza Cambia Mendoza"): the two layers of
+  // scripts/temas/parties.ts. Different parties never become one.
+  const party = (raw: string | undefined) => parties.ref(raw)?.name ?? null;
   const electedRecord = (e: Row): ElectedRecord => ({
     date: e.eleccion_fecha!,
     role: ROLE_NAME[e.cargo!] ?? tidyTitle(e.cargo_texto || e.cargo!),
     place: e.seccion_electoral ? `${e.seccion_electoral} sección electoral` : e.jurisdiccion || "Mendoza",
     party: party(e.partido),
+    partySlug: parties.ref(e.partido)?.slug ?? null,
     sourceUrl: e.fuente_url!,
   });
   // One person across elections: "Alfredo Cornejo" (2015) and "CORNEJO ALFREDO VICTOR" (2023, surname first) are the same.
@@ -179,6 +179,11 @@ export function buildHistory(cargos: Row[], electos: Row[], funcionarios: Funcio
 
   // ---------------------------------------------------------------- ex officials and past elected
   const people: HistoryPerson[] = [];
+  // The badge on the face: the party of the latest election won (records are sorted by date).
+  const partyOf = (records: ElectedRecord[]) => {
+    const last = records.at(-1);
+    return { party: last ? parties.ref(last.party) : null, partyMissing: Boolean(last && !last.party) };
+  };
   const latest = (positions: PastPosition[]) =>
     [...positions].sort((a, b) => (a.to ?? "9999").localeCompare(b.to ?? "9999") || byDate(a, b)).at(-1);
   for (const reg of registryList) {
@@ -195,6 +200,7 @@ export function buildHistory(cargos: Row[], electos: Row[], funcionarios: Funcio
       to: last.to?.slice(0, 4) ?? null,
       positions: reg.positions,
       elected: el?.records ?? [],
+      ...partyOf(el?.records ?? []),
     });
   }
   const usedIds = new Set<string>();
@@ -213,6 +219,7 @@ export function buildHistory(cargos: Row[], electos: Row[], funcionarios: Funcio
       to: null,
       positions: [],
       elected: el.records,
+      ...partyOf(el.records),
     });
   }
   // Ex officials first, who just left at the top (who people look for); then the elected, latest election first.
@@ -242,17 +249,27 @@ export function buildHistory(cargos: Row[], electos: Row[], funcionarios: Funcio
       return {
         date,
         year: Number(date.slice(0, 4)),
-        governor: gov && govHref ? { name: governorName(gov.nombre!), party: party(gov.partido), href: govHref } : null,
+        governor:
+          gov && govHref
+            ? {
+                name: governorName(gov.nombre!),
+                party: party(gov.partido),
+                partySlug: parties.ref(gov.partido)?.slug ?? null,
+                href: govHref,
+              }
+            : null,
         offices: OFFICES.flatMap(([key, label]) => {
           const of = rows.filter((r) => r.cargo === key);
           if (of.length === 0) return [];
-          const count = new Map<string, number>();
+          const count = new Map<string, { nombre: string; valor: number; slug: string | null }>();
           for (const r of of) {
-            const name = party(r.partido) ?? NO_PARTY;
-            count.set(name, (count.get(name) ?? 0) + 1);
+            const ref = parties.ref(r.partido);
+            const name = ref?.name ?? NO_PARTY;
+            const c = count.get(name) ?? { nombre: name, valor: 0, slug: ref?.slug ?? null };
+            c.valor++;
+            count.set(name, c);
           }
-          const parties = [...count].sort((a, b) => b[1] - a[1]).map(([nombre, valor]) => ({ nombre, valor }));
-          return [{ key, label, total: of.length, parties }];
+          return [{ key, label, total: of.length, parties: [...count.values()].sort((a, b) => b.valor - a.valor) }];
         }),
         sourceUrl: rows[0]!.fuente_url!,
       };

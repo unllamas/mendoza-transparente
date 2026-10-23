@@ -290,7 +290,7 @@ Los datos se actualizan automáticamente desde fuentes oficiales y se pueden des
 ## Secciones
 
 ${principales.map((p) => `- [${p.title.replace(/ · Mendoza Transparente$/, "")}](${canonicalUrl(p.path)}): ${p.description}`).join("\n")}
-${seccion("Leyes", "/leyes")}${seccion("Municipios", "/municipios")}${seccion("Funcionarios", "/funcionarios")}${seccion("Organismos que compran", "/organismos")}${seccion("Proveedores del Estado", "/proveedores")}${seccion("Datos abiertos", "/datos")}`,
+${seccion("Leyes", "/leyes")}${seccion("Municipios", "/municipios")}${seccion("Funcionarios", "/funcionarios")}${seccion("Partidos, frentes y bloques", "/partidos")}${seccion("Organismos que compran", "/organismos")}${seccion("Proveedores del Estado", "/proveedores")}${seccion("Datos abiertos", "/datos")}`,
 );
 
 console.log(`SEO listo: ${paginas.length} páginas, ${slugsOg.size} imágenes, sitemap.xml, robots.txt y llms.txt.`);

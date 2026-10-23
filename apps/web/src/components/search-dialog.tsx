@@ -21,6 +21,7 @@ import {
   RiCornerDownLeftLine,
   RiDatabase2Line,
   RiEyeOffLine,
+  RiFlagLine,
   RiHistoryLine,
   RiLayoutGridLine,
   RiMapPinLine,
@@ -59,6 +60,7 @@ const fold = (s: string) =>
 const KIND_WEIGHT: Record<string, number> = {
   Municipio: 6,
   Funcionario: 5,
+  Partido: 5,
   "Ex funcionario": 4,
   Ley: 4,
   Organismo: 4,
@@ -71,6 +73,7 @@ const KIND_WEIGHT: Record<string, number> = {
 /** Result groups, in the order the filters show them: plural label and icon. */
 const GROUPS: { kind: string; label: string; icon: RemixiconComponentType }[] = [
   { kind: "Funcionario", label: "Funcionarios", icon: RiTeamLine },
+  { kind: "Partido", label: "Partidos, frentes y bloques", icon: RiFlagLine },
   { kind: "Ex funcionario", label: "Ex funcionarios y electos", icon: RiHistoryLine },
   { kind: "Municipio", label: "Municipios", icon: RiMapPinLine },
   { kind: "Ley", label: "Leyes", icon: RiScales3Line },

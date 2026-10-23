@@ -226,8 +226,34 @@ Página `/funcionarios/historial` y sección de trayectoria en la ficha de cada 
   - **Cargos y fechas:** el registro de la Oficina de Ética Pública (`etica-publica/cargos.csv`), un renglón por cargo con su inicio y su fin. Incluye a los ex funcionarios («mandato cumplido») con cargos jerárquicos (la misma lista `HIERARCHICAL` del scraper); de ellos se baja solo el detalle, no la declaración.
   - **Partido:** solo para los cargos electos, tal como lo dice el acta de proclamación de la Junta Electoral (`junta-electoral/electos.csv`). Las actas publicadas empiezan en 2015.
 - **Nunca se infiere el partido:** un cargo designado (ministro, director) no tiene partido en ninguna fuente oficial, y no se le asigna el del gobierno que lo nombró. Tampoco se cruza con padrones de afiliados: la afiliación política es un dato sensible (Ley 25.326).
+- **Un nombre por partido:** las actas escriben un mismo partido de varias formas («Alianza Cambia Mendoza», «Frente Cambia Mendoza»). Se muestran con un solo nombre según [Partidos, frentes y bloques](#partidos-frentes-y-bloques).
 - **Desde agosto de 2018:** el registro de Ética Pública se cargó ese mes, así que muchos cargos figuran desde el 10/08/2018 aunque hayan empezado antes. Se avisa debajo de la lista cuando aparece esa fecha. Antes de 2018, los cargos electos salen solo de las actas.
 - **Fechas imposibles** (año 0025, 2100) se toman como sin fecha.
 - **La misma persona en dos fuentes:** el mismo criterio conservador de [Cruces entre fuentes](#cruces-entre-fuentes), y además la coincidencia tiene que ser única; si dos personas podrían ser la misma, no se unen. Quien tiene un cargo actual con ficha ve su pasado en la ficha y no se repite en el historial.
 - **Electos:** se cuentan solo los titulares. La cuenta por partido es de bancas o cargos ganados en esa elección, no de votos.
 - **Qué falta:** las designaciones anteriores a 2018 y el detalle de los cargos sin declaración jurada salen del Boletín Oficial, que se completa de a poco (ver [Designaciones](#personal-y-costo-de-cada-organismo)).
+
+
+## Partidos, frentes y bloques
+
+Páginas `/partidos` y `/partidos/<slug>`, la insignia del partido en la cara de cada persona (`PersonAvatar`) y el reparto por partido del historial (`scripts/temas/parties.ts`).
+
+- **Qué se muestra de cada persona:**
+  - **Legisladores** (provinciales y nacionales): el bloque que publica su cámara, porque es lo único que dice la fuente.
+  - **Intendentes, gobernador y vice:** el partido o frente con el que fueron electos.
+  - **Electos en las actas** (historial): el partido, frente o lista que dice el acta de esa elección, aunque la persona haya cambiado después.
+  - **Cargos designados** (ministros, Fiscal de Estado, presidentes de entes): nada. No es un dato que falte, es que el cargo no tiene partido. Nunca se les asigna el del gobierno que los nombró.
+  - **Electos sin partido en la fuente:** se marca como tal («No lo informa la fuente oficial», insignia vacía). Nunca se infiere.
+- **Un mismo nombre escrito de varias formas se une en dos capas:**
+  1. **Automática:** se ignoran las mayúsculas, las tildes, los signos y los espacios («Frente De Todos» = «Frente de Todos»; «Partido Democrata» = «Partido Demócrata»). Se muestra la forma más frecuente.
+  2. **Curada:** `data/curado/partidos.yaml` une otras formas del **mismo nombre**: el prefijo legal («Partido», «Alianza», «Frente»), la sigla junto al nombre («UCR - Unión Cívica Radical»), el artículo («Unión Mendocina») o una errata. Cada alias lleva su `motivo`, que se muestra en la página del partido («También figura como»). Sin motivo escrito, no se une.
+- **Nunca se juntan partidos distintos:** La Libertad Avanza, Mendocinos por la Libertad y PRO quedan separados; el Partido Justicialista, Fuerza Patria y Unión por la Patria, también. Un frente no absorbe a los partidos que lo forman: Cambia Mendoza es una entidad propia, no «la UCR». Los «Elegí» de cada municipio son frentes distintos.
+- **Lo que no está en el archivo queda como entidad propia,** con el nombre tal como lo escribe la fuente y su página. Nunca se agrupa en «otros».
+- **Casos decididos** (con el motivo en `partidos.yaml`):
+  - «UCR-Cambia Mendoza», el bloque del Senado, va con la UCR porque su nombre empieza con la sigla; la ficha de cada senador muestra el nombre del bloque tal como lo publica la Legislatura.
+  - «Frente para la Victoria 2» y «Alianza Frente para la Victoria 2» son una (misma elección, junio de 2015); «Alianza Frente para la Victoria» (noviembre de 2015) queda aparte, porque el acta no dice si es la misma alianza.
+  - «Frente Elegí» queda aparte de «Elegí Mendoza»: en 2019 figuran las dos en la misma elección.
+  - «Cambia Mendoza - Nuevos Rumbos» queda aparte: es una lista que combina dos nombres.
+- **Cifras de cada partido:** «en funciones» cuenta a quienes hoy tienen un cargo electo con ese nombre; «cargos ganados» suma los titulares proclamados desde 2015, no votos.
+- **Logos:** solo de fuentes oficiales (las boletas que publica la Junta Electoral, o el sitio oficial del partido), con la URL en `logo_fuente`. Mientras no haya uno, la sigla o las iniciales en gris. Nunca los colores del partido: el sitio usa una sola paleta para todos.
+- **Controles:** `scripts/temas/parties.test.ts` comprueba que los nombres que deben quedar separados sigan separados, que nadie designado reciba partido y que un alias no esté en dos entradas (el build se corta).

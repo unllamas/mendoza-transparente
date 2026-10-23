@@ -15,12 +15,25 @@ Cómo funciona:
 
 1. **plan** decide qué fuentes corren según el calendario (o las elegidas a mano).
 2. **scrape** corre cada fuente en su propio job; si una falla, las demás siguen. Empaqueta los cambios de `data/`.
-3. **commit** junta todos los cambios, comprueba que la web compile con ellos (`bun run data`, tipos, build y SEO) y hace **un único commit** (`chore(data): actualización automática (<fuentes>)`). Si la web no compila, no publica y abre un issue.
+3. **commit** junta todos los cambios, comprueba que la web compile con ellos (`bun run data`, tipos, build y SEO), hace **un único commit** (`chore(data): actualización automática (<fuentes>)`) en la rama `datos/automatica` y abre un **PR a `dev`** con el resumen de lo que cambia (ver [Revisar el PR de datos](#revisar-el-pr-de-datos)). Si la web no compila, no commitea y abre un issue.
    Antes, si se actualizó el Boletín Oficial, extrae las designaciones de las normas nuevas (`designaciones`, fuente derivada que no descarga nada) y escribe los resúmenes en lenguaje simple de las leyes nuevas (`apps/web/scripts/resumir-leyes.ts`). Necesita el secreto **`ANTHROPIC_API_KEY`**: sin él, las leyes nuevas se publican igual, sin resumen. Si ese paso falla, no frena la publicación. Ver [Metodología](metodologia.md#resumenes-de-leyes).
 4. **frescura** controla que el Boletín Oficial no pase más de 10 días sin actualizarse (solo si hay proxy configurado).
-5. **archivo-externo** copia en archive.org los archivos crudos que todavía no tienen copia y pide a la Wayback Machine que capture sus URLs oficiales. Corre después del commit y commitea solo los registros `archive-org.jsonl`. Necesita los secretos **`IA_ACCESS_KEY`** e **`IA_SECRET_KEY`**; sin ellos, se saltea. Ver [Datos y archivo](datos-y-archivo.md#copias-fuera-del-repo-archiveorg).
+5. **archivo-externo** copia en archive.org los archivos crudos que todavía no tienen copia y pide a la Wayback Machine que capture sus URLs oficiales. Corre después del commit y commitea solo los registros `archive-org.jsonl`, en el mismo PR de datos. Necesita los secretos **`IA_ACCESS_KEY`** e **`IA_SECRET_KEY`**; sin ellos, se saltea. Ver [Datos y archivo](datos-y-archivo.md#copias-fuera-del-repo-archiveorg).
 
-Los commits de datos van directo a `main` (todos los checkouts fijan `ref: main`) y el workflow «Back merge a dev» los lleva a `dev`. Ver [Ramas y releases](ramas-y-releases.md#datos).
+Los datos **nunca van directo a `main`**: una actualización puede traer menos filas que antes (una fuente que se cae a medias, un archivo que el organismo reemplazó) y eso dejaría el sitio incongruente. Por eso entran a `dev` por un PR que alguien revisa, y llegan a producción con la próxima publicación. Ver [Ramas y releases](ramas-y-releases.md#datos).
+
+- **Un solo PR de datos abierto a la vez.** Si ya hay uno, la corrida siguiente parte de su rama (`datos/automatica`) y suma un commit, con el resumen nuevo como comentario y las fuentes nuevas en el título. Si no hay ninguno, parte de `dev` y abre uno.
+- **Los checks del PR.** El bot abre el PR con el token del workflow, que no dispara la CI, así que `.github/scripts/data-pr.sh` corre a mano `verificar` y `titulo` sobre la rama. Los commits que se suman después los disparan solos, porque salen con la deploy key.
+- **Costo:** cada PR de datos corre la CI (unos 11 minutos de Actions, gratis en un repo público) y Cloudflare arma la vista previa de la rama (un build del plan gratis de 500 por mes).
+
+### Revisar el PR de datos
+
+`scripts/data-changes.ts` compara los datos contra `dev` y su resumen va en el cuerpo del PR:
+
+- Por cada CSV publicado que cambia: filas antes y después, **nuevas**, **corregidas** y **borradas**. Una fila que se va y vuelve con las mismas dos primeras columnas (`anio,mes`, `cuit,razon_social`, `fecha,nro_boletin`) cuenta como corregida, por ejemplo el promedio del mes en curso. Las que se van sin reemplazo son las borradas.
+- Un aviso «⚠️ Revisar antes de mergear», y la etiqueta `datos-con-borrados` en el PR, si hay filas borradas, si se borra un archivo, si se tocó un crudo (`data/raw/` es de solo agregar) o si un registro `manifest.jsonl` o `archive-org.jsonl` se reescribió en vez de crecer.
+
+Con el aviso, antes de mergear se mira el sitio del organismo. Si fue un error de la fuente, se cierra el PR sin mergear (la corrida siguiente parte de nuevo de `dev`). Se mergea con squash, como cualquier PR a `dev`. Las pruebas del script están en `scripts/data-changes.test.ts`.
 
 Correrlo a mano: pestaña **Actions → Actualizar datos → Run workflow**, con las fuentes separadas por coma (vacío = todas).
 
@@ -39,32 +52,34 @@ Verificado el 12/10/2026 con check-host.net (consultas desde Brasil, Alemania y 
 |---|---|
 | Boletín Oficial (`portalgateway.mendoza.gov.ar`) | No responde a la red de GitHub (Azure). Desde otros proveedores, sí. |
 | Senado de Mendoza (`senadomendoza.gob.ar`, `senadomza.gov.ar`) | Responde 403 a cualquier conexión de fuera de Argentina. |
+| Ética Pública (`eticapublica.mendoza.gov.ar`) | Responde, pero tarda unos 40 segundos por pedido desde GitHub (menos de 1 desde Argentina): la corrida no termina en el límite de 3 horas. Visto el 21/10/2026 en las corridas del 19/10. |
 
 Esos hosts están en `HOSTS_CON_PROXY` (`packages/core/src/fetch.ts`). Si el repositorio tiene el secreto **`PROXY_AR`** (`http://usuario:clave@host:puerto`, un proxy con salida en Argentina), los pedidos a esos sitios pasan por ahí y todo lo demás va directo. Sin el secreto:
 
 - El Boletín Oficial se saltea, sin abrir issues.
 - La Legislatura actualiza Diputados y el Senado conserva sus datos anteriores.
+- Ética Pública se saltea, sin abrir issues.
 
-Para activarlo: contratar un proxy argentino de pago por uso (el consumo es de unos 20 MB por mes) y cargarlo en **Settings → Secrets and variables → Actions → New repository secret** con el nombre `PROXY_AR`.
+Para activarlo: contratar un proxy argentino de pago por uso (el consumo es de unos 20 MB por mes para el Boletín y el Senado, más unos 25 MB por mes para Ética Pública, que baja unos 6 MB por semana) y cargarlo en **Settings → Secrets and variables → Actions → New repository secret** con el nombre `PROXY_AR`.
 
 ## A mano: `bun run actualizar`
 
 Respaldo para cuando la nube no llega (sitios bloqueados) o para confirmar un dato. Se corre desde una computadora en Argentina, en la copia de trabajo del repo:
 
 ```bash
-bun run actualizar                     # Boletín Oficial y Legislatura (las bloqueadas en la nube)
+bun run actualizar                     # Boletín Oficial, Legislatura y Ética Pública (las bloqueadas en la nube)
 bun run actualizar compras-ocds dnap   # fuentes puntuales
 bun run actualizar --todas             # todas las del workflow
-bun run actualizar --sin-publicar      # solo descargar y ver el resumen
+bun run actualizar --sin-publicar      # solo descargar y ver el resumen y los cambios contra dev
 bun run actualizar --si                # publicar sin preguntar
 ```
 
 Qué hace (`scripts/actualizar.ts`):
 
 1. Corre cada scraper con los mismos argumentos que el workflow.
-2. Muestra un resumen: estado, archivos nuevos y tiempo por fuente.
+2. Muestra un resumen: estado, archivos nuevos y tiempo por fuente, y lo que cambia contra `dev` ([Revisar el PR de datos](#revisar-el-pr-de-datos)).
 3. Comprueba que la web compile con los datos nuevos.
-4. **Pregunta antes de publicar** y hace commit y push **solo de `data/`**: nunca sube código que se esté editando. Solo publica desde `main`: en otra rama, frena antes del commit y deja los cambios en `data/`.
+4. **Pregunta antes de publicar** y hace commit **solo de `data/`** (nunca sube código que se esté editando), push y un **PR a `dev`** con el resumen. Si se corre en `dev`, crea antes la rama `datos/actualizacion-<fecha>`; en otra rama, commitea ahí. En `main` no corre: los datos no se publican directo en producción.
 
 ### Completar años anteriores del Boletín Oficial
 
