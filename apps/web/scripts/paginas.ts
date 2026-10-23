@@ -32,6 +32,8 @@ import type {
   MunicipioPagina,
   NoPublicado,
   OrganismoResumen,
+  PartyDetail,
+  PartySummary,
   PoblacionTema,
   ProveedorResumen,
   RecaudacionTema,
@@ -93,6 +95,7 @@ const descripcion = (t: string) => recortar(t, 160);
 const NAV = [
   ["/senales", "Para mirar de cerca"],
   ["/funcionarios", "Funcionarios"],
+  ["/partidos", "Partidos"],
   ["/gobierno", "Gobierno por dentro"],
   ["/municipios", "Municipios"],
   ["/leyes", "Leyes"],
@@ -157,6 +160,8 @@ const MENDOZA = {
   containedInPlace: { "@type": "Country", name: "Argentina" },
 };
 const publisher = { "@id": `${SITE_URL}/#organization` };
+/** The same @id on the party page and on each person's affiliation: search engines join them as one entity. */
+const partyId = (slug: string) => `${SITE_URL}/partidos/${slug}#partido`;
 
 // ------------------------------------------------------------------ construcción
 
@@ -179,6 +184,7 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
   const funcionarios = await json<FuncionariosTema>("temas/funcionarios.json", { personas: [] });
   const historial = await json<HistoryTema>("temas/history.json", { people: [], elections: [], formerCount: 0 });
   const municipios = await json<MunicipioPagina[]>("temas/municipios.json", []);
+  const partidos = await json<PartySummary[]>("temas/partidos.json", []);
   const organismos = await json<OrganismoResumen[]>("temas/organismos.json", []);
   const proveedores = (await json<ProveedorResumen[]>("temas/proveedores.json", [])).filter((p) => p.indexable);
   const leyes = await json<LeyResumen[]>("temas/leyes.json", []);
@@ -809,7 +815,7 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
           url: url(path),
           ...(p.foto ? { image: `${SITE_URL}${p.foto}` } : {}),
           worksFor: { "@type": "GovernmentOrganization", name: p.organismo, areaServed: MENDOZA },
-          ...(filiacion ? { affiliation: { "@type": "Organization", name: filiacion } } : {}),
+          ...(p.party ? { affiliation: { "@type": "PoliticalParty", "@id": partyId(p.party.slug), name: p.party.name } } : {}),
           description: resumen,
         },
         breadcrumb(migas),
@@ -830,6 +836,9 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
         resumen,
         datos,
         secciones: [
+          ...(p.party
+            ? [{ titulo: "Partido, frente o bloque", items: [{ texto: filiacion ?? p.party.name, href: `/partidos/${p.party.slug}` }] }]
+            : []),
           ...(p.municipalities.length
             ? [
                 {
@@ -859,6 +868,178 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
       lastmod: p.ddjj?.fecha ?? hoy,
       prioridad: 0.7,
     });
+  }
+
+  // ---------------------------------------------------------------- partidos, frentes y bloques
+  if (partidos.length) {
+    const migasIndice: Miga[] = [
+      ["/", "Inicio"],
+      ["/funcionarios", "Funcionarios"],
+      ["/partidos", "Partidos"],
+    ];
+    const conCargos = partidos.filter((x) => x.inOffice > 0);
+    const linea = (x: PartySummary) =>
+      [
+        x.inOffice > 0 && `${nf.format(x.inOffice)} en funciones`,
+        x.seatsWon > 0 && `${nf.format(x.seatsWon)} ${x.seatsWon === 1 ? "cargo ganado" : "cargos ganados"} desde 2015`,
+      ]
+        .filter(Boolean)
+        .join(", ");
+    estatica("/partidos", {
+      figura: `${conCargos.length} con cargos hoy`,
+      bajada: "Quiénes ocupan un cargo con cada partido, frente o bloque, y qué ganó cada uno desde 2015.",
+      ld: [
+        breadcrumb(migasIndice),
+        {
+          "@type": "ItemList",
+          name: "Partidos, frentes y bloques de Mendoza",
+          itemListElement: partidos.map((x, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: x.name,
+            url: url(`/partidos/${x.slug}`),
+          })),
+        },
+      ],
+      html: cuerpo({
+        migas: migasIndice,
+        h1: "Partidos, frentes y bloques de Mendoza",
+        resumen: `${conCargos.length} partidos, frentes o bloques tienen hoy a alguien en un cargo electo en Mendoza: Legislatura, intendencias, gobernación y Congreso. Para cada uno, quiénes son y cuántas bancas y cargos ganó en las elecciones desde 2015, según las actas de la Junta Electoral. Los cargos designados, como los ministros, no tienen partido en ninguna fuente oficial.`,
+        secciones: [
+          { titulo: "Con cargos hoy", items: conCargos.map((x) => ({ texto: `${x.name}: ${linea(x)}`, href: `/partidos/${x.slug}` })) },
+          {
+            titulo: "En elecciones anteriores",
+            items: partidos.filter((x) => x.inOffice === 0).map((x) => ({ texto: `${x.name}: ${linea(x)}`, href: `/partidos/${x.slug}` })),
+          },
+        ],
+        fuente: { nombre: "Legislatura de Mendoza, Gobierno de Mendoza y Junta Electoral de Mendoza" },
+      }),
+      lastmod: hoy,
+      prioridad: 0.8,
+    });
+
+    for (const summary of partidos) {
+      const x = await json<PartyDetail>(`temas/partidos/${summary.slug}.json`);
+      const path = `/partidos/${x.slug}`;
+      const migas: Miga[] = [...migasIndice, [path, x.name]];
+      // "UCR" is how people search it; the full name goes too.
+      const nombre = x.short && x.short !== x.name && x.short.length > 2 && x.name.length > 3 ? `${x.short} (${x.name})` : x.name;
+      const count = (group: string) => x.members.find((g) => g.group === group)?.people.length ?? 0;
+      const legislators = count("diputados_provincial") + count("senado_provincial");
+      const mayors = count("intendentes");
+      const national = count("diputados_nacional") + count("senado_nacional");
+      const partes = [
+        legislators && `${nf.format(legislators)} ${legislators === 1 ? "legislador provincial" : "legisladores provinciales"}`,
+        mayors && `${nf.format(mayors)} ${mayors === 1 ? "intendente" : "intendentes"}`,
+        national && `${nf.format(national)} ${national === 1 ? "legislador nacional" : "legisladores nacionales"}`,
+        count("ejecutivo") && "la gobernación",
+      ].filter(Boolean) as string[];
+      const listaHumana = (xs: string[]) => (xs.length < 2 ? xs.join("") : `${xs.slice(0, -1).join(", ")} y ${xs.at(-1)}`);
+      const hoyTiene = partes.length ? `Hoy tiene ${listaHumana(partes)}` : "Hoy no tiene cargos electos en funciones";
+      const gano = x.seatsWon
+        ? `En las elecciones desde 2015 ganó ${nf.format(x.seatsWon)} ${x.seatsWon === 1 ? "cargo" : "cargos"} como titular, según las actas de la Junta Electoral`
+        : "";
+      const tambien = x.aliases.length ? ` También figura como ${listaHumana(x.aliases.map((a) => a.name))}.` : "";
+      const resumen = `${hoyTiene}.${gano ? ` ${gano}.` : ""}${tambien}`;
+      // "Cambia Mendoza", not "Cambia Mendoza en Mendoza".
+      const enMendoza = (n: string) => (/mendoza/i.test(n) ? n : `${n} en Mendoza`);
+      const quienes =
+        count("ejecutivo") && mayors
+          ? "gobernador e intendentes"
+          : legislators && mayors
+            ? "legisladores e intendentes"
+            : legislators
+              ? "sus legisladores"
+              : mayors
+                ? "sus intendentes"
+                : "";
+      const titleBase = quienes ? `${enMendoza(nombre)}: ${quienes}` : enMendoza(nombre);
+      paginas.push({
+        path,
+        title: titulo(titleBase.length > 60 ? enMendoza(nombre) : titleBase),
+        description: descripcion(`${enMendoza(x.name)}. ${resumen}`),
+        og: {
+          slug: `partido-${x.slug}`,
+          eyebrow: "PARTIDOS",
+          titulo: x.name,
+          figura: x.inOffice ? `${nf.format(x.inOffice)} en funciones` : `${nf.format(x.seatsWon)} cargos ganados`,
+          bajada: x.inOffice ? `${listaHumana(partes)}.` : `Cargos ganados desde 2015, según la Junta Electoral.`,
+        },
+        ld: [
+          {
+            "@type": "PoliticalParty",
+            "@id": partyId(x.slug),
+            name: x.name,
+            ...(x.aliases.length || x.short.length > 2
+              ? { alternateName: [...new Set([...(x.short.length > 2 ? [x.short] : []), ...x.aliases.map((a) => a.name)])] }
+              : {}),
+            url: url(path),
+            ...(x.logo ? { logo: `${SITE_URL}${x.logo}` } : {}),
+            ...(x.wikidata ? { sameAs: [`https://www.wikidata.org/wiki/${x.wikidata}`] } : {}),
+            areaServed: MENDOZA,
+            description: resumen,
+            ...(x.inOffice
+              ? {
+                  member: x.members.flatMap((g) =>
+                    g.people.map((m) => ({ "@type": "Person", name: m.name, url: url(`/funcionarios/${m.role}/${m.slug}`) })),
+                  ),
+                }
+              : {}),
+          },
+          breadcrumb(migas),
+          faq([
+            ...(legislators
+              ? ([
+                  [
+                    `¿Cuántos legisladores tiene ${nombre} en Mendoza?`,
+                    `${nf.format(legislators)} en la Legislatura de Mendoza (${nf.format(count("senado_provincial"))} en el Senado y ${nf.format(count("diputados_provincial"))} en Diputados), según los bloques que publica cada cámara.`,
+                  ],
+                ] as [string, string][])
+              : []),
+            ...(mayors
+              ? ([
+                  [
+                    `¿Qué intendentes de Mendoza son de ${nombre}?`,
+                    `${listaHumana(x.members.find((g) => g.group === "intendentes")!.people.map((m) => `${m.name} (${m.place})`))}.`,
+                  ],
+                ] as [string, string][])
+              : []),
+            ...(x.seatsWon ? ([[`¿Cuántos cargos ganó ${nombre} en Mendoza?`, `${gano}.`]] as [string, string][]) : []),
+          ]),
+        ],
+        html: cuerpo({
+          migas,
+          h1: enMendoza(x.name),
+          resumen,
+          secciones: [
+            ...x.members.map((g) => ({
+              titulo: GRUPO[g.group]!,
+              items: g.people.map((m) => ({
+                texto: `${m.name}, ${m.place}${m.asWritten !== x.name ? ` (${m.via === "bloque" ? "bloque" : "figura como"} ${m.asWritten})` : ""}`,
+                href: `/funcionarios/${m.role}/${m.slug}`,
+              })),
+            })),
+            {
+              titulo: "Qué ganó en cada elección",
+              items: x.elections.map((e) => ({
+                texto: `${fechaLarga(e.date)}: ${e.offices.map((o) => `${o.label} ${o.count}`).join(", ")}`,
+              })),
+            },
+            {
+              titulo: "Electos que hoy no tienen cargo",
+              items: x.former.slice(0, 50).map((f) => ({
+                texto: `${f.name}, ${f.role} (${f.place}, ${f.year})`,
+                href: `/funcionarios/historial?persona=${f.id}`,
+              })),
+            },
+            { titulo: "También figura como", items: x.aliases.map((a) => ({ texto: `${a.name}: ${a.reason}` })) },
+          ],
+          fuente: { nombre: "Legislatura de Mendoza, Gobierno de Mendoza y Junta Electoral de Mendoza" },
+        }),
+        lastmod: hoy,
+        prioridad: x.inOffice ? 0.7 : 0.5,
+      });
+    }
   }
 
   // ---------------------------------------------------------------- gobierno por dentro

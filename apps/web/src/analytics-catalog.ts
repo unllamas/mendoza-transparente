@@ -202,6 +202,29 @@ export const EVENT_CATALOG: EventDoc[] = [
     description: "Desde la página de funcionarios, abrió el historial: quién ocupó cada cargo antes y quién ganó cada elección.",
     tags: ["funcionarios"],
   },
+  {
+    event: "official.party.open",
+    description:
+      "Desde la ficha de un funcionario (o su lista de elecciones ganadas), abrió la página de su partido, frente o bloque. También desde la composición por bloque.",
+    tags: ["funcionarios", "partidos"],
+  },
+  {
+    event: "officials.history.party.open",
+    description: "En el historial, abrió la página de un partido desde el reparto de cargos de una elección.",
+    tags: ["funcionarios", "partidos"],
+  },
+  { event: "party.open", description: "En /partidos, abrió la página de un partido, frente o bloque.", tags: ["partidos"] },
+  {
+    event: "party.member.open",
+    description: "En la página de un partido, abrió la ficha de alguien que hoy ocupa un cargo con ese nombre.",
+    tags: ["partidos", "funcionarios"],
+  },
+  {
+    event: "party.former.open",
+    description:
+      "En la página de un partido, abrió la ficha en el historial de alguien que ganó una elección con ese nombre y hoy no tiene cargo.",
+    tags: ["partidos", "funcionarios"],
+  },
   { event: "law.official_pdf.open", description: "Abrió el PDF oficial de una ley. Propiedad law: número.", tags: ["leyes"] },
   { event: "law.full_text.toggle", description: "Desplegó o plegó el texto completo de una ley. Propiedad law.", tags: ["leyes"] },
   {

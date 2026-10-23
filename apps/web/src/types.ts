@@ -247,6 +247,17 @@ export type GrupoFuncionario =
   | "diputados_nacional"
   | "senado_nacional";
 
+/** A party, front or legislative bloc, under one name however the sources write it (data/curado/partidos.yaml). */
+export interface PartyRef {
+  /** URL: /partidos/<slug>. */
+  slug: string;
+  name: string;
+  /** Up to three letters for the badge on a face: the acronym, or the initials of the name. */
+  short: string;
+  /** Logo from an official source (/partidos/<file>), or null while there is none. */
+  logo: string | null;
+}
+
 export interface Funcionario {
   id: string;
   /** URL: /funcionarios/<role>/<slug> (cargo y nombre). */
@@ -267,6 +278,10 @@ export interface Funcionario {
   organismo: string;
   partido: string | null;
   bloque: string | null;
+  /** What the badge on the face shows: the bloc for legislators, the party or front for the rest. Null for appointed positions. */
+  party: PartyRef | null;
+  /** Elected, but the official source does not say the party (never inferred). */
+  partyMissing: boolean;
   seccion: string | null;
   mandatoDesde: string | null;
   mandatoHasta: string | null;
@@ -310,8 +325,10 @@ export interface ElectedRecord {
   role: string;
   /** Province, municipality or electoral section. */
   place: string;
-  /** Party, front or list as the record says; null if the record does not say. */
+  /** Party, front or list as the record says (under its normalized name); null if the record does not say. */
   party: string | null;
+  /** /partidos/<slug> of that party; null if the record does not say. */
+  partySlug: string | null;
   sourceUrl: string;
 }
 
@@ -328,6 +345,10 @@ export interface HistoryPerson {
   to: string | null;
   positions: PastPosition[];
   elected: ElectedRecord[];
+  /** Party of the latest election this person won; null if they were never elected. */
+  party: PartyRef | null;
+  /** Won an election, but the record does not say the party. */
+  partyMissing: boolean;
 }
 
 /** How the elected positions of one election were split among parties. */
@@ -335,8 +356,9 @@ export interface ElectionSummary {
   date: string;
   year: number;
   /** href: the person's page if they hold a current position, else their sheet in /funcionarios/historial. */
-  governor: { name: string; party: string | null; href: string } | null;
-  offices: { key: string; label: string; total: number; parties: { nombre: string; valor: number }[] }[];
+  governor: { name: string; party: string | null; partySlug: string | null; href: string } | null;
+  /** `slug` is null for "No lo dice el acta". */
+  offices: { key: string; label: string; total: number; parties: { nombre: string; valor: number; slug: string | null }[] }[];
   sourceUrl: string;
 }
 
@@ -396,6 +418,7 @@ export interface MunicipioPagina {
     slug: string;
     nombre: string;
     partido: string | null;
+    party: PartyRef | null;
     foto: string | null;
     mandatoHasta: string | null;
   } | null;
@@ -418,7 +441,16 @@ export interface MunicipioPagina {
     serie: { anio: number; perCapita: number }[];
   } | null;
   seccion: string | null;
-  legisladores: { id: string; role: string; slug: string; nombre: string; cargo: string; bloque: string | null; foto: string | null }[];
+  legisladores: {
+    id: string;
+    role: string;
+    slug: string;
+    nombre: string;
+    cargo: string;
+    bloque: string | null;
+    party: PartyRef | null;
+    foto: string | null;
+  }[];
   /** Municipal staff from the Fiscal Responsibility Law, Annex 19 (null when the municipality does not publish it). */
   staff: MunicipalStaff | null;
   /** What the municipality publishes, checked by hand on its site (data/curado/transparencia-municipal.yaml). */
@@ -810,4 +842,44 @@ export interface UniversidadesTema {
   rendimiento: { anio: number; nuevosSinMaterias: number; reinscriptosDosOMas: number; reinscriptosSinMaterias: number } | null;
   /** UTN figures for the whole country (they cannot be split for Mendoza). */
   utn: { anioEstudiantes: number; estudiantes: number; anio: number; presupuestado: number } | null;
+}
+
+/** A person in office, as listed on a party page. */
+export interface PartyMember {
+  id: string;
+  role: string;
+  slug: string;
+  name: string;
+  photo: string | null;
+  /** Where: the municipality, the electoral section or the chamber. */
+  place: string;
+  /** The name exactly as this person's source writes it ("UCR-Cambia Mendoza"). */
+  asWritten: string;
+  /** Whether that name is the person's bloc or their party or front. */
+  via: "bloque" | "partido";
+  mandateTo: string | null;
+}
+
+/** One row of /partidos. */
+export interface PartySummary extends PartyRef {
+  /** People in office today under this name. */
+  inOffice: number;
+  /** Seats won as titular in the elections since 2015 (Junta Electoral records). */
+  seatsWon: number;
+  /** Year of the latest election it won a seat in, or null. */
+  lastElection: number | null;
+  /** How the sources use the name: as a party or front, as a legislative bloc, or both. */
+  uses: ("partido" | "bloque")[];
+}
+
+/** /partidos/<slug>: who holds office under this name and what it won in each election. */
+export interface PartyDetail extends PartySummary {
+  /** Every way the sources write the name, other than `name`, with why it counts as the same one. */
+  aliases: { name: string; reason: string }[];
+  logoSource: string | null;
+  wikidata: string | null;
+  members: { group: GrupoFuncionario; people: PartyMember[] }[];
+  elections: { date: string; year: number; offices: { label: string; count: number }[]; sourceUrl: string }[];
+  /** People elected under this name who hold no current position, with their sheet in /funcionarios/historial. */
+  former: { id: string; name: string; role: string; place: string; year: number }[];
 }

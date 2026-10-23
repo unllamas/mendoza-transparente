@@ -133,6 +133,7 @@ export function MunicipiosPage() {
                 <PersonAvatar
                   name={m.intendente?.nombre ?? m.nombre}
                   photo={m.intendente?.foto}
+                  party={m.intendente?.party}
                   className="size-10 text-caption-1-regular"
                 />
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
@@ -214,7 +215,7 @@ export function MunicipioPage() {
                 params={{ role: i.role, slug: i.slug }}
                 className={cx(cardVariants(), "flex items-center gap-4")}
               >
-                <PersonAvatar name={i.nombre} photo={i.foto} className="size-14 text-headline-regular" />
+                <PersonAvatar name={i.nombre} photo={i.foto} party={i.party} className="size-14 text-headline-regular" />
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                   <span className="text-body-regular text-text-tertiary">Intendente</span>
                   <span className="truncate text-title-3-medium group-hover:text-text-link">{i.nombre}</span>
@@ -422,7 +423,7 @@ export function MunicipioPage() {
               {m.legisladores.map((l) => (
                 <li key={l.id}>
                   <Link to="/funcionarios/$role/$slug" params={{ role: l.role, slug: l.slug }} className={listRowVariants()}>
-                    <PersonAvatar name={l.nombre} photo={l.foto} className="size-10 text-caption-1-regular" />
+                    <PersonAvatar name={l.nombre} photo={l.foto} party={l.party} className="size-10 text-caption-1-regular" />
                     <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                       <span className="truncate font-medium group-hover:text-text-link">{l.nombre}</span>
                       <span className="truncate text-body-regular text-text-tertiary">

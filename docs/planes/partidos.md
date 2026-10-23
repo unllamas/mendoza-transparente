@@ -2,7 +2,7 @@
 
 Objetivo: que cada persona electa muestre a qué partido, frente o bloque pertenece, **según lo dice la fuente oficial**, y que cada uno tenga su página en `/partidos/<slug>`. Esa página junta a sus legisladores, intendentes y bancas ganadas por elección, y responde búsquedas como «UCR Mendoza» o «diputados de La Libertad Avanza Mendoza».
 
-Fecha: 22/10/2026. Estado: propuesta aprobada, sin empezar. Faltan las decisiones del final.
+Fecha: 22/10/2026. Estado: etapas 1 a 3 hechas (normalización, páginas e insignia); faltan los logos (etapa 4) y medir (etapa 5). Los criterios que quedaron funcionando están en `docs/procesos/metodologia.md`, «Partidos, frentes y bloques», y la insignia en `docs/procesos/diseno.md`.
 
 ## Por qué
 
@@ -140,9 +140,20 @@ Cada etapa es un PR a `dev`.
 
 Cero. Son páginas estáticas del build, sin funciones ni servicios nuevos. Suma unas 40 páginas al sitemap y unos KB de logos.
 
-## Preguntas abiertas
+## Qué se hizo y qué falta
 
-1. **«UCR-Cambia Mendoza»** (bloque del Senado): ¿se muestra con su nombre y linkea a la página de la UCR, porque la cita textualmente, o tiene página propia de bloque? Propuesta: lo primero, con el motivo escrito como alias.
-2. **«Frente para la Victoria 2»** frente a «Alianza Frente para la Victoria»: se decide leyendo el acta (el «2» puede ser el número de registro o puede tratarse de otra alianza).
-3. **«Frente Elegí»** frente a «Elegí Mendoza»: lo mismo, se decide con el acta.
-4. **Logos de partidos que no figuran en las boletas:** ¿se aceptan los del sitio oficial del partido?
+- **Hecho (22/10/2026):**
+  - `data/curado/partidos.yaml` y `scripts/temas/parties.ts`, con sus tests. 40 entidades con los datos de hoy, 25 con alguien en funciones.
+  - `/partidos` y `/partidos/<slug>`, con `PoliticalParty` en JSON-LD, preguntas frecuentes, imagen para compartir, sitemap, `llms.txt` y el tipo «Partido» en el buscador. La ficha de cada persona apunta al `@id` de su partido.
+  - Insignia en `PersonAvatar` (con `PartyAvatar` de `@mt/ui`) en funcionarios, municipios e historial. Link al partido desde la ficha, la composición por bloque, las elecciones ganadas y el reparto de cada elección.
+- **Falta: logos (etapa 4).** La Junta Electoral publica las boletas de cada elección (por ejemplo, https://jusmendoza.gob.ar/estas-son-las-boletas-que-se-usaran-en-las-elecciones-del-26-de-octubre/), pero son la Boleta Única Papel: una sola imagen con todas las listas. Hay que recortar cada logo, revisarlo a mano y cargarlo en `partidos.yaml` con `logo` y `logo_fuente`. Mientras tanto, la insignia muestra la sigla.
+- **Falta: medir (etapa 5)** cerca del 5/11/2026.
+
+## Preguntas abiertas (resueltas)
+
+Se decidieron así, con el motivo escrito en `partidos.yaml` y en la metodología:
+
+1. «UCR-Cambia Mendoza» va con la UCR; la ficha muestra el nombre del bloque tal cual.
+2. «Frente para la Victoria 2» y «Alianza Frente para la Victoria 2» son una; «Alianza Frente para la Victoria» (noviembre de 2015) queda aparte.
+3. «Frente Elegí» queda aparte de «Elegí Mendoza»: en 2019 figuran las dos en la misma elección.
+4. Logos: de las boletas de la Junta Electoral; el sitio oficial del partido solo si no está en las boletas.

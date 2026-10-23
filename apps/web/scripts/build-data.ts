@@ -27,6 +27,7 @@ import { buildHome } from "./temas/home.ts";
 import { deflactor } from "./temas/inflacion.ts";
 import type { ResumenLey } from "./temas/leyes.ts";
 import { budgetSummary, buildMunicipalBudgets } from "./temas/municipal-budget.ts";
+import { assignParties, buildParties, buildPartyRegistry, type PartyEntry, partyMentions } from "./temas/parties.ts";
 import { buildPoblacion } from "./temas/poblacion.ts";
 import { buildRecaudacion } from "./temas/recaudacion.ts";
 import { buildSenales } from "./temas/senales.ts";
@@ -312,14 +313,23 @@ const funcionariosTema =
       )
     : undefined;
 // Who held each position (ex officials and past elections); it also adds the past of each current official.
+// Parties first: one name however each source writes it (data/curado/partidos.yaml), then one page each.
 if (funcionariosTema) {
+  const electos = readTable("junta-electoral", "electos.csv") ?? [];
+  const parties = buildPartyRegistry(leerCurado<PartyEntry>("partidos.yaml"), partyMentions(funcionariosTema.personas, electos));
+  assignParties(funcionariosTema.personas, parties);
   const history = buildHistory(
     readTable("etica-publica", "cargos.csv") ?? [],
-    readTable("junta-electoral", "electos.csv") ?? [],
+    electos,
     funcionariosTema,
     new Date().toISOString().slice(0, 10),
+    parties,
   );
   writeFileSync(join(OUT, "temas", "history.json"), JSON.stringify(history));
+  const { summaries, details } = buildParties(parties, funcionariosTema, history);
+  writeFileSync(join(OUT, "temas", "partidos.json"), JSON.stringify(summaries));
+  mkdirSync(join(OUT, "temas", "partidos"), { recursive: true });
+  for (const d of details) writeFileSync(join(OUT, "temas", "partidos", `${d.slug}.json`), JSON.stringify(d));
 }
 const usdRates = (readTable("indices", "tipo_cambio_mensual.csv") ?? []).filter((r) => Number(r.tipo_cambio_oficial_promedio) > 0);
 const lastUsd = usdRates.at(-1);
