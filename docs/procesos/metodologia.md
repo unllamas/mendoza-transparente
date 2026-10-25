@@ -257,3 +257,19 @@ Páginas `/partidos` y `/partidos/<slug>`, la insignia del partido en la cara de
 - **Cifras de cada partido:** «en funciones» cuenta a quienes hoy tienen un cargo electo con ese nombre; «cargos ganados» suma los titulares proclamados desde 2015, no votos.
 - **Logos:** solo de fuentes oficiales (las boletas que publica la Junta Electoral, o el sitio oficial del partido), con la URL en `logo_fuente`. Mientras no haya uno, la sigla o las iniciales en gris. Nunca los colores del partido: el sitio usa una sola paleta para todos.
 - **Controles:** `scripts/temas/parties.test.ts` comprueba que los nombres que deben quedar separados sigan separados, que nadie designado reciba partido y que un alias no esté en dos entradas (el build se corta).
+
+## Resultados electorales y auditoría
+
+Los resultados de `votacion.mendoza-transparente.com` salen de tres fuentes oficiales con un mismo formato: el sitio de resultados provisorios (`resultados-provisorios`), los datos abiertos por mesa (`elecciones-datos-abiertos`) y los escrutinios definitivos de la Junta Electoral (`escrutinios-definitivos`). Plan y etapas: [Votación](../planes/votacion.md).
+
+- **Provisorio y definitivo se muestran siempre con su nombre.** El provisorio es el conteo de la noche; el definitivo, el escrutinio de la Junta. Si existen los dos, se muestra primero el definitivo.
+- **Si dos fuentes cubren la misma elección y el mismo escrutinio**, se usa la de más detalle (por mesa antes que por departamento).
+- **Los totales que la fuente no imprime se suman de las unidades más chicas** y la página lo dice («Suma nuestra…»). Nunca se completa un dato que falta.
+- **Las PASO se leen por frente:** las listas internas («300 A», «300 B») se suman a su frente para el mano a mano y el mapa; cada lista interna sigue a la vista en «Todas las listas».
+- **Auditoría automática** (`apps/votacion/scripts/audit.ts`), por elección y cargo:
+  - las mesas de cada departamento suman lo mismo que el total impreso del departamento;
+  - qué mesas cambiaron del provisorio al definitivo, y cuáles no estaban en el provisorio;
+  - unidades con más votos que votantes, o más votantes que electores;
+  - departamentos con mesas sin escrutar.
+- **Una alerta es una señal, no una acusación.** Puede ser un error de carga, de lectura del documento (OCR) o un cambio legítimo del escrutinio. Cada alerta dice qué regla la encontró y qué se comparó, para que cualquiera la verifique con la fuente. Nunca se habla de fraude ni se señala a personas.
+- **Datos personales:** los resultados son votos sumados por lista. No se descarga el padrón ni se archivan imágenes de telegramas o certificados de mesa, que traen nombres y firmas de autoridades de mesa y fiscales; de esos documentos se toman solo los números.

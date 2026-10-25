@@ -1,0 +1,1862 @@
+eleccion,tipo_eleccion,escrutinio,cargo,nivel,seccion_electoral,departamento,circuito,mesa,tipo_voto,agrupacion,lista,candidato,votos
+2019-06-09,paso,provisorio,concejales,departamento,1,Capital,,,positivo,Partido Intransigente,6,,450
+2019-06-09,paso,provisorio,concejales,departamento,1,Capital,,,positivo,Partido Federal,8,,1101
+2019-06-09,paso,provisorio,concejales,departamento,1,Capital,,,positivo,Movimiento Socialista de los Trabajadores,38,,351
+2019-06-09,paso,provisorio,concejales,departamento,1,Capital,,,positivo,Protectora Fuerza Política,222,,5164
+2019-06-09,paso,provisorio,concejales,departamento,1,Capital,,,positivo,Frente Cambia Mendoza,300,,38468
+2019-06-09,paso,provisorio,concejales,departamento,1,Capital,,,positivo,Frente de Izquierda y de los Trabajadores,301,,2972
+2019-06-09,paso,provisorio,concejales,departamento,1,Capital,,,positivo,Frente Político y Social Elegí,302,,14789
+2019-06-09,paso,provisorio,concejales,departamento,1,Capital,,,positivo,Partido de los Jubilados,322,,1657
+2019-06-09,paso,provisorio,concejales,departamento,1,Capital,,,nulo,,,,1090
+2019-06-09,paso,provisorio,concejales,departamento,1,Capital,,,recurrido,,,,108
+2019-06-09,paso,provisorio,concejales,departamento,1,Capital,,,impugnado,,,,14
+2019-06-09,paso,provisorio,concejales,departamento,1,Capital,,,blanco,,,,1851
+2019-06-09,paso,provisorio,concejales,departamento,1,Guaymallén,,,positivo,Partido Intransigente,6,,1302
+2019-06-09,paso,provisorio,concejales,departamento,1,Guaymallén,,,positivo,Partido Federal,8,,2179
+2019-06-09,paso,provisorio,concejales,departamento,1,Guaymallén,,,positivo,Movimiento Socialista de los Trabajadores,38,,799
+2019-06-09,paso,provisorio,concejales,departamento,1,Guaymallén,,,positivo,Protectora Fuerza Política,222,,15628
+2019-06-09,paso,provisorio,concejales,departamento,1,Guaymallén,,,positivo,Frente Cambia Mendoza,300,,74100
+2019-06-09,paso,provisorio,concejales,departamento,1,Guaymallén,,,positivo,Frente de Izquierda y de los Trabajadores,301,,7454
+2019-06-09,paso,provisorio,concejales,departamento,1,Guaymallén,,,positivo,Frente Político y Social Elegí,302,,49133
+2019-06-09,paso,provisorio,concejales,departamento,1,Guaymallén,,,positivo,Partido de los Jubilados,322,,3304
+2019-06-09,paso,provisorio,concejales,departamento,1,Guaymallén,,,nulo,,,,3246
+2019-06-09,paso,provisorio,concejales,departamento,1,Guaymallén,,,recurrido,,,,393
+2019-06-09,paso,provisorio,concejales,departamento,1,Guaymallén,,,impugnado,,,,113
+2019-06-09,paso,provisorio,concejales,departamento,1,Guaymallén,,,blanco,,,,5377
+2019-06-09,paso,provisorio,concejales,departamento,1,Las Heras,,,positivo,Partido Intransigente,6,,1328
+2019-06-09,paso,provisorio,concejales,departamento,1,Las Heras,,,positivo,Partido Federal,8,,3199
+2019-06-09,paso,provisorio,concejales,departamento,1,Las Heras,,,positivo,Movimiento Socialista de los Trabajadores,38,,534
+2019-06-09,paso,provisorio,concejales,departamento,1,Las Heras,,,positivo,Protectora Fuerza Política,222,,9974
+2019-06-09,paso,provisorio,concejales,departamento,1,Las Heras,,,positivo,Frente Cambia Mendoza,300,,46302
+2019-06-09,paso,provisorio,concejales,departamento,1,Las Heras,,,positivo,Frente de Izquierda y de los Trabajadores,301,,5375
+2019-06-09,paso,provisorio,concejales,departamento,1,Las Heras,,,positivo,Frente Político y Social Elegí,302,,39473
+2019-06-09,paso,provisorio,concejales,departamento,1,Las Heras,,,positivo,Partido de los Jubilados,322,,2794
+2019-06-09,paso,provisorio,concejales,departamento,1,Las Heras,,,nulo,,,,2290
+2019-06-09,paso,provisorio,concejales,departamento,1,Las Heras,,,recurrido,,,,245
+2019-06-09,paso,provisorio,concejales,departamento,1,Las Heras,,,impugnado,,,,40
+2019-06-09,paso,provisorio,concejales,departamento,1,Las Heras,,,blanco,,,,4681
+2019-06-09,paso,provisorio,concejales,departamento,2,Junín,,,positivo,Partido Intransigente,6,,374
+2019-06-09,paso,provisorio,concejales,departamento,2,Junín,,,positivo,Partido Federal,8,,427
+2019-06-09,paso,provisorio,concejales,departamento,2,Junín,,,positivo,Protectora Fuerza Política,222,,1025
+2019-06-09,paso,provisorio,concejales,departamento,2,Junín,,,positivo,Frente Cambia Mendoza,300,,15332
+2019-06-09,paso,provisorio,concejales,departamento,2,Junín,,,positivo,Frente de Izquierda y de los Trabajadores,301,,747
+2019-06-09,paso,provisorio,concejales,departamento,2,Junín,,,positivo,Frente Político y Social Elegí,302,,6584
+2019-06-09,paso,provisorio,concejales,departamento,2,Junín,,,positivo,Partido de los Jubilados,322,,424
+2019-06-09,paso,provisorio,concejales,departamento,2,Junín,,,nulo,,,,488
+2019-06-09,paso,provisorio,concejales,departamento,2,Junín,,,recurrido,,,,19
+2019-06-09,paso,provisorio,concejales,departamento,2,Junín,,,impugnado,,,,0
+2019-06-09,paso,provisorio,concejales,departamento,2,Junín,,,blanco,,,,1269
+2019-06-09,paso,provisorio,concejales,departamento,2,La Paz,,,positivo,Partido Intransigente,6,,35
+2019-06-09,paso,provisorio,concejales,departamento,2,La Paz,,,positivo,Protectora Fuerza Política,222,,304
+2019-06-09,paso,provisorio,concejales,departamento,2,La Paz,,,positivo,Frente Cambia Mendoza,300,,3028
+2019-06-09,paso,provisorio,concejales,departamento,2,La Paz,,,positivo,Frente Político y Social Elegí,302,,2922
+2019-06-09,paso,provisorio,concejales,departamento,2,La Paz,,,nulo,,,,42
+2019-06-09,paso,provisorio,concejales,departamento,2,La Paz,,,recurrido,,,,7
+2019-06-09,paso,provisorio,concejales,departamento,2,La Paz,,,impugnado,,,,1
+2019-06-09,paso,provisorio,concejales,departamento,2,La Paz,,,blanco,,,,232
+2019-06-09,paso,provisorio,concejales,departamento,2,Maipú,,,positivo,Partido Intransigente,6,,691
+2019-06-09,paso,provisorio,concejales,departamento,2,Maipú,,,positivo,Partido Federal,8,,994
+2019-06-09,paso,provisorio,concejales,departamento,2,Maipú,,,positivo,Movimiento Socialista de los Trabajadores,38,,397
+2019-06-09,paso,provisorio,concejales,departamento,2,Maipú,,,positivo,Protectora Fuerza Política,222,,6905
+2019-06-09,paso,provisorio,concejales,departamento,2,Maipú,,,positivo,Frente Cambia Mendoza,300,,28215
+2019-06-09,paso,provisorio,concejales,departamento,2,Maipú,,,positivo,Frente de Izquierda y de los Trabajadores,301,,3435
+2019-06-09,paso,provisorio,concejales,departamento,2,Maipú,,,positivo,Frente Político y Social Elegí,302,,55308
+2019-06-09,paso,provisorio,concejales,departamento,2,Maipú,,,positivo,Partido de los Jubilados,322,,1750
+2019-06-09,paso,provisorio,concejales,departamento,2,Maipú,,,nulo,,,,2388
+2019-06-09,paso,provisorio,concejales,departamento,2,Maipú,,,recurrido,,,,165
+2019-06-09,paso,provisorio,concejales,departamento,2,Maipú,,,impugnado,,,,39
+2019-06-09,paso,provisorio,concejales,departamento,2,Maipú,,,blanco,,,,4838
+2019-06-09,paso,provisorio,concejales,departamento,2,Rivadavia,,,positivo,Partido Intransigente,6,,667
+2019-06-09,paso,provisorio,concejales,departamento,2,Rivadavia,,,positivo,Protectora Fuerza Política,222,,1121
+2019-06-09,paso,provisorio,concejales,departamento,2,Rivadavia,,,positivo,Frente Cambia Mendoza,300,,14697
+2019-06-09,paso,provisorio,concejales,departamento,2,Rivadavia,,,positivo,Frente de Izquierda y de los Trabajadores,301,,761
+2019-06-09,paso,provisorio,concejales,departamento,2,Rivadavia,,,positivo,Frente Político y Social Elegí,302,,13565
+2019-06-09,paso,provisorio,concejales,departamento,2,Rivadavia,,,positivo,Partido de los Jubilados,322,,661
+2019-06-09,paso,provisorio,concejales,departamento,2,Rivadavia,,,nulo,,,,562
+2019-06-09,paso,provisorio,concejales,departamento,2,Rivadavia,,,recurrido,,,,290
+2019-06-09,paso,provisorio,concejales,departamento,2,Rivadavia,,,impugnado,,,,36
+2019-06-09,paso,provisorio,concejales,departamento,2,Rivadavia,,,blanco,,,,1833
+2019-06-09,paso,provisorio,concejales,departamento,2,Santa Rosa,,,positivo,Partido Intransigente,6,,227
+2019-06-09,paso,provisorio,concejales,departamento,2,Santa Rosa,,,positivo,Protectora Fuerza Política,222,,211
+2019-06-09,paso,provisorio,concejales,departamento,2,Santa Rosa,,,positivo,Frente Cambia Mendoza,300,,6130
+2019-06-09,paso,provisorio,concejales,departamento,2,Santa Rosa,,,positivo,Frente Político y Social Elegí,302,,3716
+2019-06-09,paso,provisorio,concejales,departamento,2,Santa Rosa,,,nulo,,,,74
+2019-06-09,paso,provisorio,concejales,departamento,2,Santa Rosa,,,recurrido,,,,3
+2019-06-09,paso,provisorio,concejales,departamento,2,Santa Rosa,,,impugnado,,,,0
+2019-06-09,paso,provisorio,concejales,departamento,2,Santa Rosa,,,blanco,,,,435
+2019-06-09,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,Partido Intransigente,6,,1251
+2019-06-09,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,Partido Federal,8,,1175
+2019-06-09,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,Movimiento Socialista de los Trabajadores,38,,555
+2019-06-09,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,Protectora Fuerza Política,222,,10861
+2019-06-09,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,Frente Cambia Mendoza,300,,55137
+2019-06-09,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,Frente de Izquierda y de los Trabajadores,301,,4946
+2019-06-09,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,Frente Político y Social Elegí,302,,28877
+2019-06-09,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,Partido de los Jubilados,322,,2956
+2019-06-09,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,nulo,,,,1915
+2019-06-09,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,recurrido,,,,198
+2019-06-09,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,impugnado,,,,28
+2019-06-09,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,blanco,,,,3241
+2019-06-09,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,Partido Intransigente,6,,671
+2019-06-09,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,Partido Federal,8,,1035
+2019-06-09,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,Movimiento Socialista de los Trabajadores,38,,293
+2019-06-09,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,Protectora Fuerza Política,222,,5258
+2019-06-09,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,Frente Cambia Mendoza,300,,41036
+2019-06-09,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,Frente de Izquierda y de los Trabajadores,301,,2658
+2019-06-09,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,Frente Político y Social Elegí,302,,17751
+2019-06-09,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,Partido de los Jubilados,322,,1137
+2019-06-09,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,nulo,,,,1278
+2019-06-09,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,recurrido,,,,109
+2019-06-09,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,impugnado,,,,22
+2019-06-09,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,blanco,,,,2370
+2019-06-09,paso,provisorio,concejales,departamento,3,San Carlos,,,positivo,Partido Intransigente,6,,123
+2019-06-09,paso,provisorio,concejales,departamento,3,San Carlos,,,positivo,Partido Federal,8,,369
+2019-06-09,paso,provisorio,concejales,departamento,3,San Carlos,,,positivo,Protectora Fuerza Política,222,,375
+2019-06-09,paso,provisorio,concejales,departamento,3,San Carlos,,,positivo,Frente Cambia Mendoza,300,,10005
+2019-06-09,paso,provisorio,concejales,departamento,3,San Carlos,,,positivo,Frente Político y Social Elegí,302,,5161
+2019-06-09,paso,provisorio,concejales,departamento,3,San Carlos,,,positivo,San Carlos Progreso y Futuro,312,,235
+2019-06-09,paso,provisorio,concejales,departamento,3,San Carlos,,,positivo,Nuevos Rumbos,321,,2175
+2019-06-09,paso,provisorio,concejales,departamento,3,San Carlos,,,positivo,Partido de los Jubilados,322,,241
+2019-06-09,paso,provisorio,concejales,departamento,3,San Carlos,,,nulo,,,,195
+2019-06-09,paso,provisorio,concejales,departamento,3,San Carlos,,,recurrido,,,,38
+2019-06-09,paso,provisorio,concejales,departamento,3,San Carlos,,,impugnado,,,,15
+2019-06-09,paso,provisorio,concejales,departamento,3,San Carlos,,,blanco,,,,959
+2019-06-09,paso,provisorio,concejales,departamento,3,Tupungato,,,positivo,Partido Intransigente,6,,104
+2019-06-09,paso,provisorio,concejales,departamento,3,Tupungato,,,positivo,Partido Federal,8,,643
+2019-06-09,paso,provisorio,concejales,departamento,3,Tupungato,,,positivo,Protectora Fuerza Política,222,,617
+2019-06-09,paso,provisorio,concejales,departamento,3,Tupungato,,,positivo,Frente Cambia Mendoza,300,,9608
+2019-06-09,paso,provisorio,concejales,departamento,3,Tupungato,,,positivo,Frente Político y Social Elegí,302,,5976
+2019-06-09,paso,provisorio,concejales,departamento,3,Tupungato,,,positivo,Nuevo Tupungato,320,,973
+2019-06-09,paso,provisorio,concejales,departamento,3,Tupungato,,,positivo,Partido de los Jubilados,322,,209
+2019-06-09,paso,provisorio,concejales,departamento,3,Tupungato,,,nulo,,,,200
+2019-06-09,paso,provisorio,concejales,departamento,3,Tupungato,,,recurrido,,,,57
+2019-06-09,paso,provisorio,concejales,departamento,3,Tupungato,,,impugnado,,,,3
+2019-06-09,paso,provisorio,concejales,departamento,3,Tupungato,,,blanco,,,,1008
+2019-06-09,paso,provisorio,concejales,departamento,4,General Alvear,,,positivo,Partido Intransigente,6,,165
+2019-06-09,paso,provisorio,concejales,departamento,4,General Alvear,,,positivo,Partido Federal,8,,682
+2019-06-09,paso,provisorio,concejales,departamento,4,General Alvear,,,positivo,Protectora Fuerza Política,222,,540
+2019-06-09,paso,provisorio,concejales,departamento,4,General Alvear,,,positivo,Frente Cambia Mendoza,300,,11934
+2019-06-09,paso,provisorio,concejales,departamento,4,General Alvear,,,positivo,Frente de Izquierda y de los Trabajadores,301,,351
+2019-06-09,paso,provisorio,concejales,departamento,4,General Alvear,,,positivo,Frente Político y Social Elegí,302,,12228
+2019-06-09,paso,provisorio,concejales,departamento,4,General Alvear,,,nulo,,,,227
+2019-06-09,paso,provisorio,concejales,departamento,4,General Alvear,,,recurrido,,,,35
+2019-06-09,paso,provisorio,concejales,departamento,4,General Alvear,,,impugnado,,,,10
+2019-06-09,paso,provisorio,concejales,departamento,4,General Alvear,,,blanco,,,,1225
+2019-06-09,paso,provisorio,concejales,departamento,4,Malargüe,,,positivo,Partido Intransigente,6,,106
+2019-06-09,paso,provisorio,concejales,departamento,4,Malargüe,,,positivo,Partido Federal,8,,25
+2019-06-09,paso,provisorio,concejales,departamento,4,Malargüe,,,positivo,Protectora Fuerza Política,222,,103
+2019-06-09,paso,provisorio,concejales,departamento,4,Malargüe,,,positivo,Frente Cambia Mendoza,300,,4982
+2019-06-09,paso,provisorio,concejales,departamento,4,Malargüe,,,positivo,Frente de Izquierda y de los Trabajadores,301,,237
+2019-06-09,paso,provisorio,concejales,departamento,4,Malargüe,,,positivo,Frente Político y Social Elegí,302,,9062
+2019-06-09,paso,provisorio,concejales,departamento,4,Malargüe,,,nulo,,,,196
+2019-06-09,paso,provisorio,concejales,departamento,4,Malargüe,,,recurrido,,,,11
+2019-06-09,paso,provisorio,concejales,departamento,4,Malargüe,,,impugnado,,,,5
+2019-06-09,paso,provisorio,concejales,departamento,4,Malargüe,,,blanco,,,,610
+2019-06-09,paso,provisorio,diputados,seccion,1,,,,positivo,Partido Intransigente,6,,3191
+2019-06-09,paso,provisorio,diputados,seccion,1,,,,positivo,Partido Federal,8,,6467
+2019-06-09,paso,provisorio,diputados,seccion,1,,,,positivo,Movimiento Socialista de los Trabajadores,38,,1827
+2019-06-09,paso,provisorio,diputados,seccion,1,,,,positivo,Protectora Fuerza Política,222,,33983
+2019-06-09,paso,provisorio,diputados,seccion,1,,,,positivo,Frente Cambia Mendoza,300,,162131
+2019-06-09,paso,provisorio,diputados,seccion,1,,,,positivo,Frente de Izquierda y de los Trabajadores,301,,17347
+2019-06-09,paso,provisorio,diputados,seccion,1,,,,positivo,Frente Político y Social Elegí,302,,116227
+2019-06-09,paso,provisorio,diputados,seccion,1,,,,positivo,Partido de los Jubilados,322,,8289
+2019-06-09,paso,provisorio,diputados,seccion,1,,,,nulo,,,,6841
+2019-06-09,paso,provisorio,diputados,seccion,1,,,,recurrido,,,,743
+2019-06-09,paso,provisorio,diputados,seccion,1,,,,impugnado,,,,216
+2019-06-09,paso,provisorio,diputados,seccion,1,,,,blanco,,,,14540
+2019-06-09,paso,provisorio,diputados,seccion,2,,,,positivo,Partido Intransigente,6,,2485
+2019-06-09,paso,provisorio,diputados,seccion,2,,,,positivo,Partido Federal,8,,2609
+2019-06-09,paso,provisorio,diputados,seccion,2,,,,positivo,Movimiento Socialista de los Trabajadores,38,,951
+2019-06-09,paso,provisorio,diputados,seccion,2,,,,positivo,Protectora Fuerza Política,222,,15590
+2019-06-09,paso,provisorio,diputados,seccion,2,,,,positivo,Frente Cambia Mendoza,300,,99070
+2019-06-09,paso,provisorio,diputados,seccion,2,,,,positivo,Frente de Izquierda y de los Trabajadores,301,,8222
+2019-06-09,paso,provisorio,diputados,seccion,2,,,,positivo,Frente Político y Social Elegí,302,,102950
+2019-06-09,paso,provisorio,diputados,seccion,2,,,,positivo,Partido de los Jubilados,322,,4587
+2019-06-09,paso,provisorio,diputados,seccion,2,,,,nulo,,,,4530
+2019-06-09,paso,provisorio,diputados,seccion,2,,,,recurrido,,,,493
+2019-06-09,paso,provisorio,diputados,seccion,2,,,,impugnado,,,,482
+2019-06-09,paso,provisorio,diputados,seccion,2,,,,blanco,,,,14123
+2019-06-09,paso,provisorio,diputados,seccion,3,,,,positivo,Partido Intransigente,6,,2309
+2019-06-09,paso,provisorio,diputados,seccion,3,,,,positivo,Partido Federal,8,,3572
+2019-06-09,paso,provisorio,diputados,seccion,3,,,,positivo,Movimiento Socialista de los Trabajadores,38,,1182
+2019-06-09,paso,provisorio,diputados,seccion,3,,,,positivo,Protectora Fuerza Política,222,,19380
+2019-06-09,paso,provisorio,diputados,seccion,3,,,,positivo,Frente Cambia Mendoza,300,,128244
+2019-06-09,paso,provisorio,diputados,seccion,3,,,,positivo,Frente de Izquierda y de los Trabajadores,301,,9660
+2019-06-09,paso,provisorio,diputados,seccion,3,,,,positivo,Frente Político y Social Elegí,302,,72653
+2019-06-09,paso,provisorio,diputados,seccion,3,,,,positivo,Partido de los Jubilados,322,,5073
+2019-06-09,paso,provisorio,diputados,seccion,3,,,,nulo,,,,4052
+2019-06-09,paso,provisorio,diputados,seccion,3,,,,recurrido,,,,372
+2019-06-09,paso,provisorio,diputados,seccion,3,,,,impugnado,,,,114
+2019-06-09,paso,provisorio,diputados,seccion,3,,,,blanco,,,,11487
+2019-06-09,paso,provisorio,diputados,seccion,4,,,,positivo,Partido Intransigente,6,,1046
+2019-06-09,paso,provisorio,diputados,seccion,4,,,,positivo,Partido Federal,8,,3585
+2019-06-09,paso,provisorio,diputados,seccion,4,,,,positivo,Movimiento Socialista de los Trabajadores,38,,750
+2019-06-09,paso,provisorio,diputados,seccion,4,,,,positivo,Protectora Fuerza Política,222,,4062
+2019-06-09,paso,provisorio,diputados,seccion,4,,,,positivo,Frente Cambia Mendoza,300,,53377
+2019-06-09,paso,provisorio,diputados,seccion,4,,,,positivo,Frente de Izquierda y de los Trabajadores,301,,3613
+2019-06-09,paso,provisorio,diputados,seccion,4,,,,positivo,Frente Político y Social Elegí,302,,71620
+2019-06-09,paso,provisorio,diputados,seccion,4,,,,positivo,Partido de los Jubilados,322,,3041
+2019-06-09,paso,provisorio,diputados,seccion,4,,,,nulo,,,,2316
+2019-06-09,paso,provisorio,diputados,seccion,4,,,,recurrido,,,,166
+2019-06-09,paso,provisorio,diputados,seccion,4,,,,impugnado,,,,50
+2019-06-09,paso,provisorio,diputados,seccion,4,,,,blanco,,,,7199
+2019-06-09,paso,provisorio,gobernador,provincia,,,,,positivo,Partido Intransigente,6,,8743
+2019-06-09,paso,provisorio,gobernador,provincia,,,,,positivo,Partido Federal,8,,15322
+2019-06-09,paso,provisorio,gobernador,provincia,,,,,positivo,Movimiento Socialista de los Trabajadores,38,,4744
+2019-06-09,paso,provisorio,gobernador,provincia,,,,,positivo,Protectora Fuerza Política,222,,76395
+2019-06-09,paso,provisorio,gobernador,provincia,,,,,positivo,Frente Cambia Mendoza,300,,449683
+2019-06-09,paso,provisorio,gobernador,provincia,,,,,positivo,Frente de Izquierda y de los Trabajadores,301,,38510
+2019-06-09,paso,provisorio,gobernador,provincia,,,,,positivo,Frente Político y Social Elegí,302,,373621
+2019-06-09,paso,provisorio,gobernador,provincia,,,,,positivo,Partido de los Jubilados,322,,20415
+2019-06-09,paso,provisorio,gobernador,provincia,,,,,nulo,,,,19037
+2019-06-09,paso,provisorio,gobernador,provincia,,,,,recurrido,,,,1872
+2019-06-09,paso,provisorio,gobernador,provincia,,,,,impugnado,,,,802
+2019-06-09,paso,provisorio,gobernador,provincia,,,,,blanco,,,,39236
+2019-06-09,paso,provisorio,intendente,departamento,1,Capital,,,positivo,Partido Intransigente,6,,424
+2019-06-09,paso,provisorio,intendente,departamento,1,Capital,,,positivo,Partido Federal,8,,1070
+2019-06-09,paso,provisorio,intendente,departamento,1,Capital,,,positivo,Movimiento Socialista de los Trabajadores,38,,351
+2019-06-09,paso,provisorio,intendente,departamento,1,Capital,,,positivo,Protectora Fuerza Política,222,,5181
+2019-06-09,paso,provisorio,intendente,departamento,1,Capital,,,positivo,Frente Cambia Mendoza,300,,38885
+2019-06-09,paso,provisorio,intendente,departamento,1,Capital,,,positivo,Frente de Izquierda y de los Trabajadores,301,,2913
+2019-06-09,paso,provisorio,intendente,departamento,1,Capital,,,positivo,Frente Político y Social Elegí,302,,15153
+2019-06-09,paso,provisorio,intendente,departamento,1,Capital,,,positivo,Partido de los Jubilados,322,,1639
+2019-06-09,paso,provisorio,intendente,departamento,1,Capital,,,nulo,,,,1097
+2019-06-09,paso,provisorio,intendente,departamento,1,Capital,,,recurrido,,,,107
+2019-06-09,paso,provisorio,intendente,departamento,1,Capital,,,impugnado,,,,16
+2019-06-09,paso,provisorio,intendente,departamento,1,Capital,,,blanco,,,,1625
+2019-06-09,paso,provisorio,intendente,departamento,1,Guaymallén,,,positivo,Partido Intransigente,6,,1302
+2019-06-09,paso,provisorio,intendente,departamento,1,Guaymallén,,,positivo,Partido Federal,8,,2143
+2019-06-09,paso,provisorio,intendente,departamento,1,Guaymallén,,,positivo,Movimiento Socialista de los Trabajadores,38,,790
+2019-06-09,paso,provisorio,intendente,departamento,1,Guaymallén,,,positivo,Protectora Fuerza Política,222,,15576
+2019-06-09,paso,provisorio,intendente,departamento,1,Guaymallén,,,positivo,Frente Cambia Mendoza,300,,75210
+2019-06-09,paso,provisorio,intendente,departamento,1,Guaymallén,,,positivo,Frente de Izquierda y de los Trabajadores,301,,7451
+2019-06-09,paso,provisorio,intendente,departamento,1,Guaymallén,,,positivo,Frente Político y Social Elegí,302,,49865
+2019-06-09,paso,provisorio,intendente,departamento,1,Guaymallén,,,positivo,Partido de los Jubilados,322,,3248
+2019-06-09,paso,provisorio,intendente,departamento,1,Guaymallén,,,nulo,,,,3412
+2019-06-09,paso,provisorio,intendente,departamento,1,Guaymallén,,,recurrido,,,,417
+2019-06-09,paso,provisorio,intendente,departamento,1,Guaymallén,,,impugnado,,,,111
+2019-06-09,paso,provisorio,intendente,departamento,1,Guaymallén,,,blanco,,,,4817
+2019-06-09,paso,provisorio,intendente,departamento,1,Las Heras,,,positivo,Partido Intransigente,6,,1275
+2019-06-09,paso,provisorio,intendente,departamento,1,Las Heras,,,positivo,Partido Federal,8,,3175
+2019-06-09,paso,provisorio,intendente,departamento,1,Las Heras,,,positivo,Movimiento Socialista de los Trabajadores,38,,529
+2019-06-09,paso,provisorio,intendente,departamento,1,Las Heras,,,positivo,Protectora Fuerza Política,222,,9942
+2019-06-09,paso,provisorio,intendente,departamento,1,Las Heras,,,positivo,Frente Cambia Mendoza,300,,47292
+2019-06-09,paso,provisorio,intendente,departamento,1,Las Heras,,,positivo,Frente de Izquierda y de los Trabajadores,301,,5345
+2019-06-09,paso,provisorio,intendente,departamento,1,Las Heras,,,positivo,Frente Político y Social Elegí,302,,40035
+2019-06-09,paso,provisorio,intendente,departamento,1,Las Heras,,,positivo,Partido de los Jubilados,322,,2727
+2019-06-09,paso,provisorio,intendente,departamento,1,Las Heras,,,nulo,,,,2320
+2019-06-09,paso,provisorio,intendente,departamento,1,Las Heras,,,recurrido,,,,256
+2019-06-09,paso,provisorio,intendente,departamento,1,Las Heras,,,impugnado,,,,40
+2019-06-09,paso,provisorio,intendente,departamento,1,Las Heras,,,blanco,,,,3616
+2019-06-09,paso,provisorio,intendente,departamento,2,Junín,,,positivo,Partido Intransigente,6,,356
+2019-06-09,paso,provisorio,intendente,departamento,2,Junín,,,positivo,Partido Federal,8,,430
+2019-06-09,paso,provisorio,intendente,departamento,2,Junín,,,positivo,Protectora Fuerza Política,222,,972
+2019-06-09,paso,provisorio,intendente,departamento,2,Junín,,,positivo,Frente Cambia Mendoza,300,,15465
+2019-06-09,paso,provisorio,intendente,departamento,2,Junín,,,positivo,Frente de Izquierda y de los Trabajadores,301,,753
+2019-06-09,paso,provisorio,intendente,departamento,2,Junín,,,positivo,Frente Político y Social Elegí,302,,6642
+2019-06-09,paso,provisorio,intendente,departamento,2,Junín,,,positivo,Partido de los Jubilados,322,,425
+2019-06-09,paso,provisorio,intendente,departamento,2,Junín,,,nulo,,,,510
+2019-06-09,paso,provisorio,intendente,departamento,2,Junín,,,recurrido,,,,19
+2019-06-09,paso,provisorio,intendente,departamento,2,Junín,,,impugnado,,,,0
+2019-06-09,paso,provisorio,intendente,departamento,2,Junín,,,blanco,,,,1131
+2019-06-09,paso,provisorio,intendente,departamento,2,La Paz,,,positivo,Partido Intransigente,6,,37
+2019-06-09,paso,provisorio,intendente,departamento,2,La Paz,,,positivo,Protectora Fuerza Política,222,,302
+2019-06-09,paso,provisorio,intendente,departamento,2,La Paz,,,positivo,Frente Cambia Mendoza,300,,3071
+2019-06-09,paso,provisorio,intendente,departamento,2,La Paz,,,positivo,Frente Político y Social Elegí,302,,3016
+2019-06-09,paso,provisorio,intendente,departamento,2,La Paz,,,nulo,,,,41
+2019-06-09,paso,provisorio,intendente,departamento,2,La Paz,,,recurrido,,,,7
+2019-06-09,paso,provisorio,intendente,departamento,2,La Paz,,,impugnado,,,,1
+2019-06-09,paso,provisorio,intendente,departamento,2,La Paz,,,blanco,,,,144
+2019-06-09,paso,provisorio,intendente,departamento,2,Maipú,,,positivo,Partido Intransigente,6,,671
+2019-06-09,paso,provisorio,intendente,departamento,2,Maipú,,,positivo,Partido Federal,8,,984
+2019-06-09,paso,provisorio,intendente,departamento,2,Maipú,,,positivo,Movimiento Socialista de los Trabajadores,38,,388
+2019-06-09,paso,provisorio,intendente,departamento,2,Maipú,,,positivo,Protectora Fuerza Política,222,,6891
+2019-06-09,paso,provisorio,intendente,departamento,2,Maipú,,,positivo,Frente Cambia Mendoza,300,,28328
+2019-06-09,paso,provisorio,intendente,departamento,2,Maipú,,,positivo,Frente de Izquierda y de los Trabajadores,301,,3438
+2019-06-09,paso,provisorio,intendente,departamento,2,Maipú,,,positivo,Frente Político y Social Elegí,302,,56405
+2019-06-09,paso,provisorio,intendente,departamento,2,Maipú,,,positivo,Partido de los Jubilados,322,,1739
+2019-06-09,paso,provisorio,intendente,departamento,2,Maipú,,,nulo,,,,2236
+2019-06-09,paso,provisorio,intendente,departamento,2,Maipú,,,recurrido,,,,166
+2019-06-09,paso,provisorio,intendente,departamento,2,Maipú,,,impugnado,,,,39
+2019-06-09,paso,provisorio,intendente,departamento,2,Maipú,,,blanco,,,,4308
+2019-06-09,paso,provisorio,intendente,departamento,2,Rivadavia,,,positivo,Partido Intransigente,6,,638
+2019-06-09,paso,provisorio,intendente,departamento,2,Rivadavia,,,positivo,Protectora Fuerza Política,222,,1119
+2019-06-09,paso,provisorio,intendente,departamento,2,Rivadavia,,,positivo,Frente Cambia Mendoza,300,,14964
+2019-06-09,paso,provisorio,intendente,departamento,2,Rivadavia,,,positivo,Frente de Izquierda y de los Trabajadores,301,,732
+2019-06-09,paso,provisorio,intendente,departamento,2,Rivadavia,,,positivo,Frente Político y Social Elegí,302,,14024
+2019-06-09,paso,provisorio,intendente,departamento,2,Rivadavia,,,positivo,Partido de los Jubilados,322,,628
+2019-06-09,paso,provisorio,intendente,departamento,2,Rivadavia,,,nulo,,,,605
+2019-06-09,paso,provisorio,intendente,departamento,2,Rivadavia,,,recurrido,,,,308
+2019-06-09,paso,provisorio,intendente,departamento,2,Rivadavia,,,impugnado,,,,40
+2019-06-09,paso,provisorio,intendente,departamento,2,Rivadavia,,,blanco,,,,1805
+2019-06-09,paso,provisorio,intendente,departamento,2,Santa Rosa,,,positivo,Partido Intransigente,6,,224
+2019-06-09,paso,provisorio,intendente,departamento,2,Santa Rosa,,,positivo,Protectora Fuerza Política,222,,210
+2019-06-09,paso,provisorio,intendente,departamento,2,Santa Rosa,,,positivo,Frente Cambia Mendoza,300,,6281
+2019-06-09,paso,provisorio,intendente,departamento,2,Santa Rosa,,,positivo,Frente Político y Social Elegí,302,,3759
+2019-06-09,paso,provisorio,intendente,departamento,2,Santa Rosa,,,nulo,,,,80
+2019-06-09,paso,provisorio,intendente,departamento,2,Santa Rosa,,,recurrido,,,,3
+2019-06-09,paso,provisorio,intendente,departamento,2,Santa Rosa,,,impugnado,,,,0
+2019-06-09,paso,provisorio,intendente,departamento,2,Santa Rosa,,,blanco,,,,322
+2019-06-09,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,Partido Intransigente,6,,1249
+2019-06-09,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,Partido Federal,8,,1178
+2019-06-09,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,Movimiento Socialista de los Trabajadores,38,,562
+2019-06-09,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,Protectora Fuerza Política,222,,10935
+2019-06-09,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,Frente Cambia Mendoza,300,,55980
+2019-06-09,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,Frente de Izquierda y de los Trabajadores,301,,4979
+2019-06-09,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,Frente Político y Social Elegí,302,,29047
+2019-06-09,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,Partido de los Jubilados,322,,2949
+2019-06-09,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,nulo,,,,2004
+2019-06-09,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,recurrido,,,,219
+2019-06-09,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,impugnado,,,,26
+2019-06-09,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,blanco,,,,2971
+2019-06-09,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,Partido Intransigente,6,,677
+2019-06-09,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,Partido Federal,8,,1035
+2019-06-09,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,Movimiento Socialista de los Trabajadores,38,,304
+2019-06-09,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,Protectora Fuerza Política,222,,5221
+2019-06-09,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,Frente Cambia Mendoza,300,,41747
+2019-06-09,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,Frente de Izquierda y de los Trabajadores,301,,2629
+2019-06-09,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,Frente Político y Social Elegí,302,,18245
+2019-06-09,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,Partido de los Jubilados,322,,1120
+2019-06-09,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,nulo,,,,1325
+2019-06-09,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,recurrido,,,,111
+2019-06-09,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,impugnado,,,,30
+2019-06-09,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,blanco,,,,1959
+2019-06-09,paso,provisorio,intendente,departamento,3,San Carlos,,,positivo,Partido Intransigente,6,,112
+2019-06-09,paso,provisorio,intendente,departamento,3,San Carlos,,,positivo,Partido Federal,8,,373
+2019-06-09,paso,provisorio,intendente,departamento,3,San Carlos,,,positivo,Protectora Fuerza Política,222,,388
+2019-06-09,paso,provisorio,intendente,departamento,3,San Carlos,,,positivo,Frente Cambia Mendoza,300,,10247
+2019-06-09,paso,provisorio,intendente,departamento,3,San Carlos,,,positivo,Frente Político y Social Elegí,302,,5399
+2019-06-09,paso,provisorio,intendente,departamento,3,San Carlos,,,positivo,San Carlos Progreso y Futuro,312,,228
+2019-06-09,paso,provisorio,intendente,departamento,3,San Carlos,,,positivo,Nuevos Rumbos,321,,2221
+2019-06-09,paso,provisorio,intendente,departamento,3,San Carlos,,,positivo,Partido de los Jubilados,322,,222
+2019-06-09,paso,provisorio,intendente,departamento,3,San Carlos,,,nulo,,,,188
+2019-06-09,paso,provisorio,intendente,departamento,3,San Carlos,,,recurrido,,,,43
+2019-06-09,paso,provisorio,intendente,departamento,3,San Carlos,,,impugnado,,,,11
+2019-06-09,paso,provisorio,intendente,departamento,3,San Carlos,,,blanco,,,,775
+2019-06-09,paso,provisorio,intendente,departamento,3,Tupungato,,,positivo,Partido Intransigente,6,,99
+2019-06-09,paso,provisorio,intendente,departamento,3,Tupungato,,,positivo,Partido Federal,8,,633
+2019-06-09,paso,provisorio,intendente,departamento,3,Tupungato,,,positivo,Protectora Fuerza Política,222,,585
+2019-06-09,paso,provisorio,intendente,departamento,3,Tupungato,,,positivo,Frente Cambia Mendoza,300,,9877
+2019-06-09,paso,provisorio,intendente,departamento,3,Tupungato,,,positivo,Frente Político y Social Elegí,302,,6059
+2019-06-09,paso,provisorio,intendente,departamento,3,Tupungato,,,positivo,Nuevo Tupungato,320,,1011
+2019-06-09,paso,provisorio,intendente,departamento,3,Tupungato,,,positivo,Partido de los Jubilados,322,,205
+2019-06-09,paso,provisorio,intendente,departamento,3,Tupungato,,,nulo,,,,210
+2019-06-09,paso,provisorio,intendente,departamento,3,Tupungato,,,recurrido,,,,67
+2019-06-09,paso,provisorio,intendente,departamento,3,Tupungato,,,impugnado,,,,12
+2019-06-09,paso,provisorio,intendente,departamento,3,Tupungato,,,blanco,,,,846
+2019-06-09,paso,provisorio,intendente,departamento,4,General Alvear,,,positivo,Partido Intransigente,6,,139
+2019-06-09,paso,provisorio,intendente,departamento,4,General Alvear,,,positivo,Partido Federal,8,,592
+2019-06-09,paso,provisorio,intendente,departamento,4,General Alvear,,,positivo,Protectora Fuerza Política,222,,548
+2019-06-09,paso,provisorio,intendente,departamento,4,General Alvear,,,positivo,Frente Cambia Mendoza,300,,12338
+2019-06-09,paso,provisorio,intendente,departamento,4,General Alvear,,,positivo,Frente de Izquierda y de los Trabajadores,301,,335
+2019-06-09,paso,provisorio,intendente,departamento,4,General Alvear,,,positivo,Frente Político y Social Elegí,302,,12264
+2019-06-09,paso,provisorio,intendente,departamento,4,General Alvear,,,nulo,,,,239
+2019-06-09,paso,provisorio,intendente,departamento,4,General Alvear,,,recurrido,,,,32
+2019-06-09,paso,provisorio,intendente,departamento,4,General Alvear,,,impugnado,,,,10
+2019-06-09,paso,provisorio,intendente,departamento,4,General Alvear,,,blanco,,,,915
+2019-06-09,paso,provisorio,intendente,departamento,4,Malargüe,,,positivo,Partido Intransigente,6,,80
+2019-06-09,paso,provisorio,intendente,departamento,4,Malargüe,,,positivo,Partido Federal,8,,22
+2019-06-09,paso,provisorio,intendente,departamento,4,Malargüe,,,positivo,Protectora Fuerza Política,222,,130
+2019-06-09,paso,provisorio,intendente,departamento,4,Malargüe,,,positivo,Frente Cambia Mendoza,300,,4966
+2019-06-09,paso,provisorio,intendente,departamento,4,Malargüe,,,positivo,Frente de Izquierda y de los Trabajadores,301,,223
+2019-06-09,paso,provisorio,intendente,departamento,4,Malargüe,,,positivo,Frente Político y Social Elegí,302,,9507
+2019-06-09,paso,provisorio,intendente,departamento,4,Malargüe,,,nulo,,,,218
+2019-06-09,paso,provisorio,intendente,departamento,4,Malargüe,,,recurrido,,,,10
+2019-06-09,paso,provisorio,intendente,departamento,4,Malargüe,,,impugnado,,,,5
+2019-06-09,paso,provisorio,intendente,departamento,4,Malargüe,,,blanco,,,,362
+2019-06-09,paso,provisorio,senadores,seccion,1,,,,positivo,Partido Intransigente,6,,3182
+2019-06-09,paso,provisorio,senadores,seccion,1,,,,positivo,Partido Federal,8,,6463
+2019-06-09,paso,provisorio,senadores,seccion,1,,,,positivo,Movimiento Socialista de los Trabajadores,38,,1805
+2019-06-09,paso,provisorio,senadores,seccion,1,,,,positivo,Protectora Fuerza Política,222,,34478
+2019-06-09,paso,provisorio,senadores,seccion,1,,,,positivo,Frente Cambia Mendoza,300,,163844
+2019-06-09,paso,provisorio,senadores,seccion,1,,,,positivo,Frente de Izquierda y de los Trabajadores,301,,17385
+2019-06-09,paso,provisorio,senadores,seccion,1,,,,positivo,Frente Político y Social Elegí,302,,116888
+2019-06-09,paso,provisorio,senadores,seccion,1,,,,positivo,Partido de los Jubilados,322,,8232
+2019-06-09,paso,provisorio,senadores,seccion,1,,,,nulo,,,,6851
+2019-06-09,paso,provisorio,senadores,seccion,1,,,,recurrido,,,,741
+2019-06-09,paso,provisorio,senadores,seccion,1,,,,impugnado,,,,201
+2019-06-09,paso,provisorio,senadores,seccion,1,,,,blanco,,,,13474
+2019-06-09,paso,provisorio,senadores,seccion,2,,,,positivo,Partido Intransigente,6,,2325
+2019-06-09,paso,provisorio,senadores,seccion,2,,,,positivo,Partido Federal,8,,2623
+2019-06-09,paso,provisorio,senadores,seccion,2,,,,positivo,Movimiento Socialista de los Trabajadores,38,,962
+2019-06-09,paso,provisorio,senadores,seccion,2,,,,positivo,Protectora Fuerza Política,222,,15698
+2019-06-09,paso,provisorio,senadores,seccion,2,,,,positivo,Frente Cambia Mendoza,300,,97391
+2019-06-09,paso,provisorio,senadores,seccion,2,,,,positivo,Frente de Izquierda y de los Trabajadores,301,,8246
+2019-06-09,paso,provisorio,senadores,seccion,2,,,,positivo,Frente Político y Social Elegí,302,,103459
+2019-06-09,paso,provisorio,senadores,seccion,2,,,,positivo,Partido de los Jubilados,322,,4525
+2019-06-09,paso,provisorio,senadores,seccion,2,,,,nulo,,,,4487
+2019-06-09,paso,provisorio,senadores,seccion,2,,,,recurrido,,,,461
+2019-06-09,paso,provisorio,senadores,seccion,2,,,,impugnado,,,,481
+2019-06-09,paso,provisorio,senadores,seccion,2,,,,blanco,,,,14835
+2019-06-09,paso,provisorio,senadores,seccion,3,,,,positivo,Partido Intransigente,6,,2288
+2019-06-09,paso,provisorio,senadores,seccion,3,,,,positivo,Partido Federal,8,,3556
+2019-06-09,paso,provisorio,senadores,seccion,3,,,,positivo,Movimiento Socialista de los Trabajadores,38,,1165
+2019-06-09,paso,provisorio,senadores,seccion,3,,,,positivo,Protectora Fuerza Política,222,,19593
+2019-06-09,paso,provisorio,senadores,seccion,3,,,,positivo,Frente Cambia Mendoza,300,,129204
+2019-06-09,paso,provisorio,senadores,seccion,3,,,,positivo,Frente de Izquierda y de los Trabajadores,301,,9710
+2019-06-09,paso,provisorio,senadores,seccion,3,,,,positivo,Frente Político y Social Elegí,302,,73332
+2019-06-09,paso,provisorio,senadores,seccion,3,,,,positivo,Partido de los Jubilados,322,,5047
+2019-06-09,paso,provisorio,senadores,seccion,3,,,,nulo,,,,4000
+2019-06-09,paso,provisorio,senadores,seccion,3,,,,recurrido,,,,378
+2019-06-09,paso,provisorio,senadores,seccion,3,,,,impugnado,,,,107
+2019-06-09,paso,provisorio,senadores,seccion,3,,,,blanco,,,,11220
+2019-06-09,paso,provisorio,senadores,seccion,4,,,,positivo,Partido Intransigente,6,,1018
+2019-06-09,paso,provisorio,senadores,seccion,4,,,,positivo,Partido Federal,8,,3282
+2019-06-09,paso,provisorio,senadores,seccion,4,,,,positivo,Movimiento Socialista de los Trabajadores,38,,741
+2019-06-09,paso,provisorio,senadores,seccion,4,,,,positivo,Protectora Fuerza Política,222,,4100
+2019-06-09,paso,provisorio,senadores,seccion,4,,,,positivo,Frente Cambia Mendoza,300,,53887
+2019-06-09,paso,provisorio,senadores,seccion,4,,,,positivo,Frente de Izquierda y de los Trabajadores,301,,3526
+2019-06-09,paso,provisorio,senadores,seccion,4,,,,positivo,Frente Político y Social Elegí,302,,71829
+2019-06-09,paso,provisorio,senadores,seccion,4,,,,positivo,Partido de los Jubilados,322,,3014
+2019-06-09,paso,provisorio,senadores,seccion,4,,,,nulo,,,,2303
+2019-06-09,paso,provisorio,senadores,seccion,4,,,,recurrido,,,,166
+2019-06-09,paso,provisorio,senadores,seccion,4,,,,impugnado,,,,53
+2019-06-09,paso,provisorio,senadores,seccion,4,,,,blanco,,,,7164
+2019-09-01,municipal,provisorio,concejales,departamento,1,Lavalle,,,positivo,Frente Elegí,300,,14751
+2019-09-01,municipal,provisorio,concejales,departamento,1,Lavalle,,,positivo,Frente Cambia Mendoza,302,,7327
+2019-09-01,municipal,provisorio,concejales,departamento,1,Lavalle,,,positivo,Frente de Izquierda y de los Trabajadores,301,,1567
+2019-09-01,municipal,provisorio,concejales,departamento,1,Lavalle,,,blanco,,,,277
+2019-09-01,municipal,provisorio,concejales,departamento,1,Lavalle,,,nulo,,,,277
+2019-09-01,municipal,provisorio,concejales,departamento,1,Lavalle,,,recurrido,,,,12
+2019-09-01,municipal,provisorio,concejales,departamento,1,Lavalle,,,impugnado,,,,2
+2019-09-01,municipal,provisorio,concejales,departamento,2,San Martín,,,positivo,Frente Cambia Mendoza,302,,34136
+2019-09-01,municipal,provisorio,concejales,departamento,2,San Martín,,,positivo,Frente Elegí,300,,28920
+2019-09-01,municipal,provisorio,concejales,departamento,2,San Martín,,,positivo,Frente de Izquierda y de los Trabajadores,301,,2539
+2019-09-01,municipal,provisorio,concejales,departamento,2,San Martín,,,positivo,Partido Demócrata,151,,2417
+2019-09-01,municipal,provisorio,concejales,departamento,2,San Martín,,,nulo,,,,877
+2019-09-01,municipal,provisorio,concejales,departamento,2,San Martín,,,blanco,,,,820
+2019-09-01,municipal,provisorio,concejales,departamento,2,San Martín,,,recurrido,,,,56
+2019-09-01,municipal,provisorio,concejales,departamento,2,San Martín,,,impugnado,,,,6
+2019-09-01,municipal,provisorio,concejales,departamento,3,Tunuyán,,,positivo,Frente Elegí,300,,21273
+2019-09-01,municipal,provisorio,concejales,departamento,3,Tunuyán,,,positivo,Frente Cambia Mendoza,302,,8250
+2019-09-01,municipal,provisorio,concejales,departamento,3,Tunuyán,,,blanco,,,,612
+2019-09-01,municipal,provisorio,concejales,departamento,3,Tunuyán,,,nulo,,,,280
+2019-09-01,municipal,provisorio,concejales,departamento,3,Tunuyán,,,recurrido,,,,19
+2019-09-01,municipal,provisorio,concejales,departamento,3,Tunuyán,,,impugnado,,,,1
+2019-09-01,municipal,provisorio,concejales,departamento,4,San Rafael,,,positivo,Frente Elegí,300,,62948
+2019-09-01,municipal,provisorio,concejales,departamento,4,San Rafael,,,positivo,Frente Cambia Mendoza,302,,37775
+2019-09-01,municipal,provisorio,concejales,departamento,4,San Rafael,,,positivo,Partido Demócrata,151,,6580
+2019-09-01,municipal,provisorio,concejales,departamento,4,San Rafael,,,blanco,,,,1777
+2019-09-01,municipal,provisorio,concejales,departamento,4,San Rafael,,,nulo,,,,1170
+2019-09-01,municipal,provisorio,concejales,departamento,4,San Rafael,,,recurrido,,,,22
+2019-09-01,municipal,provisorio,concejales,departamento,4,San Rafael,,,impugnado,,,,17
+2019-09-01,municipal,provisorio,intendente,departamento,1,Lavalle,,,positivo,Frente Elegí,300,,14945
+2019-09-01,municipal,provisorio,intendente,departamento,1,Lavalle,,,positivo,Frente Cambia Mendoza,302,,7323
+2019-09-01,municipal,provisorio,intendente,departamento,1,Lavalle,,,positivo,Frente de Izquierda y de los Trabajadores,301,,1529
+2019-09-01,municipal,provisorio,intendente,departamento,1,Lavalle,,,nulo,,,,281
+2019-09-01,municipal,provisorio,intendente,departamento,1,Lavalle,,,blanco,,,,149
+2019-09-01,municipal,provisorio,intendente,departamento,1,Lavalle,,,recurrido,,,,12
+2019-09-01,municipal,provisorio,intendente,departamento,1,Lavalle,,,impugnado,,,,2
+2019-09-01,municipal,provisorio,intendente,departamento,2,San Martín,,,positivo,Frente Cambia Mendoza,302,,34442
+2019-09-01,municipal,provisorio,intendente,departamento,2,San Martín,,,positivo,Frente Elegí,300,,29278
+2019-09-01,municipal,provisorio,intendente,departamento,2,San Martín,,,positivo,Frente de Izquierda y de los Trabajadores,301,,2458
+2019-09-01,municipal,provisorio,intendente,departamento,2,San Martín,,,positivo,Partido Demócrata,151,,2278
+2019-09-01,municipal,provisorio,intendente,departamento,2,San Martín,,,nulo,,,,879
+2019-09-01,municipal,provisorio,intendente,departamento,2,San Martín,,,blanco,,,,510
+2019-09-01,municipal,provisorio,intendente,departamento,2,San Martín,,,recurrido,,,,59
+2019-09-01,municipal,provisorio,intendente,departamento,2,San Martín,,,impugnado,,,,4
+2019-09-01,municipal,provisorio,intendente,departamento,3,Tunuyán,,,positivo,Frente Elegí,300,,21993
+2019-09-01,municipal,provisorio,intendente,departamento,3,Tunuyán,,,positivo,Frente Cambia Mendoza,302,,7944
+2019-09-01,municipal,provisorio,intendente,departamento,3,Tunuyán,,,nulo,,,,290
+2019-09-01,municipal,provisorio,intendente,departamento,3,Tunuyán,,,blanco,,,,280
+2019-09-01,municipal,provisorio,intendente,departamento,3,Tunuyán,,,recurrido,,,,21
+2019-09-01,municipal,provisorio,intendente,departamento,3,Tunuyán,,,impugnado,,,,1
+2019-09-01,municipal,provisorio,intendente,departamento,4,San Rafael,,,positivo,Frente Elegí,300,,63904
+2019-09-01,municipal,provisorio,intendente,departamento,4,San Rafael,,,positivo,Frente Cambia Mendoza,302,,37838
+2019-09-01,municipal,provisorio,intendente,departamento,4,San Rafael,,,positivo,Partido Demócrata,151,,6186
+2019-09-01,municipal,provisorio,intendente,departamento,4,San Rafael,,,blanco,,,,1295
+2019-09-01,municipal,provisorio,intendente,departamento,4,San Rafael,,,nulo,,,,1193
+2019-09-01,municipal,provisorio,intendente,departamento,4,San Rafael,,,recurrido,,,,22
+2019-09-01,municipal,provisorio,intendente,departamento,4,San Rafael,,,impugnado,,,,17
+2019-09-29,general,provisorio,concejales,departamento,1,Capital,,,positivo,Frente Cambia Mendoza,300,,45723
+2019-09-29,general,provisorio,concejales,departamento,1,Capital,,,positivo,Elegí Frente Político y Social,302,,17936
+2019-09-29,general,provisorio,concejales,departamento,1,Capital,,,positivo,Protectora Fuerza Política,222,,5519
+2019-09-29,general,provisorio,concejales,departamento,1,Capital,,,positivo,Frente de Izquierda y de los Trabajadores,301,,3192
+2019-09-29,general,provisorio,concejales,departamento,1,Capital,,,blanco,,,,1547
+2019-09-29,general,provisorio,concejales,departamento,1,Capital,,,nulo,,,,783
+2019-09-29,general,provisorio,concejales,departamento,1,Capital,,,recurrido,,,,83
+2019-09-29,general,provisorio,concejales,departamento,1,Capital,,,impugnado,,,,3
+2019-09-29,general,provisorio,concejales,departamento,1,Guaymallén,,,positivo,Frente Cambia Mendoza,300,,93091
+2019-09-29,general,provisorio,concejales,departamento,1,Guaymallén,,,positivo,Elegí Frente Político y Social,302,,51300
+2019-09-29,general,provisorio,concejales,departamento,1,Guaymallén,,,positivo,Protectora Fuerza Política,222,,16652
+2019-09-29,general,provisorio,concejales,departamento,1,Guaymallén,,,positivo,Frente de Izquierda y de los Trabajadores,301,,6859
+2019-09-29,general,provisorio,concejales,departamento,1,Guaymallén,,,blanco,,,,6162
+2019-09-29,general,provisorio,concejales,departamento,1,Guaymallén,,,nulo,,,,2287
+2019-09-29,general,provisorio,concejales,departamento,1,Guaymallén,,,recurrido,,,,160
+2019-09-29,general,provisorio,concejales,departamento,1,Guaymallén,,,impugnado,,,,23
+2019-09-29,general,provisorio,concejales,departamento,1,Las Heras,,,positivo,Frente Cambia Mendoza,300,,63594
+2019-09-29,general,provisorio,concejales,departamento,1,Las Heras,,,positivo,Elegí Frente Político y Social,302,,42788
+2019-09-29,general,provisorio,concejales,departamento,1,Las Heras,,,positivo,Protectora Fuerza Política,222,,8673
+2019-09-29,general,provisorio,concejales,departamento,1,Las Heras,,,positivo,Frente de Izquierda y de los Trabajadores,301,,4257
+2019-09-29,general,provisorio,concejales,departamento,1,Las Heras,,,blanco,,,,4860
+2019-09-29,general,provisorio,concejales,departamento,1,Las Heras,,,nulo,,,,1657
+2019-09-29,general,provisorio,concejales,departamento,1,Las Heras,,,recurrido,,,,182
+2019-09-29,general,provisorio,concejales,departamento,1,Las Heras,,,impugnado,,,,31
+2019-09-29,general,provisorio,concejales,departamento,2,Junín,,,positivo,Frente Cambia Mendoza,300,,16603
+2019-09-29,general,provisorio,concejales,departamento,2,Junín,,,positivo,Elegí Frente Político y Social,302,,7603
+2019-09-29,general,provisorio,concejales,departamento,2,Junín,,,positivo,Protectora Fuerza Política,222,,1468
+2019-09-29,general,provisorio,concejales,departamento,2,Junín,,,positivo,Frente de Izquierda y de los Trabajadores,301,,663
+2019-09-29,general,provisorio,concejales,departamento,2,Junín,,,blanco,,,,1137
+2019-09-29,general,provisorio,concejales,departamento,2,Junín,,,nulo,,,,342
+2019-09-29,general,provisorio,concejales,departamento,2,Junín,,,recurrido,,,,16
+2019-09-29,general,provisorio,concejales,departamento,2,Junín,,,impugnado,,,,3
+2019-09-29,general,provisorio,concejales,departamento,2,La Paz,,,positivo,Elegí Frente Político y Social,302,,3759
+2019-09-29,general,provisorio,concejales,departamento,2,La Paz,,,positivo,Frente Cambia Mendoza,300,,3714
+2019-09-29,general,provisorio,concejales,departamento,2,La Paz,,,blanco,,,,183
+2019-09-29,general,provisorio,concejales,departamento,2,La Paz,,,nulo,,,,27
+2019-09-29,general,provisorio,concejales,departamento,2,La Paz,,,impugnado,,,,3
+2019-09-29,general,provisorio,concejales,departamento,2,La Paz,,,recurrido,,,,0
+2019-09-29,general,provisorio,concejales,departamento,2,Maipú,,,positivo,Elegí Frente Político y Social,302,,49069
+2019-09-29,general,provisorio,concejales,departamento,2,Maipú,,,positivo,Frente Cambia Mendoza,300,,42908
+2019-09-29,general,provisorio,concejales,departamento,2,Maipú,,,positivo,Protectora Fuerza Política,222,,11634
+2019-09-29,general,provisorio,concejales,departamento,2,Maipú,,,positivo,Frente de Izquierda y de los Trabajadores,301,,4287
+2019-09-29,general,provisorio,concejales,departamento,2,Maipú,,,blanco,,,,5015
+2019-09-29,general,provisorio,concejales,departamento,2,Maipú,,,nulo,,,,1683
+2019-09-29,general,provisorio,concejales,departamento,2,Maipú,,,recurrido,,,,283
+2019-09-29,general,provisorio,concejales,departamento,2,Maipú,,,impugnado,,,,17
+2019-09-29,general,provisorio,concejales,departamento,2,Rivadavia,,,positivo,Frente Cambia Mendoza,300,,18697
+2019-09-29,general,provisorio,concejales,departamento,2,Rivadavia,,,positivo,Elegí Frente Político y Social,302,,13318
+2019-09-29,general,provisorio,concejales,departamento,2,Rivadavia,,,blanco,,,,3313
+2019-09-29,general,provisorio,concejales,departamento,2,Rivadavia,,,nulo,,,,344
+2019-09-29,general,provisorio,concejales,departamento,2,Rivadavia,,,recurrido,,,,11
+2019-09-29,general,provisorio,concejales,departamento,2,Rivadavia,,,impugnado,,,,0
+2019-09-29,general,provisorio,concejales,departamento,2,Santa Rosa,,,positivo,Elegí Frente Político y Social,302,,5586
+2019-09-29,general,provisorio,concejales,departamento,2,Santa Rosa,,,positivo,Frente Cambia Mendoza,300,,5226
+2019-09-29,general,provisorio,concejales,departamento,2,Santa Rosa,,,blanco,,,,527
+2019-09-29,general,provisorio,concejales,departamento,2,Santa Rosa,,,nulo,,,,62
+2019-09-29,general,provisorio,concejales,departamento,2,Santa Rosa,,,recurrido,,,,5
+2019-09-29,general,provisorio,concejales,departamento,2,Santa Rosa,,,impugnado,,,,0
+2019-09-29,general,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,Frente Cambia Mendoza,300,,68296
+2019-09-29,general,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,Elegí Frente Político y Social,302,,31789
+2019-09-29,general,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,Protectora Fuerza Política,222,,10860
+2019-09-29,general,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,Frente de Izquierda y de los Trabajadores,301,,4770
+2019-09-29,general,provisorio,concejales,departamento,3,Godoy Cruz,,,blanco,,,,3407
+2019-09-29,general,provisorio,concejales,departamento,3,Godoy Cruz,,,nulo,,,,1414
+2019-09-29,general,provisorio,concejales,departamento,3,Godoy Cruz,,,recurrido,,,,136
+2019-09-29,general,provisorio,concejales,departamento,3,Godoy Cruz,,,impugnado,,,,18
+2019-09-29,general,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,Frente Cambia Mendoza,300,,45923
+2019-09-29,general,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,Elegí Frente Político y Social,302,,22703
+2019-09-29,general,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,Protectora Fuerza Política,222,,8208
+2019-09-29,general,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,Frente de Izquierda y de los Trabajadores,301,,3165
+2019-09-29,general,provisorio,concejales,departamento,3,Luján de Cuyo,,,blanco,,,,2668
+2019-09-29,general,provisorio,concejales,departamento,3,Luján de Cuyo,,,nulo,,,,1081
+2019-09-29,general,provisorio,concejales,departamento,3,Luján de Cuyo,,,recurrido,,,,46
+2019-09-29,general,provisorio,concejales,departamento,3,Luján de Cuyo,,,impugnado,,,,8
+2019-09-29,general,provisorio,concejales,departamento,3,San Carlos,,,positivo,Frente Cambia Mendoza,300,,9943
+2019-09-29,general,provisorio,concejales,departamento,3,San Carlos,,,positivo,Elegí Frente Político y Social,302,,5489
+2019-09-29,general,provisorio,concejales,departamento,3,San Carlos,,,positivo,Nuevos Rumbos,321,,4081
+2019-09-29,general,provisorio,concejales,departamento,3,San Carlos,,,blanco,,,,1480
+2019-09-29,general,provisorio,concejales,departamento,3,San Carlos,,,nulo,,,,114
+2019-09-29,general,provisorio,concejales,departamento,3,San Carlos,,,recurrido,,,,14
+2019-09-29,general,provisorio,concejales,departamento,3,San Carlos,,,impugnado,,,,8
+2019-09-29,general,provisorio,concejales,departamento,3,Tupungato,,,positivo,Frente Cambia Mendoza,300,,10335
+2019-09-29,general,provisorio,concejales,departamento,3,Tupungato,,,positivo,Elegí Frente Político y Social,302,,6955
+2019-09-29,general,provisorio,concejales,departamento,3,Tupungato,,,positivo,Nuevo Tupungato,320,,692
+2019-09-29,general,provisorio,concejales,departamento,3,Tupungato,,,positivo,Protectora Fuerza Política,222,,573
+2019-09-29,general,provisorio,concejales,departamento,3,Tupungato,,,positivo,Partido Federal,8,,572
+2019-09-29,general,provisorio,concejales,departamento,3,Tupungato,,,blanco,,,,1062
+2019-09-29,general,provisorio,concejales,departamento,3,Tupungato,,,nulo,,,,176
+2019-09-29,general,provisorio,concejales,departamento,3,Tupungato,,,recurrido,,,,10
+2019-09-29,general,provisorio,concejales,departamento,3,Tupungato,,,impugnado,,,,0
+2019-09-29,general,provisorio,concejales,departamento,4,General Alvear,,,positivo,Frente Cambia Mendoza,300,,15174
+2019-09-29,general,provisorio,concejales,departamento,4,General Alvear,,,positivo,Elegí Frente Político y Social,302,,12657
+2019-09-29,general,provisorio,concejales,departamento,4,General Alvear,,,blanco,,,,1505
+2019-09-29,general,provisorio,concejales,departamento,4,General Alvear,,,nulo,,,,188
+2019-09-29,general,provisorio,concejales,departamento,4,General Alvear,,,recurrido,,,,20
+2019-09-29,general,provisorio,concejales,departamento,4,General Alvear,,,impugnado,,,,4
+2019-09-29,general,provisorio,concejales,departamento,4,Malargüe,,,positivo,Frente Cambia Mendoza,300,,9879
+2019-09-29,general,provisorio,concejales,departamento,4,Malargüe,,,positivo,Elegí Frente Político y Social,302,,7281
+2019-09-29,general,provisorio,concejales,departamento,4,Malargüe,,,blanco,,,,855
+2019-09-29,general,provisorio,concejales,departamento,4,Malargüe,,,nulo,,,,196
+2019-09-29,general,provisorio,concejales,departamento,4,Malargüe,,,recurrido,,,,13
+2019-09-29,general,provisorio,concejales,departamento,4,Malargüe,,,impugnado,,,,4
+2019-09-29,general,provisorio,diputados,seccion,1,,,,positivo,Frente Cambia Mendoza,300,,203783
+2019-09-29,general,provisorio,diputados,seccion,1,,,,positivo,Elegí Frente Político y Social,302,,129874
+2019-09-29,general,provisorio,diputados,seccion,1,,,,positivo,Protectora Fuerza Política,222,,35445
+2019-09-29,general,provisorio,diputados,seccion,1,,,,positivo,Frente de Izquierda y de los Trabajadores,301,,15807
+2019-09-29,general,provisorio,diputados,seccion,1,,,,blanco,,,,11616
+2019-09-29,general,provisorio,diputados,seccion,1,,,,nulo,,,,4935
+2019-09-29,general,provisorio,diputados,seccion,1,,,,recurrido,,,,431
+2019-09-29,general,provisorio,diputados,seccion,1,,,,impugnado,,,,63
+2019-09-29,general,provisorio,diputados,seccion,2,,,,positivo,Frente Cambia Mendoza,300,,125684
+2019-09-29,general,provisorio,diputados,seccion,2,,,,positivo,Elegí Frente Político y Social,302,,102183
+2019-09-29,general,provisorio,diputados,seccion,2,,,,positivo,Protectora Fuerza Política,222,,21903
+2019-09-29,general,provisorio,diputados,seccion,2,,,,positivo,Frente de Izquierda y de los Trabajadores,301,,8214
+2019-09-29,general,provisorio,diputados,seccion,2,,,,blanco,,,,9056
+2019-09-29,general,provisorio,diputados,seccion,2,,,,nulo,,,,3460
+2019-09-29,general,provisorio,diputados,seccion,2,,,,recurrido,,,,344
+2019-09-29,general,provisorio,diputados,seccion,2,,,,impugnado,,,,30
+2019-09-29,general,provisorio,diputados,seccion,3,,,,positivo,Frente Cambia Mendoza,300,,145676
+2019-09-29,general,provisorio,diputados,seccion,3,,,,positivo,Elegí Frente Político y Social,302,,82457
+2019-09-29,general,provisorio,diputados,seccion,3,,,,positivo,Protectora Fuerza Política,222,,23744
+2019-09-29,general,provisorio,diputados,seccion,3,,,,positivo,Frente de Izquierda y de los Trabajadores,301,,10640
+2019-09-29,general,provisorio,diputados,seccion,3,,,,blanco,,,,10983
+2019-09-29,general,provisorio,diputados,seccion,3,,,,nulo,,,,3046
+2019-09-29,general,provisorio,diputados,seccion,3,,,,recurrido,,,,220
+2019-09-29,general,provisorio,diputados,seccion,3,,,,impugnado,,,,36
+2019-09-29,general,provisorio,diputados,seccion,4,,,,positivo,Frente Cambia Mendoza,300,,70133
+2019-09-29,general,provisorio,diputados,seccion,4,,,,positivo,Elegí Frente Político y Social,302,,67412
+2019-09-29,general,provisorio,diputados,seccion,4,,,,blanco,,,,13371
+2019-09-29,general,provisorio,diputados,seccion,4,,,,nulo,,,,2022
+2019-09-29,general,provisorio,diputados,seccion,4,,,,recurrido,,,,77
+2019-09-29,general,provisorio,diputados,seccion,4,,,,impugnado,,,,27
+2019-09-29,general,provisorio,gobernador,provincia,,,,,positivo,Frente Cambia Mendoza,300,,554361
+2019-09-29,general,provisorio,gobernador,provincia,,,,,positivo,Elegí Frente Político y Social,302,,388609
+2019-09-29,general,provisorio,gobernador,provincia,,,,,positivo,Protectora Fuerza Política,222,,93847
+2019-09-29,general,provisorio,gobernador,provincia,,,,,positivo,Frente de Izquierda y de los Trabajadores,301,,36664
+2019-09-29,general,provisorio,gobernador,provincia,,,,,blanco,,,,22602
+2019-09-29,general,provisorio,gobernador,provincia,,,,,nulo,,,,14095
+2019-09-29,general,provisorio,gobernador,provincia,,,,,recurrido,,,,1118
+2019-09-29,general,provisorio,gobernador,provincia,,,,,impugnado,,,,140
+2019-09-29,general,provisorio,intendente,departamento,1,Capital,,,positivo,Frente Cambia Mendoza,300,,46073
+2019-09-29,general,provisorio,intendente,departamento,1,Capital,,,positivo,Elegí Frente Político y Social,302,,18029
+2019-09-29,general,provisorio,intendente,departamento,1,Capital,,,positivo,Protectora Fuerza Política,222,,5303
+2019-09-29,general,provisorio,intendente,departamento,1,Capital,,,positivo,Frente de Izquierda y de los Trabajadores,301,,3039
+2019-09-29,general,provisorio,intendente,departamento,1,Capital,,,blanco,,,,1394
+2019-09-29,general,provisorio,intendente,departamento,1,Capital,,,nulo,,,,782
+2019-09-29,general,provisorio,intendente,departamento,1,Capital,,,recurrido,,,,83
+2019-09-29,general,provisorio,intendente,departamento,1,Capital,,,impugnado,,,,3
+2019-09-29,general,provisorio,intendente,departamento,1,Guaymallén,,,positivo,Frente Cambia Mendoza,300,,94179
+2019-09-29,general,provisorio,intendente,departamento,1,Guaymallén,,,positivo,Elegí Frente Político y Social,302,,51394
+2019-09-29,general,provisorio,intendente,departamento,1,Guaymallén,,,positivo,Protectora Fuerza Política,222,,16428
+2019-09-29,general,provisorio,intendente,departamento,1,Guaymallén,,,positivo,Frente de Izquierda y de los Trabajadores,301,,6671
+2019-09-29,general,provisorio,intendente,departamento,1,Guaymallén,,,blanco,,,,5224
+2019-09-29,general,provisorio,intendente,departamento,1,Guaymallén,,,nulo,,,,2279
+2019-09-29,general,provisorio,intendente,departamento,1,Guaymallén,,,recurrido,,,,161
+2019-09-29,general,provisorio,intendente,departamento,1,Guaymallén,,,impugnado,,,,23
+2019-09-29,general,provisorio,intendente,departamento,1,Las Heras,,,positivo,Frente Cambia Mendoza,300,,65215
+2019-09-29,general,provisorio,intendente,departamento,1,Las Heras,,,positivo,Elegí Frente Político y Social,302,,43021
+2019-09-29,general,provisorio,intendente,departamento,1,Las Heras,,,positivo,Protectora Fuerza Política,222,,8380
+2019-09-29,general,provisorio,intendente,departamento,1,Las Heras,,,positivo,Frente de Izquierda y de los Trabajadores,301,,4053
+2019-09-29,general,provisorio,intendente,departamento,1,Las Heras,,,blanco,,,,3560
+2019-09-29,general,provisorio,intendente,departamento,1,Las Heras,,,nulo,,,,1660
+2019-09-29,general,provisorio,intendente,departamento,1,Las Heras,,,recurrido,,,,182
+2019-09-29,general,provisorio,intendente,departamento,1,Las Heras,,,impugnado,,,,30
+2019-09-29,general,provisorio,intendente,departamento,2,Junín,,,positivo,Frente Cambia Mendoza,300,,16730
+2019-09-29,general,provisorio,intendente,departamento,2,Junín,,,positivo,Elegí Frente Político y Social,302,,7676
+2019-09-29,general,provisorio,intendente,departamento,2,Junín,,,positivo,Protectora Fuerza Política,222,,1370
+2019-09-29,general,provisorio,intendente,departamento,2,Junín,,,positivo,Frente de Izquierda y de los Trabajadores,301,,638
+2019-09-29,general,provisorio,intendente,departamento,2,Junín,,,blanco,,,,967
+2019-09-29,general,provisorio,intendente,departamento,2,Junín,,,nulo,,,,340
+2019-09-29,general,provisorio,intendente,departamento,2,Junín,,,recurrido,,,,16
+2019-09-29,general,provisorio,intendente,departamento,2,Junín,,,impugnado,,,,3
+2019-09-29,general,provisorio,intendente,departamento,2,La Paz,,,positivo,Elegí Frente Político y Social,302,,3799
+2019-09-29,general,provisorio,intendente,departamento,2,La Paz,,,positivo,Frente Cambia Mendoza,300,,3745
+2019-09-29,general,provisorio,intendente,departamento,2,La Paz,,,blanco,,,,111
+2019-09-29,general,provisorio,intendente,departamento,2,La Paz,,,nulo,,,,27
+2019-09-29,general,provisorio,intendente,departamento,2,La Paz,,,impugnado,,,,3
+2019-09-29,general,provisorio,intendente,departamento,2,La Paz,,,recurrido,,,,0
+2019-09-29,general,provisorio,intendente,departamento,2,Maipú,,,positivo,Elegí Frente Político y Social,302,,49956
+2019-09-29,general,provisorio,intendente,departamento,2,Maipú,,,positivo,Frente Cambia Mendoza,300,,42578
+2019-09-29,general,provisorio,intendente,departamento,2,Maipú,,,positivo,Protectora Fuerza Política,222,,11495
+2019-09-29,general,provisorio,intendente,departamento,2,Maipú,,,positivo,Frente de Izquierda y de los Trabajadores,301,,4234
+2019-09-29,general,provisorio,intendente,departamento,2,Maipú,,,blanco,,,,4625
+2019-09-29,general,provisorio,intendente,departamento,2,Maipú,,,nulo,,,,1690
+2019-09-29,general,provisorio,intendente,departamento,2,Maipú,,,recurrido,,,,282
+2019-09-29,general,provisorio,intendente,departamento,2,Maipú,,,impugnado,,,,17
+2019-09-29,general,provisorio,intendente,departamento,2,Rivadavia,,,positivo,Frente Cambia Mendoza,300,,18927
+2019-09-29,general,provisorio,intendente,departamento,2,Rivadavia,,,positivo,Elegí Frente Político y Social,302,,13680
+2019-09-29,general,provisorio,intendente,departamento,2,Rivadavia,,,blanco,,,,2667
+2019-09-29,general,provisorio,intendente,departamento,2,Rivadavia,,,nulo,,,,356
+2019-09-29,general,provisorio,intendente,departamento,2,Rivadavia,,,recurrido,,,,11
+2019-09-29,general,provisorio,intendente,departamento,2,Rivadavia,,,impugnado,,,,0
+2019-09-29,general,provisorio,intendente,departamento,2,Santa Rosa,,,positivo,Elegí Frente Político y Social,302,,5659
+2019-09-29,general,provisorio,intendente,departamento,2,Santa Rosa,,,positivo,Frente Cambia Mendoza,300,,5281
+2019-09-29,general,provisorio,intendente,departamento,2,Santa Rosa,,,blanco,,,,410
+2019-09-29,general,provisorio,intendente,departamento,2,Santa Rosa,,,nulo,,,,56
+2019-09-29,general,provisorio,intendente,departamento,2,Santa Rosa,,,recurrido,,,,5
+2019-09-29,general,provisorio,intendente,departamento,2,Santa Rosa,,,impugnado,,,,0
+2019-09-29,general,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,Frente Cambia Mendoza,300,,69063
+2019-09-29,general,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,Elegí Frente Político y Social,302,,31756
+2019-09-29,general,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,Protectora Fuerza Política,222,,10763
+2019-09-29,general,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,Frente de Izquierda y de los Trabajadores,301,,4605
+2019-09-29,general,provisorio,intendente,departamento,3,Godoy Cruz,,,blanco,,,,3045
+2019-09-29,general,provisorio,intendente,departamento,3,Godoy Cruz,,,nulo,,,,1418
+2019-09-29,general,provisorio,intendente,departamento,3,Godoy Cruz,,,recurrido,,,,135
+2019-09-29,general,provisorio,intendente,departamento,3,Godoy Cruz,,,impugnado,,,,18
+2019-09-29,general,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,Frente Cambia Mendoza,300,,46376
+2019-09-29,general,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,Elegí Frente Político y Social,302,,22887
+2019-09-29,general,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,Protectora Fuerza Política,222,,8049
+2019-09-29,general,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,Frente de Izquierda y de los Trabajadores,301,,3057
+2019-09-29,general,provisorio,intendente,departamento,3,Luján de Cuyo,,,blanco,,,,2335
+2019-09-29,general,provisorio,intendente,departamento,3,Luján de Cuyo,,,nulo,,,,1075
+2019-09-29,general,provisorio,intendente,departamento,3,Luján de Cuyo,,,recurrido,,,,48
+2019-09-29,general,provisorio,intendente,departamento,3,Luján de Cuyo,,,impugnado,,,,9
+2019-09-29,general,provisorio,intendente,departamento,3,San Carlos,,,positivo,Frente Cambia Mendoza,300,,10218
+2019-09-29,general,provisorio,intendente,departamento,3,San Carlos,,,positivo,Elegí Frente Político y Social,302,,5551
+2019-09-29,general,provisorio,intendente,departamento,3,San Carlos,,,positivo,Nuevos Rumbos,321,,4152
+2019-09-29,general,provisorio,intendente,departamento,3,San Carlos,,,blanco,,,,1247
+2019-09-29,general,provisorio,intendente,departamento,3,San Carlos,,,nulo,,,,115
+2019-09-29,general,provisorio,intendente,departamento,3,San Carlos,,,recurrido,,,,14
+2019-09-29,general,provisorio,intendente,departamento,3,San Carlos,,,impugnado,,,,8
+2019-09-29,general,provisorio,intendente,departamento,3,Tupungato,,,positivo,Frente Cambia Mendoza,300,,10665
+2019-09-29,general,provisorio,intendente,departamento,3,Tupungato,,,positivo,Elegí Frente Político y Social,302,,7046
+2019-09-29,general,provisorio,intendente,departamento,3,Tupungato,,,positivo,Nuevo Tupungato,320,,698
+2019-09-29,general,provisorio,intendente,departamento,3,Tupungato,,,positivo,Partido Federal,8,,559
+2019-09-29,general,provisorio,intendente,departamento,3,Tupungato,,,blanco,,,,1162
+2019-09-29,general,provisorio,intendente,departamento,3,Tupungato,,,nulo,,,,153
+2019-09-29,general,provisorio,intendente,departamento,3,Tupungato,,,recurrido,,,,10
+2019-09-29,general,provisorio,intendente,departamento,3,Tupungato,,,impugnado,,,,0
+2019-09-29,general,provisorio,intendente,departamento,4,General Alvear,,,positivo,Frente Cambia Mendoza,300,,15742
+2019-09-29,general,provisorio,intendente,departamento,4,General Alvear,,,positivo,Elegí Frente Político y Social,302,,12525
+2019-09-29,general,provisorio,intendente,departamento,4,General Alvear,,,blanco,,,,1085
+2019-09-29,general,provisorio,intendente,departamento,4,General Alvear,,,nulo,,,,178
+2019-09-29,general,provisorio,intendente,departamento,4,General Alvear,,,recurrido,,,,20
+2019-09-29,general,provisorio,intendente,departamento,4,General Alvear,,,impugnado,,,,4
+2019-09-29,general,provisorio,intendente,departamento,4,Malargüe,,,positivo,Frente Cambia Mendoza,300,,10169
+2019-09-29,general,provisorio,intendente,departamento,4,Malargüe,,,positivo,Elegí Frente Político y Social,302,,7321
+2019-09-29,general,provisorio,intendente,departamento,4,Malargüe,,,blanco,,,,569
+2019-09-29,general,provisorio,intendente,departamento,4,Malargüe,,,nulo,,,,192
+2019-09-29,general,provisorio,intendente,departamento,4,Malargüe,,,recurrido,,,,14
+2019-09-29,general,provisorio,intendente,departamento,4,Malargüe,,,impugnado,,,,4
+2019-09-29,general,provisorio,senadores,seccion,1,,,,positivo,Frente Cambia Mendoza,300,,203963
+2019-09-29,general,provisorio,senadores,seccion,1,,,,positivo,Elegí Frente Político y Social,302,,130735
+2019-09-29,general,provisorio,senadores,seccion,1,,,,positivo,Protectora Fuerza Política,222,,36208
+2019-09-29,general,provisorio,senadores,seccion,1,,,,positivo,Frente de Izquierda y de los Trabajadores,301,,15847
+2019-09-29,general,provisorio,senadores,seccion,1,,,,blanco,,,,9814
+2019-09-29,general,provisorio,senadores,seccion,1,,,,nulo,,,,4958
+2019-09-29,general,provisorio,senadores,seccion,1,,,,recurrido,,,,430
+2019-09-29,general,provisorio,senadores,seccion,1,,,,impugnado,,,,60
+2019-09-29,general,provisorio,senadores,seccion,2,,,,positivo,Frente Cambia Mendoza,300,,127164
+2019-09-29,general,provisorio,senadores,seccion,2,,,,positivo,Elegí Frente Político y Social,302,,102106
+2019-09-29,general,provisorio,senadores,seccion,2,,,,positivo,Protectora Fuerza Política,222,,21914
+2019-09-29,general,provisorio,senadores,seccion,2,,,,positivo,Frente de Izquierda y de los Trabajadores,301,,8197
+2019-09-29,general,provisorio,senadores,seccion,2,,,,blanco,,,,7922
+2019-09-29,general,provisorio,senadores,seccion,2,,,,nulo,,,,3443
+2019-09-29,general,provisorio,senadores,seccion,2,,,,recurrido,,,,343
+2019-09-29,general,provisorio,senadores,seccion,2,,,,impugnado,,,,30
+2019-09-29,general,provisorio,senadores,seccion,3,,,,positivo,Frente Cambia Mendoza,300,,145917
+2019-09-29,general,provisorio,senadores,seccion,3,,,,positivo,Elegí Frente Político y Social,302,,83438
+2019-09-29,general,provisorio,senadores,seccion,3,,,,positivo,Protectora Fuerza Política,222,,24074
+2019-09-29,general,provisorio,senadores,seccion,3,,,,positivo,Frente de Izquierda y de los Trabajadores,301,,10553
+2019-09-29,general,provisorio,senadores,seccion,3,,,,blanco,,,,10020
+2019-09-29,general,provisorio,senadores,seccion,3,,,,nulo,,,,3062
+2019-09-29,general,provisorio,senadores,seccion,3,,,,recurrido,,,,223
+2019-09-29,general,provisorio,senadores,seccion,3,,,,impugnado,,,,35
+2019-09-29,general,provisorio,senadores,seccion,4,,,,positivo,Frente Cambia Mendoza,300,,69983
+2019-09-29,general,provisorio,senadores,seccion,4,,,,positivo,Elegí Frente Político y Social,302,,67657
+2019-09-29,general,provisorio,senadores,seccion,4,,,,blanco,,,,13276
+2019-09-29,general,provisorio,senadores,seccion,4,,,,nulo,,,,2036
+2019-09-29,general,provisorio,senadores,seccion,4,,,,recurrido,,,,80
+2019-09-29,general,provisorio,senadores,seccion,4,,,,impugnado,,,,27
+2023-04-30,municipal,provisorio,concejales,departamento,1,Lavalle,,,positivo,PARTIDO VERDE,181,,354
+2023-04-30,municipal,provisorio,concejales,departamento,1,Lavalle,,,positivo,CAMBIA MENDOZA,501,,3856
+2023-04-30,municipal,provisorio,concejales,departamento,1,Lavalle,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,502,,411
+2023-04-30,municipal,provisorio,concejales,departamento,1,Lavalle,,,positivo,FRENTE LIBERTARIO DEMÓCRATA Y JUBILADOS,503,,999
+2023-04-30,municipal,provisorio,concejales,departamento,1,Lavalle,,,positivo,ELEGÍ GESTIÓN LAVALLE,506,,14632
+2023-04-30,municipal,provisorio,concejales,departamento,1,Lavalle,,,nulo,,,,984
+2023-04-30,municipal,provisorio,concejales,departamento,1,Lavalle,,,recurrido,,,,456
+2023-04-30,municipal,provisorio,concejales,departamento,1,Lavalle,,,impugnado,,,,0
+2023-04-30,municipal,provisorio,concejales,departamento,1,Lavalle,,,blanco,,,,1858
+2023-04-30,municipal,provisorio,concejales,departamento,2,La Paz,,,positivo,PARTIDO VERDE,181,,156
+2023-04-30,municipal,provisorio,concejales,departamento,2,La Paz,,,positivo,CAMBIA MENDOZA,501,,3016
+2023-04-30,municipal,provisorio,concejales,departamento,2,La Paz,,,positivo,FRENTE ELEGÍ GESTIÓN LA PAZ,506,,3326
+2023-04-30,municipal,provisorio,concejales,departamento,2,La Paz,,,nulo,,,,193
+2023-04-30,municipal,provisorio,concejales,departamento,2,La Paz,,,recurrido,,,,116
+2023-04-30,municipal,provisorio,concejales,departamento,2,La Paz,,,impugnado,,,,0
+2023-04-30,municipal,provisorio,concejales,departamento,2,La Paz,,,blanco,,,,475
+2023-04-30,municipal,provisorio,concejales,departamento,2,Maipú,,,positivo,PARTIDO VERDE,181,,2136
+2023-04-30,municipal,provisorio,concejales,departamento,2,Maipú,,,positivo,PARTIDO PARTI.C.I.P.AR,303,,783
+2023-04-30,municipal,provisorio,concejales,departamento,2,Maipú,,,positivo,CAMBIA MENDOZA,501,,26090
+2023-04-30,municipal,provisorio,concejales,departamento,2,Maipú,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,502,,2866
+2023-04-30,municipal,provisorio,concejales,departamento,2,Maipú,,,positivo,FRENTE LIBERTARIO DEMÓCRATA Y JUBILADOS,503,,5826
+2023-04-30,municipal,provisorio,concejales,departamento,2,Maipú,,,positivo,FRENTE ELEGÍ MAIPÚ CRECE,506,,41107
+2023-04-30,municipal,provisorio,concejales,departamento,2,Maipú,,,nulo,,,,7678
+2023-04-30,municipal,provisorio,concejales,departamento,2,Maipú,,,recurrido,,,,747
+2023-04-30,municipal,provisorio,concejales,departamento,2,Maipú,,,impugnado,,,,53
+2023-04-30,municipal,provisorio,concejales,departamento,2,Maipú,,,blanco,,,,7503
+2023-04-30,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,positivo,PARTIDO VERDE,181,,93
+2023-04-30,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,positivo,CAMBIA MENDOZA,501,,3529
+2023-04-30,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,positivo,FRENTE LIBERTARIO DEMÓCRATA Y JUBILADOS,503,,401
+2023-04-30,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,positivo,ELEGÍ SANTA ROSA,506,,4617
+2023-04-30,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,nulo,,,,408
+2023-04-30,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,recurrido,,,,129
+2023-04-30,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,impugnado,,,,3
+2023-04-30,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,blanco,,,,823
+2023-04-30,municipal,provisorio,concejales,departamento,3,San Carlos,,,positivo,PARTIDO VERDE,181,,3665
+2023-04-30,municipal,provisorio,concejales,departamento,3,San Carlos,,,positivo,CAMBIA MENDOZA - NUEVOS RUMBOS,501,,5574
+2023-04-30,municipal,provisorio,concejales,departamento,3,San Carlos,,,positivo,FRENTE ENCUENTRO POR SAN CARLOS,504,,6039
+2023-04-30,municipal,provisorio,concejales,departamento,3,San Carlos,,,positivo,ELEGÍ SAN CARLOS,506,,1328
+2023-04-30,municipal,provisorio,concejales,departamento,3,San Carlos,,,nulo,,,,941
+2023-04-30,municipal,provisorio,concejales,departamento,3,San Carlos,,,recurrido,,,,167
+2023-04-30,municipal,provisorio,concejales,departamento,3,San Carlos,,,impugnado,,,,1
+2023-04-30,municipal,provisorio,concejales,departamento,3,San Carlos,,,blanco,,,,2551
+2023-04-30,municipal,provisorio,concejales,departamento,3,Tunuyán,,,positivo,PARTIDO VERDE,181,,645
+2023-04-30,municipal,provisorio,concejales,departamento,3,Tunuyán,,,positivo,CAMBIA MENDOZA,501,,8817
+2023-04-30,municipal,provisorio,concejales,departamento,3,Tunuyán,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,502,,636
+2023-04-30,municipal,provisorio,concejales,departamento,3,Tunuyán,,,positivo,FRENTE UNIDOS POR TUNUYÁN,505,,2396
+2023-04-30,municipal,provisorio,concejales,departamento,3,Tunuyán,,,positivo,ELEGÍ GESTIÓN TUNUYÁN,506,,13206
+2023-04-30,municipal,provisorio,concejales,departamento,3,Tunuyán,,,nulo,,,,1201
+2023-04-30,municipal,provisorio,concejales,departamento,3,Tunuyán,,,recurrido,,,,386
+2023-04-30,municipal,provisorio,concejales,departamento,3,Tunuyán,,,impugnado,,,,3
+2023-04-30,municipal,provisorio,concejales,departamento,3,Tunuyán,,,blanco,,,,2260
+2023-04-30,municipal,provisorio,concejales,departamento,4,San Rafael,,,positivo,PARTIDO VERDE,181,,967
+2023-04-30,municipal,provisorio,concejales,departamento,4,San Rafael,,,positivo,PARTIDO VALLE GRANDE,327,,675
+2023-04-30,municipal,provisorio,concejales,departamento,4,San Rafael,,,positivo,CAMBIA MENDOZA,501,,31692
+2023-04-30,municipal,provisorio,concejales,departamento,4,San Rafael,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,502,,1357
+2023-04-30,municipal,provisorio,concejales,departamento,4,San Rafael,,,positivo,FRENTE LIBERTARIO DEMÓCRATA Y JUBILADOS,503,,8370
+2023-04-30,municipal,provisorio,concejales,departamento,4,San Rafael,,,positivo,ELEGÍ SAN RAFAEL AVANZA,506,,34474
+2023-04-30,municipal,provisorio,concejales,departamento,4,San Rafael,,,nulo,,,,6864
+2023-04-30,municipal,provisorio,concejales,departamento,4,San Rafael,,,recurrido,,,,824
+2023-04-30,municipal,provisorio,concejales,departamento,4,San Rafael,,,impugnado,,,,41
+2023-04-30,municipal,provisorio,concejales,departamento,4,San Rafael,,,blanco,,,,7517
+2023-04-30,municipal,provisorio,intendente,departamento,1,Lavalle,,,positivo,PARTIDO VERDE,181,,324
+2023-04-30,municipal,provisorio,intendente,departamento,1,Lavalle,,,positivo,CAMBIA MENDOZA,501,,3826
+2023-04-30,municipal,provisorio,intendente,departamento,1,Lavalle,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,502,,361
+2023-04-30,municipal,provisorio,intendente,departamento,1,Lavalle,,,positivo,FRENTE LIBERTARIO DEMÓCRATA Y JUBILADOS,503,,949
+2023-04-30,municipal,provisorio,intendente,departamento,1,Lavalle,,,positivo,ELEGÍ GESTIÓN LAVALLE,506,,16122
+2023-04-30,municipal,provisorio,intendente,departamento,1,Lavalle,,,nulo,,,,1153
+2023-04-30,municipal,provisorio,intendente,departamento,1,Lavalle,,,recurrido,,,,477
+2023-04-30,municipal,provisorio,intendente,departamento,1,Lavalle,,,impugnado,,,,0
+2023-04-30,municipal,provisorio,intendente,departamento,1,Lavalle,,,blanco,,,,573
+2023-04-30,municipal,provisorio,intendente,departamento,2,La Paz,,,positivo,PARTIDO VERDE,181,,154
+2023-04-30,municipal,provisorio,intendente,departamento,2,La Paz,,,positivo,CAMBIA MENDOZA,501,,3150
+2023-04-30,municipal,provisorio,intendente,departamento,2,La Paz,,,positivo,FRENTE ELEGÍ GESTIÓN LA PAZ,506,,3594
+2023-04-30,municipal,provisorio,intendente,departamento,2,La Paz,,,nulo,,,,207
+2023-04-30,municipal,provisorio,intendente,departamento,2,La Paz,,,recurrido,,,,125
+2023-04-30,municipal,provisorio,intendente,departamento,2,La Paz,,,impugnado,,,,0
+2023-04-30,municipal,provisorio,intendente,departamento,2,La Paz,,,blanco,,,,123
+2023-04-30,municipal,provisorio,intendente,departamento,2,Maipú,,,positivo,PARTIDO VERDE,181,,2085
+2023-04-30,municipal,provisorio,intendente,departamento,2,Maipú,,,positivo,PARTIDO PARTI.C.I.P.AR,303,,769
+2023-04-30,municipal,provisorio,intendente,departamento,2,Maipú,,,positivo,CAMBIA MENDOZA,501,,27080
+2023-04-30,municipal,provisorio,intendente,departamento,2,Maipú,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,502,,2795
+2023-04-30,municipal,provisorio,intendente,departamento,2,Maipú,,,positivo,FRENTE LIBERTARIO DEMÓCRATA Y JUBILADOS,503,,5492
+2023-04-30,municipal,provisorio,intendente,departamento,2,Maipú,,,positivo,FRENTE ELEGÍ MAIPÚ CRECE,506,,45513
+2023-04-30,municipal,provisorio,intendente,departamento,2,Maipú,,,nulo,,,,8260
+2023-04-30,municipal,provisorio,intendente,departamento,2,Maipú,,,recurrido,,,,770
+2023-04-30,municipal,provisorio,intendente,departamento,2,Maipú,,,impugnado,,,,27
+2023-04-30,municipal,provisorio,intendente,departamento,2,Maipú,,,blanco,,,,3114
+2023-04-30,municipal,provisorio,intendente,departamento,2,Santa Rosa,,,positivo,PARTIDO VERDE,181,,90
+2023-04-30,municipal,provisorio,intendente,departamento,2,Santa Rosa,,,positivo,CAMBIA MENDOZA,501,,3585
+2023-04-30,municipal,provisorio,intendente,departamento,2,Santa Rosa,,,positivo,FRENTE LIBERTARIO DEMÓCRATA Y JUBILADOS,503,,278
+2023-04-30,municipal,provisorio,intendente,departamento,2,Santa Rosa,,,positivo,ELEGÍ SANTA ROSA,506,,5336
+2023-04-30,municipal,provisorio,intendente,departamento,2,Santa Rosa,,,nulo,,,,485
+2023-04-30,municipal,provisorio,intendente,departamento,2,Santa Rosa,,,recurrido,,,,144
+2023-04-30,municipal,provisorio,intendente,departamento,2,Santa Rosa,,,impugnado,,,,3
+2023-04-30,municipal,provisorio,intendente,departamento,2,Santa Rosa,,,blanco,,,,271
+2023-04-30,municipal,provisorio,intendente,departamento,3,San Carlos,,,positivo,PARTIDO VERDE,181,,4515
+2023-04-30,municipal,provisorio,intendente,departamento,3,San Carlos,,,positivo,CAMBIA MENDOZA - NUEVOS RUMBOS,501,,6183
+2023-04-30,municipal,provisorio,intendente,departamento,3,San Carlos,,,positivo,FRENTE ENCUENTRO POR SAN CARLOS,504,,7054
+2023-04-30,municipal,provisorio,intendente,departamento,3,San Carlos,,,positivo,ELEGÍ SAN CARLOS,506,,1450
+2023-04-30,municipal,provisorio,intendente,departamento,3,San Carlos,,,nulo,,,,1054
+2023-04-30,municipal,provisorio,intendente,departamento,3,San Carlos,,,recurrido,,,,185
+2023-04-30,municipal,provisorio,intendente,departamento,3,San Carlos,,,impugnado,,,,1
+2023-04-30,municipal,provisorio,intendente,departamento,3,San Carlos,,,blanco,,,,468
+2023-04-30,municipal,provisorio,intendente,departamento,3,Tunuyán,,,positivo,PARTIDO VERDE,181,,578
+2023-04-30,municipal,provisorio,intendente,departamento,3,Tunuyán,,,positivo,CAMBIA MENDOZA,501,,9696
+2023-04-30,municipal,provisorio,intendente,departamento,3,Tunuyán,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,502,,643
+2023-04-30,municipal,provisorio,intendente,departamento,3,Tunuyán,,,positivo,FRENTE UNIDOS POR TUNUYÁN,505,,2660
+2023-04-30,municipal,provisorio,intendente,departamento,3,Tunuyán,,,positivo,ELEGÍ GESTIÓN TUNUYÁN,506,,13649
+2023-04-30,municipal,provisorio,intendente,departamento,3,Tunuyán,,,nulo,,,,1354
+2023-04-30,municipal,provisorio,intendente,departamento,3,Tunuyán,,,recurrido,,,,382
+2023-04-30,municipal,provisorio,intendente,departamento,3,Tunuyán,,,impugnado,,,,3
+2023-04-30,municipal,provisorio,intendente,departamento,3,Tunuyán,,,blanco,,,,824
+2023-04-30,municipal,provisorio,intendente,departamento,4,San Rafael,,,positivo,PARTIDO VERDE,181,,904
+2023-04-30,municipal,provisorio,intendente,departamento,4,San Rafael,,,positivo,PARTIDO VALLE GRANDE,327,,727
+2023-04-30,municipal,provisorio,intendente,departamento,4,San Rafael,,,positivo,CAMBIA MENDOZA,501,,33552
+2023-04-30,municipal,provisorio,intendente,departamento,4,San Rafael,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,502,,1292
+2023-04-30,municipal,provisorio,intendente,departamento,4,San Rafael,,,positivo,FRENTE LIBERTARIO DEMÓCRATA Y JUBILADOS,503,,8493
+2023-04-30,municipal,provisorio,intendente,departamento,4,San Rafael,,,positivo,ELEGÍ SAN RAFAEL AVANZA,506,,37955
+2023-04-30,municipal,provisorio,intendente,departamento,4,San Rafael,,,nulo,,,,7667
+2023-04-30,municipal,provisorio,intendente,departamento,4,San Rafael,,,recurrido,,,,857
+2023-04-30,municipal,provisorio,intendente,departamento,4,San Rafael,,,impugnado,,,,29
+2023-04-30,municipal,provisorio,intendente,departamento,4,San Rafael,,,blanco,,,,2908
+2023-06-11,paso,provisorio,concejales,departamento,1,Capital,,,positivo,LA UNION MENDOCINA,504,,8907
+2023-06-11,paso,provisorio,concejales,departamento,1,Capital,,,positivo,CAMBIA MENDOZA,501,,32658
+2023-06-11,paso,provisorio,concejales,departamento,1,Capital,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,3128
+2023-06-11,paso,provisorio,concejales,departamento,1,Capital,,,positivo,ELEGÍ MENDOZA,502,,8504
+2023-06-11,paso,provisorio,concejales,departamento,1,Capital,,,positivo,PARTIDO VERDE,181,,3690
+2023-06-11,paso,provisorio,concejales,departamento,1,Capital,,,nulo,,,,2966
+2023-06-11,paso,provisorio,concejales,departamento,1,Capital,,,recurrido,,,,99
+2023-06-11,paso,provisorio,concejales,departamento,1,Capital,,,impugnado,,,,5
+2023-06-11,paso,provisorio,concejales,departamento,1,Capital,,,blanco,,,,6545
+2023-06-11,paso,provisorio,concejales,departamento,1,Guaymallén,,,positivo,LA UNION MENDOCINA,504,,27922
+2023-06-11,paso,provisorio,concejales,departamento,1,Guaymallén,,,positivo,CAMBIA MENDOZA,501,,60689
+2023-06-11,paso,provisorio,concejales,departamento,1,Guaymallén,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,7669
+2023-06-11,paso,provisorio,concejales,departamento,1,Guaymallén,,,positivo,ELEGÍ MENDOZA,502,,21593
+2023-06-11,paso,provisorio,concejales,departamento,1,Guaymallén,,,positivo,PARTIDO VERDE,181,,8016
+2023-06-11,paso,provisorio,concejales,departamento,1,Guaymallén,,,nulo,,,,10894
+2023-06-11,paso,provisorio,concejales,departamento,1,Guaymallén,,,recurrido,,,,602
+2023-06-11,paso,provisorio,concejales,departamento,1,Guaymallén,,,impugnado,,,,52
+2023-06-11,paso,provisorio,concejales,departamento,1,Guaymallén,,,blanco,,,,19175
+2023-06-11,paso,provisorio,concejales,departamento,1,Las Heras,,,positivo,LA UNION MENDOCINA,504,,24847
+2023-06-11,paso,provisorio,concejales,departamento,1,Las Heras,,,positivo,CAMBIA MENDOZA,501,,31509
+2023-06-11,paso,provisorio,concejales,departamento,1,Las Heras,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,4262
+2023-06-11,paso,provisorio,concejales,departamento,1,Las Heras,,,positivo,ELEGÍ MENDOZA,502,,19390
+2023-06-11,paso,provisorio,concejales,departamento,1,Las Heras,,,positivo,HACIENDO LAS HERAS,325,,719
+2023-06-11,paso,provisorio,concejales,departamento,1,Las Heras,,,positivo,PARTIDO VERDE,181,,5665
+2023-06-11,paso,provisorio,concejales,departamento,1,Las Heras,,,nulo,,,,8835
+2023-06-11,paso,provisorio,concejales,departamento,1,Las Heras,,,recurrido,,,,687
+2023-06-11,paso,provisorio,concejales,departamento,1,Las Heras,,,impugnado,,,,16
+2023-06-11,paso,provisorio,concejales,departamento,1,Las Heras,,,blanco,,,,16450
+2023-06-11,paso,provisorio,concejales,departamento,2,Junín,,,positivo,LA UNION MENDOCINA,504,,2798
+2023-06-11,paso,provisorio,concejales,departamento,2,Junín,,,positivo,CAMBIA MENDOZA,501,,12696
+2023-06-11,paso,provisorio,concejales,departamento,2,Junín,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,509
+2023-06-11,paso,provisorio,concejales,departamento,2,Junín,,,positivo,ELEGÍ MENDOZA,502,,3319
+2023-06-11,paso,provisorio,concejales,departamento,2,Junín,,,positivo,PARTIDO VERDE,181,,803
+2023-06-11,paso,provisorio,concejales,departamento,2,Junín,,,nulo,,,,1301
+2023-06-11,paso,provisorio,concejales,departamento,2,Junín,,,recurrido,,,,67
+2023-06-11,paso,provisorio,concejales,departamento,2,Junín,,,impugnado,,,,0
+2023-06-11,paso,provisorio,concejales,departamento,2,Junín,,,blanco,,,,5288
+2023-06-11,paso,provisorio,concejales,departamento,2,Rivadavia,,,positivo,LA UNION MENDOCINA,504,,2412
+2023-06-11,paso,provisorio,concejales,departamento,2,Rivadavia,,,positivo,CAMBIA MENDOZA,501,,9757
+2023-06-11,paso,provisorio,concejales,departamento,2,Rivadavia,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,686
+2023-06-11,paso,provisorio,concejales,departamento,2,Rivadavia,,,positivo,ELEGÍ MENDOZA,502,,5108
+2023-06-11,paso,provisorio,concejales,departamento,2,Rivadavia,,,positivo,SEMBRAR,328,,5525
+2023-06-11,paso,provisorio,concejales,departamento,2,Rivadavia,,,positivo,PARTIDO VERDE,181,,629
+2023-06-11,paso,provisorio,concejales,departamento,2,Rivadavia,,,nulo,,,,1699
+2023-06-11,paso,provisorio,concejales,departamento,2,Rivadavia,,,recurrido,,,,31
+2023-06-11,paso,provisorio,concejales,departamento,2,Rivadavia,,,impugnado,,,,147
+2023-06-11,paso,provisorio,concejales,departamento,2,Rivadavia,,,blanco,,,,6230
+2023-06-11,paso,provisorio,concejales,departamento,2,San Martín,,,positivo,LA UNION MENDOCINA,504,,9257
+2023-06-11,paso,provisorio,concejales,departamento,2,San Martín,,,positivo,CAMBIA MENDOZA,501,,25344
+2023-06-11,paso,provisorio,concejales,departamento,2,San Martín,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,1491
+2023-06-11,paso,provisorio,concejales,departamento,2,San Martín,,,positivo,ELEGÍ MENDOZA,502,,10736
+2023-06-11,paso,provisorio,concejales,departamento,2,San Martín,,,positivo,PARTIDO VERDE,181,,1699
+2023-06-11,paso,provisorio,concejales,departamento,2,San Martín,,,nulo,,,,3486
+2023-06-11,paso,provisorio,concejales,departamento,2,San Martín,,,recurrido,,,,279
+2023-06-11,paso,provisorio,concejales,departamento,2,San Martín,,,impugnado,,,,102
+2023-06-11,paso,provisorio,concejales,departamento,2,San Martín,,,blanco,,,,11868
+2023-06-11,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,LA UNION MENDOCINA,504,,15132
+2023-06-11,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,CAMBIA MENDOZA,501,,48755
+2023-06-11,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,4692
+2023-06-11,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,ELEGÍ MENDOZA,502,,11648
+2023-06-11,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,PARTIDO VERDE,181,,5850
+2023-06-11,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,nulo,,,,7021
+2023-06-11,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,recurrido,,,,347
+2023-06-11,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,impugnado,,,,93
+2023-06-11,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,blanco,,,,11196
+2023-06-11,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,LA UNION MENDOCINA,504,,30990
+2023-06-11,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,CAMBIA MENDOZA,501,,23504
+2023-06-11,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,2818
+2023-06-11,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,ELEGÍ MENDOZA,502,,7210
+2023-06-11,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,PARTIDO VERDE,181,,2827
+2023-06-11,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,nulo,,,,3492
+2023-06-11,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,recurrido,,,,154
+2023-06-11,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,impugnado,,,,35
+2023-06-11,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,blanco,,,,9226
+2023-06-11,paso,provisorio,concejales,departamento,3,Tupungato,,,positivo,LA UNION MENDOCINA,504,,3104
+2023-06-11,paso,provisorio,concejales,departamento,3,Tupungato,,,positivo,CAMBIA MENDOZA,501,,6766
+2023-06-11,paso,provisorio,concejales,departamento,3,Tupungato,,,positivo,NUEVO TUPUNGATO,320,,822
+2023-06-11,paso,provisorio,concejales,departamento,3,Tupungato,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,461
+2023-06-11,paso,provisorio,concejales,departamento,3,Tupungato,,,positivo,ELEGÍ MENDOZA,502,,3445
+2023-06-11,paso,provisorio,concejales,departamento,3,Tupungato,,,nulo,,,,890
+2023-06-11,paso,provisorio,concejales,departamento,3,Tupungato,,,recurrido,,,,48
+2023-06-11,paso,provisorio,concejales,departamento,3,Tupungato,,,impugnado,,,,1
+2023-06-11,paso,provisorio,concejales,departamento,3,Tupungato,,,blanco,,,,3897
+2023-06-11,paso,provisorio,concejales,departamento,4,General Alvear,,,positivo,LA UNION MENDOCINA,504,,3144
+2023-06-11,paso,provisorio,concejales,departamento,4,General Alvear,,,positivo,CAMBIA MENDOZA,501,,11330
+2023-06-11,paso,provisorio,concejales,departamento,4,General Alvear,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,359
+2023-06-11,paso,provisorio,concejales,departamento,4,General Alvear,,,positivo,ELEGÍ MENDOZA,502,,3522
+2023-06-11,paso,provisorio,concejales,departamento,4,General Alvear,,,positivo,PARTIDO VERDE,181,,314
+2023-06-11,paso,provisorio,concejales,departamento,4,General Alvear,,,nulo,,,,918
+2023-06-11,paso,provisorio,concejales,departamento,4,General Alvear,,,recurrido,,,,50
+2023-06-11,paso,provisorio,concejales,departamento,4,General Alvear,,,impugnado,,,,3
+2023-06-11,paso,provisorio,concejales,departamento,4,General Alvear,,,blanco,,,,4320
+2023-06-11,paso,provisorio,concejales,departamento,4,Malargüe,,,positivo,LA UNION MENDOCINA,504,,2140
+2023-06-11,paso,provisorio,concejales,departamento,4,Malargüe,,,positivo,CAMBIA MENDOZA,501,,2766
+2023-06-11,paso,provisorio,concejales,departamento,4,Malargüe,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,131
+2023-06-11,paso,provisorio,concejales,departamento,4,Malargüe,,,positivo,ELEGÍ MENDOZA,502,,6453
+2023-06-11,paso,provisorio,concejales,departamento,4,Malargüe,,,positivo,RECONSTRUYENDO MALARGÜE,329,,797
+2023-06-11,paso,provisorio,concejales,departamento,4,Malargüe,,,nulo,,,,652
+2023-06-11,paso,provisorio,concejales,departamento,4,Malargüe,,,recurrido,,,,42
+2023-06-11,paso,provisorio,concejales,departamento,4,Malargüe,,,impugnado,,,,1
+2023-06-11,paso,provisorio,concejales,departamento,4,Malargüe,,,blanco,,,,3188
+2023-06-11,paso,provisorio,diputados,seccion,1,,,,positivo,LA UNION MENDOCINA,504,,62414
+2023-06-11,paso,provisorio,diputados,seccion,1,,,,positivo,CAMBIA MENDOZA,501 A,,88198
+2023-06-11,paso,provisorio,diputados,seccion,1,,,,positivo,CAMBIA MENDOZA,501 B,,46020
+2023-06-11,paso,provisorio,diputados,seccion,1,,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503 A,,12924
+2023-06-11,paso,provisorio,diputados,seccion,1,,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503 B,,4006
+2023-06-11,paso,provisorio,diputados,seccion,1,,,,positivo,ELEGÍ MENDOZA,502 C,,22628
+2023-06-11,paso,provisorio,diputados,seccion,1,,,,positivo,ELEGÍ MENDOZA,502 D,,13878
+2023-06-11,paso,provisorio,diputados,seccion,1,,,,positivo,ELEGÍ MENDOZA,502 A,,10016
+2023-06-11,paso,provisorio,diputados,seccion,1,,,,positivo,ELEGÍ MENDOZA,502 B,,4322
+2023-06-11,paso,provisorio,diputados,seccion,1,,,,positivo,PARTIDO VERDE,181,,18383
+2023-06-11,paso,provisorio,diputados,seccion,1,,,,nulo,,,,23327
+2023-06-11,paso,provisorio,diputados,seccion,1,,,,recurrido,,,,1392
+2023-06-11,paso,provisorio,diputados,seccion,1,,,,impugnado,,,,49
+2023-06-11,paso,provisorio,diputados,seccion,1,,,,blanco,,,,47999
+2023-06-11,paso,provisorio,diputados,seccion,2,,,,positivo,LA UNION MENDOCINA,504,,29227
+2023-06-11,paso,provisorio,diputados,seccion,2,,,,positivo,CAMBIA MENDOZA,501 A,,55438
+2023-06-11,paso,provisorio,diputados,seccion,2,,,,positivo,CAMBIA MENDOZA,501 B,,38567
+2023-06-11,paso,provisorio,diputados,seccion,2,,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503 A,,6380
+2023-06-11,paso,provisorio,diputados,seccion,2,,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503 B,,2777
+2023-06-11,paso,provisorio,diputados,seccion,2,,,,positivo,ELEGÍ MENDOZA,502 C,,20692
+2023-06-11,paso,provisorio,diputados,seccion,2,,,,positivo,ELEGÍ MENDOZA,502 D,,9884
+2023-06-11,paso,provisorio,diputados,seccion,2,,,,positivo,ELEGÍ MENDOZA,502 A,,5814
+2023-06-11,paso,provisorio,diputados,seccion,2,,,,positivo,ELEGÍ MENDOZA,502 B,,2202
+2023-06-11,paso,provisorio,diputados,seccion,2,,,,positivo,PARTIDO VERDE,181,,9868
+2023-06-11,paso,provisorio,diputados,seccion,2,,,,nulo,,,,12921
+2023-06-11,paso,provisorio,diputados,seccion,2,,,,recurrido,,,,516
+2023-06-11,paso,provisorio,diputados,seccion,2,,,,impugnado,,,,152
+2023-06-11,paso,provisorio,diputados,seccion,2,,,,blanco,,,,46589
+2023-06-11,paso,provisorio,diputados,seccion,3,,,,positivo,LA UNION MENDOCINA,504,,56868
+2023-06-11,paso,provisorio,diputados,seccion,3,,,,positivo,CAMBIA MENDOZA,501 A,,61622
+2023-06-11,paso,provisorio,diputados,seccion,3,,,,positivo,CAMBIA MENDOZA,501 B,,31107
+2023-06-11,paso,provisorio,diputados,seccion,3,,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503 A,,7760
+2023-06-11,paso,provisorio,diputados,seccion,3,,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503 B,,2662
+2023-06-11,paso,provisorio,diputados,seccion,3,,,,positivo,ELEGÍ MENDOZA,502 C,,13076
+2023-06-11,paso,provisorio,diputados,seccion,3,,,,positivo,ELEGÍ MENDOZA,502 A,,7206
+2023-06-11,paso,provisorio,diputados,seccion,3,,,,positivo,ELEGÍ MENDOZA,502 D,,6681
+2023-06-11,paso,provisorio,diputados,seccion,3,,,,positivo,ELEGÍ MENDOZA,502 B,,2125
+2023-06-11,paso,provisorio,diputados,seccion,3,,,,positivo,PARTIDO VERDE,181,,11975
+2023-06-11,paso,provisorio,diputados,seccion,3,,,,nulo,,,,13715
+2023-06-11,paso,provisorio,diputados,seccion,3,,,,recurrido,,,,610
+2023-06-11,paso,provisorio,diputados,seccion,3,,,,impugnado,,,,168
+2023-06-11,paso,provisorio,diputados,seccion,3,,,,blanco,,,,36276
+2023-06-11,paso,provisorio,diputados,seccion,4,,,,positivo,LA UNION MENDOCINA,504,,17780
+2023-06-11,paso,provisorio,diputados,seccion,4,,,,positivo,CAMBIA MENDOZA,501 A,,32791
+2023-06-11,paso,provisorio,diputados,seccion,4,,,,positivo,CAMBIA MENDOZA,501 B,,11957
+2023-06-11,paso,provisorio,diputados,seccion,4,,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503 A,,2873
+2023-06-11,paso,provisorio,diputados,seccion,4,,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503 B,,974
+2023-06-11,paso,provisorio,diputados,seccion,4,,,,positivo,ELEGÍ MENDOZA,502 D,,16781
+2023-06-11,paso,provisorio,diputados,seccion,4,,,,positivo,ELEGÍ MENDOZA,502 C,,7267
+2023-06-11,paso,provisorio,diputados,seccion,4,,,,positivo,ELEGÍ MENDOZA,502 A,,3024
+2023-06-11,paso,provisorio,diputados,seccion,4,,,,positivo,ELEGÍ MENDOZA,502 B,,1530
+2023-06-11,paso,provisorio,diputados,seccion,4,,,,positivo,PARTIDO VERDE,181,,3742
+2023-06-11,paso,provisorio,diputados,seccion,4,,,,nulo,,,,6755
+2023-06-11,paso,provisorio,diputados,seccion,4,,,,recurrido,,,,194
+2023-06-11,paso,provisorio,diputados,seccion,4,,,,impugnado,,,,96
+2023-06-11,paso,provisorio,diputados,seccion,4,,,,blanco,,,,23016
+2023-06-11,paso,provisorio,gobernador,provincia,,,,,positivo,LA UNION MENDOCINA,504,,200433
+2023-06-11,paso,provisorio,gobernador,provincia,,,,,positivo,CAMBIA MENDOZA,501 A,,256214
+2023-06-11,paso,provisorio,gobernador,provincia,,,,,positivo,CAMBIA MENDOZA,501 B,,165352
+2023-06-11,paso,provisorio,gobernador,provincia,,,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503 A,,29499
+2023-06-11,paso,provisorio,gobernador,provincia,,,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503 B,,9487
+2023-06-11,paso,provisorio,gobernador,provincia,,,,,positivo,ELEGÍ MENDOZA,502 C,,66658
+2023-06-11,paso,provisorio,gobernador,provincia,,,,,positivo,ELEGÍ MENDOZA,502 D,,51382
+2023-06-11,paso,provisorio,gobernador,provincia,,,,,positivo,ELEGÍ MENDOZA,502 A,,26857
+2023-06-11,paso,provisorio,gobernador,provincia,,,,,positivo,ELEGÍ MENDOZA,502 B,,9997
+2023-06-11,paso,provisorio,gobernador,provincia,,,,,positivo,PARTIDO VERDE,181,,44306
+2023-06-11,paso,provisorio,gobernador,provincia,,,,,nulo,,,,61966
+2023-06-11,paso,provisorio,gobernador,provincia,,,,,recurrido,,,,3023
+2023-06-11,paso,provisorio,gobernador,provincia,,,,,impugnado,,,,234
+2023-06-11,paso,provisorio,gobernador,provincia,,,,,blanco,,,,62377
+2023-06-11,paso,provisorio,intendente,departamento,1,Capital,,,positivo,LA UNION MENDOCINA,504,,8542
+2023-06-11,paso,provisorio,intendente,departamento,1,Capital,,,positivo,CAMBIA MENDOZA,501,,35246
+2023-06-11,paso,provisorio,intendente,departamento,1,Capital,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,2974
+2023-06-11,paso,provisorio,intendente,departamento,1,Capital,,,positivo,ELEGÍ MENDOZA,502,,8437
+2023-06-11,paso,provisorio,intendente,departamento,1,Capital,,,positivo,PARTIDO VERDE,181,,3442
+2023-06-11,paso,provisorio,intendente,departamento,1,Capital,,,nulo,,,,3152
+2023-06-11,paso,provisorio,intendente,departamento,1,Capital,,,recurrido,,,,83
+2023-06-11,paso,provisorio,intendente,departamento,1,Capital,,,impugnado,,,,5
+2023-06-11,paso,provisorio,intendente,departamento,1,Capital,,,blanco,,,,4635
+2023-06-11,paso,provisorio,intendente,departamento,1,Guaymallén,,,positivo,LA UNION MENDOCINA,504,,31442
+2023-06-11,paso,provisorio,intendente,departamento,1,Guaymallén,,,positivo,CAMBIA MENDOZA,501,,61718
+2023-06-11,paso,provisorio,intendente,departamento,1,Guaymallén,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,7553
+2023-06-11,paso,provisorio,intendente,departamento,1,Guaymallén,,,positivo,ELEGÍ MENDOZA,502,,22654
+2023-06-11,paso,provisorio,intendente,departamento,1,Guaymallén,,,positivo,PARTIDO VERDE,181,,7666
+2023-06-11,paso,provisorio,intendente,departamento,1,Guaymallén,,,nulo,,,,11404
+2023-06-11,paso,provisorio,intendente,departamento,1,Guaymallén,,,recurrido,,,,631
+2023-06-11,paso,provisorio,intendente,departamento,1,Guaymallén,,,impugnado,,,,29
+2023-06-11,paso,provisorio,intendente,departamento,1,Guaymallén,,,blanco,,,,13875
+2023-06-11,paso,provisorio,intendente,departamento,1,Las Heras,,,positivo,LA UNION MENDOCINA,504,,26001
+2023-06-11,paso,provisorio,intendente,departamento,1,Las Heras,,,positivo,CAMBIA MENDOZA,501,,34352
+2023-06-11,paso,provisorio,intendente,departamento,1,Las Heras,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,3991
+2023-06-11,paso,provisorio,intendente,departamento,1,Las Heras,,,positivo,ELEGÍ MENDOZA,502,,22561
+2023-06-11,paso,provisorio,intendente,departamento,1,Las Heras,,,positivo,HACIENDO LAS HERAS,325,,732
+2023-06-11,paso,provisorio,intendente,departamento,1,Las Heras,,,positivo,PARTIDO VERDE,181,,5370
+2023-06-11,paso,provisorio,intendente,departamento,1,Las Heras,,,nulo,,,,9422
+2023-06-11,paso,provisorio,intendente,departamento,1,Las Heras,,,recurrido,,,,694
+2023-06-11,paso,provisorio,intendente,departamento,1,Las Heras,,,impugnado,,,,16
+2023-06-11,paso,provisorio,intendente,departamento,1,Las Heras,,,blanco,,,,9914
+2023-06-11,paso,provisorio,intendente,departamento,2,Junín,,,positivo,LA UNION MENDOCINA,504,,2482
+2023-06-11,paso,provisorio,intendente,departamento,2,Junín,,,positivo,CAMBIA MENDOZA,501,,16970
+2023-06-11,paso,provisorio,intendente,departamento,2,Junín,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,407
+2023-06-11,paso,provisorio,intendente,departamento,2,Junín,,,positivo,ELEGÍ MENDOZA,502,,3198
+2023-06-11,paso,provisorio,intendente,departamento,2,Junín,,,positivo,PARTIDO VERDE,181,,761
+2023-06-11,paso,provisorio,intendente,departamento,2,Junín,,,nulo,,,,1434
+2023-06-11,paso,provisorio,intendente,departamento,2,Junín,,,recurrido,,,,73
+2023-06-11,paso,provisorio,intendente,departamento,2,Junín,,,impugnado,,,,0
+2023-06-11,paso,provisorio,intendente,departamento,2,Junín,,,blanco,,,,1616
+2023-06-11,paso,provisorio,intendente,departamento,2,Rivadavia,,,positivo,LA UNION MENDOCINA,504,,2524
+2023-06-11,paso,provisorio,intendente,departamento,2,Rivadavia,,,positivo,CAMBIA MENDOZA,501,,10410
+2023-06-11,paso,provisorio,intendente,departamento,2,Rivadavia,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,617
+2023-06-11,paso,provisorio,intendente,departamento,2,Rivadavia,,,positivo,ELEGÍ MENDOZA,502,,5652
+2023-06-11,paso,provisorio,intendente,departamento,2,Rivadavia,,,positivo,SEMBRAR,328,,7943
+2023-06-11,paso,provisorio,intendente,departamento,2,Rivadavia,,,positivo,PARTIDO VERDE,181,,524
+2023-06-11,paso,provisorio,intendente,departamento,2,Rivadavia,,,nulo,,,,1973
+2023-06-11,paso,provisorio,intendente,departamento,2,Rivadavia,,,recurrido,,,,37
+2023-06-11,paso,provisorio,intendente,departamento,2,Rivadavia,,,impugnado,,,,45
+2023-06-11,paso,provisorio,intendente,departamento,2,Rivadavia,,,blanco,,,,2605
+2023-06-11,paso,provisorio,intendente,departamento,2,San Martín,,,positivo,LA UNION MENDOCINA,504,,11579
+2023-06-11,paso,provisorio,intendente,departamento,2,San Martín,,,positivo,CAMBIA MENDOZA,501,,30000
+2023-06-11,paso,provisorio,intendente,departamento,2,San Martín,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,1379
+2023-06-11,paso,provisorio,intendente,departamento,2,San Martín,,,positivo,ELEGÍ MENDOZA,502,,12052
+2023-06-11,paso,provisorio,intendente,departamento,2,San Martín,,,positivo,PARTIDO VERDE,181,,1537
+2023-06-11,paso,provisorio,intendente,departamento,2,San Martín,,,nulo,,,,3716
+2023-06-11,paso,provisorio,intendente,departamento,2,San Martín,,,recurrido,,,,285
+2023-06-11,paso,provisorio,intendente,departamento,2,San Martín,,,impugnado,,,,7
+2023-06-11,paso,provisorio,intendente,departamento,2,San Martín,,,blanco,,,,4610
+2023-06-11,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,LA UNION MENDOCINA,504,,15320
+2023-06-11,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,CAMBIA MENDOZA,501,,51001
+2023-06-11,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,4737
+2023-06-11,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,ELEGÍ MENDOZA,502,,11740
+2023-06-11,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,PARTIDO VERDE,181,,5705
+2023-06-11,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,nulo,,,,7274
+2023-06-11,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,recurrido,,,,354
+2023-06-11,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,impugnado,,,,68
+2023-06-11,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,blanco,,,,8881
+2023-06-11,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,LA UNION MENDOCINA,504,,33907
+2023-06-11,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,CAMBIA MENDOZA,501,,23921
+2023-06-11,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,2701
+2023-06-11,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,ELEGÍ MENDOZA,502,,7112
+2023-06-11,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,PARTIDO VERDE,181,,2554
+2023-06-11,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,nulo,,,,3758
+2023-06-11,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,recurrido,,,,157
+2023-06-11,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,impugnado,,,,25
+2023-06-11,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,blanco,,,,6238
+2023-06-11,paso,provisorio,intendente,departamento,3,Tupungato,,,positivo,LA UNION MENDOCINA,504,,3834
+2023-06-11,paso,provisorio,intendente,departamento,3,Tupungato,,,positivo,CAMBIA MENDOZA,501,,7732
+2023-06-11,paso,provisorio,intendente,departamento,3,Tupungato,,,positivo,NUEVO TUPUNGATO,320,,1068
+2023-06-11,paso,provisorio,intendente,departamento,3,Tupungato,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,462
+2023-06-11,paso,provisorio,intendente,departamento,3,Tupungato,,,positivo,ELEGÍ MENDOZA,502,,3976
+2023-06-11,paso,provisorio,intendente,departamento,3,Tupungato,,,nulo,,,,954
+2023-06-11,paso,provisorio,intendente,departamento,3,Tupungato,,,recurrido,,,,48
+2023-06-11,paso,provisorio,intendente,departamento,3,Tupungato,,,impugnado,,,,1
+2023-06-11,paso,provisorio,intendente,departamento,3,Tupungato,,,blanco,,,,1432
+2023-06-11,paso,provisorio,intendente,departamento,4,General Alvear,,,positivo,LA UNION MENDOCINA,504,,3527
+2023-06-11,paso,provisorio,intendente,departamento,4,General Alvear,,,positivo,CAMBIA MENDOZA,501,,13989
+2023-06-11,paso,provisorio,intendente,departamento,4,General Alvear,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,335
+2023-06-11,paso,provisorio,intendente,departamento,4,General Alvear,,,positivo,ELEGÍ MENDOZA,502,,3540
+2023-06-11,paso,provisorio,intendente,departamento,4,General Alvear,,,nulo,,,,1144
+2023-06-11,paso,provisorio,intendente,departamento,4,General Alvear,,,recurrido,,,,59
+2023-06-11,paso,provisorio,intendente,departamento,4,General Alvear,,,impugnado,,,,3
+2023-06-11,paso,provisorio,intendente,departamento,4,General Alvear,,,blanco,,,,1522
+2023-06-11,paso,provisorio,intendente,departamento,4,Malargüe,,,positivo,LA UNION MENDOCINA,504,,2353
+2023-06-11,paso,provisorio,intendente,departamento,4,Malargüe,,,positivo,CAMBIA MENDOZA,501,,3035
+2023-06-11,paso,provisorio,intendente,departamento,4,Malargüe,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503,,132
+2023-06-11,paso,provisorio,intendente,departamento,4,Malargüe,,,positivo,ELEGÍ MENDOZA,502,,8663
+2023-06-11,paso,provisorio,intendente,departamento,4,Malargüe,,,positivo,RECONSTRUYENDO MALARGÜE,329,,861
+2023-06-11,paso,provisorio,intendente,departamento,4,Malargüe,,,nulo,,,,725
+2023-06-11,paso,provisorio,intendente,departamento,4,Malargüe,,,recurrido,,,,55
+2023-06-11,paso,provisorio,intendente,departamento,4,Malargüe,,,impugnado,,,,2
+2023-06-11,paso,provisorio,intendente,departamento,4,Malargüe,,,blanco,,,,787
+2023-06-11,paso,provisorio,senadores,seccion,1,,,,positivo,LA UNION MENDOCINA,504,,62707
+2023-06-11,paso,provisorio,senadores,seccion,1,,,,positivo,CAMBIA MENDOZA,501 A,,89626
+2023-06-11,paso,provisorio,senadores,seccion,1,,,,positivo,CAMBIA MENDOZA,501 B,,46087
+2023-06-11,paso,provisorio,senadores,seccion,1,,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503 A,,12993
+2023-06-11,paso,provisorio,senadores,seccion,1,,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503 B,,3829
+2023-06-11,paso,provisorio,senadores,seccion,1,,,,positivo,ELEGÍ MENDOZA,502 C,,22737
+2023-06-11,paso,provisorio,senadores,seccion,1,,,,positivo,ELEGÍ MENDOZA,502 D,,13917
+2023-06-11,paso,provisorio,senadores,seccion,1,,,,positivo,ELEGÍ MENDOZA,502 A,,9944
+2023-06-11,paso,provisorio,senadores,seccion,1,,,,positivo,ELEGÍ MENDOZA,502 B,,4291
+2023-06-11,paso,provisorio,senadores,seccion,1,,,,positivo,PARTIDO VERDE,181,,18303
+2023-06-11,paso,provisorio,senadores,seccion,1,,,,nulo,,,,23389
+2023-06-11,paso,provisorio,senadores,seccion,1,,,,recurrido,,,,1381
+2023-06-11,paso,provisorio,senadores,seccion,1,,,,impugnado,,,,48
+2023-06-11,paso,provisorio,senadores,seccion,1,,,,blanco,,,,46718
+2023-06-11,paso,provisorio,senadores,seccion,2,,,,positivo,LA UNION MENDOCINA,504,,29771
+2023-06-11,paso,provisorio,senadores,seccion,2,,,,positivo,CAMBIA MENDOZA,501 A,,55534
+2023-06-11,paso,provisorio,senadores,seccion,2,,,,positivo,CAMBIA MENDOZA,501 B,,39329
+2023-06-11,paso,provisorio,senadores,seccion,2,,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503 A,,6360
+2023-06-11,paso,provisorio,senadores,seccion,2,,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503 B,,2845
+2023-06-11,paso,provisorio,senadores,seccion,2,,,,positivo,ELEGÍ MENDOZA,502 C,,20423
+2023-06-11,paso,provisorio,senadores,seccion,2,,,,positivo,ELEGÍ MENDOZA,502 D,,10245
+2023-06-11,paso,provisorio,senadores,seccion,2,,,,positivo,ELEGÍ MENDOZA,502 A,,5929
+2023-06-11,paso,provisorio,senadores,seccion,2,,,,positivo,ELEGÍ MENDOZA,502 B,,2309
+2023-06-11,paso,provisorio,senadores,seccion,2,,,,positivo,PARTIDO VERDE,181,,9684
+2023-06-11,paso,provisorio,senadores,seccion,2,,,,nulo,,,,12899
+2023-06-11,paso,provisorio,senadores,seccion,2,,,,recurrido,,,,520
+2023-06-11,paso,provisorio,senadores,seccion,2,,,,impugnado,,,,151
+2023-06-11,paso,provisorio,senadores,seccion,2,,,,blanco,,,,45907
+2023-06-11,paso,provisorio,senadores,seccion,3,,,,positivo,LA UNION MENDOCINA,504,,57007
+2023-06-11,paso,provisorio,senadores,seccion,3,,,,positivo,CAMBIA MENDOZA,501 A,,62284
+2023-06-11,paso,provisorio,senadores,seccion,3,,,,positivo,CAMBIA MENDOZA,501 B,,31342
+2023-06-11,paso,provisorio,senadores,seccion,3,,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503 A,,7823
+2023-06-11,paso,provisorio,senadores,seccion,3,,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503 B,,2606
+2023-06-11,paso,provisorio,senadores,seccion,3,,,,positivo,ELEGÍ MENDOZA,502 C,,13067
+2023-06-11,paso,provisorio,senadores,seccion,3,,,,positivo,ELEGÍ MENDOZA,502 A,,7368
+2023-06-11,paso,provisorio,senadores,seccion,3,,,,positivo,ELEGÍ MENDOZA,502 D,,6571
+2023-06-11,paso,provisorio,senadores,seccion,3,,,,positivo,ELEGÍ MENDOZA,502 B,,2103
+2023-06-11,paso,provisorio,senadores,seccion,3,,,,positivo,PARTIDO VERDE,181,,11956
+2023-06-11,paso,provisorio,senadores,seccion,3,,,,nulo,,,,13795
+2023-06-11,paso,provisorio,senadores,seccion,3,,,,recurrido,,,,622
+2023-06-11,paso,provisorio,senadores,seccion,3,,,,impugnado,,,,114
+2023-06-11,paso,provisorio,senadores,seccion,3,,,,blanco,,,,35490
+2023-06-11,paso,provisorio,senadores,seccion,4,,,,positivo,LA UNION MENDOCINA,504,,17954
+2023-06-11,paso,provisorio,senadores,seccion,4,,,,positivo,CAMBIA MENDOZA,501 A,,33903
+2023-06-11,paso,provisorio,senadores,seccion,4,,,,positivo,CAMBIA MENDOZA,501 B,,11826
+2023-06-11,paso,provisorio,senadores,seccion,4,,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503 A,,2841
+2023-06-11,paso,provisorio,senadores,seccion,4,,,,positivo,FRENTE DE IZQUIERDA Y TRABAJADORES - UNIDAD,503 B,,962
+2023-06-11,paso,provisorio,senadores,seccion,4,,,,positivo,ELEGÍ MENDOZA,502 D,,16853
+2023-06-11,paso,provisorio,senadores,seccion,4,,,,positivo,ELEGÍ MENDOZA,502 C,,7370
+2023-06-11,paso,provisorio,senadores,seccion,4,,,,positivo,ELEGÍ MENDOZA,502 A,,3098
+2023-06-11,paso,provisorio,senadores,seccion,4,,,,positivo,ELEGÍ MENDOZA,502 B,,1516
+2023-06-11,paso,provisorio,senadores,seccion,4,,,,positivo,PARTIDO VERDE,181,,3678
+2023-06-11,paso,provisorio,senadores,seccion,4,,,,nulo,,,,6830
+2023-06-11,paso,provisorio,senadores,seccion,4,,,,recurrido,,,,196
+2023-06-11,paso,provisorio,senadores,seccion,4,,,,impugnado,,,,46
+2023-06-11,paso,provisorio,senadores,seccion,4,,,,blanco,,,,21926
+2023-09-03,municipal,provisorio,concejales,departamento,1,Lavalle,,,positivo,ELEGÍ GESTIÓN LAVALLE,506,,10478
+2023-09-03,municipal,provisorio,concejales,departamento,1,Lavalle,,,positivo,CAMBIA MENDOZA,501,,5563
+2023-09-03,municipal,provisorio,concejales,departamento,1,Lavalle,,,positivo,FRENTE LIBERTARIO DEMÓCRATA Y JUBILADOS,503,,2698
+2023-09-03,municipal,provisorio,concejales,departamento,1,Lavalle,,,nulo,,,,588
+2023-09-03,municipal,provisorio,concejales,departamento,1,Lavalle,,,recurrido,,,,44
+2023-09-03,municipal,provisorio,concejales,departamento,1,Lavalle,,,impugnado,,,,53
+2023-09-03,municipal,provisorio,concejales,departamento,1,Lavalle,,,blanco,,,,4259
+2023-09-03,municipal,provisorio,concejales,departamento,2,La Paz,,,positivo,CAMBIA MENDOZA,501,,2959
+2023-09-03,municipal,provisorio,concejales,departamento,2,La Paz,,,positivo,FRENTE ELEGÍ GESTIÓN LA PAZ,506,,4038
+2023-09-03,municipal,provisorio,concejales,departamento,2,La Paz,,,nulo,,,,100
+2023-09-03,municipal,provisorio,concejales,departamento,2,La Paz,,,recurrido,,,,20
+2023-09-03,municipal,provisorio,concejales,departamento,2,La Paz,,,impugnado,,,,16
+2023-09-03,municipal,provisorio,concejales,departamento,2,La Paz,,,blanco,,,,778
+2023-09-03,municipal,provisorio,concejales,departamento,2,Maipú,,,positivo,CAMBIA MENDOZA,501,,25454
+2023-09-03,municipal,provisorio,concejales,departamento,2,Maipú,,,positivo,FRENTE LIBERTARIO DEMÓCRATA Y JUBILADOS,503,,13290
+2023-09-03,municipal,provisorio,concejales,departamento,2,Maipú,,,positivo,FRENTE ELEGÍ MAIPÚ CRECE,506,,41024
+2023-09-03,municipal,provisorio,concejales,departamento,2,Maipú,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,502,,2622
+2023-09-03,municipal,provisorio,concejales,departamento,2,Maipú,,,nulo,,,,2683
+2023-09-03,municipal,provisorio,concejales,departamento,2,Maipú,,,recurrido,,,,127
+2023-09-03,municipal,provisorio,concejales,departamento,2,Maipú,,,impugnado,,,,34
+2023-09-03,municipal,provisorio,concejales,departamento,2,Maipú,,,blanco,,,,11075
+2023-09-03,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,positivo,FRENTE LIBERTARIO DEMÓCRATA Y JUBILADOS,503,,723
+2023-09-03,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,positivo,ELEGÍ SANTA ROSA,506,,4937
+2023-09-03,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,positivo,CAMBIA MENDOZA,501,,3650
+2023-09-03,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,nulo,,,,266
+2023-09-03,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,recurrido,,,,26
+2023-09-03,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,impugnado,,,,0
+2023-09-03,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,blanco,,,,1459
+2023-09-03,municipal,provisorio,concejales,departamento,3,San Carlos,,,positivo,FRENTE ENCUENTRO POR SAN CARLOS,504,,5445
+2023-09-03,municipal,provisorio,concejales,departamento,3,San Carlos,,,positivo,PARTIDO VERDE,181,,4931
+2023-09-03,municipal,provisorio,concejales,departamento,3,San Carlos,,,positivo,CAMBIA MENDOZA - NUEVOS RUMBOS,501,,5401
+2023-09-03,municipal,provisorio,concejales,departamento,3,San Carlos,,,positivo,ELEGÍ SAN CARLOS,506,,1052
+2023-09-03,municipal,provisorio,concejales,departamento,3,San Carlos,,,nulo,,,,642
+2023-09-03,municipal,provisorio,concejales,departamento,3,San Carlos,,,recurrido,,,,60
+2023-09-03,municipal,provisorio,concejales,departamento,3,San Carlos,,,impugnado,,,,1
+2023-09-03,municipal,provisorio,concejales,departamento,3,San Carlos,,,blanco,,,,4013
+2023-09-03,municipal,provisorio,concejales,departamento,3,Tunuyán,,,positivo,ELEGÍ GESTIÓN TUNUYÁN,506,,14310
+2023-09-03,municipal,provisorio,concejales,departamento,3,Tunuyán,,,positivo,CAMBIA MENDOZA,501,,10972
+2023-09-03,municipal,provisorio,concejales,departamento,3,Tunuyán,,,nulo,,,,863
+2023-09-03,municipal,provisorio,concejales,departamento,3,Tunuyán,,,recurrido,,,,67
+2023-09-03,municipal,provisorio,concejales,departamento,3,Tunuyán,,,impugnado,,,,0
+2023-09-03,municipal,provisorio,concejales,departamento,3,Tunuyán,,,blanco,,,,4111
+2023-09-03,municipal,provisorio,concejales,departamento,4,San Rafael,,,positivo,CAMBIA MENDOZA,501,,23718
+2023-09-03,municipal,provisorio,concejales,departamento,4,San Rafael,,,positivo,FRENTE LIBERTARIO DEMÓCRATA Y JUBILADOS,503,,18269
+2023-09-03,municipal,provisorio,concejales,departamento,4,San Rafael,,,positivo,ELEGÍ SAN RAFAEL AVANZA,506,,37403
+2023-09-03,municipal,provisorio,concejales,departamento,4,San Rafael,,,nulo,,,,2524
+2023-09-03,municipal,provisorio,concejales,departamento,4,San Rafael,,,recurrido,,,,74
+2023-09-03,municipal,provisorio,concejales,departamento,4,San Rafael,,,impugnado,,,,4
+2023-09-03,municipal,provisorio,concejales,departamento,4,San Rafael,,,blanco,,,,13825
+2023-09-03,municipal,provisorio,intendente,departamento,1,Lavalle,,,positivo,ELEGÍ GESTIÓN LAVALLE,506,"GONZALEZ, EDGARDO ARNALDO",13410
+2023-09-03,municipal,provisorio,intendente,departamento,1,Lavalle,,,positivo,CAMBIA MENDOZA,501,"LUPPO, LUCAS DANIEL",6439
+2023-09-03,municipal,provisorio,intendente,departamento,1,Lavalle,,,positivo,FRENTE LIBERTARIO DEMÓCRATA Y JUBILADOS,503,"TORRECILLA, BETINA ESTHER",2622
+2023-09-03,municipal,provisorio,intendente,departamento,1,Lavalle,,,nulo,,,,636
+2023-09-03,municipal,provisorio,intendente,departamento,1,Lavalle,,,recurrido,,,,48
+2023-09-03,municipal,provisorio,intendente,departamento,1,Lavalle,,,impugnado,,,,3
+2023-09-03,municipal,provisorio,intendente,departamento,1,Lavalle,,,blanco,,,,388
+2023-09-03,municipal,provisorio,intendente,departamento,2,La Paz,,,positivo,CAMBIA MENDOZA,501,"BLANCO, CESAR RAMIRO",3216
+2023-09-03,municipal,provisorio,intendente,departamento,2,La Paz,,,positivo,FRENTE ELEGÍ GESTIÓN LA PAZ,506,"UBIETA, FERNANDO ALCIDES",4505
+2023-09-03,municipal,provisorio,intendente,departamento,2,La Paz,,,nulo,,,,104
+2023-09-03,municipal,provisorio,intendente,departamento,2,La Paz,,,recurrido,,,,19
+2023-09-03,municipal,provisorio,intendente,departamento,2,La Paz,,,impugnado,,,,0
+2023-09-03,municipal,provisorio,intendente,departamento,2,La Paz,,,blanco,,,,65
+2023-09-03,municipal,provisorio,intendente,departamento,2,Maipú,,,positivo,CAMBIA MENDOZA,501,"PINTI, MAURICIO OSCAR",27436
+2023-09-03,municipal,provisorio,intendente,departamento,2,Maipú,,,positivo,FRENTE LIBERTARIO DEMÓCRATA Y JUBILADOS,503,"CORDOBA, FELISA CLAUDIA CARINA",13088
+2023-09-03,municipal,provisorio,intendente,departamento,2,Maipú,,,positivo,FRENTE ELEGÍ MAIPÚ CRECE,506,"STEVANATO, JOSE MATIAS",49259
+2023-09-03,municipal,provisorio,intendente,departamento,2,Maipú,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,502,"CORTEZ, PABLO NICOLAS",2323
+2023-09-03,municipal,provisorio,intendente,departamento,2,Maipú,,,nulo,,,,2858
+2023-09-03,municipal,provisorio,intendente,departamento,2,Maipú,,,recurrido,,,,135
+2023-09-03,municipal,provisorio,intendente,departamento,2,Maipú,,,impugnado,,,,3
+2023-09-03,municipal,provisorio,intendente,departamento,2,Maipú,,,blanco,,,,1501
+2023-09-03,municipal,provisorio,intendente,departamento,2,Santa Rosa,,,positivo,ELEGÍ SANTA ROSA,506,"DESTEFANIS, MARIA FLOR",6153
+2023-09-03,municipal,provisorio,intendente,departamento,2,Santa Rosa,,,positivo,CAMBIA MENDOZA,501,"FERNANDEZ, LEONARDO ENZO",4439
+2023-09-03,municipal,provisorio,intendente,departamento,2,Santa Rosa,,,nulo,,,,253
+2023-09-03,municipal,provisorio,intendente,departamento,2,Santa Rosa,,,recurrido,,,,27
+2023-09-03,municipal,provisorio,intendente,departamento,2,Santa Rosa,,,impugnado,,,,0
+2023-09-03,municipal,provisorio,intendente,departamento,2,Santa Rosa,,,blanco,,,,255
+2023-09-03,municipal,provisorio,intendente,departamento,3,San Carlos,,,positivo,FRENTE ENCUENTRO POR SAN CARLOS,504,"MORILLAS, MARTIN ALEJANDRO",6937
+2023-09-03,municipal,provisorio,intendente,departamento,3,San Carlos,,,positivo,PARTIDO VERDE,181,"ROMANO, MARCELO MARTIN",6204
+2023-09-03,municipal,provisorio,intendente,departamento,3,San Carlos,,,positivo,CAMBIA MENDOZA - NUEVOS RUMBOS,501,"PANNOCCHIA, SILVIO ROMAN",6447
+2023-09-03,municipal,provisorio,intendente,departamento,3,San Carlos,,,positivo,ELEGÍ SAN CARLOS,506,"TORRES, JUAN GABRIEL",1040
+2023-09-03,municipal,provisorio,intendente,departamento,3,San Carlos,,,nulo,,,,658
+2023-09-03,municipal,provisorio,intendente,departamento,3,San Carlos,,,recurrido,,,,67
+2023-09-03,municipal,provisorio,intendente,departamento,3,San Carlos,,,impugnado,,,,1
+2023-09-03,municipal,provisorio,intendente,departamento,3,San Carlos,,,blanco,,,,325
+2023-09-03,municipal,provisorio,intendente,departamento,3,Tunuyán,,,positivo,ELEGÍ GESTIÓN TUNUYÁN,506,"ANDRAOS, JOSE EMIR",16213
+2023-09-03,municipal,provisorio,intendente,departamento,3,Tunuyán,,,positivo,CAMBIA MENDOZA,501,"LOPEZ, LUIS MANUEL",12518
+2023-09-03,municipal,provisorio,intendente,departamento,3,Tunuyán,,,nulo,,,,886
+2023-09-03,municipal,provisorio,intendente,departamento,3,Tunuyán,,,recurrido,,,,77
+2023-09-03,municipal,provisorio,intendente,departamento,3,Tunuyán,,,impugnado,,,,0
+2023-09-03,municipal,provisorio,intendente,departamento,3,Tunuyán,,,blanco,,,,728
+2023-09-03,municipal,provisorio,intendente,departamento,4,San Rafael,,,positivo,CAMBIA MENDOZA,501,"FREIDEMBERG, ABEL LEONARDO",25378
+2023-09-03,municipal,provisorio,intendente,departamento,4,San Rafael,,,positivo,FRENTE LIBERTARIO DEMÓCRATA Y JUBILADOS,503,"BIANCHI, LUIS RODOLFO",20098
+2023-09-03,municipal,provisorio,intendente,departamento,4,San Rafael,,,positivo,ELEGÍ SAN RAFAEL AVANZA,506,"FELIX, OMAR CHAFI",47435
+2023-09-03,municipal,provisorio,intendente,departamento,4,San Rafael,,,nulo,,,,2644
+2023-09-03,municipal,provisorio,intendente,departamento,4,San Rafael,,,recurrido,,,,83
+2023-09-03,municipal,provisorio,intendente,departamento,4,San Rafael,,,impugnado,,,,4
+2023-09-03,municipal,provisorio,intendente,departamento,4,San Rafael,,,blanco,,,,1620
+2023-09-24,general,provisorio,concejales,departamento,1,Capital,,,positivo,CAMBIA MENDOZA,501,,30599
+2023-09-24,general,provisorio,concejales,departamento,1,Capital,,,positivo,LA UNIÓN MENDOCINA,504,,11381
+2023-09-24,general,provisorio,concejales,departamento,1,Capital,,,positivo,PARTIDO VERDE,181,,7821
+2023-09-24,general,provisorio,concejales,departamento,1,Capital,,,positivo,ELEGÍ MENDOZA,502,,6679
+2023-09-24,general,provisorio,concejales,departamento,1,Capital,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,503,,3253
+2023-09-24,general,provisorio,concejales,departamento,1,Capital,,,blanco,,,,5768
+2023-09-24,general,provisorio,concejales,departamento,1,Capital,,,nulo,,,,1857
+2023-09-24,general,provisorio,concejales,departamento,1,Capital,,,recurrido,,,,60
+2023-09-24,general,provisorio,concejales,departamento,1,Capital,,,impugnado,,,,13
+2023-09-24,general,provisorio,concejales,departamento,1,Guaymallén,,,positivo,CAMBIA MENDOZA,501,,57952
+2023-09-24,general,provisorio,concejales,departamento,1,Guaymallén,,,positivo,LA UNIÓN MENDOCINA,504,,37034
+2023-09-24,general,provisorio,concejales,departamento,1,Guaymallén,,,positivo,PARTIDO VERDE,181,,19299
+2023-09-24,general,provisorio,concejales,departamento,1,Guaymallén,,,positivo,ELEGÍ MENDOZA,502,,15942
+2023-09-24,general,provisorio,concejales,departamento,1,Guaymallén,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,503,,7177
+2023-09-24,general,provisorio,concejales,departamento,1,Guaymallén,,,blanco,,,,17835
+2023-09-24,general,provisorio,concejales,departamento,1,Guaymallén,,,nulo,,,,5374
+2023-09-24,general,provisorio,concejales,departamento,1,Guaymallén,,,recurrido,,,,178
+2023-09-24,general,provisorio,concejales,departamento,1,Guaymallén,,,impugnado,,,,7
+2023-09-24,general,provisorio,concejales,departamento,1,Las Heras,,,positivo,CAMBIA MENDOZA,501,,29737
+2023-09-24,general,provisorio,concejales,departamento,1,Las Heras,,,positivo,LA UNIÓN MENDOCINA,504,,27734
+2023-09-24,general,provisorio,concejales,departamento,1,Las Heras,,,positivo,ELEGÍ MENDOZA,502,,16605
+2023-09-24,general,provisorio,concejales,departamento,1,Las Heras,,,positivo,PARTIDO VERDE,181,,16157
+2023-09-24,general,provisorio,concejales,departamento,1,Las Heras,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,503,,4621
+2023-09-24,general,provisorio,concejales,departamento,1,Las Heras,,,blanco,,,,14935
+2023-09-24,general,provisorio,concejales,departamento,1,Las Heras,,,nulo,,,,4225
+2023-09-24,general,provisorio,concejales,departamento,1,Las Heras,,,recurrido,,,,272
+2023-09-24,general,provisorio,concejales,departamento,1,Las Heras,,,impugnado,,,,30
+2023-09-24,general,provisorio,concejales,departamento,2,Junín,,,positivo,CAMBIA MENDOZA,501,,11818
+2023-09-24,general,provisorio,concejales,departamento,2,Junín,,,positivo,LA UNIÓN MENDOCINA,504,,5035
+2023-09-24,general,provisorio,concejales,departamento,2,Junín,,,positivo,ELEGÍ MENDOZA,502,,2143
+2023-09-24,general,provisorio,concejales,departamento,2,Junín,,,positivo,PARTIDO VERDE,181,,1680
+2023-09-24,general,provisorio,concejales,departamento,2,Junín,,,blanco,,,,6178
+2023-09-24,general,provisorio,concejales,departamento,2,Junín,,,nulo,,,,823
+2023-09-24,general,provisorio,concejales,departamento,2,Junín,,,recurrido,,,,21
+2023-09-24,general,provisorio,concejales,departamento,2,Junín,,,impugnado,,,,0
+2023-09-24,general,provisorio,concejales,departamento,2,Rivadavia,,,positivo,CAMBIA MENDOZA,501,,9862
+2023-09-24,general,provisorio,concejales,departamento,2,Rivadavia,,,positivo,SEMBRAR,328,,7985
+2023-09-24,general,provisorio,concejales,departamento,2,Rivadavia,,,positivo,ELEGÍ MENDOZA,502,,3947
+2023-09-24,general,provisorio,concejales,departamento,2,Rivadavia,,,positivo,LA UNIÓN MENDOCINA,504,,2748
+2023-09-24,general,provisorio,concejales,departamento,2,Rivadavia,,,blanco,,,,7973
+2023-09-24,general,provisorio,concejales,departamento,2,Rivadavia,,,nulo,,,,987
+2023-09-24,general,provisorio,concejales,departamento,2,Rivadavia,,,recurrido,,,,78
+2023-09-24,general,provisorio,concejales,departamento,2,Rivadavia,,,impugnado,,,,1
+2023-09-24,general,provisorio,concejales,departamento,2,San Martín,,,positivo,CAMBIA MENDOZA,501,,25802
+2023-09-24,general,provisorio,concejales,departamento,2,San Martín,,,positivo,LA UNIÓN MENDOCINA,504,,13124
+2023-09-24,general,provisorio,concejales,departamento,2,San Martín,,,positivo,ELEGÍ MENDOZA,502,,7754
+2023-09-24,general,provisorio,concejales,departamento,2,San Martín,,,positivo,PARTIDO VERDE,181,,4023
+2023-09-24,general,provisorio,concejales,departamento,2,San Martín,,,blanco,,,,13879
+2023-09-24,general,provisorio,concejales,departamento,2,San Martín,,,nulo,,,,2223
+2023-09-24,general,provisorio,concejales,departamento,2,San Martín,,,recurrido,,,,125
+2023-09-24,general,provisorio,concejales,departamento,2,San Martín,,,impugnado,,,,3
+2023-09-24,general,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,CAMBIA MENDOZA,501,,47148
+2023-09-24,general,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,LA UNIÓN MENDOCINA,504,,19455
+2023-09-24,general,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,PARTIDO VERDE,181,,12620
+2023-09-24,general,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,ELEGÍ MENDOZA,502,,11016
+2023-09-24,general,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,503,,5009
+2023-09-24,general,provisorio,concejales,departamento,3,Godoy Cruz,,,blanco,,,,10249
+2023-09-24,general,provisorio,concejales,departamento,3,Godoy Cruz,,,nulo,,,,3247
+2023-09-24,general,provisorio,concejales,departamento,3,Godoy Cruz,,,recurrido,,,,126
+2023-09-24,general,provisorio,concejales,departamento,3,Godoy Cruz,,,impugnado,,,,34
+2023-09-24,general,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,LA UNIÓN MENDOCINA,504,,32036
+2023-09-24,general,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,CAMBIA MENDOZA,501,,22483
+2023-09-24,general,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,ELEGÍ MENDOZA,502,,6701
+2023-09-24,general,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,PARTIDO VERDE,181,,5801
+2023-09-24,general,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,503,,2507
+2023-09-24,general,provisorio,concejales,departamento,3,Luján de Cuyo,,,blanco,,,,9817
+2023-09-24,general,provisorio,concejales,departamento,3,Luján de Cuyo,,,nulo,,,,2401
+2023-09-24,general,provisorio,concejales,departamento,3,Luján de Cuyo,,,recurrido,,,,78
+2023-09-24,general,provisorio,concejales,departamento,3,Luján de Cuyo,,,impugnado,,,,17
+2023-09-24,general,provisorio,concejales,departamento,3,Tupungato,,,positivo,CAMBIA MENDOZA,501,,5827
+2023-09-24,general,provisorio,concejales,departamento,3,Tupungato,,,positivo,LA UNIÓN MENDOCINA,504,,3488
+2023-09-24,general,provisorio,concejales,departamento,3,Tupungato,,,positivo,ELEGÍ MENDOZA,502,,2451
+2023-09-24,general,provisorio,concejales,departamento,3,Tupungato,,,positivo,NUEVO TUPUNGATO,320,,2145
+2023-09-24,general,provisorio,concejales,departamento,3,Tupungato,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,503,,348
+2023-09-24,general,provisorio,concejales,departamento,3,Tupungato,,,blanco,,,,5018
+2023-09-24,general,provisorio,concejales,departamento,3,Tupungato,,,nulo,,,,522
+2023-09-24,general,provisorio,concejales,departamento,3,Tupungato,,,recurrido,,,,42
+2023-09-24,general,provisorio,concejales,departamento,3,Tupungato,,,impugnado,,,,0
+2023-09-24,general,provisorio,concejales,departamento,4,General Alvear,,,positivo,CAMBIA MENDOZA,501,,8549
+2023-09-24,general,provisorio,concejales,departamento,4,General Alvear,,,positivo,LA UNIÓN MENDOCINA,504,,6831
+2023-09-24,general,provisorio,concejales,departamento,4,General Alvear,,,positivo,ELEGÍ MENDOZA,502,,2921
+2023-09-24,general,provisorio,concejales,departamento,4,General Alvear,,,blanco,,,,6163
+2023-09-24,general,provisorio,concejales,departamento,4,General Alvear,,,nulo,,,,700
+2023-09-24,general,provisorio,concejales,departamento,4,General Alvear,,,recurrido,,,,46
+2023-09-24,general,provisorio,concejales,departamento,4,General Alvear,,,impugnado,,,,0
+2023-09-24,general,provisorio,concejales,departamento,4,Malargüe,,,positivo,ELEGÍ MENDOZA,502,,5630
+2023-09-24,general,provisorio,concejales,departamento,4,Malargüe,,,positivo,CAMBIA MENDOZA,501,,3689
+2023-09-24,general,provisorio,concejales,departamento,4,Malargüe,,,positivo,LA UNIÓN MENDOCINA,504,,2244
+2023-09-24,general,provisorio,concejales,departamento,4,Malargüe,,,positivo,RECONSTRUYENDO MALARGÜE,329,,1360
+2023-09-24,general,provisorio,concejales,departamento,4,Malargüe,,,blanco,,,,4173
+2023-09-24,general,provisorio,concejales,departamento,4,Malargüe,,,nulo,,,,445
+2023-09-24,general,provisorio,concejales,departamento,4,Malargüe,,,recurrido,,,,14
+2023-09-24,general,provisorio,concejales,departamento,4,Malargüe,,,impugnado,,,,0
+2023-09-24,general,provisorio,diputados,seccion,1,,,,positivo,CAMBIA MENDOZA,501,,123074
+2023-09-24,general,provisorio,diputados,seccion,1,,,,positivo,LA UNIÓN MENDOCINA,504,,80426
+2023-09-24,general,provisorio,diputados,seccion,1,,,,positivo,PARTIDO VERDE,181,,45711
+2023-09-24,general,provisorio,diputados,seccion,1,,,,positivo,ELEGÍ MENDOZA,502,,44691
+2023-09-24,general,provisorio,diputados,seccion,1,,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,503,,17491
+2023-09-24,general,provisorio,diputados,seccion,1,,,,blanco,,,,41240
+2023-09-24,general,provisorio,diputados,seccion,1,,,,nulo,,,,12232
+2023-09-24,general,provisorio,diputados,seccion,1,,,,recurrido,,,,521
+2023-09-24,general,provisorio,diputados,seccion,1,,,,impugnado,,,,82
+2023-09-24,general,provisorio,diputados,seccion,2,,,,positivo,CAMBIA MENDOZA,501,,83902
+2023-09-24,general,provisorio,diputados,seccion,2,,,,positivo,LA UNIÓN MENDOCINA,504,,47272
+2023-09-24,general,provisorio,diputados,seccion,2,,,,positivo,ELEGÍ MENDOZA,502,,34081
+2023-09-24,general,provisorio,diputados,seccion,2,,,,positivo,PARTIDO VERDE,181,,22770
+2023-09-24,general,provisorio,diputados,seccion,2,,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,503,,10061
+2023-09-24,general,provisorio,diputados,seccion,2,,,,blanco,,,,43798
+2023-09-24,general,provisorio,diputados,seccion,2,,,,nulo,,,,8225
+2023-09-24,general,provisorio,diputados,seccion,2,,,,recurrido,,,,282
+2023-09-24,general,provisorio,diputados,seccion,2,,,,impugnado,,,,5
+2023-09-24,general,provisorio,diputados,seccion,3,,,,positivo,CAMBIA MENDOZA,501,,88216
+2023-09-24,general,provisorio,diputados,seccion,3,,,,positivo,LA UNIÓN MENDOCINA,504,,66516
+2023-09-24,general,provisorio,diputados,seccion,3,,,,positivo,ELEGÍ MENDOZA,502,,26278
+2023-09-24,general,provisorio,diputados,seccion,3,,,,positivo,PARTIDO VERDE,181,,25563
+2023-09-24,general,provisorio,diputados,seccion,3,,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,503,,10704
+2023-09-24,general,provisorio,diputados,seccion,3,,,,blanco,,,,34210
+2023-09-24,general,provisorio,diputados,seccion,3,,,,nulo,,,,7930
+2023-09-24,general,provisorio,diputados,seccion,3,,,,recurrido,,,,286
+2023-09-24,general,provisorio,diputados,seccion,3,,,,impugnado,,,,85
+2023-09-24,general,provisorio,diputados,seccion,4,,,,positivo,CAMBIA MENDOZA,501,,42698
+2023-09-24,general,provisorio,diputados,seccion,4,,,,positivo,LA UNIÓN MENDOCINA,504,,29430
+2023-09-24,general,provisorio,diputados,seccion,4,,,,positivo,ELEGÍ MENDOZA,502,,25726
+2023-09-24,general,provisorio,diputados,seccion,4,,,,positivo,PARTIDO VERDE,181,,7457
+2023-09-24,general,provisorio,diputados,seccion,4,,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,503,,3751
+2023-09-24,general,provisorio,diputados,seccion,4,,,,blanco,,,,23283
+2023-09-24,general,provisorio,diputados,seccion,4,,,,nulo,,,,4765
+2023-09-24,general,provisorio,diputados,seccion,4,,,,recurrido,,,,115
+2023-09-24,general,provisorio,diputados,seccion,4,,,,impugnado,,,,6
+2023-09-24,general,provisorio,gobernador,provincia,,,,,positivo,CAMBIA MENDOZA,501,"CORNEJO Alfredo, CASADO Hebe",367367
+2023-09-24,general,provisorio,gobernador,provincia,,,,,positivo,LA UNIÓN MENDOCINA,504,"DE MARCHI Omar, OROZCO Daniel",275980
+2023-09-24,general,provisorio,gobernador,provincia,,,,,positivo,ELEGÍ MENDOZA,502,"PARISI Omar, ILARDO Lucas",137038
+2023-09-24,general,provisorio,gobernador,provincia,,,,,positivo,PARTIDO VERDE,181,"VADILLO Mario, FUGAZZOTTO Ema",110277
+2023-09-24,general,provisorio,gobernador,provincia,,,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,503,"JIMENEZ Lautaro, BARBEITO Noelia",39360
+2023-09-24,general,provisorio,gobernador,provincia,,,,,blanco,,,,48523
+2023-09-24,general,provisorio,gobernador,provincia,,,,,nulo,,,,35858
+2023-09-24,general,provisorio,gobernador,provincia,,,,,recurrido,,,,1257
+2023-09-24,general,provisorio,gobernador,provincia,,,,,impugnado,,,,59
+2023-09-24,general,provisorio,intendente,departamento,1,Capital,,,positivo,CAMBIA MENDOZA,501,"SUAREZ, Ulpiano",33564
+2023-09-24,general,provisorio,intendente,departamento,1,Capital,,,positivo,LA UNIÓN MENDOCINA,504,"LARICCHIA, Hugo",10903
+2023-09-24,general,provisorio,intendente,departamento,1,Capital,,,positivo,PARTIDO VERDE,181,"GARRIGA, Euge",7237
+2023-09-24,general,provisorio,intendente,departamento,1,Capital,,,positivo,ELEGÍ MENDOZA,502,"LAMBERTI, Gisela",6601
+2023-09-24,general,provisorio,intendente,departamento,1,Capital,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,503,"UCEDA, Gerardo",2976
+2023-09-24,general,provisorio,intendente,departamento,1,Capital,,,blanco,,,,4282
+2023-09-24,general,provisorio,intendente,departamento,1,Capital,,,nulo,,,,1957
+2023-09-24,general,provisorio,intendente,departamento,1,Capital,,,recurrido,,,,59
+2023-09-24,general,provisorio,intendente,departamento,1,Capital,,,impugnado,,,,12
+2023-09-24,general,provisorio,intendente,departamento,1,Guaymallén,,,positivo,CAMBIA MENDOZA,501,"CALVENTE, Marcos",59577
+2023-09-24,general,provisorio,intendente,departamento,1,Guaymallén,,,positivo,LA UNIÓN MENDOCINA,504,"PRADINES, Gabriel",40915
+2023-09-24,general,provisorio,intendente,departamento,1,Guaymallén,,,positivo,PARTIDO VERDE,181,"MELLADO, Oscar Alfredo",18176
+2023-09-24,general,provisorio,intendente,departamento,1,Guaymallén,,,positivo,ELEGÍ MENDOZA,502,"VICENCIO, Natalia",16220
+2023-09-24,general,provisorio,intendente,departamento,1,Guaymallén,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,503,"BUSTAMANTE, Gerardo",6812
+2023-09-24,general,provisorio,intendente,departamento,1,Guaymallén,,,blanco,,,,13224
+2023-09-24,general,provisorio,intendente,departamento,1,Guaymallén,,,nulo,,,,5767
+2023-09-24,general,provisorio,intendente,departamento,1,Guaymallén,,,recurrido,,,,180
+2023-09-24,general,provisorio,intendente,departamento,1,Guaymallén,,,impugnado,,,,8
+2023-09-24,general,provisorio,intendente,departamento,1,Las Heras,,,positivo,CAMBIA MENDOZA,501,"LO PRESTI, Francisco",32181
+2023-09-24,general,provisorio,intendente,departamento,1,Las Heras,,,positivo,LA UNIÓN MENDOCINA,504,"BUSTOS, Martín",28517
+2023-09-24,general,provisorio,intendente,departamento,1,Las Heras,,,positivo,ELEGÍ MENDOZA,502,"CANO, Adriana",19548
+2023-09-24,general,provisorio,intendente,departamento,1,Las Heras,,,positivo,PARTIDO VERDE,181,"GONZALEZ, DI PIETRO Edu",15410
+2023-09-24,general,provisorio,intendente,departamento,1,Las Heras,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,503,"VIDELA, Edgardo",4265
+2023-09-24,general,provisorio,intendente,departamento,1,Las Heras,,,blanco,,,,9559
+2023-09-24,general,provisorio,intendente,departamento,1,Las Heras,,,nulo,,,,4656
+2023-09-24,general,provisorio,intendente,departamento,1,Las Heras,,,recurrido,,,,277
+2023-09-24,general,provisorio,intendente,departamento,1,Las Heras,,,impugnado,,,,36
+2023-09-24,general,provisorio,intendente,departamento,2,Junín,,,positivo,CAMBIA MENDOZA,501,"ABED, Mario",16273
+2023-09-24,general,provisorio,intendente,departamento,2,Junín,,,positivo,LA UNIÓN MENDOCINA,504,"JOSÉ, Nati",4945
+2023-09-24,general,provisorio,intendente,departamento,2,Junín,,,positivo,ELEGÍ MENDOZA,502,"PEPA, Santiago",1998
+2023-09-24,general,provisorio,intendente,departamento,2,Junín,,,positivo,PARTIDO VERDE,181,"ABBA, Claudio Daniel",1365
+2023-09-24,general,provisorio,intendente,departamento,2,Junín,,,blanco,,,,2149
+2023-09-24,general,provisorio,intendente,departamento,2,Junín,,,nulo,,,,971
+2023-09-24,general,provisorio,intendente,departamento,2,Junín,,,recurrido,,,,23
+2023-09-24,general,provisorio,intendente,departamento,2,Junín,,,impugnado,,,,0
+2023-09-24,general,provisorio,intendente,departamento,2,Rivadavia,,,positivo,SEMBRAR,328,"MANSUR, Ricardo",11313
+2023-09-24,general,provisorio,intendente,departamento,2,Rivadavia,,,positivo,CAMBIA MENDOZA,501,"DI CESARE, Mauricio",11117
+2023-09-24,general,provisorio,intendente,departamento,2,Rivadavia,,,positivo,ELEGÍ MENDOZA,502,"DEVITO, Cristian",4183
+2023-09-24,general,provisorio,intendente,departamento,2,Rivadavia,,,positivo,LA UNIÓN MENDOCINA,504,"BERNASCONI, Daniel",2617
+2023-09-24,general,provisorio,intendente,departamento,2,Rivadavia,,,blanco,,,,3113
+2023-09-24,general,provisorio,intendente,departamento,2,Rivadavia,,,nulo,,,,1240
+2023-09-24,general,provisorio,intendente,departamento,2,Rivadavia,,,recurrido,,,,68
+2023-09-24,general,provisorio,intendente,departamento,2,Rivadavia,,,impugnado,,,,1
+2023-09-24,general,provisorio,intendente,departamento,2,San Martín,,,positivo,CAMBIA MENDOZA,501,"RUFEIL, Raúl",31873
+2023-09-24,general,provisorio,intendente,departamento,2,San Martín,,,positivo,LA UNIÓN MENDOCINA,504,"GIMENEZ, Jorge Omar",15042
+2023-09-24,general,provisorio,intendente,departamento,2,San Martín,,,positivo,ELEGÍ MENDOZA,502,"CÁSERES, Eber",9537
+2023-09-24,general,provisorio,intendente,departamento,2,San Martín,,,blanco,,,,7925
+2023-09-24,general,provisorio,intendente,departamento,2,San Martín,,,nulo,,,,2468
+2023-09-24,general,provisorio,intendente,departamento,2,San Martín,,,recurrido,,,,135
+2023-09-24,general,provisorio,intendente,departamento,2,San Martín,,,impugnado,,,,3
+2023-09-24,general,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,CAMBIA MENDOZA,501,"COSTARELLI, Diego",49493
+2023-09-24,general,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,LA UNIÓN MENDOCINA,504,"SANCHEZ, Marcos",19376
+2023-09-24,general,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,PARTIDO VERDE,181,"BRESCIA, Marcelo",12040
+2023-09-24,general,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,ELEGÍ MENDOZA,502,"SANFILIPPO, Darío",11171
+2023-09-24,general,provisorio,intendente,departamento,3,Godoy Cruz,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,503,"ROMAN, Juan Ignacio",4814
+2023-09-24,general,provisorio,intendente,departamento,3,Godoy Cruz,,,blanco,,,,8377
+2023-09-24,general,provisorio,intendente,departamento,3,Godoy Cruz,,,nulo,,,,3370
+2023-09-24,general,provisorio,intendente,departamento,3,Godoy Cruz,,,recurrido,,,,127
+2023-09-24,general,provisorio,intendente,departamento,3,Godoy Cruz,,,impugnado,,,,28
+2023-09-24,general,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,LA UNIÓN MENDOCINA,504,"ALLASINO, Esteban",36646
+2023-09-24,general,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,CAMBIA MENDOZA,501,"MEMA, Natalio",22756
+2023-09-24,general,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,ELEGÍ MENDOZA,502,"SCALCO, Paloma",6642
+2023-09-24,general,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,PARTIDO VERDE,181,"GARCÍA, Fernando",5082
+2023-09-24,general,provisorio,intendente,departamento,3,Luján de Cuyo,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,503,"VARGAS, Alejandra",2214
+2023-09-24,general,provisorio,intendente,departamento,3,Luján de Cuyo,,,blanco,,,,5761
+2023-09-24,general,provisorio,intendente,departamento,3,Luján de Cuyo,,,nulo,,,,2741
+2023-09-24,general,provisorio,intendente,departamento,3,Luján de Cuyo,,,recurrido,,,,79
+2023-09-24,general,provisorio,intendente,departamento,3,Luján de Cuyo,,,impugnado,,,,18
+2023-09-24,general,provisorio,intendente,departamento,3,Tupungato,,,positivo,CAMBIA MENDOZA,501,"AGUILERA, Gustavo",7135
+2023-09-24,general,provisorio,intendente,departamento,3,Tupungato,,,positivo,LA UNIÓN MENDOCINA,504,"PELEGRINA, Luis",4345
+2023-09-24,general,provisorio,intendente,departamento,3,Tupungato,,,positivo,ELEGÍ MENDOZA,502,"TORRES, Juan",3103
+2023-09-24,general,provisorio,intendente,departamento,3,Tupungato,,,positivo,NUEVO TUPUNGATO,320,"DR. CABEZAS, Hugo",2873
+2023-09-24,general,provisorio,intendente,departamento,3,Tupungato,,,blanco,,,,1863
+2023-09-24,general,provisorio,intendente,departamento,3,Tupungato,,,nulo,,,,583
+2023-09-24,general,provisorio,intendente,departamento,3,Tupungato,,,recurrido,,,,45
+2023-09-24,general,provisorio,intendente,departamento,3,Tupungato,,,impugnado,,,,0
+2023-09-24,general,provisorio,intendente,departamento,4,General Alvear,,,positivo,CAMBIA MENDOZA,501,"MOLERO, Jany",10570
+2023-09-24,general,provisorio,intendente,departamento,4,General Alvear,,,positivo,LA UNIÓN MENDOCINA,504,"LÓPEZ, Javier Rubén",9004
+2023-09-24,general,provisorio,intendente,departamento,4,General Alvear,,,positivo,ELEGÍ MENDOZA,502,"VÁZQUEZ, Claudio",3153
+2023-09-24,general,provisorio,intendente,departamento,4,General Alvear,,,blanco,,,,1728
+2023-09-24,general,provisorio,intendente,departamento,4,General Alvear,,,nulo,,,,827
+2023-09-24,general,provisorio,intendente,departamento,4,General Alvear,,,recurrido,,,,54
+2023-09-24,general,provisorio,intendente,departamento,4,General Alvear,,,impugnado,,,,0
+2023-09-24,general,provisorio,intendente,departamento,4,Malargüe,,,positivo,ELEGÍ MENDOZA,502,"JAQUE, Celso",7552
+2023-09-24,general,provisorio,intendente,departamento,4,Malargüe,,,positivo,CAMBIA MENDOZA,501,"OJEDA, Juan Manuel",4572
+2023-09-24,general,provisorio,intendente,departamento,4,Malargüe,,,positivo,LA UNIÓN MENDOCINA,504,"TIEPPO, Jorge",2598
+2023-09-24,general,provisorio,intendente,departamento,4,Malargüe,,,positivo,RECONSTRUYENDO MALARGÜE,329,"CAMIOLO, Silvina",1674
+2023-09-24,general,provisorio,intendente,departamento,4,Malargüe,,,blanco,,,,694
+2023-09-24,general,provisorio,intendente,departamento,4,Malargüe,,,nulo,,,,558
+2023-09-24,general,provisorio,intendente,departamento,4,Malargüe,,,recurrido,,,,24
+2023-09-24,general,provisorio,intendente,departamento,4,Malargüe,,,impugnado,,,,0
+2023-09-24,general,provisorio,senadores,seccion,1,,,,positivo,CAMBIA MENDOZA,501,,123334
+2023-09-24,general,provisorio,senadores,seccion,1,,,,positivo,LA UNIÓN MENDOCINA,504,,81143
+2023-09-24,general,provisorio,senadores,seccion,1,,,,positivo,PARTIDO VERDE,181,,45770
+2023-09-24,general,provisorio,senadores,seccion,1,,,,positivo,ELEGÍ MENDOZA,502,,45072
+2023-09-24,general,provisorio,senadores,seccion,1,,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,503,,17224
+2023-09-24,general,provisorio,senadores,seccion,1,,,,blanco,,,,40149
+2023-09-24,general,provisorio,senadores,seccion,1,,,,nulo,,,,12256
+2023-09-24,general,provisorio,senadores,seccion,1,,,,recurrido,,,,521
+2023-09-24,general,provisorio,senadores,seccion,1,,,,impugnado,,,,74
+2023-09-24,general,provisorio,senadores,seccion,2,,,,positivo,CAMBIA MENDOZA,501,,84251
+2023-09-24,general,provisorio,senadores,seccion,2,,,,positivo,LA UNIÓN MENDOCINA,504,,47910
+2023-09-24,general,provisorio,senadores,seccion,2,,,,positivo,ELEGÍ MENDOZA,502,,33904
+2023-09-24,general,provisorio,senadores,seccion,2,,,,positivo,PARTIDO VERDE,181,,22792
+2023-09-24,general,provisorio,senadores,seccion,2,,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,503,,10068
+2023-09-24,general,provisorio,senadores,seccion,2,,,,blanco,,,,43094
+2023-09-24,general,provisorio,senadores,seccion,2,,,,nulo,,,,8275
+2023-09-24,general,provisorio,senadores,seccion,2,,,,recurrido,,,,285
+2023-09-24,general,provisorio,senadores,seccion,2,,,,impugnado,,,,5
+2023-09-24,general,provisorio,senadores,seccion,3,,,,positivo,CAMBIA MENDOZA,501,,88993
+2023-09-24,general,provisorio,senadores,seccion,3,,,,positivo,LA UNIÓN MENDOCINA,504,,66701
+2023-09-24,general,provisorio,senadores,seccion,3,,,,positivo,ELEGÍ MENDOZA,502,,26304
+2023-09-24,general,provisorio,senadores,seccion,3,,,,positivo,PARTIDO VERDE,181,,25605
+2023-09-24,general,provisorio,senadores,seccion,3,,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,503,,10619
+2023-09-24,general,provisorio,senadores,seccion,3,,,,blanco,,,,33550
+2023-09-24,general,provisorio,senadores,seccion,3,,,,nulo,,,,7938
+2023-09-24,general,provisorio,senadores,seccion,3,,,,recurrido,,,,290
+2023-09-24,general,provisorio,senadores,seccion,3,,,,impugnado,,,,49
+2023-09-24,general,provisorio,senadores,seccion,4,,,,positivo,CAMBIA MENDOZA,501,,43785
+2023-09-24,general,provisorio,senadores,seccion,4,,,,positivo,LA UNIÓN MENDOCINA,504,,29513
+2023-09-24,general,provisorio,senadores,seccion,4,,,,positivo,ELEGÍ MENDOZA,502,,25734
+2023-09-24,general,provisorio,senadores,seccion,4,,,,positivo,PARTIDO VERDE,181,,7443
+2023-09-24,general,provisorio,senadores,seccion,4,,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,503,,3822
+2023-09-24,general,provisorio,senadores,seccion,4,,,,blanco,,,,22017
+2023-09-24,general,provisorio,senadores,seccion,4,,,,nulo,,,,4787
+2023-09-24,general,provisorio,senadores,seccion,4,,,,recurrido,,,,116
+2023-09-24,general,provisorio,senadores,seccion,4,,,,impugnado,,,,6
+2025-10-26,general,provisorio,concejales,departamento,1,Capital,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,34627
+2025-10-26,general,provisorio,concejales,departamento,1,Capital,,,positivo,FUERZA JUSTICIALISTA MENDOZA,,,10980
+2025-10-26,general,provisorio,concejales,departamento,1,Capital,,,positivo,FRENTE VERDE,,,4809
+2025-10-26,general,provisorio,concejales,departamento,1,Capital,,,positivo,FRENTE LIBERTARIO DEMÓCRATA,,,4230
+2025-10-26,general,provisorio,concejales,departamento,1,Capital,,,positivo,FRENTE DE IZQUIERDA Y DE LOS TRABAJADORES - UNIDAD,,,3130
+2025-10-26,general,provisorio,concejales,departamento,1,Capital,,,positivo,ALIANZA PROVINCIAS UNIDAS - DEFENDAMOS MENDOZA,,,1535
+2025-10-26,general,provisorio,concejales,departamento,1,Capital,,,positivo,PARTIDO DE LOS JUBILADOS,,,1480
+2025-10-26,general,provisorio,concejales,departamento,1,Capital,,,positivo,PROTECTORA FUERZA POLÍTICA,,,952
+2025-10-26,general,provisorio,concejales,departamento,1,Capital,,,blanco,,,,5961
+2025-10-26,general,provisorio,concejales,departamento,1,Capital,,,nulo,,,,1577
+2025-10-26,general,provisorio,concejales,departamento,1,Capital,,,recurrido,,,,65
+2025-10-26,general,provisorio,concejales,departamento,1,Capital,,,impugnado,,,,7
+2025-10-26,general,provisorio,concejales,departamento,1,Guaymallén,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,81597
+2025-10-26,general,provisorio,concejales,departamento,1,Guaymallén,,,positivo,FUERZA JUSTICIALISTA MENDOZA,,,25915
+2025-10-26,general,provisorio,concejales,departamento,1,Guaymallén,,,positivo,FRENTE VERDE,,,11580
+2025-10-26,general,provisorio,concejales,departamento,1,Guaymallén,,,positivo,FRENTE LIBERTARIO DEMÓCRATA,,,7183
+2025-10-26,general,provisorio,concejales,departamento,1,Guaymallén,,,positivo,ALIANZA PROVINCIAS UNIDAS - DEFENDAMOS MENDOZA,,,6638
+2025-10-26,general,provisorio,concejales,departamento,1,Guaymallén,,,positivo,FRENTE DE IZQUIERDA Y DE LOS TRABAJADORES - UNIDAD,,,5516
+2025-10-26,general,provisorio,concejales,departamento,1,Guaymallén,,,positivo,PARTIDO DE LOS JUBILADOS,,,4067
+2025-10-26,general,provisorio,concejales,departamento,1,Guaymallén,,,positivo,PROTECTORA FUERZA POLÍTICA,,,2027
+2025-10-26,general,provisorio,concejales,departamento,1,Guaymallén,,,blanco,,,,18189
+2025-10-26,general,provisorio,concejales,departamento,1,Guaymallén,,,nulo,,,,4191
+2025-10-26,general,provisorio,concejales,departamento,1,Guaymallén,,,recurrido,,,,225
+2025-10-26,general,provisorio,concejales,departamento,1,Guaymallén,,,impugnado,,,,80
+2025-10-26,general,provisorio,concejales,departamento,1,Las Heras,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,48502
+2025-10-26,general,provisorio,concejales,departamento,1,Las Heras,,,positivo,FUERZA JUSTICIALISTA MENDOZA,,,21817
+2025-10-26,general,provisorio,concejales,departamento,1,Las Heras,,,positivo,FRENTE VERDE,,,8392
+2025-10-26,general,provisorio,concejales,departamento,1,Las Heras,,,positivo,FRENTE LIBERTARIO DEMÓCRATA,,,4167
+2025-10-26,general,provisorio,concejales,departamento,1,Las Heras,,,positivo,FRENTE DE IZQUIERDA Y DE LOS TRABAJADORES - UNIDAD,,,3930
+2025-10-26,general,provisorio,concejales,departamento,1,Las Heras,,,positivo,ALIANZA PROVINCIAS UNIDAS - DEFENDAMOS MENDOZA,,,3073
+2025-10-26,general,provisorio,concejales,departamento,1,Las Heras,,,positivo,PARTIDO DE LOS JUBILADOS,,,2935
+2025-10-26,general,provisorio,concejales,departamento,1,Las Heras,,,positivo,PROTECTORA FUERZA POLÍTICA,,,2495
+2025-10-26,general,provisorio,concejales,departamento,1,Las Heras,,,positivo,VIENTOS DE CAMBIO,,,2186
+2025-10-26,general,provisorio,concejales,departamento,1,Las Heras,,,blanco,,,,13664
+2025-10-26,general,provisorio,concejales,departamento,1,Las Heras,,,nulo,,,,3475
+2025-10-26,general,provisorio,concejales,departamento,1,Las Heras,,,recurrido,,,,196
+2025-10-26,general,provisorio,concejales,departamento,1,Las Heras,,,impugnado,,,,39
+2025-10-26,general,provisorio,concejales,departamento,1,Lavalle,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,7676
+2025-10-26,general,provisorio,concejales,departamento,1,Lavalle,,,positivo,FUERZA JUSTICIALISTA MENDOZA,,,6818
+2025-10-26,general,provisorio,concejales,departamento,1,Lavalle,,,positivo,ALIANZA PROVINCIAS UNIDAS - DEFENDAMOS MENDOZA,,,2540
+2025-10-26,general,provisorio,concejales,departamento,1,Lavalle,,,positivo,FRENTE VERDE,,,1289
+2025-10-26,general,provisorio,concejales,departamento,1,Lavalle,,,positivo,FRENTE LIBERTARIO DEMÓCRATA,,,925
+2025-10-26,general,provisorio,concejales,departamento,1,Lavalle,,,positivo,FRENTE DE IZQUIERDA Y DE LOS TRABAJADORES - UNIDAD,,,561
+2025-10-26,general,provisorio,concejales,departamento,1,Lavalle,,,positivo,PROTECTORA FUERZA POLÍTICA,,,420
+2025-10-26,general,provisorio,concejales,departamento,1,Lavalle,,,positivo,PARTIDO DE LOS JUBILADOS,,,354
+2025-10-26,general,provisorio,concejales,departamento,1,Lavalle,,,blanco,,,,4051
+2025-10-26,general,provisorio,concejales,departamento,1,Lavalle,,,nulo,,,,723
+2025-10-26,general,provisorio,concejales,departamento,1,Lavalle,,,recurrido,,,,35
+2025-10-26,general,provisorio,concejales,departamento,1,Lavalle,,,impugnado,,,,38
+2025-10-26,general,provisorio,concejales,departamento,2,Junín,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,13883
+2025-10-26,general,provisorio,concejales,departamento,2,Junín,,,positivo,FUERZA JUSTICIALISTA MENDOZA,,,4865
+2025-10-26,general,provisorio,concejales,departamento,2,Junín,,,positivo,FRENTE LIBERTARIO DEMÓCRATA,,,1339
+2025-10-26,general,provisorio,concejales,departamento,2,Junín,,,positivo,FRENTE VERDE,,,1334
+2025-10-26,general,provisorio,concejales,departamento,2,Junín,,,positivo,PARTIDO DE LOS JUBILADOS,,,732
+2025-10-26,general,provisorio,concejales,departamento,2,Junín,,,positivo,ALIANZA PROVINCIAS UNIDAS - DEFENDAMOS MENDOZA,,,718
+2025-10-26,general,provisorio,concejales,departamento,2,Junín,,,positivo,FRENTE DE IZQUIERDA Y DE LOS TRABAJADORES - UNIDAD,,,603
+2025-10-26,general,provisorio,concejales,departamento,2,Junín,,,positivo,PROTECTORA FUERZA POLÍTICA,,,417
+2025-10-26,general,provisorio,concejales,departamento,2,Junín,,,blanco,,,,3649
+2025-10-26,general,provisorio,concejales,departamento,2,Junín,,,nulo,,,,881
+2025-10-26,general,provisorio,concejales,departamento,2,Junín,,,recurrido,,,,5
+2025-10-26,general,provisorio,concejales,departamento,2,Junín,,,impugnado,,,,43
+2025-10-26,general,provisorio,concejales,departamento,2,San Martín,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,28113
+2025-10-26,general,provisorio,concejales,departamento,2,San Martín,,,positivo,FUERZA JUSTICIALISTA MENDOZA,,,13317
+2025-10-26,general,provisorio,concejales,departamento,2,San Martín,,,positivo,FRENTE VERDE,,,5938
+2025-10-26,general,provisorio,concejales,departamento,2,San Martín,,,positivo,FRENTE LIBERTARIO DEMÓCRATA,,,2899
+2025-10-26,general,provisorio,concejales,departamento,2,San Martín,,,positivo,ALIANZA PROVINCIAS UNIDAS - DEFENDAMOS MENDOZA,,,1926
+2025-10-26,general,provisorio,concejales,departamento,2,San Martín,,,positivo,FRENTE DE IZQUIERDA Y DE LOS TRABAJADORES - UNIDAD,,,1629
+2025-10-26,general,provisorio,concejales,departamento,2,San Martín,,,positivo,PARTIDO DE LOS JUBILADOS,,,1569
+2025-10-26,general,provisorio,concejales,departamento,2,San Martín,,,positivo,PROTECTORA FUERZA POLÍTICA,,,1145
+2025-10-26,general,provisorio,concejales,departamento,2,San Martín,,,blanco,,,,8432
+2025-10-26,general,provisorio,concejales,departamento,2,San Martín,,,nulo,,,,2272
+2025-10-26,general,provisorio,concejales,departamento,2,San Martín,,,recurrido,,,,113
+2025-10-26,general,provisorio,concejales,departamento,2,San Martín,,,impugnado,,,,14
+2025-10-26,general,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,52691
+2025-10-26,general,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,FUERZA JUSTICIALISTA MENDOZA,,,18331
+2025-10-26,general,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,FRENTE VERDE,,,7745
+2025-10-26,general,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,FRENTE LIBERTARIO DEMÓCRATA,,,6275
+2025-10-26,general,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,FRENTE DE IZQUIERDA Y DE LOS TRABAJADORES - UNIDAD,,,4359
+2025-10-26,general,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,PARTIDO DE LOS JUBILADOS,,,2785
+2025-10-26,general,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,ALIANZA PROVINCIAS UNIDAS - DEFENDAMOS MENDOZA,,,2530
+2025-10-26,general,provisorio,concejales,departamento,3,Godoy Cruz,,,positivo,PROTECTORA FUERZA POLÍTICA,,,1698
+2025-10-26,general,provisorio,concejales,departamento,3,Godoy Cruz,,,blanco,,,,11031
+2025-10-26,general,provisorio,concejales,departamento,3,Godoy Cruz,,,nulo,,,,2757
+2025-10-26,general,provisorio,concejales,departamento,3,Godoy Cruz,,,recurrido,,,,175
+2025-10-26,general,provisorio,concejales,departamento,3,Godoy Cruz,,,impugnado,,,,27
+2025-10-26,general,provisorio,concejales,departamento,3,San Carlos,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,6992
+2025-10-26,general,provisorio,concejales,departamento,3,San Carlos,,,positivo,NUEVOS RUMBOS,,,2933
+2025-10-26,general,provisorio,concejales,departamento,3,San Carlos,,,positivo,ALIANZA PROVINCIAS UNIDAS - DEFENDAMOS MENDOZA,,,2691
+2025-10-26,general,provisorio,concejales,departamento,3,San Carlos,,,positivo,FUERZA JUSTICIALISTA MENDOZA,,,2538
+2025-10-26,general,provisorio,concejales,departamento,3,San Carlos,,,positivo,PROTECTORA FUERZA POLÍTICA,,,887
+2025-10-26,general,provisorio,concejales,departamento,3,San Carlos,,,positivo,FRENTE VERDE,,,767
+2025-10-26,general,provisorio,concejales,departamento,3,San Carlos,,,positivo,FRENTE LIBERTARIO DEMÓCRATA,,,742
+2025-10-26,general,provisorio,concejales,departamento,3,San Carlos,,,positivo,PARTIDO DE LOS JUBILADOS,,,593
+2025-10-26,general,provisorio,concejales,departamento,3,San Carlos,,,blanco,,,,2774
+2025-10-26,general,provisorio,concejales,departamento,3,San Carlos,,,nulo,,,,726
+2025-10-26,general,provisorio,concejales,departamento,3,San Carlos,,,recurrido,,,,52
+2025-10-26,general,provisorio,concejales,departamento,3,San Carlos,,,impugnado,,,,88
+2025-10-26,general,provisorio,concejales,departamento,3,Tunuyán,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,12603
+2025-10-26,general,provisorio,concejales,departamento,3,Tunuyán,,,positivo,FUERZA JUSTICIALISTA MENDOZA,,,8363
+2025-10-26,general,provisorio,concejales,departamento,3,Tunuyán,,,positivo,ALIANZA PROVINCIAS UNIDAS - DEFENDAMOS MENDOZA,,,1759
+2025-10-26,general,provisorio,concejales,departamento,3,Tunuyán,,,positivo,FRENTE VERDE,,,1304
+2025-10-26,general,provisorio,concejales,departamento,3,Tunuyán,,,positivo,PARTIDO DE LOS JUBILADOS,,,1083
+2025-10-26,general,provisorio,concejales,departamento,3,Tunuyán,,,positivo,FRENTE LIBERTARIO DEMÓCRATA,,,970
+2025-10-26,general,provisorio,concejales,departamento,3,Tunuyán,,,positivo,PROTECTORA FUERZA POLÍTICA,,,829
+2025-10-26,general,provisorio,concejales,departamento,3,Tunuyán,,,positivo,FRENTE DE IZQUIERDA Y DE LOS TRABAJADORES - UNIDAD,,,433
+2025-10-26,general,provisorio,concejales,departamento,3,Tunuyán,,,blanco,,,,4210
+2025-10-26,general,provisorio,concejales,departamento,3,Tunuyán,,,nulo,,,,768
+2025-10-26,general,provisorio,concejales,departamento,3,Tunuyán,,,recurrido,,,,54
+2025-10-26,general,provisorio,concejales,departamento,3,Tunuyán,,,impugnado,,,,39
+2025-10-26,general,provisorio,concejales,departamento,3,Tupungato,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,7031
+2025-10-26,general,provisorio,concejales,departamento,3,Tupungato,,,positivo,FUERZA JUSTICIALISTA MENDOZA,,,3398
+2025-10-26,general,provisorio,concejales,departamento,3,Tupungato,,,positivo,PARTIDO NUEVO TUPUNGATO,,,1580
+2025-10-26,general,provisorio,concejales,departamento,3,Tupungato,,,positivo,ALIANZA PROVINCIAS UNIDAS - DEFENDAMOS MENDOZA,,,1337
+2025-10-26,general,provisorio,concejales,departamento,3,Tupungato,,,positivo,PARTIDO RENUEVA TUPUNGATO,,,1093
+2025-10-26,general,provisorio,concejales,departamento,3,Tupungato,,,positivo,FRENTE VERDE,,,1015
+2025-10-26,general,provisorio,concejales,departamento,3,Tupungato,,,positivo,FRENTE LIBERTARIO DEMÓCRATA,,,659
+2025-10-26,general,provisorio,concejales,departamento,3,Tupungato,,,positivo,PARTIDO DE LOS JUBILADOS,,,368
+2025-10-26,general,provisorio,concejales,departamento,3,Tupungato,,,positivo,PROTECTORA FUERZA POLÍTICA,,,305
+2025-10-26,general,provisorio,concejales,departamento,3,Tupungato,,,blanco,,,,2686
+2025-10-26,general,provisorio,concejales,departamento,3,Tupungato,,,nulo,,,,593
+2025-10-26,general,provisorio,concejales,departamento,3,Tupungato,,,recurrido,,,,21
+2025-10-26,general,provisorio,concejales,departamento,3,Tupungato,,,impugnado,,,,0
+2025-10-26,general,provisorio,concejales,departamento,4,General Alvear,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,11132
+2025-10-26,general,provisorio,concejales,departamento,4,General Alvear,,,positivo,FUERZA JUSTICIALISTA MENDOZA,,,5423
+2025-10-26,general,provisorio,concejales,departamento,4,General Alvear,,,positivo,FRENTE VERDE,,,1473
+2025-10-26,general,provisorio,concejales,departamento,4,General Alvear,,,positivo,ALIANZA PROVINCIAS UNIDAS - DEFENDAMOS MENDOZA,,,1188
+2025-10-26,general,provisorio,concejales,departamento,4,General Alvear,,,positivo,FRENTE LIBERTARIO DEMÓCRATA,,,963
+2025-10-26,general,provisorio,concejales,departamento,4,General Alvear,,,positivo,FRENTE DE IZQUIERDA Y DE LOS TRABAJADORES - UNIDAD,,,603
+2025-10-26,general,provisorio,concejales,departamento,4,General Alvear,,,positivo,PARTIDO DE LOS JUBILADOS,,,509
+2025-10-26,general,provisorio,concejales,departamento,4,General Alvear,,,positivo,PROTECTORA FUERZA POLÍTICA,,,0
+2025-10-26,general,provisorio,concejales,departamento,4,General Alvear,,,blanco,,,,3351
+2025-10-26,general,provisorio,concejales,departamento,4,General Alvear,,,nulo,,,,772
+2025-10-26,general,provisorio,concejales,departamento,4,General Alvear,,,recurrido,,,,30
+2025-10-26,general,provisorio,concejales,departamento,4,General Alvear,,,impugnado,,,,5
+2025-10-26,general,provisorio,concejales,departamento,4,Malargüe,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,5480
+2025-10-26,general,provisorio,concejales,departamento,4,Malargüe,,,positivo,FUERZA JUSTICIALISTA MENDOZA,,,3643
+2025-10-26,general,provisorio,concejales,departamento,4,Malargüe,,,positivo,FRENTE VERDE,,,1952
+2025-10-26,general,provisorio,concejales,departamento,4,Malargüe,,,positivo,ALIANZA PROVINCIAS UNIDAS - DEFENDAMOS MENDOZA,,,537
+2025-10-26,general,provisorio,concejales,departamento,4,Malargüe,,,positivo,FRENTE LIBERTARIO DEMÓCRATA,,,442
+2025-10-26,general,provisorio,concejales,departamento,4,Malargüe,,,positivo,PROTECTORA FUERZA POLÍTICA,,,371
+2025-10-26,general,provisorio,concejales,departamento,4,Malargüe,,,positivo,PARTIDO DE LOS JUBILADOS,,,353
+2025-10-26,general,provisorio,concejales,departamento,4,Malargüe,,,positivo,FRENTE DE IZQUIERDA Y DE LOS TRABAJADORES - UNIDAD,,,267
+2025-10-26,general,provisorio,concejales,departamento,4,Malargüe,,,blanco,,,,2223
+2025-10-26,general,provisorio,concejales,departamento,4,Malargüe,,,nulo,,,,822
+2025-10-26,general,provisorio,concejales,departamento,4,Malargüe,,,recurrido,,,,15
+2025-10-26,general,provisorio,concejales,departamento,4,Malargüe,,,impugnado,,,,3
+2025-10-26,general,provisorio,diputados,seccion,1,,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,173888
+2025-10-26,general,provisorio,diputados,seccion,1,,,,positivo,FUERZA JUSTICIALISTA MENDOZA,,,64960
+2025-10-26,general,provisorio,diputados,seccion,1,,,,positivo,FRENTE VERDE,,,26971
+2025-10-26,general,provisorio,diputados,seccion,1,,,,positivo,FRENTE LIBERTARIO DEMÓCRATA,,,16942
+2025-10-26,general,provisorio,diputados,seccion,1,,,,positivo,FRENTE DE IZQUIERDA Y DE LOS TRABAJADORES - UNIDAD,,,14393
+2025-10-26,general,provisorio,diputados,seccion,1,,,,positivo,ALIANZA PROVINCIAS UNIDAS - DEFENDAMOS MENDOZA,,,13113
+2025-10-26,general,provisorio,diputados,seccion,1,,,,positivo,PARTIDO DE LOS JUBILADOS,,,8775
+2025-10-26,general,provisorio,diputados,seccion,1,,,,positivo,PROTECTORA FUERZA POLÍTICA,,,7020
+2025-10-26,general,provisorio,diputados,seccion,1,,,,blanco,,,,39963
+2025-10-26,general,provisorio,diputados,seccion,1,,,,nulo,,,,10135
+2025-10-26,general,provisorio,diputados,seccion,1,,,,recurrido,,,,508
+2025-10-26,general,provisorio,diputados,seccion,1,,,,impugnado,,,,171
+2025-10-26,general,provisorio,diputados,seccion,2,,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,116724
+2025-10-26,general,provisorio,diputados,seccion,2,,,,positivo,FUERZA JUSTICIALISTA MENDOZA,,,56902
+2025-10-26,general,provisorio,diputados,seccion,2,,,,positivo,FRENTE VERDE,,,14279
+2025-10-26,general,provisorio,diputados,seccion,2,,,,positivo,FRENTE LIBERTARIO DEMÓCRATA,,,11386
+2025-10-26,general,provisorio,diputados,seccion,2,,,,positivo,FRENTE DE IZQUIERDA Y DE LOS TRABAJADORES - UNIDAD,,,6851
+2025-10-26,general,provisorio,diputados,seccion,2,,,,positivo,PARTIDO DE LOS JUBILADOS,,,6332
+2025-10-26,general,provisorio,diputados,seccion,2,,,,positivo,ALIANZA PROVINCIAS UNIDAS - DEFENDAMOS MENDOZA,,,4719
+2025-10-26,general,provisorio,diputados,seccion,2,,,,positivo,PROTECTORA FUERZA POLÍTICA,,,3267
+2025-10-26,general,provisorio,diputados,seccion,2,,,,blanco,,,,31451
+2025-10-26,general,provisorio,diputados,seccion,2,,,,nulo,,,,8007
+2025-10-26,general,provisorio,diputados,seccion,2,,,,recurrido,,,,363
+2025-10-26,general,provisorio,diputados,seccion,2,,,,impugnado,,,,118
+2025-10-26,general,provisorio,diputados,seccion,3,,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,126715
+2025-10-26,general,provisorio,diputados,seccion,3,,,,positivo,FUERZA JUSTICIALISTA MENDOZA,,,43546
+2025-10-26,general,provisorio,diputados,seccion,3,,,,positivo,FRENTE VERDE,,,15526
+2025-10-26,general,provisorio,diputados,seccion,3,,,,positivo,FRENTE LIBERTARIO DEMÓCRATA,,,14562
+2025-10-26,general,provisorio,diputados,seccion,3,,,,positivo,FRENTE DE IZQUIERDA Y DE LOS TRABAJADORES - UNIDAD,,,8917
+2025-10-26,general,provisorio,diputados,seccion,3,,,,positivo,ALIANZA PROVINCIAS UNIDAS - DEFENDAMOS MENDOZA,,,8214
+2025-10-26,general,provisorio,diputados,seccion,3,,,,positivo,PARTIDO DE LOS JUBILADOS,,,6313
+2025-10-26,general,provisorio,diputados,seccion,3,,,,positivo,PROTECTORA FUERZA POLÍTICA,,,4324
+2025-10-26,general,provisorio,diputados,seccion,3,,,,blanco,,,,34494
+2025-10-26,general,provisorio,diputados,seccion,3,,,,nulo,,,,7195
+2025-10-26,general,provisorio,diputados,seccion,3,,,,recurrido,,,,367
+2025-10-26,general,provisorio,diputados,seccion,3,,,,impugnado,,,,301
+2025-10-26,general,provisorio,diputados,seccion,4,,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,63134
+2025-10-26,general,provisorio,diputados,seccion,4,,,,positivo,FUERZA JUSTICIALISTA MENDOZA,,,37311
+2025-10-26,general,provisorio,diputados,seccion,4,,,,positivo,FRENTE LIBERTARIO DEMÓCRATA,,,5499
+2025-10-26,general,provisorio,diputados,seccion,4,,,,positivo,FRENTE VERDE,,,4769
+2025-10-26,general,provisorio,diputados,seccion,4,,,,positivo,PARTIDO DE LOS JUBILADOS,,,3453
+2025-10-26,general,provisorio,diputados,seccion,4,,,,positivo,ALIANZA PROVINCIAS UNIDAS - DEFENDAMOS MENDOZA,,,3372
+2025-10-26,general,provisorio,diputados,seccion,4,,,,positivo,FRENTE DE IZQUIERDA Y DE LOS TRABAJADORES - UNIDAD,,,2572
+2025-10-26,general,provisorio,diputados,seccion,4,,,,positivo,PROTECTORA FUERZA POLÍTICA,,,1083
+2025-10-26,general,provisorio,diputados,seccion,4,,,,blanco,,,,19240
+2025-10-26,general,provisorio,diputados,seccion,4,,,,nulo,,,,4690
+2025-10-26,general,provisorio,diputados,seccion,4,,,,recurrido,,,,166
+2025-10-26,general,provisorio,diputados,seccion,4,,,,impugnado,,,,14
+2025-10-26,general,provisorio,senadores,seccion,1,,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,182101
+2025-10-26,general,provisorio,senadores,seccion,1,,,,positivo,FUERZA JUSTICIALISTA MENDOZA,,,71785
+2025-10-26,general,provisorio,senadores,seccion,1,,,,positivo,FRENTE VERDE,,,29279
+2025-10-26,general,provisorio,senadores,seccion,1,,,,positivo,FRENTE LIBERTARIO DEMÓCRATA,,,17537
+2025-10-26,general,provisorio,senadores,seccion,1,,,,positivo,FRENTE DE IZQUIERDA Y DE LOS TRABAJADORES - UNIDAD,,,13987
+2025-10-26,general,provisorio,senadores,seccion,1,,,,positivo,ALIANZA PROVINCIAS UNIDAS - DEFENDAMOS MENDOZA,,,12562
+2025-10-26,general,provisorio,senadores,seccion,1,,,,positivo,PARTIDO DE LOS JUBILADOS,,,9826
+2025-10-26,general,provisorio,senadores,seccion,1,,,,positivo,PROTECTORA FUERZA POLÍTICA,,,7030
+2025-10-26,general,provisorio,senadores,seccion,1,,,,blanco,,,,23048
+2025-10-26,general,provisorio,senadores,seccion,1,,,,nulo,,,,10644
+2025-10-26,general,provisorio,senadores,seccion,1,,,,recurrido,,,,530
+2025-10-26,general,provisorio,senadores,seccion,1,,,,impugnado,,,,103
+2025-10-26,general,provisorio,senadores,seccion,2,,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,118812
+2025-10-26,general,provisorio,senadores,seccion,2,,,,positivo,FUERZA JUSTICIALISTA MENDOZA,,,62092
+2025-10-26,general,provisorio,senadores,seccion,2,,,,positivo,FRENTE VERDE,,,15926
+2025-10-26,general,provisorio,senadores,seccion,2,,,,positivo,FRENTE LIBERTARIO DEMÓCRATA,,,13034
+2025-10-26,general,provisorio,senadores,seccion,2,,,,positivo,FRENTE DE IZQUIERDA Y DE LOS TRABAJADORES - UNIDAD,,,7805
+2025-10-26,general,provisorio,senadores,seccion,2,,,,positivo,PARTIDO DE LOS JUBILADOS,,,7104
+2025-10-26,general,provisorio,senadores,seccion,2,,,,positivo,ALIANZA PROVINCIAS UNIDAS - DEFENDAMOS MENDOZA,,,5261
+2025-10-26,general,provisorio,senadores,seccion,2,,,,positivo,PROTECTORA FUERZA POLÍTICA,,,3225
+2025-10-26,general,provisorio,senadores,seccion,2,,,,blanco,,,,20085
+2025-10-26,general,provisorio,senadores,seccion,2,,,,nulo,,,,8291
+2025-10-26,general,provisorio,senadores,seccion,2,,,,recurrido,,,,386
+2025-10-26,general,provisorio,senadores,seccion,2,,,,impugnado,,,,86
+2025-10-26,general,provisorio,senadores,seccion,3,,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,133295
+2025-10-26,general,provisorio,senadores,seccion,3,,,,positivo,FUERZA JUSTICIALISTA MENDOZA,,,48271
+2025-10-26,general,provisorio,senadores,seccion,3,,,,positivo,FRENTE VERDE,,,16820
+2025-10-26,general,provisorio,senadores,seccion,3,,,,positivo,FRENTE LIBERTARIO DEMÓCRATA,,,15139
+2025-10-26,general,provisorio,senadores,seccion,3,,,,positivo,FRENTE DE IZQUIERDA Y DE LOS TRABAJADORES - UNIDAD,,,9206
+2025-10-26,general,provisorio,senadores,seccion,3,,,,positivo,ALIANZA PROVINCIAS UNIDAS - DEFENDAMOS MENDOZA,,,8651
+2025-10-26,general,provisorio,senadores,seccion,3,,,,positivo,PARTIDO DE LOS JUBILADOS,,,6790
+2025-10-26,general,provisorio,senadores,seccion,3,,,,positivo,PROTECTORA FUERZA POLÍTICA,,,4465
+2025-10-26,general,provisorio,senadores,seccion,3,,,,blanco,,,,21206
+2025-10-26,general,provisorio,senadores,seccion,3,,,,nulo,,,,7552
+2025-10-26,general,provisorio,senadores,seccion,3,,,,recurrido,,,,375
+2025-10-26,general,provisorio,senadores,seccion,3,,,,impugnado,,,,223
+2025-10-26,general,provisorio,senadores,seccion,4,,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,67090
+2025-10-26,general,provisorio,senadores,seccion,4,,,,positivo,FUERZA JUSTICIALISTA MENDOZA,,,40972
+2025-10-26,general,provisorio,senadores,seccion,4,,,,positivo,FRENTE LIBERTARIO DEMÓCRATA,,,5360
+2025-10-26,general,provisorio,senadores,seccion,4,,,,positivo,FRENTE VERDE,,,5127
+2025-10-26,general,provisorio,senadores,seccion,4,,,,positivo,PARTIDO DE LOS JUBILADOS,,,3814
+2025-10-26,general,provisorio,senadores,seccion,4,,,,positivo,ALIANZA PROVINCIAS UNIDAS - DEFENDAMOS MENDOZA,,,2872
+2025-10-26,general,provisorio,senadores,seccion,4,,,,positivo,FRENTE DE IZQUIERDA Y DE LOS TRABAJADORES - UNIDAD,,,2679
+2025-10-26,general,provisorio,senadores,seccion,4,,,,positivo,PROTECTORA FUERZA POLÍTICA,,,1263
+2025-10-26,general,provisorio,senadores,seccion,4,,,,blanco,,,,12438
+2025-10-26,general,provisorio,senadores,seccion,4,,,,nulo,,,,4857
+2025-10-26,general,provisorio,senadores,seccion,4,,,,recurrido,,,,155
+2025-10-26,general,provisorio,senadores,seccion,4,,,,impugnado,,,,24
+2026-02-22,municipal,provisorio,concejales,departamento,2,La Paz,,,positivo,ELEGI GESTION LA PAZ,,,3502
+2026-02-22,municipal,provisorio,concejales,departamento,2,La Paz,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,2167
+2026-02-22,municipal,provisorio,concejales,departamento,2,La Paz,,,positivo,FRENTE LIBERTARIO DEMOCRATA,,,311
+2026-02-22,municipal,provisorio,concejales,departamento,2,La Paz,,,positivo,PARTIDO DE LOS JUBILADOS,,,216
+2026-02-22,municipal,provisorio,concejales,departamento,2,La Paz,,,positivo,FRENTE VERDE,,,188
+2026-02-22,municipal,provisorio,concejales,departamento,2,La Paz,,,blanco,,,,96
+2026-02-22,municipal,provisorio,concejales,departamento,2,La Paz,,,nulo,,,,169
+2026-02-22,municipal,provisorio,concejales,departamento,2,La Paz,,,recurrido,,,,14
+2026-02-22,municipal,provisorio,concejales,departamento,2,La Paz,,,impugnado,,,,1
+2026-02-22,municipal,provisorio,concejales,departamento,2,Maipú,,,positivo,MAIPU CRECE,,,28937
+2026-02-22,municipal,provisorio,concejales,departamento,2,Maipú,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,27004
+2026-02-22,municipal,provisorio,concejales,departamento,2,Maipú,,,positivo,FRENTE LIBERTARIO DEMOCRATA,,,3238
+2026-02-22,municipal,provisorio,concejales,departamento,2,Maipú,,,positivo,PROYECTO MAIPU NUEVO RUMBO,,,2948
+2026-02-22,municipal,provisorio,concejales,departamento,2,Maipú,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,,,2692
+2026-02-22,municipal,provisorio,concejales,departamento,2,Maipú,,,positivo,FRENTE VERDE,,,2316
+2026-02-22,municipal,provisorio,concejales,departamento,2,Maipú,,,blanco,,,,952
+2026-02-22,municipal,provisorio,concejales,departamento,2,Maipú,,,nulo,,,,2395
+2026-02-22,municipal,provisorio,concejales,departamento,2,Maipú,,,recurrido,,,,50
+2026-02-22,municipal,provisorio,concejales,departamento,2,Maipú,,,impugnado,,,,12
+2026-02-22,municipal,provisorio,concejales,departamento,2,Rivadavia,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,9356
+2026-02-22,municipal,provisorio,concejales,departamento,2,Rivadavia,,,positivo,PARTIDO SEMBRAR,,,6839
+2026-02-22,municipal,provisorio,concejales,departamento,2,Rivadavia,,,positivo,FUERZA JUSTICIALISTA RIVADAVIA,,,2526
+2026-02-22,municipal,provisorio,concejales,departamento,2,Rivadavia,,,positivo,FRENTE PATRIA,,,1569
+2026-02-22,municipal,provisorio,concejales,departamento,2,Rivadavia,,,positivo,FRENTE LIBERTARIO DEMOCRATA,,,1041
+2026-02-22,municipal,provisorio,concejales,departamento,2,Rivadavia,,,positivo,FRENTE VERDE,,,966
+2026-02-22,municipal,provisorio,concejales,departamento,2,Rivadavia,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,,,833
+2026-02-22,municipal,provisorio,concejales,departamento,2,Rivadavia,,,blanco,,,,623
+2026-02-22,municipal,provisorio,concejales,departamento,2,Rivadavia,,,nulo,,,,1166
+2026-02-22,municipal,provisorio,concejales,departamento,2,Rivadavia,,,recurrido,,,,29
+2026-02-22,municipal,provisorio,concejales,departamento,2,Rivadavia,,,impugnado,,,,1
+2026-02-22,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,positivo,SANTA ROSA GANA,,,4248
+2026-02-22,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,2184
+2026-02-22,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,positivo,AHORA SANTARROSINOS,,,1439
+2026-02-22,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,positivo,FRENTE LIBERTARIO DEMOCRATA,,,765
+2026-02-22,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,positivo,FRENTE VERDE,,,510
+2026-02-22,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,blanco,,,,123
+2026-02-22,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,nulo,,,,316
+2026-02-22,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,recurrido,,,,6
+2026-02-22,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,impugnado,,,,0
+2026-02-22,municipal,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,29061
+2026-02-22,municipal,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,FUERZA JUSTICIALISTA LUJAN DE CUYO,,,5085
+2026-02-22,municipal,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,FRENTE PATRIA,,,5030
+2026-02-22,municipal,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,FRENTE LIBERTARIO DEMOCRATA,,,3544
+2026-02-22,municipal,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,FRENTE VERDE,,,3247
+2026-02-22,municipal,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,,,2195
+2026-02-22,municipal,provisorio,concejales,departamento,3,Luján de Cuyo,,,positivo,PROTECTORA FUERZA POLITICA,,,972
+2026-02-22,municipal,provisorio,concejales,departamento,3,Luján de Cuyo,,,blanco,,,,1167
+2026-02-22,municipal,provisorio,concejales,departamento,3,Luján de Cuyo,,,nulo,,,,2076
+2026-02-22,municipal,provisorio,concejales,departamento,3,Luján de Cuyo,,,recurrido,,,,31
+2026-02-22,municipal,provisorio,concejales,departamento,3,Luján de Cuyo,,,impugnado,,,,5
+2026-02-22,municipal,provisorio,concejales,departamento,4,San Rafael,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,27965
+2026-02-22,municipal,provisorio,concejales,departamento,4,San Rafael,,,positivo,SAN RAFAEL EN MARCHA,,,27272
+2026-02-22,municipal,provisorio,concejales,departamento,4,San Rafael,,,positivo,FRENTE LIBERTARIO DEMOCRATA,,,8194
+2026-02-22,municipal,provisorio,concejales,departamento,4,San Rafael,,,positivo,SAN RAFAEL FUTURO,,,4010
+2026-02-22,municipal,provisorio,concejales,departamento,4,San Rafael,,,positivo,FRENTE VERDE,,,2248
+2026-02-22,municipal,provisorio,concejales,departamento,4,San Rafael,,,positivo,FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD,,,1710
+2026-02-22,municipal,provisorio,concejales,departamento,4,San Rafael,,,blanco,,,,3798
+2026-02-22,municipal,provisorio,concejales,departamento,4,San Rafael,,,nulo,,,,3130
+2026-02-22,municipal,provisorio,concejales,departamento,4,San Rafael,,,recurrido,,,,65
+2026-02-22,municipal,provisorio,concejales,departamento,4,San Rafael,,,impugnado,,,,17
+2026-02-22,municipal,provisorio,convencionales,departamento,4,San Rafael,,,positivo,SAN RAFAEL EN MARCHA,,,29120
+2026-02-22,municipal,provisorio,convencionales,departamento,4,San Rafael,,,positivo,LA LIBERTAD AVANZA + CAMBIA MENDOZA,,,26898
+2026-02-22,municipal,provisorio,convencionales,departamento,4,San Rafael,,,positivo,FRENTE LIBERTARIO DEMOCRATA,,,7877
+2026-02-22,municipal,provisorio,convencionales,departamento,4,San Rafael,,,positivo,SAN RAFAEL FUTURO,,,3996
+2026-02-22,municipal,provisorio,convencionales,departamento,4,San Rafael,,,positivo,FRENTE VERDE,,,2192
+2026-02-22,municipal,provisorio,convencionales,departamento,4,San Rafael,,,blanco,,,,4632
+2026-02-22,municipal,provisorio,convencionales,departamento,4,San Rafael,,,nulo,,,,2941
+2026-02-22,municipal,provisorio,convencionales,departamento,4,San Rafael,,,recurrido,,,,47
+2026-02-22,municipal,provisorio,convencionales,departamento,4,San Rafael,,,impugnado,,,,17

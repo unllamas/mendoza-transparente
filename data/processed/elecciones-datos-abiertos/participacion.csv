@@ -1,0 +1,263 @@
+eleccion,tipo_eleccion,escrutinio,cargo,nivel,seccion_electoral,departamento,circuito,mesa,mesas_habilitadas,mesas_escrutadas,electores,votantes
+2015-06-21,general,definitivo,gobernador,provincia,,,,,3965,3965,1352973,1074391
+2015-06-21,general,definitivo,gobernador,departamento,1,Capital,,,301,301,100022,73907
+2015-06-21,general,definitivo,gobernador,departamento,4,General Alvear,,,110,110,36976,29540
+2015-06-21,general,definitivo,gobernador,departamento,3,Godoy Cruz,,,448,448,155366,120170
+2015-06-21,general,definitivo,gobernador,departamento,1,Guaymallén,,,627,627,217244,169178
+2015-06-21,general,definitivo,gobernador,departamento,2,Junín,,,95,95,32199,26379
+2015-06-21,general,definitivo,gobernador,departamento,2,La Paz,,,27,27,8460,7467
+2015-06-21,general,definitivo,gobernador,departamento,1,Las Heras,,,443,443,151477,120550
+2015-06-21,general,definitivo,gobernador,departamento,1,Lavalle,,,90,90,29724,24518
+2015-06-21,general,definitivo,gobernador,departamento,3,Luján de Cuyo,,,275,275,94115,77110
+2015-06-21,general,definitivo,gobernador,departamento,2,Maipú,,,383,383,132096,107953
+2015-06-21,general,definitivo,gobernador,departamento,4,Malargüe,,,66,66,22088,17348
+2015-06-21,general,definitivo,gobernador,departamento,2,Rivadavia,,,126,126,42698,35019
+2015-06-21,general,definitivo,gobernador,departamento,3,San Carlos,,,72,72,24504,19845
+2015-06-21,general,definitivo,gobernador,departamento,2,San Martín,,,262,262,90386,72461
+2015-06-21,general,definitivo,gobernador,departamento,4,San Rafael,,,417,417,141416,111347
+2015-06-21,general,definitivo,gobernador,departamento,2,Santa Rosa,,,41,41,13071,11205
+2015-06-21,general,definitivo,gobernador,departamento,3,Tunuyán,,,112,112,37739,31104
+2015-06-21,general,definitivo,gobernador,departamento,3,Tupungato,,,70,70,23392,19290
+2015-06-21,general,definitivo,senadores,provincia,,,,,3965,3965,1352973,1074363
+2015-06-21,general,definitivo,senadores,departamento,1,Capital,,,301,301,100022,73907
+2015-06-21,general,definitivo,senadores,departamento,4,General Alvear,,,110,110,36976,29540
+2015-06-21,general,definitivo,senadores,departamento,3,Godoy Cruz,,,448,448,155366,120170
+2015-06-21,general,definitivo,senadores,departamento,1,Guaymallén,,,627,627,217244,169178
+2015-06-21,general,definitivo,senadores,departamento,2,Junín,,,95,95,32199,26379
+2015-06-21,general,definitivo,senadores,departamento,2,La Paz,,,27,27,8460,7467
+2015-06-21,general,definitivo,senadores,departamento,1,Las Heras,,,443,443,151477,120550
+2015-06-21,general,definitivo,senadores,departamento,1,Lavalle,,,90,90,29724,24518
+2015-06-21,general,definitivo,senadores,departamento,3,Luján de Cuyo,,,275,275,94115,77110
+2015-06-21,general,definitivo,senadores,departamento,2,Maipú,,,383,383,132096,107953
+2015-06-21,general,definitivo,senadores,departamento,4,Malargüe,,,66,66,22088,17348
+2015-06-21,general,definitivo,senadores,departamento,2,Rivadavia,,,126,126,42698,35019
+2015-06-21,general,definitivo,senadores,departamento,3,San Carlos,,,72,72,24504,19845
+2015-06-21,general,definitivo,senadores,departamento,2,San Martín,,,262,262,90386,72461
+2015-06-21,general,definitivo,senadores,departamento,4,San Rafael,,,417,417,141416,111347
+2015-06-21,general,definitivo,senadores,departamento,2,Santa Rosa,,,41,41,13071,11205
+2015-06-21,general,definitivo,senadores,departamento,3,Tunuyán,,,112,112,37739,31104
+2015-06-21,general,definitivo,senadores,departamento,3,Tupungato,,,70,70,23392,19290
+2015-06-21,general,definitivo,diputados,provincia,,,,,3965,3965,1352973,1074364
+2015-06-21,general,definitivo,diputados,departamento,1,Capital,,,301,301,100022,73907
+2015-06-21,general,definitivo,diputados,departamento,4,General Alvear,,,110,110,36976,29540
+2015-06-21,general,definitivo,diputados,departamento,3,Godoy Cruz,,,448,448,155366,120170
+2015-06-21,general,definitivo,diputados,departamento,1,Guaymallén,,,627,627,217244,169178
+2015-06-21,general,definitivo,diputados,departamento,2,Junín,,,95,95,32199,26379
+2015-06-21,general,definitivo,diputados,departamento,2,La Paz,,,27,27,8460,7467
+2015-06-21,general,definitivo,diputados,departamento,1,Las Heras,,,443,443,151477,120550
+2015-06-21,general,definitivo,diputados,departamento,1,Lavalle,,,90,90,29724,24518
+2015-06-21,general,definitivo,diputados,departamento,3,Luján de Cuyo,,,275,275,94115,77110
+2015-06-21,general,definitivo,diputados,departamento,2,Maipú,,,383,383,132096,107953
+2015-06-21,general,definitivo,diputados,departamento,4,Malargüe,,,66,66,22088,17348
+2015-06-21,general,definitivo,diputados,departamento,2,Rivadavia,,,126,126,42698,35019
+2015-06-21,general,definitivo,diputados,departamento,3,San Carlos,,,72,72,24504,19845
+2015-06-21,general,definitivo,diputados,departamento,2,San Martín,,,262,262,90386,72461
+2015-06-21,general,definitivo,diputados,departamento,4,San Rafael,,,417,417,141416,111347
+2015-06-21,general,definitivo,diputados,departamento,2,Santa Rosa,,,41,41,13071,11205
+2015-06-21,general,definitivo,diputados,departamento,3,Tunuyán,,,112,112,37739,31104
+2015-06-21,general,definitivo,diputados,departamento,3,Tupungato,,,70,70,23392,19290
+2015-06-21,general,definitivo,intendente,departamento,4,General Alvear,,,111,111,37101,29575
+2015-06-21,general,definitivo,intendente,departamento,1,Guaymallén,,,628,628,217914,169451
+2015-06-21,general,definitivo,intendente,departamento,2,Junín,,,95,95,32199,26379
+2015-06-21,general,definitivo,intendente,departamento,2,La Paz,,,28,28,8475,7477
+2015-06-21,general,definitivo,intendente,departamento,1,Las Heras,,,444,444,151727,120613
+2015-06-21,general,definitivo,intendente,departamento,1,Lavalle,,,91,91,29975,24671
+2015-06-21,general,definitivo,intendente,departamento,3,Luján de Cuyo,,,276,276,94571,77431
+2015-06-21,general,definitivo,intendente,departamento,2,Maipú,,,384,384,132127,107966
+2015-06-21,general,definitivo,intendente,departamento,4,Malargüe,,,67,67,22226,17432
+2015-06-21,general,definitivo,intendente,departamento,2,Rivadavia,,,127,127,42727,35034
+2015-06-21,general,definitivo,intendente,departamento,2,San Martín,,,262,262,90386,72461
+2015-06-21,general,definitivo,intendente,departamento,4,San Rafael,,,420,420,142529,111828
+2015-06-21,general,definitivo,intendente,departamento,2,Santa Rosa,,,42,42,13106,11221
+2015-06-21,general,definitivo,intendente,departamento,3,Tunuyán,,,113,113,37855,31203
+2015-06-21,general,definitivo,intendente,departamento,3,Tupungato,,,71,71,23407,19300
+2015-06-21,general,definitivo,concejales,departamento,4,General Alvear,,,111,111,37101,29575
+2015-06-21,general,definitivo,concejales,departamento,1,Guaymallén,,,628,628,217914,169451
+2015-06-21,general,definitivo,concejales,departamento,2,Junín,,,95,95,32199,26379
+2015-06-21,general,definitivo,concejales,departamento,2,La Paz,,,28,28,8475,7477
+2015-06-21,general,definitivo,concejales,departamento,1,Las Heras,,,444,444,151727,120613
+2015-06-21,general,definitivo,concejales,departamento,1,Lavalle,,,91,91,29975,24671
+2015-06-21,general,definitivo,concejales,departamento,3,Luján de Cuyo,,,276,276,94571,77431
+2015-06-21,general,definitivo,concejales,departamento,2,Maipú,,,384,384,132127,107966
+2015-06-21,general,definitivo,concejales,departamento,4,Malargüe,,,67,67,22226,17432
+2015-06-21,general,definitivo,concejales,departamento,2,Rivadavia,,,127,127,42727,35034
+2015-06-21,general,definitivo,concejales,departamento,2,San Martín,,,262,262,90386,72461
+2015-06-21,general,definitivo,concejales,departamento,4,San Rafael,,,420,420,142529,111828
+2015-06-21,general,definitivo,concejales,departamento,2,Santa Rosa,,,42,42,13106,11221
+2015-06-21,general,definitivo,concejales,departamento,3,Tunuyán,,,113,113,37855,31203
+2015-06-21,general,definitivo,concejales,departamento,3,Tupungato,,,71,71,23407,19300
+2019-06-09,paso,definitivo,gobernador,departamento,1,Capital,,,293,293,98385,72177
+2019-06-09,paso,definitivo,gobernador,departamento,4,General Alvear,,,113,113,37665,28640
+2019-06-09,paso,definitivo,gobernador,departamento,3,Godoy Cruz,,,448,448,155262,117681
+2019-06-09,paso,definitivo,gobernador,departamento,1,Guaymallén,,,646,646,223788,172127
+2019-06-09,paso,definitivo,gobernador,departamento,2,Junín,,,102,102,33901,27371
+2019-06-09,paso,definitivo,gobernador,departamento,2,La Paz,,,27,27,8639,7284
+2019-06-09,paso,definitivo,gobernador,departamento,1,Las Heras,,,461,461,158227,123246
+2019-06-09,paso,definitivo,gobernador,departamento,1,Lavalle,,,95,95,32162,25714
+2019-06-09,paso,definitivo,gobernador,departamento,3,Luján de Cuyo,,,303,303,103675,82764
+2019-06-09,paso,definitivo,gobernador,departamento,2,Maipú,,,412,412,141315,113364
+2019-06-09,paso,definitivo,gobernador,departamento,4,Malargüe,,,70,70,23350,18381
+2019-06-09,paso,definitivo,gobernador,departamento,2,Rivadavia,,,130,130,44084,35192
+2019-06-09,paso,definitivo,gobernador,departamento,3,San Carlos,,,78,78,26308,21520
+2019-06-09,paso,definitivo,gobernador,departamento,2,San Martín,,,271,271,93698,72876
+2019-06-09,paso,definitivo,gobernador,departamento,4,San Rafael,,,433,433,147088,111452
+2019-06-09,paso,definitivo,gobernador,departamento,2,Santa Rosa,,,44,44,13473,11094
+2019-06-09,paso,definitivo,gobernador,departamento,3,Tunuyán,,,117,117,39783,31320
+2019-06-09,paso,definitivo,gobernador,departamento,3,Tupungato,,,77,76,25279,19995
+2019-06-09,paso,definitivo,senadores,departamento,1,Capital,,,293,293,98385,72177
+2019-06-09,paso,definitivo,senadores,departamento,4,General Alvear,,,113,113,37665,28640
+2019-06-09,paso,definitivo,senadores,departamento,3,Godoy Cruz,,,448,448,155262,117681
+2019-06-09,paso,definitivo,senadores,departamento,1,Guaymallén,,,646,646,223788,172127
+2019-06-09,paso,definitivo,senadores,departamento,2,Junín,,,102,102,33901,27371
+2019-06-09,paso,definitivo,senadores,departamento,2,La Paz,,,27,27,8639,7284
+2019-06-09,paso,definitivo,senadores,departamento,1,Las Heras,,,461,461,158227,123246
+2019-06-09,paso,definitivo,senadores,departamento,1,Lavalle,,,95,95,32162,25714
+2019-06-09,paso,definitivo,senadores,departamento,3,Luján de Cuyo,,,303,303,103675,82764
+2019-06-09,paso,definitivo,senadores,departamento,2,Maipú,,,412,412,141315,113364
+2019-06-09,paso,definitivo,senadores,departamento,4,Malargüe,,,70,70,23350,18381
+2019-06-09,paso,definitivo,senadores,departamento,2,Rivadavia,,,130,130,44084,35192
+2019-06-09,paso,definitivo,senadores,departamento,3,San Carlos,,,78,78,26308,21520
+2019-06-09,paso,definitivo,senadores,departamento,2,San Martín,,,271,271,93698,72876
+2019-06-09,paso,definitivo,senadores,departamento,4,San Rafael,,,433,433,147088,111452
+2019-06-09,paso,definitivo,senadores,departamento,2,Santa Rosa,,,44,44,13473,11094
+2019-06-09,paso,definitivo,senadores,departamento,3,Tunuyán,,,117,117,39783,31320
+2019-06-09,paso,definitivo,senadores,departamento,3,Tupungato,,,77,76,25279,19995
+2019-06-09,paso,definitivo,diputados,departamento,1,Capital,,,293,293,98385,72177
+2019-06-09,paso,definitivo,diputados,departamento,4,General Alvear,,,113,113,37665,28640
+2019-06-09,paso,definitivo,diputados,departamento,3,Godoy Cruz,,,448,448,155262,117681
+2019-06-09,paso,definitivo,diputados,departamento,1,Guaymallén,,,646,646,223788,172127
+2019-06-09,paso,definitivo,diputados,departamento,2,Junín,,,102,102,33901,27371
+2019-06-09,paso,definitivo,diputados,departamento,2,La Paz,,,27,27,8639,7284
+2019-06-09,paso,definitivo,diputados,departamento,1,Las Heras,,,461,461,158227,123246
+2019-06-09,paso,definitivo,diputados,departamento,1,Lavalle,,,95,95,32162,25714
+2019-06-09,paso,definitivo,diputados,departamento,3,Luján de Cuyo,,,303,303,103675,82764
+2019-06-09,paso,definitivo,diputados,departamento,2,Maipú,,,412,412,141315,113364
+2019-06-09,paso,definitivo,diputados,departamento,4,Malargüe,,,70,70,23350,18381
+2019-06-09,paso,definitivo,diputados,departamento,2,Rivadavia,,,130,130,44084,35192
+2019-06-09,paso,definitivo,diputados,departamento,3,San Carlos,,,78,78,26308,21520
+2019-06-09,paso,definitivo,diputados,departamento,2,San Martín,,,271,271,93698,72876
+2019-06-09,paso,definitivo,diputados,departamento,4,San Rafael,,,433,433,147088,111452
+2019-06-09,paso,definitivo,diputados,departamento,2,Santa Rosa,,,44,44,13473,11094
+2019-06-09,paso,definitivo,diputados,departamento,3,Tunuyán,,,117,117,39783,31320
+2019-06-09,paso,definitivo,diputados,departamento,3,Tupungato,,,77,76,25279,19995
+2019-06-09,paso,definitivo,intendente,departamento,1,Capital,,,295,295,98826,72378
+2019-06-09,paso,definitivo,intendente,departamento,4,General Alvear,,,113,113,37665,28640
+2019-06-09,paso,definitivo,intendente,departamento,3,Godoy Cruz,,,449,449,155418,117708
+2019-06-09,paso,definitivo,intendente,departamento,1,Guaymallén,,,648,648,224243,172395
+2019-06-09,paso,definitivo,intendente,departamento,2,Junín,,,102,102,33901,27371
+2019-06-09,paso,definitivo,intendente,departamento,2,La Paz,,,28,28,8642,7287
+2019-06-09,paso,definitivo,intendente,departamento,1,Las Heras,,,464,464,158996,123571
+2019-06-09,paso,definitivo,intendente,departamento,3,Luján de Cuyo,,,304,304,103803,82847
+2019-06-09,paso,definitivo,intendente,departamento,2,Maipú,,,413,413,141599,113569
+2019-06-09,paso,definitivo,intendente,departamento,4,Malargüe,,,71,71,23498,18442
+2019-06-09,paso,definitivo,intendente,departamento,2,Rivadavia,,,131,131,44118,35211
+2019-06-09,paso,definitivo,intendente,departamento,3,San Carlos,,,79,79,26324,21527
+2019-06-09,paso,definitivo,intendente,departamento,2,Santa Rosa,,,44,44,13473,11094
+2019-06-09,paso,definitivo,intendente,departamento,3,Tupungato,,,78,77,25297,20010
+2019-06-09,paso,definitivo,concejales,departamento,1,Capital,,,295,295,98826,72378
+2019-06-09,paso,definitivo,concejales,departamento,4,General Alvear,,,113,113,37665,28640
+2019-06-09,paso,definitivo,concejales,departamento,3,Godoy Cruz,,,449,449,155418,117708
+2019-06-09,paso,definitivo,concejales,departamento,1,Guaymallén,,,648,648,224243,172395
+2019-06-09,paso,definitivo,concejales,departamento,2,Junín,,,102,102,33901,27371
+2019-06-09,paso,definitivo,concejales,departamento,2,La Paz,,,28,28,8642,7287
+2019-06-09,paso,definitivo,concejales,departamento,1,Las Heras,,,464,464,158996,123571
+2019-06-09,paso,definitivo,concejales,departamento,3,Luján de Cuyo,,,304,304,103803,82847
+2019-06-09,paso,definitivo,concejales,departamento,2,Maipú,,,413,413,141599,113569
+2019-06-09,paso,definitivo,concejales,departamento,4,Malargüe,,,71,71,23498,18442
+2019-06-09,paso,definitivo,concejales,departamento,2,Rivadavia,,,131,131,44118,35211
+2019-06-09,paso,definitivo,concejales,departamento,3,San Carlos,,,79,79,26324,21527
+2019-06-09,paso,definitivo,concejales,departamento,2,Santa Rosa,,,44,44,13473,11094
+2019-06-09,paso,definitivo,concejales,departamento,3,Tupungato,,,78,77,25297,20010
+2019-09-01,municipal,definitivo,intendente,departamento,1,Lavalle,,,96,96,32586,24241
+2019-09-01,municipal,definitivo,intendente,departamento,2,San Martín,,,274,274,93841,70126
+2019-09-01,municipal,definitivo,intendente,departamento,4,San Rafael,,,439,439,149116,111056
+2019-09-01,municipal,definitivo,intendente,departamento,3,Tunuyán,,,119,119,40098,30461
+2019-09-01,municipal,definitivo,concejales,departamento,1,Lavalle,,,96,96,32586,24241
+2019-09-01,municipal,definitivo,concejales,departamento,2,San Martín,,,274,274,93841,70126
+2019-09-01,municipal,definitivo,concejales,departamento,4,San Rafael,,,439,439,149116,111056
+2019-09-01,municipal,definitivo,concejales,departamento,3,Tunuyán,,,119,119,40098,30461
+2019-09-29,general,provisorio,gobernador,provincia,,,,,4120,4119,1406082,1111436
+2019-09-29,general,provisorio,gobernador,departamento,1,Capital,,,293,293,98385,74749
+2019-09-29,general,provisorio,gobernador,departamento,4,General Alvear,,,113,113,37665,29668
+2019-09-29,general,provisorio,gobernador,departamento,3,Godoy Cruz,,,448,447,155262,120806
+2019-09-29,general,provisorio,gobernador,departamento,1,Guaymallén,,,646,646,223788,176151
+2019-09-29,general,provisorio,gobernador,departamento,2,Junín,,,102,102,33901,27581
+2019-09-29,general,provisorio,gobernador,departamento,2,La Paz,,,27,27,8639,7683
+2019-09-29,general,provisorio,gobernador,departamento,1,Las Heras,,,461,461,158227,125756
+2019-09-29,general,provisorio,gobernador,departamento,1,Lavalle,,,95,95,32162,25705
+2019-09-29,general,provisorio,gobernador,departamento,3,Luján de Cuyo,,,303,303,103675,83983
+2019-09-29,general,provisorio,gobernador,departamento,2,Maipú,,,412,412,141315,115792
+2019-09-29,general,provisorio,gobernador,departamento,4,Malargüe,,,70,70,23350,18254
+2019-09-29,general,provisorio,gobernador,departamento,2,Rivadavia,,,130,130,44084,35855
+2019-09-29,general,provisorio,gobernador,departamento,3,San Carlos,,,78,78,26308,21245
+2019-09-29,general,provisorio,gobernador,departamento,2,San Martín,,,271,271,93698,74035
+2019-09-29,general,provisorio,gobernador,departamento,4,San Rafael,,,433,433,147088,111106
+2019-09-29,general,provisorio,gobernador,departamento,2,Santa Rosa,,,44,44,13473,11398
+2019-09-29,general,provisorio,gobernador,departamento,3,Tunuyán,,,117,117,39783,31134
+2019-09-29,general,provisorio,gobernador,departamento,3,Tupungato,,,77,77,25279,20535
+2019-09-29,general,provisorio,senadores,provincia,,,,,4120,4119,1406082,986722
+2019-09-29,general,provisorio,senadores,departamento,1,Capital,,,293,293,98385,74593
+2019-09-29,general,provisorio,senadores,departamento,4,General Alvear,,,113,113,37665,29488
+2019-09-29,general,provisorio,senadores,departamento,3,Godoy Cruz,,,448,447,155262,120892
+2019-09-29,general,provisorio,senadores,departamento,1,Guaymallén,,,646,646,223788,176024
+2019-09-29,general,provisorio,senadores,departamento,2,Junín,,,102,102,33901,27676
+2019-09-29,general,provisorio,senadores,departamento,2,La Paz,,,27,27,8639,7683
+2019-09-29,general,provisorio,senadores,departamento,1,Las Heras,,,461,461,158227,125716
+2019-09-29,general,provisorio,senadores,departamento,1,Lavalle,,,95,95,32162,25682
+2019-09-29,general,provisorio,senadores,departamento,3,Luján de Cuyo,,,303,303,103675,83815
+2019-09-29,general,provisorio,senadores,departamento,2,Maipú,,,412,412,141315,114792
+2019-09-29,general,provisorio,senadores,departamento,4,Malargüe,,,70,70,23350,18131
+2019-09-29,general,provisorio,senadores,departamento,2,Rivadavia,,,130,130,44084,35809
+2019-09-29,general,provisorio,senadores,departamento,3,San Carlos,,,78,78,26308,21014
+2019-09-29,general,provisorio,senadores,departamento,2,San Martín,,,271,271,93698,73762
+2019-09-29,general,provisorio,senadores,departamento,4,San Rafael,,,433,433,147088,105440
+2019-09-29,general,provisorio,senadores,departamento,2,Santa Rosa,,,44,44,13473,11397
+2019-09-29,general,provisorio,senadores,departamento,3,Tunuyán,,,117,117,39783,31052
+2019-09-29,general,provisorio,senadores,departamento,3,Tupungato,,,77,77,25279,20549
+2019-09-29,general,provisorio,diputados,provincia,,,,,4120,4119,1406082,986919
+2019-09-29,general,provisorio,diputados,departamento,1,Capital,,,293,293,98385,74614
+2019-09-29,general,provisorio,diputados,departamento,4,General Alvear,,,113,113,37665,29490
+2019-09-29,general,provisorio,diputados,departamento,3,Godoy Cruz,,,448,447,155262,120696
+2019-09-29,general,provisorio,diputados,departamento,1,Guaymallén,,,646,646,223788,176037
+2019-09-29,general,provisorio,diputados,departamento,2,Junín,,,102,102,33901,27644
+2019-09-29,general,provisorio,diputados,departamento,2,La Paz,,,27,27,8639,7682
+2019-09-29,general,provisorio,diputados,departamento,1,Las Heras,,,461,461,158227,125781
+2019-09-29,general,provisorio,diputados,departamento,1,Lavalle,,,95,95,32162,25522
+2019-09-29,general,provisorio,diputados,departamento,3,Luján de Cuyo,,,303,303,103675,83664
+2019-09-29,general,provisorio,diputados,departamento,2,Maipú,,,412,412,141315,114759
+2019-09-29,general,provisorio,diputados,departamento,4,Malargüe,,,70,70,23350,18144
+2019-09-29,general,provisorio,diputados,departamento,2,Rivadavia,,,130,130,44084,35812
+2019-09-29,general,provisorio,diputados,departamento,3,San Carlos,,,78,78,26308,20903
+2019-09-29,general,provisorio,diputados,departamento,2,San Martín,,,271,271,93698,73580
+2019-09-29,general,provisorio,diputados,departamento,4,San Rafael,,,433,433,147088,105408
+2019-09-29,general,provisorio,diputados,departamento,2,Santa Rosa,,,44,44,13473,11397
+2019-09-29,general,provisorio,diputados,departamento,3,Tunuyán,,,117,117,39783,30990
+2019-09-29,general,provisorio,diputados,departamento,3,Tupungato,,,77,77,25279,20549
+2019-09-29,general,provisorio,intendente,departamento,1,Capital,,,295,295,98826,74706
+2019-09-29,general,provisorio,intendente,departamento,4,General Alvear,,,113,113,37665,29554
+2019-09-29,general,provisorio,intendente,departamento,3,Godoy Cruz,,,449,448,155418,120803
+2019-09-29,general,provisorio,intendente,departamento,1,Guaymallén,,,648,648,224243,176359
+2019-09-29,general,provisorio,intendente,departamento,2,Junín,,,102,102,33901,27740
+2019-09-29,general,provisorio,intendente,departamento,2,La Paz,,,28,28,8642,7685
+2019-09-29,general,provisorio,intendente,departamento,1,Las Heras,,,464,464,158996,126101
+2019-09-29,general,provisorio,intendente,departamento,3,Luján de Cuyo,,,304,304,103803,83836
+2019-09-29,general,provisorio,intendente,departamento,2,Maipú,,,413,413,141599,114877
+2019-09-29,general,provisorio,intendente,departamento,4,Malargüe,,,71,71,23498,18269
+2019-09-29,general,provisorio,intendente,departamento,2,Rivadavia,,,131,131,44118,35641
+2019-09-29,general,provisorio,intendente,departamento,3,San Carlos,,,79,79,26324,21305
+2019-09-29,general,provisorio,intendente,departamento,2,Santa Rosa,,,44,44,13473,11411
+2019-09-29,general,provisorio,intendente,departamento,3,Tupungato,,,78,78,25297,20293
+2019-09-29,general,provisorio,concejales,departamento,1,Capital,,,295,295,98826,74786
+2019-09-29,general,provisorio,concejales,departamento,4,General Alvear,,,113,113,37665,29548
+2019-09-29,general,provisorio,concejales,departamento,3,Godoy Cruz,,,449,448,155418,120690
+2019-09-29,general,provisorio,concejales,departamento,1,Guaymallén,,,648,648,224243,176534
+2019-09-29,general,provisorio,concejales,departamento,2,Junín,,,102,102,33901,27835
+2019-09-29,general,provisorio,concejales,departamento,2,La Paz,,,28,28,8642,7686
+2019-09-29,general,provisorio,concejales,departamento,1,Las Heras,,,464,464,158996,126042
+2019-09-29,general,provisorio,concejales,departamento,3,Luján de Cuyo,,,304,304,103803,83802
+2019-09-29,general,provisorio,concejales,departamento,2,Maipú,,,413,413,141599,114896
+2019-09-29,general,provisorio,concejales,departamento,4,Malargüe,,,71,71,23498,18228
+2019-09-29,general,provisorio,concejales,departamento,2,Rivadavia,,,131,131,44118,35683
+2019-09-29,general,provisorio,concejales,departamento,3,San Carlos,,,79,79,26324,21129
+2019-09-29,general,provisorio,concejales,departamento,2,Santa Rosa,,,44,44,13473,11406
+2019-09-29,general,provisorio,concejales,departamento,3,Tupungato,,,78,78,25297,20375

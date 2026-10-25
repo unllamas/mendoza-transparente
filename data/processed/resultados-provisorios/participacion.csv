@@ -1,0 +1,200 @@
+eleccion,tipo_eleccion,escrutinio,cargo,nivel,seccion_electoral,departamento,circuito,mesa,mesas_habilitadas,mesas_escrutadas,electores,votantes
+2019-06-09,paso,provisorio,concejales,departamento,1,Capital,,,295,287,98826,68015
+2019-06-09,paso,provisorio,concejales,departamento,1,Guaymallén,,,648,628,224243,163028
+2019-06-09,paso,provisorio,concejales,departamento,1,Las Heras,,,464,442,158996,116235
+2019-06-09,paso,provisorio,concejales,departamento,2,Junín,,,102,102,33901,26689
+2019-06-09,paso,provisorio,concejales,departamento,2,La Paz,,,28,26,8642,6571
+2019-06-09,paso,provisorio,concejales,departamento,2,Maipú,,,413,391,141599,105125
+2019-06-09,paso,provisorio,concejales,departamento,2,Rivadavia,,,131,129,44118,34193
+2019-06-09,paso,provisorio,concejales,departamento,2,Santa Rosa,,,44,44,13473,10796
+2019-06-09,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,449,439,155418,111140
+2019-06-09,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,304,278,103803,73618
+2019-06-09,paso,provisorio,concejales,departamento,3,San Carlos,,,79,76,26324,19891
+2019-06-09,paso,provisorio,concejales,departamento,3,Tupungato,,,78,78,25297,19398
+2019-06-09,paso,provisorio,concejales,departamento,4,General Alvear,,,113,109,37665,27397
+2019-06-09,paso,provisorio,concejales,departamento,4,Malargüe,,,71,61,23498,15337
+2019-06-09,paso,provisorio,diputados,seccion,1,,,,1495,1445,512562,371802
+2019-06-09,paso,provisorio,diputados,seccion,2,,,,986,957,335110,256092
+2019-06-09,paso,provisorio,diputados,seccion,3,,,,1023,981,350307,258098
+2019-06-09,paso,provisorio,diputados,seccion,4,,,,616,598,208103,150825
+2019-06-09,paso,provisorio,gobernador,provincia,,,,,4120,3981,1406082,1048380
+2019-06-09,paso,provisorio,intendente,departamento,1,Capital,,,295,287,98826,68461
+2019-06-09,paso,provisorio,intendente,departamento,1,Guaymallén,,,648,628,224243,164342
+2019-06-09,paso,provisorio,intendente,departamento,1,Las Heras,,,464,442,158996,116552
+2019-06-09,paso,provisorio,intendente,departamento,2,Junín,,,102,102,33901,26703
+2019-06-09,paso,provisorio,intendente,departamento,2,La Paz,,,28,26,8642,6619
+2019-06-09,paso,provisorio,intendente,departamento,2,Maipú,,,413,391,141599,105593
+2019-06-09,paso,provisorio,intendente,departamento,2,Rivadavia,,,131,129,44118,34863
+2019-06-09,paso,provisorio,intendente,departamento,2,Santa Rosa,,,44,44,13473,10879
+2019-06-09,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,449,439,155418,112099
+2019-06-09,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,304,278,103803,74403
+2019-06-09,paso,provisorio,intendente,departamento,3,San Carlos,,,79,76,26324,20207
+2019-06-09,paso,provisorio,intendente,departamento,3,Tupungato,,,78,78,25297,19604
+2019-06-09,paso,provisorio,intendente,departamento,4,General Alvear,,,113,109,37665,27412
+2019-06-09,paso,provisorio,intendente,departamento,4,Malargüe,,,71,61,23498,15523
+2019-06-09,paso,provisorio,senadores,seccion,1,,,,1495,1445,512562,373544
+2019-06-09,paso,provisorio,senadores,seccion,2,,,,986,957,335110,255493
+2019-06-09,paso,provisorio,senadores,seccion,3,,,,1023,981,350307,259600
+2019-06-09,paso,provisorio,senadores,seccion,4,,,,616,598,208103,151083
+2019-09-01,municipal,provisorio,concejales,departamento,1,Lavalle,,,96,96,32586,24213
+2019-09-01,municipal,provisorio,concejales,departamento,2,San Martín,,,274,273,93841,69771
+2019-09-01,municipal,provisorio,concejales,departamento,3,Tunuyán,,,119,119,40098,30435
+2019-09-01,municipal,provisorio,concejales,departamento,4,San Rafael,,,439,438,149116,110289
+2019-09-01,municipal,provisorio,intendente,departamento,1,Lavalle,,,96,96,32586,24241
+2019-09-01,municipal,provisorio,intendente,departamento,2,San Martín,,,274,273,93841,69908
+2019-09-01,municipal,provisorio,intendente,departamento,3,Tunuyán,,,119,119,40098,30529
+2019-09-01,municipal,provisorio,intendente,departamento,4,San Rafael,,,439,438,149116,110455
+2019-09-29,general,provisorio,concejales,departamento,1,Capital,,,295,295,98826,74786
+2019-09-29,general,provisorio,concejales,departamento,1,Guaymallén,,,648,648,224243,176534
+2019-09-29,general,provisorio,concejales,departamento,1,Las Heras,,,464,464,158996,126042
+2019-09-29,general,provisorio,concejales,departamento,2,Junín,,,102,102,33901,27835
+2019-09-29,general,provisorio,concejales,departamento,2,La Paz,,,28,28,8642,7686
+2019-09-29,general,provisorio,concejales,departamento,2,Maipú,,,413,413,141599,114896
+2019-09-29,general,provisorio,concejales,departamento,2,Rivadavia,,,131,131,44118,35683
+2019-09-29,general,provisorio,concejales,departamento,2,Santa Rosa,,,44,44,13473,11406
+2019-09-29,general,provisorio,concejales,departamento,3,Godoy Cruz,,,449,448,155418,120690
+2019-09-29,general,provisorio,concejales,departamento,3,Luján de Cuyo,,,304,304,103803,83802
+2019-09-29,general,provisorio,concejales,departamento,3,San Carlos,,,79,79,26324,21129
+2019-09-29,general,provisorio,concejales,departamento,3,Tupungato,,,78,78,25297,20375
+2019-09-29,general,provisorio,concejales,departamento,4,General Alvear,,,113,113,37665,29548
+2019-09-29,general,provisorio,concejales,departamento,4,Malargüe,,,71,71,23498,18228
+2019-09-29,general,provisorio,diputados,seccion,1,,,,1495,1495,512562,401954
+2019-09-29,general,provisorio,diputados,seccion,2,,,,986,986,335110,270874
+2019-09-29,general,provisorio,diputados,seccion,3,,,,1023,1022,350307,276802
+2019-09-29,general,provisorio,diputados,seccion,4,,,,616,616,208103,153042
+2019-09-29,general,provisorio,gobernador,provincia,,,,,4120,4119,1406082,1111436
+2019-09-29,general,provisorio,intendente,departamento,1,Capital,,,295,295,98826,74706
+2019-09-29,general,provisorio,intendente,departamento,1,Guaymallén,,,648,648,224243,176359
+2019-09-29,general,provisorio,intendente,departamento,1,Las Heras,,,464,464,158996,126101
+2019-09-29,general,provisorio,intendente,departamento,2,Junín,,,102,102,33901,27740
+2019-09-29,general,provisorio,intendente,departamento,2,La Paz,,,28,28,8642,7685
+2019-09-29,general,provisorio,intendente,departamento,2,Maipú,,,413,413,141599,114877
+2019-09-29,general,provisorio,intendente,departamento,2,Rivadavia,,,131,131,44118,35641
+2019-09-29,general,provisorio,intendente,departamento,2,Santa Rosa,,,44,44,13473,11411
+2019-09-29,general,provisorio,intendente,departamento,3,Godoy Cruz,,,449,448,155418,120803
+2019-09-29,general,provisorio,intendente,departamento,3,Luján de Cuyo,,,304,304,103803,83836
+2019-09-29,general,provisorio,intendente,departamento,3,San Carlos,,,79,79,26324,21305
+2019-09-29,general,provisorio,intendente,departamento,3,Tupungato,,,78,78,25297,20293
+2019-09-29,general,provisorio,intendente,departamento,4,General Alvear,,,113,113,37665,29554
+2019-09-29,general,provisorio,intendente,departamento,4,Malargüe,,,71,71,23498,18269
+2019-09-29,general,provisorio,senadores,seccion,1,,,,1495,1495,512562,402015
+2019-09-29,general,provisorio,senadores,seccion,2,,,,986,986,335110,271119
+2019-09-29,general,provisorio,senadores,seccion,3,,,,1023,1022,350307,277322
+2019-09-29,general,provisorio,senadores,seccion,4,,,,616,616,208103,153059
+2023-04-30,municipal,provisorio,concejales,departamento,1,Lavalle,,,109,109,36410,23550
+2023-04-30,municipal,provisorio,concejales,departamento,2,La Paz,,,29,29,9432,7282
+2023-04-30,municipal,provisorio,concejales,departamento,2,Maipú,,,449,447,153945,94789
+2023-04-30,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,46,46,14710,10003
+2023-04-30,municipal,provisorio,concejales,departamento,3,San Carlos,,,86,86,28891,20266
+2023-04-30,municipal,provisorio,concejales,departamento,3,Tunuyán,,,130,128,43979,29550
+2023-04-30,municipal,provisorio,concejales,departamento,4,San Rafael,,,453,441,154589,92781
+2023-04-30,municipal,provisorio,intendente,departamento,1,Lavalle,,,109,109,36410,23785
+2023-04-30,municipal,provisorio,intendente,departamento,2,La Paz,,,29,29,9432,7353
+2023-04-30,municipal,provisorio,intendente,departamento,2,Maipú,,,449,447,153945,95905
+2023-04-30,municipal,provisorio,intendente,departamento,2,Santa Rosa,,,46,46,14710,10192
+2023-04-30,municipal,provisorio,intendente,departamento,3,San Carlos,,,86,86,28891,20910
+2023-04-30,municipal,provisorio,intendente,departamento,3,Tunuyán,,,130,128,43979,29789
+2023-04-30,municipal,provisorio,intendente,departamento,4,San Rafael,,,453,441,154589,94384
+2023-06-11,paso,provisorio,concejales,departamento,1,Capital,,,300,299,100575,66502
+2023-06-11,paso,provisorio,concejales,departamento,1,Guaymallén,,,683,682,235924,156612
+2023-06-11,paso,provisorio,concejales,departamento,1,Las Heras,,,491,490,168792,112380
+2023-06-11,paso,provisorio,concejales,departamento,2,Junín,,,109,108,37249,26781
+2023-06-11,paso,provisorio,concejales,departamento,2,Rivadavia,,,136,134,45993,32224
+2023-06-11,paso,provisorio,concejales,departamento,2,San Martín,,,282,279,96822,64262
+2023-06-11,paso,provisorio,concejales,departamento,3,Godoy Cruz,,,462,460,159606,104734
+2023-06-11,paso,provisorio,concejales,departamento,3,Luján de Cuyo,,,335,334,115360,80256
+2023-06-11,paso,provisorio,concejales,departamento,3,Tupungato,,,85,85,28055,19434
+2023-06-11,paso,provisorio,concejales,departamento,4,General Alvear,,,116,113,38465,23960
+2023-06-11,paso,provisorio,concejales,departamento,4,Malargüe,,,76,75,25314,16170
+2023-06-11,paso,provisorio,diputados,seccion,1,,,,1575,1571,539815,355556
+2023-06-11,paso,provisorio,diputados,seccion,2,,,,1046,1039,357217,241027
+2023-06-11,paso,provisorio,diputados,seccion,3,,,,1092,1089,375056,251851
+2023-06-11,paso,provisorio,diputados,seccion,4,,,,637,631,216648,128780
+2023-06-11,paso,provisorio,gobernador,provincia,,,,,4350,4330,1488736,987785
+2023-06-11,paso,provisorio,intendente,departamento,1,Capital,,,300,299,100575,66516
+2023-06-11,paso,provisorio,intendente,departamento,1,Guaymallén,,,683,682,235924,156972
+2023-06-11,paso,provisorio,intendente,departamento,1,Las Heras,,,491,490,168792,113053
+2023-06-11,paso,provisorio,intendente,departamento,2,Junín,,,109,108,37249,26941
+2023-06-11,paso,provisorio,intendente,departamento,2,Rivadavia,,,136,134,45993,32330
+2023-06-11,paso,provisorio,intendente,departamento,2,San Martín,,,282,279,96822,65165
+2023-06-11,paso,provisorio,intendente,departamento,3,Godoy Cruz,,,462,460,159606,105080
+2023-06-11,paso,provisorio,intendente,departamento,3,Luján de Cuyo,,,335,334,115360,80373
+2023-06-11,paso,provisorio,intendente,departamento,3,Tupungato,,,85,85,28055,19507
+2023-06-11,paso,provisorio,intendente,departamento,4,General Alvear,,,116,113,38465,24119
+2023-06-11,paso,provisorio,intendente,departamento,4,Malargüe,,,76,75,25314,16613
+2023-06-11,paso,provisorio,senadores,seccion,1,,,,1575,1571,539815,355970
+2023-06-11,paso,provisorio,senadores,seccion,2,,,,1046,1039,357217,241906
+2023-06-11,paso,provisorio,senadores,seccion,3,,,,1092,1089,375056,252148
+2023-06-11,paso,provisorio,senadores,seccion,4,,,,637,631,216648,128999
+2023-09-03,municipal,provisorio,concejales,departamento,1,Lavalle,,,109,109,36410,23683
+2023-09-03,municipal,provisorio,concejales,departamento,2,La Paz,,,29,29,9432,7911
+2023-09-03,municipal,provisorio,concejales,departamento,2,Maipú,,,449,449,153945,96309
+2023-09-03,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,46,46,14710,11061
+2023-09-03,municipal,provisorio,concejales,departamento,3,San Carlos,,,86,86,28891,21545
+2023-09-03,municipal,provisorio,concejales,departamento,3,Tunuyán,,,130,130,43979,30323
+2023-09-03,municipal,provisorio,concejales,departamento,4,San Rafael,,,453,452,154589,95817
+2023-09-03,municipal,provisorio,intendente,departamento,1,Lavalle,,,109,109,36410,23546
+2023-09-03,municipal,provisorio,intendente,departamento,2,La Paz,,,29,29,9432,7909
+2023-09-03,municipal,provisorio,intendente,departamento,2,Maipú,,,449,449,153945,96603
+2023-09-03,municipal,provisorio,intendente,departamento,2,Santa Rosa,,,46,46,14710,11127
+2023-09-03,municipal,provisorio,intendente,departamento,3,San Carlos,,,86,86,28891,21679
+2023-09-03,municipal,provisorio,intendente,departamento,3,Tunuyán,,,130,130,43979,30422
+2023-09-03,municipal,provisorio,intendente,departamento,4,San Rafael,,,453,452,154589,97262
+2023-09-24,general,provisorio,concejales,departamento,1,Capital,,,300,299,100575,67431
+2023-09-24,general,provisorio,concejales,departamento,1,Guaymallén,,,683,682,235924,160798
+2023-09-24,general,provisorio,concejales,departamento,1,Las Heras,,,491,486,168792,114316
+2023-09-24,general,provisorio,concejales,departamento,2,Junín,,,109,108,37249,27698
+2023-09-24,general,provisorio,concejales,departamento,2,Rivadavia,,,136,136,45993,33581
+2023-09-24,general,provisorio,concejales,departamento,2,San Martín,,,282,282,96822,66933
+2023-09-24,general,provisorio,concejales,departamento,3,Godoy Cruz,,,462,462,159606,108904
+2023-09-24,general,provisorio,concejales,departamento,3,Luján de Cuyo,,,335,334,115360,81841
+2023-09-24,general,provisorio,concejales,departamento,3,Tupungato,,,85,85,28055,19841
+2023-09-24,general,provisorio,concejales,departamento,4,General Alvear,,,116,116,38465,25210
+2023-09-24,general,provisorio,concejales,departamento,4,Malargüe,,,76,76,25314,17555
+2023-09-24,general,provisorio,diputados,seccion,1,,,,1575,1568,539815,365468
+2023-09-24,general,provisorio,diputados,seccion,2,,,,1046,1046,357217,250396
+2023-09-24,general,provisorio,diputados,seccion,3,,,,1092,1091,375056,259788
+2023-09-24,general,provisorio,diputados,seccion,4,,,,637,637,216648,137231
+2023-09-24,general,provisorio,gobernador,provincia,,,,,4350,4342,1488736,1015719
+2023-09-24,general,provisorio,intendente,departamento,1,Capital,,,300,299,100575,67591
+2023-09-24,general,provisorio,intendente,departamento,1,Guaymallén,,,683,682,235924,160879
+2023-09-24,general,provisorio,intendente,departamento,1,Las Heras,,,491,486,168792,114449
+2023-09-24,general,provisorio,intendente,departamento,2,Junín,,,109,108,37249,27724
+2023-09-24,general,provisorio,intendente,departamento,2,Rivadavia,,,136,136,45993,33652
+2023-09-24,general,provisorio,intendente,departamento,2,San Martín,,,282,282,96822,66983
+2023-09-24,general,provisorio,intendente,departamento,3,Godoy Cruz,,,462,462,159606,108796
+2023-09-24,general,provisorio,intendente,departamento,3,Luján de Cuyo,,,335,334,115360,81939
+2023-09-24,general,provisorio,intendente,departamento,3,Tupungato,,,85,85,28055,19947
+2023-09-24,general,provisorio,intendente,departamento,4,General Alvear,,,116,116,38465,25336
+2023-09-24,general,provisorio,intendente,departamento,4,Malargüe,,,76,76,25314,17672
+2023-09-24,general,provisorio,senadores,seccion,1,,,,1575,1568,539815,365543
+2023-09-24,general,provisorio,senadores,seccion,2,,,,1046,1046,357217,250584
+2023-09-24,general,provisorio,senadores,seccion,3,,,,1092,1091,375056,260049
+2023-09-24,general,provisorio,senadores,seccion,4,,,,637,637,216648,137223
+2025-10-26,general,provisorio,concejales,departamento,1,Capital,,,300,299,101632,69353
+2025-10-26,general,provisorio,concejales,departamento,1,Guaymallén,,,699,695,241931,167208
+2025-10-26,general,provisorio,concejales,departamento,1,Las Heras,,,499,496,171557,114871
+2025-10-26,general,provisorio,concejales,departamento,1,Lavalle,,,114,114,38447,25430
+2025-10-26,general,provisorio,concejales,departamento,2,Junín,,,115,115,38606,28469
+2025-10-26,general,provisorio,concejales,departamento,2,San Martín,,,285,285,98568,67367
+2025-10-26,general,provisorio,concejales,departamento,3,Godoy Cruz,,,463,462,160401,110404
+2025-10-26,general,provisorio,concejales,departamento,3,San Carlos,,,90,90,30129,21783
+2025-10-26,general,provisorio,concejales,departamento,3,Tunuyán,,,133,133,45572,32415
+2025-10-26,general,provisorio,concejales,departamento,3,Tupungato,,,88,88,29139,20086
+2025-10-26,general,provisorio,concejales,departamento,4,General Alvear,,,117,117,38765,25449
+2025-10-26,general,provisorio,concejales,departamento,4,Malargüe,,,77,77,25711,16108
+2025-10-26,general,provisorio,diputados,seccion,1,,,,1606,1600,551942,376839
+2025-10-26,general,provisorio,diputados,seccion,2,,,,1069,1068,366597,260399
+2025-10-26,general,provisorio,diputados,seccion,3,,,,1119,1117,384902,270474
+2025-10-26,general,provisorio,diputados,seccion,4,,,,651,651,220407,145303
+2025-10-26,general,provisorio,senadores,seccion,1,,,,1606,1600,551942,378432
+2025-10-26,general,provisorio,senadores,seccion,2,,,,1069,1068,366597,262107
+2025-10-26,general,provisorio,senadores,seccion,3,,,,1119,1117,384902,271993
+2025-10-26,general,provisorio,senadores,seccion,4,,,,651,651,220407,146651
+2026-02-22,municipal,provisorio,concejales,departamento,2,La Paz,,,30,30,9631,6664
+2026-02-22,municipal,provisorio,concejales,departamento,2,Maipú,,,470,470,161260,70544
+2026-02-22,municipal,provisorio,concejales,departamento,2,Rivadavia,,,138,138,46685,24949
+2026-02-22,municipal,provisorio,concejales,departamento,2,Santa Rosa,,,49,49,15285,9591
+2026-02-22,municipal,provisorio,concejales,departamento,3,Luján de Cuyo,,,357,354,122153,52413
+2026-02-22,municipal,provisorio,concejales,departamento,4,San Rafael,,,468,466,158994,78409
+2026-02-22,municipal,provisorio,convencionales,departamento,4,San Rafael,,,468,466,158994,77720

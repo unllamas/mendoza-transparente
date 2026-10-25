@@ -1,0 +1,88 @@
+{
+  "titulo": "Participación en las elecciones provinciales de Mendoza (datos abiertos)",
+  "descripcion": "Mesas, electores y votantes por cargo en sección, departamento y provincia, de las mismas elecciones que `resultados.csv`; el detalle por mesa está en `participacion_mesas.csv.gz` (mismas columnas). En el nivel mesa los electores no figuran (las planillas por mesa no los traen) y `votantes` es la suma de todos los votos de la mesa para ese cargo, incluidos blancos y nulos; `mesas_escrutadas` es 1 si la mesa tiene votos cargados. En departamento y provincia los números son los que imprime el cierre. Los votantes cambian de un cargo a otro porque no todos votan los mismos cargos (en 2015 y 2019 hay más votos para gobernador que para senador). En los escrutinios provisorios la cuenta pudo estar incompleta al cerrar el archivo.",
+  "fuente": "Portal de datos abiertos de Mendoza (datosabiertos.mendoza.gov.ar), planillas de la Junta Electoral.",
+  "columnas": {
+    "eleccion": {
+      "etiqueta": "Elección",
+      "tipo": "fecha",
+      "descripcion": "Fecha de la jornada (YYYY-MM-DD); identifica la elección."
+    },
+    "tipo_eleccion": {
+      "etiqueta": "Tipo de elección",
+      "tipo": "texto",
+      "valores": {
+        "paso": "PASO",
+        "general": "Generales",
+        "municipal": "Generales municipales (departamentos desdoblados)"
+      }
+    },
+    "escrutinio": {
+      "etiqueta": "Escrutinio",
+      "tipo": "texto",
+      "valores": {
+        "provisorio": "Provisorio",
+        "definitivo": "Definitivo"
+      },
+      "descripcion": "Una misma elección puede estar en los dos (PASO 2019): son cuentas distintas del mismo acto."
+    },
+    "cargo": {
+      "etiqueta": "Cargo",
+      "tipo": "texto",
+      "valores": {
+        "gobernador": "Gobernador",
+        "senadores": "Senadores provinciales",
+        "diputados": "Diputados provinciales",
+        "intendente": "Intendente",
+        "concejales": "Concejales"
+      }
+    },
+    "nivel": {
+      "etiqueta": "Nivel de la fila",
+      "tipo": "texto",
+      "valores": {
+        "provincia": "Provincia",
+        "seccion": "Sección electoral",
+        "departamento": "Departamento",
+        "mesa": "Mesa"
+      },
+      "descripcion": "El nivel más fino es la mesa. Las filas de sección, departamento y provincia son los totales que imprime la fuente: sirven para validar y no se suman con las de mesa."
+    },
+    "seccion_electoral": {
+      "etiqueta": "Sección electoral",
+      "tipo": "entero",
+      "descripcion": "1 a 4. Vacío en las filas de provincia."
+    },
+    "departamento": {
+      "etiqueta": "Departamento",
+      "tipo": "texto",
+      "descripcion": "Nombre normalizado. Vacío en las filas de provincia y de sección."
+    },
+    "circuito": {
+      "etiqueta": "Circuito",
+      "tipo": "texto",
+      "descripcion": "Siempre vacío: las planillas de mesas no dicen a qué circuito pertenece cada mesa."
+    },
+    "mesa": {
+      "etiqueta": "Mesa",
+      "tipo": "texto",
+      "descripcion": "Número de mesa tal como lo da la fuente (único dentro de cada departamento)."
+    },
+    "mesas_habilitadas": {
+      "etiqueta": "Mesas habilitadas",
+      "tipo": "entero"
+    },
+    "mesas_escrutadas": {
+      "etiqueta": "Mesas escrutadas",
+      "tipo": "entero"
+    },
+    "electores": {
+      "etiqueta": "Electores empadronados",
+      "tipo": "entero"
+    },
+    "votantes": {
+      "etiqueta": "Votantes",
+      "tipo": "entero"
+    }
+  }
+}

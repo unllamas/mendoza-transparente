@@ -1,0 +1,92 @@
+{
+  "titulo": "Escrutinios definitivos de Mendoza: mesas, electores y votantes",
+  "descripcion": "Mesas habilitadas y escrutadas, electores empadronados y votantes de cada cargo y unidad geográfica del escrutinio definitivo. Para intendente y concejales el padrón incluye extranjeros. La tabla por sección de la general de 2023 no imprime mesas ni electores, así que esas secciones no tienen fila.",
+  "columnas": {
+    "eleccion": {
+      "etiqueta": "Elección",
+      "tipo": "fecha",
+      "descripcion": "Fecha de la jornada (es el id de la elección)."
+    },
+    "tipo_eleccion": {
+      "etiqueta": "Tipo de elección",
+      "tipo": "texto",
+      "valores": {
+        "paso": "PASO",
+        "general": "General",
+        "municipal": "Municipal (municipios que desdoblaron)"
+      }
+    },
+    "escrutinio": {
+      "etiqueta": "Escrutinio",
+      "tipo": "texto",
+      "valores": {
+        "definitivo": "Definitivo"
+      }
+    },
+    "cargo": {
+      "etiqueta": "Cargo",
+      "tipo": "texto",
+      "valores": {
+        "gobernador": "Gobernador",
+        "senadores": "Senadores provinciales",
+        "diputados": "Diputados provinciales",
+        "intendente": "Intendente",
+        "concejales": "Concejales",
+        "convencionales": "Convencionales municipales"
+      }
+    },
+    "nivel": {
+      "etiqueta": "Nivel",
+      "tipo": "texto",
+      "descripcion": "Unidad geográfica de la fila, la que imprime el PDF.",
+      "valores": {
+        "provincia": "Provincia",
+        "seccion": "Sección electoral",
+        "departamento": "Departamento"
+      }
+    },
+    "seccion_electoral": {
+      "etiqueta": "Sección electoral",
+      "tipo": "texto",
+      "descripcion": "1 a 4. Solo en las filas de nivel sección; el PDF por departamento no la imprime."
+    },
+    "departamento": {
+      "etiqueta": "Departamento",
+      "tipo": "texto",
+      "descripcion": "Nombre oficial del municipio."
+    },
+    "circuito": {
+      "etiqueta": "Circuito",
+      "tipo": "texto",
+      "oculta": true,
+      "descripcion": "Siempre vacío: el escrutinio definitivo no llega a ese nivel."
+    },
+    "mesa": {
+      "etiqueta": "Mesa",
+      "tipo": "texto",
+      "oculta": true,
+      "descripcion": "Siempre vacío: el escrutinio definitivo no llega a ese nivel."
+    },
+    "mesas_habilitadas": {
+      "etiqueta": "Mesas habilitadas",
+      "tipo": "entero",
+      "unidad": "mesas"
+    },
+    "mesas_escrutadas": {
+      "etiqueta": "Mesas escrutadas",
+      "tipo": "entero",
+      "unidad": "mesas"
+    },
+    "electores": {
+      "etiqueta": "Electores empadronados",
+      "tipo": "entero",
+      "unidad": "personas"
+    },
+    "votantes": {
+      "etiqueta": "Votantes",
+      "tipo": "entero",
+      "unidad": "personas"
+    }
+  },
+  "fuente": "https://jusmendoza.gob.ar/escrutinios-definitivos-elecciones-generales-de-mendoza/"
+}
