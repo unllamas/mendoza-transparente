@@ -1,0 +1,3 @@
+# En construcción: no se indexa hasta que tenga contenido (docs/procesos/web.md#publicar).
+User-agent: *
+Disallow: /

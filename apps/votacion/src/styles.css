@@ -1,0 +1,5 @@
+/* Votación usa el design system de packages/ui, igual que el sitio. Acá no van estilos propios. */
+@import "@mt/ui/styles/mt.css";
+
+/* Archivos de esta app que Tailwind tiene que escanear (además de los del paquete). */
+@source "./";

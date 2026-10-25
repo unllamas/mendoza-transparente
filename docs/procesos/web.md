@@ -265,9 +265,10 @@ Errores de consola del tipo «Could not establish connection. Receiving end does
   |---|---|
   | `mendoza-transparente` (web) | `apps/web/*`, `data/*`, `sources.yaml`, `packages/ui/*`, `packages/participation/*`, `package.json`, `bun.lock`, `tsconfig.base.json` |
   | `mendoza-transparente-panel` | `apps/panel/*`, `packages/ui/*`, `packages/participation/*`, `package.json`, `bun.lock`, `tsconfig.base.json` |
+  | `mendoza-transparente-votacion` | `apps/votacion/*`, `packages/ui/*`, `package.json`, `bun.lock`, `tsconfig.base.json` |
 
   Si una app empieza a importar otro paquete del monorepo (por ejemplo `@mt/core`) o a leer otro archivo de la raíz, se suma a su lista en el mismo PR. Se cambia con `PATCH /accounts/$ID/pages/projects/<proyecto>` y `{"source":{"type":"github","config":{"path_includes":[…]}}}`, o en *Settings → Builds & deployments → Build watch paths*.
-- **Vistas previas solo de `dev`** (*Preview branches → Custom*, en los dos proyectos). Las ramas de trabajo no arman vista previa: se prueban en local y la CI compila la web y el panel en cada PR.
+- **Vistas previas solo de `dev`** (*Preview branches → Custom*, en los tres proyectos). Las ramas de trabajo no arman vista previa: se prueban en local y la CI compila la web, el panel y votación en cada PR.
 - **Cómo sigue:** ver el plan [Consumo de Cloudflare](../planes/consumo-de-cloudflare.md).
 
 **Configuración del proyecto:**
@@ -276,6 +277,8 @@ Errores de consola del tipo «Could not establish connection. Receiving end does
 - Base D1 vinculada como `DB` y secretos `TURNSTILE_SECRET` e `IP_SALT` (ver [Participación](participacion.md)).
 
 Cada push a `main` publica solo, incluidos los commits automáticos de datos. A `main` se llega con una publicación desde `dev`, que Cloudflare publica como vista previa en `dev.mendoza-transparente.pages.dev`: ver [Ramas y releases](ramas-y-releases.md). El panel interno se publica en otro proyecto de Pages (`mendoza-transparente-panel`), con la misma base D1: ver [Panel interno](panel.md).
+
+**Votación (`votacion.mendoza-transparente.com`).** Proyecto de Pages aparte, `mendoza-transparente-votacion`, creado el 25/10/2026 por API con la misma configuración que el panel: raíz `apps/votacion`, build `cd ../.. && bun install --frozen-lockfile && cd apps/votacion && bunx vite build`, salida `dist`, rama de producción `main` y vista previa solo de `dev` (`dev.mendoza-transparente-votacion.pages.dev`). El dominio tiene un CNAME con proxy a `mendoza-transparente-votacion.pages.dev`. Mientras está en construcción no se indexa: `noindex` en el HTML, `X-Robots-Tag` en `public/_headers` y `Disallow: /` en `robots.txt`. Cuando tenga contenido, se sacan las tres cosas y se suma al sitemap y a la skill `seo-y-geo`. Se levanta en local con `bun run votacion` (puerto 5175). Qué va a tener: plan [Votación](../planes/votacion.md).
 
 **Estado al 12/10/2026 (cuenta personal de Cloudflare, configurado por API con el token de `.env.cloudflare`):**
 - Proyecto `mendoza-transparente` (`mendoza-transparente.pages.dev`), con root directory `apps/web`.
