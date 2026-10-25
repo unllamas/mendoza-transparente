@@ -14,3 +14,4 @@ Cuando una parte de un plan queda funcionando, su proceso se documenta en `docs/
 | [Sellos de tiempo en Bitcoin](sellos-de-tiempo.md) | Propuesta, sin empezar; no se integra en esta etapa |
 | [Carga por capas](carga-por-capas.md) | Etapa 1 hecha; faltan las capas en el resto de las páginas y aliviar Recharts |
 | [Partidos políticos](partidos.md) | Etapas 1 a 3 hechas; faltan los logos y medir |
+| [Votación](votacion.md) | Etapa 0 hecha (subdominio en construcción); falta el relevamiento detallado |

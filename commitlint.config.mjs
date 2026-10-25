@@ -7,7 +7,7 @@ export default {
     "scope-enum": [
       2,
       "always",
-      ["web", "panel", "ui", "core", "scrapers", "participation", "data", "docs", "scripts", "ci", "skills", "release"],
+      ["web", "panel", "votacion", "ui", "core", "scrapers", "participation", "data", "docs", "scripts", "ci", "skills", "release"],
     ],
     // Descriptions often start with a proper noun (a municipality, an agency), so case is a written rule, not a check.
     "subject-case": [0],

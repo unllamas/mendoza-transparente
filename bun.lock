@@ -40,6 +40,25 @@
         "yaml": "^2.9.1",
       },
     },
+    "apps/votacion": {
+      "name": "@mt/votacion",
+      "version": "0.1.0",
+      "dependencies": {
+        "@mt/ui": "workspace:*",
+        "react": "^19.3.0",
+        "react-aria-components": "^1.17.0",
+        "react-dom": "^19.3.0",
+      },
+      "devDependencies": {
+        "@tailwindcss/vite": "^4.3.3",
+        "@types/react": "^19.3.0",
+        "@types/react-dom": "^19.3.0",
+        "@vitejs/plugin-react": "^6.1.2",
+        "tailwindcss": "^4.3.3",
+        "typescript": "^5",
+        "vite": "^8.3.4",
+      },
+    },
     "apps/web": {
       "name": "@mt/web",
       "version": "0.1.0",
@@ -197,6 +216,8 @@
     "@mt/scrapers": ["@mt/scrapers@workspace:packages/scrapers"],
 
     "@mt/ui": ["@mt/ui@workspace:packages/ui"],
+
+    "@mt/votacion": ["@mt/votacion@workspace:apps/votacion"],
 
     "@mt/web": ["@mt/web@workspace:apps/web"],
 
