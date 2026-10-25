@@ -33,7 +33,8 @@ describe("match", () => {
   });
   test("partial last word", () => {
     expect(titles("federico g")).toEqual(["Federico Gómez"]);
-    expect(titles("hospital s")).toEqual(["Hospital Schestakow"]);
+    // "s" also starts "Salud" in the line below Hospital Central; the title match goes first.
+    expect(titles("hospital s")).toEqual(["Hospital Schestakow", "Hospital Central"]);
   });
   test("any word order", () => {
     expect(titles("Suarez Ulpiano")).toEqual(["Ulpiano Leandro Suárez"]);
