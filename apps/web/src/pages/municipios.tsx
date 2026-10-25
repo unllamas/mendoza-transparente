@@ -138,7 +138,7 @@ export function MunicipiosPage() {
                 />
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                   <span className="truncate font-medium group-hover:text-text-link">{m.nombre}</span>
-                  <span className="truncate text-body-regular text-text-tertiary">
+                  <span className="line-clamp-2 text-body-regular text-text-tertiary">
                     {m.intendente ? m.intendente.nombre : "Intendente sin cargar"}
                     {m.intendente?.partido && ` · ${m.intendente.partido}`}
                   </span>
@@ -219,7 +219,7 @@ export function MunicipioPage() {
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                   <span className="text-body-regular text-text-tertiary">Intendente</span>
                   <span className="truncate text-title-3-medium group-hover:text-text-link">{i.nombre}</span>
-                  <span className="truncate text-body-regular text-text-secondary">
+                  <span className="line-clamp-2 text-body-regular text-text-secondary">
                     {[i.partido, i.mandatoHasta && `hasta ${i.mandatoHasta}`].filter(Boolean).join(" · ")}
                   </span>
                 </span>
@@ -426,7 +426,7 @@ export function MunicipioPage() {
                     <PersonAvatar name={l.nombre} photo={l.foto} party={l.party} className="size-10 text-caption-1-regular" />
                     <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                       <span className="truncate font-medium group-hover:text-text-link">{l.nombre}</span>
-                      <span className="truncate text-body-regular text-text-tertiary">
+                      <span className="line-clamp-2 text-body-regular text-text-tertiary">
                         {[l.cargo, l.bloque].filter(Boolean).join(" · ")}
                       </span>
                     </span>

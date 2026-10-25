@@ -129,7 +129,7 @@ export function MunicipalTransparencySection({ name, data }: { name: string; dat
                 <span className="truncate font-medium group-hover:text-text-link">{ITEMS[item.id].label}</span>
                 <span className="flex min-w-0 items-center gap-1.5 text-body-regular text-text-tertiary">
                   <StatusBadge {...STATUS[item.status]} className="shrink-0 whitespace-nowrap" />
-                  {detail(item) && <span className="truncate">· {detail(item)}</span>}
+                  {detail(item) && <span className="line-clamp-2">· {detail(item)}</span>}
                 </span>
               </span>
               <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
