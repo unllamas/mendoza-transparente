@@ -102,6 +102,7 @@ La mayoría entra desde el teléfono. Estos detalles separan «una página web e
 - **El hover no existe en el celular.** En Tailwind 4, `hover:` ya se aplica solo en dispositivos con mouse. Por eso nada importante puede depender del hover (ver Forma).
 - **Respuesta al tocar:** lo que se toca cambia algo en el momento (`active:`), no recién al soltar.
 - **Las hojas y los menús contienen su scroll** (`overscroll-contain`): al llegar al final no se mueve la página de atrás. La `Sheet` y el menú móvil ya lo hacen.
+- **Si una hoja existe para que la persona haga algo (copiar, presentar, enviar), la acción va fija abajo y se ve sin scrollear en un celular de 375×667**, no al final del contenido: arriba, lo mínimo para entender qué se pide (título y una frase); el «por qué importa» y el respaldo, debajo. Dos botones de 44 px en una fila, de una línea cada uno (`sticky -bottom-4 -mx-4 -mb-4` dentro del cuerpo de la `Sheet`, que tiene `p-4`). Ejemplo: «Pedir este dato» en `/no-publicado` (en 7 días nadie completó el pedido: los botones quedaban 217 px debajo del borde de la pantalla).
 - **Alto de pantalla con `dvh`**, no con `vh`: en el celular, `100vh` incluye la barra del navegador y deja botones tapados.
 - **Probar en un teléfono de verdad** cuando el cambio toca teclado, zoom o gestos: la emulación de Chrome no los reproduce. Con `bunx vite --host`, se abre desde el celular con la IP de la computadora.
 
