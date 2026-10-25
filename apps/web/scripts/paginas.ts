@@ -108,6 +108,8 @@ const NAV = [
   ["/empleo-publico", "Empleo público"],
   ["/poblacion", "Población"],
   ["/no-publicado", "Lo que no se publica"],
+  ["/pedir", "Pedí información"],
+  ["/cartel", "Hacé un cartel"],
   ["/participar", "Participá"],
   ["/como-leer", "Cómo leer estos datos"],
   ["/fuentes", "Fuentes"],
@@ -538,6 +540,64 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
     }),
     lastmod: hoy,
     prioridad: 0.7,
+  });
+
+  estatica("/pedir", {
+    figura: "Nota en PDF",
+    bajada: "Un pedido de acceso a la información pública, listo para presentar. Gratis y sin abogado.",
+    ld: [
+      breadcrumb([
+        ["/", "Inicio"],
+        ["/pedir", "Pedí información"],
+      ]),
+      faq([
+        [
+          "¿Cómo pido información pública en Mendoza?",
+          "Con una nota de acceso a la información pública (Ley 9070): se indica a quién se pide, qué información y los datos de quien la pide (nombre, domicilio y un correo o teléfono). Se presenta en mesa de entradas o en el canal en línea del organismo, es gratis y no hace falta abogado.",
+        ],
+        [
+          "¿Cuánto tienen para responder?",
+          "Quince días hábiles desde que reciben el pedido (artículo 13 de la Ley 9070), que se pueden prorrogar una sola vez por otros quince con una explicación.",
+        ],
+        [
+          "¿Tengo que explicar para qué quiero la información?",
+          "No. La Ley 9070 dice que no hace falta justificar el pedido (artículo 9).",
+        ],
+      ]),
+    ],
+    html: cuerpo({
+      migas: [
+        ["/", "Inicio"],
+        ["/pedir", "Pedí información"],
+      ],
+      h1: "Pedí información pública",
+      resumen:
+        "Armá una nota formal de acceso a la información pública para cualquiera de los 18 municipios de Mendoza o para un organismo de la provincia, completala en la página y descargala en PDF para presentarla. Tus datos no salen de tu dispositivo.",
+    }),
+    lastmod: hoy,
+    prioridad: 0.7,
+  });
+
+  estatica("/cartel", {
+    figura: "Para imprimir o compartir",
+    bajada: "Qué publica tu municipio, cuánta plata recibe, en qué gasta y cuántos empleados tiene.",
+    ld: [
+      breadcrumb([
+        ["/", "Inicio"],
+        ["/cartel", "Hacé un cartel"],
+      ]),
+    ],
+    html: cuerpo({
+      migas: [
+        ["/", "Inicio"],
+        ["/cartel", "Hacé un cartel"],
+      ],
+      h1: "Hacé un cartel con datos de tu municipio",
+      resumen:
+        "Elegí tu municipio y qué querés mostrar: qué datos publica, uno que no publica, cuánta plata recibe de la Provincia, en qué gasta o cuántas personas trabajan. Descargalo en PDF para imprimir o como imagen para WhatsApp e Instagram, con su fuente y un código QR.",
+    }),
+    lastmod: hoy,
+    prioridad: 0.6,
   });
 
   estatica("/como-leer", {

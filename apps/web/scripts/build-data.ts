@@ -14,6 +14,7 @@ import { parse as parseYaml } from "yaml";
 import { NO_PUBLICADO_CATEGORIES } from "../src/no-publicado-categories.ts";
 import type { DataIndex, DatasetMeta, Diccionario, NoPublicado, Preview, SourceCatalog, SourceMeta } from "../src/types.ts";
 import { construirPaginas } from "./paginas.ts";
+import { buildPosters, buildRequestTargets } from "./temas/civic-tools.ts";
 import { buildCompras } from "./temas/compras.ts";
 import { buildCoparticipacion } from "./temas/coparticipacion.ts";
 import { buildDeuda } from "./temas/deuda.ts";
@@ -346,8 +347,10 @@ if (existsSync(fotosDir)) {
 
 // Contenido editorial: lo que el Estado no publica.
 const noPublicado = join(ROOT, "data", "curado", "no-publicado.yaml");
+let noPublicadoItems: NoPublicado[] = [];
 if (existsSync(noPublicado)) {
   const items = parseYaml(readFileSync(noPublicado, "utf8")) as NoPublicado[];
+  noPublicadoItems = items;
   const invalid = items.filter((i) => !(i.categoria in NO_PUBLICADO_CATEGORIES));
   if (invalid.length) throw new Error(`no-publicado.yaml: categoría faltante o desconocida en ${invalid.map((i) => i.id).join(", ")}`);
   // A national law needs its own place to file the request: the provincial form would send people to the wrong office.
@@ -407,6 +410,9 @@ if (copaTema && poblacionTema && funcionariosTema) {
     if (m) m.budget = budgetSummary(b);
   }
   writeFileSync(join(OUT, "temas", "municipios.json"), JSON.stringify(municipios));
+  // The request letter (/pedir) and the posters (/cartel).
+  writeFileSync(join(OUT, "temas", "pedir.json"), JSON.stringify(buildRequestTargets(municipios, noPublicadoItems)));
+  writeFileSync(join(OUT, "temas", "carteles.json"), JSON.stringify(buildPosters(municipios, budgets)));
 }
 if (procesos && adjudicaciones) {
   const { organismos, proveedores } = buildOrganismosYProveedores(

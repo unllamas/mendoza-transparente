@@ -34,6 +34,11 @@ const RUTAS = [
   "/empleo-publico",
   "/poblacion",
   "/no-publicado",
+  "/pedir",
+  // The letter itself (step 2), as a poster's QR opens it.
+  "/pedir?para=muni-san-rafael&dato=sueldos,compras",
+  "/cartel",
+  "/cartel?municipio=general-alvear&tema=gasto&formato=story",
   "/participar",
   "/como-leer",
   "/fuentes",

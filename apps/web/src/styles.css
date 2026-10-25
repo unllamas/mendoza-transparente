@@ -3,3 +3,5 @@
 
 /* Archivos de la app que Tailwind tiene que escanear (además de los del paquete). */
 @source "./";
+/* Las vistas previas están en .gitignore y Tailwind no lee lo ignorado: se suman a mano (solo existen en desarrollo). */
+@source "./previews/";

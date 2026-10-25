@@ -297,7 +297,7 @@ export function MunicipioPage() {
           </Link>
         )}
 
-        {tr && <MunicipalTransparencySection name={m.nombre} data={tr} />}
+        {tr && <MunicipalTransparencySection slug={m.slug} name={m.nombre} data={tr} />}
 
         {c && c.serie.length > 1 && (
           <Section id="coparticipacion" title={`Coparticipación por habitante, en pesos de ${c.referencia}`}>

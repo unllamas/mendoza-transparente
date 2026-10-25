@@ -30,9 +30,11 @@ import type {
   PartyDetail,
   PartySummary,
   PoblacionTema,
+  PosterMunicipality,
   ProveedorDetalle,
   ProveedorResumen,
   RecaudacionTema,
+  RequestTarget,
   SenalesTema,
   UniversidadesTema,
 } from "./types.ts";
@@ -319,6 +321,29 @@ const senalesRoute = createRoute({
   component: page(() => import("./pages/senales.tsx"), "SenalesPage"),
 });
 
+const text = (v: unknown) => (typeof v === "string" ? v : undefined);
+
+const pedirRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/pedir",
+  validateSearch: (s: Record<string, unknown>): { para?: string; dato?: string } => ({ para: text(s.para), dato: text(s.dato) }),
+  loader: () => loadTema<RequestTarget[]>("pedir"),
+  component: page(() => import("./pages/pedir.tsx"), "PedirPage"),
+});
+
+const cartelRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/cartel",
+  validateSearch: (s: Record<string, unknown>): { municipio?: string; tema?: string; dato?: string; formato?: string } => ({
+    municipio: text(s.municipio),
+    tema: text(s.tema),
+    dato: text(s.dato),
+    formato: text(s.formato),
+  }),
+  loader: () => loadTema<PosterMunicipality[]>("carteles"),
+  component: page(() => import("./pages/cartel.tsx"), "CartelPage"),
+});
+
 // Development only: /vista-previa/<name> shows apps/web/src/previews/<name>.tsx, a gitignored throwaway page
 // to review a UI change before touching the real one. Process: docs/procesos/vista-previa.md.
 type PreviewModule = { Preview: (props: { data: unknown }) => ReactNode; loader?: () => Promise<unknown> };
@@ -369,6 +394,8 @@ const router = createRouter({
     senalesRoute,
     noPublicadoRoute,
     participarRoute,
+    pedirRoute,
+    cartelRoute,
     comoLeerRoute,
     fuentesRoute,
     datosRoute,

@@ -12,10 +12,8 @@ import { useRef, useState } from "react";
 import {
   Button as AriaButton,
   ComboBox as AriaComboBox,
-  Header as AriaHeader,
   ListBox as AriaListBox,
   ListBoxItem as AriaListBoxItem,
-  ListBoxSection as AriaListBoxSection,
   Popover as AriaPopover,
   useFilter,
 } from "react-aria-components";
@@ -115,28 +113,41 @@ function ComboSelect({ label, items, value, onChange, placeholder, id, onOpen }:
           className="flex max-h-[min(360px,50dvh)] flex-col gap-1 overflow-auto outline-none"
           renderEmptyState={() => <p className="p-2 text-body-regular text-text-tertiary">No hay ninguno con ese nombre.</p>}
         >
-          {groupItems(items).map(({ group, items: groupItems }) => (
-            <AriaListBoxSection key={group || "_"} id={group || "_"} className="flex flex-col gap-1">
-              {group && <AriaHeader className="px-3 pt-2 pb-1 text-caption-1-medium text-text-tertiary">{group}</AriaHeader>}
-              {groupItems.map((item) => (
-                <AriaListBoxItem
-                  key={item.id}
-                  id={item.id}
-                  textValue={item.label}
-                  className={(state) =>
-                    cx(
-                      MENU_ITEM,
-                      "min-h-11 px-3 text-body-regular",
-                      (state.isFocused || state.isSelected) && MENU_ITEM_ACTIVE,
-                      state.isSelected && "text-body-medium",
-                    )
-                  }
-                >
-                  {item.label}
-                </AriaListBoxItem>
-              ))}
-            </AriaListBoxSection>
-          ))}
+          {/* Group titles are disabled rows, not ListBoxSection: with sections, React 19.2's development
+              performance track reads a collection getter that throws and the page stops responding on the
+              first search (only in development; the production build was fine). */}
+          {groupItems(items).flatMap(({ group, items: groupItems }) => [
+            ...(group
+              ? [
+                  <AriaListBoxItem
+                    key={`group:${group}`}
+                    id={`group:${group}`}
+                    textValue={group}
+                    isDisabled
+                    className="px-3 pt-2 pb-1 text-caption-1-medium text-text-tertiary"
+                  >
+                    {group}
+                  </AriaListBoxItem>,
+                ]
+              : []),
+            ...groupItems.map((item) => (
+              <AriaListBoxItem
+                key={item.id}
+                id={item.id}
+                textValue={item.label}
+                className={(state) =>
+                  cx(
+                    MENU_ITEM,
+                    "min-h-11 px-3 text-body-regular",
+                    (state.isFocused || state.isSelected) && MENU_ITEM_ACTIVE,
+                    state.isSelected && "text-body-medium",
+                  )
+                }
+              >
+                {item.label}
+              </AriaListBoxItem>
+            )),
+          ])}
         </AriaListBox>
       </AriaPopover>
     </AriaComboBox>
