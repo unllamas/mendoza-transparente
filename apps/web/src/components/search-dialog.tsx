@@ -35,6 +35,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 import { track } from "@/analytics.ts";
+import { match } from "@/search-match.ts";
 import type { SearchEntry } from "@/types.ts";
 
 // ------------------------------------------------------------------ index and matching
@@ -47,28 +48,6 @@ const loadSearchIndex = () =>
       searchIndex = null;
       return [];
     }));
-
-/** Lowercase, no accents, and "9.735" → "9735" so law numbers match with or without dots. */
-const fold = (s: string) =>
-  s
-    .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "")
-    .toLowerCase()
-    .replace(/(\d)\.(?=\d)/g, "$1");
-
-/** People, places and laws first: they are what most searches are about. */
-const KIND_WEIGHT: Record<string, number> = {
-  Municipio: 6,
-  Funcionario: 5,
-  Partido: 5,
-  "Ex funcionario": 4,
-  Ley: 4,
-  Organismo: 4,
-  Señal: 4,
-  "No se publica": 3,
-  Proveedor: 3,
-  Sección: 3,
-};
 
 /** Result groups, in the order the filters show them: plural label and icon. */
 const GROUPS: { kind: string; label: string; icon: RemixiconComponentType }[] = [
@@ -89,25 +68,6 @@ const GROUPS: { kind: string; label: string; icon: RemixiconComponentType }[] = 
 const groupOf = (kind: string) => GROUPS.find((g) => g.kind === kind) ?? { kind, label: kind, icon: RiLayoutGridLine };
 const PER_GROUP = 3;
 const MAX_FILTERED = 50;
-
-function match(entries: SearchEntry[], query: string): SearchEntry[] {
-  const words = fold(query).split(/\s+/).filter(Boolean);
-  if (!words.length) return [];
-  const scored: [number, SearchEntry][] = [];
-  for (const e of entries) {
-    const title = fold(e.t);
-    const all = `${title} ${fold(e.s)} ${fold(e.q ?? "")}`;
-    // "ecoclean" finds "ECO CLEAN S.A.S." and "acp" finds "A.C.P.": also compare without spaces or dots.
-    const compact = all.replace(/[\s.-]/g, "");
-    if (!words.every((w) => all.includes(w) || compact.includes(w.replace(/[.-]/g, "")))) continue;
-    let score = KIND_WEIGHT[e.k] ?? 1;
-    if (words.every((w) => title.includes(w))) score += 20;
-    if (title.startsWith(words[0]!)) score += 15;
-    if (words.some((w) => new RegExp(`\\b${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`).test(title))) score += 5;
-    scored.push([score, e]);
-  }
-  return scored.sort((a, b) => b[0] - a[0] || a[1].t.length - b[1].t.length).map(([, e]) => e);
-}
 
 // ------------------------------------------------------------------ opening
 
@@ -360,16 +320,7 @@ export function SearchDialog() {
             })}
           </div>
         ) : (
-          <div className="flex flex-col gap-1 px-4 py-5 text-body-regular">
-            <span>No encontramos nada con «{q}».</span>
-            <span className="text-text-tertiary">
-              Probá con otra palabra, o{" "}
-              <Link to="/participar" search={{ tipo: "dato" }} onClick={close} className="text-text-link hover:underline">
-                sugerinos ese dato
-              </Link>
-              .
-            </span>
-          </div>
+          <NoResults query={q} onNavigate={close} />
         )}
       </div>
 
@@ -387,6 +338,48 @@ export function SearchDialog() {
         </span>
       </div>
     </Dialog>
+  );
+}
+
+/** Nothing matched: say so and offer the ways forward (the full lists, and telling us what is missing). */
+function NoResults({ query, onNavigate }: { query: string; onNavigate: () => void }) {
+  const linkClassName = "group flex min-h-11 items-center gap-3 rounded-2lg px-2 py-2.5 hover:bg-background-secondary-default";
+  return (
+    <div className="flex flex-col gap-4 px-4 py-5 text-body-regular">
+      <div className="flex flex-col gap-1">
+        <span className="text-body-medium">No encontramos nada con «{query}».</span>
+        <span className="text-text-tertiary">Revisá cómo está escrito, o probá con una sola palabra (el apellido, por ejemplo).</span>
+      </div>
+      <ul className="flex flex-col gap-1">
+        <li>
+          <Link
+            to="/funcionarios"
+            onClick={onNavigate}
+            data-track="search.no_results_link"
+            data-track-to="/funcionarios"
+            className={linkClassName}
+          >
+            <RiTeamLine className="size-5 shrink-0 text-foreground-icon-secondary" aria-hidden />
+            <span className="text-text-link">Ver todos los funcionarios</span>
+            <RiArrowRightLine className="ml-auto size-4 shrink-0 text-text-link" aria-hidden />
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/participar"
+            search={{ tipo: "dato" }}
+            onClick={onNavigate}
+            data-track="search.no_results_link"
+            data-track-to="/participar"
+            className={linkClassName}
+          >
+            <RiFlagLine className="size-5 shrink-0 text-foreground-icon-secondary" aria-hidden />
+            <span className="text-text-link">¿Falta alguien o algo? Contanos</span>
+            <RiArrowRightLine className="ml-auto size-4 shrink-0 text-text-link" aria-hidden />
+          </Link>
+        </li>
+      </ul>
+    </div>
   );
 }
 
