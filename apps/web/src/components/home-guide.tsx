@@ -29,7 +29,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { track } from "@/analytics.ts";
 import { formatNumber } from "@/lib.ts";
 import { SECCION_ELECTORAL, slug } from "@/slug.ts";
-import type { HomeGuide } from "@/types.ts";
+import type { GuideFact, HomeGuide } from "@/types.ts";
 
 /**
  * "Elegí tu departamento" → the municipality page. In the home hero, with the same height and weight as the
@@ -103,6 +103,16 @@ function Fact({ figure, fact }: { figure?: string; fact: string }) {
   );
 }
 
+/** Accepts the current shape and the old plain-string one; anything else is "no fact". */
+function asGuideFact(fact: unknown): GuideFact | null {
+  if (typeof fact === "string") return fact ? { figure: "", text: fact } : null;
+  if (fact && typeof fact === "object" && "figure" in fact && "text" in fact) {
+    const { figure, text } = fact as GuideFact;
+    return typeof figure === "string" && typeof text === "string" ? { figure, text } : null;
+  }
+  return null;
+}
+
 /**
  * The six starting questions, ordered by use (PostHog, Oct 2026). Each one answers with a figure, not a
  * description. On phones a compact list, so all six fit in the first screen; from sm up, cards.
@@ -117,7 +127,13 @@ export function StartingQuestions({
   /** Total awarded, already formatted ("$ 965.709 M"), and how many suppliers got it. */
   purchases: { total: string; suppliers: number } | null;
 }) {
-  const { facts, counts } = guide;
+  const { counts } = guide;
+  // guia.json is fetched at runtime: a copy from before facts became {figure, text} holds plain strings, and
+  // rendering an object as a child crashes the page (React error #31).
+  const facts = {
+    debt: asGuideFact(guide.facts?.debt),
+    staff: asGuideFact(guide.facts?.staff),
+  };
   const questions: Question[] = [
     {
       id: "compras",
