@@ -402,6 +402,11 @@ export const EVENT_CATALOG: EventDoc[] = [
   },
   { event: "search.example", description: "Tocó una búsqueda de ejemplo en el buscador vacío. Propiedad query.", tags: ["búsqueda"] },
   { event: "search.shortcut", description: "Fue a una sección desde los accesos del buscador vacío. Propiedad to.", tags: ["búsqueda"] },
+  {
+    event: "search.no_results_link",
+    description: "Tocó un camino sugerido cuando el buscador no encontró nada (ver funcionarios, contanos qué falta). Propiedad to.",
+    tags: ["búsqueda"],
+  },
   { event: "search.close", description: "Cerró el buscador sin elegir un resultado.", tags: ["búsqueda"] },
   {
     event: "home.department.select",
