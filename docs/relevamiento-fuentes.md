@@ -171,8 +171,8 @@ Qué se puede sacar de ahí: designaciones ("DESIGNA…"), adjudicaciones, ampli
 |---|---|---|---|
 | Junta Electoral | https://jusmendoza.gob.ar/junta-electoral-de-mendoza/ · `/escrutinios-definitivos-elecciones-generales-de-mendoza/` | Escrutinios definitivos por cargo y departamento (2023, municipales 2026), alianzas, proclamaciones. **Las actas de proclamación de 2015 a 2023 ya se leen** (fuente `junta-electoral`) | 🟡/🔴 (PDF) |
 | Portal electoral | https://elecciones.mendoza.gob.ar/ | Calendario, leyes (8967, 7005 de financiamiento, 4746 de partidos) | 🟢 |
-| Resultados provisorios | `https://resultados.mendoza.gov.ar/eleccionAAMMDDpublico/` | Por mesa, departamento y cargo | 🟡 (hay que descubrir los JSON) |
-| Resultados históricos | CKAN: `resultados-elecciones-generales-provinciales-2015/2019` y otros | CSV | 🟢 |
+| Resultados provisorios | `https://resultados.mendoza.gov.ar/eleccionAAMMDDpublico/` | Provincia, sección, departamento y circuito, por cargo. Online 2019, 2023, 2025 y 2026. Ver el plan [Votación](planes/votacion.md) | 🟡 (HTML estático, sin API) |
+| Resultados históricos | `datosabiertos.mendoza.gov.ar`: generales provinciales 2015 y 2019, municipales 2019, PASO 2017 y 2019, legislativas 2017 | XLS por mesa en ZIP, CC BY 4.0 | 🟢 |
 | DINE (Nación) | https://www.argentina.gob.ar/dine/resultados-electorales | 1983 a 2023, por mesa | 🟢 |
 | Financiamiento nacional (CNE) | https://www.electoral.gob.ar/nuevo/paginas/cne/financiamiento.php · https://aportantes.electoral.gob.ar/ | Informes de campaña por agrupación y aportantes | 🟡/🔴 (captcha) |
 | Financiamiento provincial | Ley 7005: se rinde ante la Junta Electoral | **No se publica online** → hay que pedirlo por acceso a la información | — |

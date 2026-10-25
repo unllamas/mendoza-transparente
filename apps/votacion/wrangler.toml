@@ -1,0 +1,9 @@
+# Cloudflare Pages: votacion.mendoza-transparente.com, el seguimiento de las elecciones provinciales.
+# Por ahora es estático. Ver docs/procesos/web.md#publicar y docs/planes/votacion.md.
+name = "mendoza-transparente-votacion"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-10-01"
+
+[vars]
+BUN_VERSION = "1.4.2"
+SKIP_DEPENDENCY_INSTALL = "1"

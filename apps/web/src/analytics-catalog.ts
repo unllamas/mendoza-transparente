@@ -188,6 +188,59 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["no publicado", "embudo de pedidos"],
   },
   {
+    event: "missing_data.request.letter",
+    description: "Desde un pedido de «Lo que no se publica», fue a armar la nota en PDF (/pedir). Propiedad item.",
+    tags: ["no publicado", "embudo de pedidos"],
+  },
+  {
+    event: "request_letter.target_picker.open",
+    description: "En /pedir, abrió la lista para elegir a qué municipio u organismo le pide información.",
+    tags: ["nota de pedido"],
+  },
+  {
+    event: "request_letter.write.start",
+    description:
+      "En /pedir, tocó «Armar la nota» después de elegir a quién y qué pide. Propiedades target (municipio u organismo) y documents (cuántos).",
+    tags: ["nota de pedido", "embudo de pedidos"],
+  },
+  {
+    event: "request_letter.point.add",
+    description: "En la nota de /pedir, sumó un punto escrito por la persona.",
+    tags: ["nota de pedido"],
+  },
+  {
+    event: "request_letter.remember.toggle",
+    description: "En /pedir, marcó o desmarcó «Recordar mis datos en este dispositivo». Propiedad on. Los datos nunca se envían.",
+    tags: ["nota de pedido"],
+  },
+  {
+    event: "request_letter.download",
+    description:
+      "Descargó la nota de pedido en PDF. Anónimo: propiedades target (a quién), documents (ids de lo que pide), points, custom_points (puntos propios) y remembered. Nunca el texto ni los datos de la persona.",
+    tags: ["nota de pedido", "embudo de pedidos"],
+  },
+  {
+    event: "request_letter.text.copy",
+    description: "Después de descargar la nota, copió su texto para pegarlo en el formulario en línea o en un correo. Propiedad target.",
+    tags: ["nota de pedido", "embudo de pedidos"],
+  },
+  {
+    event: "request_letter.official_form.open",
+    description: "Después de descargar la nota, abrió el formulario oficial o el correo del organismo. Propiedad target.",
+    tags: ["nota de pedido", "embudo de pedidos"],
+  },
+  {
+    event: "poster.municipality_picker.open",
+    description: "En /cartel, abrió la lista para elegir el municipio.",
+    tags: ["carteles"],
+  },
+  {
+    event: "poster.export",
+    description:
+      "Descargó o compartió un cartel. Propiedades municipality, topic (publica, falta, plata, gasto o empleo), item (el dato que falta), format (a4, square o story) y kind (pdf, png o share).",
+    tags: ["carteles"],
+  },
+  {
     event: "missing_data.request.where_we_looked",
     description: "Abrió uno de los sitios oficiales donde buscamos el dato. Propiedad item.",
     tags: ["no publicado"],
@@ -255,8 +308,13 @@ export const EVENT_CATALOG: EventDoc[] = [
   },
   {
     event: "municipality.transparency_request.open",
-    description: "Desde el detalle de algo que un municipio no publica, fue a pedirlo a «Lo que no se publica». Propiedad item.",
-    tags: ["municipios", "transparencia"],
+    description: "Desde el detalle de uno de los 9 datos de un municipio, fue a armar la nota para pedirlo (/pedir). Propiedad item.",
+    tags: ["municipios", "transparencia", "embudo de pedidos"],
+  },
+  {
+    event: "municipality.poster.open",
+    description: "Desde «Qué publica el municipio», fue a hacer un cartel con sus datos (/cartel). Propiedad municipality.",
+    tags: ["municipios", "carteles"],
   },
   {
     event: "municipality.budget.open",
@@ -402,6 +460,11 @@ export const EVENT_CATALOG: EventDoc[] = [
   },
   { event: "search.example", description: "Tocó una búsqueda de ejemplo en el buscador vacío. Propiedad query.", tags: ["búsqueda"] },
   { event: "search.shortcut", description: "Fue a una sección desde los accesos del buscador vacío. Propiedad to.", tags: ["búsqueda"] },
+  {
+    event: "search.no_results_link",
+    description: "Tocó un camino sugerido cuando el buscador no encontró nada (ver funcionarios, contanos qué falta). Propiedad to.",
+    tags: ["búsqueda"],
+  },
   { event: "search.close", description: "Cerró el buscador sin elegir un resultado.", tags: ["búsqueda"] },
   {
     event: "home.department.select",

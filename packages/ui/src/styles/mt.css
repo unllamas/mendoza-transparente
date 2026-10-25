@@ -205,3 +205,13 @@
     }
   }
 }
+
+/* Contenedor que scrollea de costado (una tabla ancha): una sombra tenue en el borde que todavía tiene contenido
+   avisa que se puede deslizar, y desaparece al llegar al final. Va sobre el color de la página. */
+@utility scroll-hint-x {
+  background:
+    linear-gradient(to right, var(--color-background-full) 30%, transparent) left center / 2rem 100% no-repeat local,
+    linear-gradient(to left, var(--color-background-full) 30%, transparent) right center / 2rem 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, rgb(0 0 0 / 0.18), transparent) left center / 0.75rem 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, rgb(0 0 0 / 0.18), transparent) right center / 0.75rem 100% no-repeat scroll;
+}

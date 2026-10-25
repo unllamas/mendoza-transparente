@@ -113,7 +113,7 @@ export function DeudaPage() {
       </div>
 
       <Section id="instrumentos" title="Instrumentos vigentes">
-        <div className={cx(tileVariants({ size: "sm" }), "overflow-x-auto p-0")}>
+        <div className={cx(tileVariants({ size: "sm" }), "scroll-hint-x overflow-x-auto p-0")}>
           <table className="w-full text-left text-body-regular">
             <thead className="border-b border-separator-border text-text-tertiary">
               <tr>

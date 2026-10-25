@@ -74,6 +74,7 @@ Monorepo con Bun workspaces y Turborepo, en TypeScript estricto.
 |---|---|
 | [`apps/web`](apps/web) | El sitio (mendoza-transparente.com) y su API pública de participación |
 | [`apps/panel`](apps/panel) | Panel interno del equipo, detrás de Cloudflare Access |
+| [`apps/votacion`](apps/votacion) | `votacion.mendoza-transparente.com`: elecciones provinciales (en construcción) |
 
 **Paquetes**
 

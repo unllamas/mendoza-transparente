@@ -34,6 +34,13 @@ module.exports = {
       to: { path: "^apps/panel/" },
     },
     {
+      name: "votacion-stands-alone",
+      severity: "error",
+      comment: "La app de votación no importa el sitio ni el panel: lo que comparten va en un paquete (@mt/ui).",
+      from: { path: "^apps/votacion/" },
+      to: { path: "^apps/(web|panel)/" },
+    },
+    {
       name: "browser-code-does-not-open-databases",
       severity: "error",
       comment:

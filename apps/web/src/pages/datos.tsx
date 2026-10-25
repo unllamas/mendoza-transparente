@@ -148,7 +148,7 @@ function DatasetView({ dataset }: { dataset: DatasetMeta }) {
 
       {preview && dict?.vista !== "ultimo" && (
         <>
-          <div className={cx(tileVariants(), "max-h-[32rem] overflow-auto p-0")}>
+          <div className={cx(tileVariants(), "scroll-hint-x max-h-[32rem] overflow-auto p-0")}>
             <table className="w-full text-left text-body-regular tabular-nums">
               <thead className="sticky top-0 bg-background-surface text-text-tertiary shadow-[0_1px_0_var(--color-separator-border)]">
                 <tr>

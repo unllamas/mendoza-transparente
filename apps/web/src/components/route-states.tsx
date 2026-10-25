@@ -1,7 +1,7 @@
 import { Alert } from "@mt/ui/components/alert";
 import { Button, buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { RiRefreshLine } from "@remixicon/react";
-import { type ErrorComponentProps, Link, useRouter, useRouterState } from "@tanstack/react-router";
+import { type ErrorComponentProps, Link, useRouterState } from "@tanstack/react-router";
 import { useEffect } from "react";
 
 import { captureError } from "@/analytics.ts";
@@ -10,8 +10,7 @@ import { captureError } from "@/analytics.ts";
  * Shown when a page fails to load or to render (the router's error boundary): the rest of the site keeps
  * working, the error goes to PostHog, and the person can retry or tell us.
  */
-export function RouteError({ error, reset }: ErrorComponentProps) {
-  const router = useRouter();
+export function RouteError({ error }: ErrorComponentProps) {
   const path = useRouterState({ select: (s) => s.location.pathname });
   useEffect(() => captureError(error, { path, boundary: "route" }), [error, path]);
   return (
@@ -21,13 +20,9 @@ export function RouteError({ error, reset }: ErrorComponentProps) {
         Ya nos llegó el aviso del error. Probá de nuevo en unos segundos; si sigue pasando, contanos qué estabas mirando.
       </Alert>
       <div className="flex flex-wrap gap-2">
-        <Button
-          leadingIcon={RiRefreshLine}
-          onClick={() => {
-            reset();
-            void router.invalidate();
-          }}
-        >
+        {/* A full reload, not router.invalidate(): a tab left open across a deploy keeps the old JS while the data
+            JSON is already new, and only a reload brings code that understands it. */}
+        <Button leadingIcon={RiRefreshLine} onClick={() => window.location.reload()}>
           Reintentar
         </Button>
         <Link to="/participar" search={{ tipo: "error", pagina: path } as never} className={buttonClassName({ variant: "secondary" })}>

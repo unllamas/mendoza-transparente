@@ -12,6 +12,7 @@ Todo el código va en inglés y toda la documentación en español. La tabla com
 |---|---|
 | `apps/web` | El sitio (Vite + React + TanStack Router), con sus scripts de build de datos y SEO y la función de la API pública (`functions/`) |
 | `apps/panel` | El panel interno del equipo (Vite + React), detrás de Cloudflare Access. Ver `panel.md` |
+| `apps/votacion` | `votacion.mendoza-transparente.com` (Vite + React): las elecciones provinciales, del histórico al conteo en vivo. Por ahora, una página «en construcción» sin indexar. Ver el plan [Votación](../planes/votacion.md) |
 | `packages/ui` (`@mt/ui`) | Design system: tokens, componentes y hooks genéricos. No conoce el router, la analítica ni los datos del sitio |
 | `packages/core` (`@mt/core`) | Utilidades de datos compartidas por los scrapers: archivo, CSV, municipios |
 | `packages/participation` (`@mt/participation`) | API de participación y del panel, consultas a la base, migraciones de D1 y login. Lo usan `apps/web` y `apps/panel` |
@@ -49,6 +50,7 @@ Todo el código va en inglés y toda la documentación en español. La tabla com
 | `logic-has-no-ui` | Que la lógica sin interfaz importe componentes o páginas |
 | `build-scripts-do-not-import-ui` | Que los scripts de build importen componentes |
 | `panel-is-not-the-site` / `site-does-not-import-the-panel` | Que el sitio y el panel interno se importen entre sí (lo compartido va en `@mt/participation` o `@mt/ui`) |
+| `votacion-stands-alone` | Que la app de votación importe el sitio o el panel (lo compartido va en un paquete) |
 | `browser-code-does-not-open-databases` | Que el código del navegador o de las funciones importe la base local de desarrollo (`local-db.ts`) |
 
 **Tipos:** TypeScript estricto con `noUncheckedIndexedAccess` y, en la web y en `@mt/ui`, `noUnusedLocals` (sin código muerto).
@@ -59,7 +61,7 @@ El proyecto no tiene financiación: todo corre en planes gratis. Por eso cada pr
 
 | Servicio | Lo que cuesta | Qué lo gasta |
 |---|---|---|
-| Cloudflare Pages | 500 builds por mes, 20.000 archivos por deploy, 100.000 pedidos a funciones por día; lo estático es gratis y sin límite | Cada push a `main` y a `dev` que toque los archivos de esa app (web y panel son dos proyectos y cada uno construye por su lado); las funciones de `/api/*` |
+| Cloudflare Pages | 500 builds por mes, 20.000 archivos por deploy, 100.000 pedidos a funciones por día; lo estático es gratis y sin límite | Cada push a `main` y a `dev` que toque los archivos de esa app (web, panel y votación son tres proyectos y cada uno construye por su lado); las funciones de `/api/*` |
 | Cloudflare D1 | 5 millones de filas leídas y 100.000 escritas por día | Participación |
 | GitHub Actions | Gratis en un repo público, pero cada job tarda y ocupa cola | CI, actualización de datos, releases, back merge |
 | PostHog | Plan gratis por eventos | Cada evento de `analytics.ts` |

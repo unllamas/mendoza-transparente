@@ -71,13 +71,14 @@ export function ColumnChart({
         </span>
       </div>
 
-      <div className="w-full min-w-0" role="img" aria-label={ariaLabel}>
+      <div className="w-full min-w-0 touch-pan-y" role="img" aria-label={ariaLabel}>
         <ResponsiveContainer width="100%" height={alto + 24}>
           <BarChart
             data={columnas}
             margin={{ top: 4, right: 0, bottom: 0, left: 0 }}
             barCategoryGap={columnas.length > 8 ? "18%" : "28%"}
             onMouseMove={select}
+            onTouchMove={select}
             onClick={select}
             onMouseLeave={() => setActive(rest)}
           >

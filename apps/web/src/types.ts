@@ -883,3 +883,45 @@ export interface PartyDetail extends PartySummary {
   /** People elected under this name who hold no current position, with their sheet in /funcionarios/historial. */
   former: { id: string; name: string; role: string; place: string; year: number }[];
 }
+
+/** Who a request letter can go to, with what it can ask for (temas/pedir.json, built by scripts/temas/civic-tools.ts). */
+export interface RequestTarget {
+  /** "muni-guaymallen" or "org-<slug of the body>": the ?para= of /pedir. */
+  id: string;
+  label: string;
+  group: "Municipios" | "Gobierno de Mendoza";
+  municipal: boolean;
+  /** City in the letter's date line. */
+  city: string;
+  /** Where to file it, as the end of "Presentala …". */
+  where: string;
+  /** Official online form or channel, when there is one. */
+  formUrl: string | null;
+  documents: RequestDocument[];
+}
+
+export interface RequestDocument {
+  /** A transparency item for a municipality, a no-publicado.yaml id for the provincial bodies: the ?dato= of /pedir. */
+  id: string;
+  label: string;
+  /** The point of the letter. */
+  text: string;
+  /** Not published or not readable: chosen by default. */
+  missing: boolean;
+  /** "No lo publica", "No se puede leer", "Lo publica" (municipalities only). */
+  status: string | null;
+}
+
+/** What a poster about a municipality can show (temas/carteles.json, built by scripts/temas/civic-tools.ts). */
+export interface PosterMunicipality {
+  slug: string;
+  name: string;
+  checked: string;
+  site: string | null;
+  items: { id: TransparencyItemId; status: TransparencyStatus }[];
+  published: number;
+  coparticipation: { year: number; reference: string; total: number; perCapita: number } | null;
+  staff: { quarter: string; positions: number; contracts: number; perThousand: number } | null;
+  /** Spending of the latest year read, with the four largest objects. */
+  spending: { year: number; cutoff: string; accrued: number; top: { name: string; accrued: number }[] } | null;
+}

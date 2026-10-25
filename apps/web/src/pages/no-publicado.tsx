@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { ShareButton } from "@/components/share-button.tsx";
 import { TrackedSheet } from "@/components/tracked-sheet.tsx";
 import { type RequestStats, useRequestStats } from "@/features/participation/api/request-stats.ts";
+import { letterTargetId, singleBody } from "@/features/request-letter/utils/targets.ts";
 import { NO_PUBLICADO_CATEGORIES, NO_PUBLICADO_THEMES, type NoPublicadoTheme } from "@/no-publicado-categories.ts";
 import type { NoPublicado } from "@/types.ts";
 import { useUrlText } from "@/url-state.ts";
@@ -247,49 +248,36 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
         <ShareButton id="pedido-compartir" context="missing_data" text={shareText(item, stats)} />
       </div>
 
-      <Alert title="Por qué importa">
-        {item.por_que_importa}
-        {item.detalle_estado && <p className="mt-1 text-text-tertiary">{item.detalle_estado}</p>}
-      </Alert>
-
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-2">
         <div className="flex items-baseline justify-between gap-3">
           <span className="font-medium">Tu pedido</span>
           <span className="text-caption-1-regular text-text-tertiary">Completá tus datos al final</span>
         </div>
-        <Textarea value={texto} onChange={setTexto} rows={13} aria-label="Texto del pedido" />
-        <div className="flex flex-wrap gap-2">
-          <Button
-            variant="secondary"
-            onClick={copiar}
-            leadingIcon={copiado ? RiCheckLine : RiFileCopyLine}
-            id="pedido-copiar"
-            data-track="missing_data.request.copy"
-            data-track-item={item.id}
-            data-track-edited={String(texto !== armarPedido(item))}
-          >
-            {copiado ? "Copiado" : "1. Copiar pedido"}
-          </Button>
-          <a
-            href={formulario}
-            id="pedido-formulario-oficial"
-            data-track="missing_data.request.official_form"
-            data-track-item={item.id}
-            target="_blank"
-            rel="noreferrer"
-            className={buttonClassName({ variant: "primary" })}
-          >
-            {porCorreo ? "2. Enviarlo por correo" : "2. Presentarlo en el formulario oficial"}
-            {!porCorreo && <RiExternalLinkLine className="size-5" aria-hidden />}
-          </a>
-        </div>
+        <Textarea value={texto} onChange={setTexto} rows={6} aria-label="Texto del pedido" />
         <p className="text-caption-1-regular text-text-tertiary text-pretty">
           Para: {item.organismo}
           {porCorreo && ` (${formulario.slice("mailto:".length)})`}.{" "}
           {porCorreo ? "Guardá el correo que mandaste" : "Guardá el número de trámite que te den"}: si no responden en 15 días hábiles,
           podés reclamar.
         </p>
+        {singleBody(item) && (
+          <Link
+            to="/pedir"
+            search={{ para: letterTargetId(item), dato: item.id }}
+            id="pedido-nota-pdf"
+            data-track="missing_data.request.letter"
+            data-track-item={item.id}
+            className="inline-flex min-h-11 w-fit items-center gap-1 text-body-medium text-text-link hover:underline"
+          >
+            ¿Lo presentás en papel? Armá la nota en PDF <RiArrowRightSLine className="size-4" aria-hidden />
+          </Link>
+        )}
       </div>
+
+      <Alert title="Por qué importa">
+        {item.por_que_importa}
+        {item.detalle_estado && <p className="mt-1 text-text-tertiary">{item.detalle_estado}</p>}
+      </Alert>
 
       <div className={cx(tileVariants(), "flex flex-col gap-2 text-body-regular")}>
         <span className="font-medium">¿Ya lo presentaste?</span>
@@ -328,6 +316,33 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
             </a>
           ))}
         </div>
+      </div>
+
+      {/* Main actions stay pinned to the bottom of the sheet: visible without scrolling on any phone. */}
+      <div className="sticky -bottom-4 z-10 -mx-4 -mb-4 grid grid-cols-[auto_1fr] gap-2 border-t border-separator-border bg-background-surface p-3">
+        <Button
+          variant="secondary"
+          onClick={copiar}
+          leadingIcon={copiado ? RiCheckLine : RiFileCopyLine}
+          id="pedido-copiar"
+          data-track="missing_data.request.copy"
+          data-track-item={item.id}
+          data-track-edited={String(texto !== armarPedido(item))}
+        >
+          {copiado ? "Copiado" : "Copiar pedido"}
+        </Button>
+        <a
+          href={formulario}
+          id="pedido-formulario-oficial"
+          data-track="missing_data.request.official_form"
+          data-track-item={item.id}
+          target="_blank"
+          rel="noreferrer"
+          className={buttonClassName({ variant: "primary", className: "min-w-0" })}
+        >
+          {porCorreo ? "Enviar por correo" : "Ir al formulario"}
+          {!porCorreo && <RiExternalLinkLine className="size-5" aria-hidden />}
+        </a>
       </div>
     </TrackedSheet>
   );
