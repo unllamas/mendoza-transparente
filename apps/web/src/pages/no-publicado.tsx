@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { ShareButton } from "@/components/share-button.tsx";
 import { TrackedSheet } from "@/components/tracked-sheet.tsx";
 import { type RequestStats, useRequestStats } from "@/features/participation/api/request-stats.ts";
+import { letterTargetId, singleBody } from "@/features/request-letter/utils/targets.ts";
 import { NO_PUBLICADO_CATEGORIES, NO_PUBLICADO_THEMES, type NoPublicadoTheme } from "@/no-publicado-categories.ts";
 import type { NoPublicado } from "@/types.ts";
 import { useUrlText } from "@/url-state.ts";
@@ -259,6 +260,18 @@ function DetalleSheet({ item, stats, onClose }: { item: NoPublicado; stats: Requ
           {porCorreo ? "Guardá el correo que mandaste" : "Guardá el número de trámite que te den"}: si no responden en 15 días hábiles,
           podés reclamar.
         </p>
+        {singleBody(item) && (
+          <Link
+            to="/pedir"
+            search={{ para: letterTargetId(item), dato: item.id }}
+            id="pedido-nota-pdf"
+            data-track="missing_data.request.letter"
+            data-track-item={item.id}
+            className="inline-flex min-h-11 w-fit items-center gap-1 text-body-medium text-text-link hover:underline"
+          >
+            ¿Lo presentás en papel? Armá la nota en PDF <RiArrowRightSLine className="size-4" aria-hidden />
+          </Link>
+        )}
       </div>
 
       <Alert title="Por qué importa">

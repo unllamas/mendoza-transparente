@@ -15,7 +15,7 @@ Para decidir rápido cómo va a quedar algo antes de tocar el código real: se a
 ## Cómo funciona
 
 - **La ruta solo existe en desarrollo:** `/vista-previa/<nombre>` muestra `apps/web/src/previews/<nombre>.tsx`. La define `apps/web/src/main.tsx` con `import.meta.env.DEV`, así que nunca llega a producción.
-- **`apps/web/src/previews/` está en `.gitignore`:** lo que se arma ahí nunca se commitea. No hace falta registrar nada ni tocar `main.tsx`: alcanza con crear el archivo.
+- **`apps/web/src/previews/` está en `.gitignore`:** lo que se arma ahí nunca se commitea. No hace falta registrar nada ni tocar `main.tsx`: alcanza con crear el archivo. Como Tailwind no lee lo que está en `.gitignore`, `apps/web/src/styles.css` suma la carpeta a mano con `@source "./previews/"`; si una clase nueva no aparece, reiniciar `vite` (no siempre ve los archivos recién creados).
 - **Cada vista previa exporta dos cosas:**
 
 ```tsx

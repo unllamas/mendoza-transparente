@@ -8,65 +8,9 @@ import { Link } from "@tanstack/react-router";
 
 import { TrackedSheet } from "@/components/tracked-sheet.tsx";
 import { formatDate, formatNumber } from "@/lib.ts";
+import { TRANSPARENCY_ITEMS as ITEMS } from "@/transparency-items.ts";
 import type { MunicipalTransparency, TransparencyItem, TransparencyItemId, TransparencyStatus } from "@/types.ts";
 import { useUrlText } from "@/url-state.ts";
-
-/** What each item is and why it matters, in the words a neighbor would use. */
-const ITEMS: Record<TransparencyItemId, { label: string; what: string; law: string }> = {
-  presupuesto: {
-    label: "Presupuesto del año",
-    what: "Cuánta plata piensa gastar el municipio en el año y en qué.",
-    law: "Ley 7314 de Responsabilidad Fiscal",
-  },
-  ejecucion: {
-    label: "Ejecución del gasto",
-    what: "Cuánto gastó de verdad, trimestre a trimestre (anexos 2 a 5 de Responsabilidad Fiscal).",
-    law: "Ley 7314 de Responsabilidad Fiscal",
-  },
-  personal: {
-    label: "Personal y contratos",
-    what: "Cuántos cargos de planta y contratos tiene y cuánto se pagó (anexo 19 de Responsabilidad Fiscal).",
-    law: "Ley 7314 de Responsabilidad Fiscal",
-  },
-  deuda: {
-    label: "Deuda",
-    what: "Cuánto debe el municipio y a quién, trimestre a trimestre.",
-    law: "Ley 7314 de Responsabilidad Fiscal",
-  },
-  compras: {
-    label: "Compras y licitaciones",
-    what: "Qué compra el municipio, a quién y por cuánto.",
-    law: "Ley 9070 de Acceso a la Información Pública",
-  },
-  normas: {
-    label: "Decretos y ordenanzas",
-    what: "Las decisiones del intendente y del Concejo Deliberante, publicadas en un boletín o digesto.",
-    law: "Ley 9070 de Acceso a la Información Pública",
-  },
-  sueldos: {
-    label: "Sueldos de las autoridades",
-    what: "Cuánto cobran el intendente y sus secretarios.",
-    law: "Ley 9070 de Acceso a la Información Pública",
-  },
-  declaraciones_juradas: {
-    label: "Declaraciones juradas",
-    what: "El patrimonio que declaran el intendente y los funcionarios.",
-    law: "Ley 8993 de Ética Pública",
-  },
-  acceso_informacion: {
-    label: "Canal para pedir información",
-    what: "Un formulario, un correo o un área donde cualquier vecino puede pedir información pública.",
-    law: "Ley 9070 de Acceso a la Información Pública",
-  },
-};
-
-/** Entry of data/curado/no-publicado.yaml with the request ready to file, when there is one for the item. */
-const REQUEST: Partial<Record<TransparencyItemId, string>> = {
-  presupuesto: "municipios-sin-datos",
-  personal: "personal-godoy-cruz-las-heras",
-  sueldos: "sueldos-autoridades-municipales",
-  acceso_informacion: "acceso-informacion-municipal",
-};
 
 const STATUS: Record<TransparencyStatus, { status: "good" | "warning" | "critical"; label: string }> = {
   current: { status: "good", label: "Al día" },
@@ -103,7 +47,7 @@ function detail(item: TransparencyItem): string {
 }
 
 /** "Qué publica el municipio": the checklist of what the law asks it to publish, with the link to check each one. */
-export function MunicipalTransparencySection({ name, data }: { name: string; data: MunicipalTransparency }) {
+export function MunicipalTransparencySection({ slug, name, data }: { slug: string; name: string; data: MunicipalTransparency }) {
   const [openId, setOpenId] = useUrlText("publica");
   const open = data.items.find((i) => i.id === openId);
   const total = data.items.length;
@@ -138,19 +82,32 @@ export function MunicipalTransparencySection({ name, data }: { name: string; dat
         ))}
       </ul>
 
-      {open && <ItemSheet item={open} name={name} searched={data.searched} site={data.site} onClose={() => setOpenId(null)} />}
+      <Link
+        to="/cartel"
+        search={{ municipio: slug }}
+        id="municipio-hacer-cartel"
+        data-track="municipality.poster.open"
+        data-track-municipality={slug}
+        className="inline-flex min-h-11 w-fit items-center gap-1 text-body-medium text-text-link hover:underline"
+      >
+        Hacé un cartel con estos datos <RiArrowRightSLine className="size-4" aria-hidden />
+      </Link>
+
+      {open && <ItemSheet item={open} slug={slug} name={name} searched={data.searched} site={data.site} onClose={() => setOpenId(null)} />}
     </Section>
   );
 }
 
 function ItemSheet({
   item,
+  slug,
   name,
   searched,
   site,
   onClose,
 }: {
   item: TransparencyItem;
+  slug: string;
   name: string;
   searched: string[];
   site: string | null;
@@ -209,13 +166,14 @@ function ItemSheet({
               </div>
             )}
             <Link
-              to="/no-publicado"
-              search={{ dato: (missing && REQUEST[item.id]) || undefined } as never}
+              to="/pedir"
+              search={{ para: `muni-${slug}`, dato: item.id }}
+              id="publica-armar-nota"
               data-track="municipality.transparency_request.open"
               data-track-item={item.id}
-              className={cx(buttonClassName({ variant: "secondary" }), "w-fit")}
+              className={cx(buttonClassName({ variant: missing ? "primary" : "secondary" }), "w-fit")}
             >
-              {missing && REQUEST[item.id] ? "Pedir este dato" : "Ver cómo pedir información pública"}
+              Armar la nota para pedirlo
             </Link>
           </div>
         )}

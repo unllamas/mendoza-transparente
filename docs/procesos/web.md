@@ -184,6 +184,26 @@ El pie lista, debajo del selector de tema, otros proyectos cívicos y de datos a
 - **Atributos:** `target="_blank"` y `rel="noopener"`. Sin `noreferrer`, así el sitio amigo también recibe el referer; sin `nofollow`, porque es una recomendación editorial.
 - **Analítica:** cada clic manda `footer.friend_site.open` con el dominio en `site`.
 
+## Nota de pedido y carteles
+
+Dos herramientas para que cualquier persona actúe con los datos, sin cuenta y sin que guardemos nada suyo.
+
+**Nota de pedido (`/pedir`).** Una nota formal de acceso a la información pública para un municipio o un organismo de la provincia.
+
+- **Dos pasos.** Primero se elige a quién (`?para=muni-<slug>` u `org-<slug>`) y qué (`?dato=`, uno o varios separados por coma). Después se completa la nota sobre la misma hoja: los espacios celestes y los puntos del pedido, que se pueden cambiar, quitar o sumar. Con `?dato=` en la URL se abre directo el segundo paso: así llegan el QR de un cartel, el link de `/no-publicado` y el de la ficha de cada municipio.
+- **El texto de la nota** sigue la Ley 9070: sujeto, información pedida y datos de quien la pide (art. 10; el DNI es opcional), 15 días hábiles (art. 13), sin explicar el motivo (art. 9) y rechazo fundado (art. 18). Para un municipio cita además «la normativa municipal aplicable», porque la ley solo invita a los municipios a adherir (art. 40). El texto está en `features/request-letter/utils/letter.ts`.
+- **Privacidad.** El PDF se arma en el navegador con `pdf-lib`: nombre, DNI, domicilio y contacto nunca salen del dispositivo. «Recordar mis datos» los guarda solo en ese navegador (`localStorage`), si la persona lo marca. La analítica cuenta descargas por organismo y dato, nunca el texto (`request_letter.download`).
+- **Datos.** `temas/pedir.json` lo arma `scripts/temas/civic-tools.ts` con los 9 datos de cada municipio (`src/transparency-items.ts`, que también usa su ficha) y los pedidos de `data/curado/no-publicado.yaml` dirigidos a un solo organismo provincial (`singleBody` en `features/request-letter/utils/targets.ts`). Un pedido nuevo en ese archivo aparece solo en `/pedir`.
+
+**Carteles (`/cartel`).** Un cartel sobre un municipio para imprimir (A4, en PDF) o compartir (cuadrado de 1080 × 1080 o historia de 1080 × 1920, en PNG).
+
+- **Qué muestra** (`?tema=`): qué publica, un dato que no publica (`?dato=`), la coparticipación, en qué gasta y cuántas personas trabajan. Solo aparecen los temas con datos para ese municipio. Cada cartel lleva su fuente, la fecha y un QR: a la nota de pedido cuando falta algo, a la ficha del municipio en el resto.
+- **Sin caras.** Los carteles muestran datos, no personas: un cartel con la foto del intendente junto a «no publica» se lee como acusación.
+- **Cómo se genera.** El mismo cartel se dibuja fuera de la pantalla en su tamaño real y `html-to-image` lo pasa a PNG; el A4 se envuelve en un PDF. Los tamaños están en `cqw` (porcentaje del ancho) para que cada formato salga con su medida exacta. Al tocar el diseño, probar con los nombres más largos (Luján de Cuyo, General Alvear) que el QR se siga leyendo y la imagen no cambie de alto.
+- **Datos.** `temas/carteles.json`, también de `scripts/temas/civic-tools.ts`.
+
+Las tres librerías (`pdf-lib`, `html-to-image` y `qrcode-generator`) se cargan solo al descargar, salvo el QR, que es chico y va con la página.
+
 ## Velocidad de carga
 
 ### Los datos de cada página, por capas

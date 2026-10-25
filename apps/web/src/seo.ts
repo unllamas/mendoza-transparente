@@ -116,6 +116,24 @@ export const PAGES: Record<string, PageMeta> = {
     eyebrow: "ACCESO A LA INFORMACIÓN",
     activa: true,
   },
+  "/pedir": {
+    title: `Pedí información pública: nota en PDF${TITLE_SUFFIX}`,
+    description:
+      "Armá gratis una nota de pedido de acceso a la información pública (Ley 9070) para tu municipio o un organismo de Mendoza y descargala en PDF.",
+    ogSlug: "pedir",
+    ogTitle: "Pedí información pública",
+    eyebrow: "ACCESO A LA INFORMACIÓN",
+    activa: true,
+  },
+  "/cartel": {
+    title: `Hacé un cartel con datos de tu municipio${TITLE_SUFFIX}`,
+    description:
+      "Qué publica tu municipio, cuánta plata recibe, en qué gasta y cuántos empleados tiene: armá un cartel para imprimir o compartir en redes.",
+    ogSlug: "cartel",
+    ogTitle: "Hacé un cartel",
+    eyebrow: "CARTELES",
+    activa: true,
+  },
   "/funcionarios": {
     title: `Funcionarios públicos de Mendoza${TITLE_SUFFIX}`,
     description:
