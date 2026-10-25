@@ -154,8 +154,30 @@ function AgencyRow({ agency: a }: { agency: AgencySummary }) {
   );
 }
 
+/**
+ * The detail JSON is fetched at runtime, so a browser can hold a copy written before a field existed (or code
+ * older than the JSON). Every list gets an empty default, so a missing field shows the normal empty state.
+ */
+function withDefaults(a: AgencyDetail | null): AgencyDetail | null {
+  if (!a) return a;
+  return {
+    ...a,
+    points: a.points ?? [],
+    before: a.before ?? [],
+    children: a.children ?? [],
+    staffSeries: a.staffSeries ?? [],
+    quarterlyChange: a.quarterlyChange ?? [],
+    costByYear: a.costByYear ?? [],
+    units: a.units ?? [],
+    team: a.team ?? [],
+    teamTotal: a.teamTotal ?? 0,
+    appointments: a.appointments ?? [],
+    budget: a.budget ?? [],
+  };
+}
+
 export function AgencyPage() {
-  const a = detailApi.useLoaderData();
+  const a = withDefaults(detailApi.useLoaderData());
   const { slug } = detailApi.useParams();
   if (!a) {
     return (
