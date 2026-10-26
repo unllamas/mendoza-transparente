@@ -99,6 +99,12 @@
   --color-map-2: #5a9bd5;
   --color-map-3: #2f78bd;
   --color-map-4: #17508a;
+  /* Segunda rampa del mapa, para cuando compiten dos fuerzas (votación): naranja de la paleta validada (dataviz),
+     separable del azul también para daltonismo. Nunca rojo: el rojo no es un color del sitio. */
+  --color-map-alt-1: #f6b896;
+  --color-map-alt-2: #f08a57;
+  --color-map-alt-3: #eb6834;
+  --color-map-alt-4: #b54a1c;
 }
 
 .dark {
@@ -130,6 +136,10 @@
   --color-map-2: #6eaadf;
   --color-map-3: #4a8fd0;
   --color-map-4: #2f72b8;
+  --color-map-alt-1: #f7c4a8;
+  --color-map-alt-2: #f29a6c;
+  --color-map-alt-3: #e8753f;
+  --color-map-alt-4: #d95926;
 }
 
 @theme inline {
@@ -152,6 +162,10 @@
   --color-map-2: var(--color-map-2);
   --color-map-3: var(--color-map-3);
   --color-map-4: var(--color-map-4);
+  --color-map-alt-1: var(--color-map-alt-1);
+  --color-map-alt-2: var(--color-map-alt-2);
+  --color-map-alt-3: var(--color-map-alt-3);
+  --color-map-alt-4: var(--color-map-alt-4);
   --color-good: #0ca30c;
   --color-warning: #fab219;
   --color-critical: #d03b3b;

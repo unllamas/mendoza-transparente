@@ -4,12 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --port 5175",
-    "build": "vite build",
+    "data": "bun scripts/build-data.ts",
+    "dev": "bun run data && vite --port 5175",
+    "build": "bun run data && vite build",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@mt/ui": "workspace:*",
+    "@remixicon/react": "^4.9.0",
+    "@tanstack/react-router": "^1.170.42",
     "react": "^19.3.0",
     "react-aria-components": "^1.17.0",
     "react-dom": "^19.3.0"
@@ -21,6 +24,8 @@
     "@vitejs/plugin-react": "^6.1.2",
     "tailwindcss": "^4.3.3",
     "typescript": "^5",
-    "vite": "^8.3.4"
+    "vite": "^8.3.4",
+    "@types/bun": "latest",
+    "yaml": "^2.9.1"
   }
 }

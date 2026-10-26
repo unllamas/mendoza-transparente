@@ -1,0 +1,104 @@
+{
+  "titulo": "Resultados electorales provinciales de Mendoza (datos abiertos)",
+  "descripcion": "Totales de sección, departamento y provincia que imprime la fuente (el detalle por mesa, con las mismas columnas, está en `mesas.csv.gz`; este diccionario vale para los dos), de las elecciones generales provinciales de 2015, las PASO de 2017 (solo concejales) y de 2019, las generales municipales del 1 de septiembre de 2019 y las generales del 29 de septiembre de 2019. Cada escrutinio es el que dice el archivo: 2015, PASO 2019 (definitivo) y municipales 2019 son definitivos; PASO 2017, PASO 2019 (provisorio) y generales 2019 son provisorios. En `mesas.csv.gz` no hay filas con 0 votos de una lista (ausente equivale a cero); los votos blancos, nulos, recurridos e impugnados se escriben siempre. El cierre de la provincia solo trae tipos de voto, no listas. La agrupación es la que dice la fuente; donde la planilla de mesas trae solo el código de la lista (PASO 2019) o una sigla, el nombre sale de la misma elección. El candidato figura únicamente donde el cierre departamental lo imprime (gobernador e intendente de 2015 y 2019). Fuera de este archivo quedan las legislativas provinciales de 2017, cuyos CSV traen solo códigos sin leyenda.",
+  "fuente": "Portal de datos abiertos de Mendoza (datosabiertos.mendoza.gov.ar), planillas de la Junta Electoral.",
+  "columnas": {
+    "eleccion": {
+      "etiqueta": "Elección",
+      "tipo": "fecha",
+      "descripcion": "Fecha de la jornada (YYYY-MM-DD); identifica la elección."
+    },
+    "tipo_eleccion": {
+      "etiqueta": "Tipo de elección",
+      "tipo": "texto",
+      "valores": {
+        "paso": "PASO",
+        "general": "Generales",
+        "municipal": "Generales municipales (departamentos desdoblados)"
+      }
+    },
+    "escrutinio": {
+      "etiqueta": "Escrutinio",
+      "tipo": "texto",
+      "valores": {
+        "provisorio": "Provisorio",
+        "definitivo": "Definitivo"
+      },
+      "descripcion": "Una misma elección puede estar en los dos (PASO 2019): son cuentas distintas del mismo acto."
+    },
+    "cargo": {
+      "etiqueta": "Cargo",
+      "tipo": "texto",
+      "valores": {
+        "gobernador": "Gobernador",
+        "senadores": "Senadores provinciales",
+        "diputados": "Diputados provinciales",
+        "intendente": "Intendente",
+        "concejales": "Concejales"
+      }
+    },
+    "nivel": {
+      "etiqueta": "Nivel de la fila",
+      "tipo": "texto",
+      "valores": {
+        "provincia": "Provincia",
+        "seccion": "Sección electoral",
+        "departamento": "Departamento",
+        "mesa": "Mesa"
+      },
+      "descripcion": "El nivel más fino es la mesa. Las filas de sección, departamento y provincia son los totales que imprime la fuente: sirven para validar y no se suman con las de mesa."
+    },
+    "seccion_electoral": {
+      "etiqueta": "Sección electoral",
+      "tipo": "entero",
+      "descripcion": "1 a 4. Vacío en las filas de provincia."
+    },
+    "departamento": {
+      "etiqueta": "Departamento",
+      "tipo": "texto",
+      "descripcion": "Nombre normalizado. Vacío en las filas de provincia y de sección."
+    },
+    "circuito": {
+      "etiqueta": "Circuito",
+      "tipo": "texto",
+      "descripcion": "Siempre vacío: las planillas de mesas no dicen a qué circuito pertenece cada mesa."
+    },
+    "mesa": {
+      "etiqueta": "Mesa",
+      "tipo": "texto",
+      "descripcion": "Número de mesa tal como lo da la fuente (único dentro de cada departamento)."
+    },
+    "tipo_voto": {
+      "etiqueta": "Tipo de voto",
+      "tipo": "texto",
+      "valores": {
+        "positivo": "Positivo (a una lista)",
+        "blanco": "En blanco",
+        "nulo": "Nulo",
+        "recurrido": "Recurrido",
+        "impugnado": "De identidad impugnada",
+        "comando_electoral": "De comando electoral (fuerzas de seguridad; solo PASO 2017)"
+      }
+    },
+    "agrupacion": {
+      "etiqueta": "Agrupación política",
+      "tipo": "texto",
+      "descripcion": "Partido, frente o alianza, como lo dice la fuente. Vacío si no es voto positivo."
+    },
+    "lista": {
+      "etiqueta": "Lista",
+      "tipo": "texto",
+      "descripcion": "Número de lista, con la letra de la lista interna en las PASO de 2019 («300 A»). En las PASO de 2017 es el nombre de la lista interna que da el archivo."
+    },
+    "candidato": {
+      "etiqueta": "Candidato",
+      "tipo": "texto",
+      "descripcion": "Solo si el cierre departamental lo imprime junto a la lista (APELLIDO, Nombre)."
+    },
+    "votos": {
+      "etiqueta": "Votos",
+      "tipo": "entero",
+      "unidad": "votos"
+    }
+  }
+}
