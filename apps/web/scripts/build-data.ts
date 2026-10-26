@@ -28,7 +28,7 @@ import { buildHome } from "./temas/home.ts";
 import { deflactor } from "./temas/inflacion.ts";
 import type { ResumenLey } from "./temas/leyes.ts";
 import { budgetSummary, buildMunicipalBudgets } from "./temas/municipal-budget.ts";
-import { assignParties, buildParties, buildPartyRegistry, type PartyEntry, partyMentions } from "./temas/parties.ts";
+import { assignParties, buildParties, buildPartyRegistry, type OfficialColor, type PartyEntry, partyMentions } from "./temas/parties.ts";
 import { buildPoblacion } from "./temas/poblacion.ts";
 import { buildRecaudacion } from "./temas/recaudacion.ts";
 import { buildSenales } from "./temas/senales.ts";
@@ -317,7 +317,11 @@ const funcionariosTema =
 // Parties first: one name however each source writes it (data/curado/partidos.yaml), then one page each.
 if (funcionariosTema) {
   const electos = readTable("junta-electoral", "electos.csv") ?? [];
-  const parties = buildPartyRegistry(leerCurado<PartyEntry>("partidos.yaml"), partyMentions(funcionariosTema.personas, electos));
+  const parties = buildPartyRegistry(
+    leerCurado<PartyEntry>("partidos.yaml"),
+    partyMentions(funcionariosTema.personas, electos),
+    leerCurado<OfficialColor>("colores-partidos.yaml"),
+  );
   assignParties(funcionariosTema.personas, parties);
   const history = buildHistory(
     readTable("etica-publica", "cargos.csv") ?? [],

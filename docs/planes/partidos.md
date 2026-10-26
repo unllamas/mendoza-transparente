@@ -2,7 +2,7 @@
 
 Objetivo: que cada persona electa muestre a qué partido, frente o bloque pertenece, **según lo dice la fuente oficial**, y que cada uno tenga su página en `/partidos/<slug>`. Esa página junta a sus legisladores, intendentes y bancas ganadas por elección, y responde búsquedas como «UCR Mendoza» o «diputados de La Libertad Avanza Mendoza».
 
-Fecha: 22/10/2026. Estado: etapas 1 a 3 hechas (normalización, páginas e insignia); logos y colores de los cinco partidos con más gente en funciones cargados el 25/10/2026; faltan los logos del resto (etapa 4) y medir (etapa 5). Los criterios que quedaron funcionando están en `docs/procesos/metodologia.md`, «Partidos, frentes y bloques», y la insignia en `docs/procesos/diseno.md`.
+Fecha: 22/10/2026. Estado: etapas 1 a 3 hechas (normalización, páginas e insignia); logos y colores de los cinco partidos con más gente en funciones cargados el 25/10/2026; desde el 26/10/2026 la insignia nunca lleva letras y toma el color de la boleta oficial (`colores-partidos.yaml`) cuando no hay logo. Quedan en gris, sin fuente oficial de logo ni de color, los bloques Fuerza Patria, Unión por la Patria, Provincias Unidas, Unión PRO, Mendocinos por la Libertad, Bloque de los Jubilados Auténticos, Mejor Mendoza, Renovador Mendoza Línea Nacional y Podemos / Encuentro Peronista, y el Partido Demócrata (falta revisar sus cuentas oficiales). Faltan los logos del resto (etapa 4) y medir (etapa 5). Los criterios que quedaron funcionando están en `docs/procesos/metodologia.md`, «Partidos, frentes y bloques», y la insignia en `docs/procesos/diseno.md`.
 
 ## Por qué
 
@@ -65,7 +65,7 @@ Un círculo chico abajo a la derecha de `PersonAvatar`, con una prop opcional `p
 | Caso | Qué se ve |
 |---|---|
 | Electo con partido y logo | El logo |
-| Electo con partido, sin logo | La sigla (o las iniciales del nombre) en gris neutro, con la misma forma |
+| Electo con partido, sin logo | Un círculo lleno con el color oficial del partido (sin letras); gris neutro si no hay color oficial |
 | Electo cuyo acta no dice el partido (hoy, solo el vicegobernador 2015) | Círculo vacío con borde punteado gris. En la ficha: «No lo informa la fuente oficial» |
 | Cargo designado | Nada: no es que falte el dato, es que el cargo no tiene partido |
 

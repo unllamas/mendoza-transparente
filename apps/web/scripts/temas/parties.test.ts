@@ -125,9 +125,33 @@ describe("partidos: a nadie se le asigna un partido que la fuente no da", () => 
   });
 });
 
-test("iniciales de la insignia", () => {
+test("iniciales del partido", () => {
   expect(partyInitials("Cambia Mendoza")).toBe("CM");
   expect(partyInitials("Partido Verde")).toBe("PV");
   expect(partyInitials("Frente Elegí Gestión La Paz")).toBe("EG");
   expect(partyInitials("Frente para la Victoria 2")).toBe("FV");
+});
+
+describe("partidos: color de la insignia", () => {
+  const official = [
+    { nombres: ["Partido Verde"], color: "#7E984D" },
+    { nombres: ["Elegí Mendoza"], anios: [2019], color: "#0a82d4" },
+    { nombres: ["Elegí Mendoza"], anios: [2023], color: "#6ca6d5" },
+    { nombres: ["Cambia Mendoza"], color: "#000000" },
+  ];
+  const withColors = buildPartyRegistry(
+    entries,
+    ["Partido Verde", "Elegí Mendoza", "Cambia Mendoza", "Mejor Mendoza"].map((n) => mention(n)),
+    official,
+  );
+
+  test("sin color en partidos.yaml, el oficial de la boleta, el de la última elección", () => {
+    expect(withColors.ref("Partido Verde")?.color).toBe("#7e984d");
+    expect(withColors.ref("Elegí Mendoza")?.color).toBe("#6ca6d5");
+  });
+
+  test("el color curado en partidos.yaml gana, y sin fuente oficial no hay color", () => {
+    expect(withColors.ref("Cambia Mendoza")?.color).toBe("#951b81");
+    expect(withColors.ref("Mejor Mendoza")?.color).toBeNull();
+  });
 });

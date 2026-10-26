@@ -128,3 +128,22 @@
   color: "#00b4d8"
   fuente: https://elecciones.mendoza.gob.ar/2023/08/03/boletas-municipales/
   parte: fondo de la columna (lista 504) en la boleta municipal de La Paz del 22/02/2026
+
+- nombres: [Elegí Gestión Lavalle]
+  anios: [2023]
+  color: "#02a8dc"
+  fuente: https://www.mendoza.gov.ar/wp-content/uploads/sites/43/2023/08/Lavalle.jpeg
+  parte: franja de la columna (lista 506) en la boleta municipal de Lavalle de 2023
+
+- nombres: [Elegí Santa Rosa]
+  anios: [2023]
+  color: "#05a4d8"
+  fuente: https://www.mendoza.gov.ar/wp-content/uploads/sites/43/2023/08/Santa-Rosa.jpeg
+  parte: franja de la columna (lista 506) en la boleta municipal de Santa Rosa de 2023; el fondo del logo «elegí Santa Rosa» es del mismo celeste
+
+- nombres: [Elegí Gestión Tunuyán]
+  anios: [2023]
+  color: "#05a6de"
+  fuente: https://www.mendoza.gov.ar/wp-content/uploads/sites/43/2023/08/Tunuyan.jpeg
+  parte: franja de la columna (lista 506) en la boleta municipal de Tunuyán de 2023
+  nota: el logo es un degradé de celeste a verde; se usa la franja de la columna
