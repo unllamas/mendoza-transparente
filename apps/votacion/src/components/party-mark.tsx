@@ -1,4 +1,4 @@
-import { initials, PartyAvatar } from "@mt/ui/components/avatar";
+import { PartyAvatar } from "@mt/ui/components/avatar";
 import { cx } from "@mt/ui/lib/cx";
 import type { CSSProperties } from "react";
 import type { PartyRef } from "../types.ts";
@@ -15,7 +15,7 @@ export function PartyMark({ parties, style, size = "sm" }: { parties: PartyRef[]
         {parties.map((p) => (
           <PartyAvatar
             key={p.slug}
-            party={{ name: p.nombre, short: p.sigla ?? initials(p.nombre), logo: p.logo, color: p.color }}
+            party={{ name: p.nombre, logo: p.logo, color: p.color }}
             className={cx(box, "ring-2 ring-background-surface")}
           />
         ))}
