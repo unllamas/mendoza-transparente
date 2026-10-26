@@ -266,6 +266,7 @@ Los resultados de `votacion.mendoza-transparente.com` salen de tres fuentes ofic
 - **Si dos fuentes cubren la misma elección y el mismo escrutinio**, se usa la de más detalle (por mesa antes que por departamento).
 - **Los totales que la fuente no imprime se suman de las unidades más chicas** y la página lo dice («Suma nuestra…»). Nunca se completa un dato que falta.
 - **Las PASO se leen por frente:** las listas internas («300 A», «300 B») se suman a su frente para el mano a mano y el mapa; cada lista interna sigue a la vista en «Todas las listas».
+- **El color de cada fuerza es el oficial:** el de su logo en la boleta oficial o en su sitio, con la URL en `fuente` (`data/curado/colores-partidos.yaml`, por nombre y año, porque el mismo nombre puede cambiar de color y un frente no hereda el color de sus partidos). Nunca se elige un color por parecido ni se toma de un diario o de Wikipedia; sin fuente, la fuerza queda con el color de la paleta y se aclara.
 - **Auditoría automática** (`apps/votacion/scripts/audit.ts`), por elección y cargo:
   - las mesas de cada departamento suman lo mismo que el total impreso del departamento;
   - qué mesas cambiaron del provisorio al definitivo, y cuáles no estaban en el provisorio;

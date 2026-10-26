@@ -1,0 +1,130 @@
+# Color oficial de cada fuerza política, para el mapa de resultados de votacion.mendoza-transparente.com.
+#
+# Criterios (docs/procesos/metodologia.md, «Resultados electorales y auditoría»; docs/procesos/diseno.md):
+# - El color sale de una fuente oficial: la boleta que publica el Estado (provincia o Nación) o el logo en el sitio
+#   oficial de la fuerza. Nunca de un diario, de Wikipedia ni «por parecido».
+# - Va por nombre tal como lo escriben las fuentes de resultados (mayúsculas, tildes y signos no importan), no por
+#   partido: un frente no hereda el color de los partidos que lo forman, y el mismo nombre puede cambiar de color
+#   de un año a otro (`anios`).
+# - Lo que no figura acá se pinta con el azul o el naranja de la paleta y la leyenda dice «sin color oficial».
+#
+# Campos:
+#   nombres  las formas en que las fuentes de resultados escriben esa fuerza
+#   anios    opcional: solo esas elecciones (año). Sin `anios`, vale para todas
+#   color    #rrggbb
+#   fuente   URL oficial de donde salió (la boleta o el logo)
+#   parte    qué parte del logo o de la boleta se midió
+#   nota     opcional: aproximaciones o decisiones
+
+- nombres: [Cambia Mendoza, Frente Cambia Mendoza, Alianza Cambia Mendoza]
+  color: "#951b81"
+  fuente: https://cambiamendoza.com/wp-content/uploads/2023/08/cropped-Cambia-Mendoza-marca-transparente.png
+  parte: fondo del escudo del logo; es también el color primario de cambiamendoza.com y coincide con la columna de la boleta 2023
+
+- nombres: [La Libertad Avanza + Cambia Mendoza]
+  color: "#644498"
+  fuente: https://elecciones.mendoza.gob.ar/2023/08/03/boletas-municipales/
+  parte: fondo de la columna en las boletas municipales del 22/02/2026 (igual en los seis departamentos)
+
+- nombres: [Alianza La Libertad Avanza, La Libertad Avanza]
+  color: "#743bbc"
+  fuente: https://www.argentina.gob.ar/sites/default/files/mendoza-bup.png
+  parte: fondo de la columna (lista 505) en la boleta única nacional de Mendoza del 26/10/2025
+
+- nombres: [Elegí Mendoza]
+  anios: [2023]
+  color: "#6ca6d5"
+  fuente: https://www.mendoza.gov.ar/wp-content/uploads/sites/43/2023/09/Capital.jpeg
+  parte: fondo de la columna (lista 502) en la boleta provincial de 2023
+  nota: el logo de 2023 tiene letras verde muy oscuro (#204040); se usa el celeste de la columna, que es el que identifica a la fuerza en la boleta
+
+- nombres: [Frente Elegí, Elegí, Elegí Frente Político y Social, Frente Político y Social Elegí, Elegí Mendoza, Alianza Elegí Mendoza Frente Político y Social]
+  anios: [2019]
+  color: "#0a82d4"
+  fuente: https://www.mendoza.gov.ar/wp-content/uploads/sites/43/2019/09/302-Capital.jpg
+  parte: letras «elegí» del logo (lista 302) en la boleta provincial de 2019
+  nota: aproximado, la boleta publicada es un escaneo
+
+- nombres: [La Unión Mendocina]
+  color: "#0082c4"
+  fuente: https://www.mendoza.gov.ar/wp-content/uploads/sites/43/2023/09/Capital.jpeg
+  parte: franja azul de la columna (lista 504) en la boleta provincial de 2023
+  nota: el logo es un degradé rojo, azul y amarillo; el azul ocupa la mayor parte
+
+- nombres: [Fuerza Justicialista Mendoza]
+  color: "#3badd4"
+  fuente: https://www.argentina.gob.ar/sites/default/files/mendoza-bup.png
+  parte: fondo de la columna (lista 501) en la boleta única nacional de Mendoza del 26/10/2025; coincide con el color primario de fuerzajusticialistamendoza.com
+
+- nombres: [Fuerza Justicialista Luján de Cuyo, Fuerza Justicialista Rivadavia]
+  color: "#00b4e4"
+  fuente: https://elecciones.mendoza.gob.ar/2023/08/03/boletas-municipales/
+  parte: fondo de la columna (lista 504) en las boletas municipales del 22/02/2026
+
+- nombres: [Frente de Izquierda y de Trabajadores - Unidad, Frente de Izquierda y de los Trabajadores, Frente de Izquierda y de los Trabajadores - Unidad]
+  color: "#f64f58"
+  fuente: https://www.argentina.gob.ar/sites/default/files/mendoza-bup.png
+  parte: fondo de la columna (lista 504) en la boleta única nacional de Mendoza del 26/10/2025; el rojo es el mismo en 2019, 2023 y 2026
+
+- nombres: [Partido Verde]
+  color: "#7e984d"
+  fuente: https://www.mendoza.gov.ar/wp-content/uploads/sites/43/2023/09/Capital.jpeg
+  parte: fondo de la columna (lista 181) en la boleta provincial de 2023
+
+- nombres: [Frente Verde]
+  color: "#799a01"
+  fuente: https://www.argentina.gob.ar/sites/default/files/mendoza-bup.png
+  parte: fondo de la columna (lista 502) en la boleta única nacional de Mendoza del 26/10/2025
+
+- nombres: [Sembrar, Partido Sembrar]
+  color: "#f0803c"
+  fuente: https://elecciones.mendoza.gob.ar/2023/08/03/boletas-municipales/
+  parte: fondo de la columna (lista 328, Rivadavia) en las boletas municipales del 22/02/2026
+
+- nombres: [Frente Libertario Demócrata]
+  color: "#1c4289"
+  fuente: https://www.argentina.gob.ar/sites/default/files/mendoza-bup.png
+  parte: fondo de la columna en la boleta única nacional de Mendoza del 26/10/2025
+
+- nombres: ["Frente Libertario, Demócrata y Jubilados", "Frente Libertario, Demócratas y Jubilados"]
+  anios: [2023]
+  color: "#f8c010"
+  fuente: https://www.mendoza.gov.ar/wp-content/uploads/sites/43/2023/08/Maipu.jpeg
+  parte: franja de la columna (lista 503) en la boleta municipal de 2023
+
+- nombres: [Protectora Fuerza Política]
+  anios: [2025]
+  color: "#2fb491"
+  fuente: https://www.argentina.gob.ar/sites/default/files/mendoza-bup.png
+  parte: fondo de la columna en la boleta única nacional de Mendoza del 26/10/2025
+
+- nombres: [Protectora Fuerza Política]
+  anios: [2026]
+  color: "#ec3c54"
+  fuente: https://elecciones.mendoza.gob.ar/2023/08/03/boletas-municipales/
+  parte: fondo de la columna (lista 222, Luján de Cuyo) en las boletas municipales del 22/02/2026
+
+- nombres: [Frente Encuentro por San Carlos, Encuentro por San Carlos]
+  color: "#e07018"
+  fuente: https://elecciones.mendoza.gob.ar/boletas-municipales-2023/
+  parte: caja naranja del logo (lista 504) en la boleta municipal de San Carlos de 2023
+
+- nombres: [Cambia Mendoza - Nuevos Rumbos]
+  color: "#a01088"
+  fuente: https://elecciones.mendoza.gob.ar/boletas-municipales-2023/
+  parte: franja de la columna (lista 501) en la boleta municipal de San Carlos de 2023
+
+- nombres: [Frente Elegí Maipú Crece, Elegí Maipú Crece, Maipú Crece]
+  color: "#00a0d8"
+  fuente: https://www.mendoza.gov.ar/wp-content/uploads/sites/43/2023/08/Maipu.jpeg
+  parte: franja de la columna (lista 506) en la boleta municipal de Maipú de 2023
+
+- nombres: [Elegí San Rafael Avanza]
+  color: "#0070b8"
+  fuente: https://elecciones.mendoza.gob.ar/boletas-municipales-2023/
+  parte: franja de la columna (lista 506) en la boleta municipal de San Rafael de 2023
+
+- nombres: [Elegí Gestión La Paz, Frente Elegí Gestión La Paz]
+  color: "#00b4d8"
+  fuente: https://elecciones.mendoza.gob.ar/2023/08/03/boletas-municipales/
+  parte: fondo de la columna (lista 504) en la boleta municipal de La Paz del 22/02/2026

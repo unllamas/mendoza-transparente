@@ -1,5 +1,5 @@
 import { cx } from "@mt/ui/lib/cx";
-import { type Contenders, forcesOf, SIDE_BG, sideOf } from "../contenders.ts";
+import { type Contenders, forcesOf, sideOf, sideStyle } from "../contenders.ts";
 import { formatNumber, formatPercent } from "../labels.ts";
 import type { Unit } from "../types.ts";
 import { positives } from "./results.tsx";
@@ -25,7 +25,7 @@ export function HeadToHead({ unit, forces }: { unit: Unit; forces: Contenders })
           l ? (
             <div key={l.agrupacion} className={cx("flex min-w-0 flex-col", i === 1 && "items-end text-right")}>
               <span className="flex min-w-0 max-w-full items-center gap-2 text-body-medium text-text-primary">
-                <span className={cx("size-2.5 shrink-0 rounded-full", SIDE_BG[i])} aria-hidden />
+                <span className="size-2.5 shrink-0 rounded-full" style={sideStyle(forces, i as 0 | 1)} aria-hidden />
                 <span className="truncate" title={l.agrupacion}>
                   {l.agrupacion}
                 </span>
@@ -51,8 +51,8 @@ export function HeadToHead({ unit, forces }: { unit: Unit; forces: Contenders })
             return (
               <span
                 key={l.key}
-                className={cx("h-full", side === null ? "bg-chart-axis" : SIDE_BG[side])}
-                style={{ width: `${(l.votos / total) * 100}%` }}
+                className="h-full"
+                style={{ ...sideStyle(forces, side), width: `${(l.votos / total) * 100}%` }}
                 title={`${l.agrupacion}: ${formatPercent(l.votos, total)}`}
               />
             );

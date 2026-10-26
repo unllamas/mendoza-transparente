@@ -92,7 +92,7 @@ function ElectionView({
   const department = results.departamentos.find((d) => slug(d.nombre) === search.departamento);
   const unit = department ?? results.provincia;
   // The two colors always follow the two leading forces of the province, also inside a department.
-  const forces = contenders(results.provincia ?? results.departamentos[0] ?? null);
+  const forces = contenders(results.provincia ?? results.departamentos[0] ?? null, election.colores);
   const checks = election.auditoria.filter((c) => c.cargo === office);
   const alerts = checks.reduce((s, c) => s + c.alertas, 0);
   const selectDepartment = (name: string | null) => set({ departamento: name ? slug(name) : undefined });

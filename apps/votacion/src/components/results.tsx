@@ -1,7 +1,7 @@
 import { tileVariants } from "@mt/ui/components/card";
 import { StatTile } from "@mt/ui/components/stat-tile";
 import { cx } from "@mt/ui/lib/cx";
-import { type Contenders, SIDE_BG, sideOf } from "../contenders.ts";
+import { type Contenders, sideOf, sideStyle } from "../contenders.ts";
 import { formatNumber, formatPercent, VOTE_TYPE_LABEL } from "../labels.ts";
 import type { Unit, VoteType } from "../types.ts";
 
@@ -62,8 +62,8 @@ export function ResultBars({ unit, forces }: { unit: Unit; forces: Contenders | 
             {l.candidato && <span className="truncate text-caption-1-regular text-text-secondary">{l.candidato}</span>}
             <div className="h-2 overflow-hidden rounded-full bg-background-action">
               <div
-                className={cx("h-full rounded-full", sideOf(forces, l) === null ? "bg-chart-axis" : SIDE_BG[sideOf(forces, l)!])}
-                style={{ width: `${total ? (l.votos / total) * 100 : 0}%` }}
+                className="h-full rounded-full"
+                style={{ ...sideStyle(forces, sideOf(forces, l)), width: `${total ? (l.votos / total) * 100 : 0}%` }}
               />
             </div>
           </li>

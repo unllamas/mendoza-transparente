@@ -14,6 +14,7 @@
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { gunzipSync } from "node:zlib";
+import { parse as parseYaml } from "yaml";
 import { slug } from "../src/slug.ts";
 import type {
   DataIndex,
@@ -31,6 +32,38 @@ import { type AuditOffice, auditElection } from "./audit.ts";
 // VOTACION_PROCESSED_DIR points the build at other CSVs (sample data for a preview), without touching data/.
 const PROCESSED_DIR = process.env.VOTACION_PROCESSED_DIR ?? join(import.meta.dir, "..", "..", "..", "data", "processed");
 const OUT = join(import.meta.dir, "..", "public", "datos");
+const COLORS = join(import.meta.dir, "..", "..", "..", "data", "curado", "colores-partidos.yaml");
+
+/** Same rule as the main site (apps/web/scripts/temas/parties.ts): case, accents and punctuation don't matter. */
+const partyKey = (s: string) =>
+  s
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+
+interface ColorEntry {
+  nombres: string[];
+  anios?: number[];
+  color: string;
+  fuente: string;
+}
+
+/** Official color of a force by name and election year (data/curado/colores-partidos.yaml); null if none. */
+function partyColors(): (name: string, year: number) => string | null {
+  const entries = existsSync(COLORS) ? (parseYaml(readFileSync(COLORS, "utf8")) as ColorEntry[]) : [];
+  for (const e of entries)
+    if (!/^#[0-9a-f]{6}$/i.test(e.color) || !e.fuente?.startsWith("https://"))
+      throw new Error(`colores-partidos.yaml: «${e.nombres[0]}» necesita un color #rrggbb y su fuente`);
+  return (name, year) => {
+    const key = partyKey(name);
+    const matches = entries.filter((e) => e.nombres.some((n) => partyKey(n) === key));
+    // An entry for that year wins over one for every year.
+    const hit = matches.find((e) => e.anios?.includes(year)) ?? matches.find((e) => !e.anios);
+    return hit ? hit.color.toLowerCase() : null;
+  };
+}
 
 /** In order of preference for the same election and scrutiny. */
 const SOURCES: { id: string; url: string }[] = [
@@ -284,7 +317,8 @@ function officeResults(office: OfficeUnits): { results: OfficeResults; details: 
   const printedProvince = [...office.byLevel.get("provincia")!.values()][0];
   // Some sources print the province's turnout and blank or null votes but not the votes per list: then the lists
   // are our sum of the departments, and the printed figures stay.
-  let provincia = printedProvince ? sortLists(printedProvince) : sumUnits("Mendoza", null, deps);
+  // Without a printed total, the province is the sum of the departments or, if the source only has sections, of them.
+  let provincia = printedProvince ? sortLists(printedProvince) : sumUnits("Mendoza", null, deps.length > 0 ? deps : secciones);
   if (printedProvince && printedProvince.listas.length === 0 && deps.length > 0) {
     const summed = sumUnits("Mendoza", null, deps)!;
     provincia = { ...printedProvince, listas: summed.listas, sumado: true };
@@ -332,11 +366,12 @@ function write(path: string, data: unknown) {
 
 async function main() {
   const collected = collect();
+  const colors = partyColors();
   rmSync(OUT, { recursive: true, force: true });
 
   const summaries: ElectionSummary[] = [];
   for (const [id, { tipo, escrutinios }] of [...collected].sort(([a], [b]) => a.localeCompare(b))) {
-    const election: Election = { id, tipo, escrutinios: {}, auditoria: [] };
+    const election: Election = { id, tipo, escrutinios: {}, auditoria: [], colores: {} };
     const offices = new Set<string>();
     for (const [scrutiny, { source, offices: byOffice }] of escrutinios) {
       const cargos: Record<string, OfficeResults> = {};
@@ -348,6 +383,13 @@ async function main() {
       }
       election.escrutinios[scrutiny] = { fuente: source.id, fuenteUrl: source.url, cargos };
     }
+    for (const scrutiny of Object.values(election.escrutinios))
+      for (const office of Object.values(scrutiny.cargos))
+        for (const u of [office.provincia, ...office.secciones, ...office.departamentos])
+          for (const l of u?.listas ?? []) {
+            const color = colors(l.agrupacion, Number(id.slice(0, 4)));
+            if (color) election.colores[l.agrupacion] = color;
+          }
     election.auditoria = auditElection(
       new Map([...escrutinios].map(([s, e]) => [s, new Map([...e.offices].map(([c, o]) => [c, auditOffice(o)]))])),
     );

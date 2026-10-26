@@ -49,6 +49,8 @@ export interface Election {
   tipo: string;
   escrutinios: Partial<Record<Scrutiny, ElectionScrutiny>>;
   auditoria: AuditCheck[];
+  /** Official color of each force (by its name as the source writes it), from data/curado/partidos.yaml. */
+  colores: Record<string, string>;
 }
 
 /** One automatic check over the official figures (scripts/audit.ts). An alert is a signal to look at, not a verdict. */

@@ -3,7 +3,7 @@ import { listRowVariants, listVariants } from "@mt/ui/components/card";
 import { cx } from "@mt/ui/lib/cx";
 import { RiArrowRightSLine } from "@remixicon/react";
 import { useState } from "react";
-import { type Contenders, forcesOf, SIDE_BG, sideOf } from "../contenders.ts";
+import { type Contenders, forcesOf, sideOf, sideStyle } from "../contenders.ts";
 import { formatNumber, formatPercent } from "../labels.ts";
 import type { Unit } from "../types.ts";
 import { positives } from "./results.tsx";
@@ -90,9 +90,9 @@ function SplitBar({ unit, forces }: { unit: Unit; forces: Contenders }) {
   const share = (side: 0 | 1) => unit.listas.filter((l) => sideOf(forces, l) === side).reduce((s, l) => s + l.votos, 0) / total;
   return (
     <span className="mt-1 flex h-1.5 max-w-60 gap-px overflow-hidden rounded-full bg-chart-grid" aria-hidden>
-      <span className={SIDE_BG[0]} style={{ width: `${share(0) * 100}%` }} />
+      <span style={{ ...sideStyle(forces, 0), width: `${share(0) * 100}%` }} />
       <span className="flex-1" />
-      <span className={SIDE_BG[1]} style={{ width: `${share(1) * 100}%` }} />
+      <span style={{ ...sideStyle(forces, 1), width: `${share(1) * 100}%` }} />
     </span>
   );
 }

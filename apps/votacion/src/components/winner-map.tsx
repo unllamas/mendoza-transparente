@@ -1,7 +1,7 @@
 import { tileVariants } from "@mt/ui/components/card";
 import { cx } from "@mt/ui/lib/cx";
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
-import { type Contenders, forcesOf, mapFill, SIDE_BG, sideOf } from "../contenders.ts";
+import { type Contenders, forcesOf, mapFill, sideOf, sideStyle } from "../contenders.ts";
 import { formatPercent } from "../labels.ts";
 import type { MapData, Unit } from "../types.ts";
 import { positives } from "./results.tsx";
@@ -70,33 +70,45 @@ export function WinnerMap({
         const w = winner(d.municipio);
         const dim = active !== null && d.municipio !== active;
         const sel = d.municipio === selected;
+        // When both forces' colors look alike, the second one's departments carry white stripes on top.
+        const striped = forces.striped && !dim && w?.side === 1;
         return (
-          <path
-            key={d.municipio}
-            d={d.path}
-            style={{ fill: dim ? "var(--color-chart-grid)" : w ? mapFill(w.side, w.share) : "var(--color-chart-grid)" }}
-            stroke="var(--color-background-primary-default)"
-            strokeWidth={1.2}
-            vectorEffect="non-scaling-stroke"
-            role="button"
-            tabIndex={zoom ? -1 : 0}
-            aria-label={`${d.municipio}: ${w ? `ganó ${w.label}` : "sin dato"}`}
-            aria-pressed={sel}
-            className="cursor-pointer outline-none transition-[fill] duration-150"
-            onPointerEnter={(e) => e.pointerType === "mouse" && showTip(e.currentTarget, d.municipio)}
-            onPointerLeave={() => setTip(null)}
-            onFocus={(e) => showTip(e.currentTarget, d.municipio)}
-            onBlur={() => setTip(null)}
-            onClick={() => onSelect(sel ? null : d.municipio)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                onSelect(sel ? null : d.municipio);
-              }
-            }}
-          />
+          <g key={d.municipio}>
+            <path
+              d={d.path}
+              style={{ fill: dim ? "var(--color-chart-grid)" : w ? mapFill(forces, w.side, w.share) : "var(--color-chart-grid)" }}
+              stroke="var(--color-background-primary-default)"
+              strokeWidth={1.2}
+              vectorEffect="non-scaling-stroke"
+              role="button"
+              tabIndex={zoom ? -1 : 0}
+              aria-label={`${d.municipio}: ${w ? `ganó ${w.label}` : "sin dato"}`}
+              aria-pressed={sel}
+              className="cursor-pointer outline-none transition-[fill] duration-150"
+              onPointerEnter={(e) => e.pointerType === "mouse" && showTip(e.currentTarget, d.municipio)}
+              onPointerLeave={() => setTip(null)}
+              onFocus={(e) => showTip(e.currentTarget, d.municipio)}
+              onBlur={() => setTip(null)}
+              onClick={() => onSelect(sel ? null : d.municipio)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  onSelect(sel ? null : d.municipio);
+                }
+              }}
+            />
+            {striped && <path d={d.path} fill={`url(#${zoom ? "stripes-zoom" : "stripes"})`} className="pointer-events-none" />}
+          </g>
         );
       });
+
+  const stripes = (id: string) => (
+    <defs>
+      <pattern id={id} width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <rect width="3" height="8" fill="rgb(255 255 255 / 0.55)" />
+      </pattern>
+    </defs>
+  );
 
   const tipWinner = tip ? winner(tip.name) : null;
   return (
@@ -108,10 +120,12 @@ export function WinnerMap({
           role="group"
           aria-label="Quién ganó en cada departamento"
         >
+          {stripes("stripes")}
           {paths(false)}
         </svg>
         <div className={cx(tileVariants({ size: "sm" }), "flex min-w-0 flex-col gap-1.5 overflow-hidden p-1.5 sm:p-2")}>
           <svg viewBox={inset} className="block aspect-square w-full overflow-hidden" aria-hidden>
+            {stripes("stripes-zoom")}
             {paths(true)}
           </svg>
           <span className="px-1 text-caption-1-regular text-text-tertiary">Gran Mendoza, ampliado</span>
@@ -132,8 +146,11 @@ export function WinnerMap({
         {forces.names.map((n, i) =>
           n ? (
             <li key={n} className="flex min-w-0 items-center gap-1.5">
-              <span className={cx("size-2.5 shrink-0 rounded-full", SIDE_BG[i])} aria-hidden />
-              <span className="truncate">Ganó {n}</span>
+              <span className="size-2.5 shrink-0 rounded-full" style={sideStyle(forces, i as 0 | 1)} aria-hidden />
+              <span className="truncate">
+                Ganó {n}
+                {forces.fallback[i] && " (sin color oficial)"}
+              </span>
             </li>
           ) : null,
         )}
