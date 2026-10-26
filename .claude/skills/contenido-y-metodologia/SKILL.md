@@ -37,6 +37,7 @@ Fuente completa: `docs/procesos/metodologia.md`, que pasa los 30 KB: se lee por 
 | `leyes.yaml` | Resúmenes de leyes en lenguaje simple | Hechos con IA a partir del texto oficial (criterios en `resumir-leyes.ts`). Siempre se presentan como hechos con IA, y revisados (`revisado:`) cuando corresponde. |
 | `transparencia-municipal.yaml` | Qué publica cada municipio (9 cosas) | Una lista verificable, no un puntaje: estado, último dato, link y `fecha_verificacion`. Lo que ya bajamos (anexo 19, declaraciones juradas) manda sobre el relevamiento. Se revisa cada trimestre con el proceso de `docs/procesos/relevamiento-municipal.md`; criterios en `metodologia.md#transparencia-municipal`. |
 | `partidos.yaml` | Formas de escribir un mismo partido, frente o bloque | Solo se une el mismo nombre (prefijo legal, sigla, artículo, errata), cada alias con su `motivo`. Nunca partidos distintos ni un frente con sus partidos. A los cargos designados no se les asigna partido. Ver `metodologia.md#partidos-frentes-y-bloques`. |
+| `frentes.yaml` | Qué partidos de `partidos.yaml` forman cada frente (votación) | Solo con fuente oficial: el nombre oficial del frente o el acta de la Junta Electoral, nunca un diario. El frente no se une a sus partidos: solo muestra sus logos y sus fichas. Ver `metodologia.md#partidos-frentes-y-bloques`. |
 | `jurisdicciones.yaml` | Organismos, competencias y equivalencias | Basado en la Ley 9501; las dudas quedan en `nota`. |
 
 ## Resúmenes con IA

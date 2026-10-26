@@ -1,0 +1,27 @@
+# Frentes electorales: qué partidos de partidos.yaml forman cada uno, para votacion.mendoza-transparente.com.
+#
+# Criterios (docs/procesos/metodologia.md, «Partidos, frentes y bloques»):
+# - Un frente no es sus partidos: no se une a ninguno ni hereda sus votos. Esto solo dice quiénes lo forman, para
+#   mostrar sus logos juntos y llevar a la ficha de cada uno.
+# - Solo se carga un partido si una fuente oficial lo pone en el frente: el nombre oficial del frente, tal como lo
+#   escriben la Junta Electoral y los resultados oficiales, o el acta de reconocimiento de la alianza. Nunca un diario.
+# - Los partidos que se suman sin figurar en el nombre necesitan el acta: mientras no esté, no se cargan, y la página
+#   aclara que el frente puede tener otros.
+# - Cada partido tiene que estar en partidos.yaml (el build se corta si no), y el frente no puede estarlo: si un
+#   nombre es un partido, no es un frente.
+#
+# Campos:
+#   nombres  las formas en que las fuentes de resultados escriben el frente (mayúsculas, tildes y signos no importan)
+#   partidos los slugs de partidos.yaml que lo forman, en el orden del nombre (al menos dos)
+#   fuente   URL oficial de donde sale la composición
+#   motivo   por qué esos partidos, en una oración
+
+- nombres: [La Libertad Avanza + Cambia Mendoza]
+  partidos: [la-libertad-avanza, cambia-mendoza]
+  fuente: https://jusmendoza.gob.ar/escrutinios-definitivos-elecciones-generales-de-mendoza/
+  motivo: El nombre oficial de la alianza (elecciones del 26/10/2025 y del 22/02/2026) nombra a los dos partidos.
+
+- nombres: [Cambia Mendoza - Nuevos Rumbos]
+  partidos: [cambia-mendoza, nuevos-rumbos]
+  fuente: https://jusmendoza.gob.ar/escrutinios-definitivos-elecciones-generales-de-mendoza/
+  motivo: El nombre oficial de la lista de San Carlos (municipales de 2023) nombra a los dos partidos.

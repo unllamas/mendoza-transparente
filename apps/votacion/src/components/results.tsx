@@ -60,7 +60,7 @@ export function ResultBars({
   unit: Unit;
   forces: Contenders | null;
   colors: Record<string, string>;
-  parties: Record<string, PartyRef>;
+  parties: Record<string, PartyRef[]>;
   onPick: (l: ListVotes) => void;
   departments?: Unit[];
 }) {
@@ -90,7 +90,7 @@ export function ResultBars({
                 <span className="flex min-w-0 flex-1 flex-col gap-1.5">
                   <span className="flex items-center justify-between gap-3 text-body-regular">
                     <span className="flex min-w-0 items-center gap-2">
-                      <PartyMark party={parties[l.agrupacion]} style={style} />
+                      <PartyMark parties={parties[l.agrupacion]} style={style} />
                       <span className={cx("min-w-0 truncate text-text-link", i === 0 && "font-semibold")} title={l.agrupacion}>
                         {l.agrupacion}
                       </span>

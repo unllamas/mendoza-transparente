@@ -285,7 +285,7 @@ Errores de consola del tipo «Could not establish connection. Receiving end does
   |---|---|
   | `mendoza-transparente` (web) | `apps/web/*`, `data/*`, `sources.yaml`, `packages/ui/*`, `packages/participation/*`, `package.json`, `bun.lock`, `tsconfig.base.json` |
   | `mendoza-transparente-panel` | `apps/panel/*`, `packages/ui/*`, `packages/participation/*`, `package.json`, `bun.lock`, `tsconfig.base.json` |
-  | `mendoza-transparente-votacion` | `apps/votacion/*`, `packages/ui/*`, `data/processed/{elecciones-datos-abiertos,resultados-provisorios,escrutinios-definitivos,geo}/*`, `data/curado/colores-partidos.yaml`, `package.json`, `bun.lock`, `tsconfig.base.json` |
+  | `mendoza-transparente-votacion` | `apps/votacion/*`, `packages/ui/*`, `data/processed/{elecciones-datos-abiertos,resultados-provisorios,escrutinios-definitivos,geo}/*`, `data/curado/{colores-partidos,partidos,frentes}.yaml`, `package.json`, `bun.lock`, `tsconfig.base.json` |
 
   Si una app empieza a importar otro paquete del monorepo (por ejemplo `@mt/core`) o a leer otro archivo de la raíz, se suma a su lista en el mismo PR. Se cambia con `PATCH /accounts/$ID/pages/projects/<proyecto>` y `{"source":{"type":"github","config":{"path_includes":[…]}}}`, o en *Settings → Builds & deployments → Build watch paths*.
 - **Vistas previas solo de `dev`** (*Preview branches → Custom*, en los tres proyectos). Las ramas de trabajo no arman vista previa: se prueban en local y la CI compila la web, el panel y votación en cada PR.

@@ -108,7 +108,7 @@
   alias:
     - nombre: Partido Nuevos Rumbos
       motivo: Mismo nombre con el prefijo legal «Partido» (acta de 2019).
-  # «Cambia Mendoza - Nuevos Rumbos» (2023) queda aparte: es una lista que combina dos nombres.
+  # «Cambia Mendoza - Nuevos Rumbos» (2023) queda aparte: es una lista que combina dos nombres (sus partidos, en frentes.yaml).
 
 - slug: frente-libertario-democrata-y-jubilados
   nombre: Frente Libertario, Demócrata y Jubilados
