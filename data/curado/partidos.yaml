@@ -15,11 +15,15 @@
 #   sigla       opcional; va en la insignia de la cara y en el título
 #   alias       las otras formas en que lo escriben las fuentes, cada una con su motivo
 #   logo        archivo en apps/web/public/partidos/ (null mientras no haya uno de fuente oficial)
-#   logo_fuente URL oficial de donde salió el logo
+#   logo_fuente URL oficial de donde salió el logo (el original queda en data/raw/partidos/)
+#   color       color propio del partido en hexadecimal, tomado de su logo oficial; pinta la insignia cuando no hay logo
 #   wikidata    id de Wikidata (Q…), si existe con certeza
 
 - slug: cambia-mendoza
   nombre: Cambia Mendoza
+  logo: cambia-mendoza.png
+  logo_fuente: https://cambiamendoza.com/wp-content/uploads/2023/08/cropped-Cambia-Mendoza-marca-transparente.png
+  color: "#951b81"
   alias:
     - nombre: Alianza Cambia Mendoza
       motivo: Mismo nombre con el prefijo legal «Alianza» (actas de 2015 y 2017).
@@ -29,6 +33,9 @@
 - slug: ucr
   nombre: Unión Cívica Radical
   sigla: UCR
+  logo: ucr.png
+  logo_fuente: https://ucrmendoza.org.ar/wp-content/uploads/2020/05/cropped-Ucr_modern_logo-1.png
+  color: "#e10019"
   alias:
     - nombre: UCR - Unión Cívica Radical
       motivo: Sigla y nombre completo juntos (bloque en el Congreso).
@@ -40,6 +47,9 @@
 - slug: partido-justicialista
   nombre: Partido Justicialista
   sigla: PJ
+  logo: partido-justicialista.png
+  logo_fuente: https://pjmendoza.org/wp-content/uploads/2020/10/cropped-cropped-logo-pj1.png
+  color: "#3c77af"
   alias:
     - nombre: Justicialista
       motivo: Mismo nombre sin el prefijo legal «Partido».
@@ -47,11 +57,18 @@
 - slug: la-libertad-avanza
   nombre: La Libertad Avanza
   sigla: LLA
+  # Su sitio (lalibertadavanza.com.ar) no tiene contenido: el logo es la imagen de su cuenta oficial en X (@LLibertadAvanza).
+  logo: la-libertad-avanza.png
+  logo_fuente: https://pbs.twimg.com/profile_images/1955653235940761605/5cwFh2XI_400x400.jpg
+  color: "#371959"
   alias: []
 
 - slug: pro
   nombre: PRO
   sigla: PRO
+  logo: pro.png
+  logo_fuente: https://pro.com.ar/assets/img/favicon-180.png
+  color: "#f7cb5b"
   alias:
     - nombre: PRO Propuesta Republicana
       motivo: Sigla y nombre completo juntos.
@@ -65,6 +82,8 @@
 - slug: frente-de-izquierda
   nombre: Frente de Izquierda y de los Trabajadores
   sigla: FIT
+  # Color de la bandera de su logo oficial (https://www.frentedeizquierda.org.ar/landing/img/favicon.svg). El logo es una bandera sin texto: con la sigla se reconoce mejor.
+  color: "#e84040"
   alias:
     - nombre: Alianza Frente de Izquierda y de los Trabajadores
       motivo: Mismo nombre con el prefijo legal «Alianza» (acta de 2015, en la misma elección que la forma sin prefijo).

@@ -2,7 +2,7 @@
 
 Objetivo: que cada persona electa muestre a qué partido, frente o bloque pertenece, **según lo dice la fuente oficial**, y que cada uno tenga su página en `/partidos/<slug>`. Esa página junta a sus legisladores, intendentes y bancas ganadas por elección, y responde búsquedas como «UCR Mendoza» o «diputados de La Libertad Avanza Mendoza».
 
-Fecha: 22/10/2026. Estado: etapas 1 a 3 hechas (normalización, páginas e insignia); faltan los logos (etapa 4) y medir (etapa 5). Los criterios que quedaron funcionando están en `docs/procesos/metodologia.md`, «Partidos, frentes y bloques», y la insignia en `docs/procesos/diseno.md`.
+Fecha: 22/10/2026. Estado: etapas 1 a 3 hechas (normalización, páginas e insignia); logos y colores de los cinco partidos con más gente en funciones cargados el 25/10/2026; faltan los logos del resto (etapa 4) y medir (etapa 5). Los criterios que quedaron funcionando están en `docs/procesos/metodologia.md`, «Partidos, frentes y bloques», y la insignia en `docs/procesos/diseno.md`.
 
 ## Por qué
 
@@ -146,7 +146,8 @@ Cero. Son páginas estáticas del build, sin funciones ni servicios nuevos. Suma
   - `data/curado/partidos.yaml` y `scripts/temas/parties.ts`, con sus tests. 40 entidades con los datos de hoy, 25 con alguien en funciones.
   - `/partidos` y `/partidos/<slug>`, con `PoliticalParty` en JSON-LD, preguntas frecuentes, imagen para compartir, sitemap, `llms.txt` y el tipo «Partido» en el buscador. La ficha de cada persona apunta al `@id` de su partido.
   - Insignia en `PersonAvatar` (con `PartyAvatar` de `@mt/ui`) en funcionarios, municipios e historial. Link al partido desde la ficha, la composición por bloque, las elecciones ganadas y el reparto de cada elección.
-- **Falta: logos (etapa 4).** La Junta Electoral publica las boletas de cada elección (por ejemplo, https://jusmendoza.gob.ar/estas-son-las-boletas-que-se-usaran-en-las-elecciones-del-26-de-octubre/), pero son la Boleta Única Papel: una sola imagen con todas las listas. Hay que recortar cada logo, revisarlo a mano y cargarlo en `partidos.yaml` con `logo` y `logo_fuente`. Mientras tanto, la insignia muestra la sigla.
+- **Hecho (25/10/2026): logos y colores.** Logos de los sitios oficiales de Cambia Mendoza, UCR, PJ y PRO, y de la cuenta oficial de La Libertad Avanza (su sitio no tiene contenido), archivados en `data/raw/partidos/`. Color propio en `color` (también el FIT, que se reconoce mejor por la sigla). La insignia ya no es gris: logo, o sigla sobre el color del partido.
+- **Falta: logos del resto (etapa 4).** Los frentes municipales («Elegí Maipú Crece», «Elegí San Rafael Avanza»…), La Unión Mendocina, Fuerza Patria y el Partido Demócrata siguen con las iniciales en gris; cada uno necesita su entrada en `partidos.yaml` con logo o color de fuente oficial. La Junta Electoral publica las boletas de cada elección (por ejemplo, https://jusmendoza.gob.ar/estas-son-las-boletas-que-se-usaran-en-las-elecciones-del-26-de-octubre/), pero son la Boleta Única Papel: una sola imagen con todas las listas. Hay que recortar cada logo, revisarlo a mano y cargarlo en `partidos.yaml` con `logo` y `logo_fuente`. Mientras tanto, la insignia muestra la sigla.
 - **Falta: medir (etapa 5)** cerca del 5/11/2026.
 
 ## Preguntas abiertas (resueltas)
