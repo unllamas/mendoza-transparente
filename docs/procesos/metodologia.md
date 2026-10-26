@@ -255,7 +255,8 @@ Páginas `/partidos` y `/partidos/<slug>`, la insignia del partido en la cara de
   - «Frente Elegí» queda aparte de «Elegí Mendoza»: en 2019 figuran las dos en la misma elección.
   - «Cambia Mendoza - Nuevos Rumbos» queda aparte: es una lista que combina dos nombres.
 - **Cifras de cada partido:** «en funciones» cuenta a quienes hoy tienen un cargo electo con ese nombre; «cargos ganados» suma los titulares proclamados desde 2015, no votos.
-- **Logos:** solo de fuentes oficiales (las boletas que publica la Junta Electoral, o el sitio oficial del partido), con la URL en `logo_fuente`. Mientras no haya uno, la sigla o las iniciales en gris. Nunca los colores del partido: el sitio usa una sola paleta para todos.
+- **Logos:** solo de fuentes oficiales (las boletas que publica la Junta Electoral, el sitio oficial del partido o, si el sitio no funciona, su cuenta oficial), con la URL en `logo_fuente` y el original archivado en `data/raw/partidos/`. Se guarda una copia cuadrada de 128 px en `apps/web/public/partidos/`, recortada para que la marca llene el círculo.
+- **Color:** el color propio del partido, tomado de su logo oficial, en `color`. Pinta la insignia mientras no haya logo. Es lo único del sitio que sale de la paleta celeste, y solo dentro de la insignia.
 - **Controles:** `scripts/temas/parties.test.ts` comprueba que los nombres que deben quedar separados sigan separados, que nadie designado reciba partido y que un alias no esté en dos entradas (el build se corta).
 
 ## Resultados electorales y auditoría

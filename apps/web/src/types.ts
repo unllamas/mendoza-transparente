@@ -256,6 +256,8 @@ export interface PartyRef {
   short: string;
   /** Logo from an official source (/partidos/<file>), or null while there is none. */
   logo: string | null;
+  /** The party's own color ("#951b81"), taken from its official logo; null for the names nobody curated. */
+  color: string | null;
 }
 
 export interface Funcionario {
