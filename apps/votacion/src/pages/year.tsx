@@ -14,7 +14,16 @@ import { ResultBars, TurnoutTiles } from "../components/results.tsx";
 import { UnitList } from "../components/units.tsx";
 import { WinnerMap } from "../components/winner-map.tsx";
 import { type Contenders, contenders } from "../contenders.ts";
-import { electionTypeLabel, formatDate, formatNumber, officeLabel, SCRUTINY_LABEL, SOURCE_LABEL } from "../labels.ts";
+import {
+  electionTypeLabel,
+  formatDate,
+  formatNumber,
+  OFFICE_HINT,
+  officeLabel,
+  SCRUTINY_HINT,
+  SCRUTINY_LABEL,
+  SOURCE_LABEL,
+} from "../labels.ts";
 import { slug } from "../slug.ts";
 import type { DataIndex, DepartmentDetail, Election, MapData, Scrutiny } from "../types.ts";
 import { useJson } from "../use-json.ts";
@@ -83,8 +92,9 @@ function ElectionView({
   const set = (patch: Partial<YearSearch>) =>
     navigate({ to: "/$anio", params: { anio: year }, search: (prev: YearSearch) => ({ ...prev, ...patch }), replace: true });
 
-  const scrutinies = (["definitivo", "provisorio"] as const).filter((s) => election.escrutinios[s]);
-  const scrutiny: Scrutiny = scrutinies.find((s) => s === search.escrutinio) ?? scrutinies[0]!;
+  // In the order they happen (provisional, then definitive), but the definitive one opens first: it is the one that counts.
+  const scrutinies = (["provisorio", "definitivo"] as const).filter((s) => election.escrutinios[s]);
+  const scrutiny: Scrutiny = scrutinies.find((s) => s === search.escrutinio) ?? scrutinies.at(-1)!;
   const data = election.escrutinios[scrutiny]!;
   const offices = Object.keys(data.cargos);
   const office = offices.includes(search.cargo ?? "") ? search.cargo! : offices[0]!;
@@ -95,6 +105,9 @@ function ElectionView({
   const forces = contenders(results.provincia ?? results.departamentos[0] ?? null, election.colores);
   const checks = election.auditoria.filter((c) => c.cargo === office);
   const alerts = checks.reduce((s, c) => s + c.alertas, 0);
+  // A municipal province total added up from separate local elections: a head-to-head over it compares lists that
+  // never ran against each other.
+  const localOnly = !department && election.tipo === "municipal" && !!results.provincia?.sumado;
   const selectDepartment = (name: string | null) => set({ departamento: name ? slug(name) : undefined });
 
   return (
@@ -124,6 +137,9 @@ function ElectionView({
             />
           )}
         </div>
+        <p className="max-w-3xl text-caption-1-regular text-text-secondary text-pretty">
+          {OFFICE_HINT[office]} {SCRUTINY_HINT[scrutiny]}
+        </p>
         {results.departamentos.length > 0 && (
           <div className="w-full max-w-sm">
             <SearchSelect
@@ -150,7 +166,14 @@ function ElectionView({
               {electionTypeLabel(election.tipo)} del {formatDate(election.id)} · escrutinio {scrutiny}
             </span>
           </div>
-          <HeadToHead unit={unit} forces={forces} />
+          {localOnly ? (
+            <p className="text-body-regular text-text-secondary text-pretty">
+              Cada departamento eligió a sus {officeLabel(office).toLowerCase()} por separado, con sus propias listas: el total de la
+              provincia es una suma nuestra y no enfrenta a nadie. Elegí un departamento para ver quién ganó y por cuánto.
+            </p>
+          ) : (
+            <HeadToHead unit={unit} forces={forces} />
+          )}
         </section>
       ) : (
         <Message title="Sin total para este cargo">La fuente no trae un total para este cargo.</Message>
@@ -172,7 +195,7 @@ function ElectionView({
           <div className="flex min-w-0 flex-col gap-8 only:col-span-full">
             <TurnoutTiles unit={unit} />
             <Section id="resultados" title="Todas las listas">
-              <ResultBars unit={unit} forces={forces} />
+              <ResultBars unit={unit} forces={forces} departments={results.departamentos} />
             </Section>
           </div>
         </div>

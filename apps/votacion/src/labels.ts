@@ -9,6 +9,16 @@ export const OFFICE_LABEL: Record<string, string> = {
   convencionales: "Convencionales",
 };
 
+/** What each office does, in one sentence, for whoever does not know it. */
+export const OFFICE_HINT: Record<string, string> = {
+  gobernador: "Gobernador: encabeza el Poder Ejecutivo de la provincia.",
+  senadores: "Senadores: integran el Senado de la provincia, que vota las leyes.",
+  diputados: "Diputados: integran la Cámara de Diputados de la provincia, que vota las leyes.",
+  intendente: "Intendente: encabeza el gobierno de cada municipio.",
+  concejales: "Concejales: integran el Concejo Deliberante de cada municipio, que vota las ordenanzas.",
+  convencionales: "Convencionales: escriben o reforman la carta orgánica, la constitución del municipio.",
+};
+
 export const ELECTION_TYPE_LABEL: Record<string, string> = {
   paso: "PASO",
   general: "Generales",
@@ -17,6 +27,12 @@ export const ELECTION_TYPE_LABEL: Record<string, string> = {
 };
 
 export const SCRUTINY_LABEL: Record<Scrutiny, string> = { provisorio: "Provisorio", definitivo: "Definitivo" };
+
+/** In the order they happen: the quick count of election night first, the official scrutiny after. */
+export const SCRUTINY_HINT: Record<Scrutiny, string> = {
+  provisorio: "Provisorio: el conteo rápido de la noche de la elección, con los telegramas de cada mesa. No tiene valor legal.",
+  definitivo: "Definitivo: el escrutinio oficial de la Junta Electoral, días después, que revisa cada acta. Es el que vale.",
+};
 
 export const VOTE_TYPE_LABEL: Record<VoteType, string> = {
   blanco: "En blanco",
