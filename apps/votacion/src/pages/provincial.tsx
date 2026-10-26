@@ -1,6 +1,18 @@
 import { SearchSelect } from "@mt/ui/components/search-select";
 import { Section } from "@mt/ui/components/section";
-import { AuditSection, DepartmentDetailView, Message, Selectors, SourcesSection, SummaryCard } from "../components/election-parts.tsx";
+import type { ReactNode } from "react";
+import {
+  AuditSection,
+  DepartmentDetailView,
+  FilterBar,
+  FilterSelect,
+  Message,
+  PLACE_CELL,
+  ResultFilters,
+  resultHint,
+  SourcesSection,
+  SummaryCard,
+} from "../components/election-parts.tsx";
 import { forceSlug, PartySheet } from "../components/party-sheet.tsx";
 import { ResultBars, TurnoutTiles } from "../components/results.tsx";
 import { UnitList } from "../components/units.tsx";
@@ -23,11 +35,16 @@ export function ProvincialView({
   options,
   search,
   set,
+  lead,
+  note,
 }: {
   election: Election;
   options: ElectionSummary[];
   search: YearSearch;
   set: SetSearch;
+  /** The year and kind filters, first in the bar. */
+  lead: ReactNode;
+  note?: string;
 }) {
   const map = useJson<MapData>("/datos/mapa.json");
 
@@ -49,19 +66,10 @@ export function ProvincialView({
 
   return (
     <div className="flex flex-col gap-8">
-      <Selectors
-        elections={options}
-        election={election.id}
-        onElection={(id) => set({ eleccion: id, cargo: undefined, departamento: undefined, partido: undefined })}
-        offices={offices}
-        office={office}
-        onOffice={(c) => set({ cargo: c, partido: undefined })}
-        scrutinies={scrutinies}
-        scrutiny={scrutiny}
-        onScrutiny={(s) => set({ escrutinio: s })}
-      >
-        {results.departamentos.length > 0 && (
-          <div className="w-full max-w-sm">
+      <FilterBar note={note} hint={resultHint(office, scrutiny)}>
+        {lead}
+        {results.departamentos.length > 0 ? (
+          <div className={PLACE_CELL}>
             <SearchSelect
               label="Departamento"
               placeholder="Buscá un departamento"
@@ -73,8 +81,26 @@ export function ProvincialView({
               ]}
             />
           </div>
+        ) : (
+          <FilterSelect
+            label="Departamento"
+            options={[{ id: PROVINCE, label: "Toda la provincia" }]}
+            value={PROVINCE}
+            className={PLACE_CELL}
+          />
         )}
-      </Selectors>
+        <ResultFilters
+          elections={options}
+          election={election.id}
+          onElection={(id) => set({ eleccion: id, cargo: undefined, departamento: undefined, partido: undefined })}
+          offices={offices}
+          office={office}
+          onOffice={(c) => set({ cargo: c, partido: undefined })}
+          scrutinies={scrutinies}
+          scrutiny={scrutiny}
+          onScrutiny={(s) => set({ escrutinio: s })}
+        />
+      </FilterBar>
 
       {unit && forces ? (
         <SummaryCard office={office} place={place} election={election} scrutiny={scrutiny} unit={unit} forces={forces} onPick={pick} />

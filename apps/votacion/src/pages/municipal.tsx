@@ -4,12 +4,23 @@ import { Section } from "@mt/ui/components/section";
 import { Skeleton } from "@mt/ui/components/skeleton";
 import { RiArrowRightSLine } from "@remixicon/react";
 import type { ReactNode } from "react";
-import { AuditSection, DepartmentDetailView, Message, Selectors, SourcesSection, SummaryCard } from "../components/election-parts.tsx";
+import {
+  AuditSection,
+  DepartmentDetailView,
+  FilterBar,
+  Message,
+  PendingFilters,
+  PLACE_CELL,
+  ResultFilters,
+  resultHint,
+  SourcesSection,
+  SummaryCard,
+} from "../components/election-parts.tsx";
 import { forceSlug, PartySheet } from "../components/party-sheet.tsx";
 import { positives, ResultBars, TurnoutTiles } from "../components/results.tsx";
 import { DepartmentMap, type LegendItem, type Paint } from "../components/winner-map.tsx";
 import { contenders, forcesOf, shade } from "../contenders.ts";
-import { electionTypeLabel, formatDate, formatPercent, officeLabel } from "../labels.ts";
+import { formatDate, formatPercent, officeLabel } from "../labels.ts";
 import { officesIn } from "../scope.ts";
 import type { SetSearch, YearSearch } from "../search.ts";
 import { slug } from "../slug.ts";
@@ -63,19 +74,24 @@ export function MunicipalView({
   summaries,
   search,
   set,
+  lead,
+  note,
 }: {
   year: string;
   summaries: ElectionSummary[];
   search: YearSearch;
   set: SetSearch;
+  /** The year and kind filters, first in the bar. */
+  lead: ReactNode;
+  note?: string;
 }) {
   const all = useJsonAll<Election>(summaries.map((s) => `/datos/elecciones/${s.id}.json`));
-  if (all.status === "loading") return <Skeleton className="h-96 w-full" />;
+  if (all.status === "loading") return <PendingFilters lead={lead} note={note} place="Municipio" />;
   if (all.status === "error") return <Message title="No pudimos cargar estas elecciones">Probá recargar la página.</Message>;
   const towns = municipalities(all.data);
   const name = [...towns.keys()].find((t) => slug(t) === search.municipio);
   const picker = (
-    <div className="w-full max-w-sm">
+    <div className={PLACE_CELL}>
       <SearchSelect
         label="Municipio"
         placeholder="Buscá tu municipio"
@@ -86,13 +102,46 @@ export function MunicipalView({
     </div>
   );
   return name ? (
-    <TownView town={name} votes={towns.get(name)!} search={search} set={set} picker={picker} />
+    <TownView
+      town={name}
+      votes={towns.get(name)!}
+      search={search}
+      set={set}
+      filters={(hint, results) => (
+        <FilterBar note={note} hint={hint}>
+          {lead}
+          {picker}
+          {results}
+        </FilterBar>
+      )}
+    />
   ) : (
-    <Overview year={year} towns={towns} set={set} picker={picker} />
+    <Overview
+      year={year}
+      towns={towns}
+      set={set}
+      filters={(hint) => (
+        <FilterBar note={note} hint={hint}>
+          {lead}
+          {picker}
+          <ResultFilters />
+        </FilterBar>
+      )}
+    />
   );
 }
 
-function Overview({ year, towns, set, picker }: { year: string; towns: Map<string, Vote[]>; set: SetSearch; picker: ReactNode }) {
+function Overview({
+  year,
+  towns,
+  set,
+  filters,
+}: {
+  year: string;
+  towns: Map<string, Vote[]>;
+  set: SetSearch;
+  filters: (hint: ReactNode) => ReactNode;
+}) {
   const map = useJson<MapData>("/datos/mapa.json");
   const results = new Map([...towns].map(([t, v]) => [t, headline(t, v)]));
   const open = (town: string | null) => set({ municipio: town ? slug(town) : undefined });
@@ -116,13 +165,12 @@ function Overview({ year, towns, set, picker }: { year: string; towns: Map<strin
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-3">
-        <p className="max-w-3xl text-body-regular text-text-secondary text-pretty">
-          En {year} {towns.size === 1 ? "votó 1 municipio" : `votaron ${towns.size} municipios`}. Cada uno elige a su intendente y a su
-          Concejo Deliberante por separado, con sus propias listas: por eso no se suman entre sí. Elegí el tuyo.
-        </p>
-        {picker}
-      </div>
+      {filters(
+        <>
+          En {year} {towns.size === 1 ? "votó 1 municipio" : `votaron ${towns.size} municipios`}, cada uno con sus propias listas: por eso
+          no se suman entre sí. Elegí el tuyo para ver su fecha, sus cargos y sus escrutinios.
+        </>,
+      )}
       <div className="grid grid-cols-[minmax(0,1fr)] items-start gap-8 lg:grid-cols-2">
         {map.status === "ready" ? (
           <Section id="mapa" title="Quién ganó en cada municipio">
@@ -181,13 +229,13 @@ function TownView({
   votes,
   search,
   set,
-  picker,
+  filters,
 }: {
   town: string;
   votes: Vote[];
   search: YearSearch;
   set: SetSearch;
-  picker: ReactNode;
+  filters: (hint: ReactNode, results: ReactNode) => ReactNode;
 }) {
   const vote = votes.find((v) => v.election.id === search.eleccion) ?? votes.at(-1)!;
   const { election } = vote;
@@ -206,23 +254,19 @@ function TownView({
 
   return (
     <div className="flex flex-col gap-8">
-      <Selectors
-        elections={votes.map((v) => ({ id: v.election.id, tipo: v.election.tipo }))}
-        election={election.id}
-        onElection={(id) => set({ eleccion: id, cargo: undefined, partido: undefined })}
-        offices={offices}
-        office={office}
-        onOffice={(c) => set({ cargo: c, partido: undefined })}
-        scrutinies={scrutinies}
-        scrutiny={scrutiny}
-        onScrutiny={(s) => set({ escrutinio: s })}
-      >
-        {picker}
-      </Selectors>
-      {votes.length === 1 && (
-        <p className="-mt-6 text-caption-1-regular text-text-secondary">
-          {town} votó el {formatDate(election.id)} ({electionTypeLabel(election.tipo).toLowerCase()}).
-        </p>
+      {filters(
+        resultHint(office, scrutiny),
+        <ResultFilters
+          elections={votes.map((v) => ({ id: v.election.id, tipo: v.election.tipo }))}
+          election={election.id}
+          onElection={(id) => set({ eleccion: id, cargo: undefined, partido: undefined })}
+          offices={offices}
+          office={office}
+          onOffice={(c) => set({ cargo: c, partido: undefined })}
+          scrutinies={scrutinies}
+          scrutiny={scrutiny}
+          onScrutiny={(s) => set({ escrutinio: s })}
+        />,
       )}
 
       {forces ? (

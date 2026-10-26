@@ -17,8 +17,3 @@ export const officesIn = (offices: string[], scope: Scope) => offices.filter((o)
 export const electionsIn = (elections: ElectionSummary[], scope: Scope) => elections.filter((e) => officesIn(e.cargos, scope).length > 0);
 
 export const SCOPE_LABEL: Record<Scope, string> = { provincial: "Provinciales", municipal: "Municipales" };
-
-export const SCOPE_HINT: Record<Scope, string> = {
-  provincial: "Gobernador, senadores y diputados: toda la provincia vota las mismas listas.",
-  municipal: "Intendente y concejales: cada municipio vota por separado, con sus propias listas.",
-};
