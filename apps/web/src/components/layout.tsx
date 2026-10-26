@@ -101,6 +101,7 @@ const FRIEND_SITES = [
   { name: "Municipios Argentinos", url: "https://municipiosargentinos.net/" },
   { name: "Datos Hoy", url: "https://www.datoshoy.com/" },
   { name: "Pensiómetro", url: "https://pensiometro.net/" },
+  { name: "Tu Provincia", url: "https://tuprovincia.com/" },
 ];
 
 function withUtm(url: string) {
