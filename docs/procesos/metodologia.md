@@ -263,7 +263,8 @@ Páginas `/partidos` y `/partidos/<slug>`, la insignia del partido en la cara de
 
 Los resultados de `votacion.mendoza-transparente.com` salen de tres fuentes oficiales con un mismo formato: el sitio de resultados provisorios (`resultados-provisorios`), los datos abiertos por mesa (`elecciones-datos-abiertos`) y los escrutinios definitivos de la Junta Electoral (`escrutinios-definitivos`). Plan y etapas: [Votación](../planes/votacion.md).
 
-- **Provisorio y definitivo se muestran siempre con su nombre.** El provisorio es el conteo de la noche; el definitivo, el escrutinio de la Junta. Si existen los dos, se muestra primero el definitivo.
+- **Provisorio y definitivo se muestran siempre con su nombre.** El provisorio es el conteo de la noche; el definitivo, el escrutinio de la Junta. El selector los ordena como ocurren (provisorio, después definitivo), pero si existen los dos se abre el definitivo, que es el que vale. Debajo de los selectores, una línea dice qué hace el cargo elegido y qué es el escrutinio elegido.
+- **Sin mano a mano en un total municipal sumado:** si cada departamento eligió sus cargos por separado, el total de la provincia es una suma de elecciones distintas y no enfrenta a nadie; la página lo dice y manda a elegir un departamento.
 - **Si dos fuentes cubren la misma elección y el mismo escrutinio**, se usa la de más detalle (por mesa antes que por departamento).
 - **Los totales que la fuente no imprime se suman de las unidades más chicas** y la página lo dice («Suma nuestra…»). Nunca se completa un dato que falta.
 - **Las PASO se leen por frente:** las listas internas («300 A», «300 B») se suman a su frente para el mano a mano y el mapa; cada lista interna sigue a la vista en «Todas las listas».
