@@ -33,6 +33,13 @@ export interface PartyEntry {
   wikidata?: string | null;
 }
 
+/** One entry of data/curado/colores-partidos.yaml: the official color of a force on the ballot or its logo. */
+export interface OfficialColor {
+  nombres: string[];
+  anios?: number[];
+  color: string;
+}
+
 /** A name as one source uses it: as a party or front, or as a legislative bloc. */
 export interface PartyMention {
   name: string;
@@ -52,7 +59,7 @@ const CONNECTORS = new Set(["de", "del", "la", "las", "el", "los", "y", "e", "po
 // Legal prefixes every front has: left out when two other words remain ("Frente Elegí Gestión La Paz" → "EG").
 const PREFIXES = new Set(["partido", "frente", "alianza", "bloque"]);
 
-/** "Cambia Mendoza" → "CM"; "Partido Verde" → "PV"; at most two letters (an acronym, when there is one, goes as is). */
+/** "Cambia Mendoza" → "CM"; "Partido Verde" → "PV": at most two letters, for titles and search (never on the badge). */
 export const partyInitials = (name: string) => {
   const words = name.split(/[\s,/-]+/).filter((w) => /^\p{L}/u.test(w) && !CONNECTORS.has(partyKey(w)));
   const core = words.filter((w) => !PREFIXES.has(partyKey(w)));
@@ -80,7 +87,7 @@ export interface PartyRegistry {
  * Every name the sources mention, grouped: the curated entries first, then one entity per remaining name, shown with
  * its most frequent spelling.
  */
-export function buildPartyRegistry(entries: PartyEntry[], mentions: PartyMention[]): PartyRegistry {
+export function buildPartyRegistry(entries: PartyEntry[], mentions: PartyMention[], officialColors: OfficialColor[] = []): PartyRegistry {
   const byKey = new Map<string, Entity>();
   const usedSlugs = new Set<string>();
   for (const e of entries) {
@@ -128,6 +135,17 @@ export function buildPartyRegistry(entries: PartyEntry[], mentions: PartyMention
     usedSlugs.add(s);
     Object.assign(entity.ref, { slug: s, name, short: partyInitials(name) });
   }
+
+  // Without a color in partidos.yaml, the official one of colores-partidos.yaml for any of its names: the latest election
+  // wins over one for every year, so the badge shows the color the force uses today.
+  const colorOf = (names: string[]) => {
+    const keys = new Set(names.map(partyKey));
+    const hits = officialColors.filter((c) => c.nombres.some((n) => keys.has(partyKey(n))));
+    const latest = (c: OfficialColor) => (c.anios ? Math.max(...c.anios) : 0);
+    return hits.sort((a, b) => latest(b) - latest(a))[0]?.color.toLowerCase() ?? null;
+  };
+  for (const entity of all)
+    entity.ref.color ??= colorOf([entity.ref.name, ...(entity.entry?.alias ?? []).map((a) => a.nombre), ...entity.spellings.keys()]);
 
   return {
     ref: (name) => (name?.trim() ? (byKey.get(partyKey(name))?.ref ?? null) : null),

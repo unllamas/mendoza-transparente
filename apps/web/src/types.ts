@@ -252,11 +252,11 @@ export interface PartyRef {
   /** URL: /partidos/<slug>. */
   slug: string;
   name: string;
-  /** Up to three letters for the badge on a face: the acronym, or the initials of the name. */
+  /** The acronym, or the initials of the name: for titles and search, never on the badge. */
   short: string;
   /** Logo from an official source (/partidos/<file>), or null while there is none. */
   logo: string | null;
-  /** The party's own color ("#951b81"), taken from its official logo; null for the names nobody curated. */
+  /** The party's official color ("#951b81"), from its logo or its column on the ballot; null when there is no official one. */
   color: string | null;
 }
 
