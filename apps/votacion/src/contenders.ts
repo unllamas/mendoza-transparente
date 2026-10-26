@@ -111,7 +111,22 @@ export function sideStyle(c: Contenders | null, side: Side): CSSProperties {
 
 /** Map fill: the winner's color, lighter the smaller its share (four steps). Grey for any other force. */
 export function mapFill(c: Contenders, side: Side, share: number) {
-  if (side === null) return OTHER;
+  return side === null ? OTHER : shade(c.colors[side], share);
+}
+
+/** A color, lighter the smaller the share (four steps). */
+export function shade(color: string, share: number) {
   const strength = share >= 0.55 ? 100 : share >= 0.45 ? 78 : share >= 0.35 ? 58 : 40;
-  return `color-mix(in oklab, ${c.colors[side]} ${strength}%, var(--color-background-full))`;
+  return `color-mix(in oklab, ${color} ${strength}%, var(--color-background-full))`;
+}
+
+/**
+ * Fill of any force: the side's color for the two leading ones, the force's official color for the rest, grey when it
+ * has none. So each stretch of a bar and each row of the list can be told apart and matched with the party.
+ */
+export function forceStyle(c: Contenders | null, colors: Record<string, string>, l: Pick<ListVotes, "lista" | "agrupacion"> | Force) {
+  const side = sideOf(c, l);
+  if (side !== null) return sideStyle(c, side);
+  const official = colors[l.agrupacion];
+  return official ? { backgroundColor: official } : sideStyle(null, null);
 }
