@@ -29,6 +29,7 @@ export interface PartyEntry {
   alias?: { nombre: string; motivo: string }[];
   logo?: string | null;
   logo_fuente?: string | null;
+  color?: string | null;
   wikidata?: string | null;
 }
 
@@ -85,12 +86,14 @@ export function buildPartyRegistry(entries: PartyEntry[], mentions: PartyMention
   for (const e of entries) {
     if (usedSlugs.has(e.slug)) throw new Error(`partidos.yaml: slug repetido «${e.slug}»`);
     usedSlugs.add(e.slug);
+    if (e.color && !/^#[0-9a-f]{6}$/i.test(e.color)) throw new Error(`partidos.yaml: color inválido «${e.color}» en «${e.slug}»`);
     const entity: Entity = {
       ref: {
         slug: e.slug,
         name: e.nombre,
         short: e.sigla ?? partyInitials(e.nombre),
         logo: e.logo ? `/partidos/${e.logo}` : null,
+        color: e.color ?? null,
       },
       entry: e,
       spellings: new Map(),
@@ -109,7 +112,7 @@ export function buildPartyRegistry(entries: PartyEntry[], mentions: PartyMention
     const key = partyKey(name);
     let entity = byKey.get(key);
     if (!entity) {
-      entity = { ref: { slug: "", name, short: "", logo: null }, entry: null, spellings: new Map(), uses: new Set() };
+      entity = { ref: { slug: "", name, short: "", logo: null, color: null }, entry: null, spellings: new Map(), uses: new Set() };
       byKey.set(key, entity);
     }
     entity.spellings.set(name, (entity.spellings.get(name) ?? 0) + 1);
