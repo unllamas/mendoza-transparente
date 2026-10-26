@@ -36,6 +36,7 @@ La gente describe lo que siente. Buscar la regla (detalle en `docs/procesos/dise
 | "Quedó vacío", "no sé qué hacer acá" | Pantallas vacías que orientan | `diseno` |
 | "Parece hecho por una IA", "parece un template" | Lo que no hacemos | `diseno` |
 | "Unos se ven más chicos que otros", "salta el layout" | Misma altura en una fila; lo que se toca solo cambia el fondo | `diseno` |
+| "Salta el layout al cambiar de año", "a veces está y a veces no", "los filtros cambian de lugar" | Filtros en una barra que no cambia de forma: lo que no aplica, deshabilitado y con aviso | `diseno` |
 | "El borde del seleccionado se rompe", "no se ve cuál elegí", "no se distingue la pestaña activa" | El elegido con su color, los demás apagados | `diseno` |
 | "Las pestañas se van de costado", "la lista es ilegible", "el menú es angosto" | Qué control usar para elegir: `ChoiceTiles` o `SearchSelect` | `diseno` |
 | "Ese botón ocupa una fila entera", "sobra lugar abajo del título" | La acción de la página va en columna a la derecha del encabezado, solo ícono con tooltip | `diseno` |

@@ -128,7 +128,7 @@ export function Select<T extends object>({
             </AriaSelectValue>
             <ChevronDownSmall
               className={cx(
-                "shrink-0 text-text-action transition-transform duration-200 ease",
+                "shrink-0 text-text-action transition-transform duration-200 ease group-data-[disabled]:text-text-tertiary",
                 size === "sm" ? "size-3.5" : "size-4",
                 isOpen && "rotate-180",
               )}

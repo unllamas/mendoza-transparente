@@ -1,13 +1,11 @@
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
-import { ChoiceTiles } from "@mt/ui/components/choice-tiles";
 import { PageHeader } from "@mt/ui/components/section";
 import { Skeleton } from "@mt/ui/components/skeleton";
 import { cx } from "@mt/ui/lib/cx";
-import { RiCommunityLine, RiGovernmentLine } from "@remixicon/react";
 import { Link, Navigate, useNavigate } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { Message } from "../components/election-parts.tsx";
-import { electionsIn, SCOPE_HINT, SCOPE_LABEL, type Scope } from "../scope.ts";
+import { FilterSelect, Message, PendingFilters } from "../components/election-parts.tsx";
+import { electionsIn, SCOPE_LABEL, type Scope } from "../scope.ts";
 import type { SetSearch, YearSearch } from "../search.ts";
 import type { DataIndex, Election } from "../types.ts";
 import { useJson } from "../use-json.ts";
@@ -48,39 +46,40 @@ export function YearPage({ year, scope, search }: { year: string; scope: Scope; 
   const scopes = (["provincial", "municipal"] as const).filter((s) => electionsIn(entry.elecciones, s).length > 0);
   if (scoped.length === 0) return <Navigate to={ROUTE[other]} params={{ anio: year }} replace />;
 
+  const lead = (
+    <>
+      <FilterSelect
+        label="Año"
+        value={year}
+        onChange={(y) => navigate({ to: ROUTE[scope], params: { anio: y }, search: {} })}
+        options={index.data.anios.map((a) => ({ id: String(a.anio), label: String(a.anio) }))}
+      />
+      <FilterSelect
+        label="Tipo"
+        value={scope}
+        onChange={(s) => navigate({ to: ROUTE[s as Scope], params: { anio: year }, search: {} })}
+        options={(["provincial", "municipal"] as const).map((s) => ({ id: s, label: SCOPE_LABEL[s], disabled: !scopes.includes(s) }))}
+      />
+    </>
+  );
+  // The kind the year did not have stays in the menu, disabled, and this line says why.
+  const note = scopes.length > 1 ? undefined : `En ${year} no hubo elecciones ${SCOPE_LABEL[other].toLowerCase()}.`;
+
   return (
     <Shell>
       <PageHeader title={`Elecciones ${SCOPE_LABEL[scope].toLowerCase()} de ${year}`}>
         {scope === "provincial"
           ? `Gobernador, senadores y diputados de Mendoza en ${year}, según las fuentes oficiales.`
-          : `Intendentes, concejales y convencionales de cada municipio de Mendoza en ${year}, según las fuentes oficiales.`}
+          : "Intendentes, concejales y convencionales de cada municipio, según las fuentes oficiales."}
       </PageHeader>
-      <YearLinks years={index.data.anios.map((a) => a.anio)} current={Number(year)} scope={scope} />
-      {scopes.length > 1 ? (
-        <ChoiceTiles
-          label="Tipo de elección"
-          value={scope}
-          onChange={(s) => navigate({ to: ROUTE[s], params: { anio: year }, search: {} })}
-          options={scopes.map((s) => ({
-            value: s,
-            label: SCOPE_LABEL[s],
-            description: SCOPE_HINT[s],
-            icon: s === "provincial" ? RiGovernmentLine : RiCommunityLine,
-          }))}
-        />
-      ) : (
-        <p className="text-body-regular text-text-secondary text-pretty">
-          En {year} no hubo elecciones {SCOPE_LABEL[other].toLowerCase()}.
-        </p>
-      )}
       {scope === "municipal" ? (
-        <MunicipalView year={year} summaries={scoped} search={search} set={set} />
+        <MunicipalView year={year} summaries={scoped} search={search} set={set} lead={lead} note={note} />
       ) : election.status === "ready" ? (
-        <ProvincialView election={election.data} options={scoped} search={search} set={set} />
+        <ProvincialView election={election.data} options={scoped} search={search} set={set} lead={lead} note={note} />
       ) : election.status === "error" ? (
         <Message title="No pudimos cargar esta elección">Probá recargar la página.</Message>
       ) : (
-        <Skeleton className="h-96 w-full" />
+        <PendingFilters lead={lead} note={note} place="Departamento" />
       )}
     </Shell>
   );
