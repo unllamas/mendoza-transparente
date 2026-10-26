@@ -2,7 +2,7 @@
 
 Objetivo: que cada persona electa muestre a qué partido, frente o bloque pertenece, **según lo dice la fuente oficial**, y que cada uno tenga su página en `/partidos/<slug>`. Esa página junta a sus legisladores, intendentes y bancas ganadas por elección, y responde búsquedas como «UCR Mendoza» o «diputados de La Libertad Avanza Mendoza».
 
-Fecha: 22/10/2026. Estado: etapas 1 a 3 hechas (normalización, páginas e insignia); logos y colores de los cinco partidos con más gente en funciones cargados el 25/10/2026; faltan los logos del resto (etapa 4) y medir (etapa 5). Los criterios que quedaron funcionando están en `docs/procesos/metodologia.md`, «Partidos, frentes y bloques», y la insignia en `docs/procesos/diseno.md`.
+Fecha: 22/10/2026. Estado: etapas 1 a 3 hechas (normalización, páginas e insignia); logos y colores de los cinco partidos con más gente en funciones cargados el 25/10/2026; desde el 26/10/2026 la insignia nunca lleva letras y toma el color de la boleta oficial (`colores-partidos.yaml`) cuando no hay logo. Quedan en gris, sin fuente oficial de logo ni de color, los bloques Fuerza Patria, Unión por la Patria, Provincias Unidas, Unión PRO, Mendocinos por la Libertad, Bloque de los Jubilados Auténticos, Mejor Mendoza, Renovador Mendoza Línea Nacional y Podemos / Encuentro Peronista, y el Partido Demócrata (falta revisar sus cuentas oficiales). Faltan los logos del resto (etapa 4) y medir (etapa 5). Los criterios que quedaron funcionando están en `docs/procesos/metodologia.md`, «Partidos, frentes y bloques», y la insignia en `docs/procesos/diseno.md`.
 
 ## Por qué
 
@@ -65,7 +65,7 @@ Un círculo chico abajo a la derecha de `PersonAvatar`, con una prop opcional `p
 | Caso | Qué se ve |
 |---|---|
 | Electo con partido y logo | El logo |
-| Electo con partido, sin logo | La sigla (o las iniciales del nombre) en gris neutro, con la misma forma |
+| Electo con partido, sin logo | Un círculo lleno con el color oficial del partido (sin letras); gris neutro si no hay color oficial |
 | Electo cuyo acta no dice el partido (hoy, solo el vicegobernador 2015) | Círculo vacío con borde punteado gris. En la ficha: «No lo informa la fuente oficial» |
 | Cargo designado | Nada: no es que falte el dato, es que el cargo no tiene partido |
 
@@ -148,6 +148,8 @@ Cero. Son páginas estáticas del build, sin funciones ni servicios nuevos. Suma
   - Insignia en `PersonAvatar` (con `PartyAvatar` de `@mt/ui`) en funcionarios, municipios e historial. Link al partido desde la ficha, la composición por bloque, las elecciones ganadas y el reparto de cada elección.
 - **Hecho (25/10/2026): logos y colores.** Logos de los sitios oficiales de Cambia Mendoza, UCR, PJ y PRO, y de la cuenta oficial de La Libertad Avanza (su sitio no tiene contenido), archivados en `data/raw/partidos/`. Color propio en `color` (también el FIT, que se reconoce mejor por la sigla). La insignia ya no es gris: logo, o sigla sobre el color del partido.
 - **Falta: logos del resto (etapa 4).** Los frentes municipales («Elegí Maipú Crece», «Elegí San Rafael Avanza»…), La Unión Mendocina, Fuerza Patria y el Partido Demócrata siguen con las iniciales en gris; cada uno necesita su entrada en `partidos.yaml` con logo o color de fuente oficial. La Junta Electoral publica las boletas de cada elección (por ejemplo, https://jusmendoza.gob.ar/estas-son-las-boletas-que-se-usaran-en-las-elecciones-del-26-de-octubre/), pero son la Boleta Única Papel: una sola imagen con todas las listas. Hay que recortar cada logo, revisarlo a mano y cargarlo en `partidos.yaml` con `logo` y `logo_fuente`. Mientras tanto, la insignia muestra la sigla.
+- **Hecho: los frentes en votación (26/10/2026).** `data/curado/frentes.yaml` dice qué partidos forman cada frente; la hoja de la fuerza en votacion.mendoza-transparente.com muestra sus logos juntos y la ficha de cada uno. Cargados los dos frentes cuyo nombre oficial nombra a los partidos: «La Libertad Avanza + Cambia Mendoza» (2025 y 2026) y «Cambia Mendoza - Nuevos Rumbos» (San Carlos, 2023).
+- **Falta: los frentes cuyo nombre no dice sus partidos** («Fuerza Justicialista Mendoza», «Elegí Mendoza» y los «Elegí» municipales) y los partidos que se sumaron sin figurar en el nombre (el PRO en «La Libertad Avanza + Cambia Mendoza» en 2026). Necesitan el acta de reconocimiento de cada alianza de la Junta Electoral, que no está publicada en una página que se pueda citar; se puede pedir por acceso a la información. Mientras tanto, la hoja aclara que el frente puede tener otros partidos. Los frentes tampoco muestran sus partidos en el sitio principal (`/partidos`), solo en votación.
 - **Falta: medir (etapa 5)** cerca del 5/11/2026.
 
 ## Preguntas abiertas (resueltas)

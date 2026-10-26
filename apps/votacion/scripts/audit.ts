@@ -9,7 +9,7 @@
  *  - mesas-sin-escrutar: departments where not every polling table was counted.
  */
 
-import type { AuditCheck, Scrutiny, Unit, VoteType } from "../src/types.ts";
+import type { AuditCase, AuditCheck, Scrutiny, Unit, VoteType } from "../src/types.ts";
 
 export interface AuditOffice {
   /** Departments as the source prints them, by name. */
@@ -20,15 +20,15 @@ export interface AuditOffice {
   departamentos: Unit[];
 }
 
-const MAX_CASES = 30;
+const MAX_CASES = 15;
 const NUMBER = new Intl.NumberFormat("es-AR");
 const signed = (n: number) => `${n > 0 ? "+" : "−"}${NUMBER.format(Math.abs(n))}`;
 const VOTE_LABEL: Record<string, string> = {
-  blanco: "votos en blanco",
-  nulo: "votos nulos",
-  recurrido: "votos recurridos",
-  impugnado: "votos impugnados",
-  comando_electoral: "votos del comando electoral",
+  blanco: "Votos en blanco",
+  nulo: "Votos nulos",
+  recurrido: "Votos recurridos",
+  impugnado: "Votos impugnados",
+  comando_electoral: "Votos del comando electoral",
 };
 
 const normalizeName = (s: string) => s.normalize("NFD").replace(/\p{M}/gu, "").replace(/\s+/g, " ").trim().toLowerCase();
@@ -55,27 +55,29 @@ function listKey(l: { lista: string; agrupacion: string }, mode: KeyMode) {
   return `#${mode === "force" ? forceNumber(l.lista) : l.lista.trim()}`;
 }
 
+type Tally = Map<string, { label: string; votes: number }>;
+
 /** Votes per list and per vote type, keyed so two units can be compared. */
-function tally(u: Unit, mode: KeyMode): Map<string, { label: string; votes: number }> {
-  const out = new Map<string, { label: string; votes: number }>();
+function tally(u: Unit, mode: KeyMode): Tally {
+  const out: Tally = new Map();
   for (const l of u.listas) {
     const k = listKey(l, mode);
     const number = mode === "force" ? forceNumber(l.lista) : l.lista.trim();
     const prev = out.get(k);
-    out.set(k, { label: number ? `lista ${number} (${l.agrupacion})` : l.agrupacion, votes: (prev?.votes ?? 0) + l.votos });
+    out.set(k, { label: number ? `Lista ${number} · ${l.agrupacion}` : l.agrupacion, votes: (prev?.votes ?? 0) + l.votos });
   }
   for (const [k, v] of Object.entries(u.otros) as [VoteType, number][]) out.set(`~${k}`, { label: VOTE_LABEL[k] ?? k, votes: v });
   return out;
 }
 
-function sumTally(units: Unit[], mode: KeyMode) {
-  const out = new Map<string, { label: string; votes: number }>();
+function sumTally(units: Unit[], mode: KeyMode): Tally {
+  const out: Tally = new Map();
   for (const u of units) for (const [k, v] of tally(u, mode)) out.set(k, { label: v.label, votes: (out.get(k)?.votes ?? 0) + v.votes });
   return out;
 }
 
 /** Differences `b − a` per key, largest first. */
-function diff(a: Map<string, { label: string; votes: number }>, b: Map<string, { label: string; votes: number }>) {
+function diff(a: Tally, b: Tally) {
   const keys = new Set([...a.keys(), ...b.keys()]);
   return [...keys]
     .map((k) => {
@@ -89,55 +91,96 @@ function diff(a: Map<string, { label: string; votes: number }>, b: Map<string, {
 
 const emitted = (u: Unit) => u.listas.reduce((s, l) => s + l.votos, 0) + Object.values(u.otros).reduce((s, v) => s + (v ?? 0), 0);
 
+type Found = AuditCase & { size: number };
+
+/**
+ * The common tail of every check: counts per department (from every case, before cutting), then the largest cases of
+ * each department, alerts first.
+ */
+function finish(
+  base: Omit<AuditCheck, "revisados" | "alertas" | "hallados" | "lugares" | "casos">,
+  checked: Map<string, number>,
+  found: Found[],
+): AuditCheck {
+  const lugares: AuditCheck["lugares"] = {};
+  for (const [lugar, revisados] of checked) lugares[lugar] = { revisados, alertas: 0, hallados: 0 };
+  for (const c of found) {
+    const l = (lugares[c.lugar] ??= { revisados: 0, alertas: 0, hallados: 0 });
+    l.hallados++;
+    if (c.alerta) l.alertas++;
+  }
+  const kept = new Map<string, number>();
+  const casos = found
+    .sort((a, b) => Number(b.alerta) - Number(a.alerta) || b.size - a.size)
+    .filter((c) => {
+      const n = kept.get(c.lugar) ?? 0;
+      kept.set(c.lugar, n + 1);
+      return n < MAX_CASES;
+    })
+    .map(({ size, ...c }) => c);
+  return {
+    ...base,
+    revisados: [...checked.values()].reduce((s, n) => s + n, 0),
+    alertas: found.filter((c) => c.alerta).length,
+    hallados: found.length,
+    lugares,
+    casos,
+  };
+}
+
 function sums(cargo: string, office: AuditOffice): AuditCheck | null {
-  const cases: { size: number; text: string }[] = [];
-  let checked = 0;
+  const found: Found[] = [];
+  const checked = new Map<string, number>();
   for (const [dep, mesas] of office.mesas) {
     const printed = office.printed.get(dep);
     if (!printed) continue;
-    checked++;
+    checked.set(dep, 1);
     const mode = matchMode([printed], mesas);
     for (const d of diff(tally(printed, mode), sumTally(mesas, mode)))
-      cases.push({ size: Math.abs(d.delta), text: `${dep}: las mesas suman ${signed(d.delta)} ${d.label} que el total impreso` });
+      found.push({
+        lugar: dep,
+        que: d.label,
+        antes: d.before,
+        despues: d.after,
+        parte: Math.abs(d.delta) / Math.max(emitted(printed), 1),
+        alerta: true,
+        size: Math.abs(d.delta),
+        texto: `${d.label}: las mesas suman ${NUMBER.format(d.after)} y el total impreso dice ${NUMBER.format(d.before)} (${signed(d.delta)})`,
+      });
   }
-  if (checked === 0) return null;
-  return {
-    id: "sumas",
-    cargo,
-    titulo: "Las mesas suman lo mismo que el total de cada departamento",
-    descripcion: "Sumamos los votos de cada mesa y los comparamos con el total que la fuente imprime para el departamento.",
-    revisados: checked,
-    unidad: "departamentos",
-    alertas: cases.length,
-    hallados: cases.length,
-    casos: cases
-      .sort((a, b) => b.size - a.size)
-      .slice(0, MAX_CASES)
-      .map((c) => c.text),
-  };
+  if (checked.size === 0) return null;
+  return finish(
+    {
+      id: "sumas",
+      cargo,
+      titulo: "Las mesas suman lo mismo que el total de cada departamento",
+      descripcion: "Sumamos los votos de cada mesa y los comparamos con el total que la fuente imprime para el departamento.",
+      unidad: "departamentos",
+    },
+    checked,
+    found,
+  );
 }
 
 /** Share of a unit's ballots above which a change between the two counts is an alert and not a routine correction. */
 const ALERT_SHARE = 0.01;
 
 /** The list with the most votes in a tally, to see whether a change turns who won. */
-const leader = (t: Map<string, { votes: number }>) =>
-  [...t].filter(([k]) => !k.startsWith("~")).sort((a, b) => b[1].votes - a[1].votes)[0]?.[0];
+const leader = (t: Tally) => [...t].filter(([k]) => !k.startsWith("~")).sort((a, b) => b[1].votes - a[1].votes)[0]?.[0];
 
 function provisionalVsDefinitive(cargo: string, prov: AuditOffice, def: AuditOffice): AuditCheck {
-  const cases: { size: number; alert: boolean; text: string }[] = [];
-  let checked = 0;
+  const found: Found[] = [];
+  const checked = new Map<string, number>();
   // Polling table by polling table when both scrutinies have them; else department by department.
   const byTable = prov.mesas.size > 0 && def.mesas.size > 0;
-  const missing: string[] = [];
   if (byTable) {
     for (const [dep, defTables] of def.mesas) {
       const provTables = new Map((prov.mesas.get(dep) ?? []).map((u) => [u.nombre, u]));
+      checked.set(dep, defTables.length);
       for (const t of defTables) {
         const p = provTables.get(t.nombre);
-        checked++;
         if (!p) {
-          missing.push(`${dep}, ${t.nombre}`);
+          found.push({ lugar: dep, mesa: t.nombre, alerta: true, size: emitted(t), texto: "No estaba en el conteo de la noche" });
           continue;
         }
         const mode = matchMode([p], [t]);
@@ -145,14 +188,17 @@ function provisionalVsDefinitive(cargo: string, prov: AuditOffice, def: AuditOff
         const changes = diff(a, b);
         if (changes.length === 0) continue;
         const size = changes.reduce((s, c) => s + Math.abs(c.delta), 0);
-        const detail = changes
-          .slice(0, 3)
-          .map((c) => `${signed(c.delta)} ${c.label}`)
-          .join(", ");
-        cases.push({
+        const flipped = leader(a) !== leader(b);
+        found.push({
+          lugar: dep,
+          mesa: t.nombre,
+          parte: size / Math.max(emitted(t), 1),
+          alerta: size >= emitted(t) * ALERT_SHARE || flipped,
           size,
-          alert: size >= emitted(t) * ALERT_SHARE || leader(a) !== leader(b),
-          text: `${dep}, ${t.nombre}: ${detail}${changes.length > 3 ? " y más" : ""}`,
+          texto: `${changes
+            .slice(0, 3)
+            .map((c) => `${c.label} ${signed(c.delta)}`)
+            .join("; ")}${changes.length > 3 ? " y más" : ""}${flipped ? ". Cambió quién ganó la mesa" : ""}`,
         });
       }
     }
@@ -161,98 +207,99 @@ function provisionalVsDefinitive(cargo: string, prov: AuditOffice, def: AuditOff
     for (const d of def.departamentos) {
       const p = provDeps.get(d.nombre);
       if (!p) continue;
-      checked++;
+      checked.set(d.nombre, 1);
       const mode = matchMode([p], [d]);
       const [a, b] = [tally(p, mode), tally(d, mode)];
       const flipped = leader(a) !== leader(b);
       for (const c of diff(a, b))
-        cases.push({
+        found.push({
+          lugar: d.nombre,
+          que: c.label,
+          antes: c.before,
+          despues: c.after,
+          parte: Math.abs(c.delta) / Math.max(emitted(d), 1),
+          alerta: flipped || Math.abs(c.delta) >= emitted(d) * ALERT_SHARE,
           size: Math.abs(c.delta),
-          alert: flipped || Math.abs(c.delta) >= emitted(d) * ALERT_SHARE,
-          text: `${d.nombre}: ${c.label} pasó de ${NUMBER.format(c.before)} a ${NUMBER.format(c.after)} (${signed(c.delta)})`,
+          texto: `${c.label} pasó de ${NUMBER.format(c.before)} a ${NUMBER.format(c.after)} (${signed(c.delta)})`,
         });
     }
   }
-  // Alerts first, then the rest by size.
-  const sorted = cases.sort((a, b) => Number(b.alert) - Number(a.alert) || b.size - a.size).map((c) => c.text);
-  // Tables the provisional count never loaded go in one line of their own, so they don't hide the ones that changed.
-  if (missing.length > 0)
-    sorted.unshift(
-      `${NUMBER.format(missing.length)} mesas del definitivo no estaban en el provisorio: ${missing.slice(0, 8).join("; ")}${missing.length > 8 ? " y más" : ""}`,
-    );
-  const unit = byTable ? "mesa" : "departamento";
-  return {
-    id: "provisorio-definitivo",
-    cargo,
-    titulo: byTable ? "Mesas que cambiaron del provisorio al definitivo" : "Cambios del provisorio al definitivo por departamento",
-    descripcion: `El provisorio es el conteo rápido de la noche de la elección; el definitivo, el escrutinio de la Junta Electoral, que revisa cada acta. Es normal que cambien algunos votos. Marcamos como alerta un cambio de más del 1 % de los votos de la ${unit}, o uno que cambia quién ganó.`,
-    revisados: checked,
-    unidad: byTable ? "mesas" : "departamentos",
-    alertas: cases.filter((c) => c.alert).length + missing.length,
-    hallados: cases.length + missing.length,
-    casos: sorted.slice(0, MAX_CASES),
-  };
+  return finish(
+    {
+      id: "provisorio-definitivo",
+      cargo,
+      titulo: "Del conteo de la noche al escrutinio oficial",
+      descripcion: `El conteo de la noche (provisorio) se hace rápido, con el telegrama de cada mesa. Días después, la Junta Electoral revisa cada acta (definitivo) y corrige lo que haga falta: es normal que cambien algunos votos. Lo marcamos para mirar si un cambio mueve más del 1 % de los votos ${byTable ? "de la mesa" : "del departamento"} o cambia quién ganó.`,
+      unidad: byTable ? "mesas" : "departamentos",
+    },
+    checked,
+    found,
+  );
 }
 
 function turnout(cargo: string, office: AuditOffice): AuditCheck | null {
-  const cases: { size: number; text: string }[] = [];
-  let checked = 0;
+  const found: Found[] = [];
+  const checked = new Map<string, number>();
   const units = [
-    ...office.departamentos.map((u) => ({ dep: "", u })),
-    ...[...office.mesas].flatMap(([dep, us]) => us.map((u) => ({ dep, u }))),
+    ...office.departamentos.map((u) => ({ dep: u.nombre, mesa: undefined as string | undefined, u })),
+    ...[...office.mesas].flatMap(([dep, us]) => us.map((u) => ({ dep, mesa: u.nombre as string | undefined, u }))),
   ];
-  for (const { dep, u } of units) {
+  for (const { dep, mesa, u } of units) {
     const p = u.participacion;
     if (!p) continue;
-    checked++;
-    const where = dep ? `${dep}, ${u.nombre}` : u.nombre;
+    checked.set(dep, (checked.get(dep) ?? 0) + 1);
     const ballots = emitted(u);
     if (p.votantes != null && p.electores != null && p.votantes > p.electores)
-      cases.push({
+      found.push({
+        lugar: dep,
+        mesa,
+        alerta: true,
         size: p.votantes - p.electores,
-        text: `${where}: votaron ${NUMBER.format(p.votantes)} de ${NUMBER.format(p.electores)} electores`,
+        texto: `Votaron ${NUMBER.format(p.votantes)} personas y el padrón tiene ${NUMBER.format(p.electores)}`,
       });
     if (p.votantes != null && ballots > p.votantes)
-      cases.push({
+      found.push({
+        lugar: dep,
+        mesa,
+        alerta: true,
         size: ballots - p.votantes,
-        text: `${where}: hay ${NUMBER.format(ballots)} votos y votaron ${NUMBER.format(p.votantes)} personas`,
+        texto: `Hay ${NUMBER.format(ballots)} votos y votaron ${NUMBER.format(p.votantes)} personas`,
       });
   }
-  if (checked === 0) return null;
-  return {
-    id: "participacion",
-    cargo,
-    titulo: "Más votos que votantes, o más votantes que electores",
-    descripcion:
-      "En una mesa o un departamento no puede haber más votos que personas que votaron, ni más votantes que electores en el padrón.",
-    revisados: checked,
-    unidad: "mesas y departamentos",
-    alertas: cases.length,
-    hallados: cases.length,
-    casos: cases
-      .sort((a, b) => b.size - a.size)
-      .slice(0, MAX_CASES)
-      .map((c) => c.text),
-  };
+  if (checked.size === 0) return null;
+  return finish(
+    {
+      id: "participacion",
+      cargo,
+      titulo: "Más votos que votantes, o más votantes que electores",
+      descripcion:
+        "En una mesa o un departamento no puede haber más votos que personas que votaron, ni más votantes que electores en el padrón.",
+      unidad: "mesas y departamentos",
+    },
+    checked,
+    found,
+  );
 }
 
 function uncounted(cargo: string, office: AuditOffice): AuditCheck | null {
   const deps = office.departamentos.filter((u) => u.participacion?.mesasHabilitadas != null && u.participacion.mesasEscrutadas != null);
   if (deps.length === 0) return null;
-  const missing = deps.filter((u) => u.participacion!.mesasEscrutadas! < u.participacion!.mesasHabilitadas!);
-  return {
-    id: "mesas-sin-escrutar",
-    cargo,
-    titulo: "Departamentos con mesas sin escrutar",
-    descripcion: "Mesas habilitadas que no aparecen escrutadas en la fuente.",
-    revisados: deps.length,
-    unidad: "departamentos",
-    alertas: missing.length,
-    hallados: missing.length,
-    casos: missing.map(
-      (u) => `${u.nombre}: ${NUMBER.format(u.participacion!.mesasHabilitadas! - u.participacion!.mesasEscrutadas!)} mesas sin escrutar`,
-    ),
-  };
+  return finish(
+    {
+      id: "mesas-sin-escrutar",
+      cargo,
+      titulo: "Mesas sin contar",
+      descripcion: "Mesas habilitadas que la fuente no muestra escrutadas.",
+      unidad: "departamentos",
+    },
+    new Map(deps.map((u) => [u.nombre, 1])),
+    deps
+      .filter((u) => u.participacion!.mesasEscrutadas! < u.participacion!.mesasHabilitadas!)
+      .map((u) => {
+        const n = u.participacion!.mesasHabilitadas! - u.participacion!.mesasEscrutadas!;
+        return { lugar: u.nombre, alerta: true, size: n, texto: `${NUMBER.format(n)} ${n === 1 ? "mesa" : "mesas"} sin escrutar` };
+      }),
+  );
 }
 
 export function auditElection(scrutinies: Map<Scrutiny, Map<string, AuditOffice>>): AuditCheck[] {

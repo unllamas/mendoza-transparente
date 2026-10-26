@@ -1,19 +1,30 @@
 import { tileVariants } from "@mt/ui/components/card";
 import { cx } from "@mt/ui/lib/cx";
-import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { type CSSProperties, type ReactNode, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { type Contenders, forcesOf, mapFill, sideOf, sideStyle } from "../contenders.ts";
 import { formatPercent } from "../labels.ts";
 import type { MapData, Unit } from "../types.ts";
 import { positives } from "./results.tsx";
 
+/** How one department is painted: its fill, what the tooltip says, and stripes when two colors look alike. */
+export interface Paint {
+  fill: string;
+  label: string;
+  striped?: boolean;
+}
+
+export interface LegendItem {
+  label: string;
+  style: CSSProperties;
+}
+
 // Small departments of Greater Mendoza, shown enlarged in a box (same drawing as the main site).
 const GRAN_MENDOZA = ["Capital", "Godoy Cruz", "Guaymallén", "Maipú", "Las Heras", "Luján de Cuyo"];
 const CORE = ["Capital", "Godoy Cruz", "Guaymallén"];
-const NO_VOTE = "no eligió este cargo en esta elección";
 
 /**
- * Each department painted with the force that won it: blue or orange for the two leading forces of the province,
- * grey for any other, darker the bigger the share. Hover or focus shows the winner; a tap opens the department.
+ * Provincial offices: each department painted with the force that won it, in the color of the two leading forces of
+ * the province, grey for any other, darker the bigger the share.
  */
 export function WinnerMap({
   map,
@@ -29,6 +40,72 @@ export function WinnerMap({
   onSelect: (name: string | null) => void;
 }) {
   const byName = useMemo(() => new Map(departments.map((d) => [d.nombre, d])), [departments]);
+  const paint = (name: string): Paint | null => {
+    const d = byName.get(name);
+    const first = d ? forcesOf(d)[0] : undefined;
+    if (!d || !first) return null;
+    const share = first.votos / positives(d);
+    const side = sideOf(forces, first);
+    return {
+      fill: mapFill(forces, side, share),
+      label: `ganó ${first.agrupacion} ${formatPercent(first.votos, positives(d))}`,
+      // When both forces' colors look alike, the second one's departments carry white stripes on top.
+      striped: forces.striped && side === 1,
+    };
+  };
+  const absent = map.departamentos.filter((d) => !byName.has(d.municipio)).length;
+  const legend: LegendItem[] = [
+    ...forces.names.flatMap((n, i) =>
+      n ? [{ label: `Ganó ${n}${forces.fallback[i] ? " (sin color oficial)" : ""}`, style: sideStyle(forces, i as 0 | 1) }] : [],
+    ),
+    { label: "Ganó otra fuerza", style: sideStyle(null, null) },
+  ];
+  return (
+    <DepartmentMap
+      map={map}
+      paint={paint}
+      selected={selected}
+      onSelect={onSelect}
+      noVote="no eligió este cargo en esta elección"
+      note={
+        absent > 0
+          ? `En esta elección este cargo se votó en ${byName.size} de los ${map.departamentos.length} departamentos. En gris claro, los que no lo eligieron en esta fecha.`
+          : undefined
+      }
+      legend={legend}
+      extra={absent > 0 ? "No votó este cargo" : undefined}
+      shading="Más oscuro, más votos para quien ganó"
+    />
+  );
+}
+
+/**
+ * The 18 departments, each with the paint it gets (light grey when it has none). Hover or focus shows what it says;
+ * a tap selects the department. Greater Mendoza goes enlarged in a box beside.
+ */
+export function DepartmentMap({
+  map,
+  paint,
+  selected,
+  onSelect,
+  noVote,
+  note,
+  legend,
+  extra,
+  shading,
+}: {
+  map: MapData;
+  paint: (name: string) => Paint | null;
+  selected: string | null;
+  onSelect: (name: string | null) => void;
+  /** What the tooltip says of a department without paint. */
+  noVote: string;
+  note?: ReactNode;
+  legend: LegendItem[];
+  /** Legend of the light grey (departments without paint), when there are some. */
+  extra?: string;
+  shading?: string;
+}) {
   const [tip, setTip] = useState<{ name: string; x: number; y: number } | null>(null);
   const boxRef = useRef<HTMLDivElement>(null);
   const tipRef = useRef<HTMLDivElement>(null);
@@ -55,35 +132,26 @@ export function WinnerMap({
     return `${cx - size / 2} ${cy - size / 2} ${size} ${size}`;
   }, [map]);
 
-  const winner = (name: string) => {
-    const d = byName.get(name);
-    const first = d ? forcesOf(d)[0] : undefined;
-    if (!d || !first) return null;
-    const share = first.votos / positives(d);
-    return { list: first, share, side: sideOf(forces, first), label: `${first.agrupacion} ${formatPercent(first.votos, positives(d))}` };
-  };
-
   const active = tip?.name ?? selected;
   const paths = (zoom: boolean) =>
     map.departamentos
       .filter((d) => !zoom || GRAN_MENDOZA.includes(d.municipio))
       .map((d) => {
-        const w = winner(d.municipio);
+        const w = paint(d.municipio);
         const dim = active !== null && d.municipio !== active;
         const sel = d.municipio === selected;
-        // When both forces' colors look alike, the second one's departments carry white stripes on top.
-        const striped = forces.striped && !dim && w?.side === 1;
+        const striped = !dim && w?.striped;
         return (
           <g key={d.municipio}>
             <path
               d={d.path}
-              style={{ fill: dim ? "var(--color-chart-grid)" : w ? mapFill(forces, w.side, w.share) : "var(--color-chart-grid)" }}
+              style={{ fill: dim || !w ? "var(--color-chart-grid)" : w.fill }}
               stroke="var(--color-background-primary-default)"
               strokeWidth={1.2}
               vectorEffect="non-scaling-stroke"
               role="button"
               tabIndex={zoom ? -1 : 0}
-              aria-label={`${d.municipio}: ${w ? `ganó ${w.label}` : NO_VOTE}`}
+              aria-label={`${d.municipio}: ${w ? w.label : noVote}`}
               aria-pressed={sel}
               className="cursor-pointer outline-none transition-[fill] duration-150"
               onPointerEnter={(e) => e.pointerType === "mouse" && showTip(e.currentTarget, d.municipio)}
@@ -111,16 +179,10 @@ export function WinnerMap({
     </defs>
   );
 
-  const tipWinner = tip ? winner(tip.name) : null;
-  const absent = map.departamentos.filter((d) => !byName.has(d.municipio)).length;
+  const tipWinner = tip ? paint(tip.name) : null;
   return (
     <div className="flex flex-col gap-3">
-      {absent > 0 && (
-        <p className="text-body-regular text-text-secondary text-pretty">
-          En esta elección este cargo se votó en {byName.size} de los {map.departamentos.length} departamentos. En gris claro, los que no lo
-          eligieron en esta fecha.
-        </p>
-      )}
+      {note && <p className="text-body-regular text-text-secondary text-pretty">{note}</p>}
       <div ref={boxRef} className="relative grid grid-cols-[3fr_2fr] items-start gap-3 sm:gap-4">
         <svg
           viewBox={map.viewBox}
@@ -146,33 +208,24 @@ export function WinnerMap({
             style={{ top: tip.y - 8, left: tip.x }}
           >
             <span className="font-medium">{tip.name}</span>{" "}
-            <span className="text-text-secondary">{tipWinner ? `ganó ${tipWinner.label}` : NO_VOTE}</span>
+            <span className="text-text-secondary">{tipWinner ? tipWinner.label : noVote}</span>
           </div>
         )}
       </div>
       <ul className="flex flex-wrap gap-x-4 gap-y-1 text-caption-1-regular text-text-secondary">
-        {forces.names.map((n, i) =>
-          n ? (
-            <li key={n} className="flex min-w-0 items-center gap-1.5">
-              <span className="size-2.5 shrink-0 rounded-full" style={sideStyle(forces, i as 0 | 1)} aria-hidden />
-              <span className="truncate">
-                Ganó {n}
-                {forces.fallback[i] && " (sin color oficial)"}
-              </span>
-            </li>
-          ) : null,
-        )}
-        <li className="flex items-center gap-1.5">
-          <span className="size-2.5 shrink-0 rounded-full bg-chart-axis" aria-hidden />
-          Ganó otra fuerza
-        </li>
-        {absent > 0 && (
+        {legend.map((item) => (
+          <li key={item.label} className="flex min-w-0 items-center gap-1.5">
+            <span className="size-2.5 shrink-0 rounded-full" style={item.style} aria-hidden />
+            <span className="truncate">{item.label}</span>
+          </li>
+        ))}
+        {extra && (
           <li className="flex items-center gap-1.5">
             <span className="size-2.5 shrink-0 rounded-full bg-chart-grid ring-1 ring-chart-axis ring-inset" aria-hidden />
-            No votó este cargo
+            {extra}
           </li>
         )}
-        <li>Más oscuro, más votos para quien ganó</li>
+        {shading && <li>{shading}</li>}
       </ul>
     </div>
   );

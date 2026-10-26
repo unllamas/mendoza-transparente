@@ -12,11 +12,12 @@
 # Campos:
 #   slug        la URL: /partidos/<slug>
 #   nombre      el nombre que se muestra
-#   sigla       opcional; va en la insignia de la cara y en el título
+#   sigla       opcional; va en el título y en el buscador (la insignia de la cara nunca lleva letras: logo o color)
 #   alias       las otras formas en que lo escriben las fuentes, cada una con su motivo
 #   logo        archivo en apps/web/public/partidos/ (null mientras no haya uno de fuente oficial)
 #   logo_fuente URL oficial de donde salió el logo (el original queda en data/raw/partidos/)
-#   color       color propio del partido en hexadecimal, tomado de su logo oficial; pinta la insignia cuando no hay logo
+#   color       color propio del partido en hexadecimal, tomado de su logo oficial; pinta la insignia cuando no hay logo.
+#               Si falta, se usa el de colores-partidos.yaml (boleta oficial) para el mismo nombre o alias.
 #   wikidata    id de Wikidata (Q…), si existe con certeza
 
 - slug: cambia-mendoza
@@ -108,7 +109,7 @@
   alias:
     - nombre: Partido Nuevos Rumbos
       motivo: Mismo nombre con el prefijo legal «Partido» (acta de 2019).
-  # «Cambia Mendoza - Nuevos Rumbos» (2023) queda aparte: es una lista que combina dos nombres.
+  # «Cambia Mendoza - Nuevos Rumbos» (2023) queda aparte: es una lista que combina dos nombres (sus partidos, en frentes.yaml).
 
 - slug: frente-libertario-democrata-y-jubilados
   nombre: Frente Libertario, Demócrata y Jubilados

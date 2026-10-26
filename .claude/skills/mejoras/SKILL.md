@@ -36,12 +36,15 @@ La gente describe lo que siente. Buscar la regla (detalle en `docs/procesos/dise
 | "Quedó vacío", "no sé qué hacer acá" | Pantallas vacías que orientan | `diseno` |
 | "Parece hecho por una IA", "parece un template" | Lo que no hacemos | `diseno` |
 | "Unos se ven más chicos que otros", "salta el layout" | Misma altura en una fila; lo que se toca solo cambia el fondo | `diseno` |
+| "Salta el layout al cambiar de año", "a veces está y a veces no", "los filtros cambian de lugar" | Filtros en una barra que no cambia de forma: lo que no aplica, deshabilitado y con aviso | `diseno` |
 | "El borde del seleccionado se rompe", "no se ve cuál elegí", "no se distingue la pestaña activa" | El elegido con su color, los demás apagados | `diseno` |
 | "Las pestañas se van de costado", "la lista es ilegible", "el menú es angosto" | Qué control usar para elegir: `ChoiceTiles` o `SearchSelect` | `diseno` |
 | "Ese botón ocupa una fila entera", "sobra lugar abajo del título" | La acción de la página va en columna a la derecha del encabezado, solo ícono con tooltip | `diseno` |
 | "Se repite arriba del título", "dos líneas que dicen lo mismo" | Una sola línea arriba del título: la ruta termina en la página actual con su ícono | `diseno` |
 | "Queda un espacio de más arriba del título", "sobra lugar" | El link para atrás va pegado al encabezado (`WithBreadcrumbs`) | `diseno` |
 | "El gráfico no es proporcional", "¿qué es el 100 %?" | En una composición, la barra llena es el total | `diseno` |
+| "¿Qué significan todas esas barras?", "esto es ilegible", "muestran muchos datos pero qué significan" | Cada tramo dice qué es; un control responde primero con una oración | `diseno` |
+| "Se mezclan las provinciales y las municipales", "¿contra quién compite?" | Provinciales y municipales nunca en la misma vista | `diseno`, `contenido-y-metodologia` |
 | "Ocupa toda la pantalla", "en la compu sobra espacio" | Dos gráficos chicos seguidos, en dos columnas en desktop | `diseno` |
 | "Que los datos queden a la vista al bajar", "la lista queda lejos de quién es", "al bajar pierdo el nombre" | Ficha en dos columnas en desktop, la izquierda fija | `diseno` |
 | "Las fuentes están arriba en unas y abajo en otras", "repite mucho «Fuente»" | Fuentes siempre al final, una fila por organismo | `diseno` |
