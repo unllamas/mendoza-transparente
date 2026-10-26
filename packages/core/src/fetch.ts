@@ -94,11 +94,19 @@ const VOLATILES_EN_LINKS = [
 
 const esHtml = (filename: string) => /\.html?$/i.test(filename);
 
-/** Huella del contenido para comparar versiones: en HTML, texto visible, links e imágenes. */
+/**
+ * Hidden fields a person does see: GeneXus pages (election results) draw their tables in the browser from
+ * `...ContainerDataV`, so the votes live there and not in the text. Without them, a change in the votes with the same
+ * number of counted polling tables would not be archived. `GXState` stays out: it is session state.
+ */
+const GENEXUS_GRID_DATA = /<input\b[^>]*?\bname\s*=\s*["'][^"']*ContainerDataV(?:_\d+)?["'][^>]*>/gi;
+
+/** Content fingerprint to compare versions: for HTML, visible text, links, images and GeneXus table data. */
 export function huella(filename: string, bytes: Uint8Array): string {
   if (!esHtml(filename)) return createHash("sha256").update(bytes).digest("hex");
-  const sinCodigo = new TextDecoder()
-    .decode(bytes)
+  const html = new TextDecoder().decode(bytes);
+  const grids = [...html.matchAll(GENEXUS_GRID_DATA)].map((m) => m[0]).join("\n");
+  const sinCodigo = html
     .replace(/<script\b[\s\S]*?<\/script>/gi, " ")
     .replace(/<style\b[\s\S]*?<\/style>/gi, " ")
     .replace(/<!--[\s\S]*?-->/g, " ");
@@ -109,7 +117,7 @@ export function huella(filename: string, bytes: Uint8Array): string {
     .replace(/&nbsp;/g, " ")
     .replace(/\s+/g, " ")
     .trim();
-  return createHash("sha256").update(`${texto}\n${links}`).digest("hex");
+  return createHash("sha256").update(`${texto}\n${links}\n${grids}`).digest("hex");
 }
 
 /** ¿El contenido nuevo es igual al de la última versión archivada (ignorando lo volátil)? */
