@@ -22,6 +22,7 @@ import type {
   Election,
   ElectionSummary,
   OfficeResults,
+  PartyRef,
   Scrutiny,
   Turnout,
   Unit,
@@ -33,6 +34,9 @@ import { type AuditOffice, auditElection } from "./audit.ts";
 const PROCESSED_DIR = process.env.VOTACION_PROCESSED_DIR ?? join(import.meta.dir, "..", "..", "..", "data", "processed");
 const OUT = join(import.meta.dir, "..", "public", "datos");
 const COLORS = join(import.meta.dir, "..", "..", "..", "data", "curado", "colores-partidos.yaml");
+const PARTIES = join(import.meta.dir, "..", "..", "..", "data", "curado", "partidos.yaml");
+/** The main site, where each curated party has its page and its logo. */
+const MAIN_SITE = "https://mendoza-transparente.com";
 
 /** Same rule as the main site (apps/web/scripts/temas/parties.ts): case, accents and punctuation don't matter. */
 const partyKey = (s: string) =>
@@ -63,6 +67,33 @@ function partyColors(): (name: string, year: number) => string | null {
     const hit = matches.find((e) => e.anios?.includes(year)) ?? matches.find((e) => !e.anios);
     return hit ? hit.color.toLowerCase() : null;
   };
+}
+
+interface PartyEntry {
+  slug: string;
+  nombre: string;
+  sigla?: string;
+  logo?: string | null;
+  alias?: { nombre: string }[];
+}
+
+/**
+ * The curated party a force's name belongs to (data/curado/partidos.yaml, by its name or an alias), to link its page
+ * on the main site. A front is not its parties: «La Libertad Avanza + Cambia Mendoza» matches nothing.
+ */
+function curatedParties(): (name: string) => PartyRef | null {
+  const entries = existsSync(PARTIES) ? (parseYaml(readFileSync(PARTIES, "utf8")) as PartyEntry[]) : [];
+  const byKey = new Map<string, PartyRef>();
+  for (const e of entries) {
+    const ref: PartyRef = {
+      slug: e.slug,
+      nombre: e.nombre,
+      sigla: e.sigla ?? null,
+      logo: e.logo ? `${MAIN_SITE}/partidos/${e.logo}` : null,
+    };
+    for (const n of [e.nombre, ...(e.alias ?? []).map((a) => a.nombre)]) byKey.set(partyKey(n), ref);
+  }
+  return (name) => byKey.get(partyKey(name)) ?? null;
 }
 
 /** In order of preference for the same election and scrutiny. */
@@ -367,11 +398,12 @@ function write(path: string, data: unknown) {
 async function main() {
   const collected = collect();
   const colors = partyColors();
+  const parties = curatedParties();
   rmSync(OUT, { recursive: true, force: true });
 
   const summaries: ElectionSummary[] = [];
   for (const [id, { tipo, escrutinios }] of [...collected].sort(([a], [b]) => a.localeCompare(b))) {
-    const election: Election = { id, tipo, escrutinios: {}, auditoria: [], colores: {} };
+    const election: Election = { id, tipo, escrutinios: {}, auditoria: [], colores: {}, partidos: {} };
     const offices = new Set<string>();
     for (const [scrutiny, { source, offices: byOffice }] of escrutinios) {
       const cargos: Record<string, OfficeResults> = {};
@@ -389,6 +421,8 @@ async function main() {
           for (const l of u?.listas ?? []) {
             const color = colors(l.agrupacion, Number(id.slice(0, 4)));
             if (color) election.colores[l.agrupacion] = color;
+            const party = parties(l.agrupacion);
+            if (party) election.partidos[l.agrupacion] = party;
           }
     election.auditoria = auditElection(
       new Map([...escrutinios].map(([s, e]) => [s, new Map([...e.offices].map(([c, o]) => [c, auditOffice(o)]))])),

@@ -51,6 +51,17 @@ export interface Election {
   auditoria: AuditCheck[];
   /** Official color of each force (by its name as the source writes it), from data/curado/partidos.yaml. */
   colores: Record<string, string>;
+  /** The party behind a force (by its name as the source writes it), when data/curado/partidos.yaml has it. */
+  partidos: Record<string, PartyRef>;
+}
+
+/** A curated party of the main site: its page is https://mendoza-transparente.com/partidos/<slug>. */
+export interface PartyRef {
+  slug: string;
+  nombre: string;
+  sigla: string | null;
+  /** Absolute URL of the official logo, on the main site. */
+  logo: string | null;
 }
 
 /** One automatic check over the official figures (scripts/audit.ts). An alert is a signal to look at, not a verdict. */
@@ -66,8 +77,27 @@ export interface AuditCheck {
   alertas: number;
   /** Every case found, alerts included. Only the provisional-to-definitive check finds cases that are not alerts. */
   hallados: number;
-  /** The largest cases, already written as a sentence. At most 30. */
-  casos: string[];
+  /** The same counts for each department, so a municipal page can show only its own. */
+  lugares: Record<string, { revisados: number; alertas: number; hallados: number }>;
+  /** The largest cases of each department, alerts first. At most 15 per department. */
+  casos: AuditCase[];
+}
+
+/** One case found by a check: a figure that changed, or a sentence when there is no pair of figures to compare. */
+export interface AuditCase {
+  /** Department. */
+  lugar: string;
+  /** Polling table, when the check goes table by table. */
+  mesa?: string;
+  /** What is compared: "Lista 506 · LA LIBERTAD AVANZA", "Votos en blanco". */
+  que?: string;
+  antes?: number;
+  despues?: number;
+  /** Share of the unit's ballots that the change moves (0.004 is 0,4 %). */
+  parte?: number;
+  alerta: boolean;
+  /** The case in one sentence, without the department. */
+  texto: string;
 }
 
 export interface MapData {

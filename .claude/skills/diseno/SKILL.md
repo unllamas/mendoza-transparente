@@ -71,6 +71,7 @@ Tarjetas dentro de tarjetas, etiquetitas sobre los títulos, secciones numeradas
 - **Dos gráficos chicos seguidos, en dos columnas en desktop** (`grid items-start gap-8 lg:grid-cols-2`), cada uno con su `h3`; si falta uno, el otro ocupa la fila (`only:col-span-full`). Una línea con bandas de gestiones o el mapa siguen a todo el ancho.
 - **Ficha de una entidad (proveedor, organismo, municipio), en dos columnas en desktop** con `EntityColumns`: el encabezado con el nombre, quién es y sus cifras a la izquierda, fija (`lg:sticky lg:top-20`), para que el nombre no se pierda al bajar; gráficos y listas a la derecha. En el celular y en la hoja, una columna. La columna fija entra en unos 700 px de alto; lo que sobra va arriba a la derecha.
 - **Bandas de gestiones de gobierno:** `GOBIERNOS` (`src/gobiernos.ts`).
+- **Votación:** cada tramo de una barra de partes dice qué es (tooltip y hoja al tocar); provinciales y municipales nunca en la misma vista; un control automático responde primero con una oración.
 - **Paleta:** está validada (skill `dataviz` del entorno). No inventar colores.
 
 ## Cómo revisar una pantalla

@@ -1,9 +1,11 @@
-import { tileVariants } from "@mt/ui/components/card";
+import { listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
 import { StatTile } from "@mt/ui/components/stat-tile";
 import { cx } from "@mt/ui/lib/cx";
-import { type Contenders, sideOf, sideStyle } from "../contenders.ts";
+import { RiArrowRightSLine } from "@remixicon/react";
+import { type Contenders, forceStyle } from "../contenders.ts";
 import { formatNumber, formatPercent, VOTE_TYPE_LABEL } from "../labels.ts";
-import type { Unit, VoteType } from "../types.ts";
+import type { ListVotes, PartyRef, Unit, VoteType } from "../types.ts";
+import { PartyMark } from "./party-mark.tsx";
 
 export const positives = (u: Unit) => u.listas.reduce((s, l) => s + l.votos, 0);
 
@@ -43,10 +45,25 @@ export function TurnoutTiles({ unit }: { unit: Unit }) {
 
 /**
  * Votes per list as bars over the positive votes (a composition: the full bar is 100 %), then blank and null votes.
- * In a total added up from departments, a list that ran in a single department says which one: in a municipal
- * election each department numbers its own ballot, so the same number belongs to different local fronts.
+ * Each row opens the force's sheet. In a total added up from departments, a list that ran in a single department says
+ * which one: in a municipal election each department numbers its own ballot, so the same number belongs to different
+ * local fronts.
  */
-export function ResultBars({ unit, forces, departments = [] }: { unit: Unit; forces: Contenders | null; departments?: Unit[] }) {
+export function ResultBars({
+  unit,
+  forces,
+  colors,
+  parties,
+  onPick,
+  departments = [],
+}: {
+  unit: Unit;
+  forces: Contenders | null;
+  colors: Record<string, string>;
+  parties: Record<string, PartyRef>;
+  onPick: (l: ListVotes) => void;
+  departments?: Unit[];
+}) {
   const total = positives(unit);
   const homes = new Map<string, string[]>();
   if (unit.sumado)
@@ -60,32 +77,36 @@ export function ResultBars({ unit, forces, departments = [] }: { unit: Unit; for
   const others = (Object.entries(unit.otros) as [VoteType, number][]).filter(([, v]) => v > 0);
   return (
     <div className="flex flex-col gap-4">
-      <ul className="flex flex-col gap-3">
+      <ul className={listVariants()}>
         {unit.listas.map((l, i) => {
           const where = homes.get(`${l.lista}|${l.agrupacion}`);
-          const note = [l.candidato, where?.length === 1 && `Solo en ${where[0]}`].filter(Boolean).join(" · ");
+          const note = [l.lista && `Lista ${l.lista}`, l.candidato, where?.length === 1 && `Solo en ${where[0]}`]
+            .filter(Boolean)
+            .join(" · ");
+          const style = forceStyle(forces, colors, l);
           return (
-            <li key={`${l.lista}|${l.agrupacion}`} className="flex flex-col gap-1.5">
-              <div className="flex items-baseline justify-between gap-3 text-body-regular">
-                <span
-                  className={cx("min-w-0 truncate", i === 0 ? "font-semibold text-text-primary" : "text-text-secondary")}
-                  title={l.agrupacion}
-                >
-                  {l.lista && <span className="tabular-nums">{l.lista} · </span>}
-                  {l.agrupacion}
+            <li key={`${l.lista}|${l.agrupacion}`}>
+              <button type="button" className={listRowVariants()} onClick={() => onPick(l)}>
+                <span className="flex min-w-0 flex-1 flex-col gap-1.5">
+                  <span className="flex items-center justify-between gap-3 text-body-regular">
+                    <span className="flex min-w-0 items-center gap-2">
+                      <PartyMark party={parties[l.agrupacion]} style={style} />
+                      <span className={cx("min-w-0 truncate text-text-link", i === 0 && "font-semibold")} title={l.agrupacion}>
+                        {l.agrupacion}
+                      </span>
+                    </span>
+                    <span className="shrink-0 font-medium whitespace-nowrap tabular-nums">
+                      {formatPercent(l.votos, total)}
+                      <span className="ml-2 font-normal text-text-secondary">{formatNumber(l.votos)}</span>
+                    </span>
+                  </span>
+                  {note && <span className="truncate text-caption-1-regular text-text-secondary">{note}</span>}
+                  <span className="h-2 overflow-hidden rounded-full bg-background-action">
+                    <span className="block h-full rounded-full" style={{ ...style, width: `${total ? (l.votos / total) * 100 : 0}%` }} />
+                  </span>
                 </span>
-                <span className="shrink-0 font-medium whitespace-nowrap tabular-nums">
-                  {formatPercent(l.votos, total)}
-                  <span className="ml-2 font-normal text-text-secondary">{formatNumber(l.votos)}</span>
-                </span>
-              </div>
-              {note && <span className="truncate text-caption-1-regular text-text-secondary">{note}</span>}
-              <div className="h-2 overflow-hidden rounded-full bg-background-action">
-                <div
-                  className="h-full rounded-full"
-                  style={{ ...sideStyle(forces, sideOf(forces, l)), width: `${total ? (l.votos / total) * 100 : 0}%` }}
-                />
-              </div>
+                <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
+              </button>
             </li>
           );
         })}
