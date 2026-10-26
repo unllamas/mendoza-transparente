@@ -44,7 +44,7 @@ export function posterTopics(m: PosterMunicipality) {
       ? [{ value: "plata" as const, label: "Plata de la Provincia", description: "Cuánto recibió de coparticipación", icon: RiBankLine }]
       : []),
     ...(m.spending
-      ? [{ value: "gasto" as const, label: "En qué gasta", description: "De cada $ 100, cuánto va a cada cosa", icon: RiShoppingBagLine }]
+      ? [{ value: "gasto" as const, label: "En qué gasta", description: "Cuánto va a cada cosa, en pesos y en %", icon: RiShoppingBagLine }]
       : []),
     ...(m.staff ? [{ value: "empleo" as const, label: "Empleados", description: "Cuántas personas trabajan", icon: RiGroupLine }] : []),
   ];
@@ -88,7 +88,7 @@ export function posterContent(m: PosterMunicipality, topic: PosterTopic, missing
         question: `¿En qué gastó ${m.name} en ${s.year}?`,
         figure: millions(s.accrued),
         unit: "millones",
-        sentence: `Lo gastado hasta ${s.cutoff}. De cada $ 100:`,
+        sentence: `Lo gastado hasta ${s.cutoff}, en millones de pesos y en % del total:`,
         body: (
           <ul className="flex flex-col gap-[1.6cqw]">
             {s.top.map((o) => {
@@ -97,7 +97,10 @@ export function posterContent(m: PosterMunicipality, topic: PosterTopic, missing
                 <li key={o.name} className="flex flex-col gap-[0.8cqw]">
                   <span className="flex justify-between gap-[2cqw]">
                     <span className="truncate">{o.name}</span>
-                    <span className="font-semibold tabular-nums">$ {share}</span>
+                    <span className="shrink-0 whitespace-nowrap tabular-nums">
+                      <span className="text-neutral-500">{millions(o.accrued)}</span>
+                      <span className="ml-[1.6cqw] font-semibold">{share} %</span>
+                    </span>
                   </span>
                   <span className="h-[1.8cqw] rounded-full bg-neutral-100">
                     <span className="block h-full rounded-full bg-accent-500" style={{ width: `${share}%` }} />
