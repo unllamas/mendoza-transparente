@@ -86,7 +86,7 @@ export function buildPosters(municipios: MunicipioPagina[], budgets: MunicipalBu
         name: m.nombre,
         checked: m.transparency!.checked,
         site: m.transparency!.site,
-        items: m.transparency!.items.map((i) => ({ id: i.id, status: i.status })),
+        items: m.transparency!.items.map((i) => ({ id: i.id, status: i.status, format: i.format, url: i.url })),
         published: m.transparency!.published,
         coparticipation: m.coparticipacion
           ? {
