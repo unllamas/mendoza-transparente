@@ -271,3 +271,33 @@
   frecuencia: cada elección (cada dos años)
   dificultad: media
   estado: activo
+
+- id: elecciones-datos-abiertos
+  nombre: Resultados electorales provinciales por mesa (datos abiertos)
+  organismo: Gobierno de Mendoza (portal de datos abiertos)
+  url: https://datosabiertos.mendoza.gov.ar/dataset/?q=elecciones
+  descripcion: "Votos por lista, en blanco, nulos, recurridos e impugnados, mesa por mesa, de las generales de 2015 (definitivo), las PASO de concejales de 2017, las PASO de 2019 (provisorio y definitivo), las municipales de septiembre de 2019 y las generales de 2019 (provisorio). Totales por departamento, sección y provincia en resultados.csv; el detalle por mesa, comprimido, en mesas.csv.gz. Las legislativas de octubre de 2017 traen solo códigos sin leyenda y no se procesan."
+  formato: zip con xls y csv
+  frecuencia: cada elección (el portal no se actualiza desde 2019)
+  dificultad: media
+  estado: activo
+
+- id: resultados-provisorios
+  nombre: Resultados provisorios de las elecciones provinciales
+  organismo: Gobierno de Mendoza (Dirección General de Informática y Comunicaciones)
+  url: https://resultados.mendoza.gov.ar/
+  descripcion: "El conteo provisorio de la noche de cada elección, tal como lo publica el sitio oficial de resultados: gobernador por provincia, senadores y diputados por sección, intendente, concejales y convencionales por departamento. Elecciones de 2019, 2023, 2025 y 2026 (el sitio no tiene 2021). No trae circuitos ni mesas."
+  formato: html
+  frecuencia: cada elección
+  dificultad: media
+  estado: activo
+
+- id: escrutinios-definitivos
+  nombre: Escrutinios definitivos de la Junta Electoral
+  organismo: H. Junta Electoral de la Provincia de Mendoza (Poder Judicial)
+  url: https://jusmendoza.gob.ar/escrutinios-definitivos-elecciones-generales-de-mendoza/
+  descripcion: "El resultado oficial de cada cargo por departamento, sección y provincia, según los escrutinios definitivos de la Junta Electoral: PASO y generales de 2023, municipales de abril y septiembre de 2023 y concejales de febrero de 2026. Son PDF escaneados con texto (OCR): cada corrección de lectura está en el código con su motivo. El de 2025 no se puede leer (páginas en imagen)."
+  formato: pdf (escaneado con texto)
+  frecuencia: cada elección
+  dificultad: alta
+  estado: activo

@@ -1,0 +1,197 @@
+eleccion,tipo_eleccion,escrutinio,cargo,nivel,seccion_electoral,departamento,circuito,mesa,mesas_habilitadas,mesas_escrutadas,electores,votantes
+2023-04-30,municipal,definitivo,intendente,departamento,,La Paz,,,29,29,9432,7351
+2023-04-30,municipal,definitivo,intendente,departamento,,Lavalle,,,109,109,36410,23816
+2023-04-30,municipal,definitivo,intendente,departamento,,Maipú,,,449,449,153945,96209
+2023-04-30,municipal,definitivo,intendente,departamento,,San Carlos,,,86,86,28891,20863
+2023-04-30,municipal,definitivo,intendente,departamento,,San Rafael,,,453,453,154589,97363
+2023-04-30,municipal,definitivo,intendente,departamento,,Santa Rosa,,,46,46,14710,10200
+2023-04-30,municipal,definitivo,intendente,departamento,,Tunuyán,,,130,130,43979,30260
+2023-04-30,municipal,definitivo,concejales,departamento,,La Paz,,,29,29,9432,7351
+2023-04-30,municipal,definitivo,concejales,departamento,,Lavalle,,,109,109,36410,23816
+2023-04-30,municipal,definitivo,concejales,departamento,,Maipú,,,449,449,153945,96209
+2023-04-30,municipal,definitivo,concejales,departamento,,San Carlos,,,86,86,28891,20863
+2023-04-30,municipal,definitivo,concejales,departamento,,San Rafael,,,453,453,154589,97363
+2023-04-30,municipal,definitivo,concejales,departamento,,Santa Rosa,,,46,46,14710,10200
+2023-04-30,municipal,definitivo,concejales,departamento,,Tunuyán,,,130,130,43979,30260
+2023-06-11,paso,definitivo,gobernador,departamento,,Capital,,,298,298,100123,66787
+2023-06-11,paso,definitivo,gobernador,departamento,,General Alvear,,,115,115,38389,24816
+2023-06-11,paso,definitivo,gobernador,departamento,,Godoy Cruz,,,461,461,159409,105887
+2023-06-11,paso,definitivo,gobernador,departamento,,Guaymallén,,,681,681,235498,157911
+2023-06-11,paso,definitivo,gobernador,departamento,,Junín,,,108,108,37247,27243
+2023-06-11,paso,definitivo,gobernador,departamento,,La Paz,,,29,29,9437,7131
+2023-06-11,paso,definitivo,gobernador,departamento,,Las Heras,,,489,489,168227,113669
+2023-06-11,paso,definitivo,gobernador,departamento,,Lavalle,,,107,107,35967,21807
+2023-06-11,paso,definitivo,gobernador,departamento,,Luján de Cuyo,,,334,334,115277,80475
+2023-06-11,paso,definitivo,gobernador,departamento,,Maipú,,,446,446,153098,102458
+2023-06-11,paso,definitivo,gobernador,departamento,,Malargüe,,,75,75,25194,16888
+2023-06-11,paso,definitivo,gobernador,departamento,,Rivadavia,,,135,135,45902,32939
+2023-06-11,paso,definitivo,gobernador,departamento,,San Carlos,,,85,85,28853,20129
+2023-06-11,paso,definitivo,gobernador,departamento,,San Martín,,,282,282,96822,66951
+2023-06-11,paso,definitivo,gobernador,departamento,,San Rafael,,,447,447,153065,91568
+2023-06-11,paso,definitivo,gobernador,departamento,,Santa Rosa,,,46,46,14711,10532
+2023-06-11,paso,definitivo,gobernador,departamento,,Tunuyán,,,128,128,43466,28590
+2023-06-11,paso,definitivo,gobernador,departamento,,Tupungato,,,84,84,28051,19621
+2023-06-11,paso,definitivo,senadores,seccion,1,,,,1575,1575,539815,360174
+2023-06-11,paso,definitivo,senadores,seccion,2,,,,1046,1046,357217,247254
+2023-06-11,paso,definitivo,senadores,seccion,3,,,,1092,1092,375056,254702
+2023-06-11,paso,definitivo,senadores,seccion,4,,,,637,637,216648,133272
+2023-06-11,paso,definitivo,senadores,departamento,,Capital,,,298,298,100123,66787
+2023-06-11,paso,definitivo,senadores,departamento,,General Alvear,,,115,115,38389,24816
+2023-06-11,paso,definitivo,senadores,departamento,,Godoy Cruz,,,461,461,159409,105887
+2023-06-11,paso,definitivo,senadores,departamento,,Guaymallén,,,681,681,235498,157911
+2023-06-11,paso,definitivo,senadores,departamento,,Junín,,,108,108,37247,27243
+2023-06-11,paso,definitivo,senadores,departamento,,La Paz,,,29,29,9437,7131
+2023-06-11,paso,definitivo,senadores,departamento,,Las Heras,,,489,489,168227,113669
+2023-06-11,paso,definitivo,senadores,departamento,,Lavalle,,,107,107,35967,21807
+2023-06-11,paso,definitivo,senadores,departamento,,Luján de Cuyo,,,334,334,115277,80475
+2023-06-11,paso,definitivo,senadores,departamento,,Maipú,,,446,446,153098,102458
+2023-06-11,paso,definitivo,senadores,departamento,,Malargüe,,,75,75,25194,16888
+2023-06-11,paso,definitivo,senadores,departamento,,Rivadavia,,,135,135,45902,32939
+2023-06-11,paso,definitivo,senadores,departamento,,San Carlos,,,85,85,28853,20129
+2023-06-11,paso,definitivo,senadores,departamento,,San Martín,,,282,282,96822,66951
+2023-06-11,paso,definitivo,senadores,departamento,,San Rafael,,,447,447,153065,91568
+2023-06-11,paso,definitivo,senadores,departamento,,Santa Rosa,,,46,46,14711,10532
+2023-06-11,paso,definitivo,senadores,departamento,,Tunuyán,,,128,128,43466,28590
+2023-06-11,paso,definitivo,senadores,departamento,,Tupungato,,,84,84,28051,19621
+2023-06-11,paso,definitivo,diputados,seccion,1,,,,1575,1575,539815,360174
+2023-06-11,paso,definitivo,diputados,seccion,2,,,,1046,1046,357217,247254
+2023-06-11,paso,definitivo,diputados,seccion,3,,,,1092,1092,375056,254702
+2023-06-11,paso,definitivo,diputados,seccion,4,,,,637,637,216648,133272
+2023-06-11,paso,definitivo,diputados,departamento,,Capital,,,298,298,100123,66787
+2023-06-11,paso,definitivo,diputados,departamento,,General Alvear,,,115,115,38389,24816
+2023-06-11,paso,definitivo,diputados,departamento,,Godoy Cruz,,,461,461,159409,105887
+2023-06-11,paso,definitivo,diputados,departamento,,Guaymallén,,,681,681,235498,157911
+2023-06-11,paso,definitivo,diputados,departamento,,Junín,,,108,108,37247,27243
+2023-06-11,paso,definitivo,diputados,departamento,,La Paz,,,29,29,9437,7131
+2023-06-11,paso,definitivo,diputados,departamento,,Las Heras,,,489,489,168227,113669
+2023-06-11,paso,definitivo,diputados,departamento,,Lavalle,,,107,107,35967,21807
+2023-06-11,paso,definitivo,diputados,departamento,,Luján de Cuyo,,,334,334,115277,80475
+2023-06-11,paso,definitivo,diputados,departamento,,Maipú,,,446,446,153098,102458
+2023-06-11,paso,definitivo,diputados,departamento,,Malargüe,,,75,75,25194,16888
+2023-06-11,paso,definitivo,diputados,departamento,,Rivadavia,,,135,135,45902,32939
+2023-06-11,paso,definitivo,diputados,departamento,,San Carlos,,,85,85,28853,20129
+2023-06-11,paso,definitivo,diputados,departamento,,San Martín,,,282,282,96822,66951
+2023-06-11,paso,definitivo,diputados,departamento,,San Rafael,,,447,447,153065,91568
+2023-06-11,paso,definitivo,diputados,departamento,,Santa Rosa,,,46,46,14711,10532
+2023-06-11,paso,definitivo,diputados,departamento,,Tunuyán,,,128,128,43466,28590
+2023-06-11,paso,definitivo,diputados,departamento,,Tupungato,,,84,84,28051,19621
+2023-06-11,paso,definitivo,intendente,departamento,,Capital,,,300,300,100575,66972
+2023-06-11,paso,definitivo,intendente,departamento,,General Alvear,,,116,116,38465,24857
+2023-06-11,paso,definitivo,intendente,departamento,,Godoy Cruz,,,462,462,159606,105939
+2023-06-11,paso,definitivo,intendente,departamento,,Guaymallén,,,683,683,235924,158208
+2023-06-11,paso,definitivo,intendente,departamento,,Junín,,,109,109,37249,27243
+2023-06-11,paso,definitivo,intendente,departamento,,Las Heras,,,491,491,168792,113931
+2023-06-11,paso,definitivo,intendente,departamento,,Luján de Cuyo,,,335,335,115360,80546
+2023-06-11,paso,definitivo,intendente,departamento,,Malargüe,,,76,76,25314,16927
+2023-06-11,paso,definitivo,intendente,departamento,,Rivadavia,,,136,136,45993,32986
+2023-06-11,paso,definitivo,intendente,departamento,,San Martín,,,282,282,96822,66951
+2023-06-11,paso,definitivo,intendente,departamento,,Tupungato,,,85,85,28055,19623
+2023-06-11,paso,definitivo,concejales,departamento,,Capital,,,300,300,100575,66972
+2023-06-11,paso,definitivo,concejales,departamento,,General Alvear,,,116,116,38465,24857
+2023-06-11,paso,definitivo,concejales,departamento,,Godoy Cruz,,,462,462,159606,105939
+2023-06-11,paso,definitivo,concejales,departamento,,Guaymallén,,,683,683,235924,158208
+2023-06-11,paso,definitivo,concejales,departamento,,Junín,,,109,109,37249,27243
+2023-06-11,paso,definitivo,concejales,departamento,,Las Heras,,,491,491,168792,113931
+2023-06-11,paso,definitivo,concejales,departamento,,Luján de Cuyo,,,335,335,115360,80546
+2023-06-11,paso,definitivo,concejales,departamento,,Malargüe,,,76,76,25314,16927
+2023-06-11,paso,definitivo,concejales,departamento,,Rivadavia,,,136,136,45993,32986
+2023-06-11,paso,definitivo,concejales,departamento,,San Martín,,,282,282,96822,66951
+2023-06-11,paso,definitivo,concejales,departamento,,Tupungato,,,85,85,28055,19623
+2023-09-03,municipal,definitivo,intendente,departamento,,La Paz,,,29,29,9432,7911
+2023-09-03,municipal,definitivo,intendente,departamento,,Lavalle,,,109,109,36410,23551
+2023-09-03,municipal,definitivo,intendente,departamento,,Maipú,,,449,449,153945,96608
+2023-09-03,municipal,definitivo,intendente,departamento,,San Carlos,,,86,86,28891,21693
+2023-09-03,municipal,definitivo,intendente,departamento,,San Rafael,,,453,453,154589,97566
+2023-09-03,municipal,definitivo,intendente,departamento,,Santa Rosa,,,46,46,14710,11140
+2023-09-03,municipal,definitivo,intendente,departamento,,Tunuyán,,,130,130,43979,30328
+2023-09-03,municipal,definitivo,concejales,departamento,,La Paz,,,29,29,9432,7911
+2023-09-03,municipal,definitivo,concejales,departamento,,Lavalle,,,109,109,36410,23551
+2023-09-03,municipal,definitivo,concejales,departamento,,Maipú,,,449,449,153945,96608
+2023-09-03,municipal,definitivo,concejales,departamento,,San Carlos,,,86,86,28891,21693
+2023-09-03,municipal,definitivo,concejales,departamento,,San Rafael,,,453,453,154589,97566
+2023-09-03,municipal,definitivo,concejales,departamento,,Santa Rosa,,,46,46,14710,11140
+2023-09-03,municipal,definitivo,concejales,departamento,,Tunuyán,,,130,130,43979,30328
+2023-09-24,general,definitivo,gobernador,provincia,,,,,4350,4350,1488736,1017252
+2023-09-24,general,definitivo,gobernador,departamento,,Capital,,,298,298,100123,67688
+2023-09-24,general,definitivo,gobernador,departamento,,General Alvear,,,115,115,38389,25331
+2023-09-24,general,definitivo,gobernador,departamento,,Godoy Cruz,,,461,461,159409,109009
+2023-09-24,general,definitivo,gobernador,departamento,,Guaymallén,,,681,681,235498,160965
+2023-09-24,general,definitivo,gobernador,departamento,,Junín,,,108,108,37247,27449
+2023-09-24,general,definitivo,gobernador,departamento,,La Paz,,,29,29,9437,7315
+2023-09-24,general,definitivo,gobernador,departamento,,Las Heras,,,489,489,168227,115406
+2023-09-24,general,definitivo,gobernador,departamento,,Lavalle,,,107,107,35967,23411
+2023-09-24,general,definitivo,gobernador,departamento,,Luján de Cuyo,,,334,334,115277,82201
+2023-09-24,general,definitivo,gobernador,departamento,,Maipú,,,446,446,153098,104429
+2023-09-24,general,definitivo,gobernador,departamento,,Malargüe,,,75,75,25194,17693
+2023-09-24,general,definitivo,gobernador,departamento,,Rivadavia,,,135,135,45902,33800
+2023-09-24,general,definitivo,gobernador,departamento,,San Carlos,,,85,85,28853,20466
+2023-09-24,general,definitivo,gobernador,departamento,,San Martín,,,282,282,96822,67774
+2023-09-24,general,definitivo,gobernador,departamento,,San Rafael,,,447,447,153065,94768
+2023-09-24,general,definitivo,gobernador,departamento,,Santa Rosa,,,46,46,14711,10588
+2023-09-24,general,definitivo,gobernador,departamento,,Tunuyán,,,128,128,43466,29188
+2023-09-24,general,definitivo,gobernador,departamento,,Tupungato,,,84,84,28051,19771
+2023-09-24,general,definitivo,senadores,departamento,,Capital,,,298,298,100123,67688
+2023-09-24,general,definitivo,senadores,departamento,,General Alvear,,,115,115,38389,25331
+2023-09-24,general,definitivo,senadores,departamento,,Godoy Cruz,,,461,461,159409,109009
+2023-09-24,general,definitivo,senadores,departamento,,Guaymallén,,,681,681,235498,160965
+2023-09-24,general,definitivo,senadores,departamento,,Junín,,,108,108,37247,27449
+2023-09-24,general,definitivo,senadores,departamento,,La Paz,,,29,29,9437,7315
+2023-09-24,general,definitivo,senadores,departamento,,Las Heras,,,489,489,168227,115406
+2023-09-24,general,definitivo,senadores,departamento,,Lavalle,,,107,107,35967,23411
+2023-09-24,general,definitivo,senadores,departamento,,Luján de Cuyo,,,334,334,115277,82201
+2023-09-24,general,definitivo,senadores,departamento,,Maipú,,,446,446,153098,104429
+2023-09-24,general,definitivo,senadores,departamento,,Malargüe,,,75,75,25194,17693
+2023-09-24,general,definitivo,senadores,departamento,,Rivadavia,,,135,135,45902,33800
+2023-09-24,general,definitivo,senadores,departamento,,San Carlos,,,85,85,28853,20466
+2023-09-24,general,definitivo,senadores,departamento,,San Martín,,,282,282,96822,67774
+2023-09-24,general,definitivo,senadores,departamento,,San Rafael,,,447,447,153065,94768
+2023-09-24,general,definitivo,senadores,departamento,,Santa Rosa,,,46,46,14711,10588
+2023-09-24,general,definitivo,senadores,departamento,,Tunuyán,,,128,128,43466,29188
+2023-09-24,general,definitivo,senadores,departamento,,Tupungato,,,84,84,28051,19771
+2023-09-24,general,definitivo,diputados,departamento,,Capital,,,298,298,100123,67688
+2023-09-24,general,definitivo,diputados,departamento,,General Alvear,,,115,115,38389,25331
+2023-09-24,general,definitivo,diputados,departamento,,Godoy Cruz,,,461,461,159409,109009
+2023-09-24,general,definitivo,diputados,departamento,,Guaymallén,,,681,681,235498,160965
+2023-09-24,general,definitivo,diputados,departamento,,Junín,,,108,108,37247,27449
+2023-09-24,general,definitivo,diputados,departamento,,La Paz,,,29,29,9437,7315
+2023-09-24,general,definitivo,diputados,departamento,,Las Heras,,,489,489,168227,115406
+2023-09-24,general,definitivo,diputados,departamento,,Lavalle,,,107,107,35967,23411
+2023-09-24,general,definitivo,diputados,departamento,,Luján de Cuyo,,,334,334,115277,82201
+2023-09-24,general,definitivo,diputados,departamento,,Maipú,,,446,446,153098,104429
+2023-09-24,general,definitivo,diputados,departamento,,Malargüe,,,75,75,25194,17693
+2023-09-24,general,definitivo,diputados,departamento,,Rivadavia,,,135,135,45902,33800
+2023-09-24,general,definitivo,diputados,departamento,,San Carlos,,,85,85,28853,20466
+2023-09-24,general,definitivo,diputados,departamento,,San Martín,,,282,282,96822,67774
+2023-09-24,general,definitivo,diputados,departamento,,San Rafael,,,447,447,153065,94768
+2023-09-24,general,definitivo,diputados,departamento,,Santa Rosa,,,46,46,14711,10588
+2023-09-24,general,definitivo,diputados,departamento,,Tunuyán,,,128,128,43466,29188
+2023-09-24,general,definitivo,diputados,departamento,,Tupungato,,,84,84,28051,19771
+2023-09-24,general,definitivo,intendente,departamento,,Capital,,,300,300,100575,67849
+2023-09-24,general,definitivo,intendente,departamento,,General Alvear,,,116,116,38465,25364
+2023-09-24,general,definitivo,intendente,departamento,,Godoy Cruz,,,462,462,159606,109046
+2023-09-24,general,definitivo,intendente,departamento,,Guaymallén,,,683,683,235924,161213
+2023-09-24,general,definitivo,intendente,departamento,,Junín,,,109,109,37249,27449
+2023-09-24,general,definitivo,intendente,departamento,,Las Heras,,,491,491,168792,115632
+2023-09-24,general,definitivo,intendente,departamento,,Luján de Cuyo,,,335,335,115360,82236
+2023-09-24,general,definitivo,intendente,departamento,,Malargüe,,,76,76,25314,17738
+2023-09-24,general,definitivo,intendente,departamento,,Rivadavia,,,136,136,45993,33847
+2023-09-24,general,definitivo,intendente,departamento,,San Martín,,,282,282,96822,67774
+2023-09-24,general,definitivo,intendente,departamento,,Tupungato,,,85,85,28055,19773
+2023-09-24,general,definitivo,concejales,departamento,,Capital,,,300,300,100575,67849
+2023-09-24,general,definitivo,concejales,departamento,,General Alvear,,,116,116,38465,25364
+2023-09-24,general,definitivo,concejales,departamento,,Godoy Cruz,,,462,462,159606,109046
+2023-09-24,general,definitivo,concejales,departamento,,Guaymallén,,,683,683,235924,161213
+2023-09-24,general,definitivo,concejales,departamento,,Junín,,,109,109,37249,27449
+2023-09-24,general,definitivo,concejales,departamento,,Las Heras,,,491,491,168792,115632
+2023-09-24,general,definitivo,concejales,departamento,,Luján de Cuyo,,,335,335,115360,82236
+2023-09-24,general,definitivo,concejales,departamento,,Malargüe,,,76,76,25314,17738
+2023-09-24,general,definitivo,concejales,departamento,,Rivadavia,,,136,136,45993,33847
+2023-09-24,general,definitivo,concejales,departamento,,San Martín,,,282,282,96822,67774
+2023-09-24,general,definitivo,concejales,departamento,,Tupungato,,,85,85,28055,19773
+2026-02-22,municipal,definitivo,concejales,departamento,,La Paz,,,30,30,9631,6664
+2026-02-22,municipal,definitivo,concejales,departamento,,Luján de Cuyo,,,357,357,122153,52760
+2026-02-22,municipal,definitivo,concejales,departamento,,Maipú,,,470,470,161260,70471
+2026-02-22,municipal,definitivo,concejales,departamento,,Rivadavia,,,138,138,46685,24954
+2026-02-22,municipal,definitivo,concejales,departamento,,San Rafael,,,468,468,158994,79002
+2026-02-22,municipal,definitivo,concejales,departamento,,Santa Rosa,,,49,49,15285,9591
+2026-02-22,municipal,definitivo,convencionales,departamento,,San Rafael,,,468,468,158994,79002

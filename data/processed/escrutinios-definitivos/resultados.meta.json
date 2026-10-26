@@ -1,0 +1,101 @@
+{
+  "titulo": "Escrutinios definitivos de Mendoza: votos por cargo, unidad y lista",
+  "descripcion": "Resultados del escrutinio definitivo de la H. Junta Electoral de la Provincia: PASO y general de 2023 (gobernador, senadores, diputados, intendentes y concejales), las PASO y generales municipales de 2023 de los siete municipios que desdoblaron, y los concejales (y convencionales en San Rafael) del 22 de febrero de 2026 en seis municipios. Una fila por lista, más los votos en blanco y nulos. En la PASO la lista incluye la interna (por ejemplo `501 A`). El nombre de la agrupación es el que imprime el PDF, con una sola forma por lista cuando el OCR la escribió de varias maneras (con o sin tilde). En las filas por sección el PDF solo imprime siglas: el nombre es el de la misma lista en el escrutinio de esa elección. El candidato figura solo cuando la fila lo imprime. Intendente y concejales incluyen extranjeros en el padrón. No está la PASO provincial de gobernador como total de la provincia (el PDF salió ilegible) ni el escrutinio de 2025 (PDF escaneado sin texto en gran parte): ver el relevamiento.",
+  "columnas": {
+    "eleccion": {
+      "etiqueta": "Elección",
+      "tipo": "fecha",
+      "descripcion": "Fecha de la jornada (es el id de la elección)."
+    },
+    "tipo_eleccion": {
+      "etiqueta": "Tipo de elección",
+      "tipo": "texto",
+      "valores": {
+        "paso": "PASO",
+        "general": "General",
+        "municipal": "Municipal (municipios que desdoblaron)"
+      }
+    },
+    "escrutinio": {
+      "etiqueta": "Escrutinio",
+      "tipo": "texto",
+      "valores": {
+        "definitivo": "Definitivo"
+      }
+    },
+    "cargo": {
+      "etiqueta": "Cargo",
+      "tipo": "texto",
+      "valores": {
+        "gobernador": "Gobernador",
+        "senadores": "Senadores provinciales",
+        "diputados": "Diputados provinciales",
+        "intendente": "Intendente",
+        "concejales": "Concejales",
+        "convencionales": "Convencionales municipales"
+      }
+    },
+    "nivel": {
+      "etiqueta": "Nivel",
+      "tipo": "texto",
+      "descripcion": "Unidad geográfica de la fila, la que imprime el PDF.",
+      "valores": {
+        "provincia": "Provincia",
+        "seccion": "Sección electoral",
+        "departamento": "Departamento"
+      }
+    },
+    "seccion_electoral": {
+      "etiqueta": "Sección electoral",
+      "tipo": "texto",
+      "descripcion": "1 a 4. Solo en las filas de nivel sección; el PDF por departamento no la imprime."
+    },
+    "departamento": {
+      "etiqueta": "Departamento",
+      "tipo": "texto",
+      "descripcion": "Nombre oficial del municipio."
+    },
+    "circuito": {
+      "etiqueta": "Circuito",
+      "tipo": "texto",
+      "oculta": true,
+      "descripcion": "Siempre vacío: el escrutinio definitivo no llega a ese nivel."
+    },
+    "mesa": {
+      "etiqueta": "Mesa",
+      "tipo": "texto",
+      "oculta": true,
+      "descripcion": "Siempre vacío: el escrutinio definitivo no llega a ese nivel."
+    },
+    "tipo_voto": {
+      "etiqueta": "Tipo de voto",
+      "tipo": "texto",
+      "valores": {
+        "positivo": "Voto a una lista",
+        "blanco": "En blanco",
+        "nulo": "Nulo"
+      }
+    },
+    "agrupacion": {
+      "etiqueta": "Agrupación",
+      "tipo": "texto",
+      "descripcion": "Vacía si no es voto a una lista."
+    },
+    "lista": {
+      "etiqueta": "Lista",
+      "tipo": "texto",
+      "descripcion": "Número de la lista; en la PASO, con la interna (`501 A`)."
+    },
+    "candidato": {
+      "etiqueta": "Candidato",
+      "tipo": "texto",
+      "descripcion": "Solo si la fila del PDF lo imprime (gobernador e intendente)."
+    },
+    "votos": {
+      "etiqueta": "Votos",
+      "tipo": "entero",
+      "unidad": "votos"
+    }
+  },
+  "fuente": "https://jusmendoza.gob.ar/escrutinios-definitivos-elecciones-generales-de-mendoza/"
+}

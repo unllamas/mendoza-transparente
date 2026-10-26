@@ -38,7 +38,7 @@ jobs:
         run: bunx vite build
       - name: Votación
         working-directory: apps/votacion
-        run: bunx vite build
+        run: bun run build
       - name: Verificación visual (scroll horizontal, consola, menú, 44 px, alertas)
         env:
           CHROME_PATH: /usr/bin/google-chrome
