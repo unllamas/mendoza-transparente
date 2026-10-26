@@ -32,12 +32,12 @@ export function AuditList({ checks }: { checks: AuditCheck[] }) {
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                   <span className="text-body-medium text-text-primary text-pretty">{c.titulo}</span>
                   <span className="text-caption-1-regular text-text-secondary text-pretty">
-                    {c.descripcion} Revisamos {formatNumber(c.revisados)}.
+                    {c.descripcion} Revisamos {formatNumber(c.revisados)} {c.unidad}.
                   </span>
                 </span>
                 <StatusBadge
-                  status={c.alertas === 0 ? "good" : "warning"}
-                  label={c.alertas === 0 ? "Sin alertas" : `${formatNumber(c.alertas)} ${c.alertas === 1 ? "alerta" : "alertas"}`}
+                  status={c.alertas > 0 ? "warning" : c.hallados > 0 ? "neutral" : "good"}
+                  label={badge(c)}
                   className="shrink-0"
                 />
                 {c.casos.length > 0 && (
@@ -54,7 +54,7 @@ export function AuditList({ checks }: { checks: AuditCheck[] }) {
                       {text}
                     </li>
                   ))}
-                  {c.alertas > c.casos.length && <li>Y {formatNumber(c.alertas - c.casos.length)} casos más, más chicos.</li>}
+                  {c.hallados > c.casos.length && <li>Y {formatNumber(c.hallados - c.casos.length)} casos más.</li>}
                 </ol>
               )}
             </details>
@@ -63,4 +63,10 @@ export function AuditList({ checks }: { checks: AuditCheck[] }) {
       </ul>
     </div>
   );
+}
+
+function badge(c: AuditCheck) {
+  if (c.alertas > 0) return `${formatNumber(c.alertas)} ${c.alertas === 1 ? "alerta" : "alertas"}`;
+  if (c.hallados > 0) return `${formatNumber(c.hallados)} ${c.hallados === 1 ? "cambio chico" : "cambios chicos"}`;
+  return "Sin alertas";
 }

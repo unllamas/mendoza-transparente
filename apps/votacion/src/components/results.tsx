@@ -13,7 +13,11 @@ export function TurnoutTiles({ unit }: { unit: Unit }) {
   const emitted = positives(unit) + Object.values(unit.otros).reduce((s, v) => s + (v ?? 0), 0);
   return (
     <div className="grid grid-cols-2 gap-3">
-      <StatTile label="Votos positivos" value={formatNumber(positives(unit))} note={`de ${formatNumber(emitted)} emitidos`} />
+      <StatTile
+        label="Votos positivos"
+        value={formatNumber(positives(unit))}
+        note={`Votos a una lista, de ${formatNumber(emitted)} emitidos (el resto, en blanco o nulos)`}
+      />
       {p?.votantes != null && p.electores != null ? (
         <StatTile
           label="Participación"
@@ -37,37 +41,54 @@ export function TurnoutTiles({ unit }: { unit: Unit }) {
   );
 }
 
-/** Votes per list as bars over the positive votes (a composition: the full bar is 100 %), then blank and null votes. */
-export function ResultBars({ unit, forces }: { unit: Unit; forces: Contenders | null }) {
+/**
+ * Votes per list as bars over the positive votes (a composition: the full bar is 100 %), then blank and null votes.
+ * In a total added up from departments, a list that ran in a single department says which one: in a municipal
+ * election each department numbers its own ballot, so the same number belongs to different local fronts.
+ */
+export function ResultBars({ unit, forces, departments = [] }: { unit: Unit; forces: Contenders | null; departments?: Unit[] }) {
   const total = positives(unit);
+  const homes = new Map<string, string[]>();
+  if (unit.sumado)
+    for (const d of departments)
+      for (const l of d.listas) {
+        const k = `${l.lista}|${l.agrupacion}`;
+        homes.set(k, [...(homes.get(k) ?? []), d.nombre]);
+      }
+  const numbers = unit.listas.map((l) => l.lista.trim()).filter(Boolean);
+  const repeated = new Set(numbers).size < numbers.length;
   const others = (Object.entries(unit.otros) as [VoteType, number][]).filter(([, v]) => v > 0);
   return (
     <div className="flex flex-col gap-4">
       <ul className="flex flex-col gap-3">
-        {unit.listas.map((l, i) => (
-          <li key={`${l.lista}|${l.agrupacion}`} className="flex flex-col gap-1.5">
-            <div className="flex items-baseline justify-between gap-3 text-body-regular">
-              <span
-                className={cx("min-w-0 truncate", i === 0 ? "font-semibold text-text-primary" : "text-text-secondary")}
-                title={l.agrupacion}
-              >
-                {l.lista && <span className="tabular-nums">{l.lista} · </span>}
-                {l.agrupacion}
-              </span>
-              <span className="shrink-0 font-medium whitespace-nowrap tabular-nums">
-                {formatPercent(l.votos, total)}
-                <span className="ml-2 font-normal text-text-secondary">{formatNumber(l.votos)}</span>
-              </span>
-            </div>
-            {l.candidato && <span className="truncate text-caption-1-regular text-text-secondary">{l.candidato}</span>}
-            <div className="h-2 overflow-hidden rounded-full bg-background-action">
-              <div
-                className="h-full rounded-full"
-                style={{ ...sideStyle(forces, sideOf(forces, l)), width: `${total ? (l.votos / total) * 100 : 0}%` }}
-              />
-            </div>
-          </li>
-        ))}
+        {unit.listas.map((l, i) => {
+          const where = homes.get(`${l.lista}|${l.agrupacion}`);
+          const note = [l.candidato, where?.length === 1 && `Solo en ${where[0]}`].filter(Boolean).join(" · ");
+          return (
+            <li key={`${l.lista}|${l.agrupacion}`} className="flex flex-col gap-1.5">
+              <div className="flex items-baseline justify-between gap-3 text-body-regular">
+                <span
+                  className={cx("min-w-0 truncate", i === 0 ? "font-semibold text-text-primary" : "text-text-secondary")}
+                  title={l.agrupacion}
+                >
+                  {l.lista && <span className="tabular-nums">{l.lista} · </span>}
+                  {l.agrupacion}
+                </span>
+                <span className="shrink-0 font-medium whitespace-nowrap tabular-nums">
+                  {formatPercent(l.votos, total)}
+                  <span className="ml-2 font-normal text-text-secondary">{formatNumber(l.votos)}</span>
+                </span>
+              </div>
+              {note && <span className="truncate text-caption-1-regular text-text-secondary">{note}</span>}
+              <div className="h-2 overflow-hidden rounded-full bg-background-action">
+                <div
+                  className="h-full rounded-full"
+                  style={{ ...sideStyle(forces, sideOf(forces, l)), width: `${total ? (l.votos / total) * 100 : 0}%` }}
+                />
+              </div>
+            </li>
+          );
+        })}
       </ul>
       {others.length > 0 && (
         <dl className={cx(tileVariants({ size: "sm" }), "flex flex-wrap gap-x-6 gap-y-2 text-body-regular")}>
@@ -82,6 +103,8 @@ export function ResultBars({ unit, forces }: { unit: Unit; forces: Contenders | 
       {unit.sumado && (
         <p className="text-caption-1-regular text-text-secondary">
           Suma nuestra de las unidades más chicas: la fuente no imprime este total.
+          {repeated &&
+            " El número de lista lo asigna la Junta Electoral en cada boleta: en una elección municipal, el mismo número puede ser de fuerzas distintas en cada departamento."}
         </p>
       )}
     </div>

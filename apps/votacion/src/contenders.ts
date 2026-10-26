@@ -10,10 +10,16 @@ import type { ListVotes, Unit } from "./types.ts";
  */
 export type Side = 0 | 1 | null;
 
-/** "300 A" → "#300". Lists without a number are matched by name (names change spelling across sources). */
+const normalizeName = (s: string) => s.normalize("NFD").replace(/\p{M}/gu, "").replace(/\s+/g, " ").trim().toLowerCase();
+
+/**
+ * "300 A" → "#300 cambia mendoza". The number joins the internal lists of a force; the name keeps apart forces that
+ * share a number in different departments (in a municipal election each department numbers its own ballot, so 504
+ * is one local front in Maipú and another one in San Rafael).
+ */
 export function forceKey(l: Pick<ListVotes, "lista" | "agrupacion">) {
   const number = l.lista.trim().replace(/^(\d+)\s*[A-Za-z]{1,2}$/, "$1");
-  return number ? `#${number}` : l.agrupacion.trim().toLowerCase();
+  return number ? `#${number} ${normalizeName(l.agrupacion)}` : normalizeName(l.agrupacion);
 }
 
 export interface Force {

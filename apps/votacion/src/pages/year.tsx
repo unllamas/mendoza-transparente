@@ -172,7 +172,7 @@ function ElectionView({
           <div className="flex min-w-0 flex-col gap-8 only:col-span-full">
             <TurnoutTiles unit={unit} />
             <Section id="resultados" title="Todas las listas">
-              <ResultBars unit={unit} forces={forces} />
+              <ResultBars unit={unit} forces={forces} departments={results.departamentos} />
             </Section>
           </div>
         </div>

@@ -61,7 +61,11 @@ export interface AuditCheck {
   descripcion: string;
   /** How many units (departments, polling tables, lists) were compared. */
   revisados: number;
+  /** What `revisados` counts, in plural: "departamentos", "mesas". */
+  unidad: string;
   alertas: number;
+  /** Every case found, alerts included. Only the provisional-to-definitive check finds cases that are not alerts. */
+  hallados: number;
   /** The largest cases, already written as a sentence. At most 30. */
   casos: string[];
 }

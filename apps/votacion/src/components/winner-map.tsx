@@ -9,6 +9,7 @@ import { positives } from "./results.tsx";
 // Small departments of Greater Mendoza, shown enlarged in a box (same drawing as the main site).
 const GRAN_MENDOZA = ["Capital", "Godoy Cruz", "Guaymallén", "Maipú", "Las Heras", "Luján de Cuyo"];
 const CORE = ["Capital", "Godoy Cruz", "Guaymallén"];
+const NO_VOTE = "no eligió este cargo en esta elección";
 
 /**
  * Each department painted with the force that won it: blue or orange for the two leading forces of the province,
@@ -82,7 +83,7 @@ export function WinnerMap({
               vectorEffect="non-scaling-stroke"
               role="button"
               tabIndex={zoom ? -1 : 0}
-              aria-label={`${d.municipio}: ${w ? `ganó ${w.label}` : "sin dato"}`}
+              aria-label={`${d.municipio}: ${w ? `ganó ${w.label}` : NO_VOTE}`}
               aria-pressed={sel}
               className="cursor-pointer outline-none transition-[fill] duration-150"
               onPointerEnter={(e) => e.pointerType === "mouse" && showTip(e.currentTarget, d.municipio)}
@@ -111,8 +112,15 @@ export function WinnerMap({
   );
 
   const tipWinner = tip ? winner(tip.name) : null;
+  const absent = map.departamentos.filter((d) => !byName.has(d.municipio)).length;
   return (
     <div className="flex flex-col gap-3">
+      {absent > 0 && (
+        <p className="text-body-regular text-text-secondary text-pretty">
+          En esta elección este cargo se votó en {byName.size} de los {map.departamentos.length} departamentos. En gris claro, los que no lo
+          eligieron en esta fecha.
+        </p>
+      )}
       <div ref={boxRef} className="relative grid grid-cols-[3fr_2fr] items-start gap-3 sm:gap-4">
         <svg
           viewBox={map.viewBox}
@@ -138,7 +146,7 @@ export function WinnerMap({
             style={{ top: tip.y - 8, left: tip.x }}
           >
             <span className="font-medium">{tip.name}</span>{" "}
-            <span className="text-text-secondary">{tipWinner ? `ganó ${tipWinner.label}` : "sin dato"}</span>
+            <span className="text-text-secondary">{tipWinner ? `ganó ${tipWinner.label}` : NO_VOTE}</span>
           </div>
         )}
       </div>
@@ -158,6 +166,12 @@ export function WinnerMap({
           <span className="size-2.5 shrink-0 rounded-full bg-chart-axis" aria-hidden />
           Ganó otra fuerza
         </li>
+        {absent > 0 && (
+          <li className="flex items-center gap-1.5">
+            <span className="size-2.5 shrink-0 rounded-full bg-chart-grid ring-1 ring-chart-axis ring-inset" aria-hidden />
+            No votó este cargo
+          </li>
+        )}
         <li>Más oscuro, más votos para quien ganó</li>
       </ul>
     </div>
