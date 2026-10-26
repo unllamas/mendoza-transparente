@@ -27,9 +27,33 @@ const isMissing = (status: string) => status === "missing" || status === "unread
 
 export const missingItems = (m: PosterMunicipality) => m.items.filter((i) => isMissing(i.status));
 
-/** What can be shown about a municipality: only the topics it has data for. */
+/** The municipality's own item behind each topic that comes from it, to tell why its figures are missing. */
+const TOPIC_ITEM: Partial<Record<PosterTopic, TransparencyItemId>> = { gasto: "ejecucion", empleo: "personal" };
+
+const FORMAT_NAME: Record<string, string> = {
+  pdf: "en PDF",
+  pdf_escaneado: "en PDF escaneado",
+  planilla: "en planillas",
+  zip: "en archivos comprimidos",
+};
+
+/** Why a topic has no figures: the municipality does not publish it ("missing"), or it does and it is not read yet ("elsewhere"). */
+function gap(m: PosterMunicipality, topic: PosterTopic) {
+  const item = m.items.find((i) => i.id === TOPIC_ITEM[topic]);
+  return item && isMissing(item.status) ? ({ kind: "missing", id: item.id } as const) : ({ kind: "elsewhere", item } as const);
+}
+
+/** Every topic, for every municipality: when the figures are missing, the poster asks for them instead. */
 export function posterTopics(m: PosterMunicipality) {
   const total = m.items.length;
+  const hint = (topic: PosterTopic, withData: string) => {
+    const has = { plata: m.coparticipation, gasto: m.spending, empleo: m.staff }[topic as "plata" | "gasto" | "empleo"];
+    if (has) return withData;
+    const g = gap(m, topic);
+    if (g.kind === "missing") return "No lo publica: con un QR para pedirlo";
+    const format = g.item?.format ? FORMAT_NAME[g.item.format] : undefined;
+    return `Lo publica${format ? ` ${format}` : ""}: con un QR para verlo`;
+  };
   return [
     {
       value: "publica" as const,
@@ -37,17 +61,69 @@ export function posterTopics(m: PosterMunicipality) {
       description: `${m.published} de ${total} datos que piden las leyes`,
       icon: RiEyeLine,
     },
-    ...(missingItems(m).length
-      ? [{ value: "falta" as const, label: "Un dato que no publica", description: "Con un QR para pedirlo", icon: RiQuestionLine }]
-      : []),
-    ...(m.coparticipation
-      ? [{ value: "plata" as const, label: "Plata de la Provincia", description: "Cuánto recibió de coparticipación", icon: RiBankLine }]
-      : []),
-    ...(m.spending
-      ? [{ value: "gasto" as const, label: "En qué gasta", description: "Cuánto va a cada cosa, en pesos y en %", icon: RiShoppingBagLine }]
-      : []),
-    ...(m.staff ? [{ value: "empleo" as const, label: "Empleados", description: "Cuántas personas trabajan", icon: RiGroupLine }] : []),
+    {
+      value: "falta" as const,
+      label: "Un dato que no publica",
+      description: missingItems(m).length ? "Con un QR para pedirlo" : `Publica los ${total}: con un QR para pedir más`,
+      icon: RiQuestionLine,
+    },
+    {
+      value: "plata" as const,
+      label: "Plata de la Provincia",
+      description: hint("plata", "Cuánto recibió de coparticipación"),
+      icon: RiBankLine,
+    },
+    {
+      value: "gasto" as const,
+      label: "En qué gasta",
+      description: hint("gasto", "Cuánto va a cada cosa, en pesos y en %"),
+      icon: RiShoppingBagLine,
+    },
+    { value: "empleo" as const, label: "Empleados", description: hint("empleo", "Cuántas personas trabajan"), icon: RiGroupLine },
   ];
+}
+
+/** A poster that asks for an item the municipality does not publish. */
+function missingPoster(m: PosterMunicipality, id: TransparencyItemId, origin: string): PosterContent {
+  const unreadable = m.items.find((i) => i.id === id)?.status === "unreadable";
+  return {
+    kicker: m.name,
+    question: MISSING_QUESTION[id] ?? TRANSPARENCY_ITEMS[id].label,
+    sentence: `${unreadable ? "La Municipalidad lo publica de una forma que no se puede leer." : "La Municipalidad no lo publica."} Cualquier persona puede pedirlo, gratis y sin explicar para qué: tienen 15 días hábiles para responder.`,
+    qrUrl: `${origin}/pedir?para=muni-${m.slug}&dato=${id}`,
+    qrLabel: "Pedilo en dos minutos",
+    source: `${unreadable ? "Revisado en" : "No lo encontramos en"} ${m.site ? new URL(m.site).hostname.replace(/^www\./, "") : "el sitio oficial"} al ${formatDate(m.checked)}.`,
+  };
+}
+
+/** "A missing item" for a municipality that publishes them all: anyone can still ask for more. */
+function allPublishedPoster(m: PosterMunicipality, origin: string): PosterContent {
+  return {
+    kicker: m.name,
+    question: `¿Qué dato no publica la Municipalidad de ${m.name}?`,
+    figure: "Ninguno",
+    unit: `de los ${m.items.length} que piden las leyes`,
+    sentence:
+      "Publica todos. Igual, cualquier persona puede pedir más información, gratis y sin explicar para qué: tienen 15 días hábiles para responder.",
+    qrUrl: `${origin}/pedir?para=muni-${m.slug}`,
+    qrLabel: "Pedí información",
+    source: `Relevamiento de Mendoza Transparente en el sitio oficial, ${formatDate(m.checked)}.`,
+  };
+}
+
+/** A poster for a topic without figures: it asks for them, or points to what the municipality publishes and is not read yet. */
+function gapPoster(m: PosterMunicipality, topic: PosterTopic, question: string, origin: string): PosterContent {
+  const g = gap(m, topic);
+  if (g.kind === "missing") return { ...missingPoster(m, g.id, origin), question };
+  const format = g.item?.format ? FORMAT_NAME[g.item.format] : undefined;
+  return {
+    kicker: m.name,
+    question,
+    sentence: `La Municipalidad lo publica${format ? ` ${format}` : ""}, pero todavía no lo pasamos a números que se puedan comparar. Con el QR lo ves en el sitio oficial.`,
+    qrUrl: g.item?.url ?? m.site ?? `${origin}/municipios/${m.slug}`,
+    qrLabel: "Miralo en el sitio oficial",
+    source: `Relevamiento de Mendoza Transparente en el sitio oficial, ${formatDate(m.checked)}.`,
+  };
 }
 
 /** The poster for a topic. The QR goes to the letter when something is missing, to the municipality's page otherwise. */
@@ -57,19 +133,11 @@ export function posterContent(m: PosterMunicipality, topic: PosterTopic, missing
   const checked = formatDate(m.checked);
   const missing = missingItems(m);
   switch (topic) {
-    case "falta": {
-      const unreadable = m.items.find((i) => i.id === missingId)?.status === "unreadable";
-      return {
-        kicker,
-        question: MISSING_QUESTION[missingId] ?? TRANSPARENCY_ITEMS[missingId].label,
-        sentence: `${unreadable ? "La Municipalidad lo publica de una forma que no se puede leer." : "La Municipalidad no lo publica."} Cualquier persona puede pedirlo, gratis y sin explicar para qué: tienen 15 días hábiles para responder.`,
-        qrUrl: `${origin}/pedir?para=muni-${m.slug}&dato=${missingId}`,
-        qrLabel: "Pedilo en dos minutos",
-        source: `${unreadable ? "Revisado en" : "No lo encontramos en"} ${m.site ? new URL(m.site).hostname.replace(/^www\./, "") : "el sitio oficial"} al ${checked}.`,
-      };
-    }
+    case "falta":
+      return missing.length ? missingPoster(m, missingId, origin) : allPublishedPoster(m, origin);
     case "plata": {
-      const c = m.coparticipation!;
+      const c = m.coparticipation;
+      if (!c) return gapPoster(m, topic, `¿Cuánta plata recibió ${m.name} de la Provincia?`, origin);
       return {
         kicker,
         question: `¿Cuánta plata recibió ${m.name} de la Provincia en ${c.year}?`,
@@ -82,7 +150,8 @@ export function posterContent(m: PosterMunicipality, topic: PosterTopic, missing
       };
     }
     case "gasto": {
-      const s = m.spending!;
+      const s = m.spending;
+      if (!s) return gapPoster(m, topic, `¿En qué gasta ${m.name}?`, origin);
       return {
         kicker,
         question: `¿En qué gastó ${m.name} en ${s.year}?`,
@@ -116,7 +185,8 @@ export function posterContent(m: PosterMunicipality, topic: PosterTopic, missing
       };
     }
     case "empleo": {
-      const s = m.staff!;
+      const s = m.staff;
+      if (!s) return gapPoster(m, topic, `¿Cuántas personas trabajan en la Municipalidad de ${m.name}?`, origin);
       return {
         kicker,
         question: `¿Cuántas personas trabajan en la Municipalidad de ${m.name}?`,

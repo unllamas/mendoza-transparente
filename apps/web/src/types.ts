@@ -918,7 +918,7 @@ export interface PosterMunicipality {
   name: string;
   checked: string;
   site: string | null;
-  items: { id: TransparencyItemId; status: TransparencyStatus }[];
+  items: { id: TransparencyItemId; status: TransparencyStatus; format: TransparencyItem["format"]; url: string | null }[];
   published: number;
   coparticipation: { year: number; reference: string; total: number; perCapita: number } | null;
   staff: { quarter: string; positions: number; contracts: number; perThousand: number } | null;
