@@ -22,7 +22,7 @@ export function HeadToHead({
   unit: Unit;
   forces: Contenders;
   colors: Record<string, string>;
-  parties: Record<string, PartyRef>;
+  parties: Record<string, PartyRef[]>;
   onPick: (f: Force) => void;
 }) {
   const total = positives(unit);
@@ -45,7 +45,7 @@ export function HeadToHead({
                 onClick={() => onPick(l)}
                 className="-my-2 flex min-h-11 max-w-full min-w-0 cursor-pointer items-center gap-2 rounded-md text-body-medium text-text-link outline-none focus-visible:ring-2 focus-visible:ring-border-focus-ring"
               >
-                <PartyMark party={parties[l.agrupacion]} style={forceStyle(forces, colors, l)} />
+                <PartyMark parties={parties[l.agrupacion]} style={forceStyle(forces, colors, l)} />
                 <span className="truncate" title={l.agrupacion}>
                   {l.agrupacion}
                 </span>
@@ -76,7 +76,7 @@ export function HeadToHead({
               />
               <Tooltip size="md">
                 <span className="flex items-center gap-2">
-                  <PartyMark party={parties[l.agrupacion]} style={forceStyle(forces, colors, l)} />
+                  <PartyMark parties={parties[l.agrupacion]} style={forceStyle(forces, colors, l)} />
                   <span className="min-w-0">
                     {l.agrupacion}
                     <span className="block font-normal text-text-secondary tabular-nums">

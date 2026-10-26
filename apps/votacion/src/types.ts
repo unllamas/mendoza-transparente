@@ -51,8 +51,11 @@ export interface Election {
   auditoria: AuditCheck[];
   /** Official color of each force (by its name as the source writes it), from data/curado/partidos.yaml. */
   colores: Record<string, string>;
-  /** The party behind a force (by its name as the source writes it), when data/curado/partidos.yaml has it. */
-  partidos: Record<string, PartyRef>;
+  /**
+   * The curated parties behind a force (by its name as the source writes it): one when the force is a party of
+   * data/curado/partidos.yaml, several when it is a front of data/curado/frentes.yaml. Missing when nobody curated it.
+   */
+  partidos: Record<string, PartyRef[]>;
 }
 
 /** A curated party of the main site: its page is https://mendoza-transparente.com/partidos/<slug>. */
@@ -62,6 +65,8 @@ export interface PartyRef {
   sigla: string | null;
   /** Absolute URL of the official logo, on the main site. */
   logo: string | null;
+  /** The party's own color ("#951b81"), from its official logo; paints its mark while it has no logo. */
+  color: string | null;
 }
 
 /** One automatic check over the official figures (scripts/audit.ts). An alert is a signal to look at, not a verdict. */

@@ -35,6 +35,7 @@ const PROCESSED_DIR = process.env.VOTACION_PROCESSED_DIR ?? join(import.meta.dir
 const OUT = join(import.meta.dir, "..", "public", "datos");
 const COLORS = join(import.meta.dir, "..", "..", "..", "data", "curado", "colores-partidos.yaml");
 const PARTIES = join(import.meta.dir, "..", "..", "..", "data", "curado", "partidos.yaml");
+const FRONTS = join(import.meta.dir, "..", "..", "..", "data", "curado", "frentes.yaml");
 /** The main site, where each curated party has its page and its logo. */
 const MAIN_SITE = "https://mendoza-transparente.com";
 
@@ -74,24 +75,51 @@ interface PartyEntry {
   nombre: string;
   sigla?: string;
   logo?: string | null;
+  color?: string | null;
   alias?: { nombre: string }[];
 }
 
+interface FrontEntry {
+  nombres: string[];
+  partidos: string[];
+  fuente: string;
+  motivo: string;
+}
+
 /**
- * The curated party a force's name belongs to (data/curado/partidos.yaml, by its name or an alias), to link its page
- * on the main site. A front is not its parties: «La Libertad Avanza + Cambia Mendoza» matches nothing.
+ * The curated parties behind a force's name: the party itself (data/curado/partidos.yaml, by its name or an alias), or
+ * the parties that form a front (data/curado/frentes.yaml). A front is not its parties: it gets their logos and links,
+ * never their name. Null when nobody curated it.
  */
-function curatedParties(): (name: string) => PartyRef | null {
+function curatedParties(): (name: string) => PartyRef[] | null {
   const entries = existsSync(PARTIES) ? (parseYaml(readFileSync(PARTIES, "utf8")) as PartyEntry[]) : [];
-  const byKey = new Map<string, PartyRef>();
+  const bySlug = new Map<string, PartyRef>();
+  const byKey = new Map<string, PartyRef[]>();
   for (const e of entries) {
     const ref: PartyRef = {
       slug: e.slug,
       nombre: e.nombre,
       sigla: e.sigla ?? null,
       logo: e.logo ? `${MAIN_SITE}/partidos/${e.logo}` : null,
+      color: e.color ?? null,
     };
-    for (const n of [e.nombre, ...(e.alias ?? []).map((a) => a.nombre)]) byKey.set(partyKey(n), ref);
+    bySlug.set(e.slug, ref);
+    for (const n of [e.nombre, ...(e.alias ?? []).map((a) => a.nombre)]) byKey.set(partyKey(n), [ref]);
+  }
+  const fronts = existsSync(FRONTS) ? (parseYaml(readFileSync(FRONTS, "utf8")) as FrontEntry[]) : [];
+  for (const f of fronts) {
+    const where = `frentes.yaml: «${f.nombres[0]}»`;
+    if (f.partidos.length < 2) throw new Error(`${where} necesita al menos dos partidos`);
+    if (!f.fuente?.startsWith("https://") || !f.motivo) throw new Error(`${where} necesita su fuente oficial y su motivo`);
+    const members = f.partidos.map((s) => {
+      const ref = bySlug.get(s);
+      if (!ref) throw new Error(`${where}: «${s}» no está en partidos.yaml`);
+      return ref;
+    });
+    for (const n of f.nombres) {
+      if (byKey.has(partyKey(n))) throw new Error(`${where}: «${n}» ya es un partido o un frente cargado`);
+      byKey.set(partyKey(n), members);
+    }
   }
   return (name) => byKey.get(partyKey(name)) ?? null;
 }
@@ -421,8 +449,8 @@ async function main() {
           for (const l of u?.listas ?? []) {
             const color = colors(l.agrupacion, Number(id.slice(0, 4)));
             if (color) election.colores[l.agrupacion] = color;
-            const party = parties(l.agrupacion);
-            if (party) election.partidos[l.agrupacion] = party;
+            const curated = parties(l.agrupacion);
+            if (curated) election.partidos[l.agrupacion] = curated;
           }
     election.auditoria = auditElection(
       new Map([...escrutinios].map(([s, e]) => [s, new Map([...e.offices].map(([c, o]) => [c, auditOffice(o)]))])),

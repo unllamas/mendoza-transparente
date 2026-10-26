@@ -13,6 +13,9 @@ import { positives } from "./results.tsx";
 /** The `partido` of the URL: a force is its number and its name ("506-la-libertad-avanza-cambia-mendoza"). */
 export const forceSlug = (l: { lista: string; agrupacion: string } | Force) => slug("key" in l ? l.key : forceKey(l));
 
+/** "A, B y C". */
+const listNames = (names: string[]) => (names.length < 2 ? (names[0] ?? "") : `${names.slice(0, -1).join(", ")} y ${names.at(-1)}`);
+
 /** How a force did in one unit: votes, share of the positive votes and place. Null if it did not run there. */
 function standing(u: Unit, key: string) {
   const all = forcesOf(u);
@@ -53,7 +56,7 @@ export function PartySheet({
   if (!here) return null;
   const { force } = here;
   const lists = unit.listas.filter((l) => forceSlug(l) === forceId);
-  const party = election.partidos[force.agrupacion];
+  const parties = election.partidos[force.agrupacion] ?? [];
   const style = forceStyle(forces, election.colores, force);
   const numbers = [...new Set(lists.map((l) => l.lista.trim()).filter(Boolean))];
   const candidates = [...new Set(lists.map((l) => l.candidato).filter(Boolean))];
@@ -76,7 +79,7 @@ export function PartySheet({
   return (
     <Sheet title={force.agrupacion} onClose={onClose}>
       <div className="flex items-center gap-3">
-        <PartyMark party={party} style={style} size="lg" />
+        <PartyMark parties={parties} style={style} size="lg" />
         <div className="flex min-w-0 flex-col">
           <span className="text-title-3-semibold text-text-primary text-pretty">{force.agrupacion}</span>
           <span className="text-caption-1-regular text-text-secondary text-pretty">
@@ -118,24 +121,32 @@ export function PartySheet({
         </section>
       )}
 
-      {party ? (
+      {parties.length > 1 && (
+        <p className="text-caption-1-regular text-text-secondary text-pretty">
+          Es un frente: su nombre oficial reúne a {listNames(parties.map((p) => p.nombre))}. Puede sumar otros partidos que no figuran en el
+          nombre.
+        </p>
+      )}
+      {parties.length > 0 ? (
         <ul className={listVariants()}>
-          <li>
-            <a
-              href={`https://mendoza-transparente.com/partidos/${party.slug}`}
-              target="_blank"
-              rel="noreferrer"
-              className={listRowVariants()}
-            >
-              <span className="flex min-w-0 flex-1 flex-col">
-                <span className="truncate text-body-medium text-text-link">Ficha de {party.sigla ?? party.nombre}</span>
-                <span className="text-caption-1-regular text-text-secondary">
-                  Quiénes ocupan cargos y sus elecciones, en Mendoza Transparente
+          {parties.map((party) => (
+            <li key={party.slug}>
+              <a
+                href={`https://mendoza-transparente.com/partidos/${party.slug}`}
+                target="_blank"
+                rel="noreferrer"
+                className={listRowVariants()}
+              >
+                <span className="flex min-w-0 flex-1 flex-col">
+                  <span className="truncate text-body-medium text-text-link">Ficha de {party.sigla ?? party.nombre}</span>
+                  <span className="text-caption-1-regular text-text-secondary">
+                    Quiénes ocupan cargos y sus elecciones, en Mendoza Transparente
+                  </span>
                 </span>
-              </span>
-              <RiExternalLinkLine className="size-4 shrink-0 text-text-link" aria-hidden />
-            </a>
-          </li>
+                <RiExternalLinkLine className="size-4 shrink-0 text-text-link" aria-hidden />
+              </a>
+            </li>
+          ))}
         </ul>
       ) : (
         <p className="text-caption-1-regular text-text-secondary text-pretty">
