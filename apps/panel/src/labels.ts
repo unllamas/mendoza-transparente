@@ -88,6 +88,18 @@ export const FINDING_STATUS_DOT: Record<FindingStatus, "good" | "warning" | "cri
   discarded: "neutral",
 };
 
+export const ASSISTANT_REASON_LABELS: Record<string, string> = {
+  dato: "Un dato está mal",
+  respuesta: "No respondió lo que preguntó",
+  falta: "Falta información o un paso",
+};
+
+export const ASSISTANT_GAP_LABELS: Record<"municipio" | "rubro" | "tramite", string> = {
+  municipio: "Municipio sin relevar",
+  rubro: "Rubro",
+  tramite: "Trámite",
+};
+
 const MONTHS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
 
 /** "2026-10-11…" → "11 oct 2026" */

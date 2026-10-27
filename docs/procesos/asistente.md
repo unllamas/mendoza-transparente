@@ -35,7 +35,7 @@ Cada respuesta guarda en `assistant_gaps` lo que se pidió y no tenemos, para de
 | `rubro` | Tasa de un rubro que no está en la lista de ese municipio | El rubro como lo dijo la persona, normalizado |
 | `tramite` | Un trámite que no tenemos | El id que armó el modelo («sacar-licencia-de-conducir») |
 
-No se guarda la IP ni la conversación; `value` se normaliza y se corta a 60 caracteres. Igual es texto que viene de la persona: no se publica y se revisa antes de usarlo. Si la tabla no existe todavía, la respuesta sale igual y queda un aviso en el log. Para consultarla:
+No se guarda la IP ni la conversación; `value` se normaliza y se corta a 60 caracteres. Igual es texto que viene de la persona: no se publica y se revisa antes de usarlo. Si la tabla no existe todavía, la respuesta sale igual y queda un aviso en el log. Se ve en la pantalla **Asistente** del panel (agrupados por tipo, municipio y valor, con la cantidad y la última fecha, de lo más pedido a lo menos). A mano:
 
 ```bash
 cd apps/web && bunx wrangler@4 d1 execute mendoza-transparente --remote --command "SELECT kind, municipality, value, COUNT(*) AS veces FROM assistant_gaps GROUP BY 1, 2, 3 ORDER BY veces DESC LIMIT 50"
@@ -112,7 +112,7 @@ Tokens y costo se miran en el tablero de uso de cada proveedor, no en PostHog. L
 
 ## Opiniones
 
-`assistant_feedback` guarda cada voto. La nota del 👎 es texto libre y puede traer datos personales: no se publica, no va a la analítica y se revisa antes de usarla. Hasta que el panel tenga su vista, se consulta a mano:
+`assistant_feedback` guarda cada voto. La nota del 👎 es texto libre y puede traer datos personales: no se publica, no va a la analítica y se revisa antes de usarla. Se ve en la pantalla **Asistente** del panel (`apps/panel`, consultas en `packages/participation/src/assistant.ts`): los totales 👍 y 👎, los 👎 por motivo, recorrido (`flow`) y municipio, y los últimos 50 votos. La lista nunca trae la nota: se abre de a una, con un aviso de que puede traer datos personales, y cada lectura queda en la auditoría (`assistant.note.read`, con el id del voto y sin el texto). Para consultarlo a mano:
 
 ```bash
 cd apps/web && bunx wrangler@4 d1 execute mendoza-transparente --remote --command "SELECT created_at, vote, reason, flow, municipality FROM assistant_feedback ORDER BY id DESC LIMIT 50"

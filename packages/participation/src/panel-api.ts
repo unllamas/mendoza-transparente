@@ -5,6 +5,7 @@
  */
 
 import type { Actor } from "./access.ts";
+import { assistantFeedback, assistantFeedbackNote, assistantGaps } from "./assistant.ts";
 import type { Db } from "./db.ts";
 import { error, json, pathOf, readBody } from "./http.ts";
 import { privacyWarnings } from "./privacy.ts";
@@ -209,6 +210,15 @@ export async function handlePanel(req: Request, db: Db, actor: Actor): Promise<R
       const code = normalizeCode(path.slice("/api/panel/items/".length));
       const item = code ? await submission(db, code, now) : null;
       return item ? json(item) : error("No existe ese envío.", 404);
+    }
+    if (path === "/api/panel/assistant") return json({ feedback: await assistantFeedback(db), gaps: await assistantGaps(db) });
+    const voteMatch = path.match(/^\/api\/panel\/assistant\/votes\/(\d+)$/);
+    if (voteMatch) {
+      // The note is free text that may carry personal data: reading it is audited, like the other sensitive reads.
+      const vote = await assistantFeedbackNote(db, Number(voteMatch[1]));
+      if (!vote) return error("No existe ese voto.", 404);
+      if (vote.note) await audit(db, actor.email, "assistant.note.read", null, { voteId: vote.id }, at);
+      return json(vote);
     }
     if (path === "/api/panel/stats") return json(await panelStats(db, now));
     if (path === "/api/panel/audit") return json(await auditLog(db, 300));
