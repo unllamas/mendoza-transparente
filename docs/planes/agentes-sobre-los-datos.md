@@ -42,7 +42,7 @@ Cuando una etapa quede funcionando, su proceso pasa a `docs/procesos/` con su sk
 
 ## Preguntas abiertas
 
-- **De dónde lee el MCP:** de los CSV estáticos que ya publica el sitio (más simple, pero los filtros se hacen en memoria) o de una copia en D1 que se carga en cada build (filtra rápido, pero hay que mantener otra copia). `data/processed` pesa hoy unos 43 MB.
+- **De dónde lee el MCP:** de los CSV estáticos que ya publica el sitio (más simple, pero los filtros se hacen en memoria) o de una copia en D1 que se carga en cada build (filtra rápido, pero hay que mantener otra copia). `data/processed` pesa hoy unos 43 MB. Propuesta concreta: [Base de datos para consultar](base-de-datos.md), etapa 4.
 - **Dónde corre:** una ruta dentro de las Pages Functions de `apps/web` o un Worker aparte (`apps/mcp`), que aísla el riesgo y los límites del sitio.
 - **Acceso:** abierto sin registro (más alcance) o con una clave gratuita (permite cortar abusos y saber quién lo usa).
 - **Qué fuentes entran primero:** se propone empezar por las más consultadas en PostHog y por las que tienen página de entidad (funcionarios, organismos, proveedores, compras).
