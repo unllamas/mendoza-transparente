@@ -2,6 +2,7 @@ import { createRootRoute, createRoute, createRouter, RouterProvider } from "@tan
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Layout } from "./components/layout.tsx";
+import { AssistantPage } from "./pages/assistant.tsx";
 import { AuditPage } from "./pages/audit.tsx";
 import { HomePage } from "./pages/home.tsx";
 import { InboxPage, type InboxSearch } from "./pages/inbox.tsx";
@@ -35,6 +36,7 @@ const routes = [
     validateSearch: (s: Record<string, unknown>): SecuritySearch => ({ hallazgo: str(s.hallazgo) }),
     component: SecurityPage,
   }),
+  createRoute({ getParentRoute: () => rootRoute, path: "/asistente", component: AssistantPage }),
   createRoute({ getParentRoute: () => rootRoute, path: "/auditoria", component: AuditPage }),
 ];
 
