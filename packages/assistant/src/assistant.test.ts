@@ -152,6 +152,10 @@ describe("agent", () => {
     expect(reply.outcome).toBe("steps");
     const steps = reply.blocks.find((b) => b.type === "steps");
     expect(steps?.type === "steps" && steps.steps.length).toBeGreaterThan(3);
+    // What the PDF folder needs travels with the block.
+    expect(steps?.type === "steps" && steps.title).toBeString();
+    expect(steps?.type === "steps" && steps.activity).toBe("Almacén");
+    expect(steps?.type === "steps" && steps.unpublished?.length).toBeGreaterThan(0);
     expect(reply.blocks.some((b) => b.type === "fee")).toBe(false);
     // The model does not even get the amounts.
     expect(JSON.stringify(calls[2]?.body)).not.toContain("63335");

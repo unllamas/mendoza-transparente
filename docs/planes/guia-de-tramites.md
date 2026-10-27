@@ -101,6 +101,8 @@ El relevamiento está en `docs/relevamiento-fuentes.md#212-impuestos-provinciale
 
 ### 6. Carpeta del trámite en PDF
 
+**Estado (27/10/2026):** la carpeta ya se baja desde la tarjeta de pasos de Aco (`apps/web/src/features/assistant/folder/`). Trae los pasos con su fuente y su fecha, una casilla para tachar cada paso y lo que no se publica. Falta la lista de papeles (hay que sumar un campo `papeles` a `tramites.yaml`), completar el formulario oficial y marcar lo que completó la IA.
+
 Al final de cada recorrido, la persona baja un PDF con lo que tiene que llevar o subir:
 - los pasos en orden, cada uno con su fuente y la fecha en que se verificó;
 - la lista de papeles para tachar;

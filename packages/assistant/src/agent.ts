@@ -141,12 +141,17 @@ export function buildBlocks(k: Knowledge, c: Collected): Block[] {
     // A question only about the fee does not need the national and provincial steps of a municipality we lack.
     const onlyFee = !p.covered && c.fee && c.context.asksFee;
     if (steps?.length && !onlyFee) {
+      const title = k.flows.find((f) => f.id === p.flow)?.title;
       blocks.push({
         type: "steps",
         flow: p.flow,
         municipality: p.municipality,
         steps: steps.map((s) => ({ level: s.level, title: s.title, detail: s.detail, href: s.href, agency: s.agency })),
         verified: p.verified ?? "",
+        // For the PDF folder: what the procedure is called, the activity picked and what is not published.
+        ...(title ? { title } : {}),
+        ...(p.covered && p.activity ? { activity: p.activity.name } : {}),
+        ...(p.covered && p.unpublished?.length ? { unpublished: p.unpublished } : {}),
       });
     }
   }
