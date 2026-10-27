@@ -110,6 +110,7 @@ const RETRY_COOLDOWN_MS = 10_000;
 const ERROR_TEXT: Record<ConversationError, string> = {
   generic: "No pude responder ahora. Probá de nuevo en un rato.",
   "rate-limit": "Mandaste muchas preguntas seguidas. Esperá unos segundos y probá de nuevo.",
+  challenge: "No pude comprobar que no sos un robot. Probá de nuevo.",
 };
 
 /** The error with its retry button. After a rate limit (10 requests every 10 s per IP) the button waits 10 s. */
@@ -139,6 +140,7 @@ export function Panel({
   onSend,
   onRetry,
   onClose,
+  verification,
 }: {
   turns: Turn[];
   thinking: boolean;
@@ -146,6 +148,8 @@ export function Panel({
   onSend: (text: string) => void;
   onRetry: () => void;
   onClose: () => void;
+  /** The Turnstile widget, while the conversation still has to prove it is a person. */
+  verification?: ReactNode;
 }) {
   const [draft, setDraft] = useState("");
   // The open picker, if any: the 18 municipalities or the activities of the last question.
@@ -247,6 +251,7 @@ export function Panel({
         />
         <IconButton icon={RiSendPlane2Line} aria-label="Enviar" type="submit" disabled={thinking} className="size-12" />
       </form>
+      {verification && <div className="flex shrink-0 justify-center px-4 pt-3 empty:hidden">{verification}</div>}
       <p className="shrink-0 px-5 pt-2 pb-3 text-center text-caption-1-regular text-text-tertiary">
         {NAME} usa IA con datos oficiales y puede equivocarse. Confirmá en la ventanilla.
       </p>

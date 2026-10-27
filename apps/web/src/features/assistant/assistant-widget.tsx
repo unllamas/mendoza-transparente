@@ -5,6 +5,7 @@ import { cx } from "@mt/ui/lib/cx";
 import { RiArrowDownSLine } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import { track } from "@/analytics.ts";
+import { Turnstile } from "@/components/turnstile.tsx";
 import { NAME, Panel } from "./panel.tsx";
 import { useConversation } from "./use-conversation.ts";
 
@@ -44,9 +45,9 @@ const FOCUSABLE =
   'a[href],button:not([disabled]),input:not([disabled]),textarea:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])';
 
 /** The floating assistant: launcher plus panel. Full screen on phones, 380 × 620 px at the bottom right on desktop. */
-export default function AssistantWidget() {
+export default function AssistantWidget({ challenge = false }: { challenge?: boolean }) {
   const [open, setOpen] = useState(false);
-  const conversation = useConversation();
+  const conversation = useConversation(challenge);
   const dialog = useRef<HTMLDivElement>(null);
   // What had the focus when the panel opened (the launcher), so closing puts it back there.
   const opener = useRef<HTMLElement | null>(null);
@@ -118,6 +119,9 @@ export default function AssistantWidget() {
             error={conversation.error}
             onSend={conversation.send}
             onRetry={conversation.retry}
+            verification={
+              conversation.verification.needed && <Turnstile key={conversation.verification.key} onToken={conversation.onToken} />
+            }
             onClose={() => toggle(false)}
           />
         </div>

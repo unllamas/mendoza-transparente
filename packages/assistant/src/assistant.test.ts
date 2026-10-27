@@ -4,8 +4,8 @@ import { join } from "node:path";
 import { currentKnowledge } from "../scripts/build-knowledge.ts";
 import { runAgent } from "./agent.ts";
 import { handleAssistant, sanitizeFeedback, sanitizeMessages } from "./http.ts";
-import { checkPass, issuePass, PASS_TTL_MS } from "./pass.ts";
 import type { Knowledge } from "./knowledge.ts";
+import { checkPass, issuePass, PASS_TTL_MS } from "./pass.ts";
 import { configuredProviders, modelFor } from "./providers.ts";
 import { asksAboutFee, feeActivities, findMunicipality, findTradeFee, getProcedure, searchUnpublished } from "./tools.ts";
 import type { Gap } from "./types.ts";
@@ -406,7 +406,11 @@ describe("modelo por tarea", () => {
 
 describe("turnstile", () => {
   const post = (body: unknown) =>
-    new Request("https://x.test/api/asistente", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+    new Request("https://x.test/api/asistente", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(body),
+    });
   const messages = [{ role: "user", content: "hola" }];
   const env = { ...KEYS, ASSISTANT_TURNSTILE: "on" };
 
@@ -434,12 +438,18 @@ describe("turnstile", () => {
     expect(denied?.status).toBe(403);
     expect(await denied?.json()).toEqual({ error: "Falta la verificación", challenge: true });
 
-    const first = await handleAssistant(post({ messages, turnstile: "ok" }), { ...deps, fetcher: fakeProvider([{ text: "Hola." }]).fetcher });
+    const first = await handleAssistant(post({ messages, turnstile: "ok" }), {
+      ...deps,
+      fetcher: fakeProvider([{ text: "Hola." }]).fetcher,
+    });
     const reply = (await first?.json()) as { text: string; pass?: string };
     expect(reply.text).toBe("Hola.");
     expect(reply.pass).toBeString();
 
-    const second = await handleAssistant(post({ messages, pass: reply.pass }), { ...deps, fetcher: fakeProvider([{ text: "Otra." }]).fetcher });
+    const second = await handleAssistant(post({ messages, pass: reply.pass }), {
+      ...deps,
+      fetcher: fakeProvider([{ text: "Otra." }]).fetcher,
+    });
     expect(second?.status).toBe(200);
     expect(tokens).toEqual(["ok"]);
   });
@@ -449,6 +459,7 @@ describe("turnstile", () => {
   });
   test("apagado, no pide nada y no devuelve pase", async () => {
     const res = await handleAssistant(post({ messages }), { knowledge: k, env: KEYS, fetcher: fakeProvider([{ text: "Hola." }]).fetcher });
-    expect(((await res?.json()) as { pass?: string }).pass).toBeUndefined();
+    const body = (await res?.json()) as { pass?: string } | undefined;
+    expect(body?.pass).toBeUndefined();
   });
 });

@@ -19,6 +19,9 @@ const SECRETS = [
   { name: "OPENROUTER_API_KEY", what: "la clave de OpenRouter" },
   { name: "ASSISTANT_MODEL", what: "el modelo (si no se carga: anthropic/claude-haiku-5.5)" },
   { name: "ASSISTANT_PROVIDERS", what: "el orden de los proveedores (si no se carga: gateway,openrouter)" },
+  { name: "ASSISTANT_MODEL_TOOLS", what: "el modelo que elige las herramientas (si no se carga: ASSISTANT_MODEL)" },
+  { name: "ASSISTANT_MODEL_ANSWER", what: "el modelo que redacta la respuesta (si no se carga: el de las herramientas)" },
+  { name: "ASSISTANT_TURNSTILE", what: "«on» para pedir Turnstile una vez por conversación (solo en producción)" },
 ];
 
 console.log(`Secretos del asistente para ${env === "production" ? "PRODUCCIÓN" : "la vista previa (dev)"}.`);

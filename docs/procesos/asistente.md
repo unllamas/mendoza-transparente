@@ -64,6 +64,7 @@ El modelo se elige sin tocar el código: es el secreto `ASSISTANT_MODEL`, que se
 
 - **Sin cargarlo:** `anthropic/claude-haiku-5.5`, el barato y rápido (`DEFAULT_MODEL` en `packages/assistant/src/providers.ts`).
 - **El id es el mismo en los dos catálogos** (por ejemplo `anthropic/claude-sonnet-5.5`). Se busca en el [catálogo de AI Gateway](https://ai-gateway.vercel.sh/v1/models) y en el de [OpenRouter](https://openrouter.ai/models). Si un proveedor usa otro id, `ASSISTANT_MODEL_GATEWAY` o `ASSISTANT_MODEL_OPENROUTER` pisan el general para ese proveedor.
+- **Un modelo por tarea:** `ASSISTANT_MODEL_TOOLS` lee la pregunta y elige las herramientas, y `ASSISTANT_MODEL_ANSWER` redacta el texto después de que corrieron. Si `ASSISTANT_MODEL_ANSWER` no está, escribe el mismo modelo de las herramientas, sin llamadas de más. Si está, suma una llamada solo en las respuestas que usaron herramientas, siempre dentro del tope de 4 por respuesta. Sirve para usar uno barato en lo mecánico y uno mejor para lo que lee la persona.
 - **`ASSISTANT_PROVIDERS`** cambia el orden (`openrouter,gateway`) o deja uno solo.
 - **Antes de cambiarlo,** correr las evals con el modelo nuevo: `ASSISTANT_MODEL=<id> bun --env-file=.env.asistente run asistente:evals`, o cargar el secreto solo en *Preview* y correrlas contra la vista previa. Un modelo más caro multiplica el gasto de cada respuesta: revisar el tope en los proveedores.
 - **El cambio se aplica** en el próximo despliegue.
@@ -74,7 +75,13 @@ El modelo se elige sin tocar el código: es el secreto `ASSISTANT_MODEL`, que se
 - Hasta 4 llamadas al modelo por respuesta (la última, sin herramientas) y 700 tokens de salida por llamada.
 - El límite del sitio para `/api/*`: 10 pedidos cada 10 segundos por IP.
 - El tope de gasto mensual de cada proveedor (paso 1 de arriba).
-- Pendiente: Turnstile en el primer mensaje si aparece abuso.
+- **Turnstile, una vez por conversación, apagado por defecto.** Se prende con el secreto `ASSISTANT_TURNSTILE=on` y reusa `TURNSTILE_SECRET`, el del registro. Con Turnstile prendido:
+  - `GET /api/asistente` responde `challenge: true`;
+  - el primer mensaje lleva el token de Turnstile y la respuesta devuelve un pase firmado, que vale 30 minutos y sirve para los mensajes siguientes (`packages/assistant/src/pass.ts`);
+  - el pase solo lleva su vencimiento, nada de la persona;
+  - si falta `TURNSTILE_SECRET`, no pasa nadie (503).
+
+  Turnstile es gratis y no consume cupo. **Se prende si aparece abuso**: Turnstile frena a los scripts, y con él prendido las evals contra esa vista previa dejan de funcionar. Por eso conviene prenderlo solo en *Production*.
 
 ## Evals
 
