@@ -63,6 +63,34 @@ const NORMAS: Norm[] = [
     ejercicio: 2026,
   },
   { norma_id: "264898", nivel: "municipal", jurisdiccion: "Godoy Cruz", documento: "codigo_tributario", numero: "7443", ejercicio: "" },
+  // Tanda 1 (docs/planes/guia-de-tramites.md#plan-por-municipio): solo el texto, sin lector del anexo todavía.
+  { norma_id: "301387", nivel: "municipal", jurisdiccion: "Capital", documento: "ordenanza_tarifaria", numero: "4222", ejercicio: 2026 },
+  { norma_id: "298597", nivel: "municipal", jurisdiccion: "Las Heras", documento: "ordenanza_tarifaria", numero: "54/25", ejercicio: 2026 },
+  {
+    norma_id: "300050",
+    nivel: "municipal",
+    jurisdiccion: "Luján de Cuyo",
+    documento: "ordenanza_tarifaria",
+    numero: "15095",
+    ejercicio: 2026,
+  },
+  {
+    norma_id: "266275",
+    nivel: "municipal",
+    jurisdiccion: "Guaymallén",
+    documento: "ordenanza_tarifaria",
+    numero: "10138",
+    ejercicio: 2025,
+  },
+  {
+    norma_id: "301163",
+    nivel: "municipal",
+    jurisdiccion: "Guaymallén",
+    documento: "ordenanza_tarifaria",
+    numero: "10298",
+    ejercicio: 2026,
+  },
+  { norma_id: "263430", nivel: "municipal", jurisdiccion: "Maipú", documento: "ordenanza_tarifaria", numero: "7638", ejercicio: 2025 },
 ];
 
 const COLUMNS = [
