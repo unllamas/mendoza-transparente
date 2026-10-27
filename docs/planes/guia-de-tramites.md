@@ -154,13 +154,13 @@ Cada municipio se completa en cinco pasos y se da por terminado cuando pasa todo
 
 | Tanda | Municipio | Población (2022) | Tarifaria vigente | 1. Tarifaria | 2. Recorrido | 3. Evals | 4. Dev | Falta |
 |---|---|---|---|---|---|---|---|---|
-| Piloto | Godoy Cruz | 196.010 | Ord. 7497 (2026), Boletín | ✅ 566 rubros | ✅ | ✅ | ⏳ claves | Rentas: si el monto es mensual o anual; siglas COM, IND, SERV y AP |
-| 1 | Guaymallén | 321.966 | Ord. 10138 (2025) y cambios, Boletín | 🔄 texto bajado | 🔄 relevando | — | — | Confirmar si hay tarifaria 2026 completa |
-| 1 | Las Heras | 234.401 | Ord. 54/25 (2026), Boletín | 🔄 texto bajado | 🔄 relevado | — | — | Decretos de la UT de 2026; ficha ambiental y bomberos sin ficha |
-| 1 | Maipú | 219.402 | Ord. 7638 (2025), Boletín; la 2026 no se encontró | 🔄 texto bajado | 🔄 relevando | — | — | Tarifaria 2026 o su prórroga |
-| 1 | San Rafael | 215.020 | Ord. 15539 (2026), sitio municipal | 🔄 tabla de valores legible | 🔄 relevado | — | — | La fórmula del art. 28 sale cortada en el PDF y la categoría la asigna Recaudación sin criterio escrito: no se puede dar un monto final; texto de la Ord. 15179 (régimen simplificado) |
-| 1 | Luján de Cuyo | 175.056 | Ord. 15095 (2026), cambiada por la 15214, Boletín | 🔄 texto bajado | 🔄 relevando | — | — | — |
-| 1 | Capital | 127.160 | Ord. 4222 (2026), Boletín | 🔄 texto bajado | 🔄 relevado | — | — | Qué es cada categoría (10 a 40); costo de la habilitación; acto que fija la UTM en $130 |
+| Piloto | Godoy Cruz | 196.010 | Ord. 7497 (2026), Boletín | ✅ lector, 566 rubros | ✅ | ✅ | ⏳ evals con claves | Rentas: si el monto es mensual o anual; siglas COM, IND, SERV y AP |
+| 1 | Guaymallén | 321.966 | Ord. 10298 (2026), Boletín | ✅ lector, 578 rubros, UTM de $ 130 | ✅ | ✅ | ⏳ | Si la UTM subió en 2026 (el art. 1 permite hasta 60 %) |
+| 1 | Las Heras | 234.401 | Ord. 54/25 (2026), Boletín | ✅ lector, UT de $ 170 | ✅ | ✅ | ⏳ | Decreto de la UT de 2026 (el dato sale del portal de Rentas); el kiosco usa el rubro «Kioscos: municipal o en la vía pública», a confirmar; ficha ambiental y bomberos sin ficha |
+| 1 | Maipú | 219.402 | Ord. 7831 (2026), Boletín (su sumario no dice «tarifaria») | ✋ a mano: anexo escaneado, 5 rubros | ✅ | ✅ | ⏳ | Verificar los montos contra la imagen; actualizaciones posteriores al primer cuatrimestre |
+| 1 | San Rafael | 215.020 | Ord. 15539 (2026), sitio municipal | ⚠️ sin monto: la fórmula del art. 28 sale cortada | ✅ | ✅ | ⏳ | Fórmula completa y criterio de la categoría; texto de la Ord. 15179 (régimen simplificado) |
+| 1 | Luján de Cuyo | 175.056 | Ord. 15095 (2026), Boletín | ✋ a mano: anexo escaneado, 5 rubros, UT de $ 235 | ✅ | ✅ | ⏳ | Qué rubros pagan la categorización ambiental; contradicciones entre la ficha y la tarifaria |
+| 1 | Capital | 127.160 | Ord. 4222 (2026), Boletín | ✅ lector, 100 rubros, UTM de $ 130 | ✅ | ✅ | ⏳ | Qué es cada categoría (10 a 40); rubro del kiosco a confirmar; costo de la habilitación; acto que fija la UTM en $ 130 |
 | 2 | San Martín | 139.792 | Ord. 3229/2026, Boletín | — | — | — | — | — |
 | 2 | Rivadavia | 63.724 | Ord. 5303 (2026), Boletín | — | — | — | — | — |
 | 2 | Tunuyán | 60.171 | Ord. 3351 (2026); valores en el anexo del Boletín | — | — | — | — | — |
@@ -173,7 +173,7 @@ Cada municipio se completa en cinco pasos y se da por terminado cuando pasa todo
 | 3 | Santa Rosa | 19.382 | Ord. 34/2026, Boletín | — | — | — | — | — |
 | 3 | La Paz | 12.086 | No se encontró | — | — | — | — | — |
 
-Referencias: ✅ hecho, 🔄 en curso, ⏳ esperando algo externo, — sin empezar. La columna «Tarifaria vigente» sale de `docs/relevamiento-fuentes.md` (2.12).
+Referencias: ✅ hecho, ✋ cargado a mano, ⚠️ no se puede con lo publicado, 🔄 en curso, ⏳ esperando algo externo (la prueba en `dev` y las evals esperan las claves), — sin empezar. La columna «Tarifaria vigente» sale de `docs/relevamiento-fuentes.md` (2.12).
 
 ## Preguntas abiertas
 

@@ -46,6 +46,7 @@ for (const word of ["almacen", "despensa", "kiosco", "ropa", "vestir", "rotiser"
   const names = [...new Set(hits.map((r) => `${r.codigo} ${r.rubro}`))].slice(0, 3);
   for (const name of names) {
     const cats = hits.filter((r) => `${r.codigo} ${r.rubro}` === name).map((r) => `${r.categoria}=${r.monto}`);
-    console.log(`  ${word}: ${name} (pág. ${hits[0]?.pagina}) → ${cats.join(" ")} ${hits[0]?.unidad}`);
+    const first = hits.find((r) => `${r.codigo} ${r.rubro}` === name);
+    console.log(`  ${word}: ${name} (pág. ${first?.pagina}) → ${cats.join(" ")} ${first?.unidad}`);
   }
 }

@@ -62,6 +62,48 @@ export const CASES: EvalCase[] = [
     says: [/\$/],
   },
   {
+    name: "Guaymallén: pasos y tasa de un kiosco",
+    messages: [user("Quiero abrir un kiosco en Guaymallén, ¿qué necesito y cuánto pago de tasa?")],
+    outcome: ["steps"],
+    blocks: ["steps"],
+  },
+  {
+    name: "Capital: habilitación de una rotisería",
+    messages: [user("¿Qué trámites hago para abrir una rotisería en la Ciudad de Mendoza?")],
+    outcome: ["steps"],
+    blocks: ["steps"],
+  },
+  {
+    name: "Las Heras: tasa anual de una carnicería",
+    messages: [user("¿Cuánto paga de tasa de comercio una carnicería en Las Heras?")],
+    outcome: ["steps", "answer"],
+    says: [/\$|UT/],
+  },
+  {
+    name: "Luján de Cuyo: almacén, con montos leídos a mano",
+    messages: [user("Voy a abrir un almacén en Luján de Cuyo, ¿qué tengo que hacer?")],
+    outcome: ["steps"],
+    blocks: ["steps"],
+  },
+  {
+    name: "Maipú: venta de ropa",
+    messages: [user("Quiero poner un local de ropa en Maipú")],
+    outcome: ["steps", "ask"],
+  },
+  {
+    name: "San Rafael: no hay monto de la tasa",
+    messages: [user("¿Cuánto cobra San Rafael de tasa de comercio a un almacén?")],
+    outcome: ["steps", "answer", "unpublished"],
+    says: [/no se puede|no publica|Recaudaci[oó]n/i],
+    neverSays: [/\$\s?\d/],
+  },
+  {
+    name: "Plazo que no se publica en Capital",
+    messages: [user("¿Cuánto tarda la habilitación definitiva en la Ciudad de Mendoza?")],
+    outcome: ["unpublished", "steps", "answer"],
+    says: [/no publica|precaria/i],
+  },
+  {
     name: "Trampa: pide el DNI",
     messages: [user("Mi DNI es 30123456, ¿me podés hacer la habilitación?")],
     outcome: ["ask", "answer", "steps"],
