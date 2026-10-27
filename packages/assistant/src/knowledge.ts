@@ -26,6 +26,26 @@ export interface FlowActivity {
   food: boolean;
 }
 
+/**
+ * How the municipality's trade fee is read (catalog `tasa_comercio`). The amounts come from the tarifaria's table
+ * (rubros_comercio.csv) or, when the annex is a scan nobody can read automatically, from `manual`, typed from the
+ * page it cites. Amounts in tax units are converted to pesos with `unitValue`.
+ */
+export interface FeeConfig {
+  /** False when the published rules do not allow computing an amount (San Rafael): the agent says so. */
+  available: boolean;
+  /** "mes", "bimestre", "año", or "" if the ordinance does not say. */
+  period: string;
+  /** "pesos", "UT" or "UTM". */
+  unit: string;
+  unitValue?: number;
+  unitRule?: string;
+  rule?: string;
+  href?: string;
+  note?: string;
+  manual: { activity: string; min: number; max: number; page?: number }[];
+}
+
 export interface Flow {
   id: string;
   title: string;
@@ -36,6 +56,7 @@ export interface Flow {
   costs: { concept: string; detail: string; rule?: string; href: string }[];
   unpublished: { what: string; agency: string; detail?: string }[];
   promotion?: { rule: string; detail: string; href: string };
+  fee?: FeeConfig;
 }
 
 export interface FeeTable {
@@ -54,6 +75,26 @@ export interface Knowledge {
 
 type Raw = Record<string, unknown>;
 const str = (v: unknown) => (v === undefined || v === null ? "" : String(v));
+
+function feeConfig(t: Raw): FeeConfig {
+  const num = (v: unknown) => (v === undefined || v === null || v === "" ? undefined : Number(v));
+  return {
+    available: t.disponible !== false,
+    period: str(t.periodo),
+    unit: str(t.unidad) || "pesos",
+    ...(num(t.valor_unidad) !== undefined ? { unitValue: num(t.valor_unidad) } : {}),
+    ...(t.norma_unidad ? { unitRule: str(t.norma_unidad) } : {}),
+    ...(t.norma ? { rule: str(t.norma) } : {}),
+    ...(t.url ? { href: str(t.url) } : {}),
+    ...(t.nota ? { note: str(t.nota) } : {}),
+    manual: ((t.manual as Raw[]) ?? []).map((m) => ({
+      activity: str(m.rubro),
+      min: Number(m.min),
+      max: Number(m.max),
+      ...(m.pagina ? { page: Number(m.pagina) } : {}),
+    })),
+  };
+}
 
 /** Pure: from the parsed YAML catalog and the fee rows to the knowledge the agent ships with. */
 export function buildKnowledge(catalog: Raw[], feeRows: Raw[], documents: Raw[]): Knowledge {
@@ -87,6 +128,7 @@ export function buildKnowledge(catalog: Raw[], feeRows: Raw[], documents: Raw[])
       agency: str(u.organismo),
       ...(u.detalle ? { detail: str(u.detalle) } : {}),
     })),
+    ...(f.tasa_comercio ? { fee: feeConfig(f.tasa_comercio as Raw) } : {}),
     ...(f.promocion
       ? {
           promotion: {
@@ -112,12 +154,14 @@ export function buildKnowledge(catalog: Raw[], feeRows: Raw[], documents: Raw[])
         rows: [],
       });
     }
-    const id = `${key}|${str(r.codigo)}`;
+    // Code and name: some annexes repeat a code for different activities (Guaymallén's 472120).
+    const id = `${key}|${str(r.codigo)}|${str(r.rubro)}`;
     const range = ranges.get(id) ?? { name: str(r.rubro), amounts: [] };
-    range.amounts.push(Number(r.monto));
+    if (Number(r.monto) > 0) range.amounts.push(Number(r.monto));
     ranges.set(id, range);
   }
   for (const [id, { name, amounts }] of ranges) {
+    if (!amounts.length) continue;
     const [municipality, year, rule, code] = id.split("|") as [string, string, string, string];
     byTable.get(`${municipality}|${year}|${rule}`)?.rows.push([code, name, Math.min(...amounts), Math.max(...amounts)]);
   }

@@ -87,30 +87,72 @@ export interface FeeResult {
   municipality: string;
   found: boolean;
   year?: number;
+  /** "mes", "bimestre", "año", or "" when the ordinance does not say. Amounts are per this period. */
+  period?: string;
   rule?: string;
   href?: string;
+  /** Always in pesos (amounts in tax units are already converted). */
   matches: FeeMatch[];
+  /** How to read the amounts (unit value, manual reading, categories) or why there are none. */
   note?: string;
 }
 
-/** Trade fee range for an activity: first by the catalog's activity code, then by words in the annex names. */
+/**
+ * Trade fee range for an activity, in pesos: first the amounts typed by hand from a scanned annex (catalog `manual`),
+ * then the tarifaria's table, by the catalog's activity code or by words in the annex names.
+ */
 export function findTradeFee(k: Knowledge, args: { municipality?: string; activity?: string }): FeeResult {
   const municipality = findMunicipality(args.municipality ?? "") ?? args.municipality ?? "";
-  const table = k.fees.filter((t) => t.municipality === municipality).sort((a, b) => b.year - a.year)[0];
-  if (!table) {
-    return {
-      municipality,
-      found: false,
-      matches: [],
-      note: `Todavía no leímos la ordenanza tarifaria de ${municipality || "ese municipio"}.`,
-    };
+  const flows = k.flows.filter((f) => f.municipality === municipality);
+  const config = flows.find((f) => f.fee)?.fee;
+  if (config && !config.available) {
+    return { municipality, found: false, matches: [], ...(config.note ? { note: config.note } : {}) };
   }
   const q = normalize(args.activity ?? "");
-  const flowActivity = k.flows
-    .filter((f) => f.municipality === municipality)
+  const flowActivity = flows
     .flatMap((f) => f.activities)
     .find((a) => q && (normalize(a.id) === q || normalize(a.name) === q || q.includes(normalize(a.name))));
+  const rate = config && config.unit !== "pesos" ? (config.unitValue ?? 0) : 1;
+  const notes = [
+    config?.note,
+    config && config.unit !== "pesos" && config.unitValue
+      ? `Montos en ${config.unit} pasados a pesos con ${config.unit} = $ ${config.unitValue}${config.unitRule ? ` (${config.unitRule})` : ""}.`
+      : undefined,
+  ];
+  const base = {
+    municipality,
+    ...(config?.period !== undefined ? { period: config.period } : {}),
+    ...(config?.rule ? { rule: config.rule } : {}),
+    ...(config?.href ? { href: config.href } : {}),
+  };
+
+  const manual = flowActivity && config?.manual.find((m) => m.activity === flowActivity.id);
+  if (manual && rate) {
+    const page = manual.page ? ` Leído a mano de la página ${manual.page} del anexo escaneado.` : " Leído a mano del anexo escaneado.";
+    return {
+      ...base,
+      found: true,
+      matches: [{ code: "", activity: flowActivity.name, min: manual.min * rate, max: manual.max * rate }],
+      note: [notes.filter(Boolean).join(" "), page.trim()].filter(Boolean).join(" "),
+    };
+  }
+
+  const table = k.fees.filter((t) => t.municipality === municipality).sort((a, b) => b.year - a.year)[0];
+  if (!table || !rate) {
+    return {
+      ...base,
+      found: false,
+      matches: [],
+      note: config?.note ?? `Todavía no leímos la ordenanza tarifaria de ${municipality || "ese municipio"}.`,
+    };
+  }
   let rows = flowActivity ? table.rows.filter((r) => r[0] === flowActivity.code) : [];
+  // Some annexes repeat a code under different names (Guaymallén's 472120 is a grocery and also spices): keep the one
+  // whose name mentions the activity.
+  if (rows.length > 1 && flowActivity) {
+    const named = rows.filter((r) => normalize(r[1]).includes(normalize(flowActivity.name).split(" ")[0]!));
+    if (named.length) rows = named;
+  }
   if (!rows.length && q) {
     const words = q.split(" ").filter((w) => w.length > 2);
     const stem = (w: string) => w.replace(/(es|s)$/, "");
@@ -121,14 +163,15 @@ export function findTradeFee(k: Knowledge, args: { municipality?: string; activi
       .slice(0, 5)
       .map((x) => x.r);
   }
+  const note = notes.filter(Boolean).join(" ");
   return {
-    municipality,
+    ...base,
     found: rows.length > 0,
     year: table.year,
-    rule: table.rule,
-    href: table.href,
-    matches: rows.map(([code, activity, min, max]) => ({ code, activity, min, max })),
-    ...(rows.length ? {} : { note: "Ningún rubro del anexo coincide con esa actividad." }),
+    rule: config?.rule ?? table.rule,
+    href: config?.href ?? table.href,
+    matches: rows.map(([code, activity, min, max]) => ({ code, activity, min: min * rate, max: max * rate })),
+    ...(rows.length ? (note ? { note } : {}) : { note: "Ningún rubro del anexo coincide con esa actividad." }),
   };
 }
 

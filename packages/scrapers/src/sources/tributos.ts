@@ -10,8 +10,8 @@
  * archiva y deja el texto de cada página en data/processed/tributos/textos/<norma_id>.txt, para leerlo y
  * extraer las tablas (ver docs/planes/guia-de-tramites.md).
  *
- * De algunas normas además se leen sus tablas (ver ACTIVITY_TABLES): hoy, el Anexo A de la tarifaria de Godoy
- * Cruz, con el monto de cada rubro comercial por categoría.
+ * De las tarifarias que tienen lector (src/tributos/readers/, uno por municipio) además se lee la tabla de la tasa
+ * de comercio: el monto de cada rubro por categoría.
  *
  * Por ahora es un piloto: la lista de normas está escrita a mano en NORMAS.
  *
@@ -20,20 +20,10 @@
 
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import {
-  archive,
-  collapseSpaces,
-  fetchOrReuse,
-  latestRaw,
-  PROCESSED_DIR,
-  parseArNumber,
-  type Row,
-  readProcessed,
-  readRaw,
-  writeProcessed,
-} from "@mt/core";
+import { archive, fetchOrReuse, latestRaw, PROCESSED_DIR, type Row, readProcessed, readRaw, writeProcessed } from "@mt/core";
 import { getDocumentProxy } from "unpdf";
 import { pdfPages } from "../lib/pdf.ts";
+import { READERS } from "../tributos/readers/index.ts";
 import { parseDetail, post } from "./boletin-oficial.ts";
 
 const SOURCE = "tributos";
@@ -91,6 +81,8 @@ const NORMAS: Norm[] = [
     ejercicio: 2026,
   },
   { norma_id: "263430", nivel: "municipal", jurisdiccion: "Maipú", documento: "ordenanza_tarifaria", numero: "7638", ejercicio: 2025 },
+  // Its summary only says "EXPEDIENTE …": found by the survey, not by searching "TARIFARIA".
+  { norma_id: "299346", nivel: "municipal", jurisdiccion: "Maipú", documento: "ordenanza_tarifaria", numero: "7831", ejercicio: 2026 },
 ];
 
 const COLUMNS = [
@@ -116,62 +108,9 @@ const ACTIVITY_COLUMNS = [
   "tipo_actividad",
   "categoria",
   "monto",
+  "unidad",
   "pagina",
 ];
-
-/** Categories of Godoy Cruz's Anexo A, from the most to the least expensive. */
-const GODOY_CRUZ_CATEGORIES = ["1A", "1B", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
-
-/**
- * Anexo A of Godoy Cruz's tarifaria: one line per activity with its code, name, kind (COM, IND, SERV, AP),
- * the amount for each of the 12 categories and one or two trailing 0/1 flags that the ordinance does not explain.
- * Amounts are kept as published even when a cheaper category costs more than the previous one (a likely typo
- * in the ordinance): those are logged so they can be checked against the original.
- * Group headers ("7000 FABRICACIÓN PRENDAS VESTIR") carry no amounts.
- */
-export function parseGodoyCruzActivities(text: string): Omit<Row, "norma_id" | "jurisdiccion" | "ejercicio">[] {
-  const rows: Omit<Row, "norma_id" | "jurisdiccion" | "ejercicio">[] = [];
-  let page = 0;
-  let group = "";
-  const amount = "\\d{1,3}(?:\\.\\d{3})*,\\d{2}";
-  const line = new RegExp(`^(\\d{4,6}) (.+?) (COM|IND|SERV|AP) ((?:${amount} ){12})[01](?: [01])*$`);
-  for (const raw of text.split("\n")) {
-    const l = raw.trim();
-    const p = l.match(/^── página (\d+) ──$/);
-    if (p) {
-      page = Number(p[1]);
-      continue;
-    }
-    const m = l.match(line);
-    if (m) {
-      const amounts = m[4]!.trim().split(" ").map(parseArNumber);
-      for (let i = 1; i < amounts.length; i++) {
-        if (amounts[i]! > amounts[i - 1]!)
-          console.warn(`  revisar ${m[1]} (pág. ${page}): la categoría ${GODOY_CRUZ_CATEGORIES[i]} cuesta más que la anterior`);
-      }
-      amounts.forEach((monto, i) =>
-        rows.push({
-          codigo: m[1]!,
-          grupo: group,
-          rubro: m[2]!,
-          tipo_actividad: m[3]!,
-          categoria: GODOY_CRUZ_CATEGORIES[i]!,
-          monto,
-          pagina: page,
-        }),
-      );
-      continue;
-    }
-    const g = l.match(/^(\d+000) ([A-ZÁÉÍÓÚÑ][^\d]+)$/);
-    if (g) group = collapseSpaces(g[2]!);
-  }
-  return rows;
-}
-
-/** Tables read from each norm's text, keyed by norma_id. */
-const ACTIVITY_TABLES: Record<string, (text: string) => Omit<Row, "norma_id" | "jurisdiccion" | "ejercicio">[]> = {
-  "297778": parseGodoyCruzActivities,
-};
 
 /** Links a anexos dentro de un PDF del Boletín (están como anotaciones, no en el texto). */
 async function annexLinks(bytes: Uint8Array): Promise<string[]> {
@@ -222,13 +161,14 @@ export async function run(_args: string[]) {
 
     const text = `${pages.map((p, i) => `── página ${i + 1} ──\n${p.trim()}`).join("\n\n")}\n`;
     await writeFile(join(OUT_DIR, "textos", `${n.norma_id}.txt`), text);
-    const parse = ACTIVITY_TABLES[n.norma_id];
-    if (parse) {
-      const parsed = parse(text);
-      // Godoy Cruz 2026 lists 566 activities; far fewer means the PDF layout changed and the regex missed lines.
-      if (parsed.length < 500 * 12) throw new Error(`${n.jurisdiccion}: solo ${parsed.length / 12} rubros en el anexo`);
+    const reader = READERS.find((r) => r.normaId === n.norma_id);
+    if (reader) {
+      const parsed = reader.read(text);
+      // Far fewer activities than expected means the PDF layout changed and the reader missed lines.
+      const count = new Set(parsed.map((r) => `${r.codigo}|${r.rubro}`)).size;
+      if (count < reader.minActivities) throw new Error(`${n.jurisdiccion}: solo ${count} rubros en el anexo`);
       activities.push(...parsed.map((r) => ({ norma_id: n.norma_id, jurisdiccion: n.jurisdiccion, ejercicio: n.ejercicio, ...r })));
-      console.log(`  ${parsed.length / 12} rubros con monto por categoría`);
+      console.log(`  ${count} rubros con monto por categoría`);
     }
     rows.push({ ...n, fecha_boletin: fecha, url_norma: detail.url_pdf, url_anexos: annexes.join(" "), paginas: pages.length });
     console.log(`${n.jurisdiccion} ${n.documento} ${n.numero}: ${pages.length} páginas, ${annexes.length} anexos`);

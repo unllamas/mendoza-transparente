@@ -82,10 +82,10 @@ export function buildBlocks(c: Collected): Block[] {
         ...(match && c.fee
           ? {
               fee: {
-                label: `Derecho de comercio (${match.activity.toLowerCase()}), ${c.fee.year}`,
+                label: `Derecho de comercio (${match.activity.toLowerCase()})${c.fee.year ? `, ${c.fee.year}` : ""}${c.fee.period ? `, por ${c.fee.period}` : ""}`,
                 min: match.min,
                 max: match.max,
-                ...(feeNote(p) ? { note: feeNote(p) } : {}),
+                ...([feeNote(p), c.fee.note].filter(Boolean).length ? { note: [feeNote(p), c.fee.note].filter(Boolean).join(" ") } : {}),
                 source: { label: c.fee.rule ?? "Ordenanza tarifaria", href: c.fee.href ?? "" },
               },
             }
@@ -114,7 +114,7 @@ function fallbackText(c: Collected): string {
     const fee = c.fee?.found ? c.fee.matches[0] : undefined;
     const base = `Estos son los pasos para ${p.flow.replaceAll("-", " ")} en ${p.municipality}.`;
     return fee
-      ? `${base} El derecho de comercio va de ${formatPesos(fee.min)} a ${formatPesos(fee.max)} por mes según la categoría.`
+      ? `${base} El derecho de comercio va de ${formatPesos(fee.min)} a ${formatPesos(fee.max)}${c.fee?.period ? ` por ${c.fee.period}` : ""} según la categoría.`
       : base;
   }
   return "";

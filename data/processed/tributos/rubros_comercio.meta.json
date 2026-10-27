@@ -2,20 +2,72 @@
   "titulo": "Derecho de comercio por rubro y categoría",
   "descripcion": "Cada fila es el monto que fija la ordenanza tarifaria de un municipio para un rubro comercial, industrial o de servicios en una de sus categorías (derecho de inspección y control de seguridad e higiene, el que se conoce como «derecho de comercio»). Por ahora solo Godoy Cruz 2026 (Anexo A de la Ordenanza 7497). La categoría de cada comercio la asigna la Dirección de Rentas según superficie, ubicación, personal y otros factores (artículo 21). La ordenanza no aclara si el monto es anual o mensual; el artículo 26 dice que el pago es mensual. Los montos se copian tal como se publicaron: en el rubro 34010 (envío de dinero) la categoría 10 cuesta más que la 9, probablemente un error de la ordenanza. Pesos nominales.",
   "columnas": {
-    "norma_id": { "etiqueta": "Id en el Boletín", "tipo": "texto", "oculta": true },
-    "jurisdiccion": { "etiqueta": "Municipio", "tipo": "texto" },
-    "ejercicio": { "etiqueta": "Año", "tipo": "anio" },
-    "codigo": { "etiqueta": "Código", "tipo": "texto", "descripcion": "Código del rubro en el anexo de la ordenanza." },
-    "grupo": { "etiqueta": "Grupo", "tipo": "texto", "descripcion": "Encabezado bajo el que aparece el rubro en el anexo." },
-    "rubro": { "etiqueta": "Rubro", "tipo": "texto", "descripcion": "Nombre del rubro tal como figura en el anexo, con sus abreviaturas." },
+    "norma_id": {
+      "etiqueta": "Id en el Boletín",
+      "tipo": "texto",
+      "oculta": true
+    },
+    "jurisdiccion": {
+      "etiqueta": "Municipio",
+      "tipo": "texto"
+    },
+    "ejercicio": {
+      "etiqueta": "Año",
+      "tipo": "anio"
+    },
+    "codigo": {
+      "etiqueta": "Código",
+      "tipo": "texto",
+      "descripcion": "Código del rubro en el anexo de la ordenanza."
+    },
+    "grupo": {
+      "etiqueta": "Grupo",
+      "tipo": "texto",
+      "descripcion": "Encabezado bajo el que aparece el rubro en el anexo."
+    },
+    "rubro": {
+      "etiqueta": "Rubro",
+      "tipo": "texto",
+      "descripcion": "Nombre del rubro tal como figura en el anexo, con sus abreviaturas."
+    },
     "tipo_actividad": {
       "etiqueta": "Tipo",
       "tipo": "texto",
       "descripcion": "Sigla del anexo. COM, IND y SERV parecen ser comercio, industria y servicios; la ordenanza no define ninguna, tampoco AP."
     },
-    "categoria": { "etiqueta": "Categoría", "tipo": "texto", "descripcion": "De la más cara a la más barata: 1A, 1B y del 1 al 10." },
-    "monto": { "etiqueta": "Monto", "tipo": "moneda", "moneda": "ARS", "escala": 1, "descripcion": "Pesos nominales del año, tal como figuran en el anexo." },
-    "pagina": { "etiqueta": "Página", "tipo": "numero", "descripcion": "Página del texto de la norma con sus anexos (textos/<norma_id>.txt) donde está el rubro." }
+    "categoria": {
+      "etiqueta": "Categoría",
+      "tipo": "texto",
+      "descripcion": "De la más cara a la más barata: 1A, 1B y del 1 al 10."
+    },
+    "monto": {
+      "etiqueta": "Monto",
+      "tipo": "numero",
+      "escala": 1,
+      "descripcion": "Monto tal como figura en el anexo, en la unidad de la columna «unidad». Pesos nominales del año cuando la unidad es «pesos»."
+    },
+    "unidad": {
+      "etiqueta": "Unidad",
+      "tipo": "texto",
+      "descripcion": "«pesos», o la unidad tributaria en que el anexo fija el monto (UT, UTM). Para pasarla a pesos hace falta el valor de la unidad del municipio, que fija un decreto."
+    },
+    "pagina": {
+      "etiqueta": "Página",
+      "tipo": "numero",
+      "descripcion": "Página del texto de la norma con sus anexos (textos/<norma_id>.txt) donde está el rubro."
+    }
   },
-  "orden": ["jurisdiccion", "ejercicio", "codigo", "grupo", "rubro", "tipo_actividad", "categoria", "monto", "pagina", "norma_id"]
+  "orden": [
+    "jurisdiccion",
+    "ejercicio",
+    "codigo",
+    "grupo",
+    "rubro",
+    "tipo_actividad",
+    "categoria",
+    "monto",
+    "unidad",
+    "pagina",
+    "norma_id"
+  ]
 }

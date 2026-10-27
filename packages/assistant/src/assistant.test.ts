@@ -57,7 +57,7 @@ describe("tools", () => {
     expect(almacen.steps?.some((s) => s.when === "alimentos")).toBe(true);
   });
   test("un municipio sin relevar devuelve solo Nación y Provincia", () => {
-    const r = getProcedure(k, { flow: "abrir-un-comercio", municipality: "Maipú" });
+    const r = getProcedure(k, { flow: "abrir-un-comercio", municipality: "Tunuyán" });
     expect(r.covered).toBe(false);
     expect(r.general_steps?.every((s) => s.level !== "municipio")).toBe(true);
   });
@@ -65,7 +65,25 @@ describe("tools", () => {
     const r = findTradeFee(k, { municipality: "Godoy Cruz", activity: "almacén" });
     expect(r.matches[0]).toEqual({ code: "30003", activity: "ALMACENES Y DESPENSAS", min: 63335.5, max: 613867.18 });
     expect(findTradeFee(k, { municipality: "Godoy Cruz", activity: "carnicería" }).matches[0]?.code).toBe("30007");
-    expect(findTradeFee(k, { municipality: "Maipú", activity: "almacén" }).found).toBe(false);
+    expect(findTradeFee(k, { municipality: "Tunuyán", activity: "almacén" }).found).toBe(false);
+  });
+  test("pasa las unidades tributarias a pesos y dice el período", () => {
+    const r = findTradeFee(k, { municipality: "Guaymallén", activity: "almacén" });
+    expect(r.found).toBe(true);
+    expect(r.period).toBe("bimestre");
+    expect(r.matches[0]?.max).toBe(580 * 130);
+    expect(r.matches[0]?.activity).toMatch(/ALMAC/i);
+  });
+  test("usa los montos leídos a mano cuando el anexo está escaneado", () => {
+    const r = findTradeFee(k, { municipality: "Maipú", activity: "almacén" });
+    expect(r.matches[0]).toMatchObject({ min: 8996.52, max: 14937.63 });
+    expect(r.note).toContain("página 33");
+    expect(findTradeFee(k, { municipality: "Luján de Cuyo", activity: "kiosco" }).matches[0]?.max).toBe(2500 * 235);
+  });
+  test("si el municipio no publica cómo calcularla, no inventa un monto", () => {
+    const r = findTradeFee(k, { municipality: "San Rafael", activity: "almacén" });
+    expect(r.found).toBe(false);
+    expect(r.note).toMatch(/no se puede dar un monto/);
   });
   test("lo que no se publica se encuentra por tema", () => {
     expect(searchUnpublished(k, { municipality: "Godoy Cruz", topic: "cuánto tarda la habilitación" }).matches.length).toBeGreaterThan(0);
