@@ -13,7 +13,16 @@ export interface AssistantEnv {
   ASSISTANT_MODEL?: string;
   ASSISTANT_MODEL_GATEWAY?: string;
   ASSISTANT_MODEL_OPENROUTER?: string;
+  /** Model that reads the question and picks the tools. Falls back to the provider's model. */
+  ASSISTANT_MODEL_TOOLS?: string;
+  /** Model that writes the final text, after the tools ran. Unset: the tools model writes it, with no extra call. */
+  ASSISTANT_MODEL_ANSWER?: string;
+  /** "on" asks for Turnstile once per conversation (docs/procesos/asistente.md#límites-contra-el-abuso-y-el-gasto). */
+  ASSISTANT_TURNSTILE?: string;
 }
+
+/** What a call is for: choosing tools or writing the answer. Each one can use its own model. */
+export type Task = "tools" | "answer";
 
 export const DEFAULT_MODEL = "anthropic/claude-haiku-5.5";
 
@@ -79,16 +88,23 @@ const TIMEOUT_MS = 20_000;
 /** Hard caps per call: a short answer is enough, and it bounds the cost of a single request. */
 const MAX_TOKENS = 700;
 
+/** The model for a task on a provider: the task's own model if set, then the provider's, then the general one. */
+export function modelFor(env: AssistantEnv, provider: ProviderId, task: Task): string {
+  const own = task === "answer" ? env.ASSISTANT_MODEL_ANSWER : env.ASSISTANT_MODEL_TOOLS;
+  return own || PROVIDERS[provider].model(env);
+}
+
 export async function complete(
   env: AssistantEnv,
   body: { messages: WireMessage[]; tools: readonly unknown[] },
   fetcher: Fetcher = fetch,
+  task: Task = "tools",
 ): Promise<Completion> {
   const providers = configuredProviders(env);
   if (!providers.length) throw new ProvidersUnavailable("Sin proveedores configurados");
   const failures: string[] = [];
   for (const p of providers) {
-    const model = p.model(env);
+    const model = modelFor(env, p.id, task);
     try {
       const res = await fetcher(p.url, {
         method: "POST",

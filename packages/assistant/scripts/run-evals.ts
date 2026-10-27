@@ -3,7 +3,7 @@
  *
  *   bun run asistente:evals --url https://dev.mendoza-transparente.pages.dev
  *     Sends each case to POST /api/asistente of a deployed preview, which uses the keys stored as Pages secrets.
- *     Nobody needs the keys on their machine, and every PR's preview can be evaluated before merging.
+ *     Nobody needs the keys on their machine. Only dev has a preview: run it before merging and again once on dev.
  *
  *   bun --env-file=.env.asistente run asistente:evals
  *     Runs the agent locally. .env.asistente (at the repo root, in .gitignore) holds AI_GATEWAY_API_KEY and/or

@@ -5,7 +5,8 @@ import { currentKnowledge } from "../scripts/build-knowledge.ts";
 import { runAgent } from "./agent.ts";
 import { handleAssistant, sanitizeFeedback, sanitizeMessages } from "./http.ts";
 import type { Knowledge } from "./knowledge.ts";
-import { configuredProviders } from "./providers.ts";
+import { checkPass, issuePass, PASS_TTL_MS } from "./pass.ts";
+import { configuredProviders, modelFor } from "./providers.ts";
 import { asksAboutFee, feeActivities, findMunicipality, findTradeFee, getProcedure, searchUnpublished } from "./tools.ts";
 import type { Gap } from "./types.ts";
 
@@ -371,5 +372,94 @@ describe("http", () => {
   });
   test("otras rutas no son del asistente", async () => {
     expect(await handleAssistant(req("/api/pedidos"), { knowledge: k, env: {} })).toBeNull();
+  });
+});
+
+describe("modelo por tarea", () => {
+  test("cada tarea usa su modelo y cae en el general si no lo tiene", () => {
+    expect(modelFor({}, "openrouter", "answer")).toBe("anthropic/claude-haiku-5.5");
+    expect(modelFor({ ASSISTANT_MODEL: "m" }, "gateway", "tools")).toBe("m");
+    expect(modelFor({ ASSISTANT_MODEL: "m", ASSISTANT_MODEL_ANSWER: "a" }, "gateway", "answer")).toBe("a");
+    expect(modelFor({ ASSISTANT_MODEL: "m", ASSISTANT_MODEL_ANSWER: "a" }, "gateway", "tools")).toBe("m");
+  });
+  test("con modelo de redacción, el texto después de las herramientas lo escribe ese modelo", async () => {
+    const { fetcher, calls } = fakeProvider([
+      { tool: "find_trade_fee", args: { municipality: "Godoy Cruz", activity: "Kiosco" } },
+      { text: "borrador" },
+      { text: "La ordenanza separa el quiosco del maxikiosco." },
+    ]);
+    const env = { ...KEYS, ASSISTANT_MODEL_TOOLS: "barato", ASSISTANT_MODEL_ANSWER: "mejor" };
+    const reply = await runAgent(k, env, [{ role: "user", content: "¿Cuánto paga de tasa un kiosco en Godoy Cruz?" }], { fetcher });
+    expect(reply.text).toBe("La ordenanza separa el quiosco del maxikiosco.");
+    expect(calls.map((c) => (c.body as unknown as { model: string }).model)).toEqual(["barato", "barato", "mejor"]);
+    expect(calls[2]?.body.tools).toEqual([]);
+  });
+  test("sin modelo de redacción no hay llamada de más", async () => {
+    const { fetcher, calls } = fakeProvider([
+      { tool: "find_trade_fee", args: { municipality: "Godoy Cruz", activity: "Kiosco" } },
+      { text: "Listo." },
+    ]);
+    await runAgent(k, KEYS, [{ role: "user", content: "¿Cuánto paga de tasa un kiosco en Godoy Cruz?" }], { fetcher });
+    expect(calls).toHaveLength(2);
+  });
+});
+
+describe("turnstile", () => {
+  const post = (body: unknown) =>
+    new Request("https://x.test/api/asistente", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(body),
+    });
+  const messages = [{ role: "user", content: "hola" }];
+  const env = { ...KEYS, ASSISTANT_TURNSTILE: "on" };
+
+  test("el pase vence a los 30 minutos y no se puede falsificar", async () => {
+    const now = 1_000_000;
+    const pass = await issuePass("clave", now);
+    expect(await checkPass("clave", pass, now + 1000)).toBe(true);
+    expect(await checkPass("otra", pass, now + 1000)).toBe(false);
+    expect(await checkPass("clave", pass, now + PASS_TTL_MS + 1)).toBe(false);
+    expect(await checkPass("clave", `${now + 5000}.${pass.split(".")[1]}`, now)).toBe(false);
+    expect(await checkPass("clave", undefined, now)).toBe(false);
+  });
+  test("sin token no responde; con token responde y devuelve el pase, que sirve para el siguiente mensaje", async () => {
+    const tokens: string[] = [];
+    const deps = {
+      knowledge: k,
+      env,
+      passKey: "clave",
+      verifyHuman: async (t: string) => (tokens.push(t), t === "ok"),
+    };
+    const status = await handleAssistant(new Request("https://x.test/api/asistente"), deps);
+    expect(await status?.json()).toEqual({ enabled: true, challenge: true });
+
+    const denied = await handleAssistant(post({ messages }), { ...deps, fetcher: fakeProvider([]).fetcher });
+    expect(denied?.status).toBe(403);
+    expect(await denied?.json()).toEqual({ error: "Falta la verificación", challenge: true });
+
+    const first = await handleAssistant(post({ messages, turnstile: "ok" }), {
+      ...deps,
+      fetcher: fakeProvider([{ text: "Hola." }]).fetcher,
+    });
+    const reply = (await first?.json()) as { text: string; pass?: string };
+    expect(reply.text).toBe("Hola.");
+    expect(reply.pass).toBeString();
+
+    const second = await handleAssistant(post({ messages, pass: reply.pass }), {
+      ...deps,
+      fetcher: fakeProvider([{ text: "Otra." }]).fetcher,
+    });
+    expect(second?.status).toBe(200);
+    expect(tokens).toEqual(["ok"]);
+  });
+  test("prendido sin el secreto, no deja pasar a nadie", async () => {
+    const res = await handleAssistant(post({ messages, turnstile: "ok" }), { knowledge: k, env });
+    expect(res?.status).toBe(503);
+  });
+  test("apagado, no pide nada y no devuelve pase", async () => {
+    const res = await handleAssistant(post({ messages }), { knowledge: k, env: KEYS, fetcher: fakeProvider([{ text: "Hola." }]).fetcher });
+    const body = (await res?.json()) as { pass?: string } | undefined;
+    expect(body?.pass).toBeUndefined();
   });
 });

@@ -112,6 +112,13 @@ export const CASES: EvalCase[] = [
     blocks: ["fee"],
   },
   {
+    name: "La tasa de Capital no remite a la pantalla",
+    messages: [user("¿Cuánto cobra Capital de tasa a un kiosco?")],
+    outcome: ["fee"],
+    blocks: ["fee"],
+    neverSays: [/abajo/i, /en (la )?pantalla/i],
+  },
+  {
     name: "Guaymallén: pasos y tasa de un kiosco",
     messages: [user("Quiero abrir un kiosco en Guaymallén, ¿qué necesito y cuánto pago de tasa?")],
     outcome: ["fee", "steps"],

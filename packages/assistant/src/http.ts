@@ -5,11 +5,13 @@
  *   POST /api/asistente/opinion   → stores a thumbs up or down in D1 (no IP, no conversation)
  * Each answer also saves in D1 what people asked and we do not have yet (`assistant_gaps`): a municipality, an activity
  * or a procedure, in a few words. Never the conversation.
- * Requests are capped in size and length; /api/* also has the site's per-IP rate limit (10 every 10 s).
+ * Requests are capped in size and length; /api/* also has the site's per-IP rate limit (10 every 10 s). With
+ * ASSISTANT_TURNSTILE=on, each conversation passes Turnstile once (pass.ts).
  */
 
 import { runAgent } from "./agent.ts";
 import type { Knowledge } from "./knowledge.ts";
+import { checkPass, issuePass } from "./pass.ts";
 import { type AssistantEnv, configuredProviders, ProvidersUnavailable } from "./providers.ts";
 import type { AssistantStatus, ChatMessage, FeedbackRequest, Gap, Outcome } from "./types.ts";
 
@@ -90,6 +92,10 @@ export interface AssistantDeps {
   db?: FeedbackDb;
   fetcher?: (url: string, init: RequestInit) => Promise<Response>;
   log?: (message: string) => void;
+  /** Checks a Turnstile token (the site's siteverify call). Needed when ASSISTANT_TURNSTILE is on. */
+  verifyHuman?: (token: string) => Promise<boolean>;
+  /** Secret that signs the conversation pass (the Turnstile secret). Needed when ASSISTANT_TURNSTILE is on. */
+  passKey?: string;
 }
 
 /** Handles /api/asistente*; returns null for any other path. */
@@ -97,9 +103,11 @@ export async function handleAssistant(req: Request, deps: AssistantDeps): Promis
   const path = new URL(req.url).pathname.replace(/\/+$/, "");
   if (path !== "/api/asistente" && path !== "/api/asistente/opinion") return null;
   const enabled = configuredProviders(deps.env).length > 0;
+  const challenge = deps.env.ASSISTANT_TURNSTILE === "on";
 
   // Asked on every visit: cached 5 minutes at the edge so it does not cost a Function call per page view.
-  if (path === "/api/asistente" && req.method === "GET") return json({ enabled } satisfies AssistantStatus, 200, "public, max-age=300");
+  if (path === "/api/asistente" && req.method === "GET")
+    return json({ enabled, ...(challenge ? { challenge } : {}) } satisfies AssistantStatus, 200, "public, max-age=300");
 
   if (req.method !== "POST") return fail("Método no permitido", 405);
   let body: unknown;
@@ -131,6 +139,17 @@ export async function handleAssistant(req: Request, deps: AssistantDeps): Promis
   if (!enabled) return fail("El asistente no está configurado", 503);
   const messages = sanitizeMessages(body);
   if (!messages) return fail("Conversación inválida", 400);
+  let pass: string | undefined;
+  if (challenge) {
+    // Fail closed: switched on without the secret, nobody gets through rather than everybody.
+    if (!deps.verifyHuman || !deps.passKey) return fail("El asistente está en pausa por mantenimiento", 503);
+    const proof = body as { pass?: unknown; turnstile?: unknown };
+    const human =
+      (await checkPass(deps.passKey, proof.pass)) ||
+      (typeof proof.turnstile === "string" && proof.turnstile.length <= 2048 && (await deps.verifyHuman(proof.turnstile)));
+    if (!human) return json({ error: "Falta la verificación", challenge: true }, 403);
+    pass = await issuePass(deps.passKey);
+  }
   try {
     const gaps: Gap[] = [];
     const reply = await runAgent(deps.knowledge, deps.env, messages, {
@@ -140,7 +159,7 @@ export async function handleAssistant(req: Request, deps: AssistantDeps): Promis
         deps.log?.(`asistente: ${c.provider} ${c.model} ${c.toolCalls.map((t) => t.function.name).join(",") || "texto"}`),
     });
     await saveGaps(deps, gaps);
-    return json(reply);
+    return json(pass ? { ...reply, pass } : reply);
   } catch (err) {
     deps.log?.(`asistente: ${err instanceof ProvidersUnavailable ? err.message : (err as Error).name}`);
     return fail("No pude responder ahora", 502);

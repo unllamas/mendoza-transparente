@@ -219,11 +219,18 @@ export async function runAgent(k: Knowledge, env: AssistantEnv, history: ChatMes
   let text = "";
   for (let step = 0; step < MAX_STEPS; step++) {
     // Last step: no tools, so the model has to write.
-    const tools = step === MAX_STEPS - 1 ? [] : TOOL_DEFINITIONS;
-    const c = await complete(env, { messages, tools }, opts.fetcher);
+    const last = step === MAX_STEPS - 1;
+    const c = await complete(env, { messages, tools: last ? [] : TOOL_DEFINITIONS }, opts.fetcher, last ? "answer" : "tools");
     opts.onCompletion?.(c);
     if (!c.toolCalls.length) {
       text = (c.content ?? "").trim();
+      // With a writing model of its own, the text after the tools is rewritten by it. Still within MAX_STEPS calls:
+      // this only happens before the last step.
+      if (env.ASSISTANT_MODEL_ANSWER && step > 0 && !last) {
+        const answer = await complete(env, { messages, tools: [] }, opts.fetcher, "answer");
+        opts.onCompletion?.(answer);
+        text = (answer.content ?? "").trim() || text;
+      }
       break;
     }
     messages.push({ role: "assistant", content: c.content, tool_calls: c.toolCalls });
