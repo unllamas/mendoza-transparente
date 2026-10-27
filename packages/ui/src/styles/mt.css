@@ -105,8 +105,9 @@
   --color-map-alt-2: #f08a57;
   --color-map-alt-3: #eb6834;
   --color-map-alt-4: #b54a1c;
-  /* Ilustración de fondo del hero de la portada: entera en claro; en oscuro, tenue para que no encandile. */
-  --hero-image-opacity: 1;
+  /* Ilustración de fondo del hero de la portada: de día en claro, de noche en oscuro. Como fondo CSS, el navegador
+     baja solo la del tema activo. */
+  --hero-image: url("/fondos/portada.webp");
 }
 
 .dark {
@@ -142,7 +143,7 @@
   --color-map-alt-2: #f29a6c;
   --color-map-alt-3: #e8753f;
   --color-map-alt-4: #d95926;
-  --hero-image-opacity: 0.4;
+  --hero-image: url("/fondos/portada-noche.webp");
 }
 
 @theme inline {

@@ -57,7 +57,8 @@ export function HomePage() {
         (-mt-14 = the header height; the layout gives the home page no padding). Search and department side by
         side with the same weight, and three questions as shortcuts. The content is centered on the whole screen
         below the header (pt-24 = header + the same 2.5rem as pb-10). The illustration fills the hero behind it: a mask
-        fades it into the page at the bottom and a soft veil of the page color sits behind the text so it reads.
+        fades it into the page at the bottom and a soft veil of the page color sits behind the text so it reads. Day or
+        night version per theme, from --hero-image in mt.css.
       */}
       <section className="relative -mt-14 flex min-h-svh flex-col">
         <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center-safe gap-6 px-4 pt-24 pb-10 text-center sm:px-5">
@@ -81,13 +82,10 @@ export function HomePage() {
           </div>
           <HeroQuestions />
         </div>
-        <div className="pointer-events-none absolute inset-0 mask-b-from-55%" aria-hidden>
-          <img
-            src="/fondos/portada.webp"
-            alt=""
-            fetchPriority="high"
-            className="size-full object-cover object-[center_70%] opacity-(--hero-image-opacity)"
-          />
+        <div
+          className="pointer-events-none absolute inset-0 bg-(image:--hero-image) bg-cover bg-position-[center_70%] mask-b-from-55%"
+          aria-hidden
+        >
           <div className="absolute inset-0 bg-radial-[ellipse_55%_40%_at_50%_50%] from-background-full/85 to-transparent" />
         </div>
       </section>
