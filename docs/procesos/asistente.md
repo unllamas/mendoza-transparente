@@ -87,10 +87,9 @@ El modelo se elige sin tocar el código: es el secreto `ASSISTANT_MODEL`, que se
 
 `packages/assistant/evals/cases.ts` tiene preguntas con respuesta conocida y trampas: pedir el DNI, opinión política, fuera de tema, un plazo que no se publica. Se corren contra el modelo real **antes de cambiar las instrucciones, las herramientas o el modelo**.
 
-**Contra una vista previa (la forma de siempre):** cada caso va a `POST /api/asistente` de un despliegue, que usa las claves guardadas como secretos de Pages. Nadie necesita tenerlas en su máquina. Como cada PR tiene su propia vista previa, el cambio se evalúa antes de mergearlo:
+**Contra la vista previa de `dev` (la forma de siempre):** cada caso va a `POST /api/asistente` de un despliegue, que usa las claves guardadas como secretos de Pages, así que nadie necesita tenerlas en su máquina. Las ramas de trabajo no arman vista previa (`docs/procesos/web.md`). Entonces se corre antes de mergear, para tener la línea de base, y otra vez cuando el cambio llega a `dev`. Si algo empeoró, se arregla en otro PR antes de publicar:
 
 ```bash
-bun run asistente:evals --url https://<rama>.mendoza-transparente.pages.dev   # la vista previa del PR
 bun run asistente:evals --url https://dev.mendoza-transparente.pages.dev --solo tunuyán   # solo los casos cuyo nombre lo dice
 ```
 
