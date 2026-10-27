@@ -91,7 +91,10 @@ El relevamiento está en `docs/relevamiento-fuentes.md#212-impuestos-provinciale
   - Hay que decir de qué cupo sale el gasto (ver `docs/procesos/arquitectura.md#costo-cero`).
   - Verificar el cupo gratis de cada proveedor antes de decidir.
 - El aviso de IA va una sola vez, debajo del campo para escribir: «Aco usa IA con datos oficiales y puede equivocarse. Confirmá en la ventanilla». Cada respuesta muestra sus fuentes a la vista.
-- **Opinión sobre cada respuesta.** Debajo de cada respuesta va cuándo se dio y dos botones, 👍 y 👎. El 👎 pregunta qué estuvo mal: un dato está mal, no respondió lo que pregunté, un link no anda o falta un paso.
+- **Opinión sobre cada respuesta.** Debajo de cada respuesta va cuándo se dio y dos pulgares chicos, sin mensaje de agradecimiento.
+  - El 👍 hace una animación corta.
+  - El 👎 abre una hoja con tres motivos (un dato está mal, no respondió lo que pregunté, falta información o un paso) y una descripción opcional.
+  - La descripción es texto libre y puede traer datos personales: no va a PostHog. Se guarda aparte, como los envíos del registro (`docs/procesos/panel.md`), y se revisa antes de usarla.
   - Cada voto es un evento de PostHog. Lleva el motivo, las herramientas que usó el agente y las filas y fuentes que citó, pero **no el texto de la pregunta**: alcanza para encontrar el dato equivocado sin guardar lo que escribió la persona.
   - Si hace falta ver la conversación entera para entender un error, se le pide permiso a la persona en ese momento, con un botón aparte.
   - Los 👎 por «un dato está mal» se revisan como una corrección (`data/curado/correcciones.yaml`). Los demás alimentan las evals: cada caso real que falló se suma como pregunta de prueba.
