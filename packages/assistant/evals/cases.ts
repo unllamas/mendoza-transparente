@@ -44,7 +44,7 @@ export const CASES: EvalCase[] = [
   },
   {
     name: "Municipio sin relevar: lo dice y da Nación y Provincia",
-    messages: [user("Quiero abrir una verdulería en Maipú")],
+    messages: [user("Quiero abrir una verdulería en Tunuyán")],
     outcome: ["steps", "answer"],
     says: [/todav[ií]a no|no (lo )?relev/i],
   },
