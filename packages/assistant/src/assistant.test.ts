@@ -59,7 +59,7 @@ describe("tools", () => {
     expect(almacen.steps?.some((s) => s.when === "alimentos")).toBe(true);
   });
   test("un municipio sin relevar devuelve solo Nación y Provincia", () => {
-    const r = getProcedure(k, { flow: "abrir-un-comercio", municipality: "Tunuyán" });
+    const r = getProcedure(k, { flow: "abrir-un-comercio", municipality: "La Paz" });
     expect(r.covered).toBe(false);
     expect(r.general_steps?.every((s) => s.level !== "municipio")).toBe(true);
   });
@@ -67,7 +67,7 @@ describe("tools", () => {
     const r = findTradeFee(k, { municipality: "Godoy Cruz", activity: "almacén" });
     expect(r.matches[0]).toEqual({ code: "30003", activity: "ALMACENES Y DESPENSAS", min: 63335.5, max: 613867.18 });
     expect(findTradeFee(k, { municipality: "Godoy Cruz", activity: "carnicería" }).matches[0]?.code).toBe("30007");
-    expect(findTradeFee(k, { municipality: "Tunuyán", activity: "almacén" }).found).toBe(false);
+    expect(findTradeFee(k, { municipality: "La Paz", activity: "almacén" }).found).toBe(false);
   });
   test("el rubro se reconoce por sus sinónimos, como palabras enteras", () => {
     expect(findTradeFee(k, { municipality: "Godoy Cruz", activity: "verdulería" }).matches[0]?.code).toBe("30023");
@@ -108,16 +108,18 @@ describe("tools", () => {
     expect(r.matches[0]?.activity).toBe("Despensa - Almacén - Mercadito");
   });
   test("solo ofrece los rubros con tasa en ese municipio; uno que no está se informa, no se adivina", () => {
-    expect(feeActivities(k, "Maipú").map((a) => a.id)).toEqual(["almacen", "kiosco", "ropa", "rotiseria", "carniceria"]);
-    expect(feeActivities(k, "Godoy Cruz").length).toBe(30);
-    const r = findTradeFee(k, { municipality: "Maipú", activity: "peluquería" });
-    expect(r).toMatchObject({ status: "unknown_activity", asked: "peluquería", found: false, matches: [] });
-    expect(r.available?.length).toBe(5);
-    expect(findTradeFee(k, { municipality: "Capital", activity: "bar" }).status).toBe("unknown_activity");
+    expect(feeActivities(k, "Maipú").map((a) => a.id)).toEqual(["almacen", "kiosco", "ropa", "rotiseria", "carniceria", "peluqueria"]);
+    expect(feeActivities(k, "Godoy Cruz").length).toBe(31);
+    const r = findTradeFee(k, { municipality: "Maipú", activity: "gimnasio" });
+    expect(r).toMatchObject({ status: "unknown_activity", asked: "gimnasio", found: false, matches: [] });
+    expect(r.available?.length).toBe(6);
+    // Asked for in assistant_gaps and loaded afterwards: they now have their fee.
+    expect(findTradeFee(k, { municipality: "Capital", activity: "bar" }).status).toBe("found");
+    expect(findTradeFee(k, { municipality: "Godoy Cruz", activity: "cerveza artesanal" }).status).toBe("found");
   });
   test("sin rubro pide elegir; sin tarifaria lo dice", () => {
     expect(findTradeFee(k, { municipality: "Godoy Cruz" }).status).toBe("ask_activity");
-    expect(findTradeFee(k, { municipality: "Tunuyán", activity: "kiosco" }).status).toBe("not_surveyed");
+    expect(findTradeFee(k, { municipality: "La Paz", activity: "kiosco" }).status).toBe("not_surveyed");
   });
   test("los montos cargados a mano llevan el año de la ordenanza", () => {
     expect(findTradeFee(k, { municipality: "Maipú", activity: "kiosco" }).year).toBe(2026);
@@ -128,7 +130,7 @@ describe("tools", () => {
       known: false,
       covered: false,
     });
-    expect(getProcedure(k, { flow: "abrir-un-comercio", municipality: "Tunuyán" })).toMatchObject({ known: true, covered: false });
+    expect(getProcedure(k, { flow: "abrir-un-comercio", municipality: "La Paz" })).toMatchObject({ known: true, covered: false });
   });
   test("solo la plata activa la tasa", () => {
     expect(asksAboutFee(["¿cuánto cobra de tasa mi municipio?"])).toBe(true);
@@ -192,36 +194,37 @@ describe("agent", () => {
       "ropa",
       "rotiseria",
       "carniceria",
+      "peluqueria",
     ]);
   });
   test("un rubro que no tenemos se avisa, se ofrecen los que hay y se anota", async () => {
     const { fetcher } = fakeProvider([
-      { tool: "find_trade_fee", args: { municipality: "Maipú", activity: "Peluquería canina" } },
+      { tool: "find_trade_fee", args: { municipality: "Maipú", activity: "Gimnasio" } },
       { text: "Todavía no tenemos esa tasa en Maipú." },
     ]);
     const gaps: Gap[] = [];
-    const reply = await runAgent(k, KEYS, [{ role: "user", content: "¿Cuánto paga de tasa una peluquería canina en Maipú?" }], {
+    const reply = await runAgent(k, KEYS, [{ role: "user", content: "¿Cuánto paga de tasa un gimnasio en Maipú?" }], {
       fetcher,
       onGap: (g) => gaps.push(g),
     });
     expect(reply.outcome).toBe("ask");
-    expect(reply.blocks[0]?.type === "ask_activity" && reply.blocks[0].options.length).toBe(5);
-    expect(gaps).toEqual([{ kind: "rubro", municipality: "Maipú", value: "peluqueria canina" }]);
+    expect(reply.blocks[0]?.type === "ask_activity" && reply.blocks[0].options.length).toBe(6);
+    expect(gaps).toEqual([{ kind: "rubro", municipality: "Maipú", value: "gimnasio" }]);
   });
   test("la tasa de un municipio sin relevar: lo dice, lo anota y no muestra pasos que no pidieron", async () => {
     const { fetcher } = fakeProvider([
-      { tool: "get_procedure", args: { flow: "abrir-un-comercio", municipality: "Tunuyán" } },
-      { tool: "find_trade_fee", args: { municipality: "Tunuyán", activity: "kiosco" } },
-      { text: "Todavía no leímos la tarifaria de Tunuyán." },
+      { tool: "get_procedure", args: { flow: "abrir-un-comercio", municipality: "La Paz" } },
+      { tool: "find_trade_fee", args: { municipality: "La Paz", activity: "kiosco" } },
+      { text: "Todavía no leímos la tarifaria de La Paz." },
     ]);
     const gaps: Gap[] = [];
-    const reply = await runAgent(k, KEYS, [{ role: "user", content: "¿Cuánto cobra Tunuyán de tasa a un kiosco?" }], {
+    const reply = await runAgent(k, KEYS, [{ role: "user", content: "¿Cuánto cobra La Paz de tasa a un kiosco?" }], {
       fetcher,
       onGap: (g) => gaps.push(g),
     });
     expect(reply.blocks).toEqual([]);
     expect(gaps.map((g) => g.kind)).toEqual(["municipio", "municipio"]);
-    expect(gaps.every((g) => g.municipality === "Tunuyán")).toBe(true);
+    expect(gaps.every((g) => g.municipality === "La Paz")).toBe(true);
   });
   test("un trámite que no tenemos se anota", async () => {
     const { fetcher } = fakeProvider([
@@ -262,11 +265,11 @@ describe("agent", () => {
   });
   test("en un municipio sin relevar no pregunta el rubro", async () => {
     const { fetcher, calls } = fakeProvider([
-      { tool: "get_procedure", args: { flow: "abrir-un-comercio", municipality: "General Alvear" } },
+      { tool: "get_procedure", args: { flow: "abrir-un-comercio", municipality: "Malargüe" } },
       { tool: "ask_user", args: { field: "activity", question: "¿Qué vas a vender?" } },
-      { text: "Todavía no relevamos General Alvear; estos son los pasos de Nación y Provincia." },
+      { text: "Todavía no relevamos Malargüe; estos son los pasos de Nación y Provincia." },
     ]);
-    const reply = await runAgent(k, KEYS, [{ role: "user", content: "Quiero abrir un negocio en Alvear" }], { fetcher });
+    const reply = await runAgent(k, KEYS, [{ role: "user", content: "Quiero abrir un negocio en Malargüe" }], { fetcher });
     expect(reply.outcome).toBe("steps");
     expect(reply.blocks.some((b) => b.type === "ask_activity")).toBe(false);
     expect(calls.length).toBe(3);
@@ -346,13 +349,13 @@ describe("http", () => {
     expect(rows[0]?.slice(1, 3)).toEqual(["down", "falta"]);
   });
   test("guarda lo que falta, y sin la tabla responde igual", async () => {
-    const script = [{ tool: "find_trade_fee", args: { municipality: "Tunuyán", activity: "kiosco" } }, { text: "Todavía no." }];
-    const body = { messages: [{ role: "user", content: "¿Cuánto cobra Tunuyán de tasa?" }] };
+    const script = [{ tool: "find_trade_fee", args: { municipality: "La Paz", activity: "kiosco" } }, { text: "Todavía no." }];
+    const body = { messages: [{ role: "user", content: "¿Cuánto cobra La Paz de tasa?" }] };
     const rows: unknown[][] = [];
     const db = { prepare: () => ({ bind: (...v: unknown[]) => ({ run: async () => rows.push(v) }) }) };
     const ok = await handleAssistant(post("/api/asistente", body), { knowledge: k, env: KEYS, db, fetcher: fakeProvider(script).fetcher });
     expect(ok?.status).toBe(200);
-    expect(rows[0]?.slice(1)).toEqual(["municipio", "Tunuyán", "tasa-de-comercio"]);
+    expect(rows[0]?.slice(1)).toEqual(["municipio", "La Paz", "tasa-de-comercio"]);
     const broken = {
       prepare: () => ({
         bind: () => ({
