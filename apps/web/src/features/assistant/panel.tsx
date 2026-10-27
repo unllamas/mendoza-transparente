@@ -16,7 +16,7 @@ export const NAME = "Aco";
 const SUGGESTIONS = ["¿Qué necesito para abrir un comercio?", "¿Cuánto cobra de tasas mi municipio?", "¿Cuánto pago de Ingresos Brutos?"];
 
 /** Answers that get the time and the thumbs; the ones that only ask something do not. */
-const RATED = new Set(["steps", "unpublished", "answer"]);
+const RATED = new Set(["steps", "fee", "unpublished", "answer"]);
 
 function Header({ onClose }: { onClose: () => void }) {
   return (
@@ -227,8 +227,9 @@ export function Panel({
             : {
                 title: "¿Qué vas a vender?",
                 searchLabel: "Buscar rubro",
-                empty: "No está en la lista. Escribilo con tus palabras en el chat y lo buscamos en la tarifaria.",
+                empty: "Ese rubro todavía no está en la lista de este municipio.",
                 items: sheet.items,
+                askFree: (query: string) => `Preguntar por «${query}»`,
               })}
           onPick={(label) => {
             setSheet(null);

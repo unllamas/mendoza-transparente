@@ -19,6 +19,7 @@ export function SearchSheet({
   searchLabel,
   empty,
   items,
+  askFree,
   onPick,
   onClose,
 }: {
@@ -26,6 +27,8 @@ export function SearchSheet({
   searchLabel: string;
   empty: string;
   items: SearchItem[];
+  /** When nothing matches, offer to send what was typed anyway (an activity we do not have yet is noted for later). */
+  askFree?: (query: string) => string;
   onPick: (label: string) => void;
   onClose: () => void;
 }) {
@@ -66,7 +69,19 @@ export function SearchSheet({
               ))}
             </ul>
           ) : (
-            <p className="py-6 text-center text-body-regular text-pretty text-text-secondary">{empty}</p>
+            <div className="flex flex-col gap-4 py-6">
+              <p className="text-center text-body-regular text-pretty text-text-secondary">{empty}</p>
+              {askFree && query.trim() && (
+                <ul className={listVariants()}>
+                  <li>
+                    <button type="button" onClick={() => onPick(query.trim())} className={listRowVariants()}>
+                      <span className="min-w-0 flex-1 truncate text-body-medium text-text-link">{askFree(query.trim())}</span>
+                      <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
+                    </button>
+                  </li>
+                </ul>
+              )}
+            </div>
           )}
         </div>
       </div>

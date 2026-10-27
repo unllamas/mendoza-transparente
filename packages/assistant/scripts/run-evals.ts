@@ -34,6 +34,7 @@ for (const c of CASES) {
     const reply = await runAgent(knowledge, env, c.messages, { onCompletion: (x) => (provider = `${x.provider} ${x.model}`) });
     if (!c.outcome.includes(reply.outcome)) problems.push(`outcome ${reply.outcome}, se esperaba ${c.outcome.join(" o ")}`);
     for (const b of c.blocks ?? []) if (!reply.blocks.some((x) => x.type === b)) problems.push(`falta el bloque ${b}`);
+    for (const b of c.noBlocks ?? []) if (reply.blocks.some((x) => x.type === b)) problems.push(`sobra el bloque ${b}`);
     for (const r of c.says ?? []) if (!r.test(reply.text)) problems.push(`no dice ${r}`);
     for (const r of [...NEVER, ...(c.neverSays ?? [])]) if (r.test(reply.text)) problems.push(`dice ${r}`);
     if (reply.text.split(/\s+/).length > 120) problems.push("más de 120 palabras");

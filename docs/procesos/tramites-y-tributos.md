@@ -22,7 +22,7 @@ Cómo se cargan los trámites (qué hay que hacer) y las tasas e impuestos (cuá
 Cada entrada es un **recorrido** (por ejemplo `abrir-un-comercio`) en un municipio, con los pasos de Nación, Provincia y municipio en orden.
 
 1. **Relevar** solo en sitios oficiales y con `bun run crudo`, nunca con `curl`. Anotar la URL de cada paso, sus requisitos, si es en línea o presencial, el costo y el plazo. Lo que el organismo no publica va en `no_publica`, no se completa con suposiciones.
-2. **Cargar** el recorrido con `verificado: <fecha>`. Los pasos que dependen del rubro llevan `cuando: alimentos`; el resto, `cuando: siempre` (el asistente no conoce otras condiciones: un paso opcional se aclara en su `detalle`). Los rubros apuntan al código del anexo de la tarifaria, tal como lo devuelve su lector.
+2. **Cargar** el recorrido con `verificado: <fecha>`. Los pasos que dependen del rubro llevan `cuando: alimentos`; el resto, `cuando: siempre` (el asistente no conoce otras condiciones: un paso opcional se aclara en su `detalle`). Los rubros apuntan al código del anexo de la tarifaria, tal como lo devuelve su lector (ver «Rubros de cada municipio», abajo).
 3. **La tasa de comercio** va en `tasa_comercio`:
    - `periodo` (`mes`, `bimestre`, `año`, o vacío si la ordenanza no lo dice);
    - `unidad` (`pesos`, `UT`, `UTM`) y, si no es pesos, `valor_unidad` con su fuente en `norma_unidad`;
@@ -33,6 +33,13 @@ Cada entrada es un **recorrido** (por ejemplo `abrir-un-comercio`) en un municip
 5. **Revisar el texto** con la skill `contenido-y-metodologia`: neutral, corto, sin adjetivos.
 6. **Volver a verificar** cada recorrido al menos una vez por año, cuando sale la tarifaria nueva, y actualizar `verificado`.
 
-**Rubros comunes:** `data/curado/rubros.yaml` es la lista que el asistente ofrece cuando pregunta qué vas a vender, en cualquier municipio. Los cuatro primeros se ven a la vista y el resto se busca en una hoja; las `palabras` son sinónimos para esa búsqueda y para encontrar el rubro en el anexo de la tarifaria. Un recorrido suma sus propios rubros con el código de su anexo; si un rubro está en los dos lugares, va con el mismo `id`. Después de editarla, `bun run asistente:datos`.
+**Rubros comunes:** `data/curado/rubros.yaml` es la lista de rubros como los dice la gente. Los cuatro primeros se ven a la vista y el resto se busca en una hoja. Las `palabras` son sinónimos («quiosco», «golosinas» y «maxikiosco» son el kiosco), que el asistente reconoce como palabras enteras: «pan» no está dentro de «pantalones». Después de editarla, `bun run asistente:datos`.
+
+**Rubros de cada municipio (la tasa):** cada recorrido lista en `rubros` los rubros comunes que tienen tasa en su tarifaria, **mapeados a mano**. El asistente no busca por palabras en el anexo, porque mezcla cosas sin relación («veterinaria» encontraba un sex shop). Cada rubro lleva:
+- `codigo` y `nombre_ordenanza`, tal cual figuran en el anexo. Hace falta el nombre porque algunos anexos repiten un código para actividades distintas (Guaymallén tiene unos 78).
+- `variantes`, opcional: otras actividades del mismo anexo que puede ser alguien con ese rubro y que pagan distinto (kiosco: QUIOSCO INTERIOR, MAXI KIOSCO y QUIOSCOS VIA PUBLICA). El asistente las muestra por separado, cada una con su monto, y no elige por la persona.
+- `nombre` y `alimentos` solo si cambian respecto de `rubros.yaml`.
+
+El criterio: el código que corresponde a un comercio minorista con local propio, no mayorista, fábrica, venta a consignación ni puesto en la vía pública, salvo que el rubro sea eso. Si el anexo no tiene nada razonable, el rubro no se carga: vale más un «todavía no lo tenemos» que un monto de otra actividad. Lo que la gente pide y no está queda en la tabla `assistant_gaps` (ver [Asistente](asistente.md#faltantes)), y de ahí sale qué sumar. En los anexos escaneados, solo hay tasa para los rubros de `tasa_comercio.manual`, que lleva el `ejercicio` de los montos.
 
 Hoy está relevado `abrir-un-comercio` en Godoy Cruz y en los seis municipios de la tanda 1 (estado en `docs/planes/guia-de-tramites.md#plan-por-municipio`). Para otro municipio, el asistente da solo los pasos de Nación y Provincia y avisa que falta relevar los municipales.

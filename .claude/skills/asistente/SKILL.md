@@ -15,7 +15,8 @@ Fuente completa: `docs/procesos/asistente.md`. Plan: `docs/planes/guia-de-tramit
 4. **El modelo es el secreto `ASSISTANT_MODEL`** (por defecto `anthropic/claude-haiku-5.5`), igual que el orden `ASSISTANT_PROVIDERS`: se cargan con `bun run asistente:claves` o en el panel como *Secret*, nunca en `wrangler.toml`.
 5. **Cambiar las instrucciones, las herramientas o el modelo pide correr las evals** (`bun --env-file=.env.asistente run asistente:evals`) y decir el resultado en el PR.
 6. **Medición mínima:** solo `assistant.launcher.open`, `assistant.answer.show` y `assistant.feedback.vote`. Nunca el texto de la conversación ni la nota del 👎. Tokens y costo, en el tablero de cada proveedor.
-7. **Gasto acotado:** 12 mensajes de 500 caracteres, 4 llamadas por respuesta, 700 tokens de salida y tope mensual en cada proveedor. Un evento, una llamada o un modelo más caro se justifican en el PR.
+7. **La tasa solo si la piden, y lo que no tenemos se anota.** La tarjeta `fee` sale solo si la conversación preguntó por la plata (`asksAboutFee`); los rubros de la tasa son los curados a mano de cada municipio (`feeActivities`), nunca una búsqueda por palabras; lo que falta (municipio, rubro, trámite) se dice y queda en `assistant_gaps`. Detalle en `docs/procesos/asistente.md#la-tasa-y-lo-que-no-tenemos`.
+8. **Gasto acotado:** 12 mensajes de 500 caracteres, 4 llamadas por respuesta, 700 tokens de salida y tope mensual en cada proveedor. Un evento, una llamada o un modelo más caro se justifican en el PR.
 
 ## Al cambiar algo
 

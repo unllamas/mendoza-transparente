@@ -44,6 +44,57 @@ function ActionRow({ icon: Icon, label, onPress, primary }: { icon: Icon; label:
   );
 }
 
+/** Ordinances print activities in capitals ("QUIOSCO INTERIOR"): shown as a sentence. */
+const asSentence = (name: string) => (name === name.toUpperCase() ? name.charAt(0) + name.slice(1).toLowerCase() : name);
+
+const PERIODS: Record<string, string> = { mes: "por mes", bimestre: "por bimestre", año: "por año" };
+
+/**
+ * The trade fee the person asked for: informative, so flat on the grey with a thin border. The first line is their
+ * activity; the others are activities the same ordinance tells apart, each with its own range, never merged.
+ */
+function FeeView({ fee }: { fee: Extract<Block, { type: "fee" }>["fee"] }) {
+  const period = PERIODS[fee.period];
+  return (
+    <div className="flex flex-col gap-2">
+      <p className="text-caption-1-regular text-text-secondary">
+        Derecho de comercio en {fee.municipality}
+        {fee.year ? `, ${fee.year}` : ""}
+        {period ? `, ${period}` : ""}. De la categoría más baja a la más alta.
+      </p>
+      <ul className="flex flex-col divide-y divide-separator-border rounded-xl border border-separator-border">
+        {fee.lines.map((line, i) => (
+          <li key={line.name} className="flex min-h-11 min-w-0 flex-col justify-center px-4 py-2">
+            {/* The ordinance's name is what tells the lines apart: up to two lines, never cut to look the same. */}
+            <span className="line-clamp-2 text-caption-1-regular text-pretty text-text-secondary">
+              {i > 0
+                ? `También figura: ${asSentence(line.name)}`
+                : line.name === fee.activity
+                  ? fee.activity
+                  : `${fee.activity}: ${asSentence(line.name)}`}
+            </span>
+            <span className="truncate text-body-semibold whitespace-nowrap text-text-primary tabular-nums">
+              $&nbsp;{formatNumber(Math.round(line.min))} a $&nbsp;{formatNumber(Math.round(line.max))}
+            </span>
+          </li>
+        ))}
+      </ul>
+      {fee.note && <p className="text-caption-1-regular text-pretty text-text-secondary">{fee.note}</p>}
+      {fee.source.href && (
+        <a
+          href={fee.source.href}
+          target="_blank"
+          rel="noreferrer"
+          className="flex min-h-11 items-center gap-1 self-start text-caption-1-regular text-text-link hover:underline"
+        >
+          {fee.source.label}
+          <RiArrowRightUpLine className="size-4 shrink-0" aria-hidden />
+        </a>
+      )}
+    </div>
+  );
+}
+
 export type BlockHandlers = {
   onLocate: () => void;
   onPickMunicipality: () => void;
@@ -100,18 +151,6 @@ export function BlockView({ block, answered, handlers }: { block: Block; answere
               </li>
             ))}
           </ol>
-          {block.fee && (
-            <p className="text-body-regular text-pretty text-text-primary">
-              {block.fee.label}:{" "}
-              <strong className="text-body-semibold">
-                de $&nbsp;{formatNumber(block.fee.min)} a $&nbsp;{formatNumber(block.fee.max)}
-              </strong>
-              .{block.fee.note ? ` ${block.fee.note}` : ""}{" "}
-              <a href={block.fee.source.href} target="_blank" rel="noreferrer" className="text-text-link hover:underline">
-                {block.fee.source.label}
-              </a>
-            </p>
-          )}
           {/* TODO: enable when the PDF "carpeta del trámite" exists (docs/planes/guia-de-tramites.md). */}
           <ul className={listVariants()}>
             <li>
@@ -127,6 +166,8 @@ export function BlockView({ block, answered, handlers }: { block: Block; answere
           <p className="text-caption-1-regular text-text-tertiary">Verificado el {formatDate(block.verified)}</p>
         </>
       );
+    case "fee":
+      return <FeeView fee={block.fee} />;
     case "unpublished":
       return (
         <ul className={listVariants()}>

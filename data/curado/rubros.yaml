@@ -9,7 +9,7 @@
 # - palabras: otras formas de decirlo, para el buscador y para encontrar el rubro en el anexo de la tarifaria.
 
 - { id: almacen, nombre: Almacén, alimentos: true, palabras: [despensa, mercadito, autoservicio] }
-- { id: kiosco, nombre: Kiosco, alimentos: true, palabras: [quiosco, maxikiosco, drugstore] }
+- { id: kiosco, nombre: Kiosco, alimentos: true, palabras: [quiosco, maxikiosco, maxi kiosco, drugstore, golosinas, golosinería, polirrubro] }
 - { id: ropa, nombre: Ropa, alimentos: false, palabras: [indumentaria, vestir, boutique, tienda] }
 - { id: rotiseria, nombre: Comida para llevar, alimentos: true, palabras: [rotisería, viandas, delivery] }
 - { id: carniceria, nombre: Carnicería, alimentos: true, palabras: [carnes, pollería, granja] }

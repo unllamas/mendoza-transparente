@@ -3,13 +3,15 @@
  *   GET  /api/asistente           → { enabled }: whether a provider key is configured (the widget hides otherwise)
  *   POST /api/asistente           → AssistantReply for { messages }
  *   POST /api/asistente/opinion   → stores a thumbs up or down in D1 (no IP, no conversation)
+ * Each answer also saves in D1 what people asked and we do not have yet (`assistant_gaps`): a municipality, an activity
+ * or a procedure, in a few words. Never the conversation.
  * Requests are capped in size and length; /api/* also has the site's per-IP rate limit (10 every 10 s).
  */
 
 import { runAgent } from "./agent.ts";
 import type { Knowledge } from "./knowledge.ts";
 import { type AssistantEnv, configuredProviders, ProvidersUnavailable } from "./providers.ts";
-import type { AssistantStatus, ChatMessage, FeedbackRequest, Outcome } from "./types.ts";
+import type { AssistantStatus, ChatMessage, FeedbackRequest, Gap, Outcome } from "./types.ts";
 
 /** The subset of D1 the feedback endpoint uses (same shape as @mt/participation's Db). */
 export interface FeedbackDb {
@@ -49,7 +51,7 @@ export function sanitizeMessages(body: unknown): ChatMessage[] | null {
   return messages.at(-1)?.role === "user" ? messages : null;
 }
 
-const OUTCOMES: Outcome[] = ["steps", "unpublished", "ask", "answer", "no_answer"];
+const OUTCOMES: Outcome[] = ["steps", "fee", "unpublished", "ask", "answer", "no_answer"];
 
 export function sanitizeFeedback(body: unknown): FeedbackRequest | null {
   const b = body as Partial<FeedbackRequest> | null;
@@ -64,6 +66,22 @@ export function sanitizeFeedback(body: unknown): FeedbackRequest | null {
     ...(short(b.municipality, 40) ? { municipality: short(b.municipality, 40) } : {}),
     ...(OUTCOMES.includes(b.outcome as Outcome) ? { outcome: b.outcome } : {}),
   };
+}
+
+/** Saving a gap never breaks an answer: without the table (migration 0005 not applied yet) it only logs. */
+async function saveGaps(deps: AssistantDeps, gaps: Gap[]) {
+  if (!deps.db || !gaps.length) return;
+  const at = new Date().toISOString();
+  try {
+    for (const g of gaps) {
+      await deps.db
+        .prepare("INSERT INTO assistant_gaps (created_at, kind, municipality, value) VALUES (?, ?, ?, ?)")
+        .bind(at, g.kind, g.municipality ?? null, g.value.slice(0, 60))
+        .run();
+    }
+  } catch (err) {
+    deps.log?.(`asistente: no se guardó un faltante (${(err as Error).name})`);
+  }
 }
 
 export interface AssistantDeps {
@@ -114,11 +132,14 @@ export async function handleAssistant(req: Request, deps: AssistantDeps): Promis
   const messages = sanitizeMessages(body);
   if (!messages) return fail("Conversación inválida", 400);
   try {
+    const gaps: Gap[] = [];
     const reply = await runAgent(deps.knowledge, deps.env, messages, {
       fetcher: deps.fetcher,
+      onGap: (g) => gaps.push(g),
       onCompletion: (c) =>
         deps.log?.(`asistente: ${c.provider} ${c.model} ${c.toolCalls.map((t) => t.function.name).join(",") || "texto"}`),
     });
+    await saveGaps(deps, gaps);
     return json(reply);
   } catch (err) {
     deps.log?.(`asistente: ${err instanceof ProvidersUnavailable ? err.message : (err as Error).name}`);

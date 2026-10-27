@@ -42,7 +42,7 @@ export const onRequest = async (ctx: {
   }
   const ip = request.headers.get("cf-connecting-ip") ?? "0.0.0.0";
   const res =
-    (await handleAssistant(request, { knowledge: knowledge as Knowledge, env: ctx.env, db: ctx.env.DB, log: console.log })) ??
+    (await handleAssistant(request, { knowledge: knowledge as unknown as Knowledge, env: ctx.env, db: ctx.env.DB, log: console.log })) ??
     (await handlePublic(request, ctx.env.DB, { turnstileSecret: ctx.env.TURNSTILE_SECRET, ipSalt: ctx.env.IP_SALT }, ip)) ??
     new Response("No existe", { status: 404 });
   if (cacheable && res.ok && res.headers.get("cache-control")?.startsWith("public")) ctx.waitUntil(edgeCache.put(request, res.clone()));
