@@ -12,7 +12,7 @@ Aco es el chat flotante del sitio. Responde qué hay que hacer, qué papeles hac
 | Instrucciones | `packages/assistant/src/instructions.ts` | Cortas: citar, decir «no publica», no opinar, no pedir datos personales |
 | Proveedores | `packages/assistant/src/providers.ts` | Vercel AI Gateway y OpenRouter con la API de OpenAI, en orden; si uno falla (error, demora de 20 s, 429 o 5xx), responde el otro |
 | API | `packages/assistant/src/http.ts`, servida por `apps/web/functions/api/[[route]].ts` | `GET /api/asistente` (si está prendido), `POST /api/asistente` (una respuesta) y `POST /api/asistente/opinion` (👍 o 👎) |
-| Widget | `apps/web/src/features/assistant/` | Botón «Preguntá» y panel. Se carga recién si `GET /api/asistente` dice que está prendido |
+| Widget | `apps/web/src/features/assistant/` | Botón «Preguntá» y panel. Se carga recién si `GET /api/asistente` dice que está prendido. Accesibilidad: al abrir el foco va a «Tu pregunta» y al cerrar vuelve al botón que lo abrió; el diálogo es `aria-modal` con el foco atrapado (las hojas internas manejan el suyo); en celular la página de atrás no scrollea; cada respuesta nueva se anuncia en una región `aria-live="polite"`. Si la API responde 429 (10 pedidos cada 10 s por IP) muestra un texto propio y «Reintentar» espera 10 s |
 | Opiniones | Tabla `assistant_feedback` de D1 (migración `0004`) | Voto, motivo y nota opcional. Sin IP ni texto de la conversación |
 | Faltantes | Tabla `assistant_gaps` de D1 (migración `0005`) | Lo que se pidió y no tenemos: municipio, rubro o trámite, en pocas palabras |
 

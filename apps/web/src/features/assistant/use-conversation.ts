@@ -1,9 +1,12 @@
 import type { AssistantReply, ChatMessage } from "@mt/assistant/types";
 import { useCallback, useRef, useState } from "react";
 import { track } from "@/analytics.ts";
-import { sendMessages } from "./api.ts";
+import { AssistantApiError, sendMessages } from "./api.ts";
 
 export type Turn = { from: "user"; text: string } | { from: "assistant"; reply: AssistantReply; at: number };
+
+/** Why the last request failed: the per-IP rate limit (429) or anything else. */
+export type ConversationError = "rate-limit" | "generic";
 
 const MAX_MESSAGES = 12;
 const MAX_CHARS = 500;
@@ -20,7 +23,7 @@ function toMessages(turns: Turn[]): ChatMessage[] {
 export function useConversation() {
   const [turns, setTurns] = useState<Turn[]>([]);
   const [thinking, setThinking] = useState(false);
-  const [failed, setFailed] = useState(false);
+  const [error, setError] = useState<ConversationError | null>(null);
   const turnsRef = useRef<Turn[]>([]);
   const busy = useRef(false);
 
@@ -28,14 +31,14 @@ export function useConversation() {
     if (busy.current) return;
     busy.current = true;
     setThinking(true);
-    setFailed(false);
+    setError(null);
     try {
       const reply = await sendMessages(toMessages(turnsRef.current));
       turnsRef.current = [...turnsRef.current, { from: "assistant", reply, at: Date.now() }];
       setTurns(turnsRef.current);
       track("assistant.answer.show", { outcome: reply.outcome, flow: reply.flow, municipality: reply.municipality });
-    } catch {
-      setFailed(true);
+    } catch (e) {
+      setError(e instanceof AssistantApiError && e.status === 429 ? "rate-limit" : "generic");
     } finally {
       busy.current = false;
       setThinking(false);
@@ -53,5 +56,5 @@ export function useConversation() {
     [request],
   );
 
-  return { turns, thinking, failed, send, retry: request };
+  return { turns, thinking, error, send, retry: request };
 }

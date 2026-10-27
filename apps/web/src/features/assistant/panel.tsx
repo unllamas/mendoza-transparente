@@ -9,7 +9,7 @@ import { type BlockHandlers, BlockView } from "./blocks.tsx";
 import { AnswerFooter, type FeedbackSend, FeedbackSheet } from "./feedback.tsx";
 import { currentPosition, municipalityAt } from "./locate.ts";
 import { type SearchItem, SearchSheet } from "./search-sheet.tsx";
-import type { Turn } from "./use-conversation.ts";
+import type { ConversationError, Turn } from "./use-conversation.ts";
 
 export const NAME = "Aco";
 
@@ -105,18 +105,44 @@ function useNow() {
   return now;
 }
 
+const RETRY_COOLDOWN_MS = 10_000;
+
+const ERROR_TEXT: Record<ConversationError, string> = {
+  generic: "No pude responder ahora. Probá de nuevo en un rato.",
+  "rate-limit": "Mandaste muchas preguntas seguidas. Esperá unos segundos y probá de nuevo.",
+};
+
+/** The error with its retry button. After a rate limit (10 requests every 10 s per IP) the button waits 10 s. */
+function ErrorTurn({ error, onRetry }: { error: ConversationError; onRetry: () => void }) {
+  const [waiting, setWaiting] = useState(error === "rate-limit");
+  useEffect(() => {
+    if (error !== "rate-limit") return;
+    setWaiting(true);
+    const id = setTimeout(() => setWaiting(false), RETRY_COOLDOWN_MS);
+    return () => clearTimeout(id);
+  }, [error]);
+  return (
+    <BotTurn>
+      <ShyText>{ERROR_TEXT[error]}</ShyText>
+      <Button variant="secondary" onClick={onRetry} disabled={waiting} className="self-start">
+        Reintentar
+      </Button>
+    </BotTurn>
+  );
+}
+
 /** The panel: header with the mascot, conversation, composer pinned at the bottom and the AI notice under it. */
 export function Panel({
   turns,
   thinking,
-  failed,
+  error,
   onSend,
   onRetry,
   onClose,
 }: {
   turns: Turn[];
   thinking: boolean;
-  failed: boolean;
+  error: ConversationError | null;
   onSend: (text: string) => void;
   onRetry: () => void;
   onClose: () => void;
@@ -127,13 +153,23 @@ export function Panel({
   // The thumbs-down form of an answer, open over the whole panel.
   const [feedback, setFeedback] = useState<{ send: FeedbackSend } | null>(null);
   const scroller = useRef<HTMLDivElement>(null);
+  const input = useRef<HTMLInputElement>(null);
   const now = useNow();
+
+  // The panel opens with the cursor in the question field.
+  useEffect(() => {
+    input.current?.focus({ preventScroll: true });
+  }, []);
+
+  // Only the newest thing is announced to screen readers: Aco's last reply or the error, never the whole conversation.
+  const last = turns[turns.length - 1];
+  const announcement = error ? ERROR_TEXT[error] : !thinking && last?.from === "assistant" ? `${NAME} respondió: ${last.reply.text}` : "";
 
   // Keep the latest message in sight, as in any chat. With no conversation yet, stay on top: the welcome is there.
   useEffect(() => {
-    if (!turns.length && !thinking && !failed) return;
+    if (!turns.length && !thinking && !error) return;
     scroller.current?.scrollTo({ top: scroller.current.scrollHeight });
-  }, [turns.length, thinking, failed]);
+  }, [turns.length, thinking, error]);
 
   const handlers: BlockHandlers = {
     // The position is matched against the department map in the browser; only the municipality name is sent.
@@ -152,6 +188,9 @@ export function Panel({
   return (
     <div className="relative flex h-full min-h-0 flex-col overflow-hidden bg-background-full">
       <Header onClose={onClose} />
+      <p role="status" aria-live="polite" className="sr-only">
+        {announcement}
+      </p>
       <div ref={scroller} className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto overscroll-contain p-5">
         <Hero />
         <p className="flex items-center gap-3 text-caption-1-regular text-text-tertiary" aria-hidden>
@@ -185,14 +224,7 @@ export function Panel({
             {NAME} está buscando en las fuentes…
           </p>
         )}
-        {failed && (
-          <BotTurn>
-            <ShyText>No pude responder ahora. Probá de nuevo en un rato.</ShyText>
-            <Button variant="secondary" onClick={onRetry} className="self-start">
-              Reintentar
-            </Button>
-          </BotTurn>
-        )}
+        {error && <ErrorTurn error={error} onRetry={onRetry} />}
       </div>
       <form
         className="flex shrink-0 items-center gap-2 px-4 pt-3"
@@ -204,6 +236,7 @@ export function Panel({
         }}
       >
         <input
+          ref={input}
           aria-label="Tu pregunta"
           placeholder="Escribí tu pregunta"
           enterKeyHint="send"
