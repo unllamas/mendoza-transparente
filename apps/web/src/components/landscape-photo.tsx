@@ -28,7 +28,7 @@ export function LandscapePhoto({
   return (
     <figure className={cx("relative", flush && "-mx-4 -mt-8 sm:-mx-5 sm:-mt-10")}>
       <DotImage src={photo.src} focus={photo.focus} fade={fade} className={cx("pointer-events-none w-full", className)} />
-      <figcaption className="absolute right-4 bottom-2 z-20 flex items-center gap-2 sm:right-5">
+      <figcaption className="absolute bottom-2 left-4 z-20 flex items-center gap-2 sm:left-5">
         <Popover>
           <PopoverTrigger
             aria-label="Autoría de la foto"
@@ -62,10 +62,12 @@ export function LandscapePhoto({
           search={{ tipo: "foto" }}
           data-track="landscape.propose"
           data-track-photo={id}
-          className={buttonClassName({ variant: "secondary" })}
+          aria-label="Proponé tu foto"
+          className={cx(buttonClassName({ variant: "secondary" }), "max-sm:size-11 max-sm:px-0")}
         >
           <RiCameraLine className="size-5" aria-hidden />
-          Proponé tu foto
+          {/* On phones only the camera shows: the bottom-right corner is the assistant's (docs/procesos/diseno.md). */}
+          <span className="max-sm:sr-only">Proponé tu foto</span>
         </Link>
       </figcaption>
     </figure>

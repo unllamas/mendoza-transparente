@@ -36,13 +36,13 @@ function Header({ onClose }: { onClose: () => void }) {
 /** Welcome: the mascot over the Andes with two speech bubbles, like a postcard. */
 function Hero() {
   return (
-    <div className="relative -mx-5 -mt-5 h-60 shrink-0 overflow-hidden bg-accent-50">
+    <div className="relative -mx-5 -mt-5 h-64 shrink-0 overflow-hidden bg-accent-50">
       <Andes />
-      <Mascot mascot="aco" pose="wave" size={112} priority className="absolute top-4left-1/2 -translate-x-1/2" />
-      <p className="absolute top-32 left-8 -rotate-3 rounded-2xl rounded-bl-sm bg-background-surface px-4 py-2 text-body-bold text-text-primary shadow-md">
+      <Mascot mascot="aco" pose="wave" size={160} priority className="absolute top-2 left-1/2 -translate-x-1/2" />
+      <p className="absolute top-36 left-6 -rotate-3 rounded-2xl rounded-bl-sm bg-background-surface px-4 py-2 text-body-bold text-text-primary shadow-md">
         ¡Hola! Soy {NAME} 👋
       </p>
-      <p className="absolute top-44 right-6 rotate-2 rounded-2xl rounded-br-sm bg-accent-600 px-4 py-2 text-body-bold text-white shadow-md">
+      <p className="absolute top-48 right-6 rotate-2 rounded-2xl rounded-br-sm bg-accent-600 px-4 py-2 text-body-bold text-white shadow-md">
         Te ayudo con tus trámites
       </p>
     </div>
@@ -125,9 +125,9 @@ export function Panel({
   const scroller = useRef<HTMLDivElement>(null);
   const now = useNow();
 
-  // Keep the latest message in sight, as in any chat.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: scroll again whenever the conversation grows
+  // Keep the latest message in sight, as in any chat. With no conversation yet, stay on top: the welcome is there.
   useEffect(() => {
+    if (!turns.length && !thinking && !failed) return;
     scroller.current?.scrollTo({ top: scroller.current.scrollHeight });
   }, [turns.length, thinking, failed]);
 

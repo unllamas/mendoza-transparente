@@ -196,7 +196,7 @@ Es un sitio público: tiene que funcionar con teclado, con lector de pantalla y 
 
 Para las páginas que piden un poco más de carácter (la portada), un paisaje de Mendoza en puntos de colores: cada punto toma el color de la foto que tiene debajo.
 
-- **Componentes:** `DotImage` (`@mt/ui/components/dot-image`) es el efecto, en CSS puro: una máscara de puntos repetida sobre la imagen, sin JavaScript ni dependencias, así que sale en el HTML prerenderizado. `LandscapePhoto` (`apps/web/src/components/landscape-photo.tsx`) lo usa con una foto del registro y dos botones sobre la foto, abajo a la derecha: el de autoría (ícono de información, abre el crédito al tocar) y «Proponé tu foto». Se usa `LandscapePhoto` con su `id` y una altura: `<LandscapePhoto id="cordon-del-plata" className="h-52 sm:h-80" />`. Va al tope de la página y ocupa el ancho del contenido hasta los bordes; con `flush={false}` queda donde se la pone (el hero de la portada).
+- **Componentes:** `DotImage` (`@mt/ui/components/dot-image`) es el efecto, en CSS puro: una máscara de puntos repetida sobre la imagen, sin JavaScript ni dependencias, así que sale en el HTML prerenderizado. `LandscapePhoto` (`apps/web/src/components/landscape-photo.tsx`) lo usa con una foto del registro y dos botones sobre la foto, abajo a la izquierda: el de autoría (ícono de información, abre el crédito al tocar) y «Proponé tu foto». Se usa `LandscapePhoto` con su `id` y una altura: `<LandscapePhoto id="cordon-del-plata" className="h-52 sm:h-80" />`. Va al tope de la página y ocupa el ancho del contenido hasta los bordes; con `flush={false}` queda donde se la pone (el hero de la portada).
 - **Una foto decorativa no corre el contenido:** en un hero, el texto y las acciones se centran en toda la pantalla (entre el header y el borde de abajo), y la foto va de fondo, detrás. Si la foto ocupa su propio lugar, el contenido se centra solo en lo que queda arriba y se ve corrido hacia el header.
 - **El crédito no ocupa una fila:** el crédito y la propuesta de foto van como botones sobre la imagen, nunca como una línea de texto debajo, que suma una fila y se mezcla con el título que sigue.
 - **Registro:** `apps/web/src/photos.ts`, con título, autor, licencia, link y `focus` (qué parte queda a la vista al recortar). Los archivos van en `apps/web/public/fotos/<id>.jpg`.
@@ -241,6 +241,8 @@ Se usan con `<Mascot mascot="aco" pose="wave" size={120} />` y `<MascotAvatar ma
 **Sumar una mascota.** Carpeta `packages/mascots/mascots/<id>/` con su `mascot.json` y los originales, el `import` en `src/manifest.ts` y `bun run mascotas`. Los tipos de pose salen del manifiesto, así que un nombre mal escrito no compila.
 
 `bun run mascotas --check` verifica que cada pose del manifiesto tenga su original y sus archivos generados (y que pesen poco: 512 px menos de 150 KB, 96 px menos de 20 KB). El recorte es el mismo para todas las poses de un estilo, para que Aco no cambie de tamaño al cambiar de pose. `avatar.crop` es el cuadrado, en píxeles del original, que encuadra la cabeza y el collar.
+
+- **La esquina inferior derecha es del asistente.** Ahí va el botón flotante de Aco en todas las páginas, así que ningún otro botón fijo o pegado al borde inferior de la pantalla va en esa esquina (por eso los botones de las fotos de paisaje van a la izquierda).
 
 ## Lo que no hacemos
 
