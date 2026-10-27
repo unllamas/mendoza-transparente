@@ -189,6 +189,8 @@ export interface PoblacionTema {
 export interface MapaMendoza {
   viewBox: string;
   fuente: string;
+  /** Equirectangular projection of the map: x = (lon - minLon) * cosLat * scale, y = (maxLat - lat) * scale. */
+  proyeccion?: { minLon: number; maxLat: number; cosLat: number; scale: number };
   departamentos: { municipio: string; path: string; centroide: [number, number] }[];
 }
 

@@ -6,6 +6,7 @@ import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Andes } from "./andes.tsx";
 import { type BlockHandlers, BlockView } from "./blocks.tsx";
 import { AnswerFooter } from "./feedback.tsx";
+import { currentPosition, municipalityAt } from "./locate.ts";
 import { MunicipalitySheet } from "./municipality-sheet.tsx";
 import type { Turn } from "./use-conversation.ts";
 
@@ -131,15 +132,13 @@ export function Panel({
   }, [turns.length, thinking, failed]);
 
   const handlers: BlockHandlers = {
-    onLocate: () => {
-      // TODO: match the coordinates against the municipality boundaries (data/processed/geo) and send the name as the
-      // user's message. Until that exists, any outcome opens the list, so nobody is left without a way forward.
-      if (!("geolocation" in navigator)) return setSheet(true);
-      navigator.geolocation.getCurrentPosition(
-        () => setSheet(true),
-        () => setSheet(true),
-        { timeout: 8000 },
-      );
+    // The position is matched against the department map in the browser; only the municipality name is sent.
+    // Denied, unavailable or outside Mendoza: the list opens, so nobody is left without a way forward.
+    onLocate: async () => {
+      const coords = await currentPosition();
+      const municipality = coords ? await municipalityAt(coords.latitude, coords.longitude).catch(() => null) : null;
+      if (municipality) onSend(municipality);
+      else setSheet(true);
     },
     onPickMunicipality: () => setSheet(true),
     onChoose: onSend,
