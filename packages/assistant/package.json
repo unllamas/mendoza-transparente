@@ -1,0 +1,13 @@
+{
+  "name": "@mt/assistant",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts",
+    "./knowledge.json": "./src/knowledge.json"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
+}
