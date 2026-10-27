@@ -11,7 +11,9 @@ Cómo se cargan los trámites (qué hay que hacer) y las tasas e impuestos (cuá
   2. Escribir el lector de su anexo en `packages/scrapers/src/tributos/readers/<municipio>.ts`, como el de Godoy Cruz: cada municipio tiene su formato. Cada fila dice su `unidad` (pesos, UT o UTM).
   3. Probarlo sin tocar `data/`: `bun run tributos:probar packages/scrapers/src/tributos/readers/<municipio>.ts` (cuántos rubros lee y los montos de almacén, kiosco, ropa, rotisería y carnicería).
   4. Validar los montos contra el PDF y registrarlo en `readers/index.ts`. Varios subagentes pueden escribir lectores en paralelo, uno por archivo; el registro lo hace la sesión principal.
+- **Normas que no salen en el Boletín** (General Alvear: la tarifaria está solo en el sitio municipal): la norma lleva un `url` con el PDF del sitio oficial y un `norma_id` propio (`general-alvear-2026`) en lugar del id del Boletín. `bun run scrape tributos` lo baja con `fetchOrReuse` (queda en `data/raw/tributos/`), sin detalle ni anexos del Boletín, y `fecha_boletin` queda vacía en `documentos.csv`. El resto es igual: lector, prueba y registro.
 - **Anexos escaneados** (Luján de Cuyo, Maipú): no tienen texto, así que no hay lector. Los montos de los rubros del recorrido se leen a mano de la imagen y se cargan en `tasa_comercio.manual` del catálogo, con la página.
+- **Anexos con el texto por columnas** (Rivadavia): el PDF tiene texto, pero sale con los nombres juntos y después los códigos y montos. El lector declara `layout: "rows"` y el scraper arma el texto por filas (`pdfRows` en `packages/scrapers/src/lib/pdf.ts`, junta lo que está a la misma altura).
 - **Reglas:**
   - Los montos se copian tal como se publicaron, aunque parezcan un error; el error se avisa en el diccionario.
   - Si el municipio fija las tasas en Unidades Tributarias, hace falta además el decreto que fija su valor.
@@ -42,4 +44,4 @@ Cada entrada es un **recorrido** (por ejemplo `abrir-un-comercio`) en un municip
 
 El criterio: el código que corresponde a un comercio minorista con local propio, no mayorista, fábrica, venta a consignación ni puesto en la vía pública, salvo que el rubro sea eso. Si el anexo no tiene nada razonable, el rubro no se carga: vale más un «todavía no lo tenemos» que un monto de otra actividad. Lo que la gente pide y no está queda en la tabla `assistant_gaps` (ver [Asistente](asistente.md#faltantes)), y de ahí sale qué sumar. En los anexos escaneados, solo hay tasa para los rubros de `tasa_comercio.manual`, que lleva el `ejercicio` de los montos.
 
-Hoy está relevado `abrir-un-comercio` en Godoy Cruz y en los seis municipios de la tanda 1 (estado en `docs/planes/guia-de-tramites.md#plan-por-municipio`). Para otro municipio, el asistente da solo los pasos de Nación y Provincia y avisa que falta relevar los municipales.
+Hoy está relevado `abrir-un-comercio` en Godoy Cruz y en los trece municipios de las tandas 1 y 2 (estado en `docs/planes/guia-de-tramites.md#plan-por-municipio`). Para otro municipio, el asistente da solo los pasos de Nación y Provincia y avisa que falta relevar los municipales.

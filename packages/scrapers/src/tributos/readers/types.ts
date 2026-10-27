@@ -29,6 +29,8 @@ export interface Reader {
   normaId: string;
   /** Fewer distinct activities than this means the layout changed and the reader missed lines: the run stops. */
   minActivities: number;
+  /** "rows": the annex text comes out by columns in the PDF order, so it is rebuilt by rows (pdfRows) before reading. */
+  layout?: "rows";
   read(text: string): ActivityRow[];
 }
 

@@ -18,7 +18,8 @@
 - { id: fiambreria, nombre: Fiambrería, alimentos: true, palabras: [fiambres, quesos, lácteos] }
 - { id: dietetica, nombre: Dietética, alimentos: true, palabras: [naturista, granos, productos orgánicos] }
 - { id: heladeria, nombre: Heladería, alimentos: true, palabras: [helados] }
-- { id: bar, nombre: Bar o café, alimentos: true, palabras: [cafetería, confitería, cervecería] }
+- { id: bar, nombre: Bar o café, alimentos: true, palabras: [bar, bares, cafetería, confitería, cervecería, pub] }
+- { id: cerveza-artesanal, nombre: Cerveza artesanal, alimentos: true, palabras: [cerveza, cervezas, birra, cervecería artesanal, patio cervecero, microcervecería] }
 - { id: restaurante, nombre: Restaurante, alimentos: true, palabras: [restaurant, comedor, parrilla, pizzería] }
 - { id: pastas, nombre: Fábrica de pastas, alimentos: true, palabras: [pastas frescas, ravioles] }
 - { id: peluqueria, nombre: Peluquería, alimentos: false, palabras: [barbería, estética, salón de belleza] }

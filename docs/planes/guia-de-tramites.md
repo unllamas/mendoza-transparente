@@ -157,17 +157,17 @@ Cada municipio se completa en cinco pasos y se da por terminado cuando pasa todo
 | Piloto | Godoy Cruz | 196.010 | Ord. 7497 (2026), Boletín | ✅ lector, 566 rubros | ✅ | ✅ | ⏳ evals con claves | Rentas: si el monto es mensual o anual; siglas COM, IND, SERV y AP |
 | 1 | Guaymallén | 321.966 | Ord. 10298 (2026), Boletín | ✅ lector, 578 rubros, UTM de $ 130 | ✅ | ✅ | ⏳ | Si la UTM subió en 2026 (el art. 1 permite hasta 60 %) |
 | 1 | Las Heras | 234.401 | Ord. 54/25 (2026), Boletín | ✅ lector, UT de $ 170 | ✅ | ✅ | ⏳ | Decreto de la UT de 2026 (el dato sale del portal de Rentas); el kiosco usa el rubro «Kioscos: municipal o en la vía pública», a confirmar; ficha ambiental y bomberos sin ficha |
-| 1 | Maipú | 219.402 | Ord. 7831 (2026), Boletín (su sumario no dice «tarifaria») | ✋ a mano: anexo escaneado, 5 rubros | ✅ | ✅ | ⏳ | Verificar los montos contra la imagen; actualizaciones posteriores al primer cuatrimestre |
+| 1 | Maipú | 219.402 | Ord. 7831 (2026), Boletín (su sumario no dice «tarifaria») | ✋ a mano: anexo escaneado, 6 rubros (con peluquería) | ✅ | ✅ | ⏳ | Verificar los montos contra la imagen; actualizaciones posteriores al primer cuatrimestre; la barbería (7.4.18.7) paga menos que la peluquería unisex que se muestra |
 | 1 | San Rafael | 215.020 | Ord. 15539 (2026), sitio municipal | ⚠️ sin monto: la fórmula del art. 28 sale cortada | ✅ | ✅ | ⏳ | Fórmula completa y criterio de la categoría; texto de la Ord. 15179 (régimen simplificado) |
 | 1 | Luján de Cuyo | 175.056 | Ord. 15095 (2026), Boletín | ✋ a mano: anexo escaneado, 5 rubros, UT de $ 235 | ✅ | ✅ | ⏳ | Qué rubros pagan la categorización ambiental; contradicciones entre la ficha y la tarifaria |
 | 1 | Capital | 127.160 | Ord. 4222 (2026), Boletín | ✅ lector, 100 rubros, UTM de $ 130 | ✅ | ✅ | ⏳ | Qué es cada categoría (10 a 40); rubro del kiosco a confirmar; costo de la habilitación; acto que fija la UTM en $ 130 |
-| 2 | San Martín | 139.792 | Ord. 3229/2026, Boletín | — | — | — | — | — |
-| 2 | Rivadavia | 63.724 | Ord. 5303 (2026), Boletín | — | — | — | — | — |
-| 2 | Tunuyán | 60.171 | Ord. 3351 (2026); valores en el anexo del Boletín | — | — | — | — | — |
-| 2 | General Alvear | 52.584 | Tarifaria 2026, sitio municipal | — | — | — | — | — |
-| 2 | Lavalle | 47.167 | Proyecto 2026 (decreto 4/2026); la 2025 es la Ord. 1252 | — | — | — | — | — |
-| 2 | Junín | 46.604 | Ord. 967 (2025); no hay 2026 en el Boletín | — | — | — | — | — |
-| 2 | Tupungato | 41.280 | Ord. 11/2026, sitio municipal | — | — | — | — | — |
+| 2 | San Martín | 139.792 | Ord. 3229/2026, Boletín (modifica la 3189/2024, que trae los rubros) | ✋ a mano: anexo escaneado, 5 rubros, UT de $ 83 | ✅ | ✅ | ⏳ | Si los importes son anuales o bimestrales; qué comercios usan la UT de $ 83 y cuáles la de $ 156,60; criterio de la categoría; requisitos y plazo de la habilitación; si la Ord. 3243 o el decreto 1636 cambiaron algo |
+| 2 | Rivadavia | 63.724 | Ord. 5303 (2026), Boletín | ✅ lector, 598 rubros, UTM de $ 119,60 | ✅ | ✅ | ⏳ | Plazo de la habilitación; criterio de la categoría; si el sellado es de 18 o 26 UTM; panadería (700 o 1000 UTM); reglamentación de la exención del art. 44 |
+| 2 | Tunuyán | 60.171 | Ord. 3351 (2026); valores en el anexo del decreto 7, Boletín | ✋ a mano: anexo escaneado y torcido, 5 rubros en pesos por año | ✅ | ✅ | ⏳ | Qué comercio paga la categoría 1 y cuál la 2; requisitos, costo y plazo de la habilitación; decreto de la UTM; volver a cotejar los montos contra la imagen |
+| 2 | General Alvear | 52.584 | Tarifaria 2026 (2.º semestre), sitio municipal | ✅ lector, 352 rubros, UTM de $ 1 ajustada por IPC | ✅ | ✅ | ⏳ | Categoría (1 a 5) de cada comercio; resolución de la UTM del semestre; dónde se presenta la habilitación; el curso de manipulación (gratis o $ 4.000); rubro de carnicería y verdulería |
+| 2 | Lavalle | 47.167 | Ord. 1284/2026, promulgada por el decreto 4/2026, Boletín | ✋ a mano: anexo sin texto, 5 rubros, UTM de $ 85 por bimestre | ⚠️ solo Nación y Provincia: el municipio no tiene un sitio que funcione | ✅ | ⏳ | Todo el trámite de habilitación; qué rubro es «almacén»; criterio de la categoría (A a D); la UTM después del primer cuatrimestre |
+| 2 | Junín | 46.604 | Ord. 1020/2025 (2026), Boletín (su sumario dice solo «EXPEDIENTE») | ✋ a mano: anexo escaneado, 5 rubros en pesos por año, por zona | ✅ | ✅ | ⏳ | Qué calles son zona 1 y 2; categoría que asigna el inspector; documentos y sellado; si la ropa es «Casas de modas» o «Tiendas» |
+| 2 | Tupungato | 41.280 | Ord. 11/2026, sitio municipal | ✋ a mano: escaneada, 5 rubros; la tasa es una fórmula por m², UT de $ 40 | ✅ | ✅ | ⏳ | Rubro de almacén, kiosco y carnicería (se usó el 3300); una versión con texto; plazos de factibilidad y habilitación; costo del curso de manipulación |
 | 3 | San Carlos | 39.869 | Solo la Ord. 2053/2025, que modifica la 2047/2024 | — | — | — | — | — |
 | 3 | Malargüe | 32.717 | Ord. 2268/2024, la última del sitio | — | — | — | — | — |
 | 3 | Santa Rosa | 19.382 | Ord. 34/2026, Boletín | — | — | — | — | — |

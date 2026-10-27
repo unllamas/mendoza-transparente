@@ -22,7 +22,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { archive, fetchOrReuse, latestRaw, PROCESSED_DIR, type Row, readProcessed, readRaw, writeProcessed } from "@mt/core";
 import { getDocumentProxy } from "unpdf";
-import { pdfPages } from "../lib/pdf.ts";
+import { pdfPages, pdfRows } from "../lib/pdf.ts";
 import { READERS } from "../tributos/readers/index.ts";
 import { parseDetail, post } from "./boletin-oficial.ts";
 
@@ -40,6 +40,8 @@ interface Norm {
   numero: string;
   /** Año en que rige; vacío si no es anual (un código tributario). */
   ejercicio: number | "";
+  /** Solo si la norma no sale en el Boletín: el PDF del sitio oficial del municipio. Entonces `norma_id` es un id propio. */
+  url?: string;
 }
 
 const NORMAS: Norm[] = [
@@ -83,6 +85,44 @@ const NORMAS: Norm[] = [
   { norma_id: "263430", nivel: "municipal", jurisdiccion: "Maipú", documento: "ordenanza_tarifaria", numero: "7638", ejercicio: 2025 },
   // Its summary only says "EXPEDIENTE …": found by the survey, not by searching "TARIFARIA".
   { norma_id: "299346", nivel: "municipal", jurisdiccion: "Maipú", documento: "ordenanza_tarifaria", numero: "7831", ejercicio: 2026 },
+  // Tanda 2: San Martín. Ord. 3229 amends the base tarifaria 3189/2024 and replaces its Anexo I (scanned).
+  // Two errata (302612, 308284) only fix a cited ordinance number, so they are not downloaded.
+  { norma_id: "302476", nivel: "municipal", jurisdiccion: "San Martín", documento: "ordenanza_tarifaria", numero: "3229", ejercicio: 2026 },
+  { norma_id: "266356", nivel: "municipal", jurisdiccion: "San Martín", documento: "ordenanza_tarifaria", numero: "3189", ejercicio: 2025 },
+  // Tanda 2.
+  {
+    norma_id: "302492",
+    nivel: "municipal",
+    jurisdiccion: "Tunuyán",
+    documento: "ordenanza_tarifaria",
+    numero: "decreto 7",
+    ejercicio: 2026,
+  },
+  { norma_id: "302494", nivel: "municipal", jurisdiccion: "Tunuyán", documento: "ordenanza_tarifaria", numero: "3351", ejercicio: 2026 },
+  // Tanda 2: norma publicada solo en el sitio municipal (no está en el Boletín), con id propio.
+  {
+    norma_id: "general-alvear-2026",
+    nivel: "municipal",
+    jurisdiccion: "General Alvear",
+    documento: "ordenanza_tarifaria",
+    numero: "del 2.º semestre",
+    ejercicio: 2026,
+    url: "https://alvearmendoza.gob.ar/wp-content/uploads/2026/08/IIIV-ORDENANZA-TARIFARIA-2026-2do.sem_.pdf",
+  },
+  { norma_id: "300518", nivel: "municipal", jurisdiccion: "Rivadavia", documento: "ordenanza_tarifaria", numero: "5303", ejercicio: 2026 },
+  // Tanda 2: Lavalle. The 2026 text is a draft ("proyecto") sent by decree 4/2026; the sanctioned 2025 one is Ord. 1252.
+  { norma_id: "303207", nivel: "municipal", jurisdiccion: "Lavalle", documento: "ordenanza_tarifaria", numero: "1284", ejercicio: 2026 },
+  {
+    norma_id: "303208",
+    nivel: "municipal",
+    jurisdiccion: "Lavalle",
+    documento: "ordenanza_tarifaria",
+    numero: "decreto 4/2026",
+    ejercicio: 2026,
+  },
+  { norma_id: "267077", nivel: "municipal", jurisdiccion: "Lavalle", documento: "ordenanza_tarifaria", numero: "1252", ejercicio: 2025 },
+  // Tanda 2. Its summary only says "EXPEDIENTE …"; the text is the Ordenanza Tarifaria 2026 (Ord. 1020/2025).
+  { norma_id: "302510", nivel: "municipal", jurisdiccion: "Junín", documento: "ordenanza_tarifaria", numero: "1020/2025", ejercicio: 2026 },
 ];
 
 const COLUMNS = [
@@ -131,37 +171,47 @@ export async function run(_args: string[]) {
   await mkdir(join(OUT_DIR, "textos"), { recursive: true });
 
   for (const n of NORMAS) {
-    const entry = index.get(n.norma_id);
-    if (!entry) throw new Error(`La norma ${n.norma_id} no está en boletin-oficial/normas.csv`);
-    const fecha = String(entry.fecha);
-    const params = {
-      tipo_busqueda: "norma",
-      norma_edicto_id: n.norma_id,
-      fecha_desde: String(entry.fecha_norma || fecha),
-      fecha_hasta: fecha,
-      tipo_boletin: "2",
-    };
-    const detailUrl = `https://portalgateway.mendoza.gov.ar/api/boe/detail (${new URLSearchParams(params).toString()})`;
-    // The detail is a POST, so fetchOrReuse does not apply: reuse the archived copy or ask once.
-    const archived = await latestRaw(SOURCE, `detalle-${n.norma_id}.html`);
-    let html = archived ? (await readRaw(archived)).toString() : "";
-    if (!html) {
-      html = await post("detail", params);
-      await archive(SOURCE, `detalle-${n.norma_id}.html`, html, { url: detailUrl });
+    let fecha = "";
+    let urlNorm = n.url ?? "";
+    let annexes: string[] = [];
+    let pdf: Buffer;
+    if (n.url) {
+      // Municipal site: one PDF with everything, no Boletín detail or annexes.
+      pdf = await fetchOrReuse(SOURCE, n.url, `norma-${n.norma_id}.pdf`);
+    } else {
+      const entry = index.get(n.norma_id);
+      if (!entry) throw new Error(`La norma ${n.norma_id} no está en boletin-oficial/normas.csv`);
+      fecha = String(entry.fecha);
+      const params = {
+        tipo_busqueda: "norma",
+        norma_edicto_id: n.norma_id,
+        fecha_desde: String(entry.fecha_norma || fecha),
+        fecha_hasta: fecha,
+        tipo_boletin: "2",
+      };
+      const detailUrl = `https://portalgateway.mendoza.gov.ar/api/boe/detail (${new URLSearchParams(params).toString()})`;
+      // The detail is a POST, so fetchOrReuse does not apply: reuse the archived copy or ask once.
+      const archived = await latestRaw(SOURCE, `detalle-${n.norma_id}.html`);
+      let html = archived ? (await readRaw(archived)).toString() : "";
+      if (!html) {
+        html = await post("detail", params);
+        await archive(SOURCE, `detalle-${n.norma_id}.html`, html, { url: detailUrl });
+      }
+      const detail = parseDetail(html);
+      if (!detail.url_pdf) throw new Error(`La norma ${n.norma_id} no tiene PDF en el Boletín`);
+      urlNorm = detail.url_pdf;
+      pdf = await fetchOrReuse(SOURCE, detail.url_pdf, `norma-${n.norma_id}.pdf`);
+      annexes = await annexLinks(pdf);
     }
-    const detail = parseDetail(html);
-    if (!detail.url_pdf) throw new Error(`La norma ${n.norma_id} no tiene PDF en el Boletín`);
-
-    const pdf = await fetchOrReuse(SOURCE, detail.url_pdf, `norma-${n.norma_id}.pdf`);
-    const annexes = await annexLinks(pdf);
-    const pages = [...(await pdfPages(pdf))];
+    const reader = READERS.find((r) => r.normaId === n.norma_id);
+    const toPages = reader?.layout === "rows" ? pdfRows : pdfPages;
+    const pages = [...(await toPages(pdf))];
     for (const [i, url] of annexes.entries()) {
-      pages.push(...(await pdfPages(await fetchOrReuse(SOURCE, url, `norma-${n.norma_id}-anexo-${i + 1}.pdf`))));
+      pages.push(...(await toPages(await fetchOrReuse(SOURCE, url, `norma-${n.norma_id}-anexo-${i + 1}.pdf`))));
     }
 
     const text = `${pages.map((p, i) => `── página ${i + 1} ──\n${p.trim()}`).join("\n\n")}\n`;
     await writeFile(join(OUT_DIR, "textos", `${n.norma_id}.txt`), text);
-    const reader = READERS.find((r) => r.normaId === n.norma_id);
     if (reader) {
       const parsed = reader.read(text);
       // Far fewer activities than expected means the PDF layout changed and the reader missed lines.
@@ -170,7 +220,7 @@ export async function run(_args: string[]) {
       activities.push(...parsed.map((r) => ({ norma_id: n.norma_id, jurisdiccion: n.jurisdiccion, ejercicio: n.ejercicio, ...r })));
       console.log(`  ${count} rubros con monto por categoría`);
     }
-    rows.push({ ...n, fecha_boletin: fecha, url_norma: detail.url_pdf, url_anexos: annexes.join(" "), paginas: pages.length });
+    rows.push({ ...n, fecha_boletin: fecha, url_norma: urlNorm, url_anexos: annexes.join(" "), paginas: pages.length });
     console.log(`${n.jurisdiccion} ${n.documento} ${n.numero}: ${pages.length} páginas, ${annexes.length} anexos`);
   }
 
