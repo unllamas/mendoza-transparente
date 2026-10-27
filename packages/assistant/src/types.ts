@@ -44,8 +44,11 @@ export interface FeeRange {
 export type Block =
   /** Ask where: "Usar mi ubicación" and "Buscar el municipio" (the 18 municipalities). */
   | { type: "ask_municipality" }
-  /** Ask what the business sells, with a few options; the person can also type. */
-  | { type: "ask_activity"; options: { id: string; label: string }[] }
+  /**
+   * Ask what the business sells. The first four options show as rows; the rest are found with a search sheet
+   * (`words` are synonyms for that search). The person can also type.
+   */
+  | { type: "ask_activity"; options: { id: string; label: string; words?: string[] }[] }
   | {
       type: "steps";
       flow: string;

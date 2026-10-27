@@ -9,7 +9,8 @@ export async function currentKnowledge() {
   const catalog = Bun.YAML.parse(await readFile(join(ROOT, "data", "curado", "tramites.yaml"), "utf8")) as Record<string, unknown>[];
   const fees = await readProcessed("tributos", "rubros_comercio.csv");
   const documents = await readProcessed("tributos", "documentos.csv");
-  return `${JSON.stringify(buildKnowledge(catalog, fees, documents))}\n`;
+  const common = Bun.YAML.parse(await readFile(join(ROOT, "data", "curado", "rubros.yaml"), "utf8")) as Record<string, unknown>[];
+  return `${JSON.stringify(buildKnowledge(catalog, fees, documents, common))}\n`;
 }
 
 if (import.meta.main) {

@@ -33,4 +33,6 @@ Cada entrada es un **recorrido** (por ejemplo `abrir-un-comercio`) en un municip
 5. **Revisar el texto** con la skill `contenido-y-metodologia`: neutral, corto, sin adjetivos.
 6. **Volver a verificar** cada recorrido al menos una vez por año, cuando sale la tarifaria nueva, y actualizar `verificado`.
 
+**Rubros comunes:** `data/curado/rubros.yaml` es la lista que el asistente ofrece cuando pregunta qué vas a vender, en cualquier municipio. Los cuatro primeros se ven a la vista y el resto se busca en una hoja; las `palabras` son sinónimos para esa búsqueda y para encontrar el rubro en el anexo de la tarifaria. Un recorrido suma sus propios rubros con el código de su anexo; si un rubro está en los dos lugares, va con el mismo `id`. Después de editarla, `bun run asistente:datos`.
+
 Hoy está relevado `abrir-un-comercio` en Godoy Cruz y en los seis municipios de la tanda 1 (estado en `docs/planes/guia-de-tramites.md#plan-por-municipio`). Para otro municipio, el asistente da solo los pasos de Nación y Provincia y avisa que falta relevar los municipales.

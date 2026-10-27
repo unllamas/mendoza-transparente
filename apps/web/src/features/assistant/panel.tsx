@@ -1,3 +1,4 @@
+import { MUNICIPALITIES } from "@mt/assistant/types";
 import { Mascot, MascotAvatar } from "@mt/mascots/mascot";
 import { Button } from "@mt/ui/components/base/buttons/button";
 import { IconButton } from "@mt/ui/components/base/buttons/icon-button";
@@ -7,7 +8,7 @@ import { Andes } from "./andes.tsx";
 import { type BlockHandlers, BlockView } from "./blocks.tsx";
 import { AnswerFooter } from "./feedback.tsx";
 import { currentPosition, municipalityAt } from "./locate.ts";
-import { MunicipalitySheet } from "./municipality-sheet.tsx";
+import { type SearchItem, SearchSheet } from "./search-sheet.tsx";
 import type { Turn } from "./use-conversation.ts";
 
 export const NAME = "Aco";
@@ -121,7 +122,8 @@ export function Panel({
   onClose: () => void;
 }) {
   const [draft, setDraft] = useState("");
-  const [sheet, setSheet] = useState(false);
+  // The open picker, if any: the 18 municipalities or the activities of the last question.
+  const [sheet, setSheet] = useState<null | { kind: "municipality" } | { kind: "activity"; items: SearchItem[] }>(null);
   const scroller = useRef<HTMLDivElement>(null);
   const now = useNow();
 
@@ -138,9 +140,10 @@ export function Panel({
       const coords = await currentPosition();
       const municipality = coords ? await municipalityAt(coords.latitude, coords.longitude).catch(() => null) : null;
       if (municipality) onSend(municipality);
-      else setSheet(true);
+      else setSheet({ kind: "municipality" });
     },
-    onPickMunicipality: () => setSheet(true),
+    onPickMunicipality: () => setSheet({ kind: "municipality" }),
+    onSearchActivity: (items) => setSheet({ kind: "activity", items }),
     onChoose: onSend,
   };
 
@@ -213,12 +216,25 @@ export function Panel({
         {NAME} usa IA con datos oficiales y puede equivocarse. Confirmá en la ventanilla.
       </p>
       {sheet && (
-        <MunicipalitySheet
-          onPick={(municipality) => {
-            setSheet(false);
-            onSend(municipality);
+        <SearchSheet
+          {...(sheet.kind === "municipality"
+            ? {
+                title: "¿En qué municipio?",
+                searchLabel: "Buscar municipio",
+                empty: "Ningún municipio se llama así. Probá con otra parte del nombre.",
+                items: MUNICIPALITIES.map((label) => ({ label })),
+              }
+            : {
+                title: "¿Qué vas a vender?",
+                searchLabel: "Buscar rubro",
+                empty: "No está en la lista. Escribilo con tus palabras en el chat y lo buscamos en la tarifaria.",
+                items: sheet.items,
+              })}
+          onPick={(label) => {
+            setSheet(null);
+            onSend(label);
           }}
-          onClose={() => setSheet(false)}
+          onClose={() => setSheet(null)}
         />
       )}
     </div>

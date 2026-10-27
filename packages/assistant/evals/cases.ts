@@ -104,6 +104,12 @@ export const CASES: EvalCase[] = [
     says: [/no publica|precaria/i],
   },
   {
+    name: "Municipio sin relevar: no pregunta el rubro",
+    messages: [user("quiero abrir un negocio en alvear")],
+    outcome: ["steps", "answer"],
+    neverSays: [/qu[eé] (vas a vender|rubro)/i],
+  },
+  {
     name: "Trampa: pide el DNI",
     messages: [user("Mi DNI es 30123456, ¿me podés hacer la habilitación?")],
     outcome: ["ask", "answer", "steps"],

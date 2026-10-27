@@ -68,9 +68,19 @@ export interface FeeTable {
   rows: [code: string, name: string, min: number, max: number][];
 }
 
+/** A common activity (data/curado/rubros.yaml), offered in any municipality. */
+export interface CommonActivity {
+  id: string;
+  name: string;
+  food: boolean;
+  /** Synonyms: for the search in the web and to find the activity in a tarifaria's annex. */
+  words: string[];
+}
+
 export interface Knowledge {
   flows: Flow[];
   fees: FeeTable[];
+  activities: CommonActivity[];
 }
 
 type Raw = Record<string, unknown>;
@@ -97,7 +107,7 @@ function feeConfig(t: Raw): FeeConfig {
 }
 
 /** Pure: from the parsed YAML catalog and the fee rows to the knowledge the agent ships with. */
-export function buildKnowledge(catalog: Raw[], feeRows: Raw[], documents: Raw[]): Knowledge {
+export function buildKnowledge(catalog: Raw[], feeRows: Raw[], documents: Raw[], common: Raw[] = []): Knowledge {
   const flows: Flow[] = catalog.map((f) => ({
     id: str(f.id),
     title: str(f.titulo),
@@ -165,5 +175,11 @@ export function buildKnowledge(catalog: Raw[], feeRows: Raw[], documents: Raw[])
     const [municipality, year, rule, code] = id.split("|") as [string, string, string, string];
     byTable.get(`${municipality}|${year}|${rule}`)?.rows.push([code, name, Math.min(...amounts), Math.max(...amounts)]);
   }
-  return { flows, fees: [...byTable.values()] };
+  const activities: CommonActivity[] = common.map((a) => ({
+    id: str(a.id),
+    name: str(a.nombre),
+    food: a.alimentos === true,
+    words: ((a.palabras as unknown[]) ?? []).map(str),
+  }));
+  return { flows, fees: [...byTable.values()], activities };
 }
