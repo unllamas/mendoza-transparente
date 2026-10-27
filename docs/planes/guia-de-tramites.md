@@ -92,6 +92,19 @@ El relevamiento está en `docs/relevamiento-fuentes.md#212-impuestos-provinciale
   - Verificar el cupo gratis de cada proveedor antes de decidir.
 - Cada respuesta se muestra como «respuesta generada con IA», con sus fuentes a la vista y la aclaración «confirmalo en la ventanilla».
 
+### 6. Carpeta del trámite en PDF
+
+Al final de cada recorrido, la persona baja un PDF con lo que tiene que llevar o subir:
+- los pasos en orden, cada uno con su fuente y la fecha en que se verificó;
+- la lista de papeles para tachar;
+- **el formulario oficial completo con sus datos**, cuando el organismo publica uno. Godoy Cruz, por ejemplo, publica el formulario de habilitación en PDF.
+
+Cómo se hace:
+- **En el navegador, como la nota de `/pedir`** (`features/request-letter/utils/pdf.ts`, con pdf-lib). Los datos de la persona nunca pasan por un servidor ni se guardan.
+- **El formulario oficial se completa, no se rehace.** Se usa el PDF del organismo, archivado con su fecha; si tiene campos, se llenan, y si no, se escribe encima en las posiciones de cada campo. Si el organismo cambia el formulario, el recorrido avisa que hay que revisarlo.
+- **No subimos nada por la persona:** las plataformas oficiales (Ciudadanía Digital, Mis Trámites Online de la ATM, ARCA) piden su clave y muchos trámites, su firma en persona. El PDF le ahorra escribir y le dice qué llevar; el envío lo hace ella.
+- Lo que el asistente completó con IA se marca, para que la persona lo revise antes de firmar.
+
 ## Preguntas abiertas
 
 - **El anexo de la Ley Impositiva pesa 50 MB comprimido**, cinco veces más que el crudo más grande del repo. Hay tres opciones:
@@ -103,3 +116,4 @@ El relevamiento está en `docs/relevamiento-fuentes.md#212-impuestos-provinciale
 - **Godoy Cruz:** el Anexo A no dice si el monto es anual o mensual (el artículo 26 dice que el pago es mensual). Tampoco define las siglas COM, IND, SERV y AP ni la columna final de 0 y 1. Hay que confirmarlo con la Dirección de Rentas o con una boleta real. En el rubro 34010 (envío de dinero), la categoría 10 cuesta más que la 9: probablemente es un error de la ordenanza.
 - **Dónde corre el asistente:** eve se despliega en Vercel, una segunda plataforma además de Cloudflare. Hay que confirmar el cupo gratis y cómo se manejan los secretos de los dos lados.
 - **Qué trámites siguen** después de abrir un comercio: se eligen con la medición de búsquedas.
+- **La mascota del asistente:** un cóndor andino en la vista previa del 26/10/2026, con «Aco» (por el Aconcagua) como nombre de trabajo. Faltan el nombre definitivo y una ilustración hecha por alguien que dibuje. El encabezado del panel muestra la cordillera en celestes planos, sin gradientes, para seguir las reglas de diseño.
