@@ -13,6 +13,8 @@ export interface EvalCase {
   outcome: Outcome[];
   /** Block types that must be present. */
   blocks?: string[];
+  /** Block types that must not be present. */
+  noBlocks?: string[];
   /** Patterns the text must contain / must not contain (case-insensitive). */
   says?: RegExp[];
   neverSays?: RegExp[];
@@ -32,10 +34,58 @@ export const CASES: EvalCase[] = [
     blocks: ["ask_municipality"],
   },
   {
-    name: "Con municipio y rubro, da los pasos y la tasa",
+    name: "Con municipio y rubro, da los pasos y no la tasa que no pidió",
     messages: [user("Quiero abrir un almacén en Godoy Cruz, ¿qué tengo que hacer?")],
     outcome: ["steps"],
     blocks: ["steps"],
+    noBlocks: ["fee"],
+  },
+  {
+    name: "La tasa: pregunta, municipio y kiosco (el recorrido del widget)",
+    messages: [
+      user("¿cuánto cobra de tasa mi municipio?"),
+      aco("¿En qué municipio querés averiguar la tasa?"),
+      user("Godoy Cruz"),
+      aco("¿A qué rubro se dedica tu comercio?"),
+      user("Kiosco"),
+    ],
+    outcome: ["fee"],
+    blocks: ["fee"],
+    noBlocks: ["steps"],
+    neverSays: [/\$\s?\d/],
+  },
+  {
+    name: "La tasa: al dar el municipio, pregunta el rubro con la lista de ese municipio",
+    messages: [user("¿cuánto cobra de tasa mi municipio?"), aco("¿En qué municipio querés averiguar la tasa?"), user("Maipú")],
+    outcome: ["ask"],
+    blocks: ["ask_activity"],
+  },
+  {
+    name: "La tasa de un rubro que ese municipio no tiene: lo dice y lo anota",
+    messages: [user("¿Cuánto paga de tasa una peluquería en Maipú?")],
+    outcome: ["ask", "answer"],
+    says: [/todav[ií]a no|no (la )?tenemos/i],
+    noBlocks: ["fee"],
+  },
+  {
+    name: "La tasa en un municipio sin relevar: lo dice, sin pasos que no pidió",
+    messages: [user("¿Cuánto cobra Tunuyán de tasa a un kiosco?")],
+    outcome: ["answer", "no_answer"],
+    says: [/todav[ií]a no/i],
+    noBlocks: ["steps", "fee"],
+  },
+  {
+    name: "Sinónimos: golosinas es un kiosco",
+    messages: [user("¿Cuánto pago de tasa por un negocio de golosinas en Guaymallén?")],
+    outcome: ["fee"],
+    blocks: ["fee"],
+  },
+  {
+    name: "Un trámite que no tenemos: lo dice y no inventa pasos",
+    messages: [user("¿Cómo saco la licencia de conducir en Godoy Cruz?")],
+    outcome: ["answer"],
+    says: [/todav[ií]a no|no (lo )?tenemos/i],
+    noBlocks: ["steps"],
   },
   {
     name: "Respuesta a la pregunta del municipio",
@@ -56,16 +106,16 @@ export const CASES: EvalCase[] = [
     neverSays: [/\b\d+ d[ií]as\b/i],
   },
   {
-    name: "Tasa de un rubro que no está en el menú",
+    name: "Tasa de una carnicería en Godoy Cruz",
     messages: [user("¿Cuánto paga de derecho de comercio una carnicería en Godoy Cruz?")],
-    outcome: ["steps", "answer"],
-    says: [/\$/],
+    outcome: ["fee"],
+    blocks: ["fee"],
   },
   {
     name: "Guaymallén: pasos y tasa de un kiosco",
     messages: [user("Quiero abrir un kiosco en Guaymallén, ¿qué necesito y cuánto pago de tasa?")],
-    outcome: ["steps"],
-    blocks: ["steps"],
+    outcome: ["fee", "steps"],
+    blocks: ["steps", "fee"],
   },
   {
     name: "Capital: habilitación de una rotisería",
@@ -76,8 +126,8 @@ export const CASES: EvalCase[] = [
   {
     name: "Las Heras: tasa anual de una carnicería",
     messages: [user("¿Cuánto paga de tasa de comercio una carnicería en Las Heras?")],
-    outcome: ["steps", "answer"],
-    says: [/\$|UT/],
+    outcome: ["fee"],
+    blocks: ["fee"],
   },
   {
     name: "Luján de Cuyo: almacén, con montos leídos a mano",
@@ -93,7 +143,8 @@ export const CASES: EvalCase[] = [
   {
     name: "San Rafael: no hay monto de la tasa",
     messages: [user("¿Cuánto cobra San Rafael de tasa de comercio a un almacén?")],
-    outcome: ["steps", "answer", "unpublished"],
+    outcome: ["answer", "unpublished", "no_answer"],
+    noBlocks: ["fee", "ask_activity"],
     says: [/no se puede|no publica|Recaudaci[oó]n/i],
     neverSays: [/\$\s?\d/],
   },

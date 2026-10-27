@@ -6,7 +6,7 @@ import { RiArrowRightSLine, RiCloseLine, RiSendPlane2Line } from "@remixicon/rea
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Andes } from "./andes.tsx";
 import { type BlockHandlers, BlockView } from "./blocks.tsx";
-import { AnswerFooter } from "./feedback.tsx";
+import { AnswerFooter, type FeedbackSend, FeedbackSheet } from "./feedback.tsx";
 import { currentPosition, municipalityAt } from "./locate.ts";
 import { type SearchItem, SearchSheet } from "./search-sheet.tsx";
 import type { Turn } from "./use-conversation.ts";
@@ -16,7 +16,7 @@ export const NAME = "Aco";
 const SUGGESTIONS = ["¿Qué necesito para abrir un comercio?", "¿Cuánto cobra de tasas mi municipio?", "¿Cuánto pago de Ingresos Brutos?"];
 
 /** Answers that get the time and the thumbs; the ones that only ask something do not. */
-const RATED = new Set(["steps", "unpublished", "answer"]);
+const RATED = new Set(["steps", "fee", "unpublished", "answer"]);
 
 function Header({ onClose }: { onClose: () => void }) {
   return (
@@ -124,6 +124,8 @@ export function Panel({
   const [draft, setDraft] = useState("");
   // The open picker, if any: the 18 municipalities or the activities of the last question.
   const [sheet, setSheet] = useState<null | { kind: "municipality" } | { kind: "activity"; items: SearchItem[] }>(null);
+  // The thumbs-down form of an answer, open over the whole panel.
+  const [feedback, setFeedback] = useState<{ send: FeedbackSend } | null>(null);
   const scroller = useRef<HTMLDivElement>(null);
   const now = useNow();
 
@@ -173,7 +175,7 @@ export function Panel({
               {reply.blocks.map((block, j) => (
                 <BlockView key={`${block.type}-${j}`} block={block} answered={answered} handlers={handlers} />
               ))}
-              {RATED.has(reply.outcome) && <AnswerFooter reply={reply} at={turn.at} now={now} />}
+              {RATED.has(reply.outcome) && <AnswerFooter reply={reply} at={turn.at} now={now} onAskWhy={(send) => setFeedback({ send })} />}
             </BotTurn>
           );
         })}
@@ -215,6 +217,15 @@ export function Panel({
       <p className="shrink-0 px-5 pt-2 pb-3 text-center text-caption-1-regular text-text-tertiary">
         {NAME} usa IA con datos oficiales y puede equivocarse. Confirmá en la ventanilla.
       </p>
+      {feedback && (
+        <FeedbackSheet
+          onClose={() => setFeedback(null)}
+          onSend={(reason, note) => {
+            feedback.send(reason, note);
+            setFeedback(null);
+          }}
+        />
+      )}
       {sheet && (
         <SearchSheet
           {...(sheet.kind === "municipality"
@@ -227,8 +238,9 @@ export function Panel({
             : {
                 title: "¿Qué vas a vender?",
                 searchLabel: "Buscar rubro",
-                empty: "No está en la lista. Escribilo con tus palabras en el chat y lo buscamos en la tarifaria.",
+                empty: "Ese rubro todavía no está en la lista de este municipio.",
                 items: sheet.items,
+                askFree: (query: string) => `Preguntar por «${query}»`,
               })}
           onPick={(label) => {
             setSheet(null);

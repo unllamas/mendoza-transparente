@@ -14,6 +14,34 @@ Aco es el chat flotante del sitio. Responde qué hay que hacer, qué papeles hac
 | API | `packages/assistant/src/http.ts`, servida por `apps/web/functions/api/[[route]].ts` | `GET /api/asistente` (si está prendido), `POST /api/asistente` (una respuesta) y `POST /api/asistente/opinion` (👍 o 👎) |
 | Widget | `apps/web/src/features/assistant/` | Botón «Preguntá» y panel. Se carga recién si `GET /api/asistente` dice que está prendido |
 | Opiniones | Tabla `assistant_feedback` de D1 (migración `0004`) | Voto, motivo y nota opcional. Sin IP ni texto de la conversación |
+| Faltantes | Tabla `assistant_gaps` de D1 (migración `0005`) | Lo que se pidió y no tenemos: municipio, rubro o trámite, en pocas palabras |
+
+## La tasa y lo que no tenemos
+
+Son reglas del código, no de las instrucciones al modelo, así que no dependen de que el modelo las cumpla:
+
+- **La tarjeta de la tasa sale solo si la persona preguntó por la plata** («tasa», «cuánto cobra», «cuánto pago», «costo»…, en cualquier mensaje de la conversación: `asksAboutFee` en `tools.ts`). Si no preguntó, la herramienta ni siquiera le pasa los montos al modelo. Es una tarjeta propia (bloque `fee`), separada de los pasos.
+- **Al pedir el rubro para la tasa, se ofrecen solo los que tenemos en ese municipio** (`feeActivities`): 30 en Godoy Cruz y Guaymallén, 29 en Las Heras, 28 en Capital y 5 en Luján y Maipú, donde el anexo está escaneado. Para los pasos sirve cualquier rubro, porque solo cambia los de alimentos.
+- **Los sinónimos llevan al mismo rubro, pero lo que la ordenanza separa se muestra separado.** «Quiosco», «golosinas» y «maxikiosco» llevan al kiosco, y la tarjeta muestra cada actividad del anexo con su propio monto (ver [Trámites y tributos](tramites-y-tributos.md)).
+- **Lo que no tenemos se dice y se anota**, nunca se adivina. La herramienta de la tasa devuelve uno de cinco estados: `found`, `ask_activity`, `unknown_activity` (el rubro no está en la lista de ese municipio: se ofrecen los que hay), `not_surveyed` (no leímos su tarifaria) o `not_computable` (San Rafael). La de los pasos distingue un trámite que no tenemos (`known: false`) de un municipio sin relevar. En el buscador de rubros, lo que no aparece se puede mandar igual («Preguntar por «…»»).
+
+## Faltantes
+
+Cada respuesta guarda en `assistant_gaps` lo que se pidió y no tenemos, para decidir qué relevar primero:
+
+| `kind` | Cuándo | `value` |
+|---|---|---|
+| `municipio` | Pasos o tasa de un municipio sin relevar | `abrir-un-comercio` o `tasa-de-comercio` |
+| `rubro` | Tasa de un rubro que no está en la lista de ese municipio | El rubro como lo dijo la persona, normalizado |
+| `tramite` | Un trámite que no tenemos | El id que armó el modelo («sacar-licencia-de-conducir») |
+
+No se guarda la IP ni la conversación; `value` se normaliza y se corta a 60 caracteres. Igual es texto que viene de la persona: no se publica y se revisa antes de usarlo. Si la tabla no existe todavía, la respuesta sale igual y queda un aviso en el log. Para consultarla:
+
+```bash
+cd apps/web && bunx wrangler@4 d1 execute mendoza-transparente --remote --command "SELECT kind, municipality, value, COUNT(*) AS veces FROM assistant_gaps GROUP BY 1, 2, 3 ORDER BY veces DESC LIMIT 50"
+```
+
+La migración `0005` se aplica con `cd apps/web && bunx wrangler@4 d1 migrations apply mendoza-transparente --remote`, antes de probar en la vista previa: la base es la misma para la vista previa y producción, y la tabla nueva no cambia nada de lo que ya existe.
 
 ## Claves y configuración
 
@@ -67,7 +95,7 @@ Se edita `data/curado/tramites.yaml` (proceso en [Trámites y tributos](tramites
 
 Solo tres eventos en PostHog, sin texto de la conversación (detalle en el plan, etapa 7):
 - `assistant.launcher.open`;
-- `assistant.answer.show`, con `outcome`, `flow` y `municipality`;
+- `assistant.answer.show`, con `outcome` (`steps`, `fee`, `ask`, `unpublished`, `answer` o `no_answer`), `flow` y `municipality`;
 - `assistant.feedback.vote`, con `vote` y `reason`.
 
 Tokens y costo se miran en el tablero de uso de cada proveedor, no en PostHog. Los errores de los proveedores quedan en el log de la función (`asistente: …`), solo con el código HTTP.

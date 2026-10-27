@@ -106,7 +106,7 @@ function devApi(): Plugin {
         // (AI_GATEWAY_API_KEY or OPENROUTER_API_KEY, for example `bun --env-file=../../.env.asistente run dev`) it works locally.
         const response =
           (await handleAssistant(request, {
-            knowledge: knowledge as Knowledge,
+            knowledge: knowledge as unknown as Knowledge,
             env: process.env as AssistantEnv,
             db: await db!,
             log: console.log,

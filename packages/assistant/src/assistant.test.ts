@@ -6,7 +6,8 @@ import { runAgent } from "./agent.ts";
 import { handleAssistant, sanitizeFeedback, sanitizeMessages } from "./http.ts";
 import type { Knowledge } from "./knowledge.ts";
 import { configuredProviders } from "./providers.ts";
-import { findMunicipality, findTradeFee, getProcedure, searchUnpublished } from "./tools.ts";
+import { asksAboutFee, feeActivities, findMunicipality, findTradeFee, getProcedure, searchUnpublished } from "./tools.ts";
+import type { Gap } from "./types.ts";
 
 const knowledgePath = join(import.meta.dir, "knowledge.json");
 const k = JSON.parse(readFileSync(knowledgePath, "utf8")) as Knowledge;
@@ -67,8 +68,13 @@ describe("tools", () => {
     expect(findTradeFee(k, { municipality: "Godoy Cruz", activity: "carnicería" }).matches[0]?.code).toBe("30007");
     expect(findTradeFee(k, { municipality: "Tunuyán", activity: "almacén" }).found).toBe(false);
   });
-  test("un rubro común fuera del menú del municipio se busca por sus sinónimos", () => {
+  test("el rubro se reconoce por sus sinónimos, como palabras enteras", () => {
     expect(findTradeFee(k, { municipality: "Godoy Cruz", activity: "verdulería" }).matches[0]?.code).toBe("30023");
+    expect(findTradeFee(k, { municipality: "Godoy Cruz", activity: "golosinas" }).activity?.id).toBe("kiosco");
+    expect(findTradeFee(k, { municipality: "Godoy Cruz", activity: "quiosco" }).activity?.id).toBe("kiosco");
+    expect(findTradeFee(k, { municipality: "Guaymallén", activity: "maxikiosco" }).activity?.id).toBe("kiosco");
+    // "pan" no está dentro de "pantalones"
+    expect(findTradeFee(k, { municipality: "Godoy Cruz", activity: "pantalones" }).activity?.id).not.toBe("panaderia");
     const p = getProcedure(k, { flow: "abrir-un-comercio", municipality: "Godoy Cruz", activity: "panadería" });
     expect(p.steps?.some((s) => s.when === "alimentos")).toBe(true);
   });
@@ -88,7 +94,46 @@ describe("tools", () => {
   test("si el municipio no publica cómo calcularla, no inventa un monto", () => {
     const r = findTradeFee(k, { municipality: "San Rafael", activity: "almacén" });
     expect(r.found).toBe(false);
+    expect(r.status).toBe("not_computable");
     expect(r.note).toMatch(/no se puede dar un monto/);
+  });
+  test("lo que la ordenanza separa se muestra por separado, cada uno con su monto", () => {
+    const r = findTradeFee(k, { municipality: "Godoy Cruz", activity: "kiosco" });
+    expect(r.matches.map((m) => m.activity)).toEqual(["QUIOSCO INTERIOR", "MAXI KIOSCO", "QUIOSCOS VIA PUBLICA"]);
+    expect(r.matches[1]).toMatchObject({ min: 95003.25, max: 920800.77 });
+  });
+  test("un código repetido en el anexo toma la fila curada por su nombre", () => {
+    const r = findTradeFee(k, { municipality: "Guaymallén", activity: "almacén" });
+    expect(r.matches[0]?.activity).toBe("Despensa - Almacén - Mercadito");
+  });
+  test("solo ofrece los rubros con tasa en ese municipio; uno que no está se informa, no se adivina", () => {
+    expect(feeActivities(k, "Maipú").map((a) => a.id)).toEqual(["almacen", "kiosco", "ropa", "rotiseria", "carniceria"]);
+    expect(feeActivities(k, "Godoy Cruz").length).toBe(30);
+    const r = findTradeFee(k, { municipality: "Maipú", activity: "peluquería" });
+    expect(r).toMatchObject({ status: "unknown_activity", asked: "peluquería", found: false, matches: [] });
+    expect(r.available?.length).toBe(5);
+    expect(findTradeFee(k, { municipality: "Capital", activity: "bar" }).status).toBe("unknown_activity");
+  });
+  test("sin rubro pide elegir; sin tarifaria lo dice", () => {
+    expect(findTradeFee(k, { municipality: "Godoy Cruz" }).status).toBe("ask_activity");
+    expect(findTradeFee(k, { municipality: "Tunuyán", activity: "kiosco" }).status).toBe("not_surveyed");
+  });
+  test("los montos cargados a mano llevan el año de la ordenanza", () => {
+    expect(findTradeFee(k, { municipality: "Maipú", activity: "kiosco" }).year).toBe(2026);
+    expect(findTradeFee(k, { municipality: "Luján de Cuyo", activity: "kiosco" }).year).toBe(2026);
+  });
+  test("un trámite que no tenemos se distingue de un municipio sin relevar", () => {
+    expect(getProcedure(k, { flow: "sacar-licencia-de-conducir", municipality: "Godoy Cruz" })).toMatchObject({
+      known: false,
+      covered: false,
+    });
+    expect(getProcedure(k, { flow: "abrir-un-comercio", municipality: "Tunuyán" })).toMatchObject({ known: true, covered: false });
+  });
+  test("solo la plata activa la tasa", () => {
+    expect(asksAboutFee(["¿cuánto cobra de tasa mi municipio?"])).toBe(true);
+    expect(asksAboutFee(["¿Cuánto pago por un kiosco?"])).toBe(true);
+    expect(asksAboutFee(["quiero abrir un kiosco en Maipú", "Kiosco"])).toBe(false);
+    expect(asksAboutFee(["¿cuánto tarda la habilitación?"])).toBe(false);
   });
   test("lo que no se publica se encuentra por tema", () => {
     expect(searchUnpublished(k, { municipality: "Godoy Cruz", topic: "cuánto tarda la habilitación" }).matches.length).toBeGreaterThan(0);
@@ -96,18 +141,104 @@ describe("tools", () => {
 });
 
 describe("agent", () => {
-  test("arma los pasos y la tasa desde las herramientas, no desde el texto del modelo", async () => {
-    const { fetcher } = fakeProvider([
+  test("arma los pasos desde las herramientas y no muestra la tasa si no la pidieron", async () => {
+    const { fetcher, calls } = fakeProvider([
       { tool: "get_procedure", args: { flow: "abrir-un-comercio", municipality: "Godoy Cruz", activity: "almacen" } },
       { tool: "find_trade_fee", args: { municipality: "Godoy Cruz", activity: "almacen" } },
-      { text: "Son estos pasos. Mientras dura la habilitación la tasa es más cara." },
+      { text: "Son estos pasos." },
     ]);
     const reply = await runAgent(k, KEYS, [{ role: "user", content: "Quiero abrir un almacén en Godoy Cruz" }], { fetcher });
     expect(reply.outcome).toBe("steps");
     const steps = reply.blocks.find((b) => b.type === "steps");
-    expect(steps?.type === "steps" && steps.fee?.min).toBe(63335.5);
     expect(steps?.type === "steps" && steps.steps.length).toBeGreaterThan(3);
+    expect(reply.blocks.some((b) => b.type === "fee")).toBe(false);
+    // The model does not even get the amounts.
+    expect(JSON.stringify(calls[2]?.body)).not.toContain("63335");
     expect(reply.municipality).toBe("Godoy Cruz");
+  });
+  test("la tasa pedida llega en su propia tarjeta, con las variantes de la ordenanza", async () => {
+    const { fetcher } = fakeProvider([
+      { tool: "find_trade_fee", args: { municipality: "Godoy Cruz", activity: "Kiosco" } },
+      { text: "La ordenanza separa el quiosco del maxikiosco." },
+    ]);
+    const history = [
+      { role: "user" as const, content: "¿cuánto cobra de tasa mi municipio?" },
+      { role: "assistant" as const, content: "¿En qué municipio?" },
+      { role: "user" as const, content: "Godoy Cruz" },
+      { role: "assistant" as const, content: "¿Qué rubro?" },
+      { role: "user" as const, content: "Kiosco" },
+    ];
+    const reply = await runAgent(k, KEYS, history, { fetcher });
+    expect(reply.outcome).toBe("fee");
+    expect(reply.municipality).toBe("Godoy Cruz");
+    const card = reply.blocks.find((b) => b.type === "fee");
+    expect(card?.type === "fee" && card.fee.activity).toBe("Kiosco");
+    expect(card?.type === "fee" && card.fee.lines.map((l) => l.name)).toEqual(["QUIOSCO INTERIOR", "MAXI KIOSCO", "QUIOSCOS VIA PUBLICA"]);
+    expect(reply.blocks.some((b) => b.type === "steps")).toBe(false);
+  });
+  test("al pedir el rubro para la tasa ofrece solo los del municipio, aunque el modelo no lo pase", async () => {
+    const { fetcher } = fakeProvider([{ tool: "ask_user", args: { field: "activity", question: "¿Qué rubro?" } }]);
+    const history = [
+      { role: "user" as const, content: "¿cuánto cobra de tasa mi municipio?" },
+      { role: "assistant" as const, content: "¿En qué municipio?" },
+      { role: "user" as const, content: "Maipú" },
+    ];
+    const reply = await runAgent(k, KEYS, history, { fetcher });
+    const block = reply.blocks[0];
+    expect(block?.type === "ask_activity" && block.options.map((o) => o.id)).toEqual([
+      "almacen",
+      "kiosco",
+      "ropa",
+      "rotiseria",
+      "carniceria",
+    ]);
+  });
+  test("un rubro que no tenemos se avisa, se ofrecen los que hay y se anota", async () => {
+    const { fetcher } = fakeProvider([
+      { tool: "find_trade_fee", args: { municipality: "Maipú", activity: "Peluquería canina" } },
+      { text: "Todavía no tenemos esa tasa en Maipú." },
+    ]);
+    const gaps: Gap[] = [];
+    const reply = await runAgent(k, KEYS, [{ role: "user", content: "¿Cuánto paga de tasa una peluquería canina en Maipú?" }], {
+      fetcher,
+      onGap: (g) => gaps.push(g),
+    });
+    expect(reply.outcome).toBe("ask");
+    expect(reply.blocks[0]?.type === "ask_activity" && reply.blocks[0].options.length).toBe(5);
+    expect(gaps).toEqual([{ kind: "rubro", municipality: "Maipú", value: "peluqueria canina" }]);
+  });
+  test("la tasa de un municipio sin relevar: lo dice, lo anota y no muestra pasos que no pidieron", async () => {
+    const { fetcher } = fakeProvider([
+      { tool: "get_procedure", args: { flow: "abrir-un-comercio", municipality: "Tunuyán" } },
+      { tool: "find_trade_fee", args: { municipality: "Tunuyán", activity: "kiosco" } },
+      { text: "Todavía no leímos la tarifaria de Tunuyán." },
+    ]);
+    const gaps: Gap[] = [];
+    const reply = await runAgent(k, KEYS, [{ role: "user", content: "¿Cuánto cobra Tunuyán de tasa a un kiosco?" }], {
+      fetcher,
+      onGap: (g) => gaps.push(g),
+    });
+    expect(reply.blocks).toEqual([]);
+    expect(gaps.map((g) => g.kind)).toEqual(["municipio", "municipio"]);
+    expect(gaps.every((g) => g.municipality === "Tunuyán")).toBe(true);
+  });
+  test("un trámite que no tenemos se anota", async () => {
+    const { fetcher } = fakeProvider([
+      { tool: "get_procedure", args: { flow: "sacar-licencia-de-conducir", municipality: "Godoy Cruz" } },
+      { text: "Todavía no tenemos ese trámite." },
+    ]);
+    const gaps: Gap[] = [];
+    await runAgent(k, KEYS, [{ role: "user", content: "¿Cómo saco la licencia en Godoy Cruz?" }], { fetcher, onGap: (g) => gaps.push(g) });
+    expect(gaps).toEqual([{ kind: "tramite", municipality: "Godoy Cruz", value: "sacar licencia de conducir" }]);
+  });
+  test("en San Rafael no pide el rubro para la tasa", async () => {
+    const { fetcher, calls } = fakeProvider([
+      { tool: "ask_user", args: { field: "activity", question: "¿Qué rubro?", municipality: "San Rafael" } },
+      { text: "San Rafael no permite calcularla." },
+    ]);
+    const reply = await runAgent(k, KEYS, [{ role: "user", content: "¿Cuánto cobra de tasa San Rafael?" }], { fetcher });
+    expect(reply.blocks.some((b) => b.type === "ask_activity")).toBe(false);
+    expect(calls.length).toBe(2);
   });
   test("si falta el municipio, pregunta y termina el turno", async () => {
     const { fetcher, calls } = fakeProvider([{ tool: "ask_user", args: { field: "municipality", question: "¿En qué municipio?" } }]);
@@ -212,6 +343,31 @@ describe("http", () => {
     const res = await handleAssistant(post("/api/asistente/opinion", { vote: "down", reason: "falta" }), { knowledge: k, env: {}, db });
     expect(res?.status).toBe(201);
     expect(rows[0]?.slice(1, 3)).toEqual(["down", "falta"]);
+  });
+  test("guarda lo que falta, y sin la tabla responde igual", async () => {
+    const script = [{ tool: "find_trade_fee", args: { municipality: "Tunuyán", activity: "kiosco" } }, { text: "Todavía no." }];
+    const body = { messages: [{ role: "user", content: "¿Cuánto cobra Tunuyán de tasa?" }] };
+    const rows: unknown[][] = [];
+    const db = { prepare: () => ({ bind: (...v: unknown[]) => ({ run: async () => rows.push(v) }) }) };
+    const ok = await handleAssistant(post("/api/asistente", body), { knowledge: k, env: KEYS, db, fetcher: fakeProvider(script).fetcher });
+    expect(ok?.status).toBe(200);
+    expect(rows[0]?.slice(1)).toEqual(["municipio", "Tunuyán", "tasa-de-comercio"]);
+    const broken = {
+      prepare: () => ({
+        bind: () => ({
+          run: async () => {
+            throw new Error("no such table");
+          },
+        }),
+      }),
+    };
+    const res = await handleAssistant(post("/api/asistente", body), {
+      knowledge: k,
+      env: KEYS,
+      db: broken,
+      fetcher: fakeProvider(script).fetcher,
+    });
+    expect(res?.status).toBe(200);
   });
   test("otras rutas no son del asistente", async () => {
     expect(await handleAssistant(req("/api/pedidos"), { knowledge: k, env: {} })).toBeNull();

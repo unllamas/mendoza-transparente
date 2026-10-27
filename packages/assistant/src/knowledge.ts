@@ -23,6 +23,13 @@ export interface FlowActivity {
   name: string;
   /** Code of the activity in the municipality's tarifaria annex. */
   code: string;
+  /** Name of the activity as printed in the annex: some annexes repeat a code for different activities. */
+  codeName?: string;
+  /**
+   * Other activities of the same annex that someone with this one could be, each with its own amount (a kiosk can be
+   * QUIOSCO INTERIOR or MAXI KIOSCO). Shown apart, never merged into one range.
+   */
+  variants: { code: string; name?: string }[];
   food: boolean;
 }
 
@@ -38,6 +45,8 @@ export interface FeeConfig {
   period: string;
   /** "pesos", "UT" or "UTM". */
   unit: string;
+  /** Year of the tarifaria, for the amounts typed by hand (`manual`); the table ones carry their own. */
+  year?: number;
   unitValue?: number;
   unitRule?: string;
   rule?: string;
@@ -92,6 +101,7 @@ function feeConfig(t: Raw): FeeConfig {
     available: t.disponible !== false,
     period: str(t.periodo),
     unit: str(t.unidad) || "pesos",
+    ...(num(t.ejercicio) !== undefined ? { year: num(t.ejercicio) } : {}),
     ...(num(t.valor_unidad) !== undefined ? { unitValue: num(t.valor_unidad) } : {}),
     ...(t.norma_unidad ? { unitRule: str(t.norma_unidad) } : {}),
     ...(t.norma ? { rule: str(t.norma) } : {}),
@@ -108,17 +118,27 @@ function feeConfig(t: Raw): FeeConfig {
 
 /** Pure: from the parsed YAML catalog and the fee rows to the knowledge the agent ships with. */
 export function buildKnowledge(catalog: Raw[], feeRows: Raw[], documents: Raw[], common: Raw[] = []): Knowledge {
+  // A flow's activity can be just an id and a code: name and food come from the common list (rubros.yaml).
+  const commonById = new Map(common.map((a) => [str(a.id), a]));
   const flows: Flow[] = catalog.map((f) => ({
     id: str(f.id),
     title: str(f.titulo),
     municipality: str(f.municipio),
     verified: str(f.verificado),
-    activities: ((f.rubros as Raw[]) ?? []).map((r) => ({
-      id: str(r.id),
-      name: str(r.nombre),
-      code: str(r.codigo),
-      food: r.alimentos === true,
-    })),
+    activities: ((f.rubros as Raw[]) ?? []).map((r) => {
+      const c = commonById.get(str(r.id));
+      return {
+        id: str(r.id),
+        name: str(r.nombre ?? c?.nombre),
+        code: str(r.codigo),
+        ...(r.nombre_ordenanza ? { codeName: str(r.nombre_ordenanza) } : {}),
+        variants: ((r.variantes as Raw[]) ?? []).map((v) => ({
+          code: str(v.codigo),
+          ...(v.nombre_ordenanza ? { name: str(v.nombre_ordenanza) } : {}),
+        })),
+        food: (r.alimentos ?? c?.alimentos) === true,
+      };
+    }),
     steps: ((f.pasos as Raw[]) ?? []).map((p) => ({
       level: str(p.nivel) as Level,
       agency: str(p.organismo),

@@ -72,8 +72,11 @@ function Thumb({ kind, on, onPress }: { kind: Vote; on: boolean; onPress: () => 
   );
 }
 
-/** Thumbs-down form: three reasons and an optional note, as a bottom sheet over the panel. */
-function FeedbackSheet({ onSend, onClose }: { onSend: (reason: FeedbackReason, note: string) => void; onClose: () => void }) {
+/**
+ * Thumbs-down form: three reasons and an optional note, as a bottom sheet over the whole panel. The panel renders it
+ * (like the search sheet), not the answer: inside the answer's row it was positioned against that row and broke.
+ */
+export function FeedbackSheet({ onSend, onClose }: { onSend: (reason: FeedbackReason, note: string) => void; onClose: () => void }) {
   const [reason, setReason] = useState<FeedbackReason | null>(null);
   const [note, setNote] = useState("");
   return (
@@ -144,10 +147,24 @@ function relativeTime(at: number, now: number): string {
   return hours < 24 ? `hace ${hours} h` : "hace más de un día";
 }
 
-/** Under each answer: when it was given and two small thumbs. Up sparks; down opens the form. No thank-you text. */
-export function AnswerFooter({ reply, at, now }: { reply: AssistantReply; at: number; now: number }) {
+export type FeedbackSend = (reason: FeedbackReason, note: string) => void;
+
+/**
+ * Under each answer: when it was given and two small thumbs. Up sparks; down asks the panel to open the form
+ * (`onAskWhy`), which calls back with the reason. No thank-you text.
+ */
+export function AnswerFooter({
+  reply,
+  at,
+  now,
+  onAskWhy,
+}: {
+  reply: AssistantReply;
+  at: number;
+  now: number;
+  onAskWhy: (send: FeedbackSend) => void;
+}) {
   const [vote, setVote] = useState<Vote | null>(null);
-  const [asking, setAsking] = useState(false);
   const [celebrating, setCelebrating] = useState(false);
   const context = { flow: reply.flow, municipality: reply.municipality, outcome: reply.outcome };
 
@@ -180,19 +197,19 @@ export function AnswerFooter({ reply, at, now }: { reply: AssistantReply; at: nu
       )}
       <span className="mr-auto text-caption-1-regular text-text-tertiary">{relativeTime(at, now)}</span>
       <Thumb kind="up" on={vote === "up"} onPress={voteUp} />
-      <Thumb kind="down" on={vote === "down"} onPress={() => vote !== "down" && setAsking(true)} />
-      {asking && (
-        <FeedbackSheet
-          onClose={() => setAsking(false)}
-          onSend={(reason, note) => {
+      <Thumb
+        kind="down"
+        on={vote === "down"}
+        onPress={() =>
+          vote !== "down" &&
+          onAskWhy((reason, note) => {
             setVote("down");
-            setAsking(false);
             sendFeedback({ vote: "down", reason, ...(note ? { note: note.slice(0, NOTE_MAX) } : {}), ...context });
             // The free note never goes to analytics: only the vote and the reason.
             track("assistant.feedback.vote", { vote: "down", reason });
-          }}
-        />
-      )}
+          })
+        }
+      />
     </div>
   );
 }

@@ -6,7 +6,14 @@
 # - Cada paso sale de una página o norma oficial (url) y el recorrido lleva la fecha en que se verificó.
 # - Lo que el organismo no publica va en `no_publica`, no se completa con suposiciones.
 # - `cuando` dice si el paso aplica siempre o solo a ciertos rubros (`alimentos`).
-# - Los rubros apuntan al código del anexo de la ordenanza tarifaria (data/processed/tributos/rubros_comercio.csv).
+# - Los rubros apuntan al código del anexo de la ordenanza tarifaria (data/processed/tributos/rubros_comercio.csv),
+#   con `nombre_ordenanza` tal cual figura, porque algunos anexos repiten un código para actividades distintas.
+#   Un rubro sin `nombre` ni `alimentos` los toma de data/curado/rubros.yaml.
+# - `variantes`: otras actividades del mismo anexo que puede ser alguien con ese rubro y que pagan distinto (un kiosco
+#   puede ser QUIOSCO INTERIOR o MAXI KIOSCO). El asistente las muestra por separado, cada una con su monto.
+# - Solo se cargan los rubros que se mapearon a mano: el asistente no busca por palabras en el anexo. Lo que alguien
+#   pide y no está queda en la tabla `assistant_gaps` para sumarlo después.
+# - `tasa_comercio.ejercicio`: año de los montos cargados a mano (`manual`).
 
 - id: abrir-un-comercio
   titulo: Abrir un comercio
@@ -16,19 +23,172 @@
     - id: almacen
       nombre: Almacén
       codigo: "30003"
+      nombre_ordenanza: "ALMACENES Y DESPENSAS"
       alimentos: true
+      variantes:
+        - { codigo: "30016", nombre_ordenanza: "MERCADITOS" }
+        - { codigo: "26002", nombre_ordenanza: "AUTOSERVICIO HASTA 3 CAJAS" }
     - id: kiosco
       nombre: Kiosco
-      codigo: "30037"
+      codigo: "30021"
+      nombre_ordenanza: "QUIOSCO INTERIOR"
       alimentos: true
+      variantes:
+        - { codigo: "30037", nombre_ordenanza: "MAXI KIOSCO" }
+        - { codigo: "31075", nombre_ordenanza: "QUIOSCOS VIA PUBLICA" }
     - id: ropa
       nombre: Ropa
       codigo: "31020"
+      nombre_ordenanza: "ARTICULOS DE VESTIR"
       alimentos: false
+      variantes:
+        - { codigo: "31031", nombre_ordenanza: "BOUTIQUE" }
+        - { codigo: "31113", nombre_ordenanza: "INDUMENTARIA DEPORTIVA" }
     - id: rotiseria
       nombre: Comida para llevar
       codigo: "42006"
+      nombre_ordenanza: "VENTA Y/O PREPARACION DE VIANDAS ROTISERIAS Y SIM"
       alimentos: true
+      variantes:
+        - { codigo: "42003", nombre_ordenanza: "SANDWICHERIA Y/ O SALONES COMEDORES" }
+        - { codigo: "42012", nombre_ordenanza: "PANCHOS Y/O HAMBURGUESAS" }
+    - id: carniceria
+      codigo: "30007"
+      nombre_ordenanza: "CARNICERIAS"
+      variantes:
+        - { codigo: "30004", nombre_ordenanza: "AVES EVISCERADAS VENTA" }
+        - { codigo: "30008", nombre_ordenanza: "CHASINADOS EMBUTIDOS Y AFINES" }
+    - id: verduleria
+      codigo: "30023"
+      nombre_ordenanza: "VERDULERIAS Y FRUTERIAS"
+    - id: panaderia
+      codigo: "30018"
+      nombre_ordenanza: "PANADERIAS VENTAS"
+      variantes:
+        - { codigo: "4017", nombre_ordenanza: "ELABORACION PAN, TORTAS Y FACTURAS" }
+        - { codigo: "30026", nombre_ordenanza: "MASAS Y TORTAS FINAS VENTA" }
+        - { codigo: "30030", nombre_ordenanza: "VENTA DE REPOSTERIA" }
+    - id: fiambreria
+      codigo: "30009"
+      nombre_ordenanza: "FIAMBRERIAS"
+    - id: dietetica
+      codigo: "30034"
+      nombre_ordenanza: "DIETETICAS"
+      variantes:
+        - { codigo: "30013", nombre_ordenanza: "HERBORISTERIAS" }
+        - { codigo: "30029", nombre_ordenanza: "VENTA PRODUCTOS PARA CELIACOS" }
+    - id: heladeria
+      codigo: "30012"
+      nombre_ordenanza: "HELADOS VENTA ELABORACION PROPIA"
+      variantes:
+        - { codigo: "30011", nombre_ordenanza: "HELADOS VENTA A CONSIGNACION" }
+    - id: bar
+      codigo: "42001"
+      nombre_ordenanza: "BARES Y CONFITERIAS"
+      variantes:
+        - { codigo: "42002", nombre_ordenanza: "CASAS DE TE O CAFÉ" }
+        - { codigo: "30033", nombre_ordenanza: "EXPENDEDORAS DE CAFE / CAFE AL PASO" }
+    - id: restaurante
+      codigo: "42005"
+      nombre_ordenanza: "RESTAURANTES"
+      variantes:
+        - { codigo: "42010", nombre_ordenanza: "ELABORACION DE COMIDAS A LA PARRILLA" }
+        - { codigo: "42003", nombre_ordenanza: "SANDWICHERIA Y/ O SALONES COMEDORES" }
+    - id: pastas
+      codigo: "4031"
+      nombre_ordenanza: "FBRC. DE PASTAS FRESCAS"
+      variantes:
+        - { codigo: "30027", nombre_ordenanza: "PASTAS FRESCAS VENTA" }
+    - id: peluqueria
+      codigo: "45003"
+      nombre_ordenanza: "PELUQUERIA DAMAS O CABALLEROS"
+      variantes:
+        - { codigo: "39050", nombre_ordenanza: "BARBERÍAS" }
+        - { codigo: "45004", nombre_ordenanza: "INSTITUTO DE ESTETICA" }
+    - id: ferreteria
+      codigo: "31051"
+      nombre_ordenanza: "FERRETERIAS"
+      variantes:
+        - { codigo: "31072", nombre_ordenanza: "PINTURERIAS" }
+        - { codigo: "31044", nombre_ordenanza: "CORRALON CON VENTA MATERIALES DE CONSTRUCCION" }
+    - id: libreria
+      codigo: "31061"
+      nombre_ordenanza: "LIBRERIAS Y PAPELERIAS"
+      variantes:
+        - { codigo: "40013", nombre_ordenanza: "FOTOCOPIADORA" }
+    - id: zapateria
+      codigo: "31088"
+      nombre_ordenanza: "ZAPATERIAS Y ZAPATILLERIAS"
+    - id: bazar
+      codigo: "31028"
+      nombre_ordenanza: "BAZARES"
+      variantes:
+        - { codigo: "31106", nombre_ordenanza: "REGALERIA" }
+        - { codigo: "31090", nombre_ordenanza: "COTILLON VENTA" }
+    - id: jugueteria
+      codigo: "31057"
+      nombre_ordenanza: "JUGUETERIAS"
+    - id: perfumeria
+      codigo: "31071"
+      nombre_ordenanza: "PERFUMERIAS"
+      variantes:
+        - { codigo: "45005", nombre_ordenanza: "VENTA DE COSMETICOS" }
+        - { codigo: "31027", nombre_ordenanza: "ARTICULOS DE LIMPIEZA" }
+    - id: celulares
+      codigo: "31083"
+      nombre_ordenanza: "TELEFONO CELULAR VENTA"
+      variantes:
+        - { codigo: "31120", nombre_ordenanza: "ACCESORIOS PARA TELÉFONOS MÓVILES" }
+        - { codigo: "31039", nombre_ordenanza: "COMPUTACION ANEXOS E INSUMOS" }
+    - id: optica
+      codigo: "31068"
+      nombre_ordenanza: "OPTICAS"
+    - id: floreria
+      codigo: "31052"
+      nombre_ordenanza: "FLORERIAS"
+      variantes:
+        - { codigo: "31073", nombre_ordenanza: "PLANTAS Y MACETAS" }
+    - id: muebleria
+      codigo: "31067"
+      nombre_ordenanza: "MUEBLERIAS"
+    - id: veterinaria
+      codigo: "39018"
+      nombre_ordenanza: "VETERINARIAS CLINICA Y CIRUGIA"
+      variantes:
+        - { codigo: "31095", nombre_ordenanza: "VENTA DE ACCESORIOS PARA MASCOTAS" }
+        - { codigo: "31119", nombre_ordenanza: "VENTA DE INSUMOS PARA ANIMALES" }
+        - { codigo: "31096", nombre_ordenanza: "VENTA DE FARMACOS PARA ANIMALES" }
+    - id: lavanderia
+      codigo: "44001"
+      nombre_ordenanza: "LAVADERO MECANICO"
+      variantes:
+        - { codigo: "44005", nombre_ordenanza: "TINTORERIAS" }
+        - { codigo: "44003", nombre_ordenanza: "SECADO Y/O PLANCHADO DE ROPA" }
+    - id: gimnasio
+      codigo: "39007"
+      nombre_ordenanza: "GIMNASIOS"
+      variantes:
+        - { codigo: "39035", nombre_ordenanza: "PILATES" }
+        - { codigo: "39019", nombre_ordenanza: "YOGA Y SIMILARES" }
+    - id: taller
+      codigo: "17017"
+      nombre_ordenanza: "MECANICA AUTOMOTOR"
+      variantes:
+        - { codigo: "17014", nombre_ordenanza: "GOMERIAS Y REPARACIONES EN GRAL." }
+        - { codigo: "17044", nombre_ordenanza: "LUBRICENTRO (CAMBIO DE ACEITE)" }
+        - { codigo: "17010", nombre_ordenanza: "ELECTRICIDAD DEL AUTOMOTOR" }
+    - id: farmacia
+      codigo: "31049"
+      nombre_ordenanza: "FARMACIAS"
+      variantes:
+        - { codigo: "31094", nombre_ordenanza: "DROGUERIAS" }
+    - id: oficina
+      codigo: "39020"
+      nombre_ordenanza: "ACTIVIDAD PROFESIONAL A TERCEROS"
+      variantes:
+        - { codigo: "39003", nombre_ordenanza: "CONSULT.MEDICOS POR CONSULTORIO" }
+        - { codigo: "40011", nombre_ordenanza: "ESTUDIOS JURIDICOS CONTABLES ESCRIBANIAS ETC." }
+        - { codigo: "40020", nombre_ordenanza: "OFICINAS ADMINISTRATIVAS" }
   pasos:
     - nivel: nacion
       organismo: ARCA
@@ -101,19 +261,105 @@
     - id: almacen
       nombre: Almacén
       codigo: "11030311"
+      nombre_ordenanza: "Venta de sustancias alimenticias Minoristas y de consumo familiar."
       alimentos: true
+      variantes:
+        - { codigo: "11030511", nombre_ordenanza: "Minimercados (Mini-markets)" }
+        - { codigo: "11030211", nombre_ordenanza: "Autoservicios" }
     - id: kiosco
       nombre: Kiosco
       codigo: "11030411"
+      nombre_ordenanza: "Comercios netamente Minoristas."
       alimentos: true
+      variantes:
+        - { codigo: "11030311", nombre_ordenanza: "Venta de sustancias alimenticias Minoristas y de consumo familiar." }
     - id: ropa
       nombre: Ropa
       codigo: "11420111"
+      nombre_ordenanza: "Artículos de consumo, comercial, personal y vestimenta"
       alimentos: false
     - id: rotiseria
       nombre: Comida para llevar
       codigo: "11040511"
+      nombre_ordenanza: "Cocina (comidas para llevar), Rotiserías"
       alimentos: true
+    - id: carniceria
+      codigo: "11030311"
+      nombre_ordenanza: "Venta de sustancias alimenticias Minoristas y de consumo familiar."
+    - id: verduleria
+      codigo: "11030311"
+      nombre_ordenanza: "Venta de sustancias alimenticias Minoristas y de consumo familiar."
+    - id: panaderia
+      codigo: "11030311"
+      nombre_ordenanza: "Venta de sustancias alimenticias Minoristas y de consumo familiar."
+    - id: fiambreria
+      codigo: "11030311"
+      nombre_ordenanza: "Venta de sustancias alimenticias Minoristas y de consumo familiar."
+    - id: dietetica
+      codigo: "11030311"
+      nombre_ordenanza: "Venta de sustancias alimenticias Minoristas y de consumo familiar."
+    - id: heladeria
+      codigo: "11040411"
+      nombre_ordenanza: "Heladerías con o sin elaboración."
+    - id: restaurante
+      codigo: "11040111"
+      nombre_ordenanza: "Restaurante y/o parrilladas"
+      variantes:
+        - { codigo: "11040311", nombre_ordenanza: "Pizzerías, Sandwicherías, Elaboración de empanadas." }
+    - id: pastas
+      codigo: "11010111"
+      nombre_ordenanza: "Elaboración y/o fraccionamiento de alimentos."
+    - id: peluqueria
+      codigo: "11430111"
+      nombre_ordenanza: "Actividades de servicios a terceros minoristas."
+    - id: ferreteria
+      codigo: "11420111"
+      nombre_ordenanza: "Artículos de consumo, comercial, personal y vestimenta"
+    - id: libreria
+      codigo: "11420111"
+      nombre_ordenanza: "Artículos de consumo, comercial, personal y vestimenta"
+    - id: zapateria
+      codigo: "11420111"
+      nombre_ordenanza: "Artículos de consumo, comercial, personal y vestimenta"
+    - id: bazar
+      codigo: "11410111"
+      nombre_ordenanza: "Amoblamientos, artículos para el hogar, enseres varios"
+    - id: jugueteria
+      codigo: "11420111"
+      nombre_ordenanza: "Artículos de consumo, comercial, personal y vestimenta"
+    - id: perfumeria
+      codigo: "11460911"
+      nombre_ordenanza: "Farmacias y perfumerías"
+    - id: celulares
+      codigo: "11462611"
+      nombre_ordenanza: "Venta de Telefonía Celular y Accesorios para Celulares"
+    - id: optica
+      codigo: "11420111"
+      nombre_ordenanza: "Artículos de consumo, comercial, personal y vestimenta"
+    - id: floreria
+      codigo: "11420111"
+      nombre_ordenanza: "Artículos de consumo, comercial, personal y vestimenta"
+    - id: muebleria
+      codigo: "11410111"
+      nombre_ordenanza: "Amoblamientos, artículos para el hogar, enseres varios"
+    - id: lavanderia
+      codigo: "11430111"
+      nombre_ordenanza: "Actividades de servicios a terceros minoristas."
+    - id: gimnasio
+      codigo: "11310311"
+      nombre_ordenanza: "Gimnasio (diversas especialidades deportivas)"
+    - id: taller
+      codigo: "11430111"
+      nombre_ordenanza: "Actividades de servicios a terceros minoristas."
+    - id: farmacia
+      codigo: "11460911"
+      nombre_ordenanza: "Farmacias y perfumerías"
+    - id: oficina
+      codigo: "11330111"
+      nombre_ordenanza: "Actividad Administrativa"
+      variantes:
+        - { codigo: "11461611", nombre_ordenanza: "Actividades Profesionales de Prestación de Servicios (Sociedades Constituidas)" }
+        - { codigo: "11460231", nombre_ordenanza: "Consultorios (Sociedades constituidas)." }
   pasos:
     - nivel: nacion
       organismo: ARCA
@@ -187,24 +433,144 @@
   rubros:
     - id: almacen
       nombre: Almacén
-      codigo: G521101
+      codigo: "G521101"
+      nombre_ordenanza: "Almacén minorista"
       alimentos: true
+      variantes:
+        - { codigo: "G522002", nombre_ordenanza: "Mercadito con venta de art. de Almacén" }
+        - { codigo: "G520002", nombre_ordenanza: "Autoservicios de alimentos" }
     - id: kiosco
       nombre: Kiosco
-      codigo: G525201   # a confirmar: el anexo solo tiene «Kioscos: Municipal o en la vía pública»
+      codigo: "G521104"
+      nombre_ordenanza: "Golosinas en general"
       alimentos: true
+      variantes:
+        - { codigo: "G525203", nombre_ordenanza: "En interior de vivienda" }
+        - { codigo: "G525201", nombre_ordenanza: "Kioscos: Municipal o en la Vía pública" }
     - id: ropa
       nombre: Ropa
-      codigo: G523206
+      codigo: "G523206"
+      nombre_ordenanza: "Ropas, indumentaria y textiles: Ropa nueva: Minorista"
       alimentos: false
+      variantes:
+        - { codigo: "G523203", nombre_ordenanza: "Ropas, indumentaria y textiles: Boutiques" }
+        - { codigo: "G523905", nombre_ordenanza: "Ropas, indumentaria y textiles: Artículos de deportes: Minorista" }
+        - { codigo: "G523201", nombre_ordenanza: "Tiendas" }
     - id: rotiseria
       nombre: Comida para llevar
-      codigo: H552007
+      codigo: "H552007"
+      nombre_ordenanza: "Pizzerías, empanadas, pizzas: Rotiserías"
       alimentos: true
+      variantes:
+        - { codigo: "H552005", nombre_ordenanza: "Pizzerías, empanadas, pizzas: Sándwiches, lomitos, panchos, comidas al paso" }
+        - { codigo: "H552006", nombre_ordenanza: "Pizzerías, empanadas, pizzas: Fainá, pasteles" }
     - id: carniceria
       nombre: Carnicería
-      codigo: G522007
+      codigo: "G522007"
+      nombre_ordenanza: "Carnes, embutidos y chacinados: Minorista"
       alimentos: true
+      variantes:
+        - { codigo: "G522004", nombre_ordenanza: "Comestibles: Aves evisceradas, huevos y subproductos de ave" }
+    - id: verduleria
+      codigo: "G522020"
+      nombre_ordenanza: "Verduras y frutas"
+    - id: panaderia
+      codigo: "G522014"
+      nombre_ordenanza: "Pan y subproductos de panificación: Sucursal"
+      variantes:
+        - { codigo: "D154102", nombre_ordenanza: "Pan y subproductos de panificación: Con elaboración mecánica" }
+        - { codigo: "G522025", nombre_ordenanza: "Facturas y confituras" }
+    - id: fiambreria
+      codigo: "G522010"
+      nombre_ordenanza: "Fiambrerías"
+      variantes:
+        - { codigo: "G522017", nombre_ordenanza: "Lácteos y derivados" }
+    - id: dietetica
+      codigo: "G52310"
+      nombre_ordenanza: "Herboristerías"
+    - id: heladeria
+      codigo: "G521106"
+      nombre_ordenanza: "Helados"
+    - id: bar
+      codigo: "H552001"
+      nombre_ordenanza: "Bares y/o cafés"
+      variantes:
+        - { codigo: "H552002", nombre_ordenanza: "Cantina, taberna o pub" }
+    - id: restaurante
+      codigo: "H552003"
+      nombre_ordenanza: "Restaurantes, confiterías, salón de té: SIN PISTA DE BAILE"
+      variantes:
+        - { codigo: "G522015", nombre_ordenanza: "Parrilladas" }
+    - id: pastas
+      codigo: "D154403"
+      nombre_ordenanza: "Fideos Frescos"
+      variantes:
+        - { codigo: "G522023", nombre_ordenanza: "Fideos y derivados de harina" }
+    - id: peluqueria
+      codigo: "O930201"
+      nombre_ordenanza: "Estética Corporal y Personal: Peluquería damas, caballeros y de animales"
+      variantes:
+        - { codigo: "O930202", nombre_ordenanza: "Salones de belleza (peluquería, cosmetología, fango terapia, spa)" }
+    - id: ferreteria
+      codigo: "G523401"
+      nombre_ordenanza: "Ferretería minorista"
+    - id: libreria
+      codigo: "G523921"
+      nombre_ordenanza: "Artículos de librería y papelería"
+    - id: zapateria
+      codigo: "G523210"
+      nombre_ordenanza: "Ropas, indumentaria y textiles: Zapatos y calzados varios"
+    - id: bazar
+      codigo: "G523302"
+      nombre_ordenanza: "Hogar: Artículos de bazar"
+    - id: jugueteria
+      codigo: "G523920"
+      nombre_ordenanza: "Juguetes"
+    - id: celulares
+      codigo: "G523317"
+      nombre_ordenanza: "Repuestos y accesorios: Telefonía, telecomunicaciones"
+      variantes:
+        - { codigo: "G523938", nombre_ordenanza: "Insumos para informática o computadoras (no repuestos)" }
+    - id: optica
+      codigo: "G523923"
+      nombre_ordenanza: "Ópticas(artículos de)"
+    - id: floreria
+      codigo: "G523917"
+      nombre_ordenanza: "Flores y plantas"
+      variantes:
+        - { codigo: "G523922", nombre_ordenanza: "Macetas y plantas" }
+    - id: muebleria
+      codigo: "G523313"
+      nombre_ordenanza: "Hogar: Muebles nuevos: Minorista"
+    - id: veterinaria
+      codigo: "N852001"
+      nombre_ordenanza: "Veterinaria"
+      variantes:
+        - { codigo: "G523101", nombre_ordenanza: "Farmacia veterinaria" }
+        - { codigo: "G523933", nombre_ordenanza: "Pájaros y mascotas" }
+        - { codigo: "G523909", nombre_ordenanza: "Alimentos y accesorios p/aves u otros animales: Minorista" }
+    - id: lavanderia
+      codigo: "O930101"
+      nombre_ordenanza: "Lavadero mecánico de ropas"
+      variantes:
+        - { codigo: "O930103", nombre_ordenanza: "Tintorería: con equipo completo" }
+    - id: gimnasio
+      codigo: "O924108"
+      nombre_ordenanza: "Salón para gimnasios, masajes"
+    - id: taller
+      codigo: "G502002"
+      nombre_ordenanza: "Automotores Vehículos: Mecánicos Automotores"
+      variantes:
+        - { codigo: "G502008", nombre_ordenanza: "Automotores Vehículos: Electricidad del automotor" }
+        - { codigo: "G502009", nombre_ordenanza: "Automotores Vehículos: Rectificaciones: Neumáticos: Gomerías, vulcanización y recapado" }
+    - id: farmacia
+      codigo: "G523102"
+      nombre_ordenanza: "Farmacia c/art. de perfumería"
+    - id: oficina
+      codigo: "K749901"
+      nombre_ordenanza: "Administrativas Y/o recepción general"
+      variantes:
+        - { codigo: "N851202", nombre_ordenanza: "Consultorio médico cualquier especialidad" }
   pasos:
     - nivel: nacion
       organismo: ARCA
@@ -285,23 +651,145 @@
     - id: almacen
       nombre: Almacén
       codigo: "472120"
+      nombre_ordenanza: "Despensa - Almacén - Mercadito"
       alimentos: true
+      variantes:
+        - { codigo: "471130", nombre_ordenanza: "Autoservicio" }
     - id: kiosco
       nombre: Kiosco
       codigo: "471191"
+      nombre_ordenanza: "Quiosco - Maxi Quiosco - Minimarket - Drugstore"
       alimentos: true
+      variantes:
+        - { codigo: "476121", nombre_ordenanza: "Quiosco de venta de diarios y revistas - Ordenanza 2560-88" }
     - id: ropa
       nombre: Ropa
       codigo: "477190"
+      nombre_ordenanza: "Indumentaria de vestir y accesorios - boutique"
       alimentos: false
+      variantes:
+        - { codigo: "477140", nombre_ordenanza: "Indumentaria y artículos deportivos" }
+        - { codigo: "477130", nombre_ordenanza: "Indumentaria para bebés, niños y artículos afines" }
     - id: rotiseria
       nombre: Comida para llevar
       codigo: "561020"
+      nombre_ordenanza: "Rotisería, elaboración y venta"
       alimentos: true
+      variantes:
+        - { codigo: "561013", nombre_ordenanza: "Pizzería, sandwichería, comidas rápidas" }
     - id: carniceria
       nombre: Carnicería
       codigo: "472130"
+      nombre_ordenanza: "Carnicería y derivados"
       alimentos: true
+      variantes:
+        - { codigo: "472140", nombre_ordenanza: "Pollería y derivados" }
+    - id: verduleria
+      codigo: "472160"
+      nombre_ordenanza: "Verdulería y Frutería"
+    - id: panaderia
+      codigo: "472171"
+      nombre_ordenanza: "Panadería y derivados (con o sin elaboración)"
+      variantes:
+        - { codigo: "472172", nombre_ordenanza: "Confitería" }
+    - id: fiambreria
+      codigo: "472112"
+      nombre_ordenanza: "Fiambrería - Productos lácteos"
+    - id: dietetica
+      codigo: "477311"
+      nombre_ordenanza: "Herboristería y diétetica"
+      variantes:
+        - { codigo: "477311", nombre_ordenanza: "Suplementos deportivos y dietarios" }
+        - { codigo: "477311", nombre_ordenanza: "Productos orgánicos" }
+    - id: heladeria
+      codigo: "561030"
+      nombre_ordenanza: "Heladería"
+    - id: bar
+      codigo: "561019"
+      nombre_ordenanza: "Confitería, salón de té, cafetería"
+      variantes:
+        - { codigo: "561014", nombre_ordenanza: "Bar/Pub" }
+        - { codigo: "561019", nombre_ordenanza: "Patio cervecero - Cervecería" }
+    - id: restaurante
+      codigo: "561011"
+      nombre_ordenanza: "Restaurante y/o parrilla"
+      variantes:
+        - { codigo: "561013", nombre_ordenanza: "Pizzería, sandwichería, comidas rápidas" }
+    - id: pastas
+      codigo: "107410"
+      nombre_ordenanza: "Pastas frescas - tapas de empanadas"
+      variantes:
+        - { codigo: "472190", nombre_ordenanza: "Pastas frescas, secas y afines" }
+    - id: peluqueria
+      codigo: "960201"
+      nombre_ordenanza: "Peluquería - barbería (con y sin consumo de bebidas)"
+    - id: ferreteria
+      codigo: "475230"
+      nombre_ordenanza: "Ferretería"
+      variantes:
+        - { codigo: "475240", nombre_ordenanza: "Pinturería. Revestimientos para pisos y paredes" }
+    - id: libreria
+      codigo: "476130"
+      nombre_ordenanza: "Librería, papelería y fotocopiadora. Venta de libros nuevos y usados"
+    - id: zapateria
+      codigo: "477220"
+      nombre_ordenanza: "Zapatería, Zapatillería"
+    - id: bazar
+      codigo: "475440"
+      nombre_ordenanza: "Bazar"
+      variantes:
+        - { codigo: "475110", nombre_ordenanza: "Regalería" }
+        - { codigo: "476400", nombre_ordenanza: "Cotillón - Productos para confitería y repostería" }
+    - id: jugueteria
+      codigo: "476400"
+      nombre_ordenanza: "Juguetería"
+    - id: perfumeria
+      codigo: "477320"
+      nombre_ordenanza: "Perfumería"
+      variantes:
+        - { codigo: "477450", nombre_ordenanza: "Artículos de limpieza fraccionados y envasados" }
+    - id: celulares
+      codigo: "474020"
+      nombre_ordenanza: "Telefonía celular, venta, reparación de equipos, accesorios"
+      variantes:
+        - { codigo: "474010", nombre_ordenanza: "Computadoras, impresoras, accesorios, repuestos" }
+    - id: optica
+      codigo: "477410"
+      nombre_ordenanza: "Óptica"
+    - id: floreria
+      codigo: "477440"
+      nombre_ordenanza: "Florería, plantas naturales y artificiales"
+    - id: muebleria
+      codigo: "475410"
+      nombre_ordenanza: "Mueblería"
+    - id: veterinaria
+      codigo: "750000"
+      nombre_ordenanza: "Veterinaria y enfermería para animales (con o sin internación u obra social) y/o servicio de estética) Servicios de inseminación artificial para reproducción de animales"
+      variantes:
+        - { codigo: "477470", nombre_ordenanza: "Alimentos y accesorios para mascotas" }
+    - id: lavanderia
+      codigo: "960102"
+      nombre_ordenanza: "Lavandería (sin calderas)"
+      variantes:
+        - { codigo: "960101", nombre_ordenanza: "Tintorería" }
+    - id: gimnasio
+      codigo: "854950"
+      nombre_ordenanza: "Gimnasio"
+    - id: taller
+      codigo: "452990"
+      nombre_ordenanza: "Mecánica de automotores"
+      variantes:
+        - { codigo: "452210", nombre_ordenanza: "Gomería con o sin venta. Excluye recapado" }
+        - { codigo: "453291", nombre_ordenanza: "Lubricantes (envasados) y repuestos para automotores (con o sin cambio de aceite)" }
+        - { codigo: "452800", nombre_ordenanza: "Frenos, alineación, tren delantero, amortiguadores y elásticos" }
+    - id: farmacia
+      codigo: "477312"
+      nombre_ordenanza: "Farmacia"
+    - id: oficina
+      codigo: "749009"
+      nombre_ordenanza: "Oficina privada y de servicios profesionales - Coworking, incluye venta on line. Consultoras y producción de eventos"
+      variantes:
+        - { codigo: "862110", nombre_ordenanza: "Consultorios privados (con administración)" }
   pasos:
     - nivel: municipio
       organismo: Municipalidad de Guaymallén
@@ -452,6 +940,7 @@
       url: https://lujandecuyo.gob.ar/tramites-industriaycomercio/
   tasa_comercio:
     periodo: año
+    ejercicio: 2026
     unidad: UT
     valor_unidad: 235
     norma_unidad: Ordenanza 15095, art. 54
@@ -572,6 +1061,7 @@
       url: https://boe.mendoza.gov.ar/default/public/publico/verpdf/d5a21295d434830ab5b54708252039fa3378485c38/anexo
   tasa_comercio:
     periodo: bimestre
+    ejercicio: 2026
     unidad: pesos
     norma: Ordenanza tarifaria 7831 (2026), art. 7 del Anexo
     url: https://boe.mendoza.gov.ar/publico/pdf_pedido/d5a21295d434830ab5b54708252039fa3378485c24

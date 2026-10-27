@@ -18,7 +18,8 @@ Fuente completa: `docs/procesos/tramites-y-tributos.md`. Cargar también `datos-
 
 1. Relevar solo sitios oficiales, con `bun run crudo`. Cada paso lleva su URL; lo que no se publica va a `no_publica`.
 2. Cargar el recorrido con `verificado: <fecha>`, los pasos condicionales con `cuando` (`siempre` o `alimentos`) y la tasa en `tasa_comercio` (período, unidad y su valor, norma; `disponible: false` si no se puede calcular).
-3. `bun run asistente:datos` para que lo vea el asistente.
-4. Volver a verificar una vez por año, con la tarifaria nueva.
+3. Mapear a mano los rubros con tasa del municipio en `rubros` (`codigo` y `nombre_ordenanza` tal cual el anexo, y `variantes` si la ordenanza separa actividades que pagan distinto). Sin equivalente razonable, el rubro no se carga. Criterio en `docs/procesos/tramites-y-tributos.md`, «Rubros de cada municipio».
+4. `bun run asistente:datos` para que lo vea el asistente.
+5. Volver a verificar una vez por año, con la tarifaria nueva, y revisar `assistant_gaps` para ver qué rubros y municipios pide la gente.
 
 Varios municipios en paralelo: un subagente por municipio (skill `delegar-en-agentes`), cada uno con su lector y su relevamiento en `tmp/agentes/`.
