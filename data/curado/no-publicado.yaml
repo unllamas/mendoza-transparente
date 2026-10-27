@@ -389,7 +389,7 @@
   titulo: La tarifaria 2026 de Tupungato en un formato que se pueda leer
   categoria: municipios
   que_es: La Ordenanza tarifaria 11/2026, con el valor de la tasa de comercio y de los demás derechos, y los trámites de habilitación con su plazo y su costo.
-  por_que_importa: La ordenanza está en el sitio del municipio como imágenes escaneadas, sin texto: no se puede buscar ni copiar, y la tasa de comercio no tiene un monto por rubro sino una fórmula. Tampoco se publica cuánto tarda la habilitación ni cuánto cuesta el carnet de manipulación de alimentos.
+  por_que_importa: "La ordenanza está en el sitio del municipio como imágenes escaneadas, sin texto: no se puede buscar ni copiar, y la tasa de comercio no tiene un monto por rubro sino una fórmula. Tampoco se publica cuánto tarda la habilitación ni cuánto cuesta el carnet de manipulación de alimentos."
   organismo: Municipalidad de Tupungato
   marco_legal: Ley 1079 Orgánica de Municipalidades y Ley 9070 de Acceso a la Información Pública
   estado: parcial
@@ -544,7 +544,7 @@
 - id: habilitacion-comercial-san-martin
   titulo: Cómo se habilita un comercio en San Martín
   categoria: municipios
-  que_es: La guía del trámite de habilitación comercial: requisitos, dónde se hace, cuánto tarda y qué categoría y zona le toca a cada comercio.
+  que_es: "La guía del trámite de habilitación comercial: requisitos, dónde se hace, cuánto tarda y qué categoría y zona le toca a cada comercio."
   por_que_importa: Quien quiere abrir un comercio en San Martín no encuentra en el sitio municipal los requisitos ni el plazo, y la ordenanza tarifaria deja la categoría (1.ª a 3.ª) a criterio del municipio, así que no puede saber cuánto va a pagar de derechos de comercio.
   organismo: Municipalidad de General San Martín (Dirección de Recursos Municipales)
   marco_legal: Ley 9070 de Acceso a la Información Pública
