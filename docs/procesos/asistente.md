@@ -65,7 +65,7 @@ El modelo se elige sin tocar el código: es el secreto `ASSISTANT_MODEL`, que se
 - **Sin cargarlo:** `anthropic/claude-haiku-5.5`, el barato y rápido (`DEFAULT_MODEL` en `packages/assistant/src/providers.ts`).
 - **El id es el mismo en los dos catálogos** (por ejemplo `anthropic/claude-sonnet-5.5`). Se busca en el [catálogo de AI Gateway](https://ai-gateway.vercel.sh/v1/models) y en el de [OpenRouter](https://openrouter.ai/models). Si un proveedor usa otro id, `ASSISTANT_MODEL_GATEWAY` o `ASSISTANT_MODEL_OPENROUTER` pisan el general para ese proveedor.
 - **`ASSISTANT_PROVIDERS`** cambia el orden (`openrouter,gateway`) o deja uno solo.
-- **Antes de cambiarlo,** correr las evals con el modelo nuevo: `ASSISTANT_MODEL=<id> bun --env-file=.env.asistente run asistente:evals`. Un modelo más caro multiplica el gasto de cada respuesta: revisar el tope en los proveedores.
+- **Antes de cambiarlo,** correr las evals con el modelo nuevo: `ASSISTANT_MODEL=<id> bun --env-file=.env.asistente run asistente:evals`, o cargar el secreto solo en *Preview* y correrlas contra la vista previa. Un modelo más caro multiplica el gasto de cada respuesta: revisar el tope en los proveedores.
 - **El cambio se aplica** en el próximo despliegue.
 
 ## Límites contra el abuso y el gasto
@@ -78,10 +78,20 @@ El modelo se elige sin tocar el código: es el secreto `ASSISTANT_MODEL`, que se
 
 ## Evals
 
-`packages/assistant/evals/cases.ts` tiene preguntas con respuesta conocida y trampas: pedir el DNI, opinión política, fuera de tema, un plazo que no se publica. Se corren contra el modelo real **antes de cambiar las instrucciones, las herramientas o el modelo**:
+`packages/assistant/evals/cases.ts` tiene preguntas con respuesta conocida y trampas: pedir el DNI, opinión política, fuera de tema, un plazo que no se publica. Se corren contra el modelo real **antes de cambiar las instrucciones, las herramientas o el modelo**.
+
+**Contra una vista previa (la forma de siempre):** cada caso va a `POST /api/asistente` de un despliegue, que usa las claves guardadas como secretos de Pages. Nadie necesita tenerlas en su máquina. Como cada PR tiene su propia vista previa, el cambio se evalúa antes de mergearlo:
 
 ```bash
-# .env.asistente en la raíz (está en .gitignore) con AI_GATEWAY_API_KEY y/o OPENROUTER_API_KEY
+bun run asistente:evals --url https://<rama>.mendoza-transparente.pages.dev   # la vista previa del PR
+bun run asistente:evals --url https://dev.mendoza-transparente.pages.dev --solo tunuyán   # solo los casos cuyo nombre lo dice
+```
+
+Los casos van de a uno, con una pausa entre caso y caso, para no chocar con el límite de 10 pedidos cada 10 segundos. Si igual llega un 429, el script espera y lo reintenta una vez.
+
+**En la máquina:** sirve para probar un modelo o un orden de proveedores antes de cargarlo como secreto. Las claves van en `.env.asistente`, en la raíz (está en `.gitignore`). Los secretos de Pages no se pueden leer: Cloudflare solo devuelve los nombres.
+
+```bash
 bun --env-file=.env.asistente run asistente:evals
 ```
 
