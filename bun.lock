@@ -98,6 +98,9 @@
     "packages/assistant": {
       "name": "@mt/assistant",
       "version": "0.1.0",
+      "devDependencies": {
+        "@mt/core": "workspace:*",
+      },
     },
     "packages/core": {
       "name": "@mt/core",

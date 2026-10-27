@@ -1,13 +1,19 @@
 /**
- * Cloudflare Pages Function for /api/*: the public participation API (@mt/participation/public-api) over D1.
+ * Cloudflare Pages Function for /api/*: the public participation API (@mt/participation/public-api) over D1, and
+ * the procedures assistant (@mt/assistant/http) under /api/asistente.
  * Bindings (wrangler.toml and the Pages dashboard): DB (D1), TURNSTILE_SECRET and IP_SALT (secrets). Without
  * the secrets, submissions answer 503 instead of skipping the checks. The panel API is not served here.
+ * Assistant secrets: AI_GATEWAY_API_KEY and OPENROUTER_API_KEY (either one turns it on; docs/procesos/asistente.md).
  */
 
+import { handleAssistant } from "@mt/assistant/http";
+import type { Knowledge } from "@mt/assistant/knowledge";
+import knowledge from "@mt/assistant/knowledge.json";
+import type { AssistantEnv } from "@mt/assistant/providers";
 import type { Db } from "@mt/participation/db";
 import { handlePublic } from "@mt/participation/public-api";
 
-interface PagesEnv {
+interface PagesEnv extends AssistantEnv {
   DB: Db;
   TURNSTILE_SECRET?: string;
   IP_SALT?: string;
@@ -36,6 +42,7 @@ export const onRequest = async (ctx: {
   }
   const ip = request.headers.get("cf-connecting-ip") ?? "0.0.0.0";
   const res =
+    (await handleAssistant(request, { knowledge: knowledge as Knowledge, env: ctx.env, db: ctx.env.DB, log: console.log })) ??
     (await handlePublic(request, ctx.env.DB, { turnstileSecret: ctx.env.TURNSTILE_SECRET, ipSalt: ctx.env.IP_SALT }, ip)) ??
     new Response("No existe", { status: 404 });
   if (cacheable && res.ok && res.headers.get("cache-control")?.startsWith("public")) ctx.waitUntil(edgeCache.put(request, res.clone()));

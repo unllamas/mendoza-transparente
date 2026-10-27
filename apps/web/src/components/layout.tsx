@@ -34,6 +34,7 @@ import {
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { trackPageview } from "@/analytics.ts";
+import { AssistantGate } from "@/features/assistant/assistant-gate.tsx";
 import { formatDate } from "@/lib.ts";
 import { usePageMeta } from "@/seo.ts";
 import { DetailSheet } from "./detail-sheet.tsx";
@@ -252,6 +253,7 @@ export function Layout() {
           <Outlet />
           <SearchDialog />
           <DetailSheet />
+          <AssistantGate />
         </main>
 
         <footer className="border-t border-separator-border">

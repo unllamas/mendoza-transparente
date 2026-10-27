@@ -1,8 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "lib": ["ES2023", "DOM"],
     "noUnusedLocals": true
   },
-  "include": ["src"]
+  "include": ["src", "scripts", "evals"]
 }

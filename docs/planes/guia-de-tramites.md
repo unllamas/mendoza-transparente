@@ -2,7 +2,7 @@
 
 Objetivo: que cualquier persona pueda saber **qué tiene que hacer, qué papeles necesita y cuánto le va a costar** un trámite ante el Estado en Mendoza (por ejemplo, abrir un comercio en Godoy Cruz), con cada paso atado a la norma o la página oficial de donde sale y a la fecha en que se verificó. Primero como páginas del sitio y después como un asistente que responde preguntas usando esos mismos datos.
 
-Fecha: 26/10/2026. Estado: etapa 1 en piloto (Godoy Cruz y Ley Impositiva 2026).
+Fecha: 26/10/2026. Estado: el asistente funciona con Godoy Cruz (etapas 2, 4, 5 y 7, proceso en `docs/procesos/asistente.md`) y espera las claves de los proveedores; la etapa 1 sigue en piloto; faltan las páginas (3) y la carpeta en PDF (6).
 
 ## Por qué
 
@@ -74,7 +74,7 @@ El relevamiento está en `docs/relevamiento-fuentes.md#212-impuestos-provinciale
 
 ### 5. Asistente propio
 
-- **Arnés:** [eve](https://github.com/vercel/eve) de Vercel, de código abierto. Cada herramienta es un archivo y trae evals, subagentes y aprobaciones humanas. Las herramientas son las de la etapa 4, importadas desde el paquete.
+- **Arnés (decidido el 27/10/2026):** un ciclo propio y chico en `packages/assistant`, servido por la función de Pages que ya tiene el sitio (`/api/asistente`). Primero se pensó en [eve](https://github.com/vercel/eve), pero eve se despliega en Vercel: sumaba una segunda plataforma con sus propios secretos y su propio cupo. Las dos APIs de modelos aceptan el formato de OpenAI, así que alcanza con `fetch`, sin dependencias nuevas, y las claves quedan como secretos de Cloudflare junto a los demás. Si más adelante hacen falta agentes largos o aprobaciones humanas, las herramientas (funciones puras) se pueden llevar a eve sin reescribirlas.
 - **Para que no se vaya por las ramas:**
   - pocas herramientas y acotadas, sin búsqueda libre en la web;
   - instrucciones cortas: citar siempre, decir «no se publica» y no opinar;

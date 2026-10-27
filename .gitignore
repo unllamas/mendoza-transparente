@@ -12,6 +12,8 @@ dist/
 .env.cloudflare
 # Clave personal de PostHog del proyecto de Mendoza Transparente, solo para este repo
 .env.posthog
+# Claves de los proveedores del asistente, solo para correr las evals en local
+.env.asistente
 # Claves S3 de archive.org, para cargarlas como secretos del repo (docs/procesos/datos-y-archivo.md)
 .env.archive-org
 # Base local de participación compartida por la web y el panel en desarrollo (docs/procesos/panel.md)

@@ -19,3 +19,7 @@ BUN_VERSION = "1.4.2"
 # La instalación la hace el build command desde la raíz del monorepo; la automática usaría npm desde apps/web
 # y falla con los workspaces de Bun.
 SKIP_DEPENDENCY_INSTALL = "1"
+# Asistente de la guía de trámites (docs/procesos/asistente.md). Orden de los proveedores y modelo, el mismo id en
+# los dos catálogos. Las claves (AI_GATEWAY_API_KEY, OPENROUTER_API_KEY) son secretos del panel, nunca van acá.
+ASSISTANT_PROVIDERS = "gateway,openrouter"
+ASSISTANT_MODEL = "anthropic/claude-haiku-5.5"
