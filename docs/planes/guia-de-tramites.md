@@ -2,7 +2,7 @@
 
 Objetivo: que cualquier persona pueda saber **qué tiene que hacer, qué papeles necesita y cuánto le va a costar** un trámite ante el Estado en Mendoza (por ejemplo, abrir un comercio en Godoy Cruz), con cada paso atado a la norma o la página oficial de donde sale y a la fecha en que se verificó. Primero como páginas del sitio y después como un asistente que responde preguntas usando esos mismos datos.
 
-Fecha: 26/10/2026, actualizado el 27/10/2026. Estado: el asistente funciona con Godoy Cruz (etapas 2, 4, 5 y 7, proceso en `docs/procesos/asistente.md`) y espera las claves de los proveedores; la etapa 1 sigue en piloto; faltan las páginas (3) y la carpeta en PDF (6).
+Fecha: 26/10/2026, actualizado el 27/10/2026. Estado: el asistente funciona con Godoy Cruz (etapas 2, 4, 5 y 7, proceso en `docs/procesos/asistente.md`) y ya responde en la vista previa de `dev` con la clave de OpenRouter; la etapa 1 sigue en piloto; faltan las páginas (3) y la carpeta en PDF (6).
 
 ## Por qué
 
@@ -173,7 +173,40 @@ Cada municipio se completa en cinco pasos y se da por terminado cuando pasa todo
 | 3 | Santa Rosa | 19.382 | Ord. 34/2026, Boletín | — | — | — | — | — |
 | 3 | La Paz | 12.086 | No se encontró | — | — | — | — | — |
 
-Referencias: ✅ hecho, ✋ cargado a mano, ⚠️ no se puede con lo publicado, 🔄 en curso, ⏳ esperando algo externo (la prueba en `dev` y las evals esperan las claves), — sin empezar. La columna «Tarifaria vigente» sale de `docs/relevamiento-fuentes.md` (2.12).
+Referencias: ✅ hecho, ✋ cargado a mano, ⚠️ no se puede con lo publicado, 🔄 en curso, ⏳ pendiente de la prueba en `dev` y de las evals, que ya se pueden correr contra la vista previa (ver «Lo que queda»), — sin empezar. La columna «Tarifaria vigente» sale de `docs/relevamiento-fuentes.md` (2.12).
+
+## Lo que queda (27/10/2026)
+
+### Estado verificado
+
+- **Base D1:** las migraciones `0001` a `0005` están aplicadas en remoto. `assistant_feedback` tiene 2 votos y `assistant_gaps` 5 faltantes: la tasa de Tunuyán, «bar» en Capital, «cerveza artesanal» en Godoy Cruz, «peluquería» en Maipú y el trámite «licencia de conducir».
+- **Secretos de Pages (vista previa y producción):** solo `OPENROUTER_API_KEY`. Falta `AI_GATEWAY_API_KEY`, así que no hay respaldo si OpenRouter falla. No está `ASSISTANT_MODEL`, así que se usa Haiku. `TURNSTILE_SECRET` ya existe, porque lo usa el registro.
+- **Los secretos no se pueden leer:** Cloudflare los guarda cifrados y solo devuelve los nombres. Por eso las evals pasan a correr contra la vista previa, que usa la clave guardada en Cloudflare, en vez de pedir un `.env.asistente` local.
+
+### Olas
+
+Cada ola es un PR a `dev`. Las tareas de una misma ola tocan archivos distintos y se reparten entre subagentes en paralelo. Lo que toca las instrucciones, las herramientas o el modelo lo hace la sesión principal, porque pide correr las evals.
+
+| Ola | Tarea | Quién | Archivos | Cierra |
+|---|---|---|---|---|
+| 0 | **Evals contra una URL:** `bun run asistente:evals --url <vista previa>` manda cada caso a `POST /api/asistente`, en secuencia y con una pausa entre caso y caso (el límite es de 10 pedidos cada 10 s). Cada PR tiene su propia vista previa, así que el cambio se evalúa antes de mergearlo. | Principal | `packages/assistant/scripts/run-evals.ts`, `docs/procesos/asistente.md` | Las evals sin `.env` |
+| 0 | **Prueba por municipio:** tres preguntas en `dev` para cada uno de los 7 municipios (pasos, tasa y algo que no se publica), con un script que reusa el modo `--url`. | Principal | `packages/assistant/evals/cases.ts`, tabla de arriba | Columnas 3 y 4 |
+| 1 | **Widget accesible:** el foco entra al campo al abrir y vuelve al botón al cerrar, `aria-modal` y trampa de foco, la página de atrás queda quieta en el celular y el 429 se distingue del error («Esperá unos segundos»). Se verifica con `bun run verificar`. | Subagente | `apps/web/src/features/assistant/` | Revisión del código |
+| 1 | **Instrucciones:** que no remita a «abajo en la pantalla», más un caso de eval que lo controle. | Principal | `packages/assistant/src/instructions.ts`, `evals/cases.ts` | Prueba del 27/10 |
+| 1 | **Faltantes reales:** sumar «bar», «cerveza artesanal» y «peluquería» a los rubros curados de esos municipios, si la tarifaria los tiene. | Subagente (`tramites-y-tributos`) | `data/curado/rubros.yaml`, `knowledge.json` | `assistant_gaps` |
+| 2 | **Turnstile en el primer mensaje**, invisible, con la verificación del registro llevada a un lugar común. Gratis: Turnstile no tiene cupo. | Principal | `packages/assistant/src/http.ts`, `packages/participation`, el widget | Etapa 5 |
+| 2 | **Un modelo por tarea:** `ASSISTANT_MODEL_TOOLS` (el que elige las herramientas) y `ASSISTANT_MODEL_ANSWER` (el que redacta), que caen en `ASSISTANT_MODEL` si no están. Se comparan con evals antes de cambiar. | Principal | `providers.ts`, `agent.ts` | Etapa 5 |
+| 2 | **Vista del asistente en el panel:** votos por motivo y recorrido, faltantes agrupados, y la nota del 👎 solo para el equipo. | Subagente (`panel`) | `apps/panel/src/pages/assistant.tsx`, la API del panel | «Hasta que el panel tenga su vista» |
+| 3 | **Tanda 2:** un subagente por municipio releva y deja su informe en `tmp/agentes/tramites-<municipio>.md`. Después la principal escribe los lectores y los recorridos. Tunuyán va primero porque ya hay un faltante. | 7 subagentes y la principal | `tributos/<municipio>.ts`, `tramites.yaml` | Tanda 2 |
+| 3 | **Carpeta del trámite en PDF (etapa 6):** primero una vista previa para aprobar, después en el navegador con pdf-lib, como `/pedir`. | Principal | `features/assistant/`, `features/request-letter/utils/pdf.ts` | Etapa 6 |
+| 3 | **Páginas de trámites (etapa 3):** una vista previa para aprobar y después la página, con su SEO. | Principal | `apps/web/src/pages/`, el registro de páginas | Etapa 3 |
+
+### Lo que hace la persona
+
+- **Cargar `AI_GATEWAY_API_KEY`** (`bun run asistente:claves`) para tener respaldo. Sin ella el asistente funciona igual, pero sin respaldo.
+- **Confirmar el tope de gasto mensual** de OpenRouter.
+- **Pedir la publicación `dev → main`** cuando quiera abrirlo al público. La producción ya tiene la clave, así que el widget aparece apenas se publica.
+- **Elegir el segundo trámite.** El único pedido hasta ahora es «licencia de conducir», y uno solo no alcanza para decidir.
 
 ## Preguntas abiertas
 
