@@ -1,4 +1,5 @@
 import type { AssistantReply, FeedbackReason, Vote } from "@mt/assistant/types";
+import { Mascot } from "@mt/mascots/mascot";
 import { Button } from "@mt/ui/components/base/buttons/button";
 import { IconButton } from "@mt/ui/components/base/buttons/icon-button";
 import { listRowVariants, listVariants } from "@mt/ui/components/card";
@@ -147,17 +148,36 @@ function relativeTime(at: number, now: number): string {
 export function AnswerFooter({ reply, at, now }: { reply: AssistantReply; at: number; now: number }) {
   const [vote, setVote] = useState<Vote | null>(null);
   const [asking, setAsking] = useState(false);
+  const [celebrating, setCelebrating] = useState(false);
   const context = { flow: reply.flow, municipality: reply.municipality, outcome: reply.outcome };
 
   const voteUp = () => {
     if (vote === "up") return;
     setVote("up");
+    setCelebrating(true);
     sendFeedback({ vote: "up", ...context });
     track("assistant.feedback.vote", { vote: "up" });
   };
 
+  // Aco cheers for 1.5 s above the thumbs (only for people who accept motion).
+  useEffect(() => {
+    if (!celebrating) return;
+    const id = setTimeout(() => setCelebrating(false), 1500);
+    return () => clearTimeout(id);
+  }, [celebrating]);
+
   return (
-    <div className="flex items-center gap-1">
+    <div className="relative flex items-center gap-1">
+      {celebrating && (
+        <Mascot
+          mascot="aco"
+          pose="celebrate"
+          size={72}
+          decorative
+          priority
+          className="pointer-events-none absolute right-0 bottom-full hidden motion-safe:block"
+        />
+      )}
       <span className="mr-auto text-caption-1-regular text-text-tertiary">{relativeTime(at, now)}</span>
       <Thumb kind="up" on={vote === "up"} onPress={voteUp} />
       <Thumb kind="down" on={vote === "down"} onPress={() => vote !== "down" && setAsking(true)} />

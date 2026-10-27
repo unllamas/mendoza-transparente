@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@mt/assistant": "workspace:*",
+    "@mt/mascots": "workspace:*",
     "@mt/participation": "workspace:*",
     "@mt/ui": "workspace:*",
     "@remixicon/react": "^4.9.0",

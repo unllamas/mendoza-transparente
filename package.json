@@ -19,6 +19,7 @@
     "verificar": "bun scripts/verificar-web.ts",
     "medir": "bun scripts/measure-vitals.ts",
     "vista-previa": "bun scripts/vista-previa.ts",
+    "mascotas": "bun packages/mascots/scripts/build-assets.ts",
     "asistente:datos": "bun packages/assistant/scripts/build-knowledge.ts",
     "asistente:evals": "bun packages/assistant/scripts/run-evals.ts",
     "resumir-leyes": "cd apps/web && bun scripts/resumir-leyes.ts",
