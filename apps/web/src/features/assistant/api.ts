@@ -13,14 +13,21 @@ export async function fetchStatus(): Promise<boolean> {
   }
 }
 
-/** Sends the conversation and returns Aco's reply. Throws on network errors and 5xx so the caller can offer a retry. */
+/** A non-2xx answer from the API. `status` 429 means the per-IP rate limit (10 requests every 10 s). */
+export class AssistantApiError extends Error {
+  constructor(readonly status: number) {
+    super(`assistant ${status}`);
+  }
+}
+
+/** Sends the conversation and returns Aco's reply. Throws on network errors and non-2xx (`AssistantApiError`) so the caller can offer a retry. */
 export async function sendMessages(messages: ChatMessage[]): Promise<AssistantReply> {
   const res = await fetch(ENDPOINT, {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ messages }),
   });
-  if (!res.ok) throw new Error(`assistant ${res.status}`);
+  if (!res.ok) throw new AssistantApiError(res.status);
   return (await res.json()) as AssistantReply;
 }
 
