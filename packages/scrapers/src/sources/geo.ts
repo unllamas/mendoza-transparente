@@ -5,7 +5,7 @@
  * código INDEC de provincia (in1 LIKE '50%').
  *
  * Salidas (data/processed/geo/):
- *  - mendoza_departamentos.json: { viewBox, fuente, departamentos: [{ municipio, path, centroide }] }
+ *  - mendoza_departamentos.json: { viewBox, fuente, proyeccion, departamentos: [{ municipio, path, centroide }] }
  *  - preview.svg: SVG estático con los 18 paths y etiquetas, para verificar a ojo.
  *
  * Proceso: proyección equirectangular (x escalado por cos de la latitud media, y invertido) a un
@@ -16,7 +16,7 @@
 
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { archive, get, MUNICIPIOS, normalizeMunicipio, PROCESSED_DIR } from "@mt/core";
+import { archive, get, latestRaw, MUNICIPIOS, normalizeMunicipio, PROCESSED_DIR, readRaw } from "@mt/core";
 
 const SOURCE = "geo";
 const WFS = "https://wms.ign.gob.ar/geoserver/ows";
@@ -251,12 +251,20 @@ function centroide(polys: Poly[]): Pt {
   return [r1(best[0]), r1(best[1])];
 }
 
-export async function run(_args: string[]) {
-  console.log("Descargando límites departamentales de Mendoza (IGN WFS)...");
-  const resp = await get(URL_FUENTE);
-  const text = await resp.text();
-  const saved = await archive(SOURCE, "ign_departamentos_mendoza.geojson", text, { url: URL_FUENTE });
-  console.log(saved ? `Archivado: ${saved}` : "Sin cambios respecto de la última descarga.");
+export async function run(args: string[]) {
+  let text: string;
+  // --archivado rebuilds the map from the last archived GeoJSON, without asking the IGN (whose certificate can expire).
+  const archived = args.includes("--archivado") ? await latestRaw(SOURCE, "ign_departamentos_mendoza.geojson") : null;
+  if (archived) {
+    console.log(`Usando la copia archivada: ${archived}`);
+    text = (await readRaw(archived)).toString("utf8");
+  } else {
+    console.log("Descargando límites departamentales de Mendoza (IGN WFS)...");
+    const resp = await get(URL_FUENTE);
+    text = await resp.text();
+    const saved = await archive(SOURCE, "ign_departamentos_mendoza.geojson", text, { url: URL_FUENTE });
+    console.log(saved ? `Archivado: ${saved}` : "Sin cambios respecto de la última descarga.");
+  }
 
   const features = (JSON.parse(text) as { features: Feature[] }).features;
 
@@ -298,7 +306,10 @@ export async function run(_args: string[]) {
       const d = simp.find((x) => x.nombre === m)!;
       return { municipio: m, path: toPath(d.polys), centroide: centroide(d.polys) };
     });
-    const json = JSON.stringify({ viewBox: `0 0 ${WIDTH} ${height}`, fuente: URL_FUENTE, departamentos });
+    // The projection, so the web can place a GPS point on the map: x = (lon - minLon) * cosLat * scale,
+    // y = (maxLat - lat) * scale (the person's location is matched in the browser and never sent anywhere).
+    const proyeccion = { minLon, maxLat, cosLat, scale };
+    const json = JSON.stringify({ viewBox: `0 0 ${WIDTH} ${height}`, fuente: URL_FUENTE, proyeccion, departamentos });
     return { json, departamentos };
   };
 

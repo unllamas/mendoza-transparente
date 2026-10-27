@@ -19,22 +19,26 @@ Aco es el chat flotante del sitio. Responde qué hay que hacer, qué papeles hac
 
 Las claves **solo** viven como secretos cifrados del proyecto de Pages. Nunca van al repositorio, a `wrangler.toml`, al navegador, a una respuesta ni a un log.
 
-1. **Crear las claves** en cada proveedor y ponerles un **tope de gasto mensual** desde su panel: es lo que corta el costo si alguien abusa.
-2. **Cargarlas como secretos**, desde `apps/web`, para la vista previa (`dev`) y para producción. Wrangler pide el valor por la terminal, así no queda en el historial:
-
-   ```bash
-   bunx wrangler@4 pages secret put AI_GATEWAY_API_KEY --project-name mendoza-transparente --env preview
-   bunx wrangler@4 pages secret put OPENROUTER_API_KEY --project-name mendoza-transparente --env preview
-   # producción: lo mismo con --env production
-   ```
-
-   O en el panel de Cloudflare: *Workers & Pages → mendoza-transparente → Settings → Variables and Secrets → Add → Secret*.
+1. **Crear las claves** y ponerles un **tope de gasto mensual** en el panel de cada proveedor: es lo que corta el costo si alguien abusa.
+   - Vercel AI Gateway: [API Keys](https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fai-gateway%2Fapi-keys) → *Create key*. La clave se ve una sola vez.
+   - OpenRouter: [Keys](https://openrouter.ai/settings/keys) → *Create key*, con su límite de crédito.
+2. **Cargarlas como secretos de Pages**, para la vista previa (`dev`) y, cuando se publique, para producción. Hay dos formas:
+   - **Por la terminal**, desde la raíz: `bun run asistente:claves` (vista previa) o `bun run asistente:claves --produccion`. Pregunta qué cargar y wrangler pide cada valor sin mostrarlo, así no queda en el historial. Necesita `bunx wrangler@4 login` o las variables `CLOUDFLARE_API_TOKEN` y `CLOUDFLARE_ACCOUNT_ID` cargadas en el shell.
+   - **Por el panel** de Cloudflare: [mendoza-transparente → Settings → Variables and Secrets](https://dash.cloudflare.com/?to=/:account/pages/view/mendoza-transparente/settings/environment-variables) → *Add*, tipo **Secret**, en *Preview* o en *Production*.
 3. **Volver a desplegar** (un push a `dev`, o *Retry deployment*): los secretos se leen en el despliegue.
-4. **Probar** en `dev.mendoza-transparente.pages.dev`: aparece el botón «Preguntá» abajo a la derecha. Con una sola clave también funciona, sin respaldo.
+4. **Probar** en `dev.mendoza-transparente.pages.dev`: aparece el botón «Preguntá» abajo a la derecha (hasta 5 minutos después, porque el estado del asistente queda en la caché del borde). Con una sola clave también funciona, sin respaldo.
 
 Sin ninguna clave, `GET /api/asistente` responde `{ "enabled": false }`, el widget no aparece y el sitio no llama a ningún proveedor.
 
-**Modelo y orden** (no son secretos): `ASSISTANT_MODEL` y `ASSISTANT_PROVIDERS` en `[vars]` de `apps/web/wrangler.toml`. El id del modelo es el mismo en los dos catálogos (hoy `anthropic/claude-haiku-5.5`, el barato). Si un proveedor usa otro id, `ASSISTANT_MODEL_GATEWAY` o `ASSISTANT_MODEL_OPENROUTER`. Cambiar de modelo pide correr las evals antes.
+### Elegir el modelo
+
+El modelo se elige sin tocar el código: es el secreto `ASSISTANT_MODEL`, que se carga igual que las claves (`bun run asistente:claves` o el panel, tipo **Secret**). No es un dato sensible, pero va como secreto porque, con `wrangler.toml`, Pages ignora las variables comunes del panel.
+
+- **Sin cargarlo:** `anthropic/claude-haiku-5.5`, el barato y rápido (`DEFAULT_MODEL` en `packages/assistant/src/providers.ts`).
+- **El id es el mismo en los dos catálogos** (por ejemplo `anthropic/claude-sonnet-5.5`). Se busca en el [catálogo de AI Gateway](https://ai-gateway.vercel.sh/v1/models) y en el de [OpenRouter](https://openrouter.ai/models). Si un proveedor usa otro id, `ASSISTANT_MODEL_GATEWAY` o `ASSISTANT_MODEL_OPENROUTER` pisan el general para ese proveedor.
+- **`ASSISTANT_PROVIDERS`** cambia el orden (`openrouter,gateway`) o deja uno solo.
+- **Antes de cambiarlo,** correr las evals con el modelo nuevo: `ASSISTANT_MODEL=<id> bun --env-file=.env.asistente run asistente:evals`. Un modelo más caro multiplica el gasto de cada respuesta: revisar el tope en los proveedores.
+- **El cambio se aplica** en el próximo despliegue.
 
 ## Límites contra el abuso y el gasto
 

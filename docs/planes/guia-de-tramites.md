@@ -2,7 +2,7 @@
 
 Objetivo: que cualquier persona pueda saber **qué tiene que hacer, qué papeles necesita y cuánto le va a costar** un trámite ante el Estado en Mendoza (por ejemplo, abrir un comercio en Godoy Cruz), con cada paso atado a la norma o la página oficial de donde sale y a la fecha en que se verificó. Primero como páginas del sitio y después como un asistente que responde preguntas usando esos mismos datos.
 
-Fecha: 26/10/2026. Estado: el asistente funciona con Godoy Cruz (etapas 2, 4, 5 y 7, proceso en `docs/procesos/asistente.md`) y espera las claves de los proveedores; la etapa 1 sigue en piloto; faltan las páginas (3) y la carpeta en PDF (6).
+Fecha: 26/10/2026, actualizado el 27/10/2026. Estado: el asistente funciona con Godoy Cruz (etapas 2, 4, 5 y 7, proceso en `docs/procesos/asistente.md`) y espera las claves de los proveedores; la etapa 1 sigue en piloto; faltan las páginas (3) y la carpeta en PDF (6).
 
 ## Por qué
 
@@ -135,6 +135,46 @@ Se guarda lo justo para saber si el asistente le sirve a la gente, sin datos per
 
 Si una pregunta nueva necesita otro dato, se suma ese evento y se dice en el PR para qué.
 
+## Plan por municipio
+
+Cada municipio se completa en cinco pasos y se da por terminado cuando pasa todos. La tabla se actualiza en cada PR que avanza un municipio, así se ve de un vistazo dónde está cada uno y qué falta probar.
+
+1. **Tarifaria:** la norma vigente en `NORMAS` de `tributos`, su texto bajado y el lector de su anexo, con los montos validados contra el PDF. Si las tasas están en Unidades Tributarias, también el valor vigente de la UT y su decreto.
+2. **Recorrido:** `abrir-un-comercio` relevado y cargado en `data/curado/tramites.yaml`, con `verificado` y `no_publica`.
+3. **Evals:** al menos dos casos propios en `packages/assistant/evals/cases.ts`: los pasos con un rubro conocido y un dato que el municipio no publica.
+4. **Prueba en `dev`:** tres preguntas a mano en la vista previa (pasos, tasa y algo que no se publica). Si una falla, se corrige antes de seguir.
+5. **Lo que no se publica:** a `data/curado/no-publicado.yaml`, con dónde se buscó.
+
+**Cómo se trabaja cada tanda:**
+- Un subagente por municipio releva en paralelo y deja su informe y un borrador del recorrido en `tmp/agentes/tramites-<municipio>.md`, sin tocar código.
+- Con los informes, la sesión principal escribe los lectores de los anexos, carga los recorridos y abre un PR por tanda. Antes de la tanda 1, el lector de cada municipio pasa a un archivo propio (`packages/scrapers/src/sources/tributos/<municipio>.ts`), como los buscadores de `municipios-lrf`, para que varios trabajen sin pisarse.
+- Las preguntas que no se pueden cerrar con lo publicado se confirman con el municipio y quedan en la columna «Falta».
+
+**Orden:** primero la población y la tarifaria disponible, porque es donde más gente pregunta y donde se puede dar el costo.
+
+| Tanda | Municipio | Población (2022) | Tarifaria vigente | 1. Tarifaria | 2. Recorrido | 3. Evals | 4. Dev | Falta |
+|---|---|---|---|---|---|---|---|---|
+| Piloto | Godoy Cruz | 196.010 | Ord. 7497 (2026), Boletín | ✅ 566 rubros | ✅ | ✅ | ⏳ claves | Rentas: si el monto es mensual o anual; siglas COM, IND, SERV y AP |
+| 1 | Guaymallén | 321.966 | Ord. 10138 (2025) y cambios, Boletín | 🔄 texto bajado | 🔄 relevando | — | — | Confirmar si hay tarifaria 2026 completa |
+| 1 | Las Heras | 234.401 | Ord. 54/25 (2026), Boletín | 🔄 texto bajado | 🔄 relevado | — | — | Decretos de la UT de 2026; ficha ambiental y bomberos sin ficha |
+| 1 | Maipú | 219.402 | Ord. 7638 (2025), Boletín; la 2026 no se encontró | 🔄 texto bajado | 🔄 relevando | — | — | Tarifaria 2026 o su prórroga |
+| 1 | San Rafael | 215.020 | Ord. 15539 (2026), sitio municipal | 🔄 tabla de valores legible | 🔄 relevado | — | — | La fórmula del art. 28 sale cortada en el PDF y la categoría la asigna Recaudación sin criterio escrito: no se puede dar un monto final; texto de la Ord. 15179 (régimen simplificado) |
+| 1 | Luján de Cuyo | 175.056 | Ord. 15095 (2026), cambiada por la 15214, Boletín | 🔄 texto bajado | 🔄 relevando | — | — | — |
+| 1 | Capital | 127.160 | Ord. 4222 (2026), Boletín | 🔄 texto bajado | 🔄 relevado | — | — | Qué es cada categoría (10 a 40); costo de la habilitación; acto que fija la UTM en $130 |
+| 2 | San Martín | 139.792 | Ord. 3229/2026, Boletín | — | — | — | — | — |
+| 2 | Rivadavia | 63.724 | Ord. 5303 (2026), Boletín | — | — | — | — | — |
+| 2 | Tunuyán | 60.171 | Ord. 3351 (2026); valores en el anexo del Boletín | — | — | — | — | — |
+| 2 | General Alvear | 52.584 | Tarifaria 2026, sitio municipal | — | — | — | — | — |
+| 2 | Lavalle | 47.167 | Proyecto 2026 (decreto 4/2026); la 2025 es la Ord. 1252 | — | — | — | — | — |
+| 2 | Junín | 46.604 | Ord. 967 (2025); no hay 2026 en el Boletín | — | — | — | — | — |
+| 2 | Tupungato | 41.280 | Ord. 11/2026, sitio municipal | — | — | — | — | — |
+| 3 | San Carlos | 39.869 | Solo la Ord. 2053/2025, que modifica la 2047/2024 | — | — | — | — | — |
+| 3 | Malargüe | 32.717 | Ord. 2268/2024, la última del sitio | — | — | — | — | — |
+| 3 | Santa Rosa | 19.382 | Ord. 34/2026, Boletín | — | — | — | — | — |
+| 3 | La Paz | 12.086 | No se encontró | — | — | — | — | — |
+
+Referencias: ✅ hecho, 🔄 en curso, ⏳ esperando algo externo, — sin empezar. La columna «Tarifaria vigente» sale de `docs/relevamiento-fuentes.md` (2.12).
+
 ## Preguntas abiertas
 
 - **El anexo de la Ley Impositiva pesa 50 MB comprimido**, cinco veces más que el crudo más grande del repo. Hay tres opciones:
@@ -147,4 +187,3 @@ Si una pregunta nueva necesita otro dato, se suma ese evento y se dice en el PR 
 - **Dónde corre el asistente:** eve se despliega en Vercel, una segunda plataforma además de Cloudflare. Hay que confirmar el cupo gratis y cómo se manejan los secretos de los dos lados.
 - **Qué trámites siguen** después de abrir un comercio: se eligen con la medición de búsquedas.
 - **Tema del widget (decidido el 26/10/2026):** fondo gris de la página, acciones blancas con sombra y los globos de la persona en un gris más oscuro.
-- **La mascota del asistente:** un cóndor andino en la vista previa del 26/10/2026, con «Aco» (por el Aconcagua) como nombre de trabajo. Faltan el nombre definitivo y una ilustración hecha por alguien que dibuje. El encabezado del panel muestra la cordillera en celestes planos, sin gradientes, para seguir las reglas de diseño.
