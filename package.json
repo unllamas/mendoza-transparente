@@ -23,6 +23,7 @@
     "asistente:datos": "bun packages/assistant/scripts/build-knowledge.ts",
     "asistente:evals": "bun packages/assistant/scripts/run-evals.ts",
     "asistente:claves": "bun scripts/asistente-claves.ts",
+    "tributos:probar": "bun packages/scrapers/src/tributos/try-reader.ts",
     "resumir-leyes": "cd apps/web && bun scripts/resumir-leyes.ts",
     "posthog-sync": "cd apps/web && bun scripts/posthog-sync.ts",
     "lint": "biome check . && bun run lint:arch",
