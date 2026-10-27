@@ -32,6 +32,16 @@
   dificultad: facil
   estado: activo
 
+- id: tributos
+  nombre: Impuestos y tasas que fijan la Provincia y los municipios
+  descripcion: "Cuánto cobra cada nivel del Estado: la Ley Impositiva de la Provincia y las ordenanzas tarifarias de los municipios, con el derecho de comercio por rubro. Piloto con Godoy Cruz."
+  organismo: Boletín Oficial de Mendoza (Legislatura y concejos deliberantes)
+  url: https://boe.mendoza.gov.ar/
+  formato: pdf
+  frecuencia: anual
+  dificultad: media
+  estado: pendiente
+
 - id: universidades-estadisticas
   nombre: Anuario de Estadísticas Universitarias (UNCuyo y UTN)
   descripcion: "Estudiantes, egresados, docentes, no docentes y presupuesto de la UNCuyo y la UTN, año a año. La UTN figura como una sola universidad para todo el país."

@@ -66,7 +66,7 @@ interface IndexItem {
 }
 
 /** POST con pausa (~1 s en total con la de get) y espera larga ante 429 (el gateway limita la tasa). */
-async function post(path: string, params: Record<string, string>): Promise<string> {
+export async function post(path: string, params: Record<string, string>): Promise<string> {
   for (let attempt = 0; ; attempt++) {
     try {
       const resp = await get(
@@ -152,7 +152,7 @@ function classify(tipo: string, sumario: string, texto: string): Categoria {
 }
 
 /** Texto plano del detalle: conserva saltos de párrafo. */
-function parseDetail(html: string) {
+export function parseDetail(html: string) {
   const $ = cheerio.load(html);
   $("#detail-body br").replaceWith("\n");
   $("#detail-body p, #detail-body div, #detail-body li, #detail-body tr").each((_, el) => {
