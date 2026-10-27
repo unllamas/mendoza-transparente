@@ -30,6 +30,7 @@ import type { ResumenLey } from "./temas/leyes.ts";
 import { budgetSummary, buildMunicipalBudgets } from "./temas/municipal-budget.ts";
 import { assignParties, buildParties, buildPartyRegistry, type OfficialColor, type PartyEntry, partyMentions } from "./temas/parties.ts";
 import { buildPoblacion } from "./temas/poblacion.ts";
+import { buildProcedures } from "./temas/procedures.ts";
 import { buildRecaudacion } from "./temas/recaudacion.ts";
 import { buildSenales } from "./temas/senales.ts";
 import type { TransparencySurvey } from "./temas/transparency.ts";
@@ -412,6 +413,29 @@ if (copaTema && poblacionTema && funcionariosTema) {
     writeFileSync(join(OUT, "temas", "municipios", b.slug, "presupuesto.json"), JSON.stringify(b));
     const m = municipios.find((x) => x.slug === b.slug);
     if (m) m.budget = budgetSummary(b);
+  }
+  // Procedure pages (/tramites/abrir-un-comercio, /municipios/<slug>/tramites/… and /tasas), from the curated catalog.
+  const procedures = buildProcedures(
+    leerCurado<Record<string, unknown>>("tramites.yaml"),
+    readTable("tributos", "rubros_comercio.csv") ?? [],
+    readTable("tributos", "documentos.csv") ?? [],
+    leerCurado<Record<string, unknown>>("rubros.yaml"),
+  );
+  mkdirSync(join(OUT, "temas", "tramites"), { recursive: true });
+  writeFileSync(join(OUT, "temas", "tramites", `${procedures.guide.id}.json`), JSON.stringify(procedures.guide));
+  const commerce = new Map<string, NonNullable<(typeof municipios)[number]["commerce"]>>();
+  for (const p of procedures.procedures) {
+    mkdirSync(join(OUT, "temas", "municipios", p.slug), { recursive: true });
+    writeFileSync(join(OUT, "temas", "municipios", p.slug, `tramite-${procedures.guide.id}.json`), JSON.stringify(p));
+    commerce.set(p.slug, { procedure: true, feesYear: null });
+  }
+  for (const f of procedures.fees) {
+    writeFileSync(join(OUT, "temas", "municipios", f.slug, "tasas.json"), JSON.stringify(f));
+    commerce.set(f.slug, { procedure: commerce.get(f.slug)?.procedure ?? false, feesYear: f.year });
+  }
+  for (const m of municipios) {
+    const c = commerce.get(m.slug);
+    if (c) m.commerce = c;
   }
   writeFileSync(join(OUT, "temas", "municipios.json"), JSON.stringify(municipios));
   // The request letter (/pedir) and the posters (/cartel).

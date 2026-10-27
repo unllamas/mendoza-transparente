@@ -2,7 +2,7 @@
 
 Objetivo: que cualquier persona pueda saber **qué tiene que hacer, qué papeles necesita y cuánto le va a costar** un trámite ante el Estado en Mendoza (por ejemplo, abrir un comercio en Godoy Cruz), con cada paso atado a la norma o la página oficial de donde sale y a la fecha en que se verificó. Primero como páginas del sitio y después como un asistente que responde preguntas usando esos mismos datos.
 
-Fecha: 26/10/2026, actualizado el 27/10/2026. Estado: el asistente funciona con Godoy Cruz (etapas 2, 4, 5 y 7, proceso en `docs/procesos/asistente.md`) y ya responde en la vista previa de `dev` con la clave de OpenRouter; la etapa 1 sigue en piloto; faltan las páginas (3) y la carpeta en PDF (6).
+Fecha: 26/10/2026, actualizado el 27/10/2026. Estado: el asistente funciona con Godoy Cruz (etapas 2, 4, 5 y 7, proceso en `docs/procesos/asistente.md`) y ya responde en la vista previa de `dev` con la clave de OpenRouter; la etapa 1 sigue en piloto; las páginas (3) están hechas (`/tramites/abrir-un-comercio`, `/municipios/<municipio>/tramites/abrir-un-comercio` y `/municipios/<municipio>/tasas`) y la carpeta en PDF (6) se baja desde Aco.
 
 ## Por qué
 

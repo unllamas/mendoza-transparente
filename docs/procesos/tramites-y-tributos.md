@@ -45,3 +45,25 @@ Cada entrada es un **recorrido** (por ejemplo `abrir-un-comercio`) en un municip
 El criterio: el código que corresponde a un comercio minorista con local propio, no mayorista, fábrica, venta a consignación ni puesto en la vía pública, salvo que el rubro sea eso. Si el anexo no tiene nada razonable, el rubro no se carga: vale más un «todavía no lo tenemos» que un monto de otra actividad. Lo que la gente pide y no está queda en la tabla `assistant_gaps` (ver [Asistente](asistente.md#faltantes)), y de ahí sale qué sumar. En los anexos escaneados, solo hay tasa para los rubros de `tasa_comercio.manual`, que lleva el `ejercicio` de los montos.
 
 Hoy está relevado `abrir-un-comercio` en Godoy Cruz y en los trece municipios de las tandas 1 y 2 (estado en `docs/planes/guia-de-tramites.md#plan-por-municipio`). Para otro municipio, el asistente da solo los pasos de Nación y Provincia y avisa que falta relevar los municipales.
+
+## Páginas
+
+Las páginas salen de los mismos archivos que usa el asistente (`data/curado/tramites.yaml`, `data/curado/rubros.yaml` y `data/processed/tributos/`); nada se escribe a mano en la web. El build (`apps/web/scripts/temas/procedures.ts`, llamado desde `build-data.ts`) genera los JSON de `public/data/temas/` y `scripts/paginas.ts` registra cada ruta con su título, descripción, JSON-LD (`GovernmentService`, `BreadcrumbList` y `FAQPage`) y HTML prerenderizado.
+
+| Ruta | Qué muestra | Cuándo existe |
+|---|---|---|
+| `/tramites/abrir-un-comercio` | Los pasos de Nación y Provincia (iguales en todos lados), lo que no publican y la comparación entre municipios: pasos propios, si se inicia en línea, si tenemos la tasa de comercio y desde cuándo | Siempre |
+| `/municipios/<slug>/tramites/abrir-un-comercio` | Pasos, costos, régimen de promoción y «lo que el municipio no publica» | Todo municipio con recorrido en `tramites.yaml` |
+| `/municipios/<slug>/tasas` | Derecho de comercio por rubro (buscador, categorías en una hoja), período, unidad y valor, y la ordenanza con su link | Solo si el anexo de la tarifaria está leído en `rubros_comercio.csv` (hoy Godoy Cruz, Capital, Las Heras, Guaymallén, General Alvear y Rivadavia) |
+
+**Regla de páginas puerta:** una página de municipio se genera solo si tiene algo propio que decir. Los municipios con pocos rubros cargados a mano (Luján de Cuyo, Maipú, San Martín, Tunuyán, Lavalle, Junín y Tupungato) y San Rafael (la fórmula publicada no permite dar un monto) no tienen `/tasas`: sus montos, o el aviso de que no se pueden calcular, van en su página de trámite. Nunca se generan páginas iguales cambiando el nombre.
+
+**Reglas de contenido**
+- Cada paso lleva su fuente oficial y la fecha de `verificado` de su recorrido. Los pasos de Nación y Provincia llevan la fecha más reciente entre los recorridos.
+- Lo que el organismo no publica sale de `no_publica` y se dice «<organismo> no publica …». Lo de la ATM va en la guía de la provincia; lo del municipio, en su página.
+- Los montos en UT o UTM se muestran en pesos con el `valor_unidad` del recorrido y, al lado, en la unidad de la ordenanza. Si el período está vacío, la página dice que la ordenanza no aclara si el monto es mensual o anual.
+- «Se inicia en línea» se deduce del texto del paso de habilitación (`en línea`, `Ciudadanía Digital`, `digital`; `presencial`, `en persona`, `con turno`) y de un `no_publica` que mencione «línea». Cuando el texto no dice nada, la página lo dice así («La ficha no dice cómo se inicia»). Si el dato se vuelve importante, conviene un campo propio en el recorrido.
+
+**Para sumar un municipio:** cargar el recorrido (ver arriba) y, si su anexo se puede leer, la tarifaria en `tributos`. Con `bun run dev` o el build las páginas aparecen solas, enlazadas desde la página del municipio y desde la guía.
+
+**Analítica:** `municipality.procedure.open`, `municipality.fees.open`, `procedure.municipality.open` y `procedure.fees.open` (clics en las tarjetas) y la hoja de cada rubro (`sheet.open` con `municipality.fees.item`). Los links a las fuentes oficiales se miden solos (`link.outbound`). Medir con PostHog y Search Console a las dos semanas de publicar.

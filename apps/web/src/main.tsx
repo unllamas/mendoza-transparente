@@ -23,6 +23,8 @@ import type {
   LeyResumen,
   MapaMendoza,
   MunicipalBudget,
+  MunicipalFees,
+  MunicipalProcedure,
   MunicipioPagina,
   NoPublicado,
   OrganismoDetalle,
@@ -31,6 +33,7 @@ import type {
   PartySummary,
   PoblacionTema,
   PosterMunicipality,
+  ProcedureGuide,
   ProveedorDetalle,
   ProveedorResumen,
   RecaudacionTema,
@@ -268,6 +271,27 @@ const municipalBudgetLatestRoute = createRoute({
   },
 });
 
+const procedureGuideRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/tramites/abrir-un-comercio",
+  loader: () => loadTema<ProcedureGuide>("tramites/abrir-un-comercio").catch(() => null),
+  component: page(() => import("./pages/procedures.tsx"), "ProcedureGuidePage"),
+});
+
+const municipalProcedureRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/municipios/$slug/tramites/abrir-un-comercio",
+  loader: ({ params }) => loadTema<MunicipalProcedure>(`municipios/${params.slug}/tramite-abrir-un-comercio`).catch(() => null),
+  component: page(() => import("./pages/procedures.tsx"), "MunicipalProcedurePage"),
+});
+
+const municipalFeesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/municipios/$slug/tasas",
+  loader: ({ params }) => loadTema<MunicipalFees>(`municipios/${params.slug}/tasas`).catch(() => null),
+  component: page(() => import("./pages/municipal-fees.tsx"), "MunicipalFeesPage"),
+});
+
 const proveedoresRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/proveedores",
@@ -385,6 +409,9 @@ const router = createRouter({
     municipioRoute,
     municipalBudgetRoute,
     municipalBudgetLatestRoute,
+    municipalFeesRoute,
+    municipalProcedureRoute,
+    procedureGuideRoute,
     proveedoresRoute,
     proveedorRoute,
     organismosRoute,
