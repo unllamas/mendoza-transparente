@@ -13,7 +13,7 @@ Cómo se cargan los trámites (qué hay que hacer) y las tasas e impuestos (cuá
 - **Reglas:**
   - Los montos se copian tal como se publicaron, aunque parezcan un error; el error se avisa en el diccionario.
   - Si el municipio fija las tasas en Unidades Tributarias, hace falta además el decreto que fija su valor.
-- **Archivos pesados:** el anexo de la Ley Impositiva 2026 pesa 50 MB comprimido y no se commitea; se guarda su texto. Antes de commitear un crudo de más de 50 MB, avisar.
+- **Archivos pesados:** el anexo de la Ley Impositiva 2026 pesa 52 MB comprimido y está en el repo como excepción aprobada (ver `datos-y-archivo.md`). Antes de commitear otro crudo de más de 50 MB, preguntar.
 
 ## Trámites: `data/curado/tramites.yaml`
 

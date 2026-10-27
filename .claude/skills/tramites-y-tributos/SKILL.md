@@ -12,7 +12,7 @@ Fuente completa: `docs/procesos/tramites-y-tributos.md`. Cargar también `datos-
 1. Buscar la norma en `data/processed/boletin-oficial/normas.csv` (sumario con «TARIFARIA» o «IMPOSITIVA») y sumarla a `NORMAS`.
 2. `bun run scrape tributos`: baja el PDF con sus anexos y deja el texto en `data/processed/tributos/textos/`.
 3. Escribir el lector de su anexo en `ACTIVITY_TABLES`, uno por municipio. Validar contra el PDF y copiar los montos tal como se publicaron.
-4. Crudos de más de 50 MB: avisar antes de commitear.
+4. Crudos de más de 50 MB: preguntar antes de commitear (la única excepción aprobada es el anexo de la Ley Impositiva 2026).
 
 ## Trámites (`data/curado/tramites.yaml`)
 

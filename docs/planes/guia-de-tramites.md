@@ -137,12 +137,6 @@ Si una pregunta nueva necesita otro dato, se suma ese evento y se dice en el PR 
 
 ## Preguntas abiertas
 
-- **El anexo de la Ley Impositiva pesa 50 MB comprimido**, cinco veces más que el crudo más grande del repo. Hay tres opciones:
-  - commitearlo igual;
-  - dejarlo solo en archive.org;
-  - archivar solo el texto extraído.
-
-  Por ahora no está commiteado.
 - **Godoy Cruz:** el Anexo A no dice si el monto es anual o mensual (el artículo 26 dice que el pago es mensual). Tampoco define las siglas COM, IND, SERV y AP ni la columna final de 0 y 1. Hay que confirmarlo con la Dirección de Rentas o con una boleta real. En el rubro 34010 (envío de dinero), la categoría 10 cuesta más que la 9: probablemente es un error de la ordenanza.
 - **Dónde corre el asistente:** eve se despliega en Vercel, una segunda plataforma además de Cloudflare. Hay que confirmar el cupo gratis y cómo se manejan los secretos de los dos lados.
 - **Qué trámites siguen** después de abrir un comercio: se eligen con la medición de búsquedas.
