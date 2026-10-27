@@ -5,7 +5,6 @@ import {
   type RemixiconComponentType,
   RiArrowRightSLine,
   RiArrowRightUpLine,
-  RiFileDownloadLine,
   RiMapPin2Line,
   RiMoreLine,
   RiRestaurant2Line,
@@ -16,6 +15,7 @@ import {
 } from "@remixicon/react";
 import { Link } from "@tanstack/react-router";
 import { formatDate, formatNumber, normalizeText } from "@/lib.ts";
+import { FolderButton } from "./folder/folder-button.tsx";
 
 type Icon = RemixiconComponentType;
 
@@ -151,18 +151,7 @@ export function BlockView({ block, answered, handlers }: { block: Block; answere
               </li>
             ))}
           </ol>
-          {/* TODO: enable when the PDF "carpeta del trámite" exists (docs/planes/guia-de-tramites.md). */}
-          <ul className={listVariants()}>
-            <li>
-              <button type="button" disabled aria-disabled className={cx(listRowVariants(), "cursor-not-allowed opacity-60")}>
-                <RiFileDownloadLine className="size-5 shrink-0 text-text-link" aria-hidden />
-                <span className="flex min-w-0 flex-1 flex-col">
-                  <span className="truncate text-body-medium text-text-link">Bajar la carpeta del trámite</span>
-                  <span className="text-caption-1-regular text-text-secondary">Pronto</span>
-                </span>
-              </button>
-            </li>
-          </ul>
+          <FolderButton block={block} />
           <p className="text-caption-1-regular text-text-tertiary">Verificado el {formatDate(block.verified)}</p>
         </>
       );

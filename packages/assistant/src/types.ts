@@ -29,6 +29,8 @@ export interface ProcedureStep {
   /** Official page or form for the step. */
   href: string;
   agency: string;
+  /** Date this step was last checked (YYYY-MM-DD); the block's `verified` when absent. */
+  verified?: string;
 }
 
 /** One activity of the tarifaria annex with its range: the cheapest and the most expensive category. */
@@ -71,6 +73,14 @@ export type Block =
       steps: ProcedureStep[];
       /** Date the steps were last checked against the official sources (YYYY-MM-DD). */
       verified: string;
+      /** Title of the procedure ("Abrir un comercio"), for the PDF folder. */
+      title?: string;
+      /** The activity the person picked ("Almacén"). */
+      activity?: string;
+      /** Papers to bring, to tick off in the PDF folder. */
+      papers?: string[];
+      /** What the agencies do not publish about this procedure ("Cuánto tarda la habilitación"). */
+      unpublished?: { what: string; agency: string; detail?: string }[];
     }
   /** The trade fee, only when the person asked how much the municipality charges. */
   | { type: "fee"; fee: FeeCard }
