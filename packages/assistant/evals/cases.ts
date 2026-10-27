@@ -238,7 +238,7 @@ export const CASES: EvalCase[] = [
     name: "General Alvear: la categoría de la tasa no se publica",
     messages: [user("Tengo una panadería en General Alvear, ¿qué categoría de la tasa de comercio me toca?")],
     outcome: ["unpublished", "answer", "fee"],
-    says: [/no publica|no (se )?(dice|informa|aclara)|Rentas/i],
+    says: [/no (se )?(publica|dice|informa|aclara|explica|define)|Rentas/i],
   },
   {
     name: "Rivadavia: pasos y tasa de una despensa",
