@@ -1,0 +1,25 @@
+{
+  "titulo": "Normas que fijan impuestos y tasas en Mendoza",
+  "descripcion": "Cada fila es una norma publicada en el Boletín Oficial que fija cuánto cobra la Provincia o un municipio: la Ley Impositiva de cada año, las ordenanzas tarifarias y los códigos tributarios municipales. El texto completo, página por página, está en textos/<norma_id>.txt. Es un piloto: por ahora están la Ley Impositiva 2026 y las normas de Godoy Cruz.",
+  "columnas": {
+    "norma_id": { "etiqueta": "Id en el Boletín", "tipo": "texto", "descripcion": "Identificador de la norma en el Boletín Oficial; es el mismo que en boletin-oficial/normas.csv." },
+    "nivel": { "etiqueta": "Nivel", "tipo": "texto", "valores": { "provincial": "Provincial", "municipal": "Municipal" } },
+    "jurisdiccion": { "etiqueta": "Jurisdicción", "tipo": "texto", "descripcion": "«Provincia» o el nombre del municipio." },
+    "documento": {
+      "etiqueta": "Documento",
+      "tipo": "texto",
+      "valores": {
+        "ley_impositiva": "Ley Impositiva",
+        "ordenanza_tarifaria": "Ordenanza tarifaria",
+        "codigo_tributario": "Código tributario municipal"
+      }
+    },
+    "numero": { "etiqueta": "N.º", "tipo": "texto" },
+    "ejercicio": { "etiqueta": "Año en que rige", "tipo": "anio", "descripcion": "Vacío si la norma no es anual, como un código tributario." },
+    "fecha_boletin": { "etiqueta": "Publicada", "tipo": "fecha" },
+    "url_norma": { "etiqueta": "Norma", "tipo": "url", "descripcion": "PDF de la norma en el Boletín Oficial." },
+    "url_anexos": { "etiqueta": "Anexos", "tipo": "texto", "descripcion": "Links a los anexos con el texto completo, separados por espacios." },
+    "paginas": { "etiqueta": "Páginas", "tipo": "numero", "descripcion": "Páginas de la norma más las de sus anexos." }
+  },
+  "orden": ["jurisdiccion", "documento", "numero", "ejercicio", "fecha_boletin", "paginas", "url_norma", "url_anexos", "nivel", "norma_id"]
+}

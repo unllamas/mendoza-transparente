@@ -7,7 +7,8 @@ Cuando una parte de un plan queda funcionando, su proceso se documenta en `docs/
 | Plan | Estado |
 |---|---|
 | [El Estado por dentro](el-estado-por-dentro.md) | Etapas 1 a 4 hechas; falta el histórico de designaciones |
-| [Agentes sobre los datos](agentes-sobre-los-datos.md) | Propuesta, sin empezar |
+| [Agentes sobre los datos](agentes-sobre-los-datos.md) | Propuesta, sin empezar; el asistente propio se arma con eve |
+| [Guía de trámites, impuestos y tasas](guia-de-tramites.md) | Etapa 1 en piloto (Godoy Cruz y Ley Impositiva 2026) |
 | [Consentimiento de cookies](consentimiento-de-cookies.md) | Propuesta, sin empezar |
 | [Consumo de Cloudflare](consumo-de-cloudflare.md) | Etapa 1 hecha; falta la configuración en Cloudflare |
 | [Portada según el uso](portada-segun-el-uso.md) | Etapas 1 y 2 hechas; falta el buscador y volver a medir |

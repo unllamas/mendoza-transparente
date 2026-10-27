@@ -314,7 +314,7 @@ Las ordenanzas tarifarias fijan los valores en **Unidades Tributarias Municipale
 | General Alvear | Tarifaria 2026, segundo semestre | `https://alvearmendoza.gob.ar/wp-content/uploads/2026/08/IIIV-ORDENANZA-TARIFARIA-2026-2do.sem_.pdf` · página `/ordenanza-tarifaria/` | 🟢 |
 | Tupungato | Ord. 11/2026 | `https://tupungato.gov.ar/wp-content/uploads/2026/08/Tarifaria-2026-1.pdf` (listado 2016 a 2026 en `?page_id=3090`) | 🟢 |
 | Tunuyán | Ord. 3351 (2026) | `https://www.tunuyan.gov.ar/site/wp-content/uploads/2026/01/3351.pdf`; los valores, en el anexo del Boletín | 🟡 |
-| Godoy Cruz | Ord. 7497 (2026) | Solo en el Boletín (19/11/2025) | 🟡 |
+| Godoy Cruz | Ord. 7497 (2026) | Solo en el Boletín (19/11/2025); el anexo con los valores tiene texto y se lee con `bun run scrape tributos` | 🟢 |
 | Guaymallén | Ord. 10138 (2025) con cambios (10202, 10298, 10399, 10407) | Boletín; el sitio solo tiene 2021 a 2023; digesto del Concejo en `https://cdguaymallen.gob.ar/digesto` (sin verificar) | 🟡 |
 | Luján de Cuyo | Ord. 15095 (2026), modificada por la 15214 | Boletín; el portal de datos solo tiene la 2025 (Ord. 14831) | 🟡 |
 | San Martín | Ord. 3229/2026 | Boletín | 🟡 |
