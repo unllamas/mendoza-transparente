@@ -99,11 +99,22 @@ export interface AssistantReply {
   /** Recorrido the answer belongs to, when there is one ("abrir-un-comercio"). */
   flow?: string;
   municipality?: string;
+  /** With Turnstile on: the pass for the next messages of this conversation. */
+  pass?: string;
 }
 
 /** GET /api/asistente: whether the assistant is configured (at least one provider key). The widget hides otherwise. */
 export interface AssistantStatus {
   enabled: boolean;
+  /** Turnstile is on: the first message needs a token, the next ones the pass of the first answer. */
+  challenge?: boolean;
+}
+
+/** Body of POST /api/asistente. With Turnstile on, `turnstile` (first message) or `pass` (the rest). */
+export interface AssistantRequest {
+  messages: ChatMessage[];
+  turnstile?: string;
+  pass?: string;
 }
 
 export type Vote = "up" | "down";
