@@ -1,10 +1,11 @@
+import { Mascot, MascotAvatar } from "@mt/mascots/mascot";
 import { Button } from "@mt/ui/components/base/buttons/button";
 import { IconButton } from "@mt/ui/components/base/buttons/icon-button";
 import { RiArrowRightSLine, RiCloseLine, RiSendPlane2Line } from "@remixicon/react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
+import { Andes } from "./andes.tsx";
 import { type BlockHandlers, BlockView } from "./blocks.tsx";
 import { AnswerFooter } from "./feedback.tsx";
-import { Andes, Mascot } from "./mascot.tsx";
 import { MunicipalitySheet } from "./municipality-sheet.tsx";
 import type { Turn } from "./use-conversation.ts";
 
@@ -19,7 +20,7 @@ function Header({ onClose }: { onClose: () => void }) {
   return (
     <div className="flex h-16 shrink-0 items-center gap-3 border-b border-separator-border bg-background-surface pr-2 pl-4">
       <span className="relative shrink-0">
-        <Mascot className="size-10" />
+        <MascotAvatar mascot="aco" size={40} decorative />
         <span className="absolute right-0 bottom-0 size-3 rounded-full border-2 border-background-surface bg-green-500" />
       </span>
       <span className="flex min-w-0 flex-1 flex-col">
@@ -36,7 +37,7 @@ function Hero() {
   return (
     <div className="relative -mx-5 -mt-5 h-60 shrink-0 overflow-hidden bg-accent-50">
       <Andes />
-      <Mascot className="absolute top-4 left-1/2 size-28 -translate-x-1/2" background={false} />
+      <Mascot mascot="aco" pose="wave" size={112} priority className="absolute top-4left-1/2 -translate-x-1/2" />
       <p className="absolute top-32 left-8 -rotate-3 rounded-2xl rounded-bl-sm bg-background-surface px-4 py-2 text-body-bold text-text-primary shadow-md">
         ¡Hola! Soy {NAME} 👋
       </p>
@@ -62,6 +63,16 @@ function BotTurn({ children }: { children: ReactNode }) {
 
 function BotText({ children }: { children: ReactNode }) {
   return <p className="text-body-regular text-pretty text-text-primary">{children}</p>;
+}
+
+/** Text with a small shy Aco beside it: for errors and for data that is not published. */
+function ShyText({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex items-end gap-2">
+      <Mascot mascot="aco" pose="shy" size={48} decorative className="shrink-0" />
+      <BotText>{children}</BotText>
+    </div>
+  );
 }
 
 function Suggestions({ onAsk }: { onAsk: (q: string) => void }) {
@@ -156,7 +167,7 @@ export function Panel({
           const answered = i < turns.length - 1;
           return (
             <BotTurn key={key}>
-              <BotText>{reply.text}</BotText>
+              {reply.outcome === "unpublished" ? <ShyText>{reply.text}</ShyText> : <BotText>{reply.text}</BotText>}
               {reply.blocks.map((block, j) => (
                 <BlockView key={`${block.type}-${j}`} block={block} answered={answered} handlers={handlers} />
               ))}
@@ -165,11 +176,14 @@ export function Panel({
           );
         })}
         {thinking && (
-          <p className="text-caption-1-regular text-text-tertiary motion-safe:animate-pulse">{NAME} está buscando en las fuentes…</p>
+          <p className="flex items-center gap-2 text-caption-1-regular text-text-tertiary motion-safe:animate-pulse">
+            <Mascot mascot="aco" pose="thinking" size={40} decorative className="shrink-0" />
+            {NAME} está buscando en las fuentes…
+          </p>
         )}
         {failed && (
           <BotTurn>
-            <BotText>No pude responder ahora. Probá de nuevo en un rato.</BotText>
+            <ShyText>No pude responder ahora. Probá de nuevo en un rato.</ShyText>
             <Button variant="secondary" onClick={onRetry} className="self-start">
               Reintentar
             </Button>

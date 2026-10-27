@@ -1,8 +1,8 @@
+import { MascotAvatar } from "@mt/mascots/mascot";
 import { cx } from "@mt/ui/lib/cx";
 import { RiArrowDownSLine } from "@remixicon/react";
 import { useEffect, useState } from "react";
 import { track } from "@/analytics.ts";
-import { Mascot } from "./mascot.tsx";
 import { NAME, Panel } from "./panel.tsx";
 import { useConversation } from "./use-conversation.ts";
 
@@ -32,7 +32,7 @@ function Launcher({ open, onPress, className }: { open: boolean; onPress: () => 
         className,
       )}
     >
-      <Mascot className="size-11" />
+      <MascotAvatar mascot="aco" size={44} decorative />
       <span className="text-body-semibold text-text-primary">Preguntá</span>
     </button>
   );

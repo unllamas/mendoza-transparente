@@ -219,6 +219,29 @@ El sitio casi no tiene animaciones, y está bien así: la gente viene a leer dat
 - **El movimiento nunca es la única señal:** además cambia un color, un ícono o un texto.
 - **Una sola cosa titila en todo el sitio:** el punto amarillo de «Para mirar de cerca» en el menú (`StatusDot` con `blinking`), que marca la sección viva. Es un parpadeo lento de opacidad, se apaga con «reducir movimiento» y no se suma a otros lugares: si todo titila, nada llama la atención.
 
+## Mascotas
+
+Las mascotas viven en `packages/mascots` (`@mt/mascots`). La primera es **Aco**, un cóndor andino, la guía de trámites. Son ilustraciones en PNG con fondo transparente y un manifiesto JSON; sumar algo es agregar archivos, no tocar el componente.
+
+Se usan con `<Mascot mascot="aco" pose="wave" size={120} />` y `<MascotAvatar mascot="aco" size={40} />` (`@mt/mascots/mascot`). Siempre con tamaño fijo (no mueve la página); `decorative` si al lado ya hay un texto que dice lo mismo; `priority` solo sobre el pliegue.
+
+**Cuándo usar cada pose de Aco**
+
+| Pose | Cuándo |
+|---|---|
+| `idle` (parado) | Reposo y avatar |
+| `wave` (saluda) | Bienvenida |
+| `thinking` (piensa) | Mientras busca en las fuentes |
+| `point` (explica) | Cuando muestra pasos o datos |
+| `celebrate` (festeja) | Después de un 👍, 1,5 s y solo con `motion-safe` |
+| `shy` (apenado) | Errores y datos que no se publican |
+
+**Sumar una pose o un estilo.** Pasar el dibujo a WebP al 80 % (`sharp`, ya en el paquete) y ponerlo en `packages/mascots/mascots/<id>/<estilo>/originales/<pose>.webp` (fondo liso claro, sombra suave permitida; así un original pesa unos 25 KB en vez de 1,5 MB), declararlo en `mascot.json` (`label`, `alt`, `use`) y correr `bun run mascotas`: genera `apps/web/public/mascotas/<id>/<estilo>/<pose>-<tamaño>.png` (se commitea). Un estilo nuevo es otra entrada en `styles`, con su propia carpeta de originales.
+
+**Sumar una mascota.** Carpeta `packages/mascots/mascots/<id>/` con su `mascot.json` y los originales, el `import` en `src/manifest.ts` y `bun run mascotas`. Los tipos de pose salen del manifiesto, así que un nombre mal escrito no compila.
+
+`bun run mascotas --check` verifica que cada pose del manifiesto tenga su original y sus archivos generados (y que pesen poco: 512 px menos de 150 KB, 96 px menos de 20 KB). El recorte es el mismo para todas las poses de un estilo, para que Aco no cambie de tamaño al cambiar de pose. `avatar.crop` es el cuadrado, en píxeles del original, que encuadra la cabeza y el collar.
+
 ## Lo que no hacemos
 
 Cosas típicas de las interfaces armadas con IA o con plantillas. Hacen que el sitio parezca genérico y le quitan seriedad:
