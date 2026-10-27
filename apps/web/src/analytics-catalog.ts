@@ -515,6 +515,24 @@ export const EVENT_CATALOG: EventDoc[] = [
   },
   { event: "landscape.propose", description: "Tocó «Proponé tu foto» sobre una foto de paisaje. Propiedad photo.", tags: ["portada"] },
 
+  {
+    event: "assistant.launcher.open",
+    description: "Abrió el asistente Aco (guía de trámites) desde el botón flotante «Preguntá».",
+    tags: ["asistente"],
+  },
+  {
+    event: "assistant.answer.show",
+    description:
+      "Aco respondió. Propiedades: outcome (steps, unpublished, ask, answer o no_answer), flow (el recorrido, p. ej. abrir-un-comercio) y municipality.",
+    tags: ["asistente"],
+  },
+  {
+    event: "assistant.feedback.vote",
+    description:
+      "Votó una respuesta de Aco. Propiedades: vote (up o down) y, si fue down, reason (dato, respuesta o falta). Nunca se envía el texto libre ni la conversación.",
+    tags: ["asistente"],
+  },
+
   // Retired: the site no longer sends these, but PostHog keeps their history. Described so it can still be read.
   {
     event: "municipality.index.open",

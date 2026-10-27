@@ -1,0 +1,88 @@
+# Catálogo de trámites: recorridos que encadenan los pasos de Nación, Provincia y municipio.
+# Lo usa el asistente de la guía de trámites (packages/assistant) y, más adelante, las páginas /tramites.
+# Proceso: docs/procesos/tramites-y-tributos.md. Plan: docs/planes/guia-de-tramites.md.
+#
+# Reglas:
+# - Cada paso sale de una página o norma oficial (url) y el recorrido lleva la fecha en que se verificó.
+# - Lo que el organismo no publica va en `no_publica`, no se completa con suposiciones.
+# - `cuando` dice si el paso aplica siempre o solo a ciertos rubros (`alimentos`).
+# - Los rubros apuntan al código del anexo de la ordenanza tarifaria (data/processed/tributos/rubros_comercio.csv).
+
+- id: abrir-un-comercio
+  titulo: Abrir un comercio
+  municipio: Godoy Cruz
+  verificado: 2026-10-26
+  rubros:
+    - id: almacen
+      nombre: Almacén
+      codigo: "30003"
+      alimentos: true
+    - id: kiosco
+      nombre: Kiosco
+      codigo: "30037"
+      alimentos: true
+    - id: ropa
+      nombre: Ropa
+      codigo: "31020"
+      alimentos: false
+    - id: rotiseria
+      nombre: Comida para llevar
+      codigo: "42006"
+      alimentos: true
+  pasos:
+    - nivel: nacion
+      organismo: ARCA
+      titulo: CUIT y alta en el monotributo
+      detalle: En línea y gratis, con DNI y clave fiscal. El alta toma unos 15 minutos.
+      url: https://www.argentina.gob.ar/servicio/inscribirme-como-monotributista
+      cuando: siempre
+    - nivel: provincia
+      organismo: ATM
+      titulo: Ingresos Brutos
+      detalle: Automática si sos monotributista (hasta 72 horas hábiles). Si no, alta en Mis Trámites Online de la ATM.
+      url: https://atm.mendoza.gov.ar/preguntas-frecuentes/impuesto-sobre-los-ingresos-brutos-2/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Godoy Cruz
+      titulo: Uso de suelo del local
+      detalle: En línea por Ciudadanía Digital, con el número de padrón y los rubros. Dice si el local puede tener esa actividad.
+      url: https://www.godoycruz.gob.ar/sitio2/?p=38659
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Godoy Cruz
+      titulo: Habilitación de comercio
+      detalle: Con turno en el Centro de Atención Unificada o por Ciudadanía Digital; los formularios se firman en persona. Iniciarla no autoriza a abrir.
+      url: https://www.godoycruz.gob.ar/sitio2/?p=38409
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Godoy Cruz
+      titulo: Ficha ambiental
+      detalle: Se presenta junto con la habilitación, en el CAU o por Ciudadanía Digital.
+      url: https://www.godoycruz.gob.ar/sitio2/wp-content/uploads/2023/09/INSTRUCTIVO-FICHA-AMBIENTAL-COMERCIO.docx.pdf
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Godoy Cruz
+      titulo: Libreta sanitaria y carnet de manipulación
+      detalle: La libreta, en el Centro de Salud del barrio FOECYT; el carnet, con un curso en línea y un examen presencial.
+      url: https://www.godoycruz.gob.ar/el-tramite-de-libreta-sanitaria-se-realiza-en-el-centro-de-salud-del-bo-foecyt/
+      cuando: alimentos
+  costos:
+    - concepto: Derecho de comercio
+      detalle: Lo cobra el municipio por mes según el rubro y la categoría que asigna Rentas. Mientras dura la habilitación se paga un 50 % más (Ordenanza 7497, art. 20).
+      norma: Ordenanza tarifaria 7497 (2026), Anexo A
+      url: https://boe.mendoza.gov.ar/publico/pdf_pedido/b6145815bd40d2e9d9ebbad5c8bb5bff3675831184
+    - concepto: Habilitación
+      detalle: Según una nota del municipio, desde 2026 habilitar no tiene costo. La ordenanza tarifaria 2026 no fija un monto para pedirla.
+      url: https://www.godoycruz.gob.ar/godoy-cruz-55-tasas-menos-vecinos-comerciantes-ahorro-estimado-70-millones/
+  no_publica:
+    - que: Cuánto tarda la habilitación
+      organismo: Municipalidad de Godoy Cruz
+      detalle: La ficha oficial dice que «dependerá del cumplimiento de los requisitos».
+    - que: Cuánto tarda el alta en Ingresos Brutos por el régimen general
+      organismo: ATM
+    - que: Los requisitos y el costo del permiso para poner un cartel
+      organismo: Municipalidad de Godoy Cruz
+  promocion:
+    norma: Ordenanza 7240/2022
+    detalle: Los comercios nuevos que toman personal pueden pedir una exención de tasas del 25 % al 100 % hasta por dos años, según cuántas personas sumen (al menos la mitad, de Godoy Cruz). No se confirmó que siga vigente en 2026.
+    url: https://datos.godoycruz.gob.ar/wp-content/uploads/ordenanzas/2022/7240.docx

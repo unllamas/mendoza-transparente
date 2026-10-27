@@ -18,6 +18,8 @@ Cómo se trabaja en Mendoza Transparente, para poder replicarlo, retomarlo o sum
 | [Participación](participacion.md) | Pedidos de información, respuestas, errores y sugerencias: API, base y moderación |
 | [Panel interno](panel.md) | La app del equipo para revisar y publicar lo que llega: login, publicación, seguridad y casos límite |
 | [Hallazgos de seguridad](seguridad.md) | Qué hacer si al relevar aparece un problema de seguridad en un sitio del Estado: límites legales, carga en el panel y a quién se reporta |
+| [Trámites y tributos](tramites-y-tributos.md) | Cómo se cargan los trámites y las tasas e impuestos de cada municipio |
+| [Asistente (Aco)](asistente.md) | Cómo funciona el chat de la guía de trámites, cómo se configuran sus claves sin exponerlas y cómo se evalúa |
 | [Trabajo con agentes](trabajo-con-agentes.md) | Cómo se orquesta el trabajo con Claude y subagentes |
 | [Ramas y releases](ramas-y-releases.md) | Ramas de trabajo, PRs a `dev`, publicaciones a `main`, releases de GitHub por día, hotfixes, back merge y hasta dónde llevar cada pedido |
 
@@ -33,4 +35,5 @@ bun run verificar                # controles de la web (scroll horizontal y cons
 bun run hallazgo                 # cargar un hallazgo de seguridad en el panel (JSON por la entrada estándar, ver seguridad.md)
 bun run vista-previa <ruta>      # capturas en 375 y 1280 px para revisar una vista previa
 bun run typecheck                # tipos de todo el monorepo
+bun run asistente:datos          # regenera lo que sabe el asistente desde el catálogo y las tasas
 ```

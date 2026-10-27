@@ -12,7 +12,7 @@ Fecha: 16/10/2026. Estado: propuesta, sin empezar. Falta decidir las preguntas a
 
 ### El arnés del asistente propio
 
-Al principio se descartó eve de Vercel porque suma una segunda plataforma. El 26/10/2026 se decidió probarlo para el asistente propio de la etapa 5: cada herramienta es un archivo y trae evals, subagentes y aprobaciones humanas. Para que la decisión se pueda revertir, las herramientas viven en un paquete propio (`packages/agent-tools`) que no depende de eve, y el MCP usa las mismas funciones. Los proveedores de modelos son Vercel AI Gateway y OpenRouter, con uno de respaldo del otro y el modelo configurable por tarea. El detalle está en [Guía de trámites, impuestos y tasas](guia-de-tramites.md#5-asistente-propio).
+El asistente propio de la etapa 5 ya existe para trámites: un ciclo chico en `packages/assistant`, servido por la función de Pages del sitio, con AI Gateway y OpenRouter de respaldo uno del otro (ver [Guía de trámites, impuestos y tasas](guia-de-tramites.md#5-asistente-propio) y `docs/procesos/asistente.md`). Se descartó eve por sumar una segunda plataforma. El MCP de este plan puede usar las mismas herramientas.
 
 ## Etapas
 
@@ -29,7 +29,7 @@ Al principio se descartó eve de Vercel porque suma una segunda plataforma. El 2
 2. **Instrucciones para el modelo** (prompt del servidor MCP): citar siempre la fuente, no adjetivar, distinguir dato de señal y decir "no se publica" cuando corresponde. Es un texto corto, versionado en el repo y revisado con los mismos criterios que los textos de la web.
 3. **Evals:** un set de preguntas con respuesta conocida y otro de preguntas trampa (datos que no existen, pedidos de DNI, "¿quién es el más corrupto?", comparaciones injustas entre gestiones). Se corre antes de cada cambio en las herramientas o en el prompt.
 4. **Lanzamiento:** página `/datos/ia` (o una sección en `/datos`) con cómo conectarlo a cada asistente, ejemplos de preguntas y sus límites. Mención en `llms.txt`. Eventos en PostHog de uso por herramienta, sin guardar las preguntas (ver `docs/procesos/analitica.md`).
-5. **Asistente en la web (condicional).** Solo si el MCP tiene uso real y pasa las evals con holgura. Se arma con eve sobre las mismas herramientas (ver arriba), con Turnstile, límite por IP y un tope de gasto mensual. Si se hace, cada respuesta se presenta como "respuesta generada con IA" y con sus fuentes a la vista.
+5. **Asistente en la web (condicional).** Solo si el MCP tiene uso real y pasa las evals con holgura. Se arma sobre las mismas herramientas (ver arriba), con Turnstile, límite por IP y un tope de gasto mensual. Si se hace, cada respuesta se presenta como "respuesta generada con IA" y con sus fuentes a la vista.
 
 Cuando una etapa quede funcionando, su proceso pasa a `docs/procesos/` con su skill, como cualquier otro.
 
