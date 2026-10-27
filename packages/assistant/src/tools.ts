@@ -40,6 +40,29 @@ export interface ProcedureResult {
   note?: string;
 }
 
+/** A common activity (data/curado/rubros.yaml) by id, name or synonym. */
+export function findCommonActivity(k: Knowledge, text: string | undefined) {
+  if (!text) return null;
+  const t = normalize(text);
+  return (
+    k.activities.find((a) => normalize(a.id) === t || normalize(a.name) === t) ??
+    k.activities.find((a) => [a.name, ...a.words].some((w) => normalize(w) === t || t.includes(normalize(w)))) ??
+    null
+  );
+}
+
+/** What the person wants to sell, among the flow's own activities first and then the common ones. */
+export function activityOptions(k: Knowledge, flow?: Flow) {
+  const seen = new Set<string>();
+  const options: { id: string; label: string; words?: string[] }[] = [];
+  for (const a of flow?.activities ?? []) {
+    seen.add(a.id);
+    options.push({ id: a.id, label: a.name, words: k.activities.find((c) => c.id === a.id)?.words });
+  }
+  for (const a of k.activities) if (!seen.has(a.id)) options.push({ id: a.id, label: a.name, words: a.words });
+  return options;
+}
+
 function pickActivity(flow: Flow, activity: string | undefined) {
   if (!activity) return null;
   const a = normalize(activity);
@@ -60,7 +83,8 @@ export function getProcedure(k: Knowledge, args: { flow?: string; municipality?:
       note: `Todavía no relevamos los pasos municipales de ${municipality || "ese municipio"}. Los de Nación y Provincia son iguales en todos lados.`,
     };
   }
-  const activity = pickActivity(flow, args.activity);
+  const common = findCommonActivity(k, args.activity);
+  const activity = pickActivity(flow, args.activity) ?? (common ? { id: common.id, name: common.name, code: "", food: common.food } : null);
   const steps = flow.steps.filter((s) => s.when === "siempre" || (s.when === "alimentos" && (activity ? activity.food : true)));
   return {
     covered: true,
@@ -154,7 +178,11 @@ export function findTradeFee(k: Knowledge, args: { municipality?: string; activi
     if (named.length) rows = named;
   }
   if (!rows.length && q) {
-    const words = q.split(" ").filter((w) => w.length > 2);
+    // The person's words plus the common activity's name and synonyms ("verdulería" also looks for "frutería").
+    const common = findCommonActivity(k, args.activity);
+    const words = [q, ...(common ? [common.name, ...common.words] : [])]
+      .flatMap((w) => normalize(w).split(" "))
+      .filter((w, i, all) => w.length > 2 && all.indexOf(w) === i);
     const stem = (w: string) => w.replace(/(es|s)$/, "");
     rows = table.rows
       .map((r) => ({ r, score: words.filter((w) => normalize(r[1]).includes(stem(w))).length }))

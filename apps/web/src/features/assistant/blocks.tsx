@@ -47,8 +47,12 @@ function ActionRow({ icon: Icon, label, onPress, primary }: { icon: Icon; label:
 export type BlockHandlers = {
   onLocate: () => void;
   onPickMunicipality: () => void;
+  onSearchActivity: (options: { label: string; words?: string[] }[]) => void;
   onChoose: (text: string) => void;
 };
+
+/** Activities shown as rows; the rest are a search away. */
+const VISIBLE_ACTIVITIES = 4;
 
 /** One block of an answer. `answered` hides the options once the person has replied to them. */
 export function BlockView({ block, answered, handlers }: { block: Block; answered: boolean; handlers: BlockHandlers }) {
@@ -65,7 +69,7 @@ export function BlockView({ block, answered, handlers }: { block: Block; answere
       if (answered) return null;
       return (
         <ul className={listVariants()}>
-          {block.options.map((option) => (
+          {block.options.slice(0, VISIBLE_ACTIVITIES).map((option) => (
             <ActionRow
               key={option.id}
               icon={activityIcon(option.label)}
@@ -74,6 +78,7 @@ export function BlockView({ block, answered, handlers }: { block: Block; answere
               primary
             />
           ))}
+          <ActionRow icon={RiSearchLine} label="Buscar otro rubro" onPress={() => handlers.onSearchActivity(block.options)} />
         </ul>
       );
     case "steps":

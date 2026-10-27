@@ -8,6 +8,7 @@ import { INSTRUCTIONS } from "./instructions.ts";
 import type { Knowledge } from "./knowledge.ts";
 import { type AssistantEnv, type Completion, complete, type Fetcher, type WireMessage } from "./providers.ts";
 import {
+  activityOptions,
   type FeeResult,
   findTradeFee,
   getProcedure,
@@ -51,6 +52,10 @@ function runTool(k: Knowledge, name: string, rawArgs: string, collected: Collect
       collected.unpublished = searchUnpublished(k, args);
       return collected.unpublished;
     case "ask_user":
+      // Asking for the activity only helps where the municipal steps and fees are surveyed.
+      if (args.field === "activity" && collected.procedure && !collected.procedure.covered) {
+        return { error: "No hace falta el rubro: ese municipio no está relevado. Respondé con los pasos de Nación y Provincia." };
+      }
       collected.ask = { field: args.field === "activity" ? "activity" : "municipality", question: String(args.question ?? "") };
       return { ok: true };
     default:
@@ -62,11 +67,13 @@ function runTool(k: Knowledge, name: string, rawArgs: string, collected: Collect
 const feeNote = (p: ProcedureResult) => p.costs?.find((c) => c.concept === "Derecho de comercio")?.detail;
 
 /** Blocks for the widget, from what the tools returned. */
-export function buildBlocks(c: Collected): Block[] {
+export function buildBlocks(k: Knowledge, c: Collected): Block[] {
   if (c.ask) {
     if (c.ask.field === "municipality") return [{ type: "ask_municipality" }];
-    const options = c.procedure?.activities ?? [];
-    return [{ type: "ask_activity", options: [...options.map((o) => ({ id: o.id, label: o.name })), { id: "otro", label: "Otro rubro" }] }];
+    const flow = c.procedure?.covered
+      ? k.flows.find((f) => f.id === c.procedure?.flow && f.municipality === c.procedure?.municipality)
+      : undefined;
+    return [{ type: "ask_activity", options: activityOptions(k, flow) }];
   }
   const blocks: Block[] = [];
   const p = c.procedure;
@@ -151,7 +158,7 @@ export async function runAgent(k: Knowledge, env: AssistantEnv, history: ChatMes
   }
   if (collected.ask) text = collected.ask.question || text;
   if (!text) text = fallbackText(collected);
-  const blocks = buildBlocks(collected);
+  const blocks = buildBlocks(k, collected);
   const p = collected.procedure;
   return {
     text,

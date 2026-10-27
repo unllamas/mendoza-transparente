@@ -67,6 +67,11 @@ describe("tools", () => {
     expect(findTradeFee(k, { municipality: "Godoy Cruz", activity: "carnicería" }).matches[0]?.code).toBe("30007");
     expect(findTradeFee(k, { municipality: "Tunuyán", activity: "almacén" }).found).toBe(false);
   });
+  test("un rubro común fuera del menú del municipio se busca por sus sinónimos", () => {
+    expect(findTradeFee(k, { municipality: "Godoy Cruz", activity: "verdulería" }).matches[0]?.code).toBe("30023");
+    const p = getProcedure(k, { flow: "abrir-un-comercio", municipality: "Godoy Cruz", activity: "panadería" });
+    expect(p.steps?.some((s) => s.when === "alimentos")).toBe(true);
+  });
   test("pasa las unidades tributarias a pesos y dice el período", () => {
     const r = findTradeFee(k, { municipality: "Guaymallén", activity: "almacén" });
     expect(r.found).toBe(true);
@@ -109,6 +114,30 @@ describe("agent", () => {
     const reply = await runAgent(k, KEYS, [{ role: "user", content: "Quiero abrir un comercio" }], { fetcher });
     expect(reply).toMatchObject({ outcome: "ask", text: "¿En qué municipio?", blocks: [{ type: "ask_municipality" }] });
     expect(calls.length).toBe(1);
+  });
+  test("pregunta el rubro con la lista completa y sin la opción «Otro rubro»", async () => {
+    const { fetcher } = fakeProvider([
+      { tool: "get_procedure", args: { flow: "abrir-un-comercio", municipality: "Godoy Cruz" } },
+      { tool: "ask_user", args: { field: "activity", question: "¿Qué vas a vender?" } },
+    ]);
+    const reply = await runAgent(k, KEYS, [{ role: "user", content: "Quiero abrir un comercio en Godoy Cruz" }], { fetcher });
+    const block = reply.blocks[0];
+    expect(block?.type).toBe("ask_activity");
+    const labels = block?.type === "ask_activity" ? block.options.map((o) => o.label) : [];
+    expect(labels.slice(0, 2)).toEqual(["Almacén", "Kiosco"]);
+    expect(labels).toContain("Verdulería");
+    expect(labels).not.toContain("Otro rubro");
+  });
+  test("en un municipio sin relevar no pregunta el rubro", async () => {
+    const { fetcher, calls } = fakeProvider([
+      { tool: "get_procedure", args: { flow: "abrir-un-comercio", municipality: "General Alvear" } },
+      { tool: "ask_user", args: { field: "activity", question: "¿Qué vas a vender?" } },
+      { text: "Todavía no relevamos General Alvear; estos son los pasos de Nación y Provincia." },
+    ]);
+    const reply = await runAgent(k, KEYS, [{ role: "user", content: "Quiero abrir un negocio en Alvear" }], { fetcher });
+    expect(reply.outcome).toBe("steps");
+    expect(reply.blocks.some((b) => b.type === "ask_activity")).toBe(false);
+    expect(calls.length).toBe(3);
   });
   test("si el primer proveedor falla, responde el segundo con su propia clave", async () => {
     const { fetcher, calls } = fakeProvider([{ status: 503 }, { text: "Hola" }]);

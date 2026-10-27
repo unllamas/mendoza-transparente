@@ -6,7 +6,7 @@ Aco es el chat flotante del sitio. Responde qué hay que hacer, qué papeles hac
 
 | Pieza | Dónde | Qué hace |
 |---|---|---|
-| Conocimiento | `data/curado/tramites.yaml` y `data/processed/tributos/rubros_comercio.csv` → `packages/assistant/src/knowledge.json` | Lo único que Aco sabe. `bun run asistente:datos` lo regenera; una prueba falla si quedó viejo |
+| Conocimiento | `data/curado/tramites.yaml`, `data/curado/rubros.yaml` y `data/processed/tributos/rubros_comercio.csv` → `packages/assistant/src/knowledge.json` | Lo único que Aco sabe. `bun run asistente:datos` lo regenera; una prueba falla si quedó viejo |
 | Herramientas | `packages/assistant/src/tools.ts` | Funciones puras sobre el conocimiento: pasos de un recorrido, tasa de un rubro, lo que no se publica y la pregunta al usuario |
 | Agente | `packages/assistant/src/agent.ts` | Hasta 4 llamadas al modelo por respuesta. El texto lo escribe el modelo; **los bloques de la pantalla (pasos, links, montos) se arman con lo que devolvieron las herramientas**, nunca con lo que escribió |
 | Instrucciones | `packages/assistant/src/instructions.ts` | Cortas: citar, decir «no publica», no opinar, no pedir datos personales |
