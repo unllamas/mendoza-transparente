@@ -50,7 +50,7 @@ Los componentes base y los tokens están en `packages/ui` (`@mt/ui`). **La base 
 
 ## Fotos de paisaje
 
-- Para darle carácter a una página (la portada): `LandscapePhoto` con un `id` de `apps/web/src/photos.ts` (efecto `DotImage` de `@mt/ui`, CSS puro). Solo fotos con licencia libre y crédito visible; se suman con `bun scripts/photo.ts` desde `apps/web`. Detalle en `diseno.md`, «Fotos de paisaje».
+- Para darle carácter a una página (municipios, participar): `LandscapePhoto` con un `id` de `apps/web/src/photos.ts` (efecto `DotImage` de `@mt/ui`, CSS puro). Solo fotos con licencia libre y crédito visible; se suman con `bun scripts/photo.ts` desde `apps/web`. La portada usa una ilustración propia de fondo (`public/fondos/portada.webp`), con fundido abajo y un velo suave detrás del texto. Detalle en `diseno.md`, «Fotos de paisaje».
 
 ## Lo que no hacemos
 
