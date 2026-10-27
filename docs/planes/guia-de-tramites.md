@@ -112,6 +112,44 @@ Cómo se hace:
 - **No subimos nada por la persona:** las plataformas oficiales (Ciudadanía Digital, Mis Trámites Online de la ATM, ARCA) piden su clave y muchos trámites, su firma en persona. El PDF le ahorra escribir y le dice qué llevar; el envío lo hace ella.
 - Lo que el asistente completó con IA se marca, para que la persona lo revise antes de firmar.
 
+### 7. Medición del asistente
+
+Desde el primer día se mide todo lo que sirve para decidir sobre el producto, en el mismo proyecto de PostHog del sitio (skill `analitica`) y sin datos personales.
+
+**Desde el servidor** (lo manda el agente, una vez por respuesta). Se usa el módulo de análisis de LLM de PostHog: generaciones, pasos y conversaciones.
+- **Cada llamada al modelo:**
+  - proveedor (AI Gateway u OpenRouter) y modelo;
+  - si entró el de respaldo;
+  - tokens de entrada y de salida, costo y demora;
+  - error, si lo hubo.
+- **Cada herramienta que usó:**
+  - nombre (`search_procedures`, `get_municipal_fees`…) y demora;
+  - cuántas filas devolvió;
+  - qué fuentes citó (id de la fuente y de la norma).
+- **Cada conversación:**
+  - cuántos turnos tuvo y qué recorrido siguió (abrir un comercio…);
+  - municipio y rubro elegidos;
+  - cómo terminó: con pasos, con un «no se publica» o sin respuesta.
+- **Lo que no se manda:** el texto de la pregunta ni el de la respuesta. El módulo de LLM de PostHog los guarda por defecto: hay que configurarlo para no hacerlo y mandar solo los metadatos de arriba.
+
+**Desde la web** (eventos con el formato `área.elemento.acción`, área `assistant`, cargados en `analytics-catalog.ts`):
+- `assistant.launcher.open` y `assistant.launcher.close`;
+- `assistant.suggestion.select`;
+- `assistant.location.use` y `assistant.municipality.pick`;
+- `assistant.source.open`;
+- `assistant.folder.download`;
+- `assistant.feedback.vote`, con el voto y el motivo (la descripción libre no va).
+
+**Tablero «Asistente»** en PostHog:
+- conversaciones por día y cuántas terminan con pasos;
+- 👍 y 👎 por recorrido, y los motivos de los 👎;
+- herramientas más usadas y las que fallan;
+- tokens y costo por día, por modelo y por proveedor, con el tope mensual marcado;
+- cuántas veces entró el proveedor de respaldo;
+- preguntas que terminaron en «no se publica», por municipio: son pedidos de información para hacer.
+
+**Costo:** hay que confirmar el cupo gratis de eventos de LLM de PostHog antes de abrir el asistente. Si se acerca al límite, se mide una de cada N conversaciones.
+
 ## Preguntas abiertas
 
 - **El anexo de la Ley Impositiva pesa 50 MB comprimido**, cinco veces más que el crudo más grande del repo. Hay tres opciones:
