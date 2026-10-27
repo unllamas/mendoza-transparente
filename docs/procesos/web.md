@@ -283,7 +283,7 @@ Errores de consola del tipo «Could not establish connection. Receiving end does
 
   | Proyecto | Construye si el push toca |
   |---|---|
-  | `mendoza-transparente` (web) | `apps/web/*`, `data/*`, `sources.yaml`, `packages/ui/*`, `packages/participation/*`, `packages/assistant/*`, `package.json`, `bun.lock`, `tsconfig.base.json` |
+  | `mendoza-transparente` (web) | `apps/web/*`, `data/*`, `sources.yaml`, `packages/ui/*`, `packages/participation/*`, `packages/assistant/*`, `packages/mascots/*`, `package.json`, `bun.lock`, `tsconfig.base.json` |
   | `mendoza-transparente-panel` | `apps/panel/*`, `packages/ui/*`, `packages/participation/*`, `package.json`, `bun.lock`, `tsconfig.base.json` |
   | `mendoza-transparente-votacion` | `apps/votacion/*`, `packages/ui/*`, `data/processed/{elecciones-datos-abiertos,resultados-provisorios,escrutinios-definitivos,geo}/*`, `data/curado/{colores-partidos,partidos,frentes}.yaml`, `package.json`, `bun.lock`, `tsconfig.base.json` |
 
