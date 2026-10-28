@@ -18,7 +18,7 @@ Fuente completa: `docs/procesos/trabajo-con-agentes.md`.
 2. **Qué leer primero:** `AGENTS.md` y la skill que corresponda. De los documentos largos, **la sección** que hace falta: `bun run seccion <documento> "<título>"` (o `bun run seccion <documento>` para ver el índice).
 3. **Reglas:**
    - **NO commit.**
-   - Código en inglés y textos en español.
+   - Nombres del código en inglés; comentarios, documentación y textos visibles en español. Los comentarios en inglés de los archivos que edita, los traduce.
    - Sin dependencias nuevas.
    - **Para mirar una página, un PDF o una planilla, `bun run crudo <url|fuente/archivo>`, nunca `curl` ni el archivo entero.** Primero busca en `data/raw/` y en el caché compartido, y devuelve una vista compacta (`--buscar`, `--links`, `--paginas` para ver más).
    - Antes de escribir una función auxiliar, usar las que ya existen: `sleep`, `collapseSpaces`, `parseArNumber`, `finiteNumber` y `fetchOrReuse` de `@mt/core`, y `pdfText` y `pdfPages` de `packages/scrapers/src/lib/pdf.ts`.
