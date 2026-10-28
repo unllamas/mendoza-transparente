@@ -9,7 +9,7 @@ Fuente completa: `docs/procesos/arquitectura.md`.
 
 ## Antes de crear un archivo
 
-1. **Idioma:** el código, en inglés (también nombres de archivo y comentarios); la documentación, en español.
+1. **Idioma:** los nombres del código, en inglés (también los nombres de archivo); los comentarios y la documentación, en español.
 2. **¿Es genérico** (no usa router, analítica ni datos del sitio)? Va a `packages/ui`.
 3. **¿Es de una sola feature** (compras, funcionarios, leyes, participación…)? Va a `apps/web/src/features/<feature>/{api,components,hooks,utils}`.
 4. **¿Lo comparten varias features** de la web? Va a `apps/web/src/components/`.

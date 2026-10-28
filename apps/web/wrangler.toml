@@ -19,3 +19,6 @@ BUN_VERSION = "1.4.2"
 # La instalación la hace el build command desde la raíz del monorepo; la automática usaría npm desde apps/web
 # y falla con los workspaces de Bun.
 SKIP_DEPENDENCY_INSTALL = "1"
+# Asistente de la guía de trámites (docs/procesos/asistente.md): las claves y, si se quiere cambiar, el modelo y
+# el orden de los proveedores son secretos del panel (`bun run asistente:claves`). No van acá: con este archivo,
+# Pages ignora las variables comunes del panel, y un secreto con el mismo nombre que una variable choca.

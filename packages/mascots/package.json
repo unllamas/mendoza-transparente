@@ -1,0 +1,26 @@
+{
+  "name": "@mt/mascots",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./manifest": "./src/manifest.ts",
+    "./mascot": "./src/mascot.tsx"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build:assets": "bun scripts/build-assets.ts"
+  },
+  "peerDependencies": {
+    "react": "^19.3.0"
+  },
+  "devDependencies": {
+    "@pdf-lib/upng": "1.0.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "sharp": "^0.35.5",
+    "typescript": "^5"
+  }
+}

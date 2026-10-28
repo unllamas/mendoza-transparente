@@ -189,6 +189,8 @@ export interface PoblacionTema {
 export interface MapaMendoza {
   viewBox: string;
   fuente: string;
+  /** Equirectangular projection of the map: x = (lon - minLon) * cosLat * scale, y = (maxLat - lat) * scale. */
+  proyeccion?: { minLon: number; maxLat: number; cosLat: number; scale: number };
   departamentos: { municipio: string; path: string; centroide: [number, number] }[];
 }
 
@@ -459,6 +461,8 @@ export interface MunicipioPagina {
   transparency: MunicipalTransparency | null;
   /** Budget from the Fiscal Responsibility Law annexes; absent while the municipality is not read yet. */
   budget?: MunicipalBudgetSummary;
+  /** Procedure and fee pages of the municipality (scripts/temas/procedures.ts); absent while it has none. */
+  commerce?: { procedure: boolean; feesYear: number | null };
 }
 
 /** Short budget summary for the municipality's main page (scripts/temas/municipal-budget.ts). */
@@ -926,4 +930,119 @@ export interface PosterMunicipality {
   staff: { quarter: string; positions: number; contracts: number; perThousand: number } | null;
   /** Spending of the latest year read, with the four largest objects. */
   spending: { year: number; cutoff: string; accrued: number; top: { name: string; accrued: number }[] } | null;
+}
+
+// ---------------------------------------------------------------- trámites (scripts/temas/procedures.ts)
+
+export interface ProcedureStep {
+  level: "nacion" | "provincia" | "municipio";
+  agency: string;
+  title: string;
+  detail: string;
+  /** Official page or norm the step comes from. */
+  href: string;
+  /** "siempre", or the condition the activity must meet ("alimentos"). */
+  when: string;
+  /** Day (YYYY-MM-DD) the step was checked against its official page. */
+  verified: string;
+}
+
+export interface ProcedureCost {
+  concept: string;
+  detail: string;
+  rule?: string;
+  href?: string;
+}
+
+/** Something an organism does not publish ("<agency> no publica <what>"). */
+export interface NotPublished {
+  agency: string;
+  what: string;
+  detail?: string;
+}
+
+export interface ProcedureFee {
+  /** False when the published rules do not allow giving an amount (San Rafael). */
+  available: boolean;
+  /** The full annex is read: the municipality has a fees page. */
+  table: boolean;
+  /** "mes", "bimestre", "año", or "" when the ordinance does not say. */
+  period: string;
+  /** "pesos", "UT" or "UTM". */
+  unit: string;
+  year: number | null;
+  unitValue?: number;
+  unitRule?: string;
+  rule: string;
+  href: string;
+  note?: string;
+  /** Amounts typed by hand for a few activities, when the annex is a scan nobody can read automatically. */
+  examples: { name: string; min: number; max: number; page?: number }[];
+}
+
+export interface MunicipalProcedure {
+  slug: string;
+  name: string;
+  verified: string;
+  /** Only the steps of the municipality: Nation and Province are on the province page. */
+  steps: ProcedureStep[];
+  costs: ProcedureCost[];
+  fee: ProcedureFee;
+  notPublished: NotPublished[];
+  promotion: { rule: string; detail: string; href?: string } | null;
+}
+
+export type OnlineStatus = "online" | "in_person" | "unknown" | "not_published";
+
+export interface ProcedureGuide {
+  id: string;
+  title: string;
+  verified: string;
+  national: ProcedureStep[];
+  province: ProcedureStep[];
+  provinceNotPublished: NotPublished[];
+  municipalities: {
+    slug: string;
+    name: string;
+    verified: string;
+    ownSteps: number;
+    online: OnlineStatus;
+    /** The sentence of the municipality's sheet that says how it starts (or what it does not say). */
+    onlineNote: string;
+    fee: "table" | "examples" | "none";
+    feeYear: number | null;
+    feeUnit: string;
+    hasPromotion: boolean;
+  }[];
+}
+
+export interface FeeRow {
+  code: string;
+  group: string;
+  name: string;
+  type: string;
+  /** Page of the ordinance with its annexes. */
+  page: number;
+  /** [category, amount in the fee's unit], in the order of the annex. */
+  amounts: [string, number][];
+}
+
+/** Trade fee by activity of a municipality whose tarifaria annex is read (/municipios/<slug>/tasas). */
+export interface MunicipalFees {
+  slug: string;
+  name: string;
+  year: number;
+  verified: string;
+  period: string;
+  unit: string;
+  unitValue?: number;
+  unitRule?: string;
+  rule: string;
+  href: string;
+  note?: string;
+  ordinance: { number: string; bulletinDate: string; href: string };
+  categories: string[];
+  /** Everyday activities of the catalog, in pesos (min and max among the categories). */
+  highlights: { name: string; code: string; min: number; max: number }[];
+  rows: FeeRow[];
 }

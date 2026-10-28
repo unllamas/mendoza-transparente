@@ -1,0 +1,41 @@
+# Rubros comunes para abrir un comercio: la lista que el asistente ofrece cuando pregunta qué vas a vender, en
+# cualquier municipio (con buscador en la web). El orden importa: los primeros cuatro se muestran a la vista.
+# Proceso: docs/procesos/tramites-y-tributos.md. Cada recorrido de data/curado/tramites.yaml puede sumar los suyos,
+# con el código de su tarifaria.
+#
+# - id: identificador estable, en minúsculas y sin acentos.
+# - nombre: como lo dice la gente.
+# - alimentos: true si vende o prepara comida (suma la libreta sanitaria y el carnet de manipulación).
+# - palabras: otras formas de decirlo, para el buscador y para encontrar el rubro en el anexo de la tarifaria.
+
+- { id: almacen, nombre: Almacén, alimentos: true, palabras: [despensa, mercadito, autoservicio] }
+- { id: kiosco, nombre: Kiosco, alimentos: true, palabras: [quiosco, maxikiosco, maxi kiosco, drugstore, golosinas, golosinería, polirrubro] }
+- { id: ropa, nombre: Ropa, alimentos: false, palabras: [indumentaria, vestir, boutique, tienda] }
+- { id: rotiseria, nombre: Comida para llevar, alimentos: true, palabras: [rotisería, viandas, delivery] }
+- { id: carniceria, nombre: Carnicería, alimentos: true, palabras: [carnes, pollería, granja] }
+- { id: verduleria, nombre: Verdulería, alimentos: true, palabras: [frutería, verduras, frutas] }
+- { id: panaderia, nombre: Panadería, alimentos: true, palabras: [confitería, facturas, pan] }
+- { id: fiambreria, nombre: Fiambrería, alimentos: true, palabras: [fiambres, quesos, lácteos] }
+- { id: dietetica, nombre: Dietética, alimentos: true, palabras: [naturista, granos, productos orgánicos] }
+- { id: heladeria, nombre: Heladería, alimentos: true, palabras: [helados] }
+- { id: bar, nombre: Bar o café, alimentos: true, palabras: [bar, bares, cafetería, confitería, cervecería, pub] }
+- { id: cerveza-artesanal, nombre: Cerveza artesanal, alimentos: true, palabras: [cerveza, cervezas, birra, cervecería artesanal, patio cervecero, microcervecería] }
+- { id: restaurante, nombre: Restaurante, alimentos: true, palabras: [restaurant, comedor, parrilla, pizzería] }
+- { id: pastas, nombre: Fábrica de pastas, alimentos: true, palabras: [pastas frescas, ravioles] }
+- { id: peluqueria, nombre: Peluquería, alimentos: false, palabras: [barbería, estética, salón de belleza] }
+- { id: ferreteria, nombre: Ferretería, alimentos: false, palabras: [pinturería, sanitarios, corralón] }
+- { id: libreria, nombre: Librería, alimentos: false, palabras: [papelería, útiles escolares, fotocopias] }
+- { id: zapateria, nombre: Zapatería, alimentos: false, palabras: [calzado, zapatillas] }
+- { id: bazar, nombre: Bazar, alimentos: false, palabras: [regalería, artículos para el hogar, cotillón] }
+- { id: jugueteria, nombre: Juguetería, alimentos: false, palabras: [juguetes] }
+- { id: perfumeria, nombre: Perfumería, alimentos: false, palabras: [cosmética, artículos de limpieza] }
+- { id: celulares, nombre: Celulares y accesorios, alimentos: false, palabras: [telefonía, electrónica, computación] }
+- { id: optica, nombre: Óptica, alimentos: false, palabras: [anteojos, lentes] }
+- { id: floreria, nombre: Florería, alimentos: false, palabras: [flores, vivero, plantas] }
+- { id: muebleria, nombre: Mueblería, alimentos: false, palabras: [muebles, colchones] }
+- { id: veterinaria, nombre: Veterinaria, alimentos: false, palabras: [forrajería, mascotas, pet shop] }
+- { id: lavanderia, nombre: Lavandería, alimentos: false, palabras: [lavadero, tintorería] }
+- { id: gimnasio, nombre: Gimnasio, alimentos: false, palabras: [fitness, crossfit] }
+- { id: taller, nombre: Taller mecánico, alimentos: false, palabras: [gomería, lubricentro, mecánica] }
+- { id: farmacia, nombre: Farmacia, alimentos: false, palabras: [droguería] }
+- { id: oficina, nombre: Oficina o consultorio, alimentos: false, palabras: [estudio, servicios profesionales, consultorio] }

@@ -4,7 +4,9 @@ Cómo está organizado el código, qué reglas se controlan solas y con qué her
 
 ## Idioma
 
-Todo el código va en inglés y toda la documentación en español. La tabla completa está en `AGENTS.md`.
+Los nombres del código (variables, funciones, tipos, propiedades, archivos) van en inglés. Los comentarios que lo explican y toda la documentación van en español, porque los lee el equipo para entender cómo se usa el sistema. La tabla completa está en `AGENTS.md`.
+
+Lo existente no se repasa de una vez: cada cambio acomoda el archivo que toca, traduciendo al español los comentarios en inglés y pasando al inglés los nombres en español que edita.
 
 ## El monorepo
 

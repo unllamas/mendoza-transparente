@@ -10,9 +10,11 @@ Fecha: 16/10/2026. Estado: propuesta, sin empezar. Falta decidir las preguntas a
 - **Costo y abuso.** Un servidor MCP no paga tokens de modelo: solo lee datos. Un chat público paga cada consulta y es un blanco fácil para el abuso.
 - **El stack.** Todo vive en Cloudflare (Pages, Functions, D1). Un MCP sobre Workers con el Agents SDK de Cloudflare no suma otra plataforma.
 
-### Por qué no eve de Vercel
+### El arnés del asistente propio
 
-eve compila cada agente a Vercel Functions: sumaría una segunda plataforma, con otros secretos y otro despliegue, para resolver algo que Cloudflare ya cubre. Además está en vista previa pública. Se vuelve a mirar si el día de mañana necesitamos agentes de larga duración con aprobaciones humanas que no entren en Workers.
+El asistente propio de la etapa 5 ya existe para trámites: un ciclo chico en `packages/assistant`, servido por la función de Pages del sitio, con AI Gateway y OpenRouter de respaldo uno del otro (ver [Guía de trámites, impuestos y tasas](guia-de-tramites.md#5-asistente-propio) y `docs/procesos/asistente.md`). Se descartó eve por sumar una segunda plataforma. El MCP de este plan puede usar las mismas herramientas.
+
+**Cambio del 27/10/2026:** Aco ya responde también sobre lo que publica el sitio (proveedores, autoridades, municipios, leyes, deuda…), con herramientas de solo lectura sobre `/data/asistente.json` (`packages/assistant/src/site-data.ts`). Se hizo antes que el MCP porque en las pruebas la mitad de las preguntas reales eran sobre esos datos y Aco las rechazaba. El riesgo de atribuirnos frases se acota igual que en los trámites: las cifras y los links de la pantalla salen de las herramientas, el modelo cita una o dos tal como vienen y las instrucciones le prohíben calcular o calificar. Esas herramientas son la base de la etapa 1 de este plan.
 
 ## Etapas
 
@@ -29,7 +31,7 @@ eve compila cada agente a Vercel Functions: sumaría una segunda plataforma, con
 2. **Instrucciones para el modelo** (prompt del servidor MCP): citar siempre la fuente, no adjetivar, distinguir dato de señal y decir "no se publica" cuando corresponde. Es un texto corto, versionado en el repo y revisado con los mismos criterios que los textos de la web.
 3. **Evals:** un set de preguntas con respuesta conocida y otro de preguntas trampa (datos que no existen, pedidos de DNI, "¿quién es el más corrupto?", comparaciones injustas entre gestiones). Se corre antes de cada cambio en las herramientas o en el prompt.
 4. **Lanzamiento:** página `/datos/ia` (o una sección en `/datos`) con cómo conectarlo a cada asistente, ejemplos de preguntas y sus límites. Mención en `llms.txt`. Eventos en PostHog de uso por herramienta, sin guardar las preguntas (ver `docs/procesos/analitica.md`).
-5. **Asistente en la web (condicional).** Solo si el MCP tiene uso real y pasa las evals con holgura. Se evalúa con el Agents SDK de Cloudflare sobre el mismo MCP, con Turnstile, límite por IP y un tope de gasto mensual. Si se hace, cada respuesta se presenta como "respuesta generada con IA" y con sus fuentes a la vista.
+5. **Asistente en la web (condicional).** Solo si el MCP tiene uso real y pasa las evals con holgura. Se arma sobre las mismas herramientas (ver arriba), con Turnstile, límite por IP y un tope de gasto mensual. Si se hace, cada respuesta se presenta como "respuesta generada con IA" y con sus fuentes a la vista.
 
 Cuando una etapa quede funcionando, su proceso pasa a `docs/procesos/` con su skill, como cualquier otro.
 
@@ -42,7 +44,7 @@ Cuando una etapa quede funcionando, su proceso pasa a `docs/procesos/` con su sk
 
 ## Preguntas abiertas
 
-- **De dónde lee el MCP:** de los CSV estáticos que ya publica el sitio (más simple, pero los filtros se hacen en memoria) o de una copia en D1 que se carga en cada build (filtra rápido, pero hay que mantener otra copia). `data/processed` pesa hoy unos 43 MB.
+- **De dónde lee el MCP:** de los CSV estáticos que ya publica el sitio (más simple, pero los filtros se hacen en memoria) o de una copia en D1 que se carga en cada build (filtra rápido, pero hay que mantener otra copia). `data/processed` pesa hoy unos 43 MB. Propuesta concreta: [Base de datos para consultar](base-de-datos.md), etapa 4.
 - **Dónde corre:** una ruta dentro de las Pages Functions de `apps/web` o un Worker aparte (`apps/mcp`), que aísla el riesgo y los límites del sitio.
 - **Acceso:** abierto sin registro (más alcance) o con una clave gratuita (permite cortar abusos y saber quién lo usa).
 - **Qué fuentes entran primero:** se propone empezar por las más consultadas en PostHog y por las que tienen página de entidad (funcionarios, organismos, proveedores, compras).

@@ -40,7 +40,8 @@ export interface PublicEnv {
 
 const MAX_PER_HOUR = 10;
 
-async function verifyTurnstile(token: unknown, ip: string, env: PublicEnv): Promise<boolean> {
+/** Cloudflare siteverify. Also used by the assistant (apps/web/functions/api/[[route]].ts). */
+export async function verifyTurnstile(token: unknown, ip: string, env: PublicEnv): Promise<boolean> {
   if (!env.turnstileSecret) return env.development === true;
   if (typeof token !== "string" || !token || token.length > 2048) return false;
   const body = new FormData();

@@ -1,7 +1,7 @@
 /**
- * Catalog of analytics events: what each one means, in Spanish, as it shows up in PostHog.
- * `bun run posthog-sync` copies these descriptions to PostHog (docs/procesos/analitica.md).
- * When adding a `data-track` or `track()` call, add its event here too.
+ * Catálogo de eventos de analítica: qué significa cada uno, en español, como aparece en PostHog.
+ * `bun run posthog-sync` copia estas descripciones a PostHog (docs/procesos/analitica.md).
+ * Al agregar una llamada `data-track` o `track()`, agregar su evento acá también.
  */
 
 export interface EventDoc {
@@ -322,6 +322,27 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["municipios", "presupuesto"],
   },
   {
+    event: "municipality.procedure.open",
+    description: "Desde la página de un municipio, abrió los pasos para abrir un comercio en ese municipio. Propiedad municipality.",
+    tags: ["municipios", "trámites"],
+  },
+  {
+    event: "municipality.fees.open",
+    description:
+      "Abrió la tasa de comercio por rubro de un municipio, desde su página o desde su trámite de abrir un comercio. Propiedad municipality.",
+    tags: ["municipios", "trámites"],
+  },
+  {
+    event: "procedure.municipality.open",
+    description: "En la guía «Abrir un comercio en Mendoza», abrió la tarjeta de un municipio para ver sus pasos. Propiedad municipality.",
+    tags: ["trámites"],
+  },
+  {
+    event: "procedure.fees.open",
+    description: "En la guía «Abrir un comercio en Mendoza», abrió la tasa de comercio por rubro de un municipio. Propiedad municipality.",
+    tags: ["trámites"],
+  },
+  {
     event: "municipality.budget.year.change",
     description: "En el presupuesto de un municipio, cambió de año. Propiedades value (el año) y label.",
     tags: ["municipios", "presupuesto"],
@@ -515,7 +536,25 @@ export const EVENT_CATALOG: EventDoc[] = [
   },
   { event: "landscape.propose", description: "Tocó «Proponé tu foto» sobre una foto de paisaje. Propiedad photo.", tags: ["portada"] },
 
-  // Retired: the site no longer sends these, but PostHog keeps their history. Described so it can still be read.
+  {
+    event: "assistant.launcher.open",
+    description: "Abrió el asistente Aco (guía de trámites) desde el botón flotante «Preguntá».",
+    tags: ["asistente"],
+  },
+  {
+    event: "assistant.answer.show",
+    description:
+      "Aco respondió. Propiedades: outcome (steps, fee, data, unpublished, ask, answer o no_answer), flow (el recorrido, p. ej. abrir-un-comercio) y municipality.",
+    tags: ["asistente"],
+  },
+  {
+    event: "assistant.feedback.vote",
+    description:
+      "Votó una respuesta de Aco. Propiedades: vote (up o down) y, si fue down, reason (dato, respuesta o falta). Nunca se envía el texto libre ni la conversación.",
+    tags: ["asistente"],
+  },
+
+  // Retirados: el sitio ya no los manda, pero PostHog guarda su historial. Se describen para poder leerlos igual.
   {
     event: "municipality.index.open",
     description:

@@ -10,13 +10,16 @@ Proyecto cívico: recopilar los datos públicos de Mendoza, normalizarlos y publ
 
 | Qué | Idioma | Ejemplos |
 |---|---|---|
-| **Todo el código**: variables, funciones, tipos, componentes, nombres de archivo y carpeta, ids de eventos, comentarios en el código | **Inglés** | `buildMunicipalStaff`, `list-search.tsx`, `purchase.flag.toggle` |
+| **Todo el código**: variables, funciones, tipos, propiedades, componentes, nombres de archivo y carpeta, ids de eventos | **Inglés** | `buildMunicipalStaff`, `list-search.tsx`, `purchase.flag.toggle` |
+| **Los comentarios del código**: cabeceras de archivo, JSDoc, explicaciones de cómo se usa algo o por qué está así | **Español** | `/** Proveedores del modelo: se prueban en orden… */` |
 | **Toda la documentación**: `docs/`, `README`, `AGENTS.md`, skills, descripción de los commits | **Español** | `docs/procesos/web.md` |
 | **Tipo y ámbito de los commits** ([Conventional Commits](docs/procesos/ramas-y-releases.md#mensajes-de-commit-y-títulos-de-pr)) | **Inglés** | `feat(web): botón «Compartir»` |
 | **Lo que ve la gente**: textos de la web, rutas públicas, nombres de eventos en PostHog | **Español** | `/leyes`, "Lo que no se publica" |
 | **Contratos públicos de datos**: columnas de los CSV publicados | Español, `snake_case` | `fecha_corte`, `tipo_personal` |
 
-El código viejo en español se pasa al inglés cuando se toca. Las columnas de los CSV no se renombran sin un plan de migración, porque otros pueden depender de ellas.
+Los comentarios son documentación: los lee el equipo, que trabaja en español, para entender cómo se usa el sistema. Adentro de un comentario, los nombres del código se escriben tal cual (`fetchOrReuse()`, `AI_GATEWAY_API_KEY`).
+
+No se hace un repaso de todo lo existente. **Lo que se toca, se acomoda en ese mismo cambio:** los nombres viejos en español se pasan al inglés, y los comentarios en inglés del archivo que se edita se traducen al español. Las columnas de los CSV no se renombran sin un plan de migración, porque otros pueden depender de ellas.
 
 ## Skills: qué cargar según la tarea
 
@@ -40,6 +43,8 @@ Las skills del proyecto (`.claude/skills/<nombre>/SKILL.md`) son la puerta de en
 | Publicar o tocar Cloudflare, D1 o PostHog; diagnosticar el sitio en vivo | `produccion` |
 | Tocar el panel interno (`apps/panel`), el registro público (`/api/registro`), la API de participación o el acceso del equipo | `panel` |
 | Encontrar un problema de seguridad en un sitio del Estado (datos de la gente expuestos, un sitio hackeado) | `panel` y `docs/procesos/seguridad.md` |
+| Relevar un trámite, sumar la tarifaria de un municipio o tocar la fuente `tributos` | `tramites-y-tributos` |
+| Tocar el asistente Aco (`packages/assistant`, `/api/asistente`, su widget, instrucciones, modelo o claves) | `asistente` |
 | Lanzar un subagente o integrar lo que devolvió | `delegar-en-agentes` |
 | Crear una rama, commitear, pushear o abrir un PR (incluido el de publicación `dev → main`), tocar los releases de GitHub o hacer un hotfix | `ramas-y-releases` |
 
@@ -77,7 +82,7 @@ El proyecto no tiene financiación y vive en planes gratis (Cloudflare, GitHub A
 
 ## Código
 
-- **Idioma:** variables, funciones, tipos, nombres de archivo y todo el código, en inglés. La documentación (`docs/`, README, este archivo) va en español, igual que el texto visible en la web y las rutas públicas (`/leyes`, `/municipios`). Parte del código viejo todavía está en español: lo que se toque, se pasa al inglés. Las columnas de los CSV publicados son un contrato público: no se renombran sin un plan de migración.
+- **Idioma:** variables, funciones, tipos, propiedades y nombres de archivo, en inglés. Los comentarios que explican el código, en español, igual que la documentación (`docs/`, README, este archivo), el texto visible en la web y las rutas públicas (`/leyes`, `/municipios`). Lo viejo se acomoda cuando se toca: los nombres en español pasan al inglés y los comentarios en inglés del archivo que se edita pasan al español. Las columnas de los CSV publicados son un contrato público: no se renombran sin un plan de migración.
 - Monorepo con Bun workspaces y Turborepo, en TypeScript estricto. Bun ejecuta TS directo, sin build.
 - Un scraper por fuente en `packages/scrapers/src/sources/<id>.ts`, que exporta `async function run(args: string[])`. Se corre con `bun run scrape <id>`.
 - Dependencias ya disponibles en `@mt/scrapers`: `cheerio` (HTML), `xlsx` (SheetJS, para XLS y XLSX), `unpdf` (texto de PDF), `fflate` (ZIP) y `stream-json` (JSON grandes en streaming).

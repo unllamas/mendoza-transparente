@@ -103,6 +103,7 @@ La mayoría entra desde el teléfono. Estos detalles separan «una página web e
 - **Teclado correcto:** `type="email"`, `type="tel"`, `inputMode="numeric"` para números y `enterKeyHint="search"` en los buscadores.
 - **El hover no existe en el celular.** En Tailwind 4, `hover:` ya se aplica solo en dispositivos con mouse. Por eso nada importante puede depender del hover (ver Forma).
 - **Respuesta al tocar:** lo que se toca cambia algo en el momento (`active:`), no recién al soltar.
+- **Una hoja se abre desde el contenedor que tapa, nunca desde la fila que la dispara.** Dentro de un panel propio (el de Aco), la hoja la dibuja el panel y la fila solo le avisa que la abra. Si la dibuja la fila (un `absolute inset-0` dentro de un elemento `relative`), se posiciona contra esa fila: queda angosta, flotando en medio del contenido y cortada. Pasó con el formulario del 👎 de Aco.
 - **Las hojas y los menús contienen su scroll** (`overscroll-contain`): al llegar al final no se mueve la página de atrás. La `Sheet` y el menú móvil ya lo hacen.
 - **Si una hoja existe para que la persona haga algo (copiar, presentar, enviar), la acción va fija abajo y se ve sin scrollear en un celular de 375×667**, no al final del contenido: arriba, lo mínimo para entender qué se pide (título y una frase); el «por qué importa» y el respaldo, debajo. Dos botones de 44 px en una fila, de una línea cada uno (`sticky -bottom-4 -mx-4 -mb-4` dentro del cuerpo de la `Sheet`, que tiene `p-4`). Ejemplo: «Pedir este dato» en `/no-publicado` (en 7 días nadie completó el pedido: los botones quedaban 217 px debajo del borde de la pantalla).
 - **Alto de pantalla con `dvh`**, no con `vh`: en el celular, `100vh` incluye la barra del navegador y deja botones tapados.
@@ -194,9 +195,11 @@ Es un sitio público: tiene que funcionar con teclado, con lector de pantalla y 
 
 ## Fotos de paisaje
 
-Para las páginas que piden un poco más de carácter (la portada), un paisaje de Mendoza en puntos de colores: cada punto toma el color de la foto que tiene debajo.
+Para las páginas que piden un poco más de carácter (municipios, participar), un paisaje de Mendoza en puntos de colores: cada punto toma el color de la foto que tiene debajo.
 
-- **Componentes:** `DotImage` (`@mt/ui/components/dot-image`) es el efecto, en CSS puro: una máscara de puntos repetida sobre la imagen, sin JavaScript ni dependencias, así que sale en el HTML prerenderizado. `LandscapePhoto` (`apps/web/src/components/landscape-photo.tsx`) lo usa con una foto del registro y dos botones sobre la foto, abajo a la derecha: el de autoría (ícono de información, abre el crédito al tocar) y «Proponé tu foto». Se usa `LandscapePhoto` con su `id` y una altura: `<LandscapePhoto id="cordon-del-plata" className="h-52 sm:h-80" />`. Va al tope de la página y ocupa el ancho del contenido hasta los bordes; con `flush={false}` queda donde se la pone (el hero de la portada).
+- **La portada lleva una ilustración, no una foto:** `apps/web/public/fondos/portada.webp` (cordillera, viñedos y un dique), de fondo en todo el hero. Una máscara la funde con la página abajo y un velo suave del color de la página (`from-background-full/85`, radial) queda detrás del título, para que el texto se lea aunque caiga sobre las montañas. En oscuro va la versión de noche (`portada-noche.webp`, con luna): las dos se eligen con el token `--hero-image` de `mt.css`, como fondo CSS, así el navegador baja solo la del tema activo. Si se cambia una, se cambian las dos con el mismo encuadre. Es propia del sitio, así que no lleva botón de autoría ni «Proponé tu foto». Se guardan a 1280 px en WebP (40 a 60 KB): es lo primero que se pinta.
+
+- **Componentes:** `DotImage` (`@mt/ui/components/dot-image`) es el efecto, en CSS puro: una máscara de puntos repetida sobre la imagen, sin JavaScript ni dependencias, así que sale en el HTML prerenderizado. `LandscapePhoto` (`apps/web/src/components/landscape-photo.tsx`) lo usa con una foto del registro y dos botones sobre la foto, abajo a la izquierda: el de autoría (ícono de información, abre el crédito al tocar) y «Proponé tu foto». Se usa `LandscapePhoto` con su `id` y una altura: `<LandscapePhoto id="cordon-del-plata" className="h-52 sm:h-80" />`. Va al tope de la página y ocupa el ancho del contenido hasta los bordes; con `flush={false}` queda donde se la pone.
 - **Una foto decorativa no corre el contenido:** en un hero, el texto y las acciones se centran en toda la pantalla (entre el header y el borde de abajo), y la foto va de fondo, detrás. Si la foto ocupa su propio lugar, el contenido se centra solo en lo que queda arriba y se ve corrido hacia el header.
 - **El crédito no ocupa una fila:** el crédito y la propuesta de foto van como botones sobre la imagen, nunca como una línea de texto debajo, que suma una fila y se mezcla con el título que sigue.
 - **Registro:** `apps/web/src/photos.ts`, con título, autor, licencia, link y `focus` (qué parte queda a la vista al recortar). Los archivos van en `apps/web/public/fotos/<id>.jpg`.
@@ -218,6 +221,31 @@ El sitio casi no tiene animaciones, y está bien así: la gente viene a leer dat
 - **Nombrar lo que cambia:** `transition-colors`, `transition-opacity`, `transition-transform`; nunca `transition-all`.
 - **El movimiento nunca es la única señal:** además cambia un color, un ícono o un texto.
 - **Una sola cosa titila en todo el sitio:** el punto amarillo de «Para mirar de cerca» en el menú (`StatusDot` con `blinking`), que marca la sección viva. Es un parpadeo lento de opacidad, se apaga con «reducir movimiento» y no se suma a otros lugares: si todo titila, nada llama la atención.
+
+## Mascotas
+
+Las mascotas viven en `packages/mascots` (`@mt/mascots`). La primera es **Aco**, un cóndor andino, la guía de trámites. Son ilustraciones en PNG con fondo transparente y un manifiesto JSON; sumar algo es agregar archivos, no tocar el componente.
+
+Se usan con `<Mascot mascot="aco" pose="wave" size={120} />` y `<MascotAvatar mascot="aco" size={40} />` (`@mt/mascots/mascot`). Siempre con tamaño fijo (no mueve la página); `decorative` si al lado ya hay un texto que dice lo mismo; `priority` solo sobre el pliegue.
+
+**Cuándo usar cada pose de Aco**
+
+| Pose | Cuándo |
+|---|---|
+| `idle` (parado) | Reposo y avatar |
+| `wave` (saluda) | Bienvenida |
+| `thinking` (piensa) | Mientras busca en las fuentes |
+| `point` (explica) | Cuando muestra pasos o datos |
+| `celebrate` (festeja) | Después de un 👍, 1,5 s y solo con `motion-safe` |
+| `shy` (apenado) | Errores y datos que no se publican |
+
+**Sumar una pose o un estilo.** Pasar el dibujo a WebP al 80 % (`sharp`, ya en el paquete) y ponerlo en `packages/mascots/mascots/<id>/<estilo>/originales/<pose>.webp` (fondo liso claro, sombra suave permitida; así un original pesa unos 25 KB en vez de 1,5 MB), declararlo en `mascot.json` (`label`, `alt`, `use`) y correr `bun run mascotas`: genera `apps/web/public/mascotas/<id>/<estilo>/<pose>-<tamaño>.png` (se commitea). Un estilo nuevo es otra entrada en `styles`, con su propia carpeta de originales.
+
+**Sumar una mascota.** Carpeta `packages/mascots/mascots/<id>/` con su `mascot.json` y los originales, el `import` en `src/manifest.ts` y `bun run mascotas`. Los tipos de pose salen del manifiesto, así que un nombre mal escrito no compila.
+
+`bun run mascotas --check` verifica que cada pose del manifiesto tenga su original y sus archivos generados (y que pesen poco: 512 px menos de 150 KB, 96 px menos de 20 KB). El recorte es el mismo para todas las poses de un estilo, para que Aco no cambie de tamaño al cambiar de pose. `avatar.crop` es el cuadrado, en píxeles del original, que encuadra la cabeza y el collar.
+
+- **La esquina inferior derecha es del asistente.** Ahí va el botón flotante de Aco en todas las páginas, así que ningún otro botón fijo o pegado al borde inferior de la pantalla va en esa esquina (por eso los botones de las fotos de paisaje van a la izquierda).
 
 ## Lo que no hacemos
 

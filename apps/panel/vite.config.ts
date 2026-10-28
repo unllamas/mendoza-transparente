@@ -4,15 +4,16 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig, type Plugin } from "vite";
 import { parse } from "yaml";
-// Relative paths, not "@mt/participation": Vite leaves workspace packages out of the config bundle, and the Node
-// of Cloudflare's build (22.16) cannot load .ts files from node_modules.
+import { loadModelPrices } from "../../packages/participation/src/assistant-usage.ts";
+// Rutas relativas, no "@mt/participation": Vite deja los paquetes del workspace fuera del bundle de la configuración,
+// y el Node del build de Cloudflare (22.16) no puede cargar archivos .ts desde node_modules.
 import type { Db } from "../../packages/participation/src/db.ts";
 import { openDevDb } from "../../packages/participation/src/local-db.ts";
 import { handlePanel } from "../../packages/participation/src/panel-api.ts";
 
 const ROOT = join(import.meta.dirname, "..", "..");
 
-/** `virtual:item-titles`: the title of each item in data/curado/no-publicado.yaml, to name what was requested. */
+/** `virtual:item-titles`: el título de cada ítem de data/curado/no-publicado.yaml, para nombrar lo que se pidió. */
 function itemTitles(): Plugin {
   const id = "virtual:item-titles";
   return {
@@ -29,12 +30,12 @@ function itemTitles(): Plugin {
 }
 
 /**
- * In development, the panel API runs here over the same local SQLite as the site (`.dev/`), as a made-up
- * team member. The login is only checked in production (functions/api/[[route]].ts): this plugin does not
- * exist in the build.
+ * En desarrollo, la API del panel corre acá sobre la misma SQLite local que el sitio (`.dev/`), con una persona del
+ * equipo inventada. El login se controla solo en producción (functions/api/[[route]].ts): este plugin no existe en el
+ * build.
  */
 function devApi(): Plugin {
-  // Opened when the dev server starts, never during the build.
+  // Se abre al levantar el servidor de desarrollo, nunca durante el build.
   let db: Promise<Db> | null = null;
   return {
     name: "mt-panel-dev-api",
@@ -50,7 +51,7 @@ function devApi(): Plugin {
           headers: { "content-type": req.headers["content-type"] ?? "", origin: req.headers.origin ?? "" },
           body: req.method === "GET" || req.method === "HEAD" ? undefined : Buffer.concat(chunks),
         });
-        const response = await handlePanel(request, await db!, { email: "equipo@localhost" });
+        const response = await handlePanel(request, await db!, { email: "equipo@localhost" }, { modelPrices: () => loadModelPrices() });
         if (!response) return next();
         res.statusCode = response.status;
         response.headers.forEach((v, k) => res.setHeader(k, v));

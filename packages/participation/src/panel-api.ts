@@ -1,10 +1,12 @@
 /**
- * Panel API (/api/panel/*): the team's inbox. Only reachable with an `Actor`, which the Pages Function gets
- * from `verifyAccess` (access.ts) and the Vite dev server makes up locally; this module never decides who
- * is logged in. Documented in docs/procesos/panel.md.
+ * API del panel (/api/panel/*): la bandeja del equipo. Solo se llega con un `Actor`, que la Pages Function saca
+ * de `verifyAccess` (access.ts) y el servidor de desarrollo de Vite inventa en local; este módulo nunca decide quién
+ * entró. Documentado en docs/procesos/panel.md.
  */
 
 import type { Actor } from "./access.ts";
+import { assistantFeedback, assistantFeedbackNote, assistantGaps } from "./assistant.ts";
+import { assistantUsage, type ModelPrices } from "./assistant-usage.ts";
 import type { Db } from "./db.ts";
 import { error, json, pathOf, readBody } from "./http.ts";
 import { privacyWarnings } from "./privacy.ts";
@@ -39,9 +41,9 @@ import { isoDate, longText, pick, tags, text, url } from "./validation.ts";
 const REQUEST_STATUSES = ["presentado", "respondido", "parcial", "denegado", "sin_respuesta"] as const;
 
 /**
- * Writes need a same-origin JSON request. The Access cookie travels with any request to the panel, so
- * without this a page elsewhere could make a logged-in browser change things (CSRF). A cross-site form
- * cannot send `application/json`, and the browser always sends `Origin` on these methods.
+ * Las escrituras piden un JSON del mismo origen. La cookie de Access viaja con cualquier pedido al panel, así que
+ * sin esto una página de otro sitio podría hacer que un navegador con sesión cambie cosas (CSRF). Un formulario de
+ * otro sitio no puede mandar `application/json`, y el navegador siempre manda `Origin` en estos métodos.
  */
 function sameOrigin(req: Request): boolean {
   const origin = req.headers.get("origin");
@@ -56,8 +58,8 @@ const csvCell = (v: unknown) => {
 };
 
 /**
- * Reads the fields of a security finding present in `body`. A field sent empty clears it; a field not sent
- * is left alone. Returns a message when something is invalid.
+ * Lee los campos de un hallazgo de seguridad que vienen en `body`. Un campo vacío lo borra; uno que no viene queda
+ * como estaba. Devuelve un mensaje si algo no es válido.
  */
 export function findingInput(body: Record<string, unknown>): FindingInput | string {
   const f: FindingInput = {};
@@ -102,7 +104,7 @@ export function findingInput(body: Record<string, unknown>): FindingInput | stri
   return f;
 }
 
-/** Security findings (/api/panel/security). Never published; the audit keeps which fields changed, not their text. */
+/** Hallazgos de seguridad (/api/panel/security). Nunca se publican; la auditoría guarda qué campos cambiaron, no el texto. */
 async function handleSecurity(req: Request, db: Db, actor: Actor, path: string, at: string): Promise<Response> {
   const code = path === "/api/panel/security" ? null : normalizeFindingCode(path.slice("/api/panel/security/".length));
   if (path !== "/api/panel/security" && !code) return error("No existe", 404);
@@ -125,7 +127,7 @@ async function handleSecurity(req: Request, db: Db, actor: Actor, path: string, 
   if ((next.status === "reported" || next.status === "acknowledged") && (!next.reportedTo || !next.reportedOn))
     return error("Para marcarlo como reportado, cargá a quién se reportó y en qué fecha.", 409);
 
-  // The finding describes where the problem is, never the exposed data itself.
+  // El hallazgo describe dónde está el problema, nunca los datos expuestos.
   const warnings = privacyWarnings(input.title, input.description);
   if (warnings.length && body.acknowledgeWarnings !== true)
     return json(
@@ -154,7 +156,12 @@ async function handleSecurity(req: Request, db: Db, actor: Actor, path: string, 
   return error("Método no permitido", 405);
 }
 
-export async function handlePanel(req: Request, db: Db, actor: Actor): Promise<Response | null> {
+export interface PanelOptions {
+  /** Precios públicos de los modelos, para estimar el costo de Aco que el proveedor no informa. */
+  modelPrices?: () => Promise<ModelPrices>;
+}
+
+export async function handlePanel(req: Request, db: Db, actor: Actor, options: PanelOptions = {}): Promise<Response | null> {
   const path = pathOf(req);
   if (!path.startsWith("/api/panel")) return null;
   const now = new Date();
@@ -179,7 +186,7 @@ export async function handlePanel(req: Request, db: Db, actor: Actor): Promise<R
         await purgeOldIpHashes(db, now);
         return json(await inbox(db, filter, now));
       }
-      // The export leaves the panel: it carries no emails and no filing numbers, and it is audited.
+      // La exportación sale del panel: no lleva correos ni números de trámite, y queda en la auditoría.
       const { items } = await inbox(db, filter, now);
       await audit(db, actor.email, "export", null, { ...filter, rows: items.length }, at);
       const columns = [
@@ -209,6 +216,20 @@ export async function handlePanel(req: Request, db: Db, actor: Actor): Promise<R
       const code = normalizeCode(path.slice("/api/panel/items/".length));
       const item = code ? await submission(db, code, now) : null;
       return item ? json(item) : error("No existe ese envío.", 404);
+    }
+    if (path === "/api/panel/assistant") return json({ feedback: await assistantFeedback(db), gaps: await assistantGaps(db) });
+    if (path === "/api/panel/assistant/usage") {
+      const prices = (await options.modelPrices?.().catch(() => ({}))) ?? {};
+      return json(await assistantUsage(db, now, prices));
+    }
+    const voteMatch = path.match(/^\/api\/panel\/assistant\/votes\/(\d+)$/);
+    if (voteMatch) {
+      // La nota y la conversación son texto de la persona y pueden traer datos personales: leerlas queda en la auditoría,
+      // como las otras lecturas sensibles.
+      const vote = await assistantFeedbackNote(db, Number(voteMatch[1]));
+      if (!vote) return error("No existe ese voto.", 404);
+      if (vote.note || vote.conversation.length) await audit(db, actor.email, "assistant.note.read", null, { voteId: vote.id }, at);
+      return json(vote);
     }
     if (path === "/api/panel/stats") return json(await panelStats(db, now));
     if (path === "/api/panel/audit") return json(await auditLog(db, 300));
@@ -243,7 +264,7 @@ export async function handlePanel(req: Request, db: Db, actor: Actor): Promise<R
   }
 
   if (itemMatch[2] === "/anonymize" && req.method === "POST") {
-    // Irreversible: the client has to send the code back, typed, as confirmation.
+    // Irreversible: el cliente tiene que devolver el código, tipeado, como confirmación.
     if (normalizeCode(body.confirm) !== code) return error("Para anonimizar, escribí el código del envío.", 400);
     await anonymize(db, code, at);
     await audit(db, actor.email, "anonymize", code, {}, at);
@@ -277,7 +298,7 @@ export async function handlePanel(req: Request, db: Db, actor: Actor): Promise<R
       if ("answeredOn" in body) patch.answeredOn = isoDate(body.answeredOn);
     }
 
-    // What the item would look like after the change, to check the publishing rules on the final state.
+    // Cómo quedaría el envío después del cambio, para controlar las reglas de publicación sobre el estado final.
     const next = {
       reviewStatus: patch.reviewStatus ?? current.reviewStatus,
       isPublic: patch.isPublic ?? current.isPublic,

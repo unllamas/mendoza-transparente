@@ -14,6 +14,7 @@ const ACTIONS: Record<string, string> = {
   export: "Exportó la bandeja",
   "security.create": "Cargó el hallazgo de seguridad",
   "security.update": "Cambió el hallazgo de seguridad",
+  "assistant.note.read": "Leyó la nota de un voto del asistente",
 };
 
 /** Who changed what. Only appended to: the panel has no way to edit or delete it. */

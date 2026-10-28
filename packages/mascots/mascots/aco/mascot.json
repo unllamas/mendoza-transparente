@@ -1,0 +1,22 @@
+{
+  "id": "aco",
+  "name": "Aco",
+  "species": "Cóndor andino",
+  "description": "La mascota de Mendoza Transparente. Guía de trámites.",
+  "defaultStyle": "ilustracion",
+  "styles": {
+    "ilustracion": {
+      "label": "Ilustración",
+      "sizes": [96, 256, 512],
+      "poses": {
+        "idle": { "label": "Parado", "alt": "Aco, un cóndor andino, parado", "use": "Avatar y estado de reposo" },
+        "wave": { "label": "Saluda", "alt": "Aco saludando con el ala", "use": "Bienvenida" },
+        "thinking": { "label": "Piensa", "alt": "Aco pensando, con el ala en el pico", "use": "Mientras busca en las fuentes" },
+        "point": { "label": "Explica", "alt": "Aco señalando con el ala", "use": "Cuando muestra pasos o datos" },
+        "celebrate": { "label": "Festeja", "alt": "Aco festejando con las dos alas arriba", "use": "Después de un 👍" },
+        "shy": { "label": "Apenado", "alt": "Aco con el ala en el pecho, apenado", "use": "Errores y datos que no se publican" }
+      },
+      "avatar": { "pose": "idle", "crop": { "x": 337, "y": 0, "size": 580 } }
+    }
+  }
+}

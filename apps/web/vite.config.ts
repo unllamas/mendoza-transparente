@@ -6,6 +6,10 @@ import react from "@vitejs/plugin-react";
 import { defineConfig, type Plugin } from "vite";
 // Relative paths, not "@mt/participation": Vite leaves workspace packages out of the config bundle, and the Node
 // of Cloudflare's build (22.16) cannot load .ts files from node_modules.
+import { handleAssistant } from "../../packages/assistant/src/http.ts";
+import knowledge from "../../packages/assistant/src/knowledge.json";
+import type { Knowledge } from "../../packages/assistant/src/knowledge.ts";
+import type { AssistantEnv } from "../../packages/assistant/src/providers.ts";
 import type { Db } from "../../packages/participation/src/db.ts";
 import { openDevDb } from "../../packages/participation/src/local-db.ts";
 import { handlePublic } from "../../packages/participation/src/public-api.ts";
@@ -80,7 +84,7 @@ function liveData(): Plugin {
 
 /**
  * In development, the participation API (/api/*) runs here over a local SQLite in `.dev/`, shared with the
- * panel (apps/panel), with example submissions. Delete the file to start over.
+ * panel (apps/panel), with example submissions. Delete the file to start over. The assistant (/api/asistente) too.
  */
 function devApi(): Plugin {
   // Opened when the dev server starts, never during the build.
@@ -98,7 +102,15 @@ function devApi(): Plugin {
           headers: { "content-type": req.headers["content-type"] ?? "application/json" },
           body: req.method === "GET" || req.method === "HEAD" ? undefined : Buffer.concat(chunks),
         });
-        const response = await handlePublic(request, await db!, { development: true }, req.socket.remoteAddress ?? "127.0.0.1");
+        // The assistant answers here too: without keys in the environment it says it is off; with them
+        // (AI_GATEWAY_API_KEY or OPENROUTER_API_KEY, for example `bun --env-file=../../.env.asistente run dev`) it works locally.
+        const response =
+          (await handleAssistant(request, {
+            knowledge: knowledge as unknown as Knowledge,
+            env: process.env as AssistantEnv,
+            db: await db!,
+            log: console.log,
+          })) ?? (await handlePublic(request, await db!, { development: true }, req.socket.remoteAddress ?? "127.0.0.1"));
         if (!response) return next();
         res.statusCode = response.status;
         response.headers.forEach((v, k) => res.setHeader(k, v));

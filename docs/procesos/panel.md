@@ -8,6 +8,7 @@
 | Bandeja | Lista y detalle, como un correo. Filtros por estado de revisión, tipo, texto y fechas, todos en la URL (`?estado=&tipo=&q=&desde=&hasta=&envio=`). Teclado: `j`/`k` moverse, `e` resolver, `#` descartar, `/` buscar. Exporta CSV |
 | Estadísticas | Pedidos por organismo (respondidos, negados, vencidos y días hasta la respuesta) y envíos por mes |
 | Seguridad | Problemas de seguridad encontrados en sitios del Estado, hasta que se reportan y se corrigen. No se publican nunca. Ver [Hallazgos de seguridad](seguridad.md) |
+| Asistente | Consumo de Aco en los últimos 30 días (gasto en USD, tokens, llamadas, modelos, fallas de cada proveedor y tiempos; ver [Consumo](asistente.md#consumo)), opiniones sobre sus respuestas (👍/👎, motivo, recorrido y municipio, últimos 50 votos) y los faltantes que la gente pidió, de más a menos pedidos. La conversación votada y la nota libre del 👎 solo se abren de a un voto y la lectura se audita. Nunca se publica. Ver [Asistente](asistente.md#opiniones) |
 | Auditoría | Cada cambio hecho desde el panel, con quién lo hizo |
 
 ## Cómo se entra (login)
@@ -135,6 +136,7 @@ curl -s -H "$H" "$B/domains" | jq '.result[] | {name, status}'                  
 | Inyección de fórmulas al abrir el CSV exportado | Las celdas que empiezan con `= + - @` llevan `'` adelante. El CSV no incluye correos ni trámites, y cada exportación queda en la auditoría |
 | Que el panel aparezca en buscadores o dentro de un iframe | `noindex` (meta, cabecera y `robots.txt`), `X-Frame-Options: DENY` y `frame-ancestors 'none'` |
 | Cambios sin rastro | Cada escritura deja una fila en `audit_log`. El panel no tiene forma de borrarla |
+| Que una nota o una conversación del asistente con datos personales se lea sin dejar rastro | La lista de votos no las trae; abrirlas es un pedido aparte (`/api/panel/assistant/votes/:id`) que deja `assistant.note.read` en la auditoría, sin el texto |
 | Datos que se guardan de más | Los hash de IP se borran a los 30 días. El correo es opcional |
 | Inyección SQL | Todas las consultas van con parámetros. Los nombres de tabla y columna salen de listas fijas |
 

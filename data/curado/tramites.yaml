@@ -1,0 +1,2193 @@
+# Catálogo de trámites: recorridos que encadenan los pasos de Nación, Provincia y municipio.
+# Lo usa el asistente de la guía de trámites (packages/assistant) y, más adelante, las páginas /tramites.
+# Proceso: docs/procesos/tramites-y-tributos.md. Plan: docs/planes/guia-de-tramites.md.
+#
+# Reglas:
+# - Cada paso sale de una página o norma oficial (url) y el recorrido lleva la fecha en que se verificó.
+# - Lo que el organismo no publica va en `no_publica`, no se completa con suposiciones.
+# - `cuando` dice si el paso aplica siempre o solo a ciertos rubros (`alimentos`).
+# - Los rubros apuntan al código del anexo de la ordenanza tarifaria (data/processed/tributos/rubros_comercio.csv),
+#   con `nombre_ordenanza` tal cual figura, porque algunos anexos repiten un código para actividades distintas.
+#   Un rubro sin `nombre` ni `alimentos` los toma de data/curado/rubros.yaml.
+# - `variantes`: otras actividades del mismo anexo que puede ser alguien con ese rubro y que pagan distinto (un kiosco
+#   puede ser QUIOSCO INTERIOR o MAXI KIOSCO). El asistente las muestra por separado, cada una con su monto.
+# - Solo se cargan los rubros que se mapearon a mano: el asistente no busca por palabras en el anexo. Lo que alguien
+#   pide y no está queda en la tabla `assistant_gaps` para sumarlo después.
+# - `tasa_comercio.ejercicio`: año de los montos cargados a mano (`manual`).
+
+- id: abrir-un-comercio
+  titulo: Abrir un comercio
+  municipio: Godoy Cruz
+  verificado: 2026-10-26
+  rubros:
+    - id: almacen
+      nombre: Almacén
+      codigo: "30003"
+      nombre_ordenanza: "ALMACENES Y DESPENSAS"
+      alimentos: true
+      variantes:
+        - { codigo: "30016", nombre_ordenanza: "MERCADITOS" }
+        - { codigo: "26002", nombre_ordenanza: "AUTOSERVICIO HASTA 3 CAJAS" }
+    - id: kiosco
+      nombre: Kiosco
+      codigo: "30021"
+      nombre_ordenanza: "QUIOSCO INTERIOR"
+      alimentos: true
+      variantes:
+        - { codigo: "30037", nombre_ordenanza: "MAXI KIOSCO" }
+        - { codigo: "31075", nombre_ordenanza: "QUIOSCOS VIA PUBLICA" }
+    - id: ropa
+      nombre: Ropa
+      codigo: "31020"
+      nombre_ordenanza: "ARTICULOS DE VESTIR"
+      alimentos: false
+      variantes:
+        - { codigo: "31031", nombre_ordenanza: "BOUTIQUE" }
+        - { codigo: "31113", nombre_ordenanza: "INDUMENTARIA DEPORTIVA" }
+    - id: rotiseria
+      nombre: Comida para llevar
+      codigo: "42006"
+      nombre_ordenanza: "VENTA Y/O PREPARACION DE VIANDAS ROTISERIAS Y SIM"
+      alimentos: true
+      variantes:
+        - { codigo: "42003", nombre_ordenanza: "SANDWICHERIA Y/ O SALONES COMEDORES" }
+        - { codigo: "42012", nombre_ordenanza: "PANCHOS Y/O HAMBURGUESAS" }
+    - id: carniceria
+      codigo: "30007"
+      nombre_ordenanza: "CARNICERIAS"
+      variantes:
+        - { codigo: "30004", nombre_ordenanza: "AVES EVISCERADAS VENTA" }
+        - { codigo: "30008", nombre_ordenanza: "CHASINADOS EMBUTIDOS Y AFINES" }
+    - id: verduleria
+      codigo: "30023"
+      nombre_ordenanza: "VERDULERIAS Y FRUTERIAS"
+    - id: panaderia
+      codigo: "30018"
+      nombre_ordenanza: "PANADERIAS VENTAS"
+      variantes:
+        - { codigo: "4017", nombre_ordenanza: "ELABORACION PAN, TORTAS Y FACTURAS" }
+        - { codigo: "30026", nombre_ordenanza: "MASAS Y TORTAS FINAS VENTA" }
+        - { codigo: "30030", nombre_ordenanza: "VENTA DE REPOSTERIA" }
+    - id: fiambreria
+      codigo: "30009"
+      nombre_ordenanza: "FIAMBRERIAS"
+    - id: dietetica
+      codigo: "30034"
+      nombre_ordenanza: "DIETETICAS"
+      variantes:
+        - { codigo: "30013", nombre_ordenanza: "HERBORISTERIAS" }
+        - { codigo: "30029", nombre_ordenanza: "VENTA PRODUCTOS PARA CELIACOS" }
+    - id: heladeria
+      codigo: "30012"
+      nombre_ordenanza: "HELADOS VENTA ELABORACION PROPIA"
+      variantes:
+        - { codigo: "30011", nombre_ordenanza: "HELADOS VENTA A CONSIGNACION" }
+    - id: bar
+      codigo: "42001"
+      nombre_ordenanza: "BARES Y CONFITERIAS"
+      variantes:
+        - { codigo: "42002", nombre_ordenanza: "CASAS DE TE O CAFÉ" }
+        - { codigo: "30033", nombre_ordenanza: "EXPENDEDORAS DE CAFE / CAFE AL PASO" }
+    - id: cerveza-artesanal
+      nombre: Cerveza artesanal
+      codigo: "30031"
+      nombre_ordenanza: "VENTA DE CERVEZAS ARTESANAL"
+      alimentos: true
+      variantes:
+        - { codigo: "42013", nombre_ordenanza: "PATIO CERVECERO" }
+        - { codigo: "4051", nombre_ordenanza: "ELABORACION DE BEBIDAS FERMENTADAS ARTESANALES" }
+    - id: restaurante
+      codigo: "42005"
+      nombre_ordenanza: "RESTAURANTES"
+      variantes:
+        - { codigo: "42010", nombre_ordenanza: "ELABORACION DE COMIDAS A LA PARRILLA" }
+        - { codigo: "42003", nombre_ordenanza: "SANDWICHERIA Y/ O SALONES COMEDORES" }
+    - id: pastas
+      codigo: "4031"
+      nombre_ordenanza: "FBRC. DE PASTAS FRESCAS"
+      variantes:
+        - { codigo: "30027", nombre_ordenanza: "PASTAS FRESCAS VENTA" }
+    - id: peluqueria
+      codigo: "45003"
+      nombre_ordenanza: "PELUQUERIA DAMAS O CABALLEROS"
+      variantes:
+        - { codigo: "39050", nombre_ordenanza: "BARBERÍAS" }
+        - { codigo: "45004", nombre_ordenanza: "INSTITUTO DE ESTETICA" }
+    - id: ferreteria
+      codigo: "31051"
+      nombre_ordenanza: "FERRETERIAS"
+      variantes:
+        - { codigo: "31072", nombre_ordenanza: "PINTURERIAS" }
+        - { codigo: "31044", nombre_ordenanza: "CORRALON CON VENTA MATERIALES DE CONSTRUCCION" }
+    - id: libreria
+      codigo: "31061"
+      nombre_ordenanza: "LIBRERIAS Y PAPELERIAS"
+      variantes:
+        - { codigo: "40013", nombre_ordenanza: "FOTOCOPIADORA" }
+    - id: zapateria
+      codigo: "31088"
+      nombre_ordenanza: "ZAPATERIAS Y ZAPATILLERIAS"
+    - id: bazar
+      codigo: "31028"
+      nombre_ordenanza: "BAZARES"
+      variantes:
+        - { codigo: "31106", nombre_ordenanza: "REGALERIA" }
+        - { codigo: "31090", nombre_ordenanza: "COTILLON VENTA" }
+    - id: jugueteria
+      codigo: "31057"
+      nombre_ordenanza: "JUGUETERIAS"
+    - id: perfumeria
+      codigo: "31071"
+      nombre_ordenanza: "PERFUMERIAS"
+      variantes:
+        - { codigo: "45005", nombre_ordenanza: "VENTA DE COSMETICOS" }
+        - { codigo: "31027", nombre_ordenanza: "ARTICULOS DE LIMPIEZA" }
+    - id: celulares
+      codigo: "31083"
+      nombre_ordenanza: "TELEFONO CELULAR VENTA"
+      variantes:
+        - { codigo: "31120", nombre_ordenanza: "ACCESORIOS PARA TELÉFONOS MÓVILES" }
+        - { codigo: "31039", nombre_ordenanza: "COMPUTACION ANEXOS E INSUMOS" }
+    - id: optica
+      codigo: "31068"
+      nombre_ordenanza: "OPTICAS"
+    - id: floreria
+      codigo: "31052"
+      nombre_ordenanza: "FLORERIAS"
+      variantes:
+        - { codigo: "31073", nombre_ordenanza: "PLANTAS Y MACETAS" }
+    - id: muebleria
+      codigo: "31067"
+      nombre_ordenanza: "MUEBLERIAS"
+    - id: veterinaria
+      codigo: "39018"
+      nombre_ordenanza: "VETERINARIAS CLINICA Y CIRUGIA"
+      variantes:
+        - { codigo: "31095", nombre_ordenanza: "VENTA DE ACCESORIOS PARA MASCOTAS" }
+        - { codigo: "31119", nombre_ordenanza: "VENTA DE INSUMOS PARA ANIMALES" }
+        - { codigo: "31096", nombre_ordenanza: "VENTA DE FARMACOS PARA ANIMALES" }
+    - id: lavanderia
+      codigo: "44001"
+      nombre_ordenanza: "LAVADERO MECANICO"
+      variantes:
+        - { codigo: "44005", nombre_ordenanza: "TINTORERIAS" }
+        - { codigo: "44003", nombre_ordenanza: "SECADO Y/O PLANCHADO DE ROPA" }
+    - id: gimnasio
+      codigo: "39007"
+      nombre_ordenanza: "GIMNASIOS"
+      variantes:
+        - { codigo: "39035", nombre_ordenanza: "PILATES" }
+        - { codigo: "39019", nombre_ordenanza: "YOGA Y SIMILARES" }
+    - id: taller
+      codigo: "17017"
+      nombre_ordenanza: "MECANICA AUTOMOTOR"
+      variantes:
+        - { codigo: "17014", nombre_ordenanza: "GOMERIAS Y REPARACIONES EN GRAL." }
+        - { codigo: "17044", nombre_ordenanza: "LUBRICENTRO (CAMBIO DE ACEITE)" }
+        - { codigo: "17010", nombre_ordenanza: "ELECTRICIDAD DEL AUTOMOTOR" }
+    - id: farmacia
+      codigo: "31049"
+      nombre_ordenanza: "FARMACIAS"
+      variantes:
+        - { codigo: "31094", nombre_ordenanza: "DROGUERIAS" }
+    - id: oficina
+      codigo: "39020"
+      nombre_ordenanza: "ACTIVIDAD PROFESIONAL A TERCEROS"
+      variantes:
+        - { codigo: "39003", nombre_ordenanza: "CONSULT.MEDICOS POR CONSULTORIO" }
+        - { codigo: "40011", nombre_ordenanza: "ESTUDIOS JURIDICOS CONTABLES ESCRIBANIAS ETC." }
+        - { codigo: "40020", nombre_ordenanza: "OFICINAS ADMINISTRATIVAS" }
+  pasos:
+    - nivel: nacion
+      organismo: ARCA
+      titulo: CUIT y alta en el monotributo
+      detalle: En línea y gratis, con DNI y clave fiscal. El alta toma unos 15 minutos.
+      url: https://www.argentina.gob.ar/servicio/inscribirme-como-monotributista
+      cuando: siempre
+    - nivel: provincia
+      organismo: ATM
+      titulo: Ingresos Brutos
+      detalle: Automática si sos monotributista (hasta 72 horas hábiles). Si no, alta en Mis Trámites Online de la ATM.
+      url: https://atm.mendoza.gov.ar/preguntas-frecuentes/impuesto-sobre-los-ingresos-brutos-2/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Godoy Cruz
+      titulo: Uso de suelo del local
+      detalle: En línea por Ciudadanía Digital, con el número de padrón y los rubros. Dice si el local puede tener esa actividad.
+      url: https://www.godoycruz.gob.ar/sitio2/?p=38659
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Godoy Cruz
+      titulo: Habilitación de comercio
+      detalle: Con turno en el Centro de Atención Unificada o por Ciudadanía Digital; los formularios se firman en persona. Iniciarla no autoriza a abrir.
+      url: https://www.godoycruz.gob.ar/sitio2/?p=38409
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Godoy Cruz
+      titulo: Ficha ambiental
+      detalle: Se presenta junto con la habilitación, en el CAU o por Ciudadanía Digital.
+      url: https://www.godoycruz.gob.ar/sitio2/wp-content/uploads/2023/09/INSTRUCTIVO-FICHA-AMBIENTAL-COMERCIO.docx.pdf
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Godoy Cruz
+      titulo: Libreta sanitaria y carnet de manipulación
+      detalle: La libreta, en el Centro de Salud del barrio FOECYT; el carnet, con un curso en línea y un examen presencial.
+      url: https://www.godoycruz.gob.ar/el-tramite-de-libreta-sanitaria-se-realiza-en-el-centro-de-salud-del-bo-foecyt/
+      cuando: alimentos
+  costos:
+    - concepto: Derecho de comercio
+      detalle: Lo cobra el municipio por mes según el rubro y la categoría que asigna Rentas. Mientras dura la habilitación se paga un 50 % más (Ordenanza 7497, art. 20).
+      norma: Ordenanza tarifaria 7497 (2026), Anexo A
+      url: https://boe.mendoza.gov.ar/publico/pdf_pedido/b6145815bd40d2e9d9ebbad5c8bb5bff3675831184
+    - concepto: Habilitación
+      detalle: Según una nota del municipio, desde 2026 habilitar no tiene costo. La ordenanza tarifaria 2026 no fija un monto para pedirla.
+      url: https://www.godoycruz.gob.ar/godoy-cruz-55-tasas-menos-vecinos-comerciantes-ahorro-estimado-70-millones/
+  tasa_comercio:
+    periodo: ""
+    unidad: pesos
+    norma: Ordenanza tarifaria 7497 (2026), Anexo A
+    url: https://boe.mendoza.gov.ar/publico/pdf_pedido/b6145815bd40d2e9d9ebbad5c8bb5bff3675831184
+    nota: La ordenanza no aclara si el monto es mensual o anual (el pago es mensual, art. 26); lo estamos confirmando con Rentas. La categoría la asigna Rentas según superficie, ubicación y personal.
+  no_publica:
+    - que: Cuánto tarda la habilitación
+      organismo: Municipalidad de Godoy Cruz
+      detalle: La ficha oficial dice que «dependerá del cumplimiento de los requisitos».
+    - que: Cuánto tarda el alta en Ingresos Brutos por el régimen general
+      organismo: ATM
+    - que: Los requisitos y el costo del permiso para poner un cartel
+      organismo: Municipalidad de Godoy Cruz
+  promocion:
+    norma: Ordenanza 7240/2022
+    detalle: Los comercios nuevos que toman personal pueden pedir una exención de tasas del 25 % al 100 % hasta por dos años, según cuántas personas sumen (al menos la mitad, de Godoy Cruz). No se confirmó que siga vigente en 2026.
+    url: https://datos.godoycruz.gob.ar/wp-content/uploads/ordenanzas/2022/7240.docx
+
+- id: abrir-un-comercio
+  titulo: Abrir un comercio
+  municipio: Capital
+  verificado: 2026-10-27
+  rubros:
+    - id: almacen
+      nombre: Almacén
+      codigo: "11030311"
+      nombre_ordenanza: "Venta de sustancias alimenticias Minoristas y de consumo familiar."
+      alimentos: true
+      variantes:
+        - { codigo: "11030511", nombre_ordenanza: "Minimercados (Mini-markets)" }
+        - { codigo: "11030211", nombre_ordenanza: "Autoservicios" }
+    - id: kiosco
+      nombre: Kiosco
+      codigo: "11030411"
+      nombre_ordenanza: "Comercios netamente Minoristas."
+      alimentos: true
+      variantes:
+        - { codigo: "11030311", nombre_ordenanza: "Venta de sustancias alimenticias Minoristas y de consumo familiar." }
+    - id: ropa
+      nombre: Ropa
+      codigo: "11420111"
+      nombre_ordenanza: "Artículos de consumo, comercial, personal y vestimenta"
+      alimentos: false
+    - id: rotiseria
+      nombre: Comida para llevar
+      codigo: "11040511"
+      nombre_ordenanza: "Cocina (comidas para llevar), Rotiserías"
+      alimentos: true
+    - id: carniceria
+      codigo: "11030311"
+      nombre_ordenanza: "Venta de sustancias alimenticias Minoristas y de consumo familiar."
+    - id: verduleria
+      codigo: "11030311"
+      nombre_ordenanza: "Venta de sustancias alimenticias Minoristas y de consumo familiar."
+    - id: panaderia
+      codigo: "11030311"
+      nombre_ordenanza: "Venta de sustancias alimenticias Minoristas y de consumo familiar."
+    - id: fiambreria
+      codigo: "11030311"
+      nombre_ordenanza: "Venta de sustancias alimenticias Minoristas y de consumo familiar."
+    - id: dietetica
+      codigo: "11030311"
+      nombre_ordenanza: "Venta de sustancias alimenticias Minoristas y de consumo familiar."
+    - id: heladeria
+      codigo: "11040411"
+      nombre_ordenanza: "Heladerías con o sin elaboración."
+    - id: bar
+      codigo: "11040211"
+      nombre_ordenanza: "Lecherías, Chocolaterías"
+    - id: restaurante
+      codigo: "11040111"
+      nombre_ordenanza: "Restaurante y/o parrilladas"
+      variantes:
+        - { codigo: "11040311", nombre_ordenanza: "Pizzerías, Sandwicherías, Elaboración de empanadas." }
+    - id: pastas
+      codigo: "11010111"
+      nombre_ordenanza: "Elaboración y/o fraccionamiento de alimentos."
+    - id: peluqueria
+      codigo: "11430111"
+      nombre_ordenanza: "Actividades de servicios a terceros minoristas."
+    - id: ferreteria
+      codigo: "11420111"
+      nombre_ordenanza: "Artículos de consumo, comercial, personal y vestimenta"
+    - id: libreria
+      codigo: "11420111"
+      nombre_ordenanza: "Artículos de consumo, comercial, personal y vestimenta"
+    - id: zapateria
+      codigo: "11420111"
+      nombre_ordenanza: "Artículos de consumo, comercial, personal y vestimenta"
+    - id: bazar
+      codigo: "11410111"
+      nombre_ordenanza: "Amoblamientos, artículos para el hogar, enseres varios"
+    - id: jugueteria
+      codigo: "11420111"
+      nombre_ordenanza: "Artículos de consumo, comercial, personal y vestimenta"
+    - id: perfumeria
+      codigo: "11460911"
+      nombre_ordenanza: "Farmacias y perfumerías"
+    - id: celulares
+      codigo: "11462611"
+      nombre_ordenanza: "Venta de Telefonía Celular y Accesorios para Celulares"
+    - id: optica
+      codigo: "11420111"
+      nombre_ordenanza: "Artículos de consumo, comercial, personal y vestimenta"
+    - id: floreria
+      codigo: "11420111"
+      nombre_ordenanza: "Artículos de consumo, comercial, personal y vestimenta"
+    - id: muebleria
+      codigo: "11410111"
+      nombre_ordenanza: "Amoblamientos, artículos para el hogar, enseres varios"
+    - id: lavanderia
+      codigo: "11430111"
+      nombre_ordenanza: "Actividades de servicios a terceros minoristas."
+    - id: gimnasio
+      codigo: "11310311"
+      nombre_ordenanza: "Gimnasio (diversas especialidades deportivas)"
+    - id: taller
+      codigo: "11430111"
+      nombre_ordenanza: "Actividades de servicios a terceros minoristas."
+    - id: farmacia
+      codigo: "11460911"
+      nombre_ordenanza: "Farmacias y perfumerías"
+    - id: oficina
+      codigo: "11330111"
+      nombre_ordenanza: "Actividad Administrativa"
+      variantes:
+        - { codigo: "11461611", nombre_ordenanza: "Actividades Profesionales de Prestación de Servicios (Sociedades Constituidas)" }
+        - { codigo: "11460231", nombre_ordenanza: "Consultorios (Sociedades constituidas)." }
+  pasos:
+    - nivel: nacion
+      organismo: ARCA
+      titulo: CUIT y alta en el monotributo
+      detalle: En línea y gratis, con DNI y clave fiscal. El alta toma unos 15 minutos.
+      url: https://www.argentina.gob.ar/servicio/inscribirme-como-monotributista
+      cuando: siempre
+    - nivel: provincia
+      organismo: ATM
+      titulo: Ingresos Brutos
+      detalle: Automática si sos monotributista (hasta 72 horas hábiles). Si no, alta en Mis Trámites Online de la ATM.
+      url: https://atm.mendoza.gov.ar/preguntas-frecuentes/impuesto-sobre-los-ingresos-brutos-2/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de la Ciudad de Mendoza
+      titulo: Uso de suelo del local
+      detalle: Antes de alquilar, mirá en el mapa de la Ciudad si el rubro está permitido en esa dirección. Después Planificación lo confirma con el inicio de la habilitación.
+      url: https://webgis.ciudaddemendoza.gob.ar/portal/apps/webappviewer/index.html?id=5f61dd0dc394450198e27943166c778e
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de la Ciudad de Mendoza
+      titulo: Habilitación de comercio
+      detalle: En línea (Iniciar Trámite) o en la Ventanilla Única, 9 de Julio 500. Con DNI, padrón, libre deuda, contrato de alquiler o autorización del dueño, plano o croquis con prevenciones de incendio y oblea de matafuegos. Si todo está bien, la habilitación precaria sale en un día hábil (silencio positivo a las 24 horas hábiles).
+      url: https://www.ciudaddemendoza.gob.ar/tramites/habilitacion-de-comercios-industrias-servicios-y-actividades-civiles/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de la Ciudad de Mendoza
+      titulo: Curso de manipulación de alimentos
+      detalle: Curso de una jornada, una vez por mes, con examen. El carnet vale 3 años. Inscripción por el formulario web.
+      url: https://ciudaddemendoza.gob.ar/tramites/inscripcion-para-curso-de-manipulacion-de-alimentos/
+      cuando: alimentos
+  costos:
+    - concepto: Derecho de comercio
+      detalle: Se paga por bimestre, o dividido por mes, según el rubro y la categoría. Se calcula en UTM; la UTM vale $130 desde el 1 de septiembre de 2026. Mientras no tenés habilitación se paga 1,5 veces el valor (art. 15).
+      norma: Ordenanza tarifaria 4222 (2026), Capítulo III
+      url: https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/12/Ordenanza-Tarifaria-4222.pdf
+    - concepto: Habilitación
+      detalle: La ficha oficial dice «sin costo» pero pide abonar un sellado; un PDF de requisitos de 2024 menciona 231 UTM y la tarifaria 2026 no lo fija.
+      url: https://www.ciudaddemendoza.gob.ar/tramites/habilitacion-de-comercios-industrias-servicios-y-actividades-civiles/
+    - concepto: Curso de manipulación de alimentos
+      detalle: 150 UTM (la ficha dice $19.500).
+      norma: Ordenanza tarifaria 4222 (2026), art. 61
+      url: https://ciudaddemendoza.gob.ar/tramites/inscripcion-para-curso-de-manipulacion-de-alimentos/
+  tasa_comercio:
+    periodo: bimestre
+    unidad: UTM
+    valor_unidad: 130
+    norma_unidad: UTM de $ 130 desde el 1 de septiembre de 2026, según la Ciudad; la ordenanza la fijó en $ 115 (art. 81)
+    norma: Ordenanza tarifaria 4222 (2026), Capítulo III
+    url: https://boe.mendoza.gov.ar/publico/pdf_pedido/68d8b77a95790363c20e11eb032a82b9d5bc1f7474
+    nota: La categoría la asigna la Ciudad y la ordenanza no publica el criterio.
+  no_publica:
+    - que: Cuánto tarda la habilitación definitiva
+      organismo: Municipalidad de la Ciudad de Mendoza
+      detalle: Solo se publica el día hábil de la habilitación precaria.
+    - que: Qué categoría de la tasa de comercio te toca
+      organismo: Municipalidad de la Ciudad de Mendoza
+    - que: Los requisitos y el costo del permiso para poner un cartel
+      organismo: Municipalidad de la Ciudad de Mendoza
+    - que: Cuánto tarda el alta en Ingresos Brutos por el régimen general
+      organismo: ATM
+  promocion:
+    norma: Ordenanza 4222/2025, arts. 15 bis a 15 quater
+    detalle: En 2026, los comercios nuevos de la 4.ª Sección pagan la mitad de la tasa el primer año; los de zona residencial R3 no pagan los dos primeros años; los del Distrito 33 tienen 50 % de descuento.
+    url: https://ciudaddemendoza.gob.ar/wp-content/uploads/2025/12/Ordenanza-Tarifaria-4222.pdf
+
+- id: abrir-un-comercio
+  titulo: Abrir un comercio
+  municipio: Las Heras
+  verificado: 2026-10-27
+  rubros:
+    - id: almacen
+      nombre: Almacén
+      codigo: "G521101"
+      nombre_ordenanza: "Almacén minorista"
+      alimentos: true
+      variantes:
+        - { codigo: "G522002", nombre_ordenanza: "Mercadito con venta de art. de Almacén" }
+        - { codigo: "G520002", nombre_ordenanza: "Autoservicios de alimentos" }
+    - id: kiosco
+      nombre: Kiosco
+      codigo: "G521104"
+      nombre_ordenanza: "Golosinas en general"
+      alimentos: true
+      variantes:
+        - { codigo: "G525203", nombre_ordenanza: "En interior de vivienda" }
+        - { codigo: "G525201", nombre_ordenanza: "Kioscos: Municipal o en la Vía pública" }
+    - id: ropa
+      nombre: Ropa
+      codigo: "G523206"
+      nombre_ordenanza: "Ropas, indumentaria y textiles: Ropa nueva: Minorista"
+      alimentos: false
+      variantes:
+        - { codigo: "G523203", nombre_ordenanza: "Ropas, indumentaria y textiles: Boutiques" }
+        - { codigo: "G523905", nombre_ordenanza: "Ropas, indumentaria y textiles: Artículos de deportes: Minorista" }
+        - { codigo: "G523201", nombre_ordenanza: "Tiendas" }
+    - id: rotiseria
+      nombre: Comida para llevar
+      codigo: "H552007"
+      nombre_ordenanza: "Pizzerías, empanadas, pizzas: Rotiserías"
+      alimentos: true
+      variantes:
+        - { codigo: "H552005", nombre_ordenanza: "Pizzerías, empanadas, pizzas: Sándwiches, lomitos, panchos, comidas al paso" }
+        - { codigo: "H552006", nombre_ordenanza: "Pizzerías, empanadas, pizzas: Fainá, pasteles" }
+    - id: carniceria
+      nombre: Carnicería
+      codigo: "G522007"
+      nombre_ordenanza: "Carnes, embutidos y chacinados: Minorista"
+      alimentos: true
+      variantes:
+        - { codigo: "G522004", nombre_ordenanza: "Comestibles: Aves evisceradas, huevos y subproductos de ave" }
+    - id: verduleria
+      codigo: "G522020"
+      nombre_ordenanza: "Verduras y frutas"
+    - id: panaderia
+      codigo: "G522014"
+      nombre_ordenanza: "Pan y subproductos de panificación: Sucursal"
+      variantes:
+        - { codigo: "D154102", nombre_ordenanza: "Pan y subproductos de panificación: Con elaboración mecánica" }
+        - { codigo: "G522025", nombre_ordenanza: "Facturas y confituras" }
+    - id: fiambreria
+      codigo: "G522010"
+      nombre_ordenanza: "Fiambrerías"
+      variantes:
+        - { codigo: "G522017", nombre_ordenanza: "Lácteos y derivados" }
+    - id: dietetica
+      codigo: "G52310"
+      nombre_ordenanza: "Herboristerías"
+    - id: heladeria
+      codigo: "G521106"
+      nombre_ordenanza: "Helados"
+    - id: bar
+      codigo: "H552001"
+      nombre_ordenanza: "Bares y/o cafés"
+      variantes:
+        - { codigo: "H552002", nombre_ordenanza: "Cantina, taberna o pub" }
+    - id: restaurante
+      codigo: "H552003"
+      nombre_ordenanza: "Restaurantes, confiterías, salón de té: SIN PISTA DE BAILE"
+      variantes:
+        - { codigo: "G522015", nombre_ordenanza: "Parrilladas" }
+    - id: pastas
+      codigo: "D154403"
+      nombre_ordenanza: "Fideos Frescos"
+      variantes:
+        - { codigo: "G522023", nombre_ordenanza: "Fideos y derivados de harina" }
+    - id: peluqueria
+      codigo: "O930201"
+      nombre_ordenanza: "Estética Corporal y Personal: Peluquería damas, caballeros y de animales"
+      variantes:
+        - { codigo: "O930202", nombre_ordenanza: "Salones de belleza (peluquería, cosmetología, fango terapia, spa)" }
+    - id: ferreteria
+      codigo: "G523401"
+      nombre_ordenanza: "Ferretería minorista"
+    - id: libreria
+      codigo: "G523921"
+      nombre_ordenanza: "Artículos de librería y papelería"
+    - id: zapateria
+      codigo: "G523210"
+      nombre_ordenanza: "Ropas, indumentaria y textiles: Zapatos y calzados varios"
+    - id: bazar
+      codigo: "G523302"
+      nombre_ordenanza: "Hogar: Artículos de bazar"
+    - id: jugueteria
+      codigo: "G523920"
+      nombre_ordenanza: "Juguetes"
+    - id: celulares
+      codigo: "G523317"
+      nombre_ordenanza: "Repuestos y accesorios: Telefonía, telecomunicaciones"
+      variantes:
+        - { codigo: "G523938", nombre_ordenanza: "Insumos para informática o computadoras (no repuestos)" }
+    - id: optica
+      codigo: "G523923"
+      nombre_ordenanza: "Ópticas(artículos de)"
+    - id: floreria
+      codigo: "G523917"
+      nombre_ordenanza: "Flores y plantas"
+      variantes:
+        - { codigo: "G523922", nombre_ordenanza: "Macetas y plantas" }
+    - id: muebleria
+      codigo: "G523313"
+      nombre_ordenanza: "Hogar: Muebles nuevos: Minorista"
+    - id: veterinaria
+      codigo: "N852001"
+      nombre_ordenanza: "Veterinaria"
+      variantes:
+        - { codigo: "G523101", nombre_ordenanza: "Farmacia veterinaria" }
+        - { codigo: "G523933", nombre_ordenanza: "Pájaros y mascotas" }
+        - { codigo: "G523909", nombre_ordenanza: "Alimentos y accesorios p/aves u otros animales: Minorista" }
+    - id: lavanderia
+      codigo: "O930101"
+      nombre_ordenanza: "Lavadero mecánico de ropas"
+      variantes:
+        - { codigo: "O930103", nombre_ordenanza: "Tintorería: con equipo completo" }
+    - id: gimnasio
+      codigo: "O924108"
+      nombre_ordenanza: "Salón para gimnasios, masajes"
+    - id: taller
+      codigo: "G502002"
+      nombre_ordenanza: "Automotores Vehículos: Mecánicos Automotores"
+      variantes:
+        - { codigo: "G502008", nombre_ordenanza: "Automotores Vehículos: Electricidad del automotor" }
+        - { codigo: "G502009", nombre_ordenanza: "Automotores Vehículos: Rectificaciones: Neumáticos: Gomerías, vulcanización y recapado" }
+    - id: farmacia
+      codigo: "G523102"
+      nombre_ordenanza: "Farmacia c/art. de perfumería"
+    - id: oficina
+      codigo: "K749901"
+      nombre_ordenanza: "Administrativas Y/o recepción general"
+      variantes:
+        - { codigo: "N851202", nombre_ordenanza: "Consultorio médico cualquier especialidad" }
+  pasos:
+    - nivel: nacion
+      organismo: ARCA
+      titulo: CUIT y alta en el monotributo
+      detalle: En línea y gratis, con DNI y clave fiscal. El alta toma unos 15 minutos.
+      url: https://www.argentina.gob.ar/servicio/inscribirme-como-monotributista
+      cuando: siempre
+    - nivel: provincia
+      organismo: ATM
+      titulo: Ingresos Brutos
+      detalle: Automática si sos monotributista (hasta 72 horas hábiles). Si no, alta en Mis Trámites Online de la ATM.
+      url: https://atm.mendoza.gov.ar/preguntas-frecuentes/impuesto-sobre-los-ingresos-brutos-2/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Las Heras
+      titulo: Factibilidad del local
+      detalle: Consulta previa de viabilidad. Se pide con el DNI, una memoria descriptiva de la actividad y un croquis a mano alzada. Se hace en la oficina de San Miguel y Rivadavia (lunes a viernes de 8 a 14) o por el expediente electrónico.
+      url: https://lasheras.gob.ar/tramites-a-distacia/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Las Heras
+      titulo: Habilitación comercial
+      detalle: Con el DNI, la constancia de inscripción en ARCA, la prueba de que sos dueño del local o el contrato de alquiler sellado por la ATM, un garante propietario y un cuaderno de inspección de tapa dura.
+      url: https://lasheras.gob.ar/tramites-a-distacia/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Las Heras
+      titulo: Curso de manipulación de alimentos
+      detalle: La tarifaria fija un arancel de 50 UT por persona. No se publica dónde se hace ni si es obligatorio para el comercio.
+      url: https://lasheras.gob.ar/wp-content/uploads/2026/03/ordenanza_tarifaria_-_2026-2.pdf
+      cuando: alimentos
+  costos:
+    - concepto: Derecho de comercio
+      detalle: Lo cobra el municipio por año según el rubro y la superficie (hasta 60 m², de 60 a 200 o más de 200), en unidades tributarias (UT). La UT vale $170 desde septiembre de 2026 y se ajusta cada dos o tres meses. Un almacén de hasta 60 m² paga 420 UT por año ($71.400). Si sos monotributista pagás un monto fijo por mes (el 70 % del importe de Ingresos Brutos de tu categoría), y en categoría A no pagás el año en que te das de alta (art. 128).
+      norma: Ordenanza tarifaria 54/25 (2026), arts. 27 y 128
+      url: https://lasheras.gob.ar/wp-content/uploads/2026/03/ordenanza_tarifaria_-_2026-2.pdf
+    - concepto: Habilitación
+      detalle: Se paga una vez, según la superficie. Hasta 60 m² son 200 UT ($34.000 con la UT a $170); de 60 a 200 m², 500 UT; más de 200 m², 1.000 UT. Más 15 UT por foliar el cuaderno de inspección.
+      norma: Ordenanza tarifaria 54/25 (2026), arts. 21 y 22
+      url: https://lasheras.gob.ar/wp-content/uploads/2026/03/ordenanza_tarifaria_-_2026-2.pdf
+    - concepto: Valor de la UT
+      detalle: $170 desde septiembre de 2026.
+      url: https://lasheras.gob.ar/rentas/
+  tasa_comercio:
+    periodo: año
+    unidad: UT
+    valor_unidad: 170
+    norma_unidad: UT de $ 170 desde septiembre de 2026, según el portal de Rentas
+    norma: Ordenanza tarifaria 54/25 (2026), art. 27
+    url: https://boe.mendoza.gov.ar/publico/pdf_pedido/6cfef2fd7adb8932d8462ccc87766a112172689043
+    nota: Las categorías A, B y C van por superficie del local (más de 200 m², de 60 a 200 m² y hasta 60 m², art. 21).
+  no_publica:
+    - que: Cuánto tarda la habilitación
+      organismo: Municipalidad de Las Heras
+      detalle: Ni la página de trámites ni la tarifaria dan un plazo.
+    - que: Los requisitos y el costo de la ficha ambiental
+      organismo: Municipalidad de Las Heras
+    - que: Los requisitos de seguridad contra incendios de un comercio chico
+      organismo: Municipalidad de Las Heras
+      detalle: Solo se publica el arancel del estudio de planos y una multa por falta de tarjeta en el matafuego.
+    - que: Los requisitos y el costo del permiso para poner un cartel
+      organismo: Municipalidad de Las Heras
+      detalle: Se publica el arancel por metro cuadrado, no el trámite.
+    - que: Dónde se tramita la libreta sanitaria y si el carnet de manipulación es obligatorio
+      organismo: Municipalidad de Las Heras
+    - que: Cuántas cuotas tiene el derecho de comercio y cuándo vencen
+      organismo: Municipalidad de Las Heras
+  promocion:
+    norma: Ordenanza tarifaria 54/25, arts. 128 a 132
+    detalle: No hay un régimen para comercios chicos nuevos. Los monotributistas de categoría A que se dan de alta en el año no pagan el derecho de comercio ese año. El régimen de promoción es para negocios que amplían 200 m² o más y toman personal (descuento de 25 % a 100 % por dos años).
+    url: https://lasheras.gob.ar/wp-content/uploads/2026/03/ordenanza_tarifaria_-_2026-2.pdf
+
+- id: abrir-un-comercio
+  titulo: Abrir un comercio
+  municipio: Guaymallén
+  verificado: 2026-10-27
+  rubros:
+    - id: almacen
+      nombre: Almacén
+      codigo: "472120"
+      nombre_ordenanza: "Despensa - Almacén - Mercadito"
+      alimentos: true
+      variantes:
+        - { codigo: "471130", nombre_ordenanza: "Autoservicio" }
+    - id: kiosco
+      nombre: Kiosco
+      codigo: "471191"
+      nombre_ordenanza: "Quiosco - Maxi Quiosco - Minimarket - Drugstore"
+      alimentos: true
+      variantes:
+        - { codigo: "476121", nombre_ordenanza: "Quiosco de venta de diarios y revistas - Ordenanza 2560-88" }
+    - id: ropa
+      nombre: Ropa
+      codigo: "477190"
+      nombre_ordenanza: "Indumentaria de vestir y accesorios - boutique"
+      alimentos: false
+      variantes:
+        - { codigo: "477140", nombre_ordenanza: "Indumentaria y artículos deportivos" }
+        - { codigo: "477130", nombre_ordenanza: "Indumentaria para bebés, niños y artículos afines" }
+    - id: rotiseria
+      nombre: Comida para llevar
+      codigo: "561020"
+      nombre_ordenanza: "Rotisería, elaboración y venta"
+      alimentos: true
+      variantes:
+        - { codigo: "561013", nombre_ordenanza: "Pizzería, sandwichería, comidas rápidas" }
+    - id: carniceria
+      nombre: Carnicería
+      codigo: "472130"
+      nombre_ordenanza: "Carnicería y derivados"
+      alimentos: true
+      variantes:
+        - { codigo: "472140", nombre_ordenanza: "Pollería y derivados" }
+    - id: verduleria
+      codigo: "472160"
+      nombre_ordenanza: "Verdulería y Frutería"
+    - id: panaderia
+      codigo: "472171"
+      nombre_ordenanza: "Panadería y derivados (con o sin elaboración)"
+      variantes:
+        - { codigo: "472172", nombre_ordenanza: "Confitería" }
+    - id: fiambreria
+      codigo: "472112"
+      nombre_ordenanza: "Fiambrería - Productos lácteos"
+    - id: dietetica
+      codigo: "477311"
+      nombre_ordenanza: "Herboristería y diétetica"
+      variantes:
+        - { codigo: "477311", nombre_ordenanza: "Suplementos deportivos y dietarios" }
+        - { codigo: "477311", nombre_ordenanza: "Productos orgánicos" }
+    - id: heladeria
+      codigo: "561030"
+      nombre_ordenanza: "Heladería"
+    - id: bar
+      codigo: "561019"
+      nombre_ordenanza: "Confitería, salón de té, cafetería"
+      variantes:
+        - { codigo: "561014", nombre_ordenanza: "Bar/Pub" }
+        - { codigo: "561019", nombre_ordenanza: "Patio cervecero - Cervecería" }
+    - id: restaurante
+      codigo: "561011"
+      nombre_ordenanza: "Restaurante y/o parrilla"
+      variantes:
+        - { codigo: "561013", nombre_ordenanza: "Pizzería, sandwichería, comidas rápidas" }
+    - id: pastas
+      codigo: "107410"
+      nombre_ordenanza: "Pastas frescas - tapas de empanadas"
+      variantes:
+        - { codigo: "472190", nombre_ordenanza: "Pastas frescas, secas y afines" }
+    - id: peluqueria
+      codigo: "960201"
+      nombre_ordenanza: "Peluquería - barbería (con y sin consumo de bebidas)"
+    - id: ferreteria
+      codigo: "475230"
+      nombre_ordenanza: "Ferretería"
+      variantes:
+        - { codigo: "475240", nombre_ordenanza: "Pinturería. Revestimientos para pisos y paredes" }
+    - id: libreria
+      codigo: "476130"
+      nombre_ordenanza: "Librería, papelería y fotocopiadora. Venta de libros nuevos y usados"
+    - id: zapateria
+      codigo: "477220"
+      nombre_ordenanza: "Zapatería, Zapatillería"
+    - id: bazar
+      codigo: "475440"
+      nombre_ordenanza: "Bazar"
+      variantes:
+        - { codigo: "475110", nombre_ordenanza: "Regalería" }
+        - { codigo: "476400", nombre_ordenanza: "Cotillón - Productos para confitería y repostería" }
+    - id: jugueteria
+      codigo: "476400"
+      nombre_ordenanza: "Juguetería"
+    - id: perfumeria
+      codigo: "477320"
+      nombre_ordenanza: "Perfumería"
+      variantes:
+        - { codigo: "477450", nombre_ordenanza: "Artículos de limpieza fraccionados y envasados" }
+    - id: celulares
+      codigo: "474020"
+      nombre_ordenanza: "Telefonía celular, venta, reparación de equipos, accesorios"
+      variantes:
+        - { codigo: "474010", nombre_ordenanza: "Computadoras, impresoras, accesorios, repuestos" }
+    - id: optica
+      codigo: "477410"
+      nombre_ordenanza: "Óptica"
+    - id: floreria
+      codigo: "477440"
+      nombre_ordenanza: "Florería, plantas naturales y artificiales"
+    - id: muebleria
+      codigo: "475410"
+      nombre_ordenanza: "Mueblería"
+    - id: veterinaria
+      codigo: "750000"
+      nombre_ordenanza: "Veterinaria y enfermería para animales (con o sin internación u obra social) y/o servicio de estética) Servicios de inseminación artificial para reproducción de animales"
+      variantes:
+        - { codigo: "477470", nombre_ordenanza: "Alimentos y accesorios para mascotas" }
+    - id: lavanderia
+      codigo: "960102"
+      nombre_ordenanza: "Lavandería (sin calderas)"
+      variantes:
+        - { codigo: "960101", nombre_ordenanza: "Tintorería" }
+    - id: gimnasio
+      codigo: "854950"
+      nombre_ordenanza: "Gimnasio"
+    - id: taller
+      codigo: "452990"
+      nombre_ordenanza: "Mecánica de automotores"
+      variantes:
+        - { codigo: "452210", nombre_ordenanza: "Gomería con o sin venta. Excluye recapado" }
+        - { codigo: "453291", nombre_ordenanza: "Lubricantes (envasados) y repuestos para automotores (con o sin cambio de aceite)" }
+        - { codigo: "452800", nombre_ordenanza: "Frenos, alineación, tren delantero, amortiguadores y elásticos" }
+    - id: farmacia
+      codigo: "477312"
+      nombre_ordenanza: "Farmacia"
+    - id: oficina
+      codigo: "749009"
+      nombre_ordenanza: "Oficina privada y de servicios profesionales - Coworking, incluye venta on line. Consultoras y producción de eventos"
+      variantes:
+        - { codigo: "862110", nombre_ordenanza: "Consultorios privados (con administración)" }
+  pasos:
+    - nivel: municipio
+      organismo: Municipalidad de Guaymallén
+      titulo: Uso de suelo del local (factibilidad)
+      detalle: Se inicia un expediente en la Mesa Única de Habilitación de Comercio (Libertad 720, Villa Nueva), con la memoria descriptiva. El certificado vale 180 días. Es obligatorio antes de la habilitación. Hay un informe de viabilidad previo y opcional.
+      url: https://www.guaymallen.gob.ar/tramite-expres-comercio/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Guaymallén
+      titulo: Habilitación de comercio (exprés para Tipo 1)
+      detalle: Presencial en la Mesa Única, de lunes a viernes de 8 a 14. Si llevás todo, salís el mismo día con la habilitación provisoria y el libro de inspección. Después hay una inspección. Se pide vínculo con el local, declaración jurada del estado del local, domicilio fiscal electrónico, memoria descriptiva y libre deuda.
+      url: https://www.guaymallen.gob.ar/tramite-expres-comercio/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Guaymallén
+      titulo: Evaluación ambiental
+      detalle: Solo si la autoridad categoriza la actividad. Se completa el formulario de categorización con la memoria descriptiva y se paga 120 UTM. Si hace falta un estudio, se paga 1 por mil de la inversión.
+      url: https://www.guaymallen.gob.ar/evaluaciones-ambientales/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Guaymallén
+      titulo: Plan contra incendios
+      detalle: En comercios chicos no hay requisito escrito. El municipio puede pedir un plan de contingencias o un sistema contra incendios con fundamento, antes de la habilitación definitiva.
+      url: https://boe.mendoza.gov.ar/publico/verpdf/82205393ee59ab28e12570417587310c469454b681/anexo
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Guaymallén
+      titulo: Carnet de manipulador y libreta sanitaria
+      detalle: Todo el personal que trabaje con alimentos. El carnet es un curso de 6 horas con examen (180 UTM); la libreta se saca en persona los martes y jueves de 7 a 8.
+      url: https://www.guaymallen.gob.ar/manipulacion-de-alimentos/
+      cuando: alimentos
+    - nivel: municipio
+      organismo: Municipalidad de Guaymallén
+      titulo: Cartel del comercio
+      detalle: Hace falta permiso antes de instalarlo. Se paga por metro cuadrado al año y, si el frente anuncia el local, un 15 % más sobre la tasa de comercio.
+      url: https://www.guaymallen.gob.ar/aforo-cero/
+      cuando: siempre
+  costos:
+    - concepto: Derecho de inspección y control de seguridad e higiene (tasa de comercio)
+      detalle: Se paga por bimestre según el rubro y la categoría (1ª a 4ª) que asigna la Dirección de Comercio. Se mide en UTM; la UTM vale $130 según la ordenanza (puede subir hasta 60 % desde abril de 2026, sin decreto publicado). Se cobra desde que pedís la apertura o desde que inspeccionan, lo que ocurra primero.
+      norma: Ordenanza tarifaria 10298 (2026), arts. 44 a 48 y Anexo B
+      url: https://www.guaymallen.gob.ar/guia-de-tramites/
+    - concepto: Habilitación y factibilidad
+      detalle: Según el programa Aforo cero del municipio no tienen costo, desde la factibilidad hasta la habilitación. La tarifaria 2026 no fija un monto para pedirlas.
+      url: https://www.guaymallen.gob.ar/aforo-cero/
+    - concepto: Libreta sanitaria y carnet de manipulador
+      detalle: Carnet 180 UTM y libreta 200 UTM según la tarifaria (la ficha de la libreta dice 180).
+      norma: Ordenanza tarifaria 10298 (2026), art. 78
+      url: https://www.guaymallen.gob.ar/libreta-sanitaria/
+  tasa_comercio:
+    periodo: bimestre
+    unidad: UTM
+    valor_unidad: 130
+    norma_unidad: Ordenanza 10298, art. 1; no encontramos un decreto que la haya subido en 2026
+    norma: Ordenanza tarifaria 10298 (2026), Anexo B
+    url: https://boe.mendoza.gov.ar/publico/pdf_pedido/6244472050f5ed156d88113a6e7319a6b87b2e5467
+    nota: La categoría (1.ª a 4.ª) la asigna el municipio.
+  no_publica:
+    - que: Cuánto tarda la factibilidad de uso
+      organismo: Municipalidad de Guaymallén
+      detalle: Solo se publica que el certificado vale 180 días.
+    - que: Si un comercio chico necesita evaluación ambiental o plan contra incendios
+      organismo: Municipalidad de Guaymallén
+      detalle: Lo decide el municipio caso por caso; no publica el criterio.
+    - que: Los requisitos, el costo y el plazo del permiso para poner un cartel
+      organismo: Municipalidad de Guaymallén
+    - que: Si la UTM subió después de abril de 2026
+      organismo: Municipalidad de Guaymallén
+  promocion:
+    norma: Programa Aforo cero y programa Guaymallén invierte con vos
+    detalle: Los comercios nuevos no pagan aforos de factibilidad ni de habilitación. Además, el programa Guaymallén invierte con vos devolvía el 40 % de la inversión en el local (mitad en efectivo, mitad en crédito fiscal), con tope de $10.000.000 según una página y de $4.000.000 según otra. No se confirmó si sigue abierto en 2026.
+    url: https://www.guaymallen.gob.ar/guaymallen-invierte-con-vos/
+
+- id: abrir-un-comercio
+  titulo: Abrir un comercio
+  municipio: Luján de Cuyo
+  verificado: 2026-10-27
+  rubros:
+    - id: almacen
+      nombre: Almacén (rubro «Despensas»)
+      codigo: "45"
+      alimentos: true
+    - id: kiosco
+      nombre: Kiosco
+      codigo: "109"
+      alimentos: true
+    - id: ropa
+      nombre: Ropa
+      codigo: "193"
+      alimentos: false
+    - id: rotiseria
+      nombre: Comida para llevar (rotisería)
+      codigo: "145"
+      alimentos: true
+    - id: carniceria
+      nombre: Carnicería
+      codigo: "28"
+      alimentos: true
+  pasos:
+    - nivel: nacion
+      organismo: ARCA
+      titulo: CUIT y alta en el monotributo
+      detalle: En línea y gratis, con DNI y clave fiscal. El alta toma unos 15 minutos.
+      url: https://www.argentina.gob.ar/servicio/inscribirme-como-monotributista
+      cuando: siempre
+    - nivel: provincia
+      organismo: ATM
+      titulo: Ingresos Brutos
+      detalle: Automática si sos monotributista (hasta 72 horas hábiles). Si no, alta en Mis Trámites Online de la ATM.
+      url: https://atm.mendoza.gov.ar/preguntas-frecuentes/impuesto-sobre-los-ingresos-brutos-2/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Luján de Cuyo
+      titulo: Factibilidad de uso de suelo
+      detalle: Si el rubro o la zona lo requieren, se pide en Ordenamiento Territorial, en persona (Boedo 505), con el formulario, el DNI y la dirección exacta. Sellado de 41 UT.
+      url: https://lujandecuyo.gob.ar/tramites-ordenamientoterritorial/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Luján de Cuyo
+      titulo: Habilitación de comercio
+      detalle: En línea con la Habilitación Comercial Digital Express (Mi Luján Digital) o en persona en Boedo 505, con turno. Pide libre deuda de la propiedad, contrato de alquiler sellado o autorización del dueño, matafuegos, luces de emergencia y disyuntor. Sin habilitación previa, los derechos de comercio suben un 30 %.
+      url: https://lujandecuyo.gob.ar/tramites-industriaycomercio/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Luján de Cuyo
+      titulo: Categorización ambiental
+      detalle: La Unidad de Evaluación Ambiental categoriza el proyecto (bajo, medio o alto impacto) con un formulario enviado por correo. La ficha oficial hoy no abre.
+      url: https://lujandecuyo.gob.ar/tramites-ordenamientoterritorial/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Luján de Cuyo
+      titulo: Libreta sanitaria y curso de manipulación de alimentos
+      detalle: La habilitación las pide si el comercio vende o elabora alimentos.
+      url: https://lujandecuyo.gob.ar/habilitacion-digital/
+      cuando: alimentos
+  costos:
+    - concepto: Derecho de comercio
+      detalle: Derecho anual en unidades tributarias (UT) según el rubro, la superficie cubierta y el área del departamento, en 6 cuotas bimestrales. La UT vale $235 en 2026. El rubro anexo paga el 20 %, 50 % o 100 % según la superficie (art. 38).
+      norma: Ordenanza tarifaria 15095 (2026), arts. 37, 38 y 54 y planilla del Capítulo V
+      url: https://boe.mendoza.gov.ar/ (norma 300050, Boletín Oficial 32499 del 19/12/2025)
+    - concepto: Habilitación (sellado y aforo)
+      detalle: Sellado de 11 UT ($2.585) según la ficha. El aforo por superficie (art. 32) es de 1,5 UT por m² cubierto, y está exceptuado el comercio de cercanía de menos de 100 m². La ficha dice $30 por m².
+      norma: Ordenanza tarifaria 15095 (2026), art. 32
+      url: https://lujandecuyo.gob.ar/tramites-industriaycomercio/
+    - concepto: Curso de manipulación de alimentos
+      detalle: 60 UT ($14.100) según la tarifaria 2026; la ficha dice 30 UT.
+      norma: Ordenanza tarifaria 15095 (2026), Cap. XI
+      url: https://lujandecuyo.gob.ar/tramites-industriaycomercio/
+  tasa_comercio:
+    periodo: año
+    ejercicio: 2026
+    unidad: UT
+    valor_unidad: 235
+    norma_unidad: Ordenanza 15095, art. 54
+    norma: Ordenanza tarifaria 15095 (2026), planilla del Capítulo V
+    url: https://boe.mendoza.gov.ar/publico/pdf_pedido/80753c9d78a1abdf791fdb3e933cec71a25fb03e86
+    nota: Montos del área 1; el valor cambia con los metros cuadrados cubiertos y se paga en 6 cuotas bimestrales.
+    manual:
+      - rubro: almacen
+        min: 500
+        max: 2000
+      - rubro: kiosco
+        min: 500
+        max: 2500
+      - rubro: ropa
+        min: 1000
+        max: 6000
+      - rubro: rotiseria
+        min: 1000
+        max: 2500
+      - rubro: carniceria
+        min: 2000
+        max: 6000
+  no_publica:
+    - que: Cuánto tarda la habilitación
+      organismo: Municipalidad de Luján de Cuyo
+      detalle: Ninguna ficha publica un plazo.
+    - que: Dónde se saca la libreta sanitaria y cuánto cuesta
+      organismo: Municipalidad de Luján de Cuyo
+      detalle: La habilitación la pide, pero la guía no dice dónde se tramita ni su costo.
+    - que: Seguridad contra incendios
+      organismo: Municipalidad de Luján de Cuyo
+      detalle: No hay ficha ni trámite en Bomberos publicado para un comercio común; solo se piden matafuegos y luces de emergencia.
+    - que: Permiso de cartel
+      organismo: Municipalidad de Luján de Cuyo
+      detalle: La tarifaria cobra un derecho por letreros y exige autorización previa, pero la guía solo tiene un canal para denunciar carteles.
+    - que: Qué comercios pagan la categorización ambiental
+      organismo: Municipalidad de Luján de Cuyo
+      detalle: La tarifaria fija 1000 UT para el bajo impacto, y no dice qué rubros alcanza.
+  promocion:
+    norma: Ordenanza tarifaria 15095 (2026), arts. 39, 53 bis y 61
+    detalle: A pedido, hay seis meses de gracia para comercios de cercanía de hasta 50 m² de un programa municipal, 50 % durante 12 meses para jóvenes de 18 a 29 años en el monotributo A, B o C, y 50 % en zonas turísticas en desarrollo (El Carrizal, Las Compuertas, Cacheuta y Potrerillos).
+    url: https://boe.mendoza.gov.ar/publico/pdf_pedido/80753c9d78a1abdf791fdb3e933cec71a25fb03e86
+
+- id: abrir-un-comercio
+  titulo: Abrir un comercio
+  municipio: Maipú
+  verificado: 2026-10-27
+  rubros:
+    - id: almacen
+      nombre: Almacén
+      codigo: "7.3.2.1"
+      alimentos: true
+    - id: kiosco
+      nombre: Kiosco
+      codigo: "7.3.2.21"
+      alimentos: true
+    - id: ropa
+      nombre: Ropa
+      codigo: "7.3.2.37"
+      alimentos: false
+    - id: rotiseria
+      nombre: Comida para llevar
+      codigo: "7.4.2.12"
+      alimentos: true
+    - id: carniceria
+      nombre: Carnicería
+      codigo: "7.3.2.11"
+      alimentos: true
+    - id: peluqueria
+      nombre: Peluquería
+      codigo: "7.4.18.8"
+      nombre_ordenanza: "Peluquería Unisex."
+      alimentos: false
+  pasos:
+    - nivel: nacion
+      organismo: ARCA
+      titulo: CUIT y alta en el monotributo
+      detalle: En línea y gratis, con DNI y clave fiscal. El alta toma unos 15 minutos.
+      url: https://www.argentina.gob.ar/servicio/inscribirme-como-monotributista
+      cuando: siempre
+    - nivel: provincia
+      organismo: ATM
+      titulo: Ingresos Brutos
+      detalle: Automática si sos monotributista (hasta 72 horas hábiles). Si no, alta en Mis Trámites Online de la ATM.
+      url: https://atm.mendoza.gov.ar/preguntas-frecuentes/impuesto-sobre-los-ingresos-brutos-2/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Maipú
+      titulo: Factibilidad de uso del suelo
+      detalle: Con el padrón, plano, mensura y memoria de la actividad. La piden los comercios que elaboran alimentos, los de más de 50 m2 y los que tienen depósito; en los demás, el trámite empieza directo en la habilitación. Incluye la evaluación ambiental y la de higiene y seguridad.
+      url: https://www.maipu.gob.ar/plan-territorial/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Maipú
+      titulo: Habilitación e inscripción de comercio
+      detalle: Se inicia en la Dirección de Rentas (con turno) o con el formulario de la guía de trámites. Piden DNI o CUIT, contrato de locación o autorización del dueño, cuaderno de habilitación y el certificado de factibilidad si corresponde. Después hay una inspección (matafuego, luz de emergencia, higiene). No hay habilitación provisoria.
+      url: https://www.maipu.gob.ar/guia-de-tramites/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Maipú
+      titulo: Carnet de manipulación de alimentos
+      detalle: Curso presencial de un día, con turno en línea. Cuesta $15.000 y vale 3 años. Es obligatorio para quien manipula alimentos.
+      url: https://www.maipu.gob.ar/maipu-mas-de-2-000-vecinos-obtuvieron-su-certificacion-en-manipulacion-de-alimentos/
+      cuando: alimentos
+    - nivel: municipio
+      organismo: Municipalidad de Maipú
+      titulo: Permiso de cartel en la vía pública
+      detalle: Solo si vas a poner un cartel. Hay que presentar croquis de ubicación y cálculo estructural con un profesional.
+      url: https://www.maipu.gob.ar/wp-content/uploads/2023/09/FO-DPT-34-Requisitos-para-Carteleria-en-Vias-Publica-combinado.pdf
+      cuando: siempre
+  costos:
+    - concepto: Derechos de inspección y control de seguridad e higiene
+      detalle: Importe fijo por bimestre según el rubro y la categoría (1ª, 2ª o 3ª) que asigna el municipio. Se suma un 10 % para Bomberos Voluntarios y $250 de gasto administrativo por boleta. Pagando todo el año hay un 15 % de descuento.
+      norma: Ordenanza tarifaria 7831 (2026), Anexo, art. 7
+      url: https://boe.mendoza.gov.ar/default/public/publico/verpdf/d5a21295d434830ab5b54708252039fa3378485c38/anexo
+    - concepto: Habilitación
+      detalle: Desde 2026 no se cobra el cuaderno de inspección, y la tarifaria exime el derecho de actuación de la habilitación a pequeños contribuyentes y emprendedores en locales chicos y a los trámites hechos por web o correo. La solicitud de actuación cuesta $4.500 (art. 9).
+      norma: Ordenanza 7831 (2026), art. 6 y Anexo, art. 9
+      url: https://boe.mendoza.gov.ar/publico/pdf_pedido/d5a21295d434830ab5b54708252039fa3378485c84
+    - concepto: Curso de manipulación de alimentos
+      detalle: $15.000, incluye el certificado.
+      norma: Ordenanza 7831 (2026), Anexo, art. 16 inc. 4 ítem 7
+      url: https://boe.mendoza.gov.ar/default/public/publico/verpdf/d5a21295d434830ab5b54708252039fa3378485c38/anexo
+  tasa_comercio:
+    periodo: bimestre
+    ejercicio: 2026
+    unidad: pesos
+    norma: Ordenanza tarifaria 7831 (2026), art. 7 del Anexo
+    url: https://boe.mendoza.gov.ar/publico/pdf_pedido/d5a21295d434830ab5b54708252039fa3378485c24
+    nota: Se suma un 10 % para Bomberos y $ 250 por boleta. Montos del primer cuatrimestre de 2026; la categoría (1.ª a 3.ª) la asigna el municipio.
+    manual:
+      - rubro: almacen
+        min: 8996.52
+        max: 14937.63
+        pagina: 33
+      - rubro: kiosco
+        min: 6704.96
+        max: 10778.85
+        pagina: 35
+      - rubro: ropa
+        min: 10778.85
+        max: 17908.18
+        pagina: 36
+      - rubro: rotiseria
+        min: 12730.93
+        max: 21218.22
+        pagina: 42
+      - rubro: carniceria
+        min: 12730.93
+        max: 21218.22
+        pagina: 34
+      - rubro: peluqueria
+        min: 12730.93
+        max: 21218.22
+        pagina: 52
+  no_publica:
+    - que: Cuánto tarda la habilitación y cuánto cuesta hoy el trámite
+      organismo: Municipalidad de Maipú
+      detalle: La guía de trámites cita un sellado de 2021 y no da plazo; una nota de 2022 habla de 10 días hábiles después de la inspección.
+    - que: Qué categoría (1ª, 2ª o 3ª) le toca a cada comercio
+      organismo: Municipalidad de Maipú
+      detalle: La ordenanza da criterios generales; la asigna Rentas.
+    - que: El valor actualizado de los derechos de comercio después del primer cuatrimestre de 2026
+      organismo: Municipalidad de Maipú
+      detalle: El anexo de la tarifaria dice «1er cuatrimestre 2026» y no se encontró una actualización.
+    - que: Los requisitos y el costo del permiso para poner un cartel
+      organismo: Municipalidad de Maipú
+    - que: Ficha ambiental y verificación contra incendios
+      organismo: Municipalidad de Maipú
+      detalle: Se evalúan dentro de la factibilidad, «según cada proyecto»; no se publica costo ni plazo.
+  promocion:
+    norma: Programa de Regularización de Actividades Comerciales (nota municipal del 12/11/2025) y Ordenanza 7831, arts. 34 y 37
+    detalle: Los emprendedores de hasta 35 años, o los comercios que contraten menores de 35, pueden pedir la exención de los derechos de habilitación y un 50 % de descuento en tasas y derechos de comercio por un año. La tarifaria también permite eximir el 50 % del derecho de inspección por un año a emprendedores de la Incubadora de Empresas. No se encontró la norma del programa ni se confirmó su vigencia en 2026.
+    url: https://www.maipu.gob.ar/maipu-lanza-nuevos-beneficios-para-jovenes-emprendedores/
+
+- id: abrir-un-comercio
+  titulo: Abrir un comercio
+  municipio: Junín
+  verificado: 2026-10-27
+  rubros:
+    - id: almacen
+      nombre: Almacén
+      codigo: "3.008"
+      nombre_ordenanza: "Almacenes minoristas"
+      alimentos: true
+    - id: kiosco
+      nombre: Kiosco
+      codigo: "3.090"
+      nombre_ordenanza: "Kioscos (superficie menor o igual a 12 m2)"
+      alimentos: true
+    - id: ropa
+      nombre: Ropa
+      codigo: "3.031.007"
+      nombre_ordenanza: "Casas de: Modas"
+      alimentos: false
+    - id: rotiseria
+      nombre: Comida para llevar (rotisería)
+      codigo: "3.124"
+      nombre_ordenanza: "Rotiserías"
+      alimentos: true
+    - id: carniceria
+      nombre: Carnicería
+      codigo: "3.029.001"
+      nombre_ordenanza: "Carnicerías: ventas al por mayor o menor"
+      alimentos: true
+  pasos:
+    - nivel: nacion
+      organismo: ARCA
+      titulo: CUIT y alta en el monotributo
+      detalle: En línea y gratis, con DNI y clave fiscal. El alta toma unos 15 minutos.
+      url: https://www.argentina.gob.ar/servicio/inscribirme-como-monotributista
+      cuando: siempre
+    - nivel: provincia
+      organismo: ATM
+      titulo: Ingresos Brutos
+      detalle: Automática si sos monotributista (hasta 72 horas hábiles). Si no, alta en Mis Trámites Online de la ATM.
+      url: https://atm.mendoza.gov.ar/preguntas-frecuentes/impuesto-sobre-los-ingresos-brutos-2/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Junín
+      titulo: Solicitud de habilitación y sellado
+      detalle: Se inicia en la Mesa de Entradas (Román Cano e Hipólito Yrigoyen, de lunes a viernes de 7 a 13), para un comercio con lugar fijo o ambulante. Hay que pagar antes un sellado en Rentas. El sitio no publica la lista de documentos a presentar.
+      url: https://www.juninmendoza.gov.ar/mesa-de-entradas/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Junín
+      titulo: Inspección y habilitación de industria y comercio
+      detalle: Con el expediente iniciado y el sellado pagado, Industria y Comercio sigue el trámite. Bromatología, Planificación Urbana y Obras Privadas verifican la infraestructura, la seguridad y la higiene. Una vez otorgado el permiso se paga por única vez un derecho de habilitación, que depende de la actividad y de la categoría que indica el inspector.
+      url: https://www.juninmendoza.gov.ar/industria-y-comercio/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Junín
+      titulo: Curso de manipulación de alimentos
+      detalle: Es requisito para habilitar un comercio de alimentos. Se dicta en Bromatología (Salvador González 525, de lunes a viernes de 7 a 13) y cuesta $12.000 según la página de aranceles.
+      url: https://www.juninmendoza.gov.ar/aranceles/
+      cuando: alimentos
+  costos:
+    - concepto: Derecho de habilitación de comercio
+      detalle: Se paga por única vez, por categoría (la asigna el inspector). Comercio, categoría 1, $3.500; categoría 2, $3.150; categoría 3, $1.500. Industrias, categoría 1, $4.375; categoría 2, $3.500.
+      norma: Ordenanza tarifaria 1020/2025 (ejercicio 2026), Cap. 9, art. 1
+      url: https://boe.mendoza.gov.ar/default/public/publico/verpdf/b91c99ea6a74320bc251a97cfe878cf56dd8bdee88/anexo
+    - concepto: Curso de manipulación de alimentos
+      detalle: $12.000 según la página de aranceles del sitio municipal, sin fecha. Otra página de Bromatología dice «veinte pesos», una cifra vieja.
+      norma: Página de aranceles de la Dirección de Veterinaria, Bromatología e Inspección de Industria y Comercio
+      url: https://www.juninmendoza.gov.ar/aranceles/
+  tasa_comercio:
+    periodo: año
+    ejercicio: 2026
+    unidad: pesos
+    norma: Ordenanza tarifaria 1020/2025 (ejercicio 2026), Cap. 9, art. 3
+    url: https://boe.mendoza.gov.ar/default/public/publico/verpdf/b91c99ea6a74320bc251a97cfe878cf56dd8bdee88/anexo
+    nota: Derechos de inspección y control de seguridad e higiene, «anualmente». El anexo es una imagen y los montos se leyeron a mano; trae un valor para la zona 1 y otro para la zona 2, y no define qué calles son de cada zona. El kiosco es el de hasta 12 m2 (con diarios, anexos o café-bar paga más). Para la ropa se tomó «Casas de modas»; «Tiendas» paga más (zona 1, $256.284; zona 2, $197.120).
+    manual:
+      - rubro: almacen
+        min: 58600
+        max: 78800
+        pagina: 13
+      - rubro: kiosco
+        min: 51742
+        max: 60394
+        pagina: 27
+      - rubro: ropa
+        min: 103484
+        max: 124172
+        pagina: 15
+      - rubro: rotiseria
+        min: 215532
+        max: 287920
+        pagina: 31
+      - rubro: carniceria
+        min: 198000
+        max: 240000
+        pagina: 15
+  no_publica:
+    - que: La lista de documentos para habilitar un comercio
+      organismo: Municipalidad de Junín
+      detalle: La página «Trámites de habilitación» del sitio no abre y la de Mesa de Entradas solo habla de «documentación a presentar» sin detallarla.
+    - que: Cuánto tarda la habilitación y cuánto cuesta el sellado de inicio
+      organismo: Municipalidad de Junín
+      detalle: La página de sellados lista los trámites que lo requieren, pero no sus montos ni plazos.
+    - que: Qué calles son de la zona 1 y de la zona 2
+      organismo: Municipalidad de Junín
+      detalle: La tarifaria cobra distinto por zona y el anexo no las define.
+    - que: Qué categoría (1, 2 o 3) le toca a cada comercio
+      organismo: Municipalidad de Junín
+      detalle: La asigna el inspector; la ordenanza no da el criterio.
+    - que: Ficha ambiental, seguridad contra incendios y permiso de cartel
+      organismo: Municipalidad de Junín
+      detalle: No se encontró ficha ni requisito publicado para un comercio común.
+  promocion:
+    norma: Ordenanza tarifaria 1020/2025, considerandos
+    detalle: Los considerandos mencionan una propuesta de 30 % de descuento para quien está al día y paga la tasa en forma anual; el articulado publicado no la fija. No se encontró un régimen de promoción para comercios nuevos.
+    url: https://boe.mendoza.gov.ar/publico/pdf_pedido/b91c99ea6a74320bc251a97cfe878cf56dd8bdee34
+
+- id: abrir-un-comercio
+  titulo: Abrir un comercio
+  municipio: San Rafael
+  verificado: 2026-10-27
+  rubros:
+    - id: almacen
+      nombre: Almacén
+      codigo: "D"   # rubro de la Tarifaria 2026, art. 29: D hasta 60 m2; B si es mayor o tiene mesas
+      alimentos: true
+    - id: kiosco
+      nombre: Kiosco
+      codigo: "D"   # B si tiene anexo permanente de revistas, juguetes, librería o fotocopias
+      alimentos: true
+    - id: ropa
+      nombre: Ropa
+      codigo: "A"
+      alimentos: false
+    - id: rotiseria
+      nombre: Comida para llevar
+      codigo: "A"
+      alimentos: true
+    - id: carniceria
+      nombre: Carnicería
+      codigo: "B"   # no figura por nombre; se clasifica por analogía (sin confirmar)
+      alimentos: true
+  pasos:
+    - nivel: nacion
+      organismo: ARCA
+      titulo: CUIT y alta en el monotributo
+      detalle: En línea y gratis, con DNI y clave fiscal. El alta toma unos 15 minutos.
+      url: https://www.argentina.gob.ar/servicio/inscribirme-como-monotributista
+      cuando: siempre
+    - nivel: provincia
+      organismo: ATM
+      titulo: Ingresos Brutos
+      detalle: Automática si sos monotributista (hasta 72 horas hábiles). Si no, alta en Mis Trámites Online de la ATM.
+      url: https://atm.mendoza.gov.ar/preguntas-frecuentes/impuesto-sobre-los-ingresos-brutos-2/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de San Rafael
+      titulo: Uso de suelo del local
+      detalle: Se consulta en Ordenamiento Territorial. El cuadro de usos por zona (formulario 5741) dice si el rubro está permitido en la zona del local. La consulta no tiene ficha con requisitos ni plazo.
+      url: https://www.sanrafael.gov.ar/ordenamientoterritorial/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de San Rafael
+      titulo: Habilitación de comercio
+      detalle: Se inicia en la Dirección de Recaudación (Comandante Salas y Belgrano) con turno, con fotocopias por duplicado del DNI, el CUIT, el contrato de alquiler o la escritura sellados, el libre deuda de la propiedad y el final de obra. Mientras se tramita se paga el 100 % de la tasa.
+      url: https://www.sanrafael.gov.ar/archivos-muni/formularios/apertura-de-comercio.pdf
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de San Rafael
+      titulo: Seguridad contra incendios
+      detalle: Bomberos solo interviene si el local supera las 100 personas o los 300 m2 (o si el municipio lo pide). Para el resto alcanza con la habilitación municipal.
+      url: https://www.sanrafael.gov.ar/archivos-muni/tarifaria/tarifaria-2026.pdf
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de San Rafael
+      titulo: Curso y carnet de manipulación de alimentos
+      detalle: Cuesta $ 15.000 (gratis para jubilados, pensionados y personas con discapacidad). Dónde se hace y cuánto dura no se publica.
+      url: https://www.sanrafael.gov.ar/archivos-muni/tarifaria/tarifaria-2026.pdf
+      cuando: alimentos
+    - nivel: municipio
+      organismo: Municipalidad de San Rafael
+      titulo: Permiso de cartel
+      detalle: Se pide a la Dirección de Recaudación antes de colocarlo. Hay que cumplir la Ordenanza 13.918 y la Resolución 132; los carteles tipo bandera y monoposte están prohibidos.
+      url: https://www.sanrafael.gov.ar/archivos-muni/tarifaria/tarifaria-2026.pdf
+      cuando: siempre
+  costos:
+    - concepto: Tasa de comercio (inspección, seguridad, higiene)
+      detalle: Anual, se paga por bimestre. Es la suma de puntos por zona, rubro, personal y superficie por un valor que depende del rubro y la categoría que asigna Recaudación. No depende de lo que se factura. 15 % de descuento por pago anual.
+      norma: Ordenanza tarifaria 15539 (2026), art. 28, 29 y 31
+      url: https://www.sanrafael.gov.ar/archivos-muni/tarifaria/tarifaria-2026.pdf
+    - concepto: Inicio del trámite y apertura de comercio
+      detalle: $ 5.900 el formulario de inicio y $ 5.900 la apertura. No se pagan si el trámite se inicia por la página web.
+      norma: Ordenanza tarifaria 15539 (2026), art. 42
+      url: https://www.sanrafael.gov.ar/archivos-muni/tarifaria/tarifaria-2026.pdf
+    - concepto: Certificados de factibilidad y uso de suelo
+      detalle: Los certificados de factibilidad son sin cargo en la tarifaria general (art. 35). La tarifaria de Ordenamiento Territorial fija $ 10.000 por certificado emitido (art. 72).
+      norma: Ordenanza tarifaria 15539 (2026), art. 35; tarifaria de Ordenamiento Territorial 2026, art. 72
+      url: https://www.sanrafael.gov.ar/archivos-muni/ordenamiento-territorial/2026/tarifaria/tarifaria-odenamiento-2026.docx
+    - concepto: Cartelería
+      detalle: Cartel propio pintado o adosado, $ 3.200 por m2 por año; toldo o saliente, $ 4.420 por m2 por cara por año.
+      norma: Ordenanza tarifaria 15539 (2026), art. 141
+      url: https://www.sanrafael.gov.ar/archivos-muni/tarifaria/tarifaria-2026.pdf
+  tasa_comercio:
+    disponible: false
+    norma: Ordenanza tarifaria 15539 (2026), art. 28
+    url: https://www.sanrafael.gov.ar/archivos-muni/tarifaria/tarifaria-2026.pdf
+    nota: San Rafael calcula la tasa con puntos por zona, rubro, personal y superficie, y la fórmula publicada está incompleta, así que no se puede dar un monto. Se consulta en la Dirección de Recaudación.
+  no_publica:
+    - que: Cuánto tarda la habilitación
+      organismo: Municipalidad de San Rafael
+    - que: Los requisitos y el plazo de la consulta de uso de suelo
+      organismo: Municipalidad de San Rafael
+    - que: Cómo se asigna la categoría (1ra a 5ta) que fija la tasa de comercio
+      organismo: Municipalidad de San Rafael
+    - que: Los requisitos del permiso de cartel
+      organismo: Municipalidad de San Rafael
+    - que: Dónde se tramita la libreta sanitaria y cuánto cuesta
+      organismo: Municipalidad de San Rafael
+    - que: Si el trámite se puede hacer completo en línea (Ordenanza 15179)
+      organismo: Municipalidad de San Rafael
+  promocion:
+    norma: Ordenanza tarifaria 15539 (2026), art. 29
+    detalle: Solo hay exención para industrias nuevas (100 % el primer año y 50 % el segundo). Para un comercio minorista nuevo no encontré un régimen de promoción.
+    url: https://www.sanrafael.gov.ar/archivos-muni/tarifaria/tarifaria-2026.pdf
+
+- id: abrir-un-comercio
+  titulo: Abrir un comercio
+  municipio: San Martín
+  verificado: 2026-10-27
+  rubros:
+    - id: almacen
+      nombre: Almacén
+      codigo: "82.5.4.1"
+      nombre_ordenanza: "Local con venta de artículos varios sin carnes."
+      alimentos: true
+    - id: kiosco
+      nombre: Kiosco
+      codigo: "82.5.6"
+      nombre_ordenanza: "Kioscos (incluye golosinas, galletitas, bebidas, cerveza, cigarrillos, y sus afines)."
+      alimentos: true
+    - id: ropa
+      nombre: Ropa
+      codigo: "83.2.3"
+      nombre_ordenanza: "Venta de prendas de vestir y elementos personales en general sin calzado."
+      alimentos: false
+    - id: rotiseria
+      nombre: Comida para llevar
+      codigo: "82.6.1"
+      nombre_ordenanza: "Rotisería, pizzería y cocina en general (sólo para llevar)."
+      alimentos: true
+    - id: carniceria
+      nombre: Carnicería
+      codigo: "82.5.4.3"
+      nombre_ordenanza: "Venta de carnes rojas y/o blancas exclusivamente (pescado, pollo, mariscos)."
+      alimentos: true
+  pasos:
+    - nivel: nacion
+      organismo: ARCA
+      titulo: CUIT y alta en el monotributo
+      detalle: En línea y gratis, con DNI y clave fiscal. El alta toma unos 15 minutos.
+      url: https://www.argentina.gob.ar/servicio/inscribirme-como-monotributista
+      cuando: siempre
+    - nivel: provincia
+      organismo: ATM
+      titulo: Ingresos Brutos
+      detalle: Automática si sos monotributista (hasta 72 horas hábiles). Si no, alta en Mis Trámites Online de la ATM.
+      url: https://atm.mendoza.gov.ar/preguntas-frecuentes/impuesto-sobre-los-ingresos-brutos-2/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de General San Martín
+      titulo: Habilitación de comercio
+      detalle: El municipio no publica la guía del trámite. La tarifaria dice que se parte de un acta de preclasificación, que la habilitación queda registrada en un acta y que, para cualquier trámite, hay que tener regularizadas las deudas con el municipio (certificado libre de deuda o plan de pago vigente).
+      url: https://boe.mendoza.gov.ar/default/public/publico/verpdf/bd8bb8364c30e32a8d19dfdcc18d30f15f9bffa862/anexo
+      cuando: siempre
+  costos:
+    - concepto: Derechos de inspección y control de seguridad e higiene en comercios e industrias
+      detalle: Importe en Unidades Tributarias según el rubro y la categoría (1.ª, 2.ª o 3.ª) que asigna el municipio. Cambia según la zona del local (art. 115). Se paga en seis cuotas bimestrales o en un pago anual anticipado, con hasta 10 % de descuento.
+      norma: Ordenanza tarifaria 3189/2024, Título 15 y arts. 113 y 115; UT 2026 fijada por la Ordenanza 3229
+      url: https://boe.mendoza.gov.ar/default/public/publico/verpdf/bd8bb8364c30e32a8d19dfdcc18d30f15f9bffa862/anexo
+  tasa_comercio:
+    periodo: año
+    ejercicio: 2026
+    unidad: UT
+    valor_unidad: 83
+    norma_unidad: Ordenanza 3229, art. 4 (modifica el art. 112 de la 3189/2024)
+    norma: Ordenanza tarifaria 3189/2024, Título 15 (art. 82 y siguientes), modificada por la 3229
+    url: https://boe.mendoza.gov.ar/default/public/publico/verpdf/bd8bb8364c30e32a8d19dfdcc18d30f15f9bffa862/anexo
+    nota: El rango va de la categoría 3.ª a la 1.ª, en la zona 2. La ordenanza suma un 5 % en la zona 1 y resta un 5 % en las zonas 3, 4 y 5 (más un 5 % en ciertas calles céntricas). Para los comercios que todavía no fueron reclasificados, la UT es de $ 156,60. La ordenanza no dice si el importe del cuadro es por año o por bimestre; la tomamos como anual porque permite pagarla en seis cuotas o en un pago anual anticipado.
+    manual:
+      - rubro: almacen
+        min: 1000
+        max: 2333
+        pagina: 33
+      - rubro: kiosco
+        min: 1000
+        max: 2000
+        pagina: 34
+      - rubro: ropa
+        min: 1466
+        max: 2333
+        pagina: 36
+      - rubro: rotiseria
+        min: 1500
+        max: 2333
+        pagina: 34
+      - rubro: carniceria
+        min: 1800
+        max: 3500
+        pagina: 33
+  no_publica:
+    - que: Cómo se tramita la habilitación y cuánto tarda
+      organismo: Municipalidad de General San Martín
+      detalle: El sitio no tiene una guía de trámites ni una ficha de habilitación comercial; no hay requisitos, canal ni plazo publicados.
+    - que: Qué categoría (1.ª, 2.ª o 3.ª) le toca a cada comercio
+      organismo: Municipalidad de General San Martín
+      detalle: La ordenanza da criterios generales (superficie, calidad del local, personal, competencia) y faculta al Ejecutivo a reglamentarlos; no hay una tabla.
+    - que: Si el importe de los derechos de comercio es anual o bimestral
+      organismo: Municipalidad de General San Martín
+      detalle: El cuadro no lo dice; solo la bodega aclara «tasa fija anual».
+    - que: Cuál UT se aplica a un comercio nuevo ($ 83 o $ 156,60)
+      organismo: Municipalidad de General San Martín
+      detalle: La ordenanza distingue comercios «reclasificados por la nueva ordenanza» de los que no, y no explica quién es cuál.
+    - que: Dónde se hace el curso de manipulación de alimentos y cuánto cuesta
+      organismo: Municipalidad de General San Martín
+    - que: Cartel, ficha ambiental y Bomberos
+      organismo: Municipalidad de General San Martín
+      detalle: La tarifaria cobra derechos de publicidad, pero no hay trámite ni requisitos publicados para un comercio común.
+  promocion:
+    norma: Ordenanza tarifaria 3189/2024, art. 113.6, en la redacción de la Ordenanza 3229
+    detalle: Los comercios que inicien el trámite de habilitación durante 2026 quedan exentos de los derechos de inspección y control durante seis bimestres, contados desde el acta de preclasificación o desde la inscripción en ATM o ARCA. Además, el Ejecutivo puede reducir hasta 50 % a los emprendimientos de centros comerciales que agrupan actividades.
+    url: https://boe.mendoza.gov.ar/default/public/publico/verpdf/9b6b8be67945ee877a71746c01cb0888e3cc230066/anexo
+- id: abrir-un-comercio
+  titulo: Abrir un comercio
+  municipio: Tunuyán
+  verificado: 2026-10-27
+  rubros:
+    - id: almacen
+      nombre: Almacén (rubro «Almacén y/o despensa minorista»)
+      codigo: "20.1.b"
+      alimentos: true
+    - id: kiosco
+      nombre: Kiosco (en la propiedad privada)
+      codigo: "20.81.b"
+      alimentos: true
+    - id: ropa
+      nombre: Ropa (rubro «Roperías, venta de ropa varia»)
+      codigo: "20.125.a"
+      alimentos: false
+    - id: rotiseria
+      nombre: Comida para llevar (rubro «Rotiserías»)
+      codigo: "20.121.a"
+      alimentos: true
+    - id: carniceria
+      nombre: Carnicería (rubro «Puesto fijo»)
+      codigo: "20.33.a"
+      alimentos: true
+  pasos:
+    - nivel: nacion
+      organismo: ARCA
+      titulo: CUIT y alta en el monotributo
+      detalle: En línea y gratis, con DNI y clave fiscal. El alta toma unos 15 minutos.
+      url: https://www.argentina.gob.ar/servicio/inscribirme-como-monotributista
+      cuando: siempre
+    - nivel: provincia
+      organismo: ATM
+      titulo: Ingresos Brutos
+      detalle: Automática si sos monotributista (hasta 72 horas hábiles). Si no, alta en Mis Trámites Online de la ATM.
+      url: https://atm.mendoza.gov.ar/preguntas-frecuentes/impuesto-sobre-los-ingresos-brutos-2/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Tunuyán
+      titulo: Habilitación comercial
+      detalle: La Dirección de Desarrollo Económico orienta y acompaña los procesos de habilitación, inscripción y formalización. El sitio municipal no publica los requisitos, el formulario ni el lugar donde se presenta.
+      url: https://www.tunuyan.gov.ar/site/direccion-de-desarrollo-economico/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Tunuyán
+      titulo: Curso y carnet de manipulación de alimentos
+      detalle: La Dirección de Inspección General y Desarrollo Económico dictan el curso, que da el Carnet Nacional de Manipulación de Alimentos, con validez de tres años. El sitio no dice si la habilitación lo pide ni cuánto cuesta.
+      url: https://www.tunuyan.gov.ar/site/curso-de-manipulacion-de-alimentos-para-galpones-de-empaque/
+      cuando: alimentos
+  costos:
+    - concepto: Derecho de inspección de seguridad e higiene
+      detalle: Importe anual según el rubro (Capítulo III, art. 20), con tasa mínima de $ 1.000 por establecimiento. La ordenanza tiene dos categorías de comercio (Cat. N° 1 y Cat. N° 2) y una categoría única, y no dice en lo leído cuál le toca a cada comercio.
+      norma: Ordenanza tarifaria 3351 (2026), anexo del decreto 7, Capítulo III, art. 20
+      url: https://boe.mendoza.gov.ar/default/public/publico/verpdf/7d3813d85832eccc93b10b7ff77d0ab6010b71eb42/anexo
+  tasa_comercio:
+    periodo: año
+    ejercicio: 2026
+    unidad: pesos
+    norma: Ordenanza tarifaria 3351 (2026), anexo del decreto 7, Capítulo III, art. 20
+    url: https://boe.mendoza.gov.ar/default/public/publico/verpdf/7d3813d85832eccc93b10b7ff77d0ab6010b71eb42/anexo
+    nota: Anexo escaneado, leído a mano. El rango va de la Cat. N° 2 a la Cat. N° 1; la ordenanza no dice cuál le toca a cada comercio. Además se paga la tasa por servicios a la propiedad (Capítulo I). Para el kiosco se tomó el de la propiedad privada; el súper kiosco o drugstore paga de $ 3.000 a $ 5.500 y el minimarket de $ 6.000 a $ 8.000.
+    manual:
+      - rubro: almacen
+        min: 6000
+        max: 8000
+        pagina: 4
+      - rubro: kiosco
+        min: 2000
+        max: 2800
+        pagina: 16
+      - rubro: ropa
+        min: 1500
+        max: 2500
+        pagina: 18
+      - rubro: rotiseria
+        min: 4000
+        max: 6500
+        pagina: 18
+      - rubro: carniceria
+        min: 4000
+        max: 7500
+        pagina: 8
+  no_publica:
+    - que: Requisitos, formulario y costo de la habilitación comercial
+      organismo: Municipalidad de Tunuyán
+      detalle: El sitio solo dice que Desarrollo Económico acompaña el proceso. La Oficina Virtual es una aplicación que no se puede leer sin entrar.
+    - que: Cuánto tarda la habilitación
+      organismo: Municipalidad de Tunuyán
+      detalle: Ninguna página oficial publica un plazo.
+    - que: Qué categoría (N° 1 o N° 2) le toca a cada comercio
+      organismo: Municipalidad de Tunuyán
+      detalle: La ordenanza tiene dos columnas de montos y una única, y en lo leído no define cuál corresponde.
+    - que: Valor de la Unidad Tributaria Municipal (UTM)
+      organismo: Municipalidad de Tunuyán
+      detalle: La ordenanza usa la UTM para los vehículos gastronómicos (200 UTM por día y 500 por mes) y no se encontró el decreto que fija su valor.
+    - que: Seguridad contra incendios
+      organismo: Municipalidad de Tunuyán
+      detalle: No hay ficha ni trámite en Bomberos publicado en el sitio municipal para un comercio común.
+    - que: Permiso de cartel
+      organismo: Municipalidad de Tunuyán
+      detalle: El sitio no publica el trámite ni el costo; la ordenanza cobra un derecho por letreros luminosos.
+
+- id: abrir-un-comercio
+  titulo: Abrir un comercio
+  municipio: General Alvear
+  verificado: 2026-10-27
+  rubros:
+    - id: almacen
+      codigo: "8-1-3-0"
+      nombre_ordenanza: "Almacenes de ramos generales minoristas: o con características similares.-"
+      variantes:
+        - { codigo: "8-1-13-0", nombre_ordenanza: "Despensas" }
+        - { codigo: "8-1-26-2", nombre_ordenanza: "Supermercados - Autoservicios - Hipermercados-Centros Comerciales - b) Autoservicios" }
+    - id: kiosco
+      codigo: "8-17-3-0"
+      nombre_ordenanza: "Maxi-Kioscos, minimarkets, drusgtores, etc. Donde se vendan artículos varios - incluídos algunos comestibles"
+      variantes:
+        - { codigo: "8-17-8-0", nombre_ordenanza: "Superkioscos:(venta en pequeñas cantidades de dos o más de los sigtes.rubros - Bijoutería, regalería, juguetería, perfumería, diarios y revistas" }
+        - { codigo: "8-17-10-0", nombre_ordenanza: "Venta de periodicos, revistas, loterias, kioscos y escaparates" }
+    - id: ropa
+      codigo: "8-5-1-0"
+      nombre_ordenanza: "Casas de modas y boutiques"
+      variantes:
+        - { codigo: "8-5-5-0", nombre_ordenanza: "Tiendas y anexos" }
+        - { codigo: "8-5-14-0", nombre_ordenanza: "Venta de artículos para hombres" }
+    - id: rotiseria
+      codigo: "8-2-3-0"
+      nombre_ordenanza: "Rotiserías y pizzerías"
+      variantes:
+        - { codigo: "8-2-15-0", nombre_ordenanza: "Ventas de Viandas a Domicilio (comidas, ensaladas, etc.)" }
+    - id: panaderia
+      codigo: "8-1-15-0"
+      nombre_ordenanza: "Panaderías"
+      variantes:
+        - { codigo: "8-1-17-0", nombre_ordenanza: "Sucursales de panaderías y/o vta. de pan" }
+    - id: fiambreria
+      codigo: "8-1-29-0"
+      nombre_ordenanza: "Fiambrerías"
+    - id: dietetica
+      codigo: "8-10-6-0"
+      nombre_ordenanza: "Dieteticas"
+    - id: heladeria
+      codigo: "8-1-19-0"
+      nombre_ordenanza: "Puestos y casas especiales que vendan helados"
+    - id: bar
+      codigo: "8-1-10-0"
+      nombre_ordenanza: "Bares"
+      variantes:
+        - { codigo: "8-1-7-0", nombre_ordenanza: "Cafeterías" }
+        - { codigo: "8-1-5-0", nombre_ordenanza: "Confiterías de estar" }
+    - id: restaurante
+      codigo: "8-2-5-0"
+      nombre_ordenanza: "Restaurantes"
+      variantes:
+        - { codigo: "8-2-6-0", nombre_ordenanza: "Parrilla - comedor temporario" }
+    - id: pastas
+      codigo: "8-3-9-0"
+      nombre_ordenanza: "Fábricas de fideos y pastas alimenticias con instalación mecánica"
+    - id: peluqueria
+      codigo: "8-18-1-0"
+      nombre_ordenanza: "a) Peluquerías para damas y/o caballeros"
+    - id: ferreteria
+      codigo: "8-7-4-0"
+      nombre_ordenanza: "Ferreterías"
+    - id: libreria
+      codigo: "8-16-1-0"
+      nombre_ordenanza: "Librerías"
+      variantes:
+        - { codigo: "8-16-4-0", nombre_ordenanza: "Papelerías con depósito y venta" }
+    - id: zapateria
+      codigo: "8-5-15-0"
+      nombre_ordenanza: "Zapaterías y zapatillerías"
+    - id: bazar
+      codigo: "8-8-3-0"
+      nombre_ordenanza: "Bazares"
+    - id: jugueteria
+      codigo: "8-8-5-0"
+      nombre_ordenanza: "Jugueterías y anexos"
+      variantes:
+        - { codigo: "8-8-11-0", nombre_ordenanza: "Jugueterías" }
+    - id: perfumeria
+      codigo: "8-10-3-0"
+      nombre_ordenanza: "Perfumerías"
+      variantes:
+        - { codigo: "8-10-2-0", nombre_ordenanza: "Farmacias y perfumerías" }
+    - id: celulares
+      codigo: "8-16-6-0"
+      nombre_ordenanza: "Venta de máquinas de computación, e insumos, accesorios, respuestos y - Venta de Celulares, e insumos, accesorios y anexos a otros renglones"
+    - id: optica
+      codigo: "8-25-2-0"
+      nombre_ordenanza: "Opticas y venta de artículos fotográficos"
+    - id: floreria
+      codigo: "8-4-2-0"
+      nombre_ordenanza: "Florerías y venta de plantas"
+    - id: muebleria
+      codigo: "8-13-3-0"
+      nombre_ordenanza: "Mueblerías"
+    - id: veterinaria
+      codigo: "8-15-3-0"
+      nombre_ordenanza: "Venta de productos de veterinaria"
+    - id: lavanderia
+      codigo: "8-19-1-0"
+      nombre_ordenanza: "Tintorerías y lavaderos de ropa"
+    - id: gimnasio
+      codigo: "8-20-5-0"
+      nombre_ordenanza: "Gimnasio"
+    - id: taller
+      codigo: "8-6-14-0"
+      nombre_ordenanza: "Talleres mecánicos con reparaciones en general"
+      variantes:
+        - { codigo: "8-6-15-0", nombre_ordenanza: "Talleres de mecánica ligera" }
+    - id: farmacia
+      codigo: "8-10-2-0"
+      nombre_ordenanza: "Farmacias y perfumerías"
+    - id: oficina
+      codigo: "8-12-10-0"
+      nombre_ordenanza: "Oficinas Administrativas"
+      variantes:
+        - { codigo: "8-12-9-0", nombre_ordenanza: "Consultorios y Estudios de Profesionales" }
+
+  pasos:
+    - nivel: nacion
+      organismo: ARCA
+      titulo: CUIT y alta en el monotributo
+      detalle: En línea y gratis, con DNI y clave fiscal. El alta toma unos 15 minutos.
+      url: https://www.argentina.gob.ar/servicio/inscribirme-como-monotributista
+      cuando: siempre
+    - nivel: provincia
+      organismo: ATM
+      titulo: Ingresos Brutos
+      detalle: Automática si sos monotributista (hasta 72 horas hábiles). Si no, alta en Mis Trámites Online de la ATM.
+      url: https://atm.mendoza.gov.ar/preguntas-frecuentes/impuesto-sobre-los-ingresos-brutos-2/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de General Alvear
+      titulo: Consulta previa en Bromatología o Veterinaria
+      detalle: Antes de iniciar el expediente, Bromatología o Veterinaria te dicen qué pide cada establecimiento que manipula, vende o transporta alimentos. Es el texto de una ficha de Inspección con fechas de 2018, que sigue en el sitio.
+      url: http://alvearmendoza.gob.ar/tramites/inspeccion/inspeccion-general-habilitaciones-alimenticias.pdf
+      cuando: alimentos
+    - nivel: municipio
+      organismo: Municipalidad de General Alvear
+      titulo: Habilitación de comercio
+      detalle: Toda actividad comercial, industrial o de servicios tiene que estar habilitada antes por la Dirección de Inspección General. Con fotocopia del DNI, constancia de inscripción en ARCA y escritura, contrato de alquiler o comodato del local. Si sos sociedad, también el contrato social y el CUIT. Rentas pide además libre deuda, sellados y el anticipo del derecho de comercio (ficha de Rentas con nombre «2018»). Las oficinas técnicas pueden pedir requisitos propios de la actividad. Los rubros de alimentos inician el expediente en Rentas.
+      url: http://alvearmendoza.gob.ar/tramites/inspeccion/inspeccion-general-habilitaciones-en-general.pdf
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de General Alvear
+      titulo: Libreta sanitaria y curso de manipulación de alimentos
+      detalle: La libreta se pide en Rentas, se paga en caja y se tramita en Enfermería de lunes a viernes de 7 a 9 hs. El curso de manipulación de alimentos es de 2 horas y media, el primer miércoles de cada mes a las 9 hs en el Concejo Deliberante, y da certificado. Son datos de la ficha de Inspección, con fechas de 2018; la tarifaria 2026 cobra libreta, curso y carnet.
+      url: http://alvearmendoza.gob.ar/tramites/inspeccion/inspeccion-general-habilitaciones-alimenticias.pdf
+      cuando: alimentos
+  costos:
+    - concepto: Derecho de comercio
+      detalle: Se paga por año, en boletos bimestrales. Los montos están en UTM, y la ordenanza fija la UTM en $ 1 y la ajusta por IPC cada semestre. El boleto bimestral no puede ser menor a 10.305,54 UTM.
+      norma: Ordenanza tarifaria 2026 (2.º semestre), art. 5 (COD. 8)
+      url: https://alvearmendoza.gob.ar/wp-content/uploads/2026/08/IIIV-ORDENANZA-TARIFARIA-2026-2do.sem_.pdf
+    - concepto: Apertura de comercio (solicitud)
+      detalle: 6.130 UTM por apertura o ampliación de comercios e industrias, y lo mismo por la instalación de un kiosco. La ordenanza reglamentaria declara el trámite gratuito para quien accede a la exención de nuevos comercios.
+      norma: Ordenanza tarifaria 2026 (2.º semestre), art. 34, incisos 1 y 2
+      url: https://alvearmendoza.gob.ar/wp-content/uploads/2026/08/IIIV-ORDENANZA-TARIFARIA-2026-2do.sem_.pdf
+    - concepto: Certificado de uso de suelo
+      detalle: 5.200 UTM. La tarifaria lo cobra, pero el sitio no dice dónde se pide ni si es un paso de la habilitación.
+      norma: Ordenanza tarifaria 2026 (2.º semestre), art. 34, inciso 47
+      url: https://alvearmendoza.gob.ar/wp-content/uploads/2026/08/IIIV-ORDENANZA-TARIFARIA-2026-2do.sem_.pdf
+    - concepto: Libreta sanitaria
+      detalle: 8.200 UTM por libreta.
+      norma: Ordenanza tarifaria 2026 (2.º semestre), art. 35, inciso 2
+      url: https://alvearmendoza.gob.ar/wp-content/uploads/2026/08/IIIV-ORDENANZA-TARIFARIA-2026-2do.sem_.pdf
+    - concepto: Curso y carnet de manipulación de alimentos
+      detalle: Curso de 4.000 UTM y carnet de 10.000 UTM (2.500 UTM el curso para eventos y con tarifa social). La ficha de Inspección, con fechas de 2018, dice que el curso es gratuito.
+      norma: Ordenanza tarifaria 2026 (2.º semestre), art. 34, incisos 38 a 41
+      url: https://alvearmendoza.gob.ar/wp-content/uploads/2026/08/IIIV-ORDENANZA-TARIFARIA-2026-2do.sem_.pdf
+  tasa_comercio:
+    periodo: año
+    unidad: UTM
+    valor_unidad: 1
+    norma_unidad: UTM de $ 1 (art. 51 de la tarifaria 2026), ajustada por IPC cada semestre por resolución del Organismo Fiscal; no encontramos la resolución vigente
+    norma: Ordenanza tarifaria 2026 (2.º semestre), art. 5 (COD. 8)
+    url: https://alvearmendoza.gob.ar/wp-content/uploads/2026/08/IIIV-ORDENANZA-TARIFARIA-2026-2do.sem_.pdf
+    nota: La ordenanza lista las categorías de cada rubro (1 a 5, a veces más) sin decir qué significa cada una ni quién la asigna. Los montos son los del texto del segundo semestre de 2026.
+  no_publica:
+    - que: Qué categoría de la tasa de comercio te toca
+      organismo: Municipalidad de General Alvear
+      detalle: La tarifaria lista los montos por categoría y no publica el criterio.
+    - que: Cuánto tarda la habilitación
+      organismo: Municipalidad de General Alvear
+    - que: Si la habilitación se puede iniciar en línea y dónde se presenta el expediente
+      organismo: Municipalidad de General Alvear
+      detalle: La ficha de requisitos no dice la oficina ni la modalidad.
+    - que: Cómo se pide el certificado de uso de suelo y si hace falta antes de habilitar
+      organismo: Municipalidad de General Alvear
+    - que: El valor de la UTM vigente en el semestre
+      organismo: Municipalidad de General Alvear
+      detalle: La tarifaria dice que se ajusta por IPC por resolución y la resolución no está publicada.
+    - que: Los requisitos y el costo del permiso para poner un cartel
+      organismo: Municipalidad de General Alvear
+    - que: Cuánto tarda el alta en Ingresos Brutos por el régimen general
+      organismo: ATM
+  promocion:
+    norma: Ordenanza reglamentaria 2026 (2.º semestre), art. 319 (Ord. 4748)
+    detalle: Los comercios, industrias y empresas de servicios nuevos no pagan los derechos de comercio, el inmueble, la publicidad ni las tasas de habilitación durante 2 años, 3 si están en un distrito o paraje. Si contratan de 1 a 5 personas en relación de dependencia suman un año, y más de 5, dos años. Para acceder se inscriben en Rentas con el formulario de aportes patronales de ARCA, que se actualiza cada semestre. Un comercio es nuevo si no existió con otra titularidad en los 2 años anteriores a la ordenanza.
+    url: https://alvearmendoza.gob.ar/wp-content/uploads/2026/08/III-ORDENANZA-REGLAM.-2026-2do.sem_.pdf
+
+- id: abrir-un-comercio
+  titulo: Abrir un comercio
+  municipio: Rivadavia
+  verificado: 2026-10-27
+  rubros:
+    - id: almacen
+      nombre: Almacén
+      codigo: "12-042-01-00"
+      nombre_ordenanza: "DESPENSAS - En radio urbano"
+      alimentos: true
+      variantes:
+        - { codigo: "12-042-03-00", nombre_ordenanza: "DESPENSAS - En radio suburbano - distritos" }
+    - id: kiosco
+      nombre: Kiosco
+      codigo: "12-100-02-00"
+      nombre_ordenanza: "QUIOSCO - Locales particulares"
+      alimentos: true
+      variantes:
+        - { codigo: "12-100-01-00", nombre_ordenanza: "QUIOSCO - Locales Municipales" }
+        - { codigo: "12-100-04-00", nombre_ordenanza: "QUIOSCO - En Distritos" }
+        - { codigo: "12-100-05-00", nombre_ordenanza: "QUIOSCO - Con venta de bebidas alcohólicas" }
+    - id: ropa
+      nombre: Ropa
+      codigo: "12-106-01-00"
+      nombre_ordenanza: "ROPERÍAS Y BOUTIQUES - Mercaderías nuevas"
+      alimentos: false
+      variantes:
+        - { codigo: "12-106-02-00", nombre_ordenanza: "ROPERÍAS Y BOUTIQUES - Mercaderías usadas" }
+    - id: rotiseria
+      nombre: Comida para llevar
+      codigo: "12-107-01-00"
+      nombre_ordenanza: "ROTISERÍAS Y PIZZERÍAS - En locales establecidos"
+      alimentos: true
+      variantes:
+        - { codigo: "12-107-01-00", nombre_ordenanza: "ROTISERÍAS Y PIZZERÍAS - Con Delivery anexo (distribución a Domicilio)" }
+    - id: carniceria
+      codigo: "12-028-01-00"
+      nombre_ordenanza: "CARNICERÍAS - Venta exclusiva con o sin embutidos"
+    - id: verduleria
+      codigo: "12-117-05-00"
+      nombre_ordenanza: "VENTA DE - Por Menor"   # la ordenanza lo imprime bajo «Verduras y/o frutas por Mayor»
+    - id: panaderia
+      codigo: "12-094-02-00"
+      nombre_ordenanza: "PANADERÍAS - Con elaboración mecánica"
+      variantes:
+        - { codigo: "12-094-01-00", nombre_ordenanza: "PANADERÍAS - Con elaboración mecánica Única (horno rotativo)" }
+        - { codigo: "12-094-03-00", nombre_ordenanza: "PANADERÍAS - En Distritos" }
+    - id: fiambreria
+      codigo: "12-045-01-00"
+      nombre_ordenanza: "EMBUTIDOS, FIAMBRES, QUESOS Y SIMILARES - Depósito y/o ventas"
+    - id: heladeria
+      codigo: "12-070-01-00"
+      nombre_ordenanza: "HELADERÍAS - Venta exclusiva"
+    - id: bar
+      codigo: "12-018-01-00"
+      nombre_ordenanza: "BARES Y CAFÉS - En radio urbano"
+      variantes:
+        - { codigo: "12-018-02-00", nombre_ordenanza: "BARES Y CAFÉS - En radio sub-urbano" }
+    - id: restaurante
+      codigo: "12-104-01-00"
+      nombre_ordenanza: "RESTAURANTES Y PARRILLADAS (GASTRONÓMICOS) - En radio urbano"
+      variantes:
+        - { codigo: "12-104-02-00", nombre_ordenanza: "RESTAURANTES Y PARRILLADAS (GASTRONÓMICOS) - En radio suburbano y/o distritos" }
+        - { codigo: "12-107-01-00", nombre_ordenanza: "ROTISERÍAS Y PIZZERÍAS - En locales establecidos" }
+    - id: pastas
+      codigo: "12-061-04-00"
+      nombre_ordenanza: "FÁBRICAS DE - Pastas y similares"
+      variantes:
+        - { codigo: "12-117-02-00", nombre_ordenanza: "VENTA DE - Pastas frescas" }
+    - id: peluqueria
+      codigo: "12-095-01-00"
+      nombre_ordenanza: "PELUQUERÍAS - Para damas o caballeros"
+    - id: ferreteria
+      codigo: "12-063-01-00"
+      nombre_ordenanza: "FERRETERÍAS Y SANITARIOS - En locales establecidos"
+    - id: libreria
+      codigo: "12-081-01-00"
+      nombre_ordenanza: "LIBRERÍAS - Exclusivamente"
+    - id: zapateria
+      codigo: "12-118-01-00"
+      nombre_ordenanza: "ZAPATERÍAS Y/0 ZAPATILLERÍAS - Depósito y/o ventas"
+    - id: bazar
+      codigo: "12-019-01-00"
+      nombre_ordenanza: "BAZARES - Bazar y menaje (exclusivo)"
+    - id: jugueteria
+      codigo: "12-077-01-00"
+      nombre_ordenanza: "JUGUETERÍAS - Exclusivamente"
+    - id: perfumeria
+      codigo: "12-096-01-00"
+      nombre_ordenanza: "PERFUMERÍAS Y ARTÍCULOS DE BELLEZA - Exclusivamente"
+    - id: celulares
+      codigo: "12-029-26-00"
+      nombre_ordenanza: "TELEFONÍA CELULAR - Venta exclusiva"
+      variantes:
+        - { codigo: "12-029-26-03", nombre_ordenanza: "TELEFONÍA CELULAR - Venta de accesorios de telefonía" }
+    - id: optica
+      codigo: "12-029-14-00"
+      nombre_ordenanza: "ÓPTICAS - Única"
+    - id: floreria
+      codigo: "12-064-01-00"
+      nombre_ordenanza: "FLORERÍAS - Venta de flores y coronas, en casas establecidas y/o exposiciones"
+    - id: muebleria
+      codigo: "12-093-01-00"
+      nombre_ordenanza: "MUEBLERÍAS - Venta y/o Exposición"
+    - id: veterinaria
+      codigo: "12-119-02-00"
+      nombre_ordenanza: "CLÍNICAS VETERINARIAS - Veterinarias con sala de espera, consultorio, venta de zooterápicos por menor y sanitarios"
+      variantes:
+        - { codigo: "12-119-01-00", nombre_ordenanza: "CLÍNICAS VETERINARIAS - Venta al por menor de zooterápicos" }
+        - { codigo: "12-117-24-00", nombre_ordenanza: "VENTA DE - Mascotas (según Ordenanza N° 5.295 - 2025)" }
+    - id: lavanderia
+      codigo: "12-115-01-00"
+      nombre_ordenanza: "TINTORERÍAS Y/0 LAVADEROS DE ROPAS - Exclusivamente"
+      variantes:
+        - { codigo: "12-115-02-00", nombre_ordenanza: "TINTORERÍAS Y/0 LAVADEROS DE ROPAS - Lavaderos Automáticos" }
+    - id: gimnasio
+      codigo: "12-075-01-00"
+      nombre_ordenanza: "INSTITUTOS - De belleza, gimnasia, manicura y otros (sin asistencia, terapéutica y/o rehabilitación)"
+    - id: taller
+      codigo: "12-112-11-00"
+      nombre_ordenanza: "TALLERES - Mecánicos"
+    - id: farmacia
+      codigo: "12-062-01-00"
+      nombre_ordenanza: "FARMACIAS - Única"
+    - id: oficina
+      codigo: "12-029-31-01"
+      nombre_ordenanza: "OFICINAS ADMINISTRADORAS - De Comercios y Servicios"
+      variantes:
+        - { codigo: "12-108-02-00", nombre_ordenanza: "SALUD - Consultorio general o especializado" }
+  pasos:
+    - nivel: nacion
+      organismo: ARCA
+      titulo: CUIT y alta en el monotributo
+      detalle: En línea y gratis, con DNI y clave fiscal. El alta toma unos 15 minutos.
+      url: https://www.argentina.gob.ar/servicio/inscribirme-como-monotributista
+      cuando: siempre
+    - nivel: provincia
+      organismo: ATM
+      titulo: Ingresos Brutos
+      detalle: Automática si sos monotributista (hasta 72 horas hábiles). Si no, alta en Mis Trámites Online de la ATM.
+      url: https://atm.mendoza.gov.ar/preguntas-frecuentes/impuesto-sobre-los-ingresos-brutos-2/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Rivadavia
+      titulo: Zona permitida del local
+      detalle: Antes de alquilar, mirá en el mapa de zonificación (Código de Uso) si el rubro está permitido en esa dirección. El personal de Comercio e Industria lo verifica en el asesoramiento previo.
+      url: https://rivadaviamendoza.gob.ar/new/wp-content/uploads/2024/04/Codigo-de-Uso.pdf
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Rivadavia
+      titulo: Habilitación de comercio
+      detalle: En el Departamento de Comercio e Industria, de lunes a viernes de 7 a 13 (263-4444548, interno 262). Te asesoran y te dan el formulario; lo completás con la documentación y lo firma el personal del Departamento. Pagás el boleto en Rentas o en Rentas Online y presentás todo en Mesa de Entrada para iniciar el expediente. Se pide DNI, CUIT o CUIL, constancia de AFIP, facturas de servicios, libre deuda del inmueble y del solicitante, dos constancias del derecho sobre el local y el plano aprobado. La habilitación sale por resolución del Intendente; iniciar el trámite no es estar habilitado.
+      url: https://rivadaviamendoza.gob.ar/new/rentas/comercio-industria/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Rivadavia
+      titulo: Curso de manipulación de alimentos
+      detalle: Curso presencial de 7 horas con examen, en el Teatro Bianchi, según el calendario del año. El carnet vale 3 años en todo el país. Se paga en Rentas Online (Curso de Manipulación de Alimentos). Para la habilitación alcanza con el certificado o el boleto de pago de la inscripción.
+      url: https://rivadaviamendoza.gob.ar/new/ciudadania/bromatologia/
+      cuando: alimentos
+    - nivel: municipio
+      organismo: Municipalidad de Rivadavia
+      titulo: Condiciones del local que elabora alimentos
+      detalle: Bromatología pide pisos y paredes lavables, aberturas con protección antiinsectos, agua potable, desagüe, bacha, mesada impermeable, sanitarios con lavamanos y personal con curso y vestimenta adecuada. Se inspecciona en la habilitación.
+      url: https://rivadaviamendoza.gob.ar/new/rentas/comercio-industria/
+      cuando: alimentos
+  costos:
+    - concepto: Derecho de inspección de seguridad e higiene (tasa de comercio)
+      detalle: Se paga una vez al año, en UTM, según el rubro y la categoría (1.ª a 4.ª) que asigna el municipio. Con el pago de todo el año de contado hay 10 % de descuento. La UTM vale $119,60.
+      norma: Ordenanza tarifaria 5303 (2026), arts. 33 a 35 y Anexo III
+      url: https://boe.mendoza.gov.ar/publico/pdf_pedido/82695f47ae36dd2044331ba47daab62acc90af9d47
+    - concepto: Habilitación de un comercio nuevo
+      detalle: Se cobra al habilitarse según la categoría del comercio, 1.ª 82 UTM, 2.ª 66 UTM, 3.ª 42 UTM y 4.ª 32 UTM (art. 36). Con la UTM a $119,60 son $9.807,20, $7.893,60, $5.023,20 y $3.827,20.
+      norma: Ordenanza tarifaria 5303 (2026), art. 36
+      url: https://boe.mendoza.gov.ar/publico/pdf_pedido/82695f47ae36dd2044331ba47daab62acc90af9d47
+    - concepto: Sellado de inicio de expediente
+      detalle: La página de Comercio e Industria dice 26 UTM; la tarifaria 2026 fija 18 UTM para iniciar un expediente y 26 UTM por la habilitación, el traslado o la baja de un comercio (art. 140).
+      norma: Ordenanza tarifaria 5303 (2026), art. 140
+      url: https://rivadaviamendoza.gob.ar/new/rentas/comercio-industria/
+    - concepto: Curso de manipulación de alimentos
+      detalle: 100 UTM ($11.960), con dictado, evaluación y certificado.
+      norma: Ordenanza tarifaria 5303 (2026), art. 89
+      url: https://boe.mendoza.gov.ar/publico/pdf_pedido/82695f47ae36dd2044331ba47daab62acc90af9d47
+  tasa_comercio:
+    periodo: año
+    unidad: UTM
+    valor_unidad: 119.6
+    norma_unidad: Ordenanza tarifaria 5303, art. 2 ($119,60); no encontramos un decreto posterior
+    norma: Ordenanza tarifaria 5303 (2026), Anexo III
+    url: https://boe.mendoza.gov.ar/publico/pdf_pedido/82695f47ae36dd2044331ba47daab62acc90af9d47
+    nota: El Anexo III da un monto anual por actividad y categoría. La categoría la asigna el municipio según la superficie, la ubicación, la cantidad de empleados y la importancia del comercio frente a otros del ramo (art. 35); no publica cómo se ponderan. Los bares, heladerías y multirrubros en la zona peatonal pagan el doble (art. 41).
+  no_publica:
+    - que: Cuánto tarda la habilitación
+      organismo: Municipalidad de Rivadavia
+      detalle: La página solo dice que sale por resolución del Intendente.
+    - que: Qué categoría de la tasa de comercio te toca
+      organismo: Municipalidad de Rivadavia
+      detalle: Publica los criterios, no cómo se ponderan.
+    - que: Qué comercios necesitan certificado CEMEPASI y seguro contra terceros
+      organismo: Municipalidad de Rivadavia
+      detalle: La página dice que se pide «dependiendo el comercio».
+    - que: Los requisitos y el costo del permiso para poner un cartel
+      organismo: Municipalidad de Rivadavia
+      detalle: Se pide declarar los carteles en la habilitación, pero no hay una página con el trámite.
+    - que: Cuánto tarda el alta en Ingresos Brutos por el régimen general
+      organismo: ATM
+  promocion:
+    norma: Ordenanza tarifaria 5303 (2026), arts. 43 y 44
+    detalle: Los pequeños emprendedores no pagan la tasa de comercio el primer y el segundo año desde el inicio de la actividad (art. 44); la Coordinación de Recursos y Finanzas Públicas debe reglamentarlo y no encontramos esa reglamentación. Las industrias nuevas no pagan los dos primeros años y la mitad el tercero (art. 43).
+    url: https://boe.mendoza.gov.ar/publico/pdf_pedido/82695f47ae36dd2044331ba47daab62acc90af9d47
+
+- id: abrir-un-comercio
+  titulo: Abrir un comercio
+  municipio: Tupungato
+  verificado: 2026-10-27
+  rubros:
+    - id: almacen
+      nombre: Almacén
+      codigo: "3300"   # VENTA DE ARTICULOS ALIMENTICIOS; el anexo no nombra el almacén, se clasifica por analogía (sin confirmar)
+      nombre_ordenanza: "VENTA DE ARTICULOS ALIMENTICIOS"
+      alimentos: true
+    - id: kiosco
+      nombre: Kiosco
+      codigo: "3300"   # igual que el almacén; el anexo no nombra el kiosco (sin confirmar)
+      nombre_ordenanza: "VENTA DE ARTICULOS ALIMENTICIOS"
+      alimentos: true
+    - id: ropa
+      nombre: Ropa
+      codigo: "3400"
+      nombre_ordenanza: "VENTA DE ARTICULOS NO ALIMENTICIOS"
+      alimentos: false
+    - id: rotiseria
+      nombre: Comida para llevar
+      codigo: "1520"   # servicios gastronómicos sin consumo en el lugar de venta
+      nombre_ordenanza: "SERVICIOS GASTRONOMICOS SIN CONSUMO EN EL LUGAR DE VENTA"
+      alimentos: true
+    - id: carniceria
+      nombre: Carnicería
+      codigo: "3300"   # no figura por nombre; se clasifica por analogía (sin confirmar)
+      nombre_ordenanza: "VENTA DE ARTICULOS ALIMENTICIOS"
+      alimentos: true
+  pasos:
+    - nivel: nacion
+      organismo: ARCA
+      titulo: CUIT y alta en el monotributo
+      detalle: En línea y gratis, con DNI y clave fiscal. El alta toma unos 15 minutos.
+      url: https://www.argentina.gob.ar/servicio/inscribirme-como-monotributista
+      cuando: siempre
+    - nivel: provincia
+      organismo: ATM
+      titulo: Ingresos Brutos
+      detalle: Automática si sos monotributista (hasta 72 horas hábiles). Si no, alta en Mis Trámites Online de la ATM.
+      url: https://atm.mendoza.gov.ar/preguntas-frecuentes/impuesto-sobre-los-ingresos-brutos-2/
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Tupungato
+      titulo: Factibilidad de explotación
+      detalle: Es el primer paso y hace falta antes de pedir la habilitación. Se inicia en línea, en Trámites Online, con el formulario, la identificación de las personas, la documentación que acredite el vínculo con el local y la identificación del inmueble. Las áreas municipales evalúan y Comercio le entrega un resumen de lo que hay que cumplir para habilitar. El trámite no tiene costo publicado ni plazo.
+      url: https://tupungato.gov.ar/?page_id=3490
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Tupungato
+      titulo: Habilitación de explotación
+      detalle: En Trámites Online, con el informe de factibilidad, el formulario, la identificación de las personas y del inmueble, el vínculo con el local, lo que pidió la factibilidad y el certificado de situación fiscal ante el municipio. Comercio revisa y pasa el expediente a Rentas, Legales, Tesorería (donde se paga el boleto de apertura) y a la resolución de habilitación, que Comercio te notifica. Después hay que pedir la inspección final.
+      url: https://tupungato.gov.ar/?page_id=3490
+      cuando: siempre
+    - nivel: municipio
+      organismo: Municipalidad de Tupungato
+      titulo: Carnet de manipulación de alimentos
+      detalle: Curso presencial de Bromatología, de 8:30 a 12:30 y de 15 a 18, con una evaluación que hay que aprobar. Primero se saca el boleto en Rentas (Av. Belgrano 348) o en la web y se paga en Tesorería. Las fechas y el costo de este año no están publicados; el aviso más reciente que encontramos es de enero de 2024.
+      url: https://tupungato.gov.ar/?p=33907
+      cuando: alimentos
+  costos:
+    - concepto: Tasa de inspección y control de seguridad e higiene
+      detalle: Mensual. Se calcula con el índice del rubro, la raíz de los metros cuadrados del local (con un mínimo y, en algunos rubros, un máximo), un coeficiente de 1,25 y el valor de la UT ($ 40).
+      norma: Ordenanza tarifaria 11/2026, arts. 35 y 36 y Anexo I
+      url: https://tupungato.gov.ar/wp-content/uploads/2026/08/Tarifaria-2026-1.pdf
+    - concepto: Inicio de la habilitación
+      detalle: Se paga una vez, con la fórmula raíz de los metros cuadrados por el índice por 3 UT. Mientras no tengas la habilitación definitiva se cobra un 50 % más de tasa (art. 34, inc. 4).
+      norma: Ordenanza tarifaria 11/2026, art. 34
+      url: https://tupungato.gov.ar/wp-content/uploads/2026/08/Tarifaria-2026-1.pdf
+    - concepto: Inspección final
+      detalle: 600 UT ($ 24.000) para comercios de menos de 200 m2 y 1.500 UT ($ 60.000) para los de más. Si hay que repetirla por algo ajeno al municipio, se cobra otra vez.
+      norma: Ordenanza tarifaria 11/2026, art. 34, inc. 7
+      url: https://tupungato.gov.ar/wp-content/uploads/2026/08/Tarifaria-2026-1.pdf
+  tasa_comercio:
+    periodo: mes
+    ejercicio: 2026
+    unidad: UT
+    valor_unidad: 40
+    norma_unidad: Ordenanza tarifaria 11/2026, art. 1 (UT = $ 40)
+    norma: Ordenanza tarifaria 11/2026, art. 36 y Anexo I
+    url: https://tupungato.gov.ar/wp-content/uploads/2026/08/Tarifaria-2026-1.pdf
+    nota: La ordenanza no fija un monto por rubro, sino una fórmula (índice x raíz de los m2 x 1,25 x UT). El monto de abajo es el del mínimo de superficie que el anexo manda aforar (20 m2; 30 m2 en comida para llevar), y sube con la raíz de los metros cuadrados reales; el anexo no publica un máximo para estos rubros. Leído a mano del anexo escaneado.
+    manual:
+      - rubro: almacen
+        min: 296.279
+        max: 296.279
+        pagina: 32
+      - rubro: kiosco
+        min: 296.279
+        max: 296.279
+        pagina: 32
+      - rubro: ropa
+        min: 279.5085
+        max: 279.5085
+        pagina: 32
+      - rubro: rotiseria
+        min: 410.7919
+        max: 410.7919
+        pagina: 30
+      - rubro: carniceria
+        min: 296.279
+        max: 296.279
+        pagina: 32
+  no_publica:
+    - que: Cuánto tarda la factibilidad y la habilitación
+      organismo: Municipalidad de Tupungato
+      detalle: Los documentos de cada trámite describen las etapas y no dan plazos.
+    - que: Cuánto cuesta hoy el carnet de manipulación de alimentos y cuándo es el próximo curso
+      organismo: Municipalidad de Tupungato
+      detalle: El aviso más reciente que encontramos es de enero de 2024 y remite al boleto de Rentas.
+    - que: Qué rubro de la tarifaria le toca a un almacén, un kiosco o una carnicería
+      organismo: Municipalidad de Tupungato
+      detalle: El Anexo I no los nombra; los agrupa en «venta de artículos alimenticios». La clasificación es nuestra y falta confirmarla.
+    - que: Los requisitos y el costo del permiso para poner un cartel
+      organismo: Municipalidad de Tupungato
+    - que: Si hay ficha ambiental o verificación de bomberos para un comercio chico
+      organismo: Municipalidad de Tupungato
+      detalle: Los requisitos del trámite no los mencionan.
+    - que: La tarifaria en un formato que se pueda leer y copiar
+      organismo: Municipalidad de Tupungato
+      detalle: La Ordenanza 11/2026 está publicada como imágenes escaneadas, sin texto.
+  promocion:
+    norma: Ordenanza tarifaria 11/2026, art. 34, inc. 5
+    detalle: Los comercios de los rubros 3300, 3400 y 3500 (venta de artículos alimenticios, no alimenticios y conjunta) no pagan la tasa de inspección y control los primeros 3 bimestres desde el inicio del registro, si no superan los 20 m2.
+    url: https://tupungato.gov.ar/wp-content/uploads/2026/08/Tarifaria-2026-1.pdf
+
+- id: abrir-un-comercio
+  titulo: Abrir un comercio
+  municipio: Lavalle
+  verificado: 2026-10-27
+  rubros:
+    - id: almacen
+      nombre: Almacén (rubro «Despensas»)
+      codigo: "60"   # Art. 16, inc. 60; la ordenanza no tiene un rubro «Almacén»: se mapeó a Despensas (sin confirmar)
+      alimentos: true
+    - id: kiosco
+      nombre: Kiosco
+      codigo: "103"
+      alimentos: true
+    - id: ropa
+      nombre: Ropa (rubro «Tienda de ropa»)
+      codigo: "28"
+      alimentos: false
+    - id: rotiseria
+      nombre: Comida para llevar (rotisería)
+      codigo: "143"
+      alimentos: true
+    - id: carniceria
+      nombre: Carnicería
+      codigo: "36"
+      alimentos: true
+  pasos:
+    - nivel: nacion
+      organismo: ARCA
+      titulo: CUIT y alta en el monotributo
+      detalle: En línea y gratis, con DNI y clave fiscal. El alta toma unos 15 minutos.
+      url: https://www.argentina.gob.ar/servicio/inscribirme-como-monotributista
+      cuando: siempre
+    - nivel: provincia
+      organismo: ATM
+      titulo: Ingresos Brutos
+      detalle: Automática si sos monotributista (hasta 72 horas hábiles). Si no, alta en Mis Trámites Online de la ATM.
+      url: https://atm.mendoza.gov.ar/preguntas-frecuentes/impuesto-sobre-los-ingresos-brutos-2/
+      cuando: siempre
+  costos:
+    - concepto: Derecho de inspección y control de seguridad e higiene (tasa de comercio)
+      detalle: Se paga por bimestre, en Unidades Tributarias Municipales (UTM), según el rubro y su categoría. Si hay una actividad principal y anexas, la principal paga el 100 % y cada anexa el 50 %. La ordenanza prevé ponderar el monto por zona, superficie del local y tipo de actividad, pero no dice si ya se aplica. Los clubes sociales y asociaciones civiles sin fines de lucro están exentos.
+      norma: Ordenanza tarifaria 1284 (2026), art. 16, 18 y 20
+      url: https://boe.mendoza.gov.ar/publico/pdf_pedido/1a1cdff7a8e3204f3be7614698a5f17f9a8900e878
+  tasa_comercio:
+    periodo: bimestre
+    ejercicio: 2026
+    unidad: UTM
+    valor_unidad: 85
+    norma_unidad: Ordenanza 1284 (2026), art. 2, promulgada por el Decreto 4/2026
+    norma: Ordenanza tarifaria 1284 (2026), art. 16
+    url: https://boe.mendoza.gov.ar/publico/pdf_pedido/1a1cdff7a8e3204f3be7614698a5f17f9a8900e878
+    nota: El anexo del Boletín es una imagen sin texto y los montos se leyeron a mano. El rango va de la categoría más baja a la más alta del rubro, y Lavalle no publica cómo asigna la categoría. El valor de la UTM puede ajustarse cada cuatrimestre según el IPC de Mendoza.
+    manual:
+      - rubro: almacen
+        min: 116
+        max: 184
+        pagina: 6
+      - rubro: kiosco
+        min: 85
+        max: 180
+        pagina: 8
+      - rubro: ropa
+        min: 120
+        max: 212
+        pagina: 5
+      - rubro: rotiseria
+        min: 90
+        max: 170
+        pagina: 9
+      - rubro: carniceria
+        min: 152
+        max: 336
+        pagina: 5
+  no_publica:
+    - que: Cómo se hace la habilitación de un comercio (requisitos, dónde, cuánto tarda y cuánto cuesta)
+      organismo: Municipalidad de Lavalle
+      detalle: No se encontró un sitio oficial del municipio. El Boletín solo trae la tarifaria y ordenanzas sueltas.
+    - que: La consulta de uso de suelo del local
+      organismo: Municipalidad de Lavalle
+    - que: Qué categoría (A, B, C o D) le toca a cada comercio
+      organismo: Municipalidad de Lavalle
+      detalle: La tarifaria fija un monto por categoría, pero no dice con qué criterio se asigna.
+    - que: Si ya se aplica la ponderación por zona, superficie y tipo de actividad del art. 20
+      organismo: Municipalidad de Lavalle
+    - que: Curso o libreta de manipulación de alimentos, seguridad contra incendios y permiso de cartel
+      organismo: Municipalidad de Lavalle
+    - que: El valor actualizado de la UTM después del primer cuatrimestre de 2026
+      organismo: Municipalidad de Lavalle
+      detalle: La ordenanza permite ajustarlo por IPC cada cuatrimestre; no se encontró un acto que lo haga.

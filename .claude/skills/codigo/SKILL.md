@@ -1,16 +1,28 @@
 ---
 name: codigo
-description: Convenciones de código de Mendoza Transparente. Cubre idioma (código en inglés, documentación en español), estructura del monorepo, dónde va cada cosa, cómo verificar y cómo commitear. Cargar al empezar cualquier cambio de código, en scrapers, apps/web o scripts, antes de escribir la primera línea.
+description: Convenciones de código de Mendoza Transparente. Cubre idioma (nombres del código en inglés; comentarios y documentación en español), estructura del monorepo, dónde va cada cosa, cómo verificar y cómo commitear. Cargar al empezar cualquier cambio de código, en scrapers, apps/web o scripts, antes de escribir la primera línea.
 ---
 
 # Código en Mendoza Transparente
 
 ## Idioma
 
-- **En inglés:** el código. Variables, funciones, tipos, nombres de archivos de código, ids de eventos y comentarios técnicos breves.
-- **En español:** la documentación (`docs/`, README, `AGENTS.md`, skills), los textos que ve la gente, las rutas públicas (`/leyes`, `/municipios`) y la descripción de los commits (el tipo y el ámbito de Conventional Commits van en inglés).
+- **En inglés:** los nombres del código. Variables, funciones, tipos, propiedades, componentes, nombres de archivos de código e ids de eventos.
+- **En español:** los comentarios del código (cabecera del archivo, JSDoc, cómo se usa algo, por qué está así), la documentación (`docs/`, README, `AGENTS.md`, skills), los textos que ve la gente, las rutas públicas (`/leyes`, `/municipios`) y la descripción de los commits (el tipo y el ámbito de Conventional Commits van en inglés). Los comentarios los lee el equipo para entender el sistema; adentro, los nombres del código van tal cual (`fetchOrReuse()`, `AI_GATEWAY_API_KEY`).
 - **Columnas de CSV publicados:** snake_case en español. Son un contrato público y **no se renombran** sin un plan de migración.
-- **Código viejo en español:** lo que se toca, se pasa al inglés, sin refactors masivos de pasada.
+- **Lo viejo se acomoda cuando se toca, sin repasos masivos:** en el archivo que se edita, los comentarios en inglés se traducen al español y los nombres en español que se tocan pasan al inglés, en el mismo commit.
+
+```ts
+/**
+ * Proveedores del modelo: Vercel AI Gateway y OpenRouter. Se prueban en orden
+ * y, si uno falla, sigue el próximo. Las claves (AI_GATEWAY_API_KEY,
+ * OPENROUTER_API_KEY) son secretos: nunca van al repositorio.
+ */
+export interface AssistantEnv {
+  /** Orden en que se prueban, separado por comas. Por defecto, "gateway,openrouter". */
+  ASSISTANT_PROVIDERS?: string;
+}
+```
 
 ## Dónde va cada cosa
 

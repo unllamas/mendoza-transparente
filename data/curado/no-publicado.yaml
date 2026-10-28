@@ -385,6 +385,23 @@
   pedido: La recaudación trimestral de cada tasa y derecho municipal, y la deuda acumulada por tasa, desde 2023, en CSV o XLSX.
   pedidos: []
 
+- id: tupungato-tarifaria-legible
+  titulo: La tarifaria 2026 de Tupungato en un formato que se pueda leer
+  categoria: municipios
+  que_es: La Ordenanza tarifaria 11/2026, con el valor de la tasa de comercio y de los demás derechos, y los trámites de habilitación con su plazo y su costo.
+  por_que_importa: "La ordenanza está en el sitio del municipio como imágenes escaneadas, sin texto: no se puede buscar ni copiar, y la tasa de comercio no tiene un monto por rubro sino una fórmula. Tampoco se publica cuánto tarda la habilitación ni cuánto cuesta el carnet de manipulación de alimentos."
+  organismo: Municipalidad de Tupungato
+  marco_legal: Ley 1079 Orgánica de Municipalidades y Ley 9070 de Acceso a la Información Pública
+  estado: parcial
+  donde_buscamos:
+    - https://tupungato.gov.ar/wp-content/uploads/2026/08/Tarifaria-2026-1.pdf
+    - https://tupungato.gov.ar/?page_id=3490
+    - https://tupungato.gov.ar/?page_id=4566
+    - https://tupungato.gov.ar/?p=33907
+  detalle_estado: Revisado el 27 oct 2026. Hay requisitos y etapas de cada trámite en Trámites Online, pero no plazos ni costos, y el aviso más reciente del curso de manipulación es de enero de 2024.
+  pedido: La Ordenanza tarifaria 11/2026 en un archivo con texto, la lista de rubros del Anexo I que corresponde a un almacén, un kiosco y una carnicería, el plazo de la factibilidad y la habilitación, y el costo y las fechas del curso de manipulación de alimentos.
+  pedidos: []
+
 - id: ordenanzas-tarifarias
   titulo: Cuánto cuesta cada tasa municipal este año
   categoria: municipios
@@ -400,6 +417,23 @@
     - https://datos.lujandecuyo.gob.ar/
   detalle_estado: Al 18/10/2026 publican la tarifaria 2026 en su sitio Capital, Las Heras, San Rafael, General Alvear, Tupungato y Tunuyán.
   pedido: La ordenanza tarifaria 2026 con todos sus anexos y los decretos que fijan el valor de la Unidad Tributaria Municipal, publicados en el sitio oficial del municipio.
+  pedidos: []
+
+- id: tunuyan-habilitacion-comercial
+  titulo: Cómo se habilita un comercio en Tunuyán
+  categoria: municipios
+  que_es: Los requisitos, el formulario, el costo y el plazo de la habilitación comercial de la Municipalidad de Tunuyán, y el decreto que fija el valor de su Unidad Tributaria Municipal.
+  por_que_importa: Quien abre un comercio no puede saber qué llevar ni cuánto va a pagar. La tarifaria 2026 está en el Boletín Oficial como imagen y no define qué comercio paga la categoría N° 1 y cuál la N° 2.
+  organismo: Municipalidad de Tunuyán (Dirección de Desarrollo Económico e Inspección General)
+  marco_legal: Ley 1079 Orgánica de Municipalidades y Ley 9070 de Acceso a la Información Pública
+  estado: sin_publicar
+  donde_buscamos:
+    - https://www.tunuyan.gov.ar/site/direccion-de-desarrollo-economico/
+    - https://www.tunuyan.gov.ar/site/ordenanzas/
+    - https://vps.infogov.com.ar/expediente/oficina_virtual/app/#/init/TDnq4
+    - https://boe.mendoza.gov.ar/
+  detalle_estado: Al 27/10/2026 el sitio dice que Desarrollo Económico acompaña los procesos de habilitación, pero no publica requisitos, formulario, costo ni plazo.
+  pedido: Los requisitos, el formulario, el costo y el plazo de la habilitación comercial, la definición de las categorías N° 1 y N° 2 del derecho de inspección de la Ordenanza 3351 (2026) y el decreto que fija el valor de la UTM, publicados en el sitio oficial.
   pedidos: []
 
 - id: utn-por-regional
@@ -506,3 +540,89 @@
   detalle_estado: Al 18/10/2026 el repositorio de estadísticas de la UNCuyo tiene cinco informes en PDF (censos, encuestas y un relevamiento de egresados) y un tablero, sin tablas por carrera ni por camada para descargar.
   pedido: Por carrera y unidad académica, desde 2018, los nuevos inscriptos, estudiantes, reinscriptos y egresados de cada año, y para cada camada de ingreso cuántos se recibieron y en cuántos años, en CSV o XLSX.
   pedidos: []
+
+- id: habilitacion-comercial-san-martin
+  titulo: Cómo se habilita un comercio en San Martín
+  categoria: municipios
+  que_es: "La guía del trámite de habilitación comercial: requisitos, dónde se hace, cuánto tarda y qué categoría y zona le toca a cada comercio."
+  por_que_importa: Quien quiere abrir un comercio en San Martín no encuentra en el sitio municipal los requisitos ni el plazo, y la ordenanza tarifaria deja la categoría (1.ª a 3.ª) a criterio del municipio, así que no puede saber cuánto va a pagar de derechos de comercio.
+  organismo: Municipalidad de General San Martín (Dirección de Recursos Municipales)
+  marco_legal: Ley 9070 de Acceso a la Información Pública
+  estado: sin_publicar
+  donde_buscamos:
+    - https://sanmartinmza.gob.ar
+    - https://web.sanmartinmza.gob.ar
+    - https://boe.mendoza.gov.ar/default/public/publico/verpdf/bd8bb8364c30e32a8d19dfdcc18d30f15f9bffa862/anexo
+  detalle_estado: Revisado el 27 oct 2026. No hay ficha de habilitación comercial ni guía de trámites. La Ordenanza tarifaria 3189/2024 (modificada por la 3229) fija los importes en UT pero no dice si son anuales o bimestrales, ni a qué comercios corresponde la UT de $ 83 y a cuáles la de $ 156,60.
+  pedido: Los requisitos, el canal y el plazo de la habilitación de un comercio minorista, los criterios con que se asigna la categoría (1.ª, 2.ª o 3.ª), si el importe de los derechos de comercio es anual o bimestral, y qué comercios tienen la UT de $ 83 y cuáles la de $ 156,60.
+  pedidos: []
+
+- id: general-alvear-categoria-y-utm-comercio
+  titulo: Qué categoría de la tasa de comercio te toca en General Alvear y cuánto vale la UTM
+  categoria: municipios
+  que_es: El criterio con que la Dirección de Rentas asigna a cada comercio una categoría de la tasa de comercio (1 a 5, y en algunos rubros hasta 8), y la resolución que fija el valor de la Unidad Tributaria Municipal de cada semestre.
+  por_que_importa: La ordenanza tarifaria publica el monto de cada rubro por categoría, pero no dice qué hace que un comercio sea de la 1 o de la 5, así que quien quiere abrir no puede saber cuánto va a pagar. Y como los montos están en UTM, ajustadas por IPC cada semestre, sin la resolución no se sabe cuántos pesos son.
+  organismo: Municipalidad de General Alvear (Dirección de Rentas)
+  marco_legal: Ley 1079 Orgánica de Municipalidades y Ley 9070 de Acceso a la Información Pública
+  estado: sin_publicar
+  donde_buscamos:
+    - https://alvearmendoza.gob.ar/ordenanza-tarifaria/
+    - https://alvearmendoza.gob.ar/wp-content/uploads/2026/08/IIIV-ORDENANZA-TARIFARIA-2026-2do.sem_.pdf
+    - https://alvearmendoza.gob.ar/wp-content/uploads/2026/08/III-ORDENANZA-REGLAM.-2026-2do.sem_.pdf
+    - http://tramites.alvearmendoza.gob.ar/rentas-alvear/
+    - https://boletinoficial.mendoza.gov.ar/
+  detalle_estado: Al 27/10/2026 el sitio publica la tarifaria y la reglamentaria del segundo semestre de 2026, con el art. 51 que fija la UTM en $ 1 y dice que se ajusta por resolución del Organismo Fiscal, pero no publica esa resolución ni el criterio de las categorías.
+  pedido: El criterio con que se asigna la categoría de la tasa de comercio a cada rubro, y las resoluciones del Organismo Fiscal que fijan el valor de la UTM en 2026, publicados en el sitio oficial del municipio.
+  pedidos: []
+
+- id: rivadavia-habilitacion-comercio
+  titulo: Cuánto tarda y qué exige la habilitación de un comercio en Rivadavia
+  categoria: municipios
+  que_es: Los plazos de la habilitación comercial, cómo se asigna la categoría de la tasa de comercio y qué comercios necesitan seguro y certificado CEMEPASI, en la Municipalidad de Rivadavia.
+  por_que_importa: Quien quiere abrir un comercio sabe qué papeles llevar, pero no cuánto va a esperar ni en qué categoría de la tasa de comercio queda. La página de Comercio e Industria no se actualiza desde 2024 y no coincide con la tarifaria en el sellado (26 UTM contra 18 UTM).
+  organismo: Municipalidad de Rivadavia (Departamento de Comercio e Industria)
+  marco_legal: Ley 9070 de Acceso a la Información Pública
+  estado: parcial
+  donde_buscamos:
+    - https://rivadaviamendoza.gob.ar/new/rentas/comercio-industria/
+    - https://rivadaviamendoza.gob.ar/new/ciudadania/bromatologia/
+    - https://rivadaviamendoza.gob.ar/transparencia/?page_id=8492
+    - https://boe.mendoza.gov.ar/
+  detalle_estado: Al 27/10/2026 la página lista los requisitos y los pasos, pero no dice el plazo de la resolución del Intendente, cómo se ponderan la superficie, la ubicación y los empleados para fijar la categoría (art. 35 de la tarifaria 5303), ni a qué rubros se les pide CEMEPASI y seguro. No hay decreto que reglamente la exención de los pequeños emprendedores (art. 44).
+  pedido: El plazo de la habilitación comercial, el criterio con que se asigna la categoría de la tasa de comercio, los rubros que exigen CEMEPASI y seguro contra terceros, y la reglamentación de la exención del art. 44 de la Ordenanza 5303.
+  pedidos: []
+
+- id: lavalle-habilitacion-comercial
+  titulo: Cómo habilitar un comercio en Lavalle
+  categoria: municipios
+  que_es: Los requisitos, el costo y el plazo de la habilitación comercial de Lavalle, y cómo se asigna la categoría que fija la tasa de comercio.
+  por_que_importa: Quien quiere abrir un comercio en Lavalle no tiene dónde leer qué papeles llevar ni cuánto va a pagar de tasa, porque el municipio no tiene un sitio oficial que funcione. Solo se conoce la tarifaria, publicada en el Boletín como imagen sin texto.
+  organismo: Municipalidad de Lavalle
+  marco_legal: Ley 9070 de Acceso a la Información Pública
+  estado: sin_publicar
+  donde_buscamos:
+    - https://lavalle.gob.ar
+    - https://lavallemendoza.gob.ar
+    - https://lavalle.mendoza.gov.ar
+    - https://boe.mendoza.gov.ar/
+  detalle_estado: Al 27/10/2026 los dominios probados no resuelven o están vacíos. El Boletín trae la Ordenanza tarifaria 1284 (2026), con la tasa por rubro en UTM, pero no los trámites. El monto de la UTM sale del art. 2 de la ordenanza, y no se encontró un ajuste posterior.
+  pedido: Que el municipio publique en un sitio oficial los requisitos, el costo y el plazo de la habilitación comercial, el criterio con que asigna la categoría de cada rubro y el valor vigente de la UTM.
+  pedidos: []
+- id: junin-tarifaria-zonas
+  titulo: Qué calles son la zona 1 y la zona 2 de la tarifaria de Junín
+  categoria: municipios
+  que_es: La definición de las zonas con las que la tarifaria 2026 de Junín cobra distinto cada derecho de comercio, y la ordenanza en texto legible.
+  por_que_importa: Sin saber qué zona le toca a su local, un comercio no puede calcular cuánto paga. Y la tarifaria solo está en el Boletín Oficial como imágenes escaneadas, que no se pueden buscar ni copiar; el link del sitio municipal a la de 2025 da 404.
+  organismo: Municipalidad de Junín
+  marco_legal: Ley 1079 Orgánica de Municipalidades y Ley 9070 de Acceso a la Información Pública
+  estado: parcial
+  donde_buscamos:
+    - https://boe.mendoza.gov.ar/
+    - https://www.juninmendoza.gov.ar/sellados/
+    - https://www.juninmendoza.gov.ar/industria-y-comercio/
+    - https://www.juninmendoza.gov.ar/mesa-de-entradas/
+    - https://hcdjunin.gob.ar/
+  detalle_estado: La Ordenanza 1020/2025 (tarifaria 2026) salió en el Boletín con su anexo escaneado; el sumario dice solo «Expediente». Trae montos por zona 1 y 2 y no define las zonas. La página «Trámites de habilitación» del sitio no abre.
+  pedido: La definición de las zonas de la tarifaria 2026, la lista de documentos para habilitar un comercio, el monto del sellado de inicio y la ordenanza tarifaria en texto, publicados en el sitio oficial del municipio.
+  pedidos: []
+
