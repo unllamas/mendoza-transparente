@@ -12,6 +12,8 @@ import {
   RiFileList3Line,
   RiGroupLine,
   RiMapPinLine,
+  RiMoneyDollarCircleLine,
+  RiStore2Line,
 } from "@remixicon/react";
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { useMemo } from "react";
@@ -295,6 +297,49 @@ export function MunicipioPage() {
               <RiArrowRightSLine className="size-4 shrink-0 text-text-link" aria-hidden />
             </span>
           </Link>
+        )}
+
+        {m.commerce && (
+          <Section id="comercio" title="Abrir un comercio">
+            <div className="grid gap-3 sm:grid-cols-2">
+              {m.commerce.procedure && (
+                <Link
+                  to="/municipios/$slug/tramites/abrir-un-comercio"
+                  params={{ slug: m.slug }}
+                  className={cx(cardVariants(), "flex flex-col gap-1")}
+                  data-track="municipality.procedure.open"
+                  data-track-municipality={m.nombre}
+                >
+                  <span className="flex min-w-0 items-center gap-2 text-body-regular text-text-secondary">
+                    <RiStore2Line className="size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
+                    <span className="truncate">Trámite</span>
+                  </span>
+                  <span className="flex items-center justify-between gap-2">
+                    <span className="min-w-0 text-body-medium text-text-link">Pasos, requisitos y costos</span>
+                    <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
+                  </span>
+                </Link>
+              )}
+              {m.commerce.feesYear && (
+                <Link
+                  to="/municipios/$slug/tasas"
+                  params={{ slug: m.slug }}
+                  className={cx(cardVariants(), "flex flex-col gap-1")}
+                  data-track="municipality.fees.open"
+                  data-track-municipality={m.nombre}
+                >
+                  <span className="flex min-w-0 items-center gap-2 text-body-regular text-text-secondary">
+                    <RiMoneyDollarCircleLine className="size-4 shrink-0 text-foreground-icon-secondary" aria-hidden />
+                    <span className="truncate">Tasa de comercio {m.commerce.feesYear}</span>
+                  </span>
+                  <span className="flex items-center justify-between gap-2">
+                    <span className="min-w-0 text-body-medium text-text-link">Cuánto cobra por cada rubro</span>
+                    <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
+                  </span>
+                </Link>
+              )}
+            </div>
+          </Section>
         )}
 
         {tr && <MunicipalTransparencySection slug={m.slug} name={m.nombre} data={tr} />}

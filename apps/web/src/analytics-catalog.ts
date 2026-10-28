@@ -322,6 +322,27 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["municipios", "presupuesto"],
   },
   {
+    event: "municipality.procedure.open",
+    description: "Desde la página de un municipio, abrió los pasos para abrir un comercio en ese municipio. Propiedad municipality.",
+    tags: ["municipios", "trámites"],
+  },
+  {
+    event: "municipality.fees.open",
+    description:
+      "Abrió la tasa de comercio por rubro de un municipio, desde su página o desde su trámite de abrir un comercio. Propiedad municipality.",
+    tags: ["municipios", "trámites"],
+  },
+  {
+    event: "procedure.municipality.open",
+    description: "En la guía «Abrir un comercio en Mendoza», abrió la tarjeta de un municipio para ver sus pasos. Propiedad municipality.",
+    tags: ["trámites"],
+  },
+  {
+    event: "procedure.fees.open",
+    description: "En la guía «Abrir un comercio en Mendoza», abrió la tasa de comercio por rubro de un municipio. Propiedad municipality.",
+    tags: ["trámites"],
+  },
+  {
     event: "municipality.budget.year.change",
     description: "En el presupuesto de un municipio, cambió de año. Propiedades value (el año) y label.",
     tags: ["municipios", "presupuesto"],

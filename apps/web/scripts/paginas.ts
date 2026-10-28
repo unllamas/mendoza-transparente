@@ -29,12 +29,17 @@ import type {
   LeyDetalle,
   LeyResumen,
   MunicipalBudget,
+  MunicipalFees,
+  MunicipalProcedure,
   MunicipioPagina,
   NoPublicado,
+  OnlineStatus,
   OrganismoResumen,
   PartyDetail,
   PartySummary,
   PoblacionTema,
+  ProcedureGuide,
+  ProcedureStep,
   ProveedorResumen,
   RecaudacionTema,
   SenalesTema,
@@ -75,6 +80,18 @@ const pesosCorto = (v: number) =>
     : Math.abs(v) >= 1e6
       ? `$ ${nf1.format(v / 1e6)} M`
       : `$ ${nf.format(Math.round(v))}`;
+
+/** What the municipality's sheet says about starting the habilitación online (src/features/procedures/utils/format.ts). */
+const ONLINE_TEXT: Record<OnlineStatus, string> = {
+  online: "Se puede iniciar en línea.",
+  in_person: "Se inicia en persona.",
+  unknown: "La ficha oficial no dice cómo se inicia.",
+  not_published: "El municipio no publica si se puede hacer completo en línea.",
+};
+const periodoTexto = (period: string) =>
+  period
+    ? `El monto es ${period === "año" ? "anual" : period === "mes" ? "mensual" : "bimestral"}.`
+    : "La ordenanza no aclara si el monto es mensual o anual.";
 
 export const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const url = (path: string) => (path === "/" ? `${SITE_URL}/` : `${SITE_URL}${path}`);
@@ -1365,6 +1382,31 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
                 },
               ]
             : []),
+          ...(m.commerce
+            ? [
+                {
+                  titulo: "Abrir un comercio",
+                  items: [
+                    ...(m.commerce.procedure
+                      ? [
+                          {
+                            texto: `Abrir un comercio en ${m.nombre}: pasos y costos`,
+                            href: `/municipios/${m.slug}/tramites/abrir-un-comercio`,
+                          },
+                        ]
+                      : []),
+                    ...(m.commerce.feesYear
+                      ? [
+                          {
+                            texto: `Tasa de comercio ${m.commerce.feesYear} de ${m.nombre}, rubro por rubro`,
+                            href: `/municipios/${m.slug}/tasas`,
+                          },
+                        ]
+                      : []),
+                  ],
+                },
+              ]
+            : []),
           {
             titulo: `Legisladores provinciales de la ${m.seccion ?? ""} sección`,
             items: m.legisladores.map((l) => ({
@@ -1473,6 +1515,289 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
         lastmod: lastFetch("municipios-lrf"),
         prioridad: y.partial ? 0.6 : 0.7,
       });
+    }
+  }
+
+  // ---------------------------------------------------------------- trámites: abrir un comercio
+  // The province guide, the procedure of each municipality and the trade fee of those whose tarifaria is read.
+  const guide = await json<ProcedureGuide | null>("temas/tramites/abrir-un-comercio.json", null);
+  if (guide) {
+    const guidePath = "/tramites/abrir-un-comercio";
+    const online = guide.municipalities.filter((m) => m.online === "online");
+    const withTable = guide.municipalities.filter((m) => m.fee === "table");
+    const guideMigas: Miga[] = [
+      ["/", "Inicio"],
+      [guidePath, "Abrir un comercio"],
+    ];
+    const guideSummary = `Los pasos para abrir un comercio en Mendoza: CUIT y monotributo en ARCA, Ingresos Brutos en la ATM y la habilitación del municipio. Comparamos ${guide.municipalities.length} municipios: ${online.length} se pueden iniciar en línea y ${withTable.length} publican la tasa por rubro.`;
+    const stepTitles = (steps: ProcedureStep[]) => steps.map((s) => s.title).join("; ");
+    paginas.push({
+      path: guidePath,
+      title: titulo("Cómo abrir un comercio en Mendoza: pasos y costos"),
+      description: descripcion(guideSummary),
+      og: {
+        slug: "tramites-abrir-un-comercio",
+        eyebrow: "TRÁMITES",
+        titulo: "Abrir un comercio en Mendoza",
+        figura: `${guide.municipalities.length} municipios`,
+        bajada: "Los pasos de Nación, Provincia y municipio, con su fuente oficial y lo que no se publica.",
+      },
+      ld: [
+        {
+          "@type": "GovernmentService",
+          name: "Abrir un comercio en Mendoza",
+          serviceType: "Habilitación de comercio",
+          description: guideSummary,
+          url: url(guidePath),
+          areaServed: MENDOZA,
+          provider: [
+            { "@type": "GovernmentOrganization", name: "ARCA" },
+            { "@type": "GovernmentOrganization", name: "Administración Tributaria Mendoza (ATM)" },
+            ...guide.municipalities.map((m) => ({ "@type": "GovernmentOrganization", name: `Municipalidad de ${m.name}` })),
+          ],
+          publisher,
+        },
+        breadcrumb(guideMigas),
+        faq([
+          [
+            "¿Qué pasos hay que hacer para abrir un comercio en Mendoza?",
+            `Primero, ${stepTitles(guide.national).toLowerCase()} en ARCA y ${stepTitles(guide.province).toLowerCase()} en la ATM. Después, los trámites del municipio donde está el local: uso de suelo, habilitación y, según el municipio, ficha ambiental, libreta sanitaria o permiso de cartel.`,
+          ],
+          [
+            "¿Se puede habilitar un comercio en línea en Mendoza?",
+            online.length
+              ? `Según sus fichas oficiales, se puede iniciar en línea en ${online.map((m) => m.name).join(", ")}. En el resto la ficha dice que se inicia en persona o no aclara cómo se hace.`
+              : "Ninguna de las fichas oficiales que revisamos dice que se pueda iniciar en línea.",
+          ],
+          [
+            "¿Cuánto cuesta habilitar un comercio en Mendoza?",
+            `Depende del municipio y del rubro. ${withTable.map((m) => m.name).join(", ")} publican en su ordenanza tarifaria el derecho de comercio de cada rubro; en el resto no encontramos una tabla completa.`,
+          ],
+        ]),
+      ],
+      html: cuerpo({
+        migas: guideMigas,
+        h1: "Abrir un comercio en Mendoza",
+        resumen: guideSummary,
+        secciones: [
+          {
+            titulo: "Primero: Nación y Provincia",
+            items: [...guide.national, ...guide.province].map((s) => ({ texto: `${s.agency}: ${s.title}. ${s.detail}`, href: s.href })),
+          },
+          {
+            titulo: "Lo que Nación y Provincia no publican",
+            items: guide.provinceNotPublished.map((n) => ({
+              texto: `${n.agency === "ATM" ? "La ATM" : n.agency} no publica ${n.what.charAt(0).toLowerCase()}${n.what.slice(1)}.`,
+            })),
+          },
+          {
+            titulo: "Después: el municipio del local",
+            items: guide.municipalities.map((m) => ({
+              texto: `${m.name}: ${m.ownSteps} pasos propios`,
+              href: `/municipios/${m.slug}/tramites/abrir-un-comercio`,
+            })),
+          },
+          {
+            titulo: "Tasa de comercio por rubro",
+            items: withTable.map((m) => ({ texto: `${m.name} ${m.feeYear}`, href: `/municipios/${m.slug}/tasas` })),
+          },
+        ],
+        fuente: { nombre: "Fichas oficiales de ARCA, la ATM y cada municipio, y ordenanzas tarifarias del Boletín Oficial" },
+        actualizado: guide.verified,
+      }),
+      lastmod: guide.verified,
+      prioridad: 0.8,
+    });
+
+    for (const m of municipios.filter((x) => x.commerce)) {
+      const overview = guide.municipalities.find((x) => x.slug === m.slug);
+      const procedure = m.commerce?.procedure
+        ? await json<MunicipalProcedure | null>(`temas/municipios/${m.slug}/tramite-abrir-un-comercio.json`, null)
+        : null;
+      const muni = { "@type": "GovernmentOrganization", name: `Municipalidad de ${m.nombre}` };
+      const area = { "@type": "AdministrativeArea", name: m.nombre, containedInPlace: MENDOZA };
+      const base: Miga[] = [
+        ["/", "Inicio"],
+        ["/municipios", "Municipios"],
+        [`/municipios/${m.slug}`, m.nombre],
+      ];
+
+      if (procedure && overview) {
+        const path = `/municipios/${m.slug}/tramites/abrir-un-comercio`;
+        const migas: Miga[] = [...base, [path, "Abrir un comercio"]];
+        const fee = procedure.fee;
+        const feeText = fee.table
+          ? `el derecho de comercio por rubro (${fee.year}) está en su ordenanza tarifaria`
+          : fee.examples.length
+            ? `publica el derecho de comercio de algunos rubros (${fee.year})`
+            : "no publica un monto calculable del derecho de comercio";
+        const resumen = `Cómo abrir un comercio en ${m.nombre}: ${procedure.steps.length} pasos propios del municipio (${procedure.steps.map((s) => s.title.toLowerCase()).join(", ")}). ${ONLINE_TEXT[overview.online]} ${feeText.charAt(0).toUpperCase()}${feeText.slice(1)}.`;
+        paginas.push({
+          path,
+          title: titulo(`Abrir un comercio en ${m.nombre}: pasos y costos`),
+          description: descripcion(resumen),
+          og: {
+            slug: `municipio-${m.slug}-abrir-un-comercio`,
+            eyebrow: "TRÁMITES",
+            photo: municipalityPhoto(m.slug),
+            titulo: `Abrir un comercio en ${m.nombre}`,
+            figura: `${procedure.steps.length} pasos`,
+            bajada: "Requisitos, costos y lo que el municipio no publica.",
+          },
+          ld: [
+            {
+              "@type": "GovernmentService",
+              name: `Abrir un comercio en ${m.nombre}`,
+              serviceType: "Habilitación de comercio",
+              description: resumen,
+              url: url(path),
+              provider: muni,
+              areaServed: area,
+              publisher,
+            },
+            breadcrumb(migas),
+            faq([
+              [
+                `¿Qué pasos hay que hacer para habilitar un comercio en ${m.nombre}?`,
+                `${procedure.steps.map((s) => s.title).join("; ")}. Antes, los de Nación (ARCA) y la Provincia (ATM), que son los mismos en toda Mendoza.`,
+              ],
+              [
+                `¿Se puede habilitar un comercio en línea en ${m.nombre}?`,
+                overview.online === "not_published"
+                  ? ONLINE_TEXT.not_published
+                  : `${ONLINE_TEXT[overview.online]} ${overview.onlineNote}`.trim(),
+              ],
+              ...(procedure.costs.length
+                ? ([
+                    [
+                      `¿Cuánto cuesta habilitar un comercio en ${m.nombre}?`,
+                      procedure.costs.map((c) => `${c.concept}: ${c.detail}`).join(" "),
+                    ],
+                  ] as [string, string][])
+                : []),
+              ...(procedure.promotion
+                ? ([[`¿Hay beneficios para un comercio nuevo en ${m.nombre}?`, procedure.promotion.detail]] as [string, string][])
+                : []),
+            ]),
+          ],
+          html: cuerpo({
+            migas,
+            h1: `Abrir un comercio en ${m.nombre}`,
+            resumen,
+            secciones: [
+              { titulo: `Pasos en ${m.nombre}`, items: procedure.steps.map((s) => ({ texto: `${s.title}. ${s.detail}`, href: s.href })) },
+              { titulo: "Cuánto cuesta", items: procedure.costs.map((c) => ({ texto: `${c.concept}. ${c.detail}`, href: c.href })) },
+              ...(procedure.promotion
+                ? [{ titulo: "Régimen de promoción", items: [{ texto: procedure.promotion.detail, href: procedure.promotion.href }] }]
+                : []),
+              {
+                titulo: `Lo que ${m.nombre} no publica`,
+                items: procedure.notPublished.map((n) => ({
+                  texto: `${n.agency} no publica ${n.what.charAt(0).toLowerCase()}${n.what.slice(1)}.`,
+                })),
+              },
+              {
+                titulo: "Más",
+                items: [
+                  { texto: "Abrir un comercio en toda Mendoza: los pasos de Nación y la Provincia", href: guidePath },
+                  ...(m.commerce?.feesYear
+                    ? [
+                        {
+                          texto: `Tasa de comercio ${m.commerce.feesYear} de ${m.nombre}, rubro por rubro`,
+                          href: `/municipios/${m.slug}/tasas`,
+                        },
+                      ]
+                    : []),
+                  { texto: `${m.nombre}: datos públicos del municipio`, href: `/municipios/${m.slug}` },
+                ],
+              },
+            ],
+            fuente: { nombre: `Ficha oficial de la Municipalidad de ${m.nombre} y su ordenanza tarifaria` },
+            actualizado: procedure.verified,
+          }),
+          lastmod: procedure.verified,
+          prioridad: 0.7,
+        });
+      }
+
+      const fees = m.commerce?.feesYear ? await json<MunicipalFees | null>(`temas/municipios/${m.slug}/tasas.json`, null) : null;
+      if (fees) {
+        const path = `/municipios/${m.slug}/tasas`;
+        const migas: Miga[] = [...base, [path, `Tasas ${fees.year}`]];
+        const sample = fees.highlights.slice(0, 3);
+        const resumen = `Cuánto cobra ${m.nombre} por el derecho de comercio en ${fees.year}: ${fees.rows.length} rubros de su ordenanza tarifaria ${fees.ordinance.number}.${
+          sample.length ? ` ${sample.map((h) => `${h.name}, de ${pesos(h.min)} a ${pesos(h.max)}`).join("; ")}.` : ""
+        } ${periodoTexto(fees.period)}`;
+        paginas.push({
+          path,
+          title: titulo(`Tasa de comercio ${m.nombre} ${fees.year}: monto por rubro`),
+          description: descripcion(resumen),
+          og: {
+            slug: `municipio-${m.slug}-tasas`,
+            eyebrow: "TASA DE COMERCIO",
+            photo: municipalityPhoto(m.slug),
+            titulo: `${m.nombre}, ${fees.year}`,
+            figura: `${nf.format(fees.rows.length)} rubros`,
+            bajada: `Derecho de comercio de la Ordenanza tarifaria ${fees.ordinance.number}.`,
+          },
+          ld: [
+            {
+              "@type": "GovernmentService",
+              name: `Derecho de comercio de ${m.nombre}`,
+              serviceType: "Tasa de inspección y control de comercios",
+              description: resumen,
+              url: url(path),
+              provider: muni,
+              areaServed: area,
+              isBasedOn: fees.ordinance.href || undefined,
+              publisher,
+            },
+            breadcrumb(migas),
+            faq([
+              [
+                `¿Cuánto es el derecho de comercio en ${m.nombre}?`,
+                `${sample.length ? `${sample.map((h) => `${h.name}: de ${pesos(h.min)} a ${pesos(h.max)}`).join("; ")}. ` : ""}Depende del rubro y de la categoría. ${periodoTexto(fees.period)}`,
+              ],
+              ...(fees.note ? ([[`¿Cómo se define la categoría del comercio en ${m.nombre}?`, fees.note]] as [string, string][]) : []),
+              [
+                `¿Dónde figura el monto del derecho de comercio de ${m.nombre}?`,
+                `En la ordenanza tarifaria ${fees.ordinance.number} de ${fees.year}${fees.ordinance.bulletinDate ? `, publicada en el Boletín Oficial el ${fechaLarga(fees.ordinance.bulletinDate)}` : ""}.`,
+              ],
+            ]),
+          ],
+          html: cuerpo({
+            migas,
+            h1: `Tasa de comercio de ${m.nombre}, ${fees.year}`,
+            resumen,
+            datos: [
+              ["Ordenanza", `Tarifaria ${fees.ordinance.number} (${fees.year})`],
+              ["Rubros en la tarifaria", nf.format(fees.rows.length)],
+              ["Unidad", fees.unit === "pesos" ? "Pesos" : `${fees.unit}${fees.unitValue ? ` a ${pesos(fees.unitValue)}` : ""}`],
+            ],
+            secciones: [
+              {
+                titulo: "Rubros comunes",
+                items: fees.highlights.map((h) => ({ texto: `${h.name}: de ${pesos(h.min)} a ${pesos(h.max)}` })),
+              },
+              {
+                titulo: "Más",
+                items: [
+                  { texto: `Abrir un comercio en ${m.nombre}: pasos y costos`, href: `/municipios/${m.slug}/tramites/abrir-un-comercio` },
+                  { texto: "Abrir un comercio en toda Mendoza", href: guidePath },
+                  { texto: `${m.nombre}: datos públicos del municipio`, href: `/municipios/${m.slug}` },
+                ],
+              },
+            ],
+            fuente: {
+              nombre: `Ordenanza tarifaria ${fees.ordinance.number} de ${m.nombre}, Boletín Oficial`,
+              url: fees.ordinance.href || undefined,
+            },
+            actualizado: fees.verified,
+          }),
+          lastmod: fees.verified,
+          prioridad: 0.7,
+        });
+      }
     }
   }
 
