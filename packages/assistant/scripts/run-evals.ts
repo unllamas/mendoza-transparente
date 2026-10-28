@@ -1,16 +1,17 @@
 /**
- * Runs the evals against the real model, in one of two ways:
+ * Corre las evals contra el modelo real, de una de dos formas:
  *
  *   bun run asistente:evals --url https://dev.mendoza-transparente.pages.dev
- *     Sends each case to POST /api/asistente of a deployed preview, which uses the keys stored as Pages secrets.
- *     Nobody needs the keys on their machine. Only dev has a preview: run it before merging and again once on dev.
+ *     Manda cada caso a POST /api/asistente de una vista previa, que usa las claves guardadas como secretos de Pages.
+ *     Nadie necesita las claves en su máquina. Solo dev tiene vista previa: correrlas antes de mergear y otra vez en dev.
+ *     Se identifican con `x-mt-source: evals`, así su consumo queda aparte del uso real en el panel.
  *
  *   bun --env-file=.env.asistente run asistente:evals
- *     Runs the agent locally. .env.asistente (at the repo root, in .gitignore) holds AI_GATEWAY_API_KEY and/or
- *     OPENROUTER_API_KEY, and optionally ASSISTANT_MODEL.
+ *     Corre el agente en la máquina. .env.asistente (en la raíz, en .gitignore) tiene AI_GATEWAY_API_KEY y/o
+ *     OPENROUTER_API_KEY, y opcionalmente ASSISTANT_MODEL.
  *
- * `--solo <text>` runs only the cases whose name contains the text. Each case costs one conversation (a few cents at
- * most with the default model).
+ * `--solo <texto>` corre solo los casos cuyo nombre contiene el texto. Cada caso cuesta una conversación (unos pocos
+ * centavos de dólar, como mucho, con el modelo por defecto).
  */
 
 import { readFileSync } from "node:fs";
@@ -21,7 +22,7 @@ import type { Knowledge } from "../src/knowledge.ts";
 import { configuredProviders } from "../src/providers.ts";
 import type { AssistantReply, ChatMessage } from "../src/types.ts";
 
-// The site allows 10 requests every 10 seconds per IP, and one case can be retried once: keep well under it.
+// El sitio permite 10 pedidos cada 10 segundos por IP, y un caso puede reintentarse una vez: quedarse bien abajo.
 const PAUSE_MS = 2_500;
 
 function argValue(name: string): string | undefined {
@@ -40,7 +41,8 @@ function remote(base: string): Ask {
     for (let attempt = 0; ; attempt++) {
       const res = await fetch(`${base}/api/asistente`, {
         method: "POST",
-        headers: { "content-type": "application/json" },
+        // Así su consumo queda separado del uso real en el panel.
+        headers: { "content-type": "application/json", "x-mt-source": "evals" },
         body: JSON.stringify({ messages }),
       });
       if (res.status === 429 && attempt === 0) {

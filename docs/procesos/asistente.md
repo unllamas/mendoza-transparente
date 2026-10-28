@@ -159,7 +159,24 @@ Solo tres eventos en PostHog, sin texto de la conversación (detalle en el plan,
 - `assistant.answer.show`, con `outcome` (`steps`, `fee`, `data`, `ask`, `unpublished`, `answer` o `no_answer`), `flow` y `municipality`;
 - `assistant.feedback.vote`, con `vote` y `reason`.
 
-Tokens y costo se miran en el tablero de uso de cada proveedor, no en PostHog. Los errores de los proveedores quedan en el log de la función (`asistente: …`), solo con el código HTTP.
+Tokens, costo y fallas de los proveedores se miran en el panel ([Consumo](#consumo)), no en PostHog. Los errores de los proveedores quedan además en el log de la función (`asistente: …`), solo con el código HTTP.
+
+## Consumo
+
+Cada respuesta guarda en D1 (migración `0007`) cuánto gastó, sin texto ni IP:
+- **`assistant_answers`:** una fila por respuesta, con si salió bien, el resultado (`outcome`), el recorrido, el municipio, cuántas llamadas hizo y cuánto tardó. `source` dice si vino del widget (`web`) o de las evals (`evals`): el script de evals manda `x-mt-source: evals`.
+- **`assistant_calls`:** una fila por cada intento contra un proveedor, también los que fallaron. Guarda la tarea (`tools` o `answer`), el proveedor, el modelo, el estado (`ok`, `http_429`, `timeout`…), los tokens de entrada y de salida, el costo y el tiempo.
+
+Se guarda después de responder (`waitUntil`), así no le suma tiempo a la persona, y también cuando la respuesta falla. Sin las tablas, Aco responde igual y deja el log `asistente: no se guardó el consumo`. Cuesta unas 3 a 5 escrituras de D1 por respuesta, dentro de las 100.000 diarias del plan gratis.
+
+**El costo** es el que informa el proveedor: OpenRouter lo manda en `usage.cost`. El AI Gateway de Vercel no lo informa en la respuesta, así que el panel lo estima con los tokens y el precio público del modelo en el [catálogo de OpenRouter](https://openrouter.ai/api/v1/models), que la función del panel guarda un día en el caché del borde. Lo estimado se marca como tal. Si un modelo no tiene precio público, sus llamadas se cuentan aparte y su gasto no se suma. El número exacto, para comparar, sigue estando en el tablero de cada proveedor.
+
+**En el panel** (pantalla **Asistente**, sección Consumo; consultas en `packages/participation/src/assistant-usage.ts`), con los últimos 30 días del widget:
+- gasto del mes y de los 30 días, costo por respuesta, respuestas y llamadas (con cuántas fallaron), tokens de entrada y de salida, y tiempo por respuesta;
+- por modelo: llamadas, tokens, gasto, qué parte del total es y cuánto tarda;
+- por proveedor: llamadas, fallas con su motivo (HTTP 429, timeout…) y tiempo;
+- por tarea (elegir herramientas o redactar), qué respondió Aco y por día;
+- aparte, lo que gastaron las evals.
 
 ## Opiniones
 

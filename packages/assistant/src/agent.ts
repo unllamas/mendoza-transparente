@@ -6,7 +6,7 @@
 
 import { INSTRUCTIONS } from "./instructions.ts";
 import type { Knowledge } from "./knowledge.ts";
-import { type AssistantEnv, type Completion, complete, type Fetcher, type WireMessage } from "./providers.ts";
+import { type AssistantEnv, type Attempt, type Completion, complete, type Fetcher, type WireMessage } from "./providers.ts";
 import {
   findSitePage,
   getMunicipality,
@@ -290,6 +290,8 @@ export interface RunOptions {
   onGap?: (gap: Gap) => void;
   /** Para logs y tests: qué proveedor respondió cada llamada. */
   onCompletion?: (c: Completion) => void;
+  /** Cada intento contra un proveedor (también los que fallaron), con tokens, costo y tiempo, para medir el consumo. */
+  onAttempt?: (a: Attempt) => void;
   /** Lo que Aco está haciendo ahora, para el widget: leer la pregunta, ejecutar una herramienta o escribir la respuesta. */
   onStatus?: (status: Progress) => void;
   /** Lo que publica el sitio (/data/asistente.json), cargado solo cuando una herramienta lo necesita. */
@@ -320,7 +322,7 @@ export async function runAgent(k: Knowledge, env: AssistantEnv, history: ChatMes
     // Último paso: sin herramientas, así que el modelo tiene que escribir.
     const last = step === MAX_STEPS - 1;
     opts.onStatus?.(step === 0 ? { phase: "thinking" } : last ? { phase: "writing" } : { phase: "thinking" });
-    const c = await complete(env, { messages, tools: last ? [] : ALL_TOOLS }, opts.fetcher, last ? "answer" : "tools");
+    const c = await complete(env, { messages, tools: last ? [] : ALL_TOOLS }, opts.fetcher, last ? "answer" : "tools", opts.onAttempt);
     opts.onCompletion?.(c);
     if (!c.toolCalls.length) {
       text = (c.content ?? "").trim();
@@ -328,7 +330,7 @@ export async function runAgent(k: Knowledge, env: AssistantEnv, history: ChatMes
       // MAX_STEPS llamadas: esto solo pasa antes del último paso.
       if (env.ASSISTANT_MODEL_ANSWER && step > 0 && !last) {
         opts.onStatus?.({ phase: "writing" });
-        const answer = await complete(env, { messages, tools: [] }, opts.fetcher, "answer");
+        const answer = await complete(env, { messages, tools: [] }, opts.fetcher, "answer", opts.onAttempt);
         opts.onCompletion?.(answer);
         text = (answer.content ?? "").trim() || text;
       }

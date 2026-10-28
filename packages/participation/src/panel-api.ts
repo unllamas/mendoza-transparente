@@ -6,6 +6,7 @@
 
 import type { Actor } from "./access.ts";
 import { assistantFeedback, assistantFeedbackNote, assistantGaps } from "./assistant.ts";
+import { assistantUsage, type ModelPrices } from "./assistant-usage.ts";
 import type { Db } from "./db.ts";
 import { error, json, pathOf, readBody } from "./http.ts";
 import { privacyWarnings } from "./privacy.ts";
@@ -155,7 +156,12 @@ async function handleSecurity(req: Request, db: Db, actor: Actor, path: string, 
   return error("Método no permitido", 405);
 }
 
-export async function handlePanel(req: Request, db: Db, actor: Actor): Promise<Response | null> {
+export interface PanelOptions {
+  /** Precios públicos de los modelos, para estimar el costo de Aco que el proveedor no informa. */
+  modelPrices?: () => Promise<ModelPrices>;
+}
+
+export async function handlePanel(req: Request, db: Db, actor: Actor, options: PanelOptions = {}): Promise<Response | null> {
   const path = pathOf(req);
   if (!path.startsWith("/api/panel")) return null;
   const now = new Date();
@@ -212,6 +218,10 @@ export async function handlePanel(req: Request, db: Db, actor: Actor): Promise<R
       return item ? json(item) : error("No existe ese envío.", 404);
     }
     if (path === "/api/panel/assistant") return json({ feedback: await assistantFeedback(db), gaps: await assistantGaps(db) });
+    if (path === "/api/panel/assistant/usage") {
+      const prices = (await options.modelPrices?.().catch(() => ({}))) ?? {};
+      return json(await assistantUsage(db, now, prices));
+    }
     const voteMatch = path.match(/^\/api\/panel\/assistant\/votes\/(\d+)$/);
     if (voteMatch) {
       // La nota y la conversación son texto de la persona y pueden traer datos personales: leerlas queda en la auditoría,

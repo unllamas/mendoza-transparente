@@ -4,7 +4,8 @@
  *   POST /api/asistente           → AssistantReply para { messages }
  *   POST /api/asistente/opinion   → guarda un pulgar arriba o abajo en D1, con la conversación votada (sin IP)
  * Cada respuesta también guarda en D1 lo que la gente preguntó y todavía no tenemos (`assistant_gaps`): un municipio,
- * una actividad o un trámite, en pocas palabras. La conversación solo se guarda si la persona vota la respuesta.
+ * una actividad o un trámite, en pocas palabras; y su consumo (`assistant_answers` y `assistant_calls`): modelo,
+ * tokens, costo y tiempo de cada llamada, sin texto. La conversación solo se guarda si la persona vota la respuesta.
  * Los pedidos tienen tope de tamaño y de largo; /api/* también tiene el límite por IP del sitio (10 cada 10 s). Con
  * ASSISTANT_TURNSTILE=on, cada conversación pasa Turnstile una vez (pass.ts).
  */
@@ -12,9 +13,9 @@
 import { runAgent } from "./agent.ts";
 import type { Knowledge } from "./knowledge.ts";
 import { checkPass, issuePass } from "./pass.ts";
-import { type AssistantEnv, configuredProviders, ProvidersUnavailable } from "./providers.ts";
+import { type AssistantEnv, type Attempt, configuredProviders, ProvidersUnavailable } from "./providers.ts";
 import type { SiteData } from "./site-data.ts";
-import type { AssistantStatus, ChatMessage, FeedbackRequest, Gap, Outcome, Progress } from "./types.ts";
+import type { AssistantReply, AssistantStatus, ChatMessage, FeedbackRequest, Gap, Outcome, Progress } from "./types.ts";
 
 /** El subconjunto de D1 que usa el endpoint de opiniones (misma forma que el Db de @mt/participation). */
 export interface FeedbackDb {
@@ -118,6 +119,63 @@ async function saveGaps(deps: AssistantDeps, gaps: Gap[]) {
   }
 }
 
+/** De dónde vino la pregunta: el script de evals se identifica con `x-mt-source: evals`, para separarlo del uso real. */
+export type UsageSource = "web" | "evals";
+
+/**
+ * Guarda el consumo de una respuesta: una fila en `assistant_answers` y una por intento en `assistant_calls`. Nunca rompe
+ * una respuesta: sin las tablas (migración 0007 todavía sin aplicar) solo deja un log.
+ */
+async function saveUsage(
+  deps: AssistantDeps,
+  usage: { source: UsageSource; started: number; reply: AssistantReply | null; attempts: Attempt[] },
+) {
+  if (!deps.db) return;
+  const at = new Date(usage.started).toISOString();
+  const id = crypto.randomUUID();
+  const { reply } = usage;
+  try {
+    await deps.db
+      .prepare(
+        "INSERT INTO assistant_answers (id, created_at, source, ok, outcome, flow, municipality, calls, ms) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      )
+      .bind(
+        id,
+        at,
+        usage.source,
+        reply ? 1 : 0,
+        reply?.outcome ?? null,
+        reply?.flow ?? null,
+        reply?.municipality ?? null,
+        usage.attempts.length,
+        Date.now() - usage.started,
+      )
+      .run();
+    for (const a of usage.attempts) {
+      await deps.db
+        .prepare(
+          `INSERT INTO assistant_calls (answer_id, created_at, task, provider, model, status, prompt_tokens, completion_tokens, cost_usd, ms)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        )
+        .bind(
+          id,
+          at,
+          a.task,
+          a.provider,
+          a.model.slice(0, 80),
+          a.status,
+          a.promptTokens ?? null,
+          a.completionTokens ?? null,
+          a.costUsd ?? null,
+          a.ms,
+        )
+        .run();
+    }
+  } catch (err) {
+    deps.log?.(`asistente: no se guardó el consumo (${(err as Error).name})`);
+  }
+}
+
 export interface AssistantDeps {
   knowledge: Knowledge;
   env: AssistantEnv;
@@ -200,16 +258,29 @@ export async function handleAssistant(req: Request, deps: AssistantDeps): Promis
     if (!human) return json({ error: "Falta la verificación", challenge: true }, 403);
     pass = await issuePass(deps.passKey);
   }
+  const source: UsageSource = req.headers.get("x-mt-source") === "evals" ? "evals" : "web";
   const answer = async (onStatus?: (s: Progress) => void) => {
     const gaps: Gap[] = [];
-    const reply = await runAgent(deps.knowledge, deps.env, messages, {
-      fetcher: deps.fetcher,
-      siteData: deps.siteData,
-      onGap: (g) => gaps.push(g),
-      onStatus,
-      onCompletion: (c) =>
-        deps.log?.(`asistente: ${c.provider} ${c.model} ${c.toolCalls.map((t) => t.function.name).join(",") || "texto"}`),
-    });
+    const attempts: Attempt[] = [];
+    const started = Date.now();
+    let reply: AssistantReply | null = null;
+    try {
+      reply = await runAgent(deps.knowledge, deps.env, messages, {
+        fetcher: deps.fetcher,
+        siteData: deps.siteData,
+        onGap: (g) => gaps.push(g),
+        onStatus,
+        onAttempt: (a) => attempts.push(a),
+        onCompletion: (c) =>
+          deps.log?.(`asistente: ${c.provider} ${c.model} ${c.toolCalls.map((t) => t.function.name).join(",") || "texto"}`),
+      });
+    } finally {
+      // Se guarda también cuando falla: una respuesta que no salió igual gastó sus intentos. Con waitUntil, después de
+      // responder, para no sumarle tiempo a la persona.
+      const saving = saveUsage(deps, { source, started, reply, attempts });
+      if (deps.waitUntil) deps.waitUntil(saving);
+      else await saving;
+    }
     await saveGaps(deps, gaps);
     return pass ? { ...reply, pass } : reply;
   };
