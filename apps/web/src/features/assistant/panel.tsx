@@ -1,15 +1,17 @@
-import type { Progress } from "@mt/assistant/types";
+import type { Block, Progress } from "@mt/assistant/types";
 import { MUNICIPALITIES } from "@mt/assistant/types";
 import { Mascot, MascotAvatar } from "@mt/mascots/mascot";
 import { Button } from "@mt/ui/components/base/buttons/button";
 import { IconButton } from "@mt/ui/components/base/buttons/icon-button";
-import { RiArrowRightSLine, RiCloseLine, RiRestartLine, RiSendPlane2Line } from "@remixicon/react";
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { RiArrowRightSLine, RiArrowRightUpLine, RiCloseLine, RiRestartLine, RiSendPlane2Line } from "@remixicon/react";
+import { Link } from "@tanstack/react-router";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { activityIcon } from "./activity-icons.ts";
 import { Andes } from "./andes.tsx";
 import { type BlockHandlers, BlockView } from "./blocks.tsx";
 import { AnswerFooter, type FeedbackSend, FeedbackSheet } from "./feedback.tsx";
 import { currentPosition, municipalityAt } from "./locate.ts";
+import { allowedHrefs, type Inline, type Paragraph, parseReplyText, plainReplyText } from "./reply-text.ts";
 import { type SearchItem, SearchSheet } from "./search-sheet.tsx";
 import { type ConversationError, progressText, type Turn } from "./use-conversation.ts";
 
@@ -86,12 +88,70 @@ function BotText({ children }: { children: ReactNode }) {
   return <p className="text-body-regular text-pretty text-text-primary">{children}</p>;
 }
 
+function InlineView({ inline, onNavigate }: { inline: Inline; onNavigate: () => void }) {
+  switch (inline.type) {
+    case "text":
+      return inline.value;
+    case "strong":
+      return <strong className="font-semibold">{inline.value}</strong>;
+    case "em":
+      return <em>{inline.value}</em>;
+    case "link":
+      // Un link del sitio navega sin recargar: el widget vive en el layout y la conversación sigue ahí.
+      return inline.internal ? (
+        <Link to={inline.href} onClick={onNavigate} className="font-medium text-text-link hover:underline">
+          {inline.label}
+        </Link>
+      ) : (
+        <a href={inline.href} target="_blank" rel="noreferrer" className="font-medium text-text-link hover:underline">
+          {inline.label}
+          <RiArrowRightUpLine className="ml-0.5 inline size-4 align-[-2px]" aria-hidden />
+        </a>
+      );
+  }
+}
+
+/** Las líneas de una lista seguidas van juntas en un mismo `ul`; el resto, un párrafo cada una. */
+function groupParagraphs(paragraphs: Paragraph[]): (Paragraph | Paragraph[])[] {
+  const groups: (Paragraph | Paragraph[])[] = [];
+  for (const p of paragraphs) {
+    const prev = groups[groups.length - 1];
+    if (p.kind === "li" && Array.isArray(prev)) prev.push(p);
+    else groups.push(p.kind === "li" ? [p] : p);
+  }
+  return groups;
+}
+
+/**
+ * El texto de una respuesta con su markdown resuelto: negrita, cursiva, listas y links. Solo se abren los links que
+ * trajeron las herramientas en los bloques de esa misma respuesta (`allowedHrefs`).
+ */
+function ReplyText({ text, blocks, onNavigate }: { text: string; blocks: Block[]; onNavigate: () => void }) {
+  const groups = useMemo(() => groupParagraphs(parseReplyText(text, allowedHrefs(blocks))), [text, blocks]);
+  const inlines = (p: Paragraph) => p.inlines.map((inline, i) => <InlineView key={i} inline={inline} onNavigate={onNavigate} />);
+  return (
+    <div className="flex flex-col gap-2 text-body-regular text-pretty text-text-primary">
+      {groups.map((group, i) =>
+        Array.isArray(group) ? (
+          <ul key={i} className="flex list-disc flex-col gap-1 pl-5 marker:text-text-tertiary">
+            {group.map((p, j) => (
+              <li key={j}>{inlines(p)}</li>
+            ))}
+          </ul>
+        ) : (
+          <p key={i}>{inlines(group)}</p>
+        ),
+      )}
+    </div>
+  );
+}
+
 /** Texto con una pequeña Aco tímida al lado: para errores y para datos que no se publican. */
 function ShyText({ children }: { children: ReactNode }) {
   return (
     <div className="flex items-end gap-2">
       <Mascot mascot="aco" pose="shy" size={48} decorative className="shrink-0" />
-      <BotText>{children}</BotText>
+      {typeof children === "string" ? <BotText>{children}</BotText> : children}
     </div>
   );
 }
@@ -203,7 +263,11 @@ export function Panel({
 
   // Solo lo más nuevo se anuncia a los lectores de pantalla: la última respuesta de Aco o el error, nunca todo.
   const last = turns[turns.length - 1];
-  const announcement = error ? ERROR_TEXT[error] : !thinking && last?.from === "assistant" ? `${NAME} respondió: ${last.reply.text}` : "";
+  const announcement = error
+    ? ERROR_TEXT[error]
+    : !thinking && last?.from === "assistant"
+      ? `${NAME} respondió: ${plainReplyText(last.reply.text)}`
+      : "";
 
   // Mantener el último mensaje a la vista, como en cualquier chat. Sin conversación, quedarse arriba: ahí está la bienvenida.
   useEffect(() => {
@@ -247,7 +311,13 @@ export function Panel({
           const answered = i < turns.length - 1;
           return (
             <BotTurn key={key}>
-              {reply.outcome === "unpublished" ? <ShyText>{reply.text}</ShyText> : <BotText>{reply.text}</BotText>}
+              {reply.outcome === "unpublished" ? (
+                <ShyText>
+                  <ReplyText text={reply.text} blocks={reply.blocks} onNavigate={handlers.onNavigate} />
+                </ShyText>
+              ) : (
+                <ReplyText text={reply.text} blocks={reply.blocks} onNavigate={handlers.onNavigate} />
+              )}
               {reply.blocks.map((block, j) => (
                 <BlockView key={`${block.type}-${j}`} block={block} answered={answered} handlers={handlers} />
               ))}
