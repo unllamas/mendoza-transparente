@@ -414,7 +414,8 @@ describe("http", () => {
     expect(answers[0]?.values.slice(2, 4)).toEqual(["web", 1]);
     expect(calls.map((c) => c.values[5])).toEqual(["http_429", "ok"]);
     expect(calls.map((c) => c.values[3])).toEqual(["gateway", "openrouter"]);
-    expect(calls[1]?.values.slice(6, 9)).toEqual([1200, 80, 0.0015]);
+    // Tokens de entrada, de salida, de la caché y de razonamiento (el falso no los informa), y el costo.
+    expect(calls[1]?.values.slice(6, 11)).toEqual([1200, 80, null, null, 0.0015]);
     expect(JSON.stringify(saved)).not.toContain("Ana");
     expect(JSON.stringify(saved)).not.toContain("municipio");
   });
