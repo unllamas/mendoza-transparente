@@ -65,6 +65,8 @@ function FeeView({ fee }: { fee: Extract<Block, { type: "fee" }>["fee"] }) {
           href={fee.source.href}
           target="_blank"
           rel="noreferrer"
+          data-track="assistant.link.open"
+          data-track-place="fee_source"
           className="flex min-h-11 items-center gap-1 self-start text-caption-1-regular text-text-link hover:underline"
         >
           {fee.source.label}
@@ -104,7 +106,13 @@ function SiteDataView({ card, onNavigate }: { card: DataCard; onNavigate: () => 
             return (
               <li key={`${row.label}-${row.href ?? row.value}`}>
                 {row.href ? (
-                  <Link to={row.href} onClick={onNavigate} className={cx(listRowVariants(), "gap-2 py-2")}>
+                  <Link
+                    to={row.href}
+                    onClick={onNavigate}
+                    data-track="assistant.link.open"
+                    data-track-place="data_row"
+                    className={cx(listRowVariants(), "gap-2 py-2")}
+                  >
                     {body}
                   </Link>
                 ) : (
@@ -118,7 +126,13 @@ function SiteDataView({ card, onNavigate }: { card: DataCard; onNavigate: () => 
       {card.note && <p className="text-caption-1-regular text-pretty text-text-secondary">{card.note}</p>}
       <ul className={listVariants()}>
         <li>
-          <Link to={card.link.href} onClick={onNavigate} className={listRowVariants()}>
+          <Link
+            to={card.link.href}
+            onClick={onNavigate}
+            data-track="assistant.link.open"
+            data-track-place="data_more"
+            className={listRowVariants()}
+          >
             <span className="min-w-0 flex-1 truncate text-body-medium text-text-link">{card.link.label}</span>
             <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
           </Link>
@@ -174,7 +188,14 @@ export function BlockView({ block, answered, handlers }: { block: Block; answere
             {block.steps.map((step, i) => (
               <li key={`${step.title}-${step.href}`}>
                 {/* Compacto a propósito: número, título y una o dos líneas de lo que importa; la fuente es la flecha. */}
-                <a href={step.href} target="_blank" rel="noreferrer" className={cx(listRowVariants(), "gap-2.5 px-3 py-2.5")}>
+                <a
+                  href={step.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  data-track="assistant.link.open"
+                  data-track-place="step"
+                  className={cx(listRowVariants(), "gap-2.5 px-3 py-2.5")}
+                >
                   <span className="w-3.5 shrink-0 self-start pt-px text-caption-1-medium text-text-tertiary tabular-nums">{i + 1}</span>
                   <span className="flex min-w-0 flex-1 flex-col">
                     <span className="line-clamp-2 text-body-medium text-pretty text-text-primary">{step.title}</span>
@@ -200,7 +221,7 @@ export function BlockView({ block, answered, handlers }: { block: Block; answere
       return (
         <ul className={listVariants()}>
           <li>
-            <Link to="/pedir" className={listRowVariants()}>
+            <Link to="/pedir" data-track="assistant.link.open" data-track-place="request" className={listRowVariants()}>
               <span className="min-w-0 flex-1 truncate text-body-medium text-text-link">
                 Pedir el dato a {block.agency.replace(/^Municipalidad de /, "")}
               </span>
