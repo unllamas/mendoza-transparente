@@ -1,8 +1,11 @@
 /**
- * The "human pass" of the assistant: when Turnstile is on (ASSISTANT_TURNSTILE=on), the first message of a
- * conversation carries a Turnstile token and the answer brings back a pass, signed with HMAC-SHA256 and valid for
- * 30 minutes, that the following messages send instead. One Turnstile check per conversation, not per message.
- * The pass carries only its expiry: nothing about the person or the conversation.
+ * El «pase» de Aco: con Turnstile prendido (ASSISTANT_TURNSTILE=on), el primer mensaje de una conversación lleva un
+ * token de Turnstile y la respuesta devuelve un pase firmado con HMAC-SHA256 que los mensajes siguientes mandan en su
+ * lugar. Un Turnstile por conversación, no por mensaje.
+ *
+ * El pase vence a los 30 minutos de emitido y no se renueva: antes se emitía uno nuevo en cada respuesta, así que
+ * quien pasaba Turnstile una vez quedaba adentro para siempre. Lleva un id al azar para contar sus mensajes
+ * (quota.ts): con el tope, se pide Turnstile de nuevo. Nada de la persona ni de la conversación.
  */
 
 export const PASS_TTL_MS = 30 * 60 * 1000;
@@ -17,16 +20,20 @@ async function sign(key: string, payload: string): Promise<string> {
 
 export async function issuePass(key: string, now = Date.now()): Promise<string> {
   const exp = String(now + PASS_TTL_MS);
-  return `${exp}.${await sign(key, exp)}`;
+  const id = crypto.randomUUID().replaceAll("-", "").slice(0, 16);
+  return `${exp}.${id}.${await sign(key, `${exp}.${id}`)}`;
 }
 
-export async function checkPass(key: string, pass: unknown, now = Date.now()): Promise<boolean> {
-  if (typeof pass !== "string" || pass.length > 200) return false;
-  const [exp, mac] = pass.split(".");
-  if (!exp || !mac || !/^\d+$/.test(exp) || Number(exp) <= now || Number(exp) > now + PASS_TTL_MS) return false;
-  const expected = await sign(key, exp);
-  // Same length always (hex of a SHA-256): compare every character so the time does not depend on where it differs.
+/** El id del pase si es válido y no venció; null si no. */
+export async function checkPass(key: string, pass: unknown, now = Date.now()): Promise<string | null> {
+  if (typeof pass !== "string" || pass.length > 200) return null;
+  const [exp, id, mac] = pass.split(".");
+  if (!exp || !id || !mac || !/^\d+$/.test(exp) || !/^[0-9a-f]{16}$/.test(id)) return null;
+  if (Number(exp) <= now || Number(exp) > now + PASS_TTL_MS) return null;
+  const expected = await sign(key, `${exp}.${id}`);
+  // Siempre el mismo largo (el hex de un SHA-256): se comparan todos los caracteres para que el tiempo no dependa de
+  // dónde difieren.
   let diff = expected.length ^ mac.length;
   for (let i = 0; i < expected.length; i++) diff |= expected.charCodeAt(i) ^ (mac.charCodeAt(i) || 0);
-  return diff === 0;
+  return diff === 0 ? id : null;
 }

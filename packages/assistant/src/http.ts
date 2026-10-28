@@ -6,14 +6,17 @@
  * Cada respuesta también guarda en D1 lo que la gente preguntó y todavía no tenemos (`assistant_gaps`): un municipio,
  * una actividad o un trámite, en pocas palabras; y su consumo (`assistant_answers` y `assistant_calls`): modelo,
  * tokens, costo y tiempo de cada llamada, sin texto. La conversación solo se guarda si la persona vota la respuesta.
- * Los pedidos tienen tope de tamaño y de largo; /api/* también tiene el límite por IP del sitio (10 cada 10 s). Con
- * ASSISTANT_TURNSTILE=on, cada conversación pasa Turnstile una vez (pass.ts).
+ * Los pedidos tienen tope de tamaño y de largo; /api/* también tiene el límite por IP del sitio (10 cada 10 s), solo en
+ * mendoza-transparente.com. Por eso Aco lleva sus propios límites por IP, por conversación y por día (quota.ts) y no
+ * responde en las direcciones *.pages.dev de producción. Con ASSISTANT_TURNSTILE=on, cada conversación pasa Turnstile
+ * una vez (pass.ts).
  */
 
 import { runAgent } from "./agent.ts";
 import type { Knowledge } from "./knowledge.ts";
 import { checkPass, issuePass } from "./pass.ts";
 import { type AssistantEnv, type Attempt, configuredProviders, ProvidersUnavailable } from "./providers.ts";
+import { hashIp, type Limits, type QuotaDb, type QuotaLimit, takeQuota } from "./quota.ts";
 import type { SiteData } from "./site-data.ts";
 import type { AssistantReply, AssistantStatus, ChatMessage, FeedbackRequest, Gap, Outcome, Progress } from "./types.ts";
 
@@ -190,13 +193,27 @@ export interface AssistantDeps {
   siteData?: () => Promise<SiteData | null>;
   /** Mantiene viva la Function hasta que se escribe una respuesta en streaming (waitUntil de Pages). */
   waitUntil?: (promise: Promise<unknown>) => void;
+  /**
+   * Los límites de uso (quota.ts). `limits` sale de `limitsForHost`: null quiere decir que ese host no atiende a Aco.
+   * Sin `quota` (tests, el servidor de Vite) no hay límites.
+   */
+  quota?: { db: QuotaDb; limits: Limits | null; ip: string; ipSalt?: string };
 }
+
+/** Lo que lee la persona cuando se corta por un límite; el widget elige su texto con `limit`. */
+const QUOTA_TEXT: Record<Exclude<QuotaLimit, "session">, string> = {
+  burst: "Demasiadas preguntas seguidas",
+  ip_day: "Llegaste al límite de preguntas de hoy",
+  site_day: "Aco llegó al límite de preguntas de hoy",
+};
 
 /** Atiende /api/asistente*; devuelve null para cualquier otra ruta. */
 export async function handleAssistant(req: Request, deps: AssistantDeps): Promise<Response | null> {
   const path = new URL(req.url).pathname.replace(/\/+$/, "");
   if (path !== "/api/asistente" && path !== "/api/asistente/opinion") return null;
-  const enabled = configuredProviders(deps.env).length > 0;
+  // Un host que no atiende a Aco (las direcciones *.pages.dev de producción) lo muestra apagado y no responde.
+  const blocked = deps.quota?.limits === null;
+  const enabled = configuredProviders(deps.env).length > 0 && !blocked;
   const challenge = deps.env.ASSISTANT_TURNSTILE === "on";
 
   // Se pide en cada visita: cacheado 5 minutos en el borde para que no cueste una llamada a la Function por vista de página.
@@ -204,6 +221,7 @@ export async function handleAssistant(req: Request, deps: AssistantDeps): Promis
     return json({ enabled, ...(challenge ? { challenge } : {}) } satisfies AssistantStatus, 200, "public, max-age=300");
 
   if (req.method !== "POST") return fail("Método no permitido", 405);
+  if (blocked) return fail("Aco responde en mendoza-transparente.com", 403);
   let body: unknown;
   try {
     body = await readJson(req);
@@ -248,15 +266,25 @@ export async function handleAssistant(req: Request, deps: AssistantDeps): Promis
   const messages = sanitizeMessages(body);
   if (!messages) return fail("Conversación inválida", 400);
   let pass: string | undefined;
+  let passId: string | undefined;
   if (challenge) {
     // Falla cerrado: encendido sin el secreto, no pasa nadie en vez de pasar todos.
     if (!deps.verifyHuman || !deps.passKey) return fail("El asistente está en pausa por mantenimiento", 503);
     const proof = body as { pass?: unknown; turnstile?: unknown };
-    const human =
-      (await checkPass(deps.passKey, proof.pass)) ||
-      (typeof proof.turnstile === "string" && proof.turnstile.length <= 2048 && (await deps.verifyHuman(proof.turnstile)));
-    if (!human) return json({ error: "Falta la verificación", challenge: true }, 403);
-    pass = await issuePass(deps.passKey);
+    passId = (await checkPass(deps.passKey, proof.pass)) ?? undefined;
+    // El pase no se renueva: vence a los 30 minutos de emitido y después se pide Turnstile de nuevo.
+    if (!passId && typeof proof.turnstile === "string" && proof.turnstile.length <= 2048 && (await deps.verifyHuman(proof.turnstile))) {
+      pass = await issuePass(deps.passKey);
+      passId = pass.split(".")[1];
+    }
+    if (!passId) return json({ error: "Falta la verificación", challenge: true }, 403);
+  }
+  if (deps.quota?.limits) {
+    const { db, limits, ip, ipSalt } = deps.quota;
+    const hit = await takeQuota(db, limits, { ipHash: await hashIp(ip, ipSalt), passId }, Date.now(), deps.log);
+    // La conversación llegó a su tope de mensajes: el widget muestra Turnstile y sigue con un pase nuevo.
+    if (hit === "session") return json({ error: "Falta la verificación", challenge: true }, 403);
+    if (hit) return json({ error: QUOTA_TEXT[hit], limit: hit }, 429);
   }
   const source: UsageSource = req.headers.get("x-mt-source") === "evals" ? "evals" : "web";
   const answer = async (onStatus?: (s: Progress) => void) => {

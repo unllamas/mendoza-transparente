@@ -307,7 +307,7 @@ Cada push a `main` publica solo, incluidos los commits automáticos de datos. A 
 - Dominio con HTTPS obligatorio y TLS 1.2 como mínimo.
 - `www.mendoza-transparente.com` redirige con 301 a `mendoza-transparente.com`, con la misma ruta y la misma query (Redirect Rule de la zona, «www a dominio principal (301)»). Sin ella, `www` servía el sitio entero con 200: dos direcciones para el mismo contenido, links compartidos de las dos formas y métricas repartidas entre dos hosts. El `www` sigue como dominio del proyecto de Pages para que tenga certificado; la regla actúa antes.
 - Bot Fight Mode activado. La protección contra robots de IA está apagada a propósito: queremos que nos lean y citen.
-- Límite de pedidos: `/api/*` en el sitio público (no en `panel.`), 10 cada 10 segundos por IP con cualquier método; si se supera, bloqueo de 10 segundos (máximo del plan gratis, que permite una sola regla).
+- Límite de pedidos: `/api/*` en el sitio público (no en `panel.`), 10 cada 10 segundos por IP con cualquier método; si se supera, bloqueo de 10 segundos (máximo del plan gratis, que permite una sola regla). La regla es de la zona: las direcciones `*.pages.dev` no pasan por ella. Por eso el asistente tiene sus propios límites y no responde en las de producción ([Asistente](asistente.md#límites-contra-el-abuso-y-el-gasto)).
 - Regla de WAF «Escáneres» (18/10/2026): bloquea las rutas que el sitio no tiene y que solo piden los escáneres (`.php`, `/wp-`, `/.env`, `/.git`, `/cgi-bin`) y los puertos que no son 80 ni 443. Sin ella, `/api/.env` y parecidas invocaban la función.
 
 **Robots y consumo.** Leer el sitio es gratis y queremos que lo lean, así que no se bloquea a nadie por ser robot. Lo que se cuida es lo que tiene cupo:
