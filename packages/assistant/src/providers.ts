@@ -105,10 +105,11 @@ export class ProvidersUnavailable extends Error {}
 
 const TIMEOUT_MS = 20_000;
 /**
- * Tope de salida por llamada. El texto tiene como máximo 280 caracteres (unos 80 tokens) y una llamada a herramientas,
- * menos: 400 deja margen y acota lo que puede gastar una respuesta que se va de largo.
+ * Tope de salida por llamada. Aunque el texto tiene como máximo 280 caracteres, el modelo genera más (unos 200 tokens
+ * de promedio en las evals): con 400, una de cada diez llamadas llegaba al tope y algunas respuestas salían cortadas.
+ * 700 acota el gasto sin cortar.
  */
-const MAX_TOKENS = 400;
+const MAX_TOKENS = 700;
 
 /** El modelo de una tarea en un proveedor: el de la tarea si está, si no el del proveedor, si no el general. */
 export function modelFor(env: AssistantEnv, provider: ProviderId, task: Task): string {
