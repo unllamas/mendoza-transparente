@@ -13,7 +13,7 @@ import { runAgent } from "./agent.ts";
 import type { Knowledge } from "./knowledge.ts";
 import { checkPass, issuePass } from "./pass.ts";
 import { type AssistantEnv, configuredProviders, ProvidersUnavailable } from "./providers.ts";
-import type { AssistantStatus, ChatMessage, FeedbackRequest, Gap, Outcome } from "./types.ts";
+import type { AssistantStatus, ChatMessage, FeedbackRequest, Gap, Outcome, Progress } from "./types.ts";
 
 /** The subset of D1 the feedback endpoint uses (same shape as @mt/participation's Db). */
 export interface FeedbackDb {
@@ -96,6 +96,8 @@ export interface AssistantDeps {
   verifyHuman?: (token: string) => Promise<boolean>;
   /** Secret that signs the conversation pass (the Turnstile secret). Needed when ASSISTANT_TURNSTILE is on. */
   passKey?: string;
+  /** Keeps the Function alive until a streamed answer is written (Pages' waitUntil). */
+  waitUntil?: (promise: Promise<unknown>) => void;
 }
 
 /** Handles /api/asistente*; returns null for any other path. */
@@ -150,18 +152,46 @@ export async function handleAssistant(req: Request, deps: AssistantDeps): Promis
     if (!human) return json({ error: "Falta la verificación", challenge: true }, 403);
     pass = await issuePass(deps.passKey);
   }
-  try {
+  const answer = async (onStatus?: (s: Progress) => void) => {
     const gaps: Gap[] = [];
     const reply = await runAgent(deps.knowledge, deps.env, messages, {
       fetcher: deps.fetcher,
       onGap: (g) => gaps.push(g),
+      onStatus,
       onCompletion: (c) =>
         deps.log?.(`asistente: ${c.provider} ${c.model} ${c.toolCalls.map((t) => t.function.name).join(",") || "texto"}`),
     });
     await saveGaps(deps, gaps);
-    return json(pass ? { ...reply, pass } : reply);
+    return pass ? { ...reply, pass } : reply;
+  };
+  const logError = (err: unknown) => deps.log?.(`asistente: ${err instanceof ProvidersUnavailable ? err.message : (err as Error).name}`);
+
+  // The widget asks for NDJSON: one line per step ({ status }) while Aco works, then { reply } or { error }. That is
+  // how it can say "buscando la tasa" instead of a spinner for 20 seconds. Anything else (the evals) gets plain JSON.
+  if ((req.headers.get("accept") ?? "").includes("application/x-ndjson")) {
+    const { readable, writable } = new TransformStream<Uint8Array, Uint8Array>();
+    const writer = writable.getWriter();
+    const encoder = new TextEncoder();
+    const send = (line: unknown) => writer.write(encoder.encode(`${JSON.stringify(line)}\n`)).catch(() => {});
+    const work = (async () => {
+      try {
+        await send({ reply: await answer((status) => void send({ status })) });
+      } catch (err) {
+        logError(err);
+        await send({ error: "No pude responder ahora" });
+      } finally {
+        await writer.close().catch(() => {});
+      }
+    })();
+    deps.waitUntil?.(work);
+    return new Response(readable, {
+      headers: { "content-type": "application/x-ndjson; charset=utf-8", "cache-control": "no-store", "x-content-type-options": "nosniff" },
+    });
+  }
+  try {
+    return json(await answer());
   } catch (err) {
-    deps.log?.(`asistente: ${err instanceof ProvidersUnavailable ? err.message : (err as Error).name}`);
+    logError(err);
     return fail("No pude responder ahora", 502);
   }
 }

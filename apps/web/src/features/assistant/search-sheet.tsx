@@ -1,11 +1,13 @@
 import { IconButton } from "@mt/ui/components/base/buttons/icon-button";
 import { listRowVariants, listVariants } from "@mt/ui/components/card";
-import { RiArrowRightSLine, RiCloseLine, RiSearchLine } from "@remixicon/react";
+import { type RemixiconComponentType, RiArrowRightSLine, RiCloseLine, RiSearchLine } from "@remixicon/react";
 import { useState } from "react";
 import { normalizeText } from "@/lib.ts";
 
 export interface SearchItem {
   label: string;
+  /** Shown before the label, so a long list is read by its icons (the activities). */
+  icon?: RemixiconComponentType;
   /** Other ways of saying it, matched by the search but not shown. */
   words?: string[];
 }
@@ -62,6 +64,7 @@ export function SearchSheet({
               {shown.map((item) => (
                 <li key={item.label}>
                   <button type="button" onClick={() => onPick(item.label)} className={listRowVariants()}>
+                    {item.icon && <item.icon className="size-5 shrink-0 text-foreground-icon-secondary" aria-hidden />}
                     <span className="min-w-0 flex-1 truncate text-body-regular text-text-primary">{item.label}</span>
                     <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
                   </button>

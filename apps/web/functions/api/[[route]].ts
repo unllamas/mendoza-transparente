@@ -50,6 +50,7 @@ export const onRequest = async (ctx: {
       log: console.log,
       verifyHuman: (token) => verifyTurnstile(token, ip, { turnstileSecret: ctx.env.TURNSTILE_SECRET }),
       passKey: ctx.env.TURNSTILE_SECRET,
+      waitUntil: (p) => ctx.waitUntil(p),
     })) ??
     (await handlePublic(request, ctx.env.DB, { turnstileSecret: ctx.env.TURNSTILE_SECRET, ipSalt: ctx.env.IP_SALT }, ip)) ??
     new Response("No existe", { status: 404 });

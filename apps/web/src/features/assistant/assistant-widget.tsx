@@ -116,9 +116,11 @@ export default function AssistantWidget({ challenge = false }: { challenge?: boo
           <Panel
             turns={conversation.turns}
             thinking={conversation.thinking}
+            progress={conversation.progress}
             error={conversation.error}
             onSend={conversation.send}
             onRetry={conversation.retry}
+            onRestart={conversation.reset}
             verification={
               conversation.verification.needed && <Turnstile key={conversation.verification.key} onToken={conversation.onToken} />
             }

@@ -90,7 +90,7 @@ El relevamiento está en `docs/relevamiento-fuentes.md#212-impuestos-provinciale
   - Hace falta Turnstile y un límite por IP.
   - Hay que decir de qué cupo sale el gasto (ver `docs/procesos/arquitectura.md#costo-cero`).
   - Verificar el cupo gratis de cada proveedor antes de decidir.
-- El aviso de IA va una sola vez, debajo del campo para escribir: «Aco usa IA con datos oficiales y puede equivocarse. Confirmá en la ventanilla». Cada respuesta muestra sus fuentes a la vista.
+- El aviso de IA va en el encabezado del widget («Responde con IA y datos oficiales»), y la bienvenida pide confirmar en la ventanilla. Cada respuesta muestra sus fuentes a la vista. Reglas del widget en `docs/procesos/asistente.md#el-widget`.
 - **Opinión sobre cada respuesta.** Debajo de cada respuesta va cuándo se dio y dos pulgares chicos, sin mensaje de agradecimiento.
   - El 👍 hace una animación corta.
   - El 👎 abre una hoja con tres motivos (un dato está mal, no respondió lo que pregunté, falta información o un paso) y una descripción opcional.

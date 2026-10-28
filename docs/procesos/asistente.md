@@ -17,6 +17,20 @@ Aco es el chat flotante del sitio. Responde qué hay que hacer, qué papeles hac
 | Opiniones | Tabla `assistant_feedback` de D1 (migración `0004`) | Voto, motivo y nota opcional. Sin IP ni texto de la conversación |
 | Faltantes | Tabla `assistant_gaps` de D1 (migración `0005`) | Lo que se pidió y no tenemos: municipio, rubro o trámite, en pocas palabras |
 
+## El widget
+
+Reglas que salieron de probarlo (27/10/2026). Cada una responde a algo que molestaba:
+
+- **La bienvenida se va con la primera pregunta.** La postal con Aco, el texto y las sugerencias solo se ven con la conversación vacía. Después, el encabezado ya muestra a Aco y el espacio es para la conversación.
+- **El aviso de IA va en el encabezado** («Responde con IA y datos oficiales»), siempre a la vista y sin ocupar una línea debajo del campo. La bienvenida suma «Confirmalo siempre en la ventanilla».
+- **Las sugerencias entran en una línea a 320 px y solo preguntan lo que Aco puede resolver.** Una sugerencia que termina en «no tengo ese dato» es peor que ninguna. Por eso se sacó la de Ingresos Brutos hasta que esté en el conocimiento.
+- **Mientras responde, Aco dice qué está haciendo, en pocas palabras y arriba del campo:** «Leyendo tu pregunta», «Buscando la tasa en la ordenanza», «Escribiendo la respuesta». Es el estado real de cada paso: la API lo manda línea a línea (NDJSON) cuando el widget pide `Accept: application/x-ndjson`. Nunca muestra el nombre de la herramienta ni a la mascota.
+- **Nunca queda colgado:** a los 60 segundos la respuesta se da por perdida y aparece «Reintentar». El botón del encabezado (↻) empieza una conversación nueva.
+- **La respuesta mide un tuit como máximo** (280 caracteres): presenta lo que se ve y dice qué hacer. Lo controlan las instrucciones y las evals.
+- **Los pasos van compactos:** número, título y hasta dos líneas de detalle. La flecha abre la fuente.
+- **Las listas de rubros llevan el ícono de cada uno** (`activity-icons.ts`, uno por cada rubro de `rubros.yaml`). Un rubro nuevo suma su ícono ahí.
+- **«Pedir el dato» va una vez por organismo**, y solo a los que vienen al caso: sin municipio, solo la Provincia y la Nación.
+
 ## La tasa y lo que no tenemos
 
 Son reglas del código, no de las instrucciones al modelo, así que no dependen de que el modelo las cumpla:

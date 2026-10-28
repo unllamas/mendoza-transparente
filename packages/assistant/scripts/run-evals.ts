@@ -86,7 +86,7 @@ for (const [i, c] of cases.entries()) {
     for (const b of c.noBlocks ?? []) if (reply.blocks.some((x) => x.type === b)) problems.push(`sobra el bloque ${b}`);
     for (const r of c.says ?? []) if (!r.test(reply.text)) problems.push(`no dice ${r}`);
     for (const r of [...NEVER, ...(c.neverSays ?? [])]) if (r.test(reply.text)) problems.push(`dice ${r}`);
-    if (reply.text.split(/\s+/).length > 120) problems.push("más de 120 palabras");
+    if (reply.text.length > 300) problems.push(`${reply.text.length} caracteres (el máximo es un tuit, 280)`);
     console.log(
       `${problems.length ? "✗" : "✓"} ${c.name} (${source})${problems.length ? `\n    ${problems.join("\n    ")}\n    «${reply.text}»` : ""}`,
     );
