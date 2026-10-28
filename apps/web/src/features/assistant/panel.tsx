@@ -1,9 +1,8 @@
-import type { Progress } from "@mt/assistant/types";
+import type { Block, Progress } from "@mt/assistant/types";
 import { MUNICIPALITIES } from "@mt/assistant/types";
 import { Mascot, MascotAvatar } from "@mt/mascots/mascot";
 import { Button } from "@mt/ui/components/base/buttons/button";
 import { IconButton } from "@mt/ui/components/base/buttons/icon-button";
-import type { Block } from "@mt/assistant/types";
 import { RiArrowRightSLine, RiArrowRightUpLine, RiCloseLine, RiRestartLine, RiSendPlane2Line } from "@remixicon/react";
 import { Link } from "@tanstack/react-router";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
@@ -264,7 +263,11 @@ export function Panel({
 
   // Solo lo más nuevo se anuncia a los lectores de pantalla: la última respuesta de Aco o el error, nunca todo.
   const last = turns[turns.length - 1];
-  const announcement = error ? ERROR_TEXT[error] : !thinking && last?.from === "assistant" ? `${NAME} respondió: ${plainReplyText(last.reply.text)}` : "";
+  const announcement = error
+    ? ERROR_TEXT[error]
+    : !thinking && last?.from === "assistant"
+      ? `${NAME} respondió: ${plainReplyText(last.reply.text)}`
+      : "";
 
   // Mantener el último mensaje a la vista, como en cualquier chat. Sin conversación, quedarse arriba: ahí está la bienvenida.
   useEffect(() => {
