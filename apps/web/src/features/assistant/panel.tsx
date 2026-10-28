@@ -16,13 +16,14 @@ import { type ConversationError, progressText, type Turn } from "./use-conversat
 export const NAME = "Aco";
 
 /**
- * Short enough for one line at 320 px, and only what Aco can answer with what we have: a suggestion it then cannot
- * resolve is worse than none (Ingresos Brutos is not in the knowledge yet).
+ * Lo bastante cortas para una línea a 320 px, y solo lo que Aco puede responder con lo que tenemos: una sugerencia que
+ * después no puede resolver es peor que ninguna (Ingresos Brutos todavía no está en el conocimiento). Una por tipo: un
+ * trámite, una tasa, los datos del sitio.
  */
-const SUGGESTIONS = ["¿Cómo abro un comercio?", "¿Cuánto cobra mi municipio?", "¿Cuánto tarda la habilitación?"];
+const SUGGESTIONS = ["¿Cómo abro un comercio?", "¿Cuánto cobra mi municipio?", "¿Quién le vende al Estado?"];
 
-/** Answers that get the time and the thumbs; the ones that only ask something do not. */
-const RATED = new Set(["steps", "fee", "unpublished", "answer"]);
+/** Respuestas que llevan la hora y los pulgares; las que solo preguntan algo, no. */
+const RATED = new Set(["steps", "fee", "data", "unpublished", "answer"]);
 
 function Header({ onClose, onRestart }: { onClose: () => void; onRestart?: () => void }) {
   return (
@@ -33,7 +34,7 @@ function Header({ onClose, onRestart }: { onClose: () => void; onRestart?: () =>
       </span>
       <span className="flex min-w-0 flex-1 flex-col">
         <span className="truncate text-body-semibold text-text-primary">{NAME}</span>
-        {/* The AI notice lives here: always in sight, without taking a line under the composer. */}
+        {/* El aviso de IA vive acá: siempre a la vista, sin ocupar una línea debajo del campo de texto. */}
         <span className="truncate text-caption-1-regular text-text-secondary">Responde con IA y datos oficiales</span>
       </span>
       {onRestart && <IconButton icon={RiRestartLine} aria-label="Empezar de nuevo" onClick={onRestart} />}
@@ -43,8 +44,8 @@ function Header({ onClose, onRestart }: { onClose: () => void; onRestart?: () =>
 }
 
 /**
- * Welcome: the mascot over the Andes with two speech bubbles, like a postcard. Only before the first question: after
- * that the header already shows Aco, and the space is for the conversation.
+ * Bienvenida: la mascota sobre los Andes con dos globos de diálogo, como una postal. Solo antes de la primera pregunta:
+ * después el encabezado ya muestra a Aco, y el espacio es para la conversación.
  */
 function Hero() {
   return (
@@ -62,7 +63,7 @@ function Hero() {
         ¡Hola! Soy {NAME} 👋
       </p>
       <p className="absolute right-5 bottom-5 rotate-2 rounded-2xl rounded-br-sm bg-accent-600 px-3 py-1.5 text-body-bold text-white shadow-md">
-        Te ayudo con tus trámites
+        Trámites y datos del Estado
       </p>
     </div>
   );
@@ -76,7 +77,7 @@ function UserBubble({ children }: { children: ReactNode }) {
   );
 }
 
-/** Agent column: no bubble, 85% of the width, so its turns and the user's read as two sides. */
+/** Columna del agente: sin globo, 85% del ancho, para que sus turnos y los del usuario se lean como dos lados. */
 function BotTurn({ children }: { children: ReactNode }) {
   return <div className="flex w-[85%] max-w-[85%] flex-col gap-4 self-start">{children}</div>;
 }
@@ -85,7 +86,7 @@ function BotText({ children }: { children: ReactNode }) {
   return <p className="text-body-regular text-pretty text-text-primary">{children}</p>;
 }
 
-/** Text with a small shy Aco beside it: for errors and for data that is not published. */
+/** Texto con una pequeña Aco tímida al lado: para errores y para datos que no se publican. */
 function ShyText({ children }: { children: ReactNode }) {
   return (
     <div className="flex items-end gap-2">
@@ -113,7 +114,7 @@ function Suggestions({ onAsk }: { onAsk: (q: string) => void }) {
   );
 }
 
-/** Re-renders every 30 seconds so "hace 2 min" keeps up. */
+/** Se vuelve a renderizar cada 30 segundos para que "hace 2 min" se mantenga al día. */
 function useNow() {
   const [now, setNow] = useState(() => Date.now());
   useEffect(() => {
@@ -123,7 +124,7 @@ function useNow() {
   return now;
 }
 
-/** What Aco is doing, right above the composer: a pulsing dot and a few words, never the mascot or a long sentence. */
+/** Lo que Aco está haciendo, justo arriba del campo de texto: un punto que pulsa y unas pocas palabras, nunca la mascota. */
 function ProgressLine({ progress }: { progress: Progress | null }) {
   return (
     <p className="flex shrink-0 items-center gap-2 px-5 pt-2 text-caption-1-regular text-text-secondary">
@@ -141,7 +142,7 @@ const ERROR_TEXT: Record<ConversationError, string> = {
   challenge: "No pude comprobar que no sos un robot. Probá de nuevo.",
 };
 
-/** The error with its retry button. After a rate limit (10 requests every 10 s per IP) the button waits 10 s. */
+/** El error con su botón de reintento. Tras un límite de uso (10 pedidos cada 10 s por IP) el botón espera 10 s. */
 function ErrorTurn({ error, onRetry }: { error: ConversationError; onRetry: () => void }) {
   const [waiting, setWaiting] = useState(error === "rate-limit");
   useEffect(() => {
@@ -160,7 +161,7 @@ function ErrorTurn({ error, onRetry }: { error: ConversationError; onRetry: () =
   );
 }
 
-/** The panel: header with the mascot, conversation, and the composer pinned at the bottom with Aco's progress over it. */
+/** El panel: encabezado con la mascota, conversación y el campo de texto fijo abajo con el progreso de Aco encima. */
 export function Panel({
   turns,
   thinking,
@@ -170,6 +171,7 @@ export function Panel({
   onRetry,
   onRestart,
   onClose,
+  onNavigate,
   verification,
 }: {
   turns: Turn[];
@@ -180,36 +182,38 @@ export function Panel({
   onRetry: () => void;
   onRestart: () => void;
   onClose: () => void;
-  /** The Turnstile widget, while the conversation still has to prove it is a person. */
+  /** Se abrió desde una respuesta un enlace a una página del sitio. */
+  onNavigate?: () => void;
+  /** El widget de Turnstile, mientras la conversación todavía tiene que demostrar que es una persona. */
   verification?: ReactNode;
 }) {
   const [draft, setDraft] = useState("");
-  // The open picker, if any: the 18 municipalities or the activities of the last question.
+  // El selector abierto, si hay alguno: los 18 municipios o las actividades de la última pregunta.
   const [sheet, setSheet] = useState<null | { kind: "municipality" } | { kind: "activity"; items: (SearchItem & { id?: string })[] }>(null);
-  // The thumbs-down form of an answer, open over the whole panel.
+  // El formulario del pulgar abajo de una respuesta, abierto sobre todo el panel.
   const [feedback, setFeedback] = useState<{ send: FeedbackSend } | null>(null);
   const scroller = useRef<HTMLDivElement>(null);
   const input = useRef<HTMLInputElement>(null);
   const now = useNow();
 
-  // The panel opens with the cursor in the question field.
+  // El panel se abre con el cursor en el campo de la pregunta.
   useEffect(() => {
     input.current?.focus({ preventScroll: true });
   }, []);
 
-  // Only the newest thing is announced to screen readers: Aco's last reply or the error, never the whole conversation.
+  // Solo lo más nuevo se anuncia a los lectores de pantalla: la última respuesta de Aco o el error, nunca todo.
   const last = turns[turns.length - 1];
   const announcement = error ? ERROR_TEXT[error] : !thinking && last?.from === "assistant" ? `${NAME} respondió: ${last.reply.text}` : "";
 
-  // Keep the latest message in sight, as in any chat. With no conversation yet, stay on top: the welcome is there.
+  // Mantener el último mensaje a la vista, como en cualquier chat. Sin conversación, quedarse arriba: ahí está la bienvenida.
   useEffect(() => {
     if (!turns.length && !thinking && !error) return;
     scroller.current?.scrollTo({ top: scroller.current.scrollHeight });
   }, [turns.length, thinking, error]);
 
   const handlers: BlockHandlers = {
-    // The position is matched against the department map in the browser; only the municipality name is sent.
-    // Denied, unavailable or outside Mendoza: the list opens, so nobody is left without a way forward.
+    // La posición se compara con el mapa de departamentos en el navegador; solo se manda el nombre del municipio.
+    // Denegada, no disponible o fuera de Mendoza: se abre la lista, para que nadie se quede sin camino.
     onLocate: async () => {
       const coords = await currentPosition();
       const municipality = coords ? await municipalityAt(coords.latitude, coords.longitude).catch(() => null) : null;
@@ -219,6 +223,7 @@ export function Panel({
     onPickMunicipality: () => setSheet({ kind: "municipality" }),
     onSearchActivity: (items) => setSheet({ kind: "activity", items }),
     onChoose: onSend,
+    onNavigate: () => onNavigate?.(),
   };
 
   return (

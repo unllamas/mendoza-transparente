@@ -5,13 +5,13 @@ import { AssistantApiError, sendMessages } from "./api.ts";
 
 export type Turn = { from: "user"; text: string } | { from: "assistant"; reply: AssistantReply; at: number };
 
-/** Why the last request failed: the per-IP rate limit (429), the Turnstile check (403) or anything else. */
+/** Por qué falló el último pedido: el límite por IP (429), la verificación de Turnstile (403) u otra cosa. */
 export type ConversationError = "rate-limit" | "challenge" | "generic";
 
-/** How long the first message waits for Turnstile before giving up with an error the person can retry. */
+/** Cuánto espera el primer mensaje a Turnstile antes de rendirse con un error que la persona puede reintentar. */
 const TOKEN_WAIT_MS = 15_000;
 
-/** What Aco is doing, in the person's words: short, and never the tool's name. */
+/** Lo que Aco está haciendo, en palabras de la persona: corto, y nunca el nombre de la herramienta. */
 export function progressText(p: Progress | null): string {
   if (!p || p.phase === "thinking") return "Leyendo tu pregunta";
   if (p.phase === "writing") return "Escribiendo la respuesta";
@@ -26,6 +26,16 @@ export function progressText(p: Progress | null): string {
       return "Mirando qué trámites tenemos";
     case "ask_user":
       return "Preparando una pregunta";
+    case "search_purchases":
+      return "Buscando en las compras";
+    case "search_people":
+      return "Buscando en las autoridades";
+    case "get_municipality":
+      return "Mirando la ficha del municipio";
+    case "search_laws":
+      return "Buscando en las leyes";
+    case "find_site_page":
+      return "Buscando en el sitio";
     default:
       return "Buscando en las fuentes";
   }
@@ -34,7 +44,7 @@ export function progressText(p: Progress | null): string {
 const MAX_MESSAGES = 12;
 const MAX_CHARS = 500;
 
-/** The last 12 messages, each cut to 500 characters: what the API gets as context. */
+/** Los últimos 12 mensajes, cada uno acortado a 500 caracteres: lo que recibe la API como contexto. */
 function toMessages(turns: Turn[]): ChatMessage[] {
   return turns
     .map((t): ChatMessage => (t.from === "user" ? { role: "user", content: t.text } : { role: "assistant", content: t.reply.text }))
@@ -43,10 +53,10 @@ function toMessages(turns: Turn[]): ChatMessage[] {
 }
 
 /**
- * The conversation, in memory only: it is not in the URL or in storage, and goes away when the page is reloaded.
- * With `challenge` (Turnstile on), the first request carries a Turnstile token and the next ones the pass that the
- * first answer brought back. `verification` says whether the Turnstile widget has to be on screen, and its `key`
- * changes to get a fresh token after a failed attempt (each token works once).
+ * La conversación, solo en memoria: no está en la URL ni en el almacenamiento, y desaparece al recargar la página.
+ * Con `challenge` (Turnstile activado), el primer pedido lleva un token de Turnstile y los siguientes el pase que trajo
+ * la primera respuesta. `verification` dice si el widget de Turnstile tiene que estar en pantalla, y su `key` cambia
+ * para conseguir un token nuevo tras un intento fallido (cada token sirve una vez).
  */
 export function useConversation(challenge = false) {
   const [turns, setTurns] = useState<Turn[]>([]);
@@ -68,7 +78,7 @@ export function useConversation(challenge = false) {
     }
   }, []);
 
-  /** What proves this is a person: nothing, the pass, or a fresh token (waited for, if Turnstile is still working). */
+  /** Lo que prueba que es una persona: nada, el pase, o un token nuevo (se espera, si Turnstile todavía está trabajando). */
   const proof = useCallback(async () => {
     if (!challenge) return {};
     if (pass.current) return { pass: pass.current };
@@ -101,7 +111,7 @@ export function useConversation(challenge = false) {
       const status = e instanceof AssistantApiError ? e.status : 0;
       setError(status === 429 ? "rate-limit" : status === 403 ? "challenge" : "generic");
       if (challenge && status !== 429) {
-        // The token was spent (or the pass expired): show Turnstile again for a fresh one.
+        // El token se gastó (o el pase venció): mostrar Turnstile de nuevo para conseguir uno nuevo.
         if (status === 403) pass.current = null;
         if (!pass.current) setVerification((v) => ({ needed: true, key: v.key + 1 }));
       }
@@ -122,7 +132,7 @@ export function useConversation(challenge = false) {
     [request],
   );
 
-  /** Starts over: a stuck or finished conversation should never need a reload. The Turnstile pass is kept. */
+  /** Empezar de cero: una conversación trabada o terminada no debería pedir una recarga. Se conserva el pase de Turnstile. */
   const reset = useCallback(() => {
     if (busy.current) return;
     turnsRef.current = [];

@@ -9,7 +9,7 @@ import { Turnstile } from "@/components/turnstile.tsx";
 import { NAME, Panel } from "./panel.tsx";
 import { useConversation } from "./use-conversation.ts";
 
-/** Closed state: the mascot's face plus a short verb. When open on desktop it turns into a chevron that closes. */
+/** Estado cerrado: la cara de la mascota más un verbo corto. Abierto en escritorio se vuelve una flecha que cierra. */
 function Launcher({ open, onPress, className }: { open: boolean; onPress: () => void; className?: string }) {
   if (open)
     return (
@@ -29,7 +29,7 @@ function Launcher({ open, onPress, className }: { open: boolean; onPress: () => 
     <button
       type="button"
       onClick={onPress}
-      aria-label={`Preguntale a ${NAME} por un trámite`}
+      aria-label={`Preguntale a ${NAME} por un trámite o un dato`}
       className={cx(
         "flex h-14 items-center gap-2 rounded-full bg-background-surface py-1.5 pr-5 pl-1.5 shadow-lg transition-[box-shadow,transform] hover:shadow-xl motion-safe:active:scale-95",
         className,
@@ -44,16 +44,16 @@ function Launcher({ open, onPress, className }: { open: boolean; onPress: () => 
 const FOCUSABLE =
   'a[href],button:not([disabled]),input:not([disabled]),textarea:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])';
 
-/** The floating assistant: launcher plus panel. Full screen on phones, 380 × 620 px at the bottom right on desktop. */
+/** El asistente flotante: lanzador más panel. Pantalla completa en celulares, 380 × 620 px abajo a la derecha en escritorio. */
 export default function AssistantWidget({ challenge = false }: { challenge?: boolean }) {
   const [open, setOpen] = useState(false);
   const conversation = useConversation(challenge);
   const dialog = useRef<HTMLDivElement>(null);
-  // What had the focus when the panel opened (the launcher), so closing puts it back there.
+  // Lo que tenía el foco cuando se abrió el panel (el lanzador), para que al cerrar vuelva ahí.
   const opener = useRef<HTMLElement | null>(null);
   const isPhone = useMediaQuery("(max-width: 639px)");
 
-  // On phones the panel is full screen: the page behind must not scroll (a single scroll at a time).
+  // En celulares el panel es pantalla completa: la página de atrás no debe scrollear (un solo scroll a la vez).
   useScrollLock(open && isPhone);
 
   const toggle = (next: boolean) => {
@@ -64,8 +64,8 @@ export default function AssistantWidget({ challenge = false }: { challenge?: boo
     setOpen(next);
   };
 
-  // Back to the opener once the panel is gone. The launcher button is the same DOM node open or closed, and it is
-  // shown again on phones by this render, so focusing it here works.
+  // Volver al que lo abrió una vez que el panel ya no está. El botón lanzador es el mismo nodo del DOM abierto o cerrado,
+  // y este render lo vuelve a mostrar en celulares, así que darle el foco acá funciona.
   useEffect(() => {
     if (open) return;
     const el = opener.current;
@@ -78,14 +78,14 @@ export default function AssistantWidget({ challenge = false }: { challenge?: boo
     const onKey = (e: KeyboardEvent) => {
       const root = dialog.current;
       if (!root) return;
-      // Keys from inside a modal sheet (SearchSheet, FeedbackSheet) are theirs: they handle Escape and trap Tab.
+      // Las teclas dentro de una hoja modal (SearchSheet, FeedbackSheet) son de ella: maneja Escape y atrapa Tab.
       if (e.defaultPrevented || !root.contains(e.target as Node)) return;
       if (e.key === "Escape") {
         setOpen(false);
         return;
       }
       if (e.key !== "Tab") return;
-      // Simple focus trap: Tab from the last control goes to the first, Shift+Tab from the first to the last.
+      // Trampa de foco simple: Tab desde el último control va al primero, Shift+Tab desde el primero al último.
       const items = [...root.querySelectorAll<HTMLElement>(FOCUSABLE)].filter((el) => el.offsetParent !== null);
       const first = items[0];
       const last = items[items.length - 1];
@@ -110,7 +110,7 @@ export default function AssistantWidget({ challenge = false }: { challenge?: boo
           ref={dialog}
           role="dialog"
           aria-modal="true"
-          aria-label={`${NAME}, guía de trámites`}
+          aria-label={`${NAME}, guía de trámites y datos`}
           className="fixed inset-0 z-40 sm:inset-auto sm:right-4 sm:bottom-24 sm:h-[620px] sm:w-[380px] sm:overflow-hidden sm:rounded-3xl sm:shadow-2xl"
         >
           <Panel
@@ -125,6 +125,8 @@ export default function AssistantWidget({ challenge = false }: { challenge?: boo
               conversation.verification.needed && <Turnstile key={conversation.verification.key} onToken={conversation.onToken} />
             }
             onClose={() => toggle(false)}
+            // En celulares el panel tapa la página: cerrarlo para que se vea la página que lo abrió. En escritorio queda.
+            onNavigate={() => isPhone && toggle(false)}
           />
         </div>
       )}

@@ -7,6 +7,15 @@ import { handleAssistant, sanitizeFeedback, sanitizeMessages } from "./http.ts";
 import type { Knowledge } from "./knowledge.ts";
 import { checkPass, issuePass, PASS_TTL_MS } from "./pass.ts";
 import { configuredProviders, modelFor } from "./providers.ts";
+import {
+  findSitePage,
+  getMunicipality,
+  type SiteData,
+  searchLaws,
+  searchPeople,
+  searchPurchases,
+  searchUnpublishedCatalog,
+} from "./site-data.ts";
 import { asksAboutFee, feeActivities, findMunicipality, findTradeFee, getProcedure, searchUnpublished } from "./tools.ts";
 import type { Gap } from "./types.ts";
 
@@ -14,7 +23,7 @@ const knowledgePath = join(import.meta.dir, "knowledge.json");
 const k = JSON.parse(readFileSync(knowledgePath, "utf8")) as Knowledge;
 const KEYS = { AI_GATEWAY_API_KEY: "gw-secret", OPENROUTER_API_KEY: "or-secret" };
 
-/** Fake provider: answers each call with the next scripted message and records what it was sent. */
+/** Proveedor falso: responde cada llamada con el siguiente mensaje guionado y registra lo que recibió. */
 function fakeProvider(script: ({ tool: string; args: object } | { text: string } | { status: number })[]) {
   const calls: { url: string; body: { tools: unknown[] }; auth: string }[] = [];
   let i = 0;
@@ -113,7 +122,7 @@ describe("tools", () => {
     const r = findTradeFee(k, { municipality: "Maipú", activity: "gimnasio" });
     expect(r).toMatchObject({ status: "unknown_activity", asked: "gimnasio", found: false, matches: [] });
     expect(r.available?.length).toBe(6);
-    // Asked for in assistant_gaps and loaded afterwards: they now have their fee.
+    // Se pidieron en assistant_gaps y se cargaron después: ahora tienen su tasa.
     expect(findTradeFee(k, { municipality: "Capital", activity: "bar" }).status).toBe("found");
     expect(findTradeFee(k, { municipality: "Godoy Cruz", activity: "cerveza artesanal" }).status).toBe("found");
   });
@@ -154,12 +163,12 @@ describe("agent", () => {
     expect(reply.outcome).toBe("steps");
     const steps = reply.blocks.find((b) => b.type === "steps");
     expect(steps?.type === "steps" && steps.steps.length).toBeGreaterThan(3);
-    // What the PDF folder needs travels with the block.
+    // Lo que necesita la carpeta en PDF viaja con el bloque.
     expect(steps?.type === "steps" && steps.title).toBeString();
     expect(steps?.type === "steps" && steps.activity).toBe("Almacén");
     expect(steps?.type === "steps" && steps.unpublished?.length).toBeGreaterThan(0);
     expect(reply.blocks.some((b) => b.type === "fee")).toBe(false);
-    // The model does not even get the amounts.
+    // El modelo ni siquiera recibe los montos.
     expect(JSON.stringify(calls[2]?.body)).not.toContain("63335");
     expect(reply.municipality).toBe("Godoy Cruz");
   });
@@ -513,5 +522,142 @@ describe("avance y pedidos de datos", () => {
     const agencies = reply.blocks.filter((b) => b.type === "unpublished").map((b) => (b.type === "unpublished" ? b.agency : ""));
     expect(new Set(agencies).size).toBe(agencies.length);
     expect(agencies.some((a) => /^Municipalidad/.test(a))).toBe(false);
+  });
+});
+
+/** Una copia chica de /data/asistente.json, con la misma forma que escribe el build del sitio. */
+const SITE: SiteData = {
+  generatedAt: "2026-10-27T00:00:00.000Z",
+  purchasesPeriod: "2020 a 2025",
+  sections: [
+    {
+      id: "deuda",
+      title: "Deuda de la Provincia",
+      path: "/deuda",
+      action: "Ver la deuda",
+      what: "Cuánto debe la Provincia.",
+      facts: [{ label: "Deuda consolidada al 30/06/2026", value: "US$ 775 millones" }],
+    },
+  ],
+  suppliers: [
+    {
+      name: "CLISA INTERIOR S.A.",
+      slug: "clisa",
+      total: "$ 56.992 millones",
+      amount: 56_992e6,
+      purchases: 19,
+      first: "2020-07-03",
+      last: "2025-09-01",
+    },
+    {
+      name: "LABORATORIOS BIOFARMA SA",
+      slug: "biofarma",
+      total: "$ 21.087 millones",
+      amount: 21_087e6,
+      purchases: 747,
+      first: "2020-01-01",
+      last: "2025-01-01",
+    },
+  ],
+  agencies: [
+    { name: "Dirección Gral Servicio Penitenciario", slug: "penitenciario", total: "$ 56.732 millones", amount: 56_732e6, purchases: 572 },
+    {
+      name: "Ministerio de Seguridad y Justicia",
+      slug: "ministerio-de-seguridad-y-justicia",
+      staff: "12.263 personas",
+      head: "Mercedes Rus, Ministra",
+      govPath: "/gobierno/ministerio-de-seguridad-y-justicia",
+    },
+  ],
+  people: [
+    {
+      name: "Alfredo Víctor Cornejo",
+      role: "Gobernador",
+      agency: "Gobernación de Mendoza",
+      municipalities: [],
+      payUnpublished: { what: "La nómina de personal con sus sueldos", agency: "Ministerio de Hacienda y Finanzas" },
+      path: "/funcionarios/gobierno/alfredo-victor-cornejo",
+    },
+    {
+      name: "Mercedes Rus",
+      role: "Ministra de Seguridad y Justicia",
+      agency: "Ministerio de Seguridad y Justicia",
+      municipalities: [],
+      path: "/funcionarios/gobierno/mercedes-rus",
+    },
+    { name: "Hebe Silvina Casado", role: "Vicegobernadora", agency: "Vicegobernación de Mendoza", municipalities: [], path: "/f/vice" },
+    { name: "José Matías Stevanato", role: "Intendente", agency: "Maipú", municipalities: ["Maipú"], path: "/f/stevanato" },
+  ],
+  municipalities: [
+    {
+      name: "Maipú",
+      slug: "maipu",
+      mayor: { label: "Intendente", value: "José Matías Stevanato" },
+      facts: [{ label: "Población", value: "221.414" }],
+    },
+  ],
+  laws: [
+    { number: "9736", title: "Irrigación expropia un terreno", topic: "Ambiente y agua", published: "2026-10-15" },
+    { number: "9700", title: "Cambios en el Código Fiscal", topic: "Impuestos", published: "2026-03-01" },
+  ],
+  unpublished: [
+    { what: "La nómina de personal con sus sueldos", agency: "Ministerio de Hacienda y Finanzas", detail: "Quién trabaja en el Estado." },
+    { what: "Quiénes son los contratados del Estado", agency: "Ministerio de Hacienda y Finanzas", detail: "La lista de contratos." },
+  ],
+};
+const site = async () => SITE;
+
+describe("datos del sitio", () => {
+  test("sin nombre trae los proveedores que más vendieron, ordenados y con su período", () => {
+    const r = searchPurchases(SITE, {});
+    expect(r.kind).toBe("top_suppliers");
+    expect(r.rows[0]?.name).toBe("CLISA INTERIOR S.A.");
+    expect(r.card?.note).toContain("pesos de cada año");
+    expect(r.card?.rows[0]?.href).toBe("/proveedores/clisa");
+  });
+  test("busca un proveedor o un organismo por nombre, sin mayúsculas ni tildes", () => {
+    expect(searchPurchases(SITE, { query: "clisa" }).kind).toBe("suppliers");
+    expect(searchPurchases(SITE, { query: "servicio penitenciario" }).kind).toBe("agencies");
+    expect(searchPurchases(SITE, { query: "nadie se llama asi" }).kind).toBe("none");
+  });
+  test("busca autoridades por cargo sin confundir gobernador con vicegobernadora, y suma el personal del ministerio", () => {
+    expect(searchPeople(SITE, { query: "gobernador" }).people.map((p) => p.name)).toEqual(["Alfredo Víctor Cornejo"]);
+    const r = searchPeople(SITE, { query: "ministro de seguridad" });
+    expect(r.people[0]?.name).toBe("Mercedes Rus");
+    expect(r.card?.rows.some((row) => row.value === "12.263 personas")).toBe(true);
+    expect(searchPeople(SITE, { query: "intendente", municipality: "maipu" }).people[0]?.name).toBe("José Matías Stevanato");
+  });
+  test("la ficha del municipio y las leyes salen con su link dentro del sitio", () => {
+    expect(getMunicipality(SITE, { municipality: "maipu" }).card?.link.href).toBe("/municipios/maipu");
+    expect(searchLaws(SITE, {}).laws[0]?.number).toBe("9736");
+    expect(searchLaws(SITE, { query: "leyes de impuestos" }).laws.map((l) => l.number)).toEqual(["9700"]);
+    expect(searchLaws(SITE, { query: "ley 9700" }).laws.map((l) => l.number)).toEqual(["9700"]);
+  });
+  test("lo que no se publica se encuentra con otras palabras", () => {
+    expect(searchUnpublishedCatalog(SITE, "cuánto gana un empleado")[0]?.what).toBe("La nómina de personal con sus sueldos");
+    expect(searchUnpublishedCatalog(SITE, "lista de contratados")[0]?.what).toBe("Quiénes son los contratados del Estado");
+  });
+  test("la sección trae sus cifras y su página", () => {
+    expect(findSitePage(SITE, { section: "deuda" }).card?.rows[0]?.value).toBe("US$ 775 millones");
+    expect(findSitePage(SITE, { section: "nada" }).found).toBe(false);
+  });
+  test("el agente muestra la tarjeta de datos y al modelo no le pasa la tarjeta", async () => {
+    const { fetcher, calls } = fakeProvider([{ tool: "search_purchases", args: {} }, { text: "El que más vendió es CLISA." }]);
+    const reply = await runAgent(k, KEYS, [{ role: "user", content: "¿Quién le vende más al Estado?" }], { fetcher, siteData: site });
+    expect(reply.outcome).toBe("data");
+    const card = reply.blocks.find((b) => b.type === "data");
+    expect(card?.type === "data" && card.card.rows.length).toBe(2);
+    expect(JSON.stringify(calls[1]?.body)).not.toContain('\\"card\\"');
+  });
+  test("si preguntan cuánto gana y no se publica, lo dice con «Pedir el dato»", async () => {
+    const { fetcher } = fakeProvider([{ tool: "search_people", args: { query: "gobernador" } }, { text: "No se publica." }]);
+    const reply = await runAgent(k, KEYS, [{ role: "user", content: "¿Cuánto gana el gobernador?" }], { fetcher, siteData: site });
+    expect(reply.blocks.map((b) => b.type)).toEqual(["data", "unpublished"]);
+  });
+  test("sin los datos del sitio responde igual, sin tarjeta", async () => {
+    const { fetcher, calls } = fakeProvider([{ tool: "search_people", args: { query: "gobernador" } }, { text: "Está en Autoridades." }]);
+    const reply = await runAgent(k, KEYS, [{ role: "user", content: "¿Quién es el gobernador?" }], { fetcher, siteData: async () => null });
+    expect(reply.blocks).toEqual([]);
+    expect(JSON.stringify(calls[1]?.body)).toContain("no están disponibles");
   });
 });

@@ -1,21 +1,22 @@
 /**
- * HTTP side of the assistant, served by the site's Pages Function under /api/asistente:
- *   GET  /api/asistente           → { enabled }: whether a provider key is configured (the widget hides otherwise)
- *   POST /api/asistente           → AssistantReply for { messages }
- *   POST /api/asistente/opinion   → stores a thumbs up or down in D1 (no IP, no conversation)
- * Each answer also saves in D1 what people asked and we do not have yet (`assistant_gaps`): a municipality, an activity
- * or a procedure, in a few words. Never the conversation.
- * Requests are capped in size and length; /api/* also has the site's per-IP rate limit (10 every 10 s). With
- * ASSISTANT_TURNSTILE=on, each conversation passes Turnstile once (pass.ts).
+ * Lado HTTP del asistente, servido por la Pages Function del sitio en /api/asistente:
+ *   GET  /api/asistente           → { enabled }: si hay una clave de proveedor configurada (si no, el widget se oculta)
+ *   POST /api/asistente           → AssistantReply para { messages }
+ *   POST /api/asistente/opinion   → guarda un pulgar arriba o abajo en D1 (sin IP, sin conversación)
+ * Cada respuesta también guarda en D1 lo que la gente preguntó y todavía no tenemos (`assistant_gaps`): un municipio,
+ * una actividad o un trámite, en pocas palabras. Nunca la conversación.
+ * Los pedidos tienen tope de tamaño y de largo; /api/* también tiene el límite por IP del sitio (10 cada 10 s). Con
+ * ASSISTANT_TURNSTILE=on, cada conversación pasa Turnstile una vez (pass.ts).
  */
 
 import { runAgent } from "./agent.ts";
 import type { Knowledge } from "./knowledge.ts";
 import { checkPass, issuePass } from "./pass.ts";
 import { type AssistantEnv, configuredProviders, ProvidersUnavailable } from "./providers.ts";
+import type { SiteData } from "./site-data.ts";
 import type { AssistantStatus, ChatMessage, FeedbackRequest, Gap, Outcome, Progress } from "./types.ts";
 
-/** The subset of D1 the feedback endpoint uses (same shape as @mt/participation's Db). */
+/** El subconjunto de D1 que usa el endpoint de opiniones (misma forma que el Db de @mt/participation). */
 export interface FeedbackDb {
   prepare(sql: string): { bind(...values: unknown[]): { run(): Promise<unknown> } };
 }
@@ -38,7 +39,7 @@ async function readJson(req: Request): Promise<unknown> {
   return JSON.parse(text);
 }
 
-/** Last messages only, each one cut, ending with the person's message. Null if the shape is wrong. */
+/** Solo los últimos mensajes, cada uno acortado, terminando con el mensaje de la persona. Null si la forma no es válida. */
 export function sanitizeMessages(body: unknown): ChatMessage[] | null {
   const raw = (body as { messages?: unknown })?.messages;
   if (!Array.isArray(raw) || !raw.length) return null;
@@ -53,7 +54,7 @@ export function sanitizeMessages(body: unknown): ChatMessage[] | null {
   return messages.at(-1)?.role === "user" ? messages : null;
 }
 
-const OUTCOMES: Outcome[] = ["steps", "fee", "unpublished", "ask", "answer", "no_answer"];
+const OUTCOMES: Outcome[] = ["steps", "fee", "data", "unpublished", "ask", "answer", "no_answer"];
 
 export function sanitizeFeedback(body: unknown): FeedbackRequest | null {
   const b = body as Partial<FeedbackRequest> | null;
@@ -70,7 +71,7 @@ export function sanitizeFeedback(body: unknown): FeedbackRequest | null {
   };
 }
 
-/** Saving a gap never breaks an answer: without the table (migration 0005 not applied yet) it only logs. */
+/** Guardar un faltante nunca rompe una respuesta: sin la tabla (migración 0005 todavía sin aplicar) solo deja un log. */
 async function saveGaps(deps: AssistantDeps, gaps: Gap[]) {
   if (!deps.db || !gaps.length) return;
   const at = new Date().toISOString();
@@ -92,22 +93,24 @@ export interface AssistantDeps {
   db?: FeedbackDb;
   fetcher?: (url: string, init: RequestInit) => Promise<Response>;
   log?: (message: string) => void;
-  /** Checks a Turnstile token (the site's siteverify call). Needed when ASSISTANT_TURNSTILE is on. */
+  /** Verifica un token de Turnstile (la llamada siteverify del sitio). Hace falta con ASSISTANT_TURNSTILE activado. */
   verifyHuman?: (token: string) => Promise<boolean>;
-  /** Secret that signs the conversation pass (the Turnstile secret). Needed when ASSISTANT_TURNSTILE is on. */
+  /** Secreto que firma el pase de la conversación (el de Turnstile). Hace falta con ASSISTANT_TURNSTILE activado. */
   passKey?: string;
-  /** Keeps the Function alive until a streamed answer is written (Pages' waitUntil). */
+  /** Lo que publica el sitio (/data/asistente.json, de los estáticos), cargado solo si una herramienta lo necesita. */
+  siteData?: () => Promise<SiteData | null>;
+  /** Mantiene viva la Function hasta que se escribe una respuesta en streaming (waitUntil de Pages). */
   waitUntil?: (promise: Promise<unknown>) => void;
 }
 
-/** Handles /api/asistente*; returns null for any other path. */
+/** Atiende /api/asistente*; devuelve null para cualquier otra ruta. */
 export async function handleAssistant(req: Request, deps: AssistantDeps): Promise<Response | null> {
   const path = new URL(req.url).pathname.replace(/\/+$/, "");
   if (path !== "/api/asistente" && path !== "/api/asistente/opinion") return null;
   const enabled = configuredProviders(deps.env).length > 0;
   const challenge = deps.env.ASSISTANT_TURNSTILE === "on";
 
-  // Asked on every visit: cached 5 minutes at the edge so it does not cost a Function call per page view.
+  // Se pide en cada visita: cacheado 5 minutos en el borde para que no cueste una llamada a la Function por vista de página.
   if (path === "/api/asistente" && req.method === "GET")
     return json({ enabled, ...(challenge ? { challenge } : {}) } satisfies AssistantStatus, 200, "public, max-age=300");
 
@@ -143,7 +146,7 @@ export async function handleAssistant(req: Request, deps: AssistantDeps): Promis
   if (!messages) return fail("Conversación inválida", 400);
   let pass: string | undefined;
   if (challenge) {
-    // Fail closed: switched on without the secret, nobody gets through rather than everybody.
+    // Falla cerrado: encendido sin el secreto, no pasa nadie en vez de pasar todos.
     if (!deps.verifyHuman || !deps.passKey) return fail("El asistente está en pausa por mantenimiento", 503);
     const proof = body as { pass?: unknown; turnstile?: unknown };
     const human =
@@ -156,6 +159,7 @@ export async function handleAssistant(req: Request, deps: AssistantDeps): Promis
     const gaps: Gap[] = [];
     const reply = await runAgent(deps.knowledge, deps.env, messages, {
       fetcher: deps.fetcher,
+      siteData: deps.siteData,
       onGap: (g) => gaps.push(g),
       onStatus,
       onCompletion: (c) =>
@@ -166,8 +170,8 @@ export async function handleAssistant(req: Request, deps: AssistantDeps): Promis
   };
   const logError = (err: unknown) => deps.log?.(`asistente: ${err instanceof ProvidersUnavailable ? err.message : (err as Error).name}`);
 
-  // The widget asks for NDJSON: one line per step ({ status }) while Aco works, then { reply } or { error }. That is
-  // how it can say "buscando la tasa" instead of a spinner for 20 seconds. Anything else (the evals) gets plain JSON.
+  // El widget pide NDJSON: una línea por paso ({ status }) mientras Aco trabaja, y después { reply } o { error }. Así
+  // puede decir "buscando la tasa" en vez de mostrar un spinner durante 20 segundos. Cualquier otro (los evals) recibe JSON.
   if ((req.headers.get("accept") ?? "").includes("application/x-ndjson")) {
     const { readable, writable } = new TransformStream<Uint8Array, Uint8Array>();
     const writer = writable.getWriter();

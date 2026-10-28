@@ -14,6 +14,8 @@ Fecha: 16/10/2026. Estado: propuesta, sin empezar. Falta decidir las preguntas a
 
 El asistente propio de la etapa 5 ya existe para trámites: un ciclo chico en `packages/assistant`, servido por la función de Pages del sitio, con AI Gateway y OpenRouter de respaldo uno del otro (ver [Guía de trámites, impuestos y tasas](guia-de-tramites.md#5-asistente-propio) y `docs/procesos/asistente.md`). Se descartó eve por sumar una segunda plataforma. El MCP de este plan puede usar las mismas herramientas.
 
+**Cambio del 27/10/2026:** Aco ya responde también sobre lo que publica el sitio (proveedores, autoridades, municipios, leyes, deuda…), con herramientas de solo lectura sobre `/data/asistente.json` (`packages/assistant/src/site-data.ts`). Se hizo antes que el MCP porque en las pruebas la mitad de las preguntas reales eran sobre esos datos y Aco las rechazaba. El riesgo de atribuirnos frases se acota igual que en los trámites: las cifras y los links de la pantalla salen de las herramientas, el modelo cita una o dos tal como vienen y las instrucciones le prohíben calcular o calificar. Esas herramientas son la base de la etapa 1 de este plan.
+
 ## Etapas
 
 1. **MCP de solo lectura** (`mcp.mendoza-transparente.com` o `/mcp`, a decidir):

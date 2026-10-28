@@ -1,6 +1,9 @@
 # Asistente de la guía de trámites (Aco)
 
-Aco es el chat flotante del sitio. Responde qué hay que hacer, qué papeles hacen falta y cuánto cuesta un trámite en Mendoza, y siempre muestra la fuente oficial y la fecha en que se verificó cada paso. Plan y decisiones de producto: [Guía de trámites, impuestos y tasas](../planes/guia-de-tramites.md).
+Aco es el chat flotante del sitio. Hace dos cosas:
+
+- **Trámites:** responde qué hay que hacer, qué papeles hacen falta y cuánto cuesta un trámite en Mendoza, y siempre muestra la fuente oficial y la fecha en que se verificó cada paso.
+- **Lo que publica el sitio:** encuentra proveedores y compras, autoridades (con su declaración jurada y si su sueldo se publica), la ficha de un municipio, leyes, deuda, recaudación, coparticipación, empleo público y lo que el Estado no publica, y lleva a la página que tiene el resto. Ver [Datos del sitio](#datos-del-sitio). Plan y decisiones de producto: [Guía de trámites, impuestos y tasas](../planes/guia-de-tramites.md).
 
 ## Cómo está armado
 
@@ -8,6 +11,7 @@ Aco es el chat flotante del sitio. Responde qué hay que hacer, qué papeles hac
 |---|---|---|
 | Conocimiento | `data/curado/tramites.yaml`, `data/curado/rubros.yaml` y `data/processed/tributos/rubros_comercio.csv` → `packages/assistant/src/knowledge.json` | Lo único que Aco sabe. `bun run asistente:datos` lo regenera; una prueba falla si quedó viejo |
 | Herramientas | `packages/assistant/src/tools.ts` | Funciones puras sobre el conocimiento: pasos de un recorrido, tasa de un rubro, lo que no se publica y la pregunta al usuario |
+| Datos del sitio | `apps/web/scripts/temas/assistant-data.ts` → `/data/asistente.json`, leído por `packages/assistant/src/site-data.ts` | Lo que el sitio publica, en una copia chica y con los valores ya formateados. Lo arma `bun run data` en cada build; la función lo lee de los archivos estáticos del mismo despliegue (`env.ASSETS`), una vez por instancia |
 | Agente | `packages/assistant/src/agent.ts` | Hasta 4 llamadas al modelo por respuesta. El texto lo escribe el modelo; **los bloques de la pantalla (pasos, links, montos) se arman con lo que devolvieron las herramientas**, nunca con lo que escribió |
 | Instrucciones | `packages/assistant/src/instructions.ts` | Cortas: citar, decir «no publica», no opinar, no pedir datos personales |
 | Proveedores | `packages/assistant/src/providers.ts` | Vercel AI Gateway y OpenRouter con la API de OpenAI, en orden; si uno falla (error, demora de 20 s, 429 o 5xx), responde el otro |
@@ -17,13 +21,36 @@ Aco es el chat flotante del sitio. Responde qué hay que hacer, qué papeles hac
 | Opiniones | Tabla `assistant_feedback` de D1 (migración `0004`) | Voto, motivo y nota opcional. Sin IP ni texto de la conversación |
 | Faltantes | Tabla `assistant_gaps` de D1 (migración `0005`) | Lo que se pidió y no tenemos: municipio, rubro o trámite, en pocas palabras |
 
+## Datos del sitio
+
+Salió de probar Aco con 20 preguntas reales (27/10/2026): contestaba «no es mi tema» o «no tenemos datos» a la mitad, sobre cosas que el sitio publica (proveedores, sueldos, deuda, leyes, coparticipación, pedir información).
+
+| Herramienta | Qué busca | De dónde |
+|---|---|---|
+| `search_purchases` | Los proveedores que más le vendieron a la Provincia, un proveedor por nombre o lo que compró un organismo | `proveedores.json`, `organismos.json` |
+| `search_people` | Autoridades por nombre, cargo, organismo o municipio, con partido, mandato, sueldo (o «no se publica») y declaración jurada; y el organismo del Ejecutivo con su personal | `funcionarios.json`, `gobierno.json`, `no-publicado.json` |
+| `get_municipality` | Intendente, población, personal, coparticipación por habitante, presupuesto y cuánto publica | `municipios.json` |
+| `search_laws` | Las últimas leyes, una por número o por palabras del tema | `leyes.json` |
+| `find_site_page` | Una sección del sitio (deuda, recaudación, empleo, pedir información…) con sus cifras principales | Los `temas/*.json` de cada página |
+| `search_unpublished` | Además de lo que no se publica de cada trámite, el catálogo de `/no-publicado` | `no-publicado.json` |
+
+Reglas:
+
+- **Las cifras llegan formateadas** («$ 56.992 millones», «US$ 775 millones»), con el mismo criterio que las páginas. El modelo puede citar una o dos tal como vienen, con su fecha; nunca las calcula, suma ni compara.
+- **Lo que se ve es una tarjeta (bloque `data`) armada con lo que devolvió la herramienta**, como los pasos y la tasa. Cada fila abre su página dentro del sitio y la tarjeta cierra con el link a la sección. En el celular, al tocar un link el panel se cierra para que se vea la página.
+- **Las compras van en pesos de cada año** y lo dice la tarjeta. Una señal no es una acusación: las instrucciones prohíben decir que algo es irregular o sospechoso.
+- **El sueldo que no se publica se dice por regla, no por palabras:** cada autoridad lleva el ítem de `/no-publicado` que corresponde a su grupo (la nómina con sueldos para el Ejecutivo, la dieta para los legisladores provinciales, el sueldo de los intendentes). Si la persona preguntó cuánto gana, sale «Pedir el dato».
+- **Hasta 2 tarjetas y 5 filas por respuesta.** El resto está en la página.
+- **Costo:** `asistente.json` pesa unos 330 KB (75 KB comprimido) y se lee de los archivos estáticos, que no cuentan como pedidos a la función. Las cinco herramientas y las instrucciones más largas suman unos 900 tokens de entrada por llamada al modelo (2 o 3 por respuesta) y ninguna llamada más.
+- **Una sección nueva del sitio** que Aco tenga que conocer se suma en `SECTION_IDS` (`site-data.ts`) y en `buildAssistantData`, con su `action` (el link, de 18 caracteres como máximo para que entre en 320 px).
+
 ## El widget
 
 Reglas que salieron de probarlo (27/10/2026). Cada una responde a algo que molestaba:
 
 - **La bienvenida se va con la primera pregunta.** La postal con Aco, el texto y las sugerencias solo se ven con la conversación vacía. Después, el encabezado ya muestra a Aco y el espacio es para la conversación.
 - **El aviso de IA va en el encabezado** («Responde con IA y datos oficiales»), siempre a la vista y sin ocupar una línea debajo del campo. La bienvenida suma «Confirmalo siempre en la ventanilla».
-- **Las sugerencias entran en una línea a 320 px y solo preguntan lo que Aco puede resolver.** Una sugerencia que termina en «no tengo ese dato» es peor que ninguna. Por eso se sacó la de Ingresos Brutos hasta que esté en el conocimiento.
+- **Las sugerencias entran en una línea a 320 px y solo preguntan lo que Aco puede resolver:** un trámite, una tasa y un dato del sitio («¿Quién le vende al Estado?»). Una sugerencia que termina en «no tengo ese dato» es peor que ninguna. Por eso se sacó la de Ingresos Brutos hasta que esté en el conocimiento.
 - **Mientras responde, Aco dice qué está haciendo, en pocas palabras y arriba del campo:** «Leyendo tu pregunta», «Buscando la tasa en la ordenanza», «Escribiendo la respuesta». Es el estado real de cada paso: la API lo manda línea a línea (NDJSON) cuando el widget pide `Accept: application/x-ndjson`. Nunca muestra el nombre de la herramienta ni a la mascota.
 - **Nunca queda colgado:** a los 60 segundos la respuesta se da por perdida y aparece «Reintentar». El botón del encabezado (↻) empieza una conversación nueva.
 - **La respuesta mide un tuit como máximo** (280 caracteres): presenta lo que se ve y dice qué hacer. Lo controlan las instrucciones y las evals.
@@ -126,7 +153,7 @@ Se edita `data/curado/tramites.yaml` (proceso en [Trámites y tributos](tramites
 
 Solo tres eventos en PostHog, sin texto de la conversación (detalle en el plan, etapa 7):
 - `assistant.launcher.open`;
-- `assistant.answer.show`, con `outcome` (`steps`, `fee`, `ask`, `unpublished`, `answer` o `no_answer`), `flow` y `municipality`;
+- `assistant.answer.show`, con `outcome` (`steps`, `fee`, `data`, `ask`, `unpublished`, `answer` o `no_answer`), `flow` y `municipality`;
 - `assistant.feedback.vote`, con `vote` y `reason`.
 
 Tokens y costo se miran en el tablero de uso de cada proveedor, no en PostHog. Los errores de los proveedores quedan en el log de la función (`asistente: …`), solo con el código HTTP.
