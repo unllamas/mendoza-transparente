@@ -1,4 +1,4 @@
-import type { AssistantReply, ChatMessage } from "@mt/assistant/types";
+import type { AssistantReply, ChatMessage, Progress } from "@mt/assistant/types";
 import { useCallback, useRef, useState } from "react";
 import { track } from "@/analytics.ts";
 import { AssistantApiError, sendMessages } from "./api.ts";
@@ -10,6 +10,26 @@ export type ConversationError = "rate-limit" | "challenge" | "generic";
 
 /** How long the first message waits for Turnstile before giving up with an error the person can retry. */
 const TOKEN_WAIT_MS = 15_000;
+
+/** What Aco is doing, in the person's words: short, and never the tool's name. */
+export function progressText(p: Progress | null): string {
+  if (!p || p.phase === "thinking") return "Leyendo tu pregunta";
+  if (p.phase === "writing") return "Escribiendo la respuesta";
+  switch (p.tool) {
+    case "get_procedure":
+      return "Buscando los pasos del trámite";
+    case "find_trade_fee":
+      return "Buscando la tasa en la ordenanza";
+    case "search_unpublished":
+      return "Revisando qué no se publica";
+    case "list_procedures":
+      return "Mirando qué trámites tenemos";
+    case "ask_user":
+      return "Preparando una pregunta";
+    default:
+      return "Buscando en las fuentes";
+  }
+}
 
 const MAX_MESSAGES = 12;
 const MAX_CHARS = 500;
@@ -31,6 +51,7 @@ function toMessages(turns: Turn[]): ChatMessage[] {
 export function useConversation(challenge = false) {
   const [turns, setTurns] = useState<Turn[]>([]);
   const [thinking, setThinking] = useState(false);
+  const [progress, setProgress] = useState<Progress | null>(null);
   const [error, setError] = useState<ConversationError | null>(null);
   const [verification, setVerification] = useState<{ needed: boolean; key: number }>({ needed: challenge, key: 0 });
   const turnsRef = useRef<Turn[]>([]);
@@ -65,9 +86,10 @@ export function useConversation(challenge = false) {
     if (busy.current) return;
     busy.current = true;
     setThinking(true);
+    setProgress(null);
     setError(null);
     try {
-      const reply = await sendMessages(toMessages(turnsRef.current), await proof());
+      const reply = await sendMessages(toMessages(turnsRef.current), await proof(), setProgress);
       if (reply.pass) {
         pass.current = reply.pass;
         setVerification((v) => ({ ...v, needed: false }));
@@ -100,5 +122,14 @@ export function useConversation(challenge = false) {
     [request],
   );
 
-  return { turns, thinking, error, send, retry: request, verification, onToken };
+  /** Starts over: a stuck or finished conversation should never need a reload. The Turnstile pass is kept. */
+  const reset = useCallback(() => {
+    if (busy.current) return;
+    turnsRef.current = [];
+    setTurns([]);
+    setError(null);
+    setProgress(null);
+  }, []);
+
+  return { turns, thinking, progress, error, send, retry: request, reset, verification, onToken };
 }

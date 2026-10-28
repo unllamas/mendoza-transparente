@@ -1,35 +1,15 @@
 import type { Block, Level } from "@mt/assistant/types";
 import { listRowVariants, listVariants } from "@mt/ui/components/card";
 import { cx } from "@mt/ui/lib/cx";
-import {
-  type RemixiconComponentType,
-  RiArrowRightSLine,
-  RiArrowRightUpLine,
-  RiMapPin2Line,
-  RiMoreLine,
-  RiRestaurant2Line,
-  RiSearchLine,
-  RiShoppingBasket2Line,
-  RiStore2Line,
-  RiTShirt2Line,
-} from "@remixicon/react";
+import { type RemixiconComponentType, RiArrowRightSLine, RiArrowRightUpLine, RiMapPin2Line, RiSearchLine } from "@remixicon/react";
 import { Link } from "@tanstack/react-router";
-import { formatDate, formatNumber, normalizeText } from "@/lib.ts";
+import { formatDate, formatNumber } from "@/lib.ts";
+import { activityIcon } from "./activity-icons.ts";
 import { FolderButton } from "./folder/folder-button.tsx";
 
 type Icon = RemixiconComponentType;
 
 const LEVELS: Record<Level, string> = { nacion: "Nación", provincia: "Provincia", municipio: "Municipio" };
-
-/** The API only sends an id and a label per activity, so the icon is guessed from the label; unknown ones get a shop. */
-function activityIcon(label: string): Icon {
-  const text = normalizeText(label);
-  if (/almacen|kiosco|verdule|fiambre/.test(text)) return RiShoppingBasket2Line;
-  if (/ropa|indumentaria|calzado/.test(text)) return RiTShirt2Line;
-  if (/comida|restaurante|bar |panaderia|cafe/.test(text)) return RiRestaurant2Line;
-  if (/otro/.test(text)) return RiMoreLine;
-  return RiStore2Line;
-}
 
 /** Actions inside an answer: white and lifted, with an icon and an arrow, so they never look like a message. */
 function ActionRow({ icon: Icon, label, onPress, primary }: { icon: Icon; label: string; onPress: () => void; primary?: boolean }) {
@@ -98,7 +78,7 @@ function FeeView({ fee }: { fee: Extract<Block, { type: "fee" }>["fee"] }) {
 export type BlockHandlers = {
   onLocate: () => void;
   onPickMunicipality: () => void;
-  onSearchActivity: (options: { label: string; words?: string[] }[]) => void;
+  onSearchActivity: (options: { id?: string; label: string; words?: string[] }[]) => void;
   onChoose: (text: string) => void;
 };
 
@@ -123,7 +103,7 @@ export function BlockView({ block, answered, handlers }: { block: Block; answere
           {block.options.slice(0, VISIBLE_ACTIVITIES).map((option) => (
             <ActionRow
               key={option.id}
-              icon={activityIcon(option.label)}
+              icon={activityIcon(option.id, option.label)}
               label={option.label}
               onPress={() => handlers.onChoose(option.label)}
               primary
@@ -138,15 +118,17 @@ export function BlockView({ block, answered, handlers }: { block: Block; answere
           <ol className={listVariants()}>
             {block.steps.map((step, i) => (
               <li key={`${step.title}-${step.href}`}>
-                <a href={step.href} target="_blank" rel="noreferrer" className={listRowVariants()}>
-                  <span className="w-4 shrink-0 text-body-medium text-text-tertiary tabular-nums">{i + 1}</span>
+                {/* Compact on purpose: number, title and one or two lines of what matters; the source is the arrow. */}
+                <a href={step.href} target="_blank" rel="noreferrer" className={cx(listRowVariants(), "gap-2.5 px-3 py-2.5")}>
+                  <span className="w-3.5 shrink-0 self-start pt-px text-caption-1-medium text-text-tertiary tabular-nums">{i + 1}</span>
                   <span className="flex min-w-0 flex-1 flex-col">
-                    <span className="truncate text-body-medium text-text-primary">{step.title}</span>
-                    <span className="text-caption-1-regular text-pretty text-text-secondary">
-                      {LEVELS[step.level]} · {step.detail}
-                    </span>
+                    <span className="line-clamp-2 text-body-medium text-pretty text-text-primary">{step.title}</span>
+                    <span className="line-clamp-2 text-caption-1-regular text-pretty text-text-secondary">{step.detail}</span>
                   </span>
-                  <RiArrowRightUpLine className="size-5 shrink-0 text-text-link" aria-label="Abrir la fuente oficial" />
+                  <RiArrowRightUpLine
+                    className="size-4 shrink-0 text-text-link"
+                    aria-label={`Abrir la fuente oficial (${LEVELS[step.level]})`}
+                  />
                 </a>
               </li>
             ))}

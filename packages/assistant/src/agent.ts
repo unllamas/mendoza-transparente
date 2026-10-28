@@ -22,7 +22,7 @@ import {
   TOOL_DEFINITIONS,
   type UnpublishedResult,
 } from "./tools.ts";
-import type { AssistantReply, Block, ChatMessage, Gap } from "./types.ts";
+import type { AssistantReply, Block, ChatMessage, Gap, Progress } from "./types.ts";
 
 /** Model calls per answer: enough to ask for the procedure and the fee, and to stop a loop from burning tokens. */
 const MAX_STEPS = 4;
@@ -166,7 +166,19 @@ export function buildBlocks(k: Knowledge, c: Collected): Block[] {
       });
     }
   }
-  for (const u of c.unpublished?.matches ?? []) blocks.push({ type: "unpublished", what: u.what, agency: u.agency });
+  // One "ask for it" per agency, and only the ones that matter here: without a municipality, the provincial and
+  // national agencies; with one, also that municipality. The same item repeated across recorridos showed up once per
+  // municipality before.
+  const where = c.context.municipality;
+  const agencies = new Set<string>();
+  for (const u of c.unpublished?.matches ?? []) {
+    const own = u.municipality;
+    const municipal = /^Municipalidad/i.test(u.agency);
+    if (municipal && (!where || own !== where)) continue;
+    if (agencies.has(u.agency) || agencies.size >= 2) continue;
+    agencies.add(u.agency);
+    blocks.push({ type: "unpublished", what: u.what, agency: u.agency });
+  }
   return blocks;
 }
 
@@ -202,6 +214,8 @@ export interface RunOptions {
   onGap?: (gap: Gap) => void;
   /** For logs and tests: which provider answered each call. */
   onCompletion?: (c: Completion) => void;
+  /** What Aco is doing right now, for the widget: reading the question, running a tool or writing the answer. */
+  onStatus?: (status: Progress) => void;
 }
 
 export async function runAgent(k: Knowledge, env: AssistantEnv, history: ChatMessage[], opts: RunOptions = {}): Promise<AssistantReply> {
@@ -225,6 +239,7 @@ export async function runAgent(k: Knowledge, env: AssistantEnv, history: ChatMes
   for (let step = 0; step < MAX_STEPS; step++) {
     // Last step: no tools, so the model has to write.
     const last = step === MAX_STEPS - 1;
+    opts.onStatus?.(step === 0 ? { phase: "thinking" } : last ? { phase: "writing" } : { phase: "thinking" });
     const c = await complete(env, { messages, tools: last ? [] : TOOL_DEFINITIONS }, opts.fetcher, last ? "answer" : "tools");
     opts.onCompletion?.(c);
     if (!c.toolCalls.length) {
@@ -232,6 +247,7 @@ export async function runAgent(k: Knowledge, env: AssistantEnv, history: ChatMes
       // With a writing model of its own, the text after the tools is rewritten by it. Still within MAX_STEPS calls:
       // this only happens before the last step.
       if (env.ASSISTANT_MODEL_ANSWER && step > 0 && !last) {
+        opts.onStatus?.({ phase: "writing" });
         const answer = await complete(env, { messages, tools: [] }, opts.fetcher, "answer");
         opts.onCompletion?.(answer);
         text = (answer.content ?? "").trim() || text;
@@ -240,6 +256,7 @@ export async function runAgent(k: Knowledge, env: AssistantEnv, history: ChatMes
     }
     messages.push({ role: "assistant", content: c.content, tool_calls: c.toolCalls });
     for (const call of c.toolCalls) {
+      opts.onStatus?.({ phase: "tool", tool: call.function.name });
       const result = runTool(k, call.function.name, call.function.arguments, collected);
       messages.push({ role: "tool", tool_call_id: call.id, content: JSON.stringify(result) });
     }

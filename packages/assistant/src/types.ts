@@ -160,3 +160,6 @@ export const MUNICIPALITIES = [
   "Tunuyán",
   "Tupungato",
 ] as const;
+
+/** What Aco is doing while it answers, streamed to the widget: reading the question, running a tool or writing. */
+export type Progress = { phase: "thinking" } | { phase: "tool"; tool: string } | { phase: "writing" };

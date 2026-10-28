@@ -21,6 +21,6 @@ Fuente completa: `docs/procesos/asistente.md`. Plan: `docs/planes/guia-de-tramit
 ## Al cambiar algo
 
 - **Un trámite o una tasa:** skill `tramites-y-tributos`, después `bun run asistente:datos`.
-- **El widget:** skills `diseno` y `revisar-interfaz`; la vista aprobada tiene fondo gris, acciones blancas y respuestas sin globo al 85 %.
+- **El widget:** skills `diseno` y `revisar-interfaz`; la vista aprobada tiene fondo gris, acciones blancas y respuestas sin globo al 85 %. Reglas del widget (bienvenida que se va, avance arriba del campo, respuestas de un tuit, íconos de rubros) en `docs/procesos/asistente.md#el-widget`.
 - **Una herramienta nueva:** en `tools.ts`, con su definición en `TOOL_DEFINITIONS`, su bloque en `buildBlocks` si dibuja algo, una prueba en `assistant.test.ts` y un caso en `evals/cases.ts`.
 - **Verificar:** `bunx tsc --noEmit` en `packages/assistant` y `apps/web`; `bun test` (lo corre la CI).

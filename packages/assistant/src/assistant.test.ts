@@ -470,3 +470,48 @@ describe("turnstile", () => {
     expect(body?.pass).toBeUndefined();
   });
 });
+
+describe("avance y pedidos de datos", () => {
+  test("con Accept NDJSON manda el avance y después la respuesta", async () => {
+    const { fetcher } = fakeProvider([
+      { tool: "find_trade_fee", args: { municipality: "Godoy Cruz", activity: "Kiosco" } },
+      { text: "La ordenanza separa el quiosco del maxikiosco." },
+    ]);
+    const req = new Request("https://x.test/api/asistente", {
+      method: "POST",
+      headers: { "content-type": "application/json", accept: "application/x-ndjson" },
+      body: JSON.stringify({ messages: [{ role: "user", content: "¿Cuánto paga de tasa un kiosco en Godoy Cruz?" }] }),
+    });
+    const res = await handleAssistant(req, { knowledge: k, env: KEYS, fetcher });
+    expect(res?.headers.get("content-type")).toContain("ndjson");
+    const lines =
+      (await res?.text())
+        ?.trim()
+        .split("\n")
+        .map((l) => JSON.parse(l)) ?? [];
+    expect(lines[0]).toEqual({ status: { phase: "thinking" } });
+    expect(lines).toContainEqual({ status: { phase: "tool", tool: "find_trade_fee" } });
+    expect(lines.at(-1)?.reply?.outcome).toBe("fee");
+  });
+  test("si fallan los proveedores, la última línea es el error, sin las claves", async () => {
+    const { fetcher } = fakeProvider([{ status: 500 }, { status: 500 }]);
+    const req = new Request("https://x.test/api/asistente", {
+      method: "POST",
+      headers: { "content-type": "application/json", accept: "application/x-ndjson" },
+      body: JSON.stringify({ messages: [{ role: "user", content: "hola" }] }),
+    });
+    const text = (await (await handleAssistant(req, { knowledge: k, env: KEYS, fetcher }))?.text()) ?? "";
+    expect(JSON.parse(text.trim().split("\n").at(-1) ?? "{}")).toEqual({ error: "No pude responder ahora" });
+    for (const secret of Object.values(KEYS)) expect(text).not.toContain(secret);
+  });
+  test("sin municipio, «pedir el dato» va una vez por organismo y nunca a municipios que no vienen al caso", async () => {
+    const { fetcher } = fakeProvider([
+      { tool: "search_unpublished", args: { topic: "ingresos brutos" } },
+      { text: "No tenemos las alícuotas de Ingresos Brutos." },
+    ]);
+    const reply = await runAgent(k, KEYS, [{ role: "user", content: "¿Cuánto pago de Ingresos Brutos?" }], { fetcher });
+    const agencies = reply.blocks.filter((b) => b.type === "unpublished").map((b) => (b.type === "unpublished" ? b.agency : ""));
+    expect(new Set(agencies).size).toBe(agencies.length);
+    expect(agencies.some((a) => /^Municipalidad/.test(a))).toBe(false);
+  });
+});
