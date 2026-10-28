@@ -155,6 +155,8 @@ export interface FeedbackRequest {
   flow?: string;
   municipality?: string;
   outcome?: Outcome;
+  /** Los mensajes hasta la respuesta votada. El servidor tapa los datos personales de la persona antes de guardarlos. */
+  conversation?: ChatMessage[];
 }
 
 export const MUNICIPALITIES = [

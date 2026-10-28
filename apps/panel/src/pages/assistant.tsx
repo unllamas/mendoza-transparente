@@ -1,4 +1,4 @@
-import type { AssistantCount, AssistantFeedback, AssistantGap, AssistantVote } from "@mt/participation/assistant";
+import type { AssistantCount, AssistantFeedback, AssistantGap, AssistantVoteDetail } from "@mt/participation/assistant";
 import { Alert } from "@mt/ui/components/alert";
 import { Sheet } from "@mt/ui/components/sheet";
 import { StatTile } from "@mt/ui/components/stat-tile";
@@ -12,13 +12,12 @@ interface AssistantData {
   feedback: AssistantFeedback;
   gaps: AssistantGap[];
 }
-type VoteNote = Omit<AssistantVote, "hasNote"> & { note: string };
 
 const when = (iso: string) =>
   `${formatDate(iso)} ${new Date(iso).toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit", timeZone: "America/Argentina/Mendoza" })}`;
 const none = (v: string | null | undefined) => v || "—";
 
-/** What people say about Aco's answers and what they ask for that we do not have yet. Never published. */
+/** Lo que la gente opina de las respuestas de Aco y lo que pide y todavía no tenemos. Nunca se publica. */
 export function AssistantPage() {
   const { data, error } = useApi<AssistantData>("/api/panel/assistant");
   const [openVote, setOpenVote] = useState<number | null>(null);
@@ -49,7 +48,7 @@ export function AssistantPage() {
         <section className="flex flex-col gap-3">
           <h2 className="text-headline-semibold">Últimos votos</h2>
           <p className="text-body-regular text-text-secondary text-pretty">
-            Los últimos 50. La nota que escribe la persona al votar 👎 no se muestra acá: se abre de a una.
+            Los últimos 50. La conversación votada y la nota del 👎 no se muestran acá: se abren de a un voto.
           </p>
           <Table
             head={["Fecha", "Voto", "Motivo", "Recorrido", "Municipio", ""]}
@@ -59,14 +58,14 @@ export function AssistantPage() {
               v.reason ? (ASSISTANT_REASON_LABELS[v.reason] ?? v.reason) : "—",
               none(v.flow),
               none(v.municipality),
-              v.hasNote ? (
+              v.hasNote || v.hasConversation ? (
                 <button
                   key="note"
                   type="button"
                   onClick={() => setOpenVote(v.id)}
                   className="min-h-11 text-body-medium text-text-link hover:underline"
                 >
-                  Ver nota
+                  {v.hasConversation ? "Ver conversación" : "Ver nota"}
                 </button>
               ) : (
                 ""
@@ -87,7 +86,7 @@ export function AssistantPage() {
         </section>
       </div>
       {openVote !== null && (
-        <Sheet title="Nota del voto" onClose={() => setOpenVote(null)}>
+        <Sheet title="Voto" onClose={() => setOpenVote(null)}>
           <VoteNoteView id={openVote} />
         </Sheet>
       )}
@@ -95,24 +94,51 @@ export function AssistantPage() {
   );
 }
 
-/** Loads the note only when it is opened: the server audits that read. */
+/** Carga la conversación y la nota recién al abrir el voto: el servidor deja esa lectura en la auditoría. */
 function VoteNoteView({ id }: { id: number }) {
-  const { data, error } = useApi<VoteNote>(`/api/panel/assistant/votes/${id}`);
+  const { data, error } = useApi<AssistantVoteDetail>(`/api/panel/assistant/votes/${id}`);
   return (
     <div className="flex flex-col gap-4 p-4">
       <Alert title="Puede traer datos personales">
-        Es texto libre de la persona. No se publica ni se copia a otro lado, y quién lo abre queda en la auditoría.
+        Es texto de la persona: al guardarlo se tapan los correos, los CUIT y los números largos, pero puede quedar algo. No se publica ni
+        se copia a otro lado, y quién lo abre queda en la auditoría. Para sumarlo a las evals, se reescribe sin datos de la persona.
       </Alert>
-      {error && <Alert title="No se pudo cargar la nota">{error}</Alert>}
+      {error && <Alert title="No se pudo cargar el voto">{error}</Alert>}
       {data && (
         <>
           <p className="text-caption-1-regular text-text-tertiary">
-            {when(data.createdAt)} · {data.reason ? (ASSISTANT_REASON_LABELS[data.reason] ?? data.reason) : "Sin motivo"} ·{" "}
-            {none(data.flow)} · {none(data.municipality)}
+            {when(data.createdAt)} · {data.vote === "up" ? "👍" : "👎"} ·{" "}
+            {data.reason ? (ASSISTANT_REASON_LABELS[data.reason] ?? data.reason) : "Sin motivo"} · {none(data.flow)} ·{" "}
+            {none(data.municipality)}
           </p>
-          <p className="whitespace-pre-wrap break-words rounded-xl bg-background-surface p-4 text-body-regular text-pretty">
-            {data.note || "No dejó nota."}
-          </p>
+          {data.conversation.length > 0 && (
+            <section className="flex flex-col gap-2">
+              <h3 className="text-body-medium text-text-primary">Conversación</h3>
+              <ol className="flex flex-col gap-2">
+                {data.conversation.map((m, i) => (
+                  <li
+                    key={i}
+                    className={
+                      m.role === "user"
+                        ? "flex flex-col gap-1 self-end rounded-xl bg-background-action p-3 sm:max-w-[85%]"
+                        : "flex flex-col gap-1 rounded-xl bg-background-surface p-3 sm:max-w-[85%]"
+                    }
+                  >
+                    <span className="text-caption-1-medium text-text-tertiary">{m.role === "user" ? "Persona" : "Aco"}</span>
+                    <p className="whitespace-pre-wrap break-words text-body-regular text-pretty">{m.content}</p>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
+          {data.vote === "down" && (
+            <section className="flex flex-col gap-2">
+              <h3 className="text-body-medium text-text-primary">Nota</h3>
+              <p className="whitespace-pre-wrap break-words rounded-xl bg-background-surface p-4 text-body-regular text-pretty">
+                {data.note || "No dejó nota."}
+              </p>
+            </section>
+          )}
         </>
       )}
       {!data && !error && (

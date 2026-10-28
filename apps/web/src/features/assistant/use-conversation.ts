@@ -44,8 +44,11 @@ export function progressText(p: Progress | null): string {
 const MAX_MESSAGES = 12;
 const MAX_CHARS = 500;
 
-/** Los últimos 12 mensajes, cada uno acortado a 500 caracteres: lo que recibe la API como contexto. */
-function toMessages(turns: Turn[]): ChatMessage[] {
+/**
+ * Los últimos 12 mensajes, cada uno acortado a 500 caracteres: lo que recibe la API como contexto, y lo que viaja con
+ * un voto (hasta la respuesta votada).
+ */
+export function toMessages(turns: Turn[]): ChatMessage[] {
   return turns
     .map((t): ChatMessage => (t.from === "user" ? { role: "user", content: t.text } : { role: "assistant", content: t.reply.text }))
     .slice(-MAX_MESSAGES)

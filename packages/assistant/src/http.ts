@@ -2,9 +2,9 @@
  * Lado HTTP del asistente, servido por la Pages Function del sitio en /api/asistente:
  *   GET  /api/asistente           → { enabled }: si hay una clave de proveedor configurada (si no, el widget se oculta)
  *   POST /api/asistente           → AssistantReply para { messages }
- *   POST /api/asistente/opinion   → guarda un pulgar arriba o abajo en D1 (sin IP, sin conversación)
+ *   POST /api/asistente/opinion   → guarda un pulgar arriba o abajo en D1, con la conversación votada (sin IP)
  * Cada respuesta también guarda en D1 lo que la gente preguntó y todavía no tenemos (`assistant_gaps`): un municipio,
- * una actividad o un trámite, en pocas palabras. Nunca la conversación.
+ * una actividad o un trámite, en pocas palabras. La conversación solo se guarda si la persona vota la respuesta.
  * Los pedidos tienen tope de tamaño y de largo; /api/* también tiene el límite por IP del sitio (10 cada 10 s). Con
  * ASSISTANT_TURNSTILE=on, cada conversación pasa Turnstile una vez (pass.ts).
  */
@@ -54,6 +54,35 @@ export function sanitizeMessages(body: unknown): ChatMessage[] | null {
   return messages.at(-1)?.role === "user" ? messages : null;
 }
 
+/**
+ * Lo que se tapa en los mensajes de la persona antes de guardar la conversación de un voto: correos, CUIT o CUIL y
+ * cualquier número de 7 dígitos o más (DNI, teléfonos). También tapa un monto escrito con todos sus dígitos; es el precio
+ * de no guardar un DNI. Las respuestas de Aco no se tocan: sus montos salen de las herramientas.
+ */
+const PERSONAL_DATA: [RegExp, string][] = [
+  [/[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g, "[correo]"],
+  [/\b\d{2}[-.\s]?\d{8}[-.\s]?\d\b/g, "[cuit]"],
+  [/\+?\d(?:[\s.-]?\d){6,}/g, "[número]"],
+];
+
+export function redactPersonalData(text: string): string {
+  return PERSONAL_DATA.reduce((t, [pattern, label]) => t.replace(pattern, label), text);
+}
+
+/** La conversación de un voto: los últimos mensajes, acortados, terminando en la respuesta votada. Null si no sirve. */
+function sanitizeConversation(raw: unknown): ChatMessage[] | null {
+  if (!Array.isArray(raw)) return null;
+  const messages: ChatMessage[] = [];
+  for (const m of raw.slice(-MAX_MESSAGES)) {
+    const role = (m as { role?: unknown })?.role;
+    const content = (m as { content?: unknown })?.content;
+    if ((role !== "user" && role !== "assistant") || typeof content !== "string") return null;
+    const trimmed = content.trim().slice(0, MAX_CHARS);
+    if (trimmed) messages.push({ role, content: role === "user" ? redactPersonalData(trimmed) : trimmed });
+  }
+  return messages.at(-1)?.role === "assistant" && messages.some((m) => m.role === "user") ? messages : null;
+}
+
 const OUTCOMES: Outcome[] = ["steps", "fee", "data", "unpublished", "ask", "answer", "no_answer"];
 
 export function sanitizeFeedback(body: unknown): FeedbackRequest | null {
@@ -61,6 +90,7 @@ export function sanitizeFeedback(body: unknown): FeedbackRequest | null {
   if (!b || (b.vote !== "up" && b.vote !== "down")) return null;
   const short = (v: unknown, n: number) => (typeof v === "string" && v.trim() ? v.trim().slice(0, n) : undefined);
   const reason = b.vote === "down" && ["dato", "respuesta", "falta"].includes(String(b.reason)) ? b.reason : undefined;
+  const conversation = sanitizeConversation(b.conversation);
   return {
     vote: b.vote,
     ...(reason ? { reason } : {}),
@@ -68,6 +98,7 @@ export function sanitizeFeedback(body: unknown): FeedbackRequest | null {
     ...(short(b.flow, 60) ? { flow: short(b.flow, 60) } : {}),
     ...(short(b.municipality, 40) ? { municipality: short(b.municipality, 40) } : {}),
     ...(OUTCOMES.includes(b.outcome as Outcome) ? { outcome: b.outcome } : {}),
+    ...(conversation ? { conversation } : {}),
   };
 }
 
@@ -125,19 +156,33 @@ export async function handleAssistant(req: Request, deps: AssistantDeps): Promis
   if (path === "/api/asistente/opinion") {
     const fb = sanitizeFeedback(body);
     if (!fb) return fail("Opinión inválida", 400);
-    if (!deps.db) return fail("Sin base de datos", 503);
-    await deps.db
-      .prepare("INSERT INTO assistant_feedback (created_at, vote, reason, note, flow, municipality, outcome) VALUES (?, ?, ?, ?, ?, ?, ?)")
-      .bind(
-        new Date().toISOString(),
-        fb.vote,
-        fb.reason ?? null,
-        fb.note ?? null,
-        fb.flow ?? null,
-        fb.municipality ?? null,
-        fb.outcome ?? null,
-      )
-      .run();
+    const db = deps.db;
+    if (!db) return fail("Sin base de datos", 503);
+    const insert = (withConversation: boolean) =>
+      db
+        .prepare(
+          withConversation
+            ? "INSERT INTO assistant_feedback (created_at, vote, reason, note, flow, municipality, outcome, conversation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+            : "INSERT INTO assistant_feedback (created_at, vote, reason, note, flow, municipality, outcome) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        )
+        .bind(
+          new Date().toISOString(),
+          fb.vote,
+          fb.reason ?? null,
+          fb.note ?? null,
+          fb.flow ?? null,
+          fb.municipality ?? null,
+          fb.outcome ?? null,
+          ...(withConversation ? [fb.conversation ? JSON.stringify(fb.conversation) : null] : []),
+        )
+        .run();
+    try {
+      await insert(true);
+    } catch (err) {
+      // Sin la columna (migración 0006 todavía sin aplicar) el voto se guarda igual, sin la conversación.
+      deps.log?.(`asistente: voto sin conversación (${(err as Error).name})`);
+      await insert(false);
+    }
     return json({ ok: true }, 201);
   }
 

@@ -13,7 +13,7 @@ import { AnswerFooter, type FeedbackSend, FeedbackSheet } from "./feedback.tsx";
 import { currentPosition, municipalityAt } from "./locate.ts";
 import { allowedHrefs, type Inline, type Paragraph, parseReplyText, plainReplyText } from "./reply-text.ts";
 import { type SearchItem, SearchSheet } from "./search-sheet.tsx";
-import { type ConversationError, progressText, type Turn } from "./use-conversation.ts";
+import { type ConversationError, progressText, type Turn, toMessages } from "./use-conversation.ts";
 
 export const NAME = "Aco";
 
@@ -301,6 +301,9 @@ export function Panel({
           <>
             <Hero />
             <BotText>Te digo qué hacer, cuánto cuesta y de dónde sale cada dato. Confirmalo siempre en la ventanilla.</BotText>
+            <p className="text-caption-1-regular text-pretty text-text-tertiary">
+              No escribas datos personales: si votás una respuesta, guardamos la conversación para mejorar a {NAME}.
+            </p>
             <Suggestions onAsk={onSend} />
           </>
         )}
@@ -321,7 +324,15 @@ export function Panel({
               {reply.blocks.map((block, j) => (
                 <BlockView key={`${block.type}-${j}`} block={block} answered={answered} handlers={handlers} />
               ))}
-              {RATED.has(reply.outcome) && <AnswerFooter reply={reply} at={turn.at} now={now} onAskWhy={(send) => setFeedback({ send })} />}
+              {RATED.has(reply.outcome) && (
+                <AnswerFooter
+                  reply={reply}
+                  conversation={() => toMessages(turns.slice(0, i + 1))}
+                  at={turn.at}
+                  now={now}
+                  onAskWhy={(send) => setFeedback({ send })}
+                />
+              )}
             </BotTurn>
           );
         })}
