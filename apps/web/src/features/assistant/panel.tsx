@@ -50,11 +50,18 @@ function Hero() {
   return (
     <div className="relative -mx-5 -mt-5 h-44 shrink-0 overflow-hidden bg-accent-50">
       <Andes />
-      <Mascot mascot="aco" pose="wave" size={120} priority className="absolute top-1 left-1/2 -translate-x-1/2" />
-      <p className="absolute top-24 left-5 -rotate-3 rounded-2xl rounded-bl-sm bg-background-surface px-3 py-1.5 text-body-bold text-text-primary shadow-md">
+      {/* Scaled from the bottom and pushed down, so only the head and the waving wing show over the mountains. */}
+      <Mascot
+        mascot="aco"
+        pose="wave"
+        size={120}
+        priority
+        className="absolute bottom-0 left-1/2 origin-bottom -translate-x-1/2 translate-y-[42%] scale-[1.9]"
+      />
+      <p className="absolute bottom-14 left-5 -rotate-3 rounded-2xl rounded-bl-sm bg-background-surface px-3 py-1.5 text-body-bold text-text-primary shadow-md">
         ¡Hola! Soy {NAME} 👋
       </p>
-      <p className="absolute top-32 right-5 rotate-2 rounded-2xl rounded-br-sm bg-accent-600 px-3 py-1.5 text-body-bold text-white shadow-md">
+      <p className="absolute right-5 bottom-5 rotate-2 rounded-2xl rounded-br-sm bg-accent-600 px-3 py-1.5 text-body-bold text-white shadow-md">
         Te ayudo con tus trámites
       </p>
     </div>
