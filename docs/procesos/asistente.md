@@ -130,7 +130,7 @@ Las direcciones `*.pages.dev` de producción usan las claves de producción y no
 
 **Topes por respuesta** (lo que cuesta cada una):
 - conversación recortada a los últimos 12 mensajes, cada uno a 500 caracteres; pedidos de más de 16 KB, rechazados;
-- hasta 4 llamadas al modelo (la última, sin herramientas) y 400 tokens de salida por llamada (el texto tiene como máximo 280 caracteres).
+- hasta 4 llamadas al modelo (la última, sin herramientas) y 700 tokens de salida por llamada. El texto tiene como máximo 280 caracteres, pero el modelo genera unos 200 tokens de promedio: con un tope de 400, una de cada diez llamadas llegaba al tope y algunas respuestas salían cortadas.
 
 **Topes de uso** (D1, tabla `assistant_quota`, migración `0008`). Cada respuesta suma uno en cada contador; si alguno llegó a su tope, se corta **antes** de llamar al modelo:
 
@@ -165,7 +165,7 @@ En los tableros de los proveedores, un «request» es **una llamada al modelo**,
 - el historial;
 - los resultados de las herramientas que ya corrieron.
 
-Una pregunta de trámite típica son 2 o 3 llamadas, entre 7.000 y 11.000 tokens. Por eso unas 700 llamadas de prueba (evals incluidas) llegan a unos 2,7 millones de tokens por menos de medio dólar. Para que no crezca:
+En las evals del 28/10/2026 (tabla `assistant_calls`), una respuesta hizo 1,9 llamadas de promedio, con unos 4.700 tokens de entrada y 200 de salida cada una: unos 9.000 tokens por respuesta. Una pregunta de trámite llega a 2 o 3 llamadas. Por eso unas 700 llamadas de prueba (evals incluidas) llegan a unos 2,7 millones de tokens por menos de medio dólar. Para que no crezca:
 - **Lo que vuelve al modelo es lo justo.** `get_procedure` le devuelve los pasos sin links ni la lista de rubros (`procedureForModel` en `agent.ts`), entre un 20 y un 40 % menos, porque el widget dibuja eso con lo que guardó la herramienta. Una herramienta nueva sigue la misma regla: al modelo, los hechos para escribir 280 caracteres; a la pantalla, el resto.
 - **Un modelo por tarea** ([Elegir el modelo](#elegir-el-modelo)) baja el precio por token, no la cantidad, y el de redacción suma una llamada. Haiku ya es el barato: se cambia solo si las evals muestran que otro más chico elige bien las herramientas.
 
