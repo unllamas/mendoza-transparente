@@ -270,14 +270,8 @@ interface Manual {
   top?: number;
 }
 // Incluye al Fiscal de Estado. No hay foto oficial utilizable de La Paz, Tupungato ni San Carlos (sus sitios
-// no publican un retrato del intendente). Rivadavia publica a otro intendente que el de autoridades.csv: se omite.
+// no publican un retrato del intendente).
 const INTENDENTES: Record<string, Manual> = {
-  // Rivadavia: el sitio municipal informa a Sergio Miodowsky como intendente (ver data/curado/correcciones.yaml).
-  "ricardo-alfredo-mansur": {
-    foto: "https://rivadavia.gob.ar/wp-content/themes/theme-riv/_img/intendente/sergio-miodowsky.jpg",
-    pagina: "https://rivadavia.gob.ar/gobierno/intendente/",
-    credito: "Municipalidad de Rivadavia",
-  },
   "ulpiano-leandro-suarez": {
     foto: "https://ciudaddemendoza.gob.ar/wp-content/uploads/2024/10/ulpiano-suarez.jpg",
     pagina: "https://ciudaddemendoza.gob.ar/gobierno/",
