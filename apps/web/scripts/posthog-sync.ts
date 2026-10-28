@@ -304,6 +304,60 @@ LIMIT 50`,
       },
     },
   },
+  {
+    name: "Aco: de abrir a votar",
+    description:
+      "Embudo del asistente Aco en los últimos 30 días: cuántos lo abren, cuántos preguntan, cuántos reciben una respuesta y cuántos la votan. Una caída grande entre preguntar y recibir respuesta es un problema del asistente; entre abrir y preguntar, de la bienvenida.",
+    query: {
+      kind: "InsightVizNode",
+      source: {
+        kind: "FunnelsQuery",
+        series: [
+          ev("assistant.launcher.open", { custom_name: "Abrió a Aco" }),
+          ev("assistant.question.send", { custom_name: "Preguntó" }),
+          ev("assistant.answer.show", { custom_name: "Recibió una respuesta" }),
+          ev("assistant.feedback.vote", { custom_name: "Votó" }),
+        ],
+        dateRange: last30,
+        filterTestAccounts: true,
+        funnelsFilter: { funnelWindowInterval: 1, funnelWindowIntervalUnit: "day" },
+      },
+    },
+  },
+  {
+    name: "Aco: preguntas, respuestas y errores",
+    description:
+      "Por día: preguntas que recibió Aco, respuestas que mostró y errores (límite de uso, verificación o falla del modelo). Las fallas por proveedor, con tokens y costo, están en el panel interno.",
+    query: trends([
+      ev("assistant.question.send", { custom_name: "Preguntas" }),
+      ev("assistant.answer.show", { custom_name: "Respuestas" }),
+      ev("assistant.answer.error", { custom_name: "Errores" }),
+    ]),
+  },
+  {
+    name: "Aco: qué responde",
+    description:
+      "Respuestas de Aco por resultado: steps (pasos de un trámite), fee (tasa), data (datos del sitio), unpublished (no se publica), ask (repregunta), answer (texto) o no_answer (no supo). Muchos no_answer piden sumar conocimiento.",
+    query: ranking("assistant.answer.show", "outcome"),
+  },
+  {
+    name: "Aco: cómo preguntan",
+    description:
+      "De dónde salen las preguntas: escritas, sugerencias de la bienvenida, opciones de una respuesta, ubicación o listas. Si nadie usa las sugerencias, hay que cambiarlas.",
+    query: ranking("assistant.question.send", "source"),
+  },
+  {
+    name: "Aco: votos",
+    description:
+      "Votos a las respuestas de Aco: up (👍) y down (👎). Los 👎 por motivo y las conversaciones votadas se leen en el panel interno, nunca en PostHog.",
+    query: ranking("assistant.feedback.vote", "vote"),
+  },
+  {
+    name: "Aco: links que se abren desde las respuestas",
+    description:
+      "Qué abre la gente desde una respuesta de Aco: el texto, la fuente oficial de un paso, la ordenanza de una tasa, una tarjeta de datos o «Pedir el dato». Mide si las respuestas llevan a algún lado.",
+    query: ranking("assistant.link.open", "place"),
+  },
 ];
 
 type Named = { id: number; name: string; deleted?: boolean };

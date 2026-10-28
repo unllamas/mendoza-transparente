@@ -6,6 +6,7 @@ import { IconButton } from "@mt/ui/components/base/buttons/icon-button";
 import { RiArrowRightSLine, RiArrowRightUpLine, RiCloseLine, RiRestartLine, RiSendPlane2Line } from "@remixicon/react";
 import { Link } from "@tanstack/react-router";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { track } from "@/analytics.ts";
 import { activityIcon } from "./activity-icons.ts";
 import { Andes } from "./andes.tsx";
 import { type BlockHandlers, BlockView } from "./blocks.tsx";
@@ -24,6 +25,12 @@ export const NAME = "Aco";
  */
 const SUGGESTIONS = ["¿Cómo abro un comercio?", "¿Cuánto cobra mi municipio?", "¿Quién le vende al Estado?"];
 
+/**
+ * De dónde salió una pregunta, para `assistant.question.send`: escrita, una sugerencia de la bienvenida, una opción de
+ * una respuesta, la ubicación o un selector. Dice si las sugerencias y los atajos se usan, nunca qué se escribió.
+ */
+type QuestionSource = "typed" | "suggestion" | "option" | "locate" | "municipality_list" | "activity_list" | "activity_free";
+
 /** Respuestas que llevan la hora y los pulgares; las que solo preguntan algo, no. */
 const RATED = new Set(["steps", "fee", "data", "unpublished", "answer"]);
 
@@ -39,7 +46,15 @@ function Header({ onClose, onRestart }: { onClose: () => void; onRestart?: () =>
         {/* El aviso de IA vive acá: siempre a la vista, sin ocupar una línea debajo del campo de texto. */}
         <span className="truncate text-caption-1-regular text-text-secondary">Responde con IA y datos oficiales</span>
       </span>
-      {onRestart && <IconButton icon={RiRestartLine} aria-label="Empezar de nuevo" onClick={onRestart} />}
+      {onRestart && (
+        <IconButton
+          icon={RiRestartLine}
+          aria-label="Empezar de nuevo"
+          onClick={onRestart}
+          id="aco-reiniciar"
+          data-track="assistant.conversation.restart"
+        />
+      )}
       <IconButton icon={RiCloseLine} aria-label="Cerrar la guía" onClick={onClose} />
     </div>
   );
@@ -99,11 +114,24 @@ function InlineView({ inline, onNavigate }: { inline: Inline; onNavigate: () => 
     case "link":
       // Un link del sitio navega sin recargar: el widget vive en el layout y la conversación sigue ahí.
       return inline.internal ? (
-        <Link to={inline.href} onClick={onNavigate} className="font-medium text-text-link hover:underline">
+        <Link
+          to={inline.href}
+          onClick={onNavigate}
+          data-track="assistant.link.open"
+          data-track-place="text"
+          className="font-medium text-text-link hover:underline"
+        >
           {inline.label}
         </Link>
       ) : (
-        <a href={inline.href} target="_blank" rel="noreferrer" className="font-medium text-text-link hover:underline">
+        <a
+          href={inline.href}
+          target="_blank"
+          rel="noreferrer"
+          data-track="assistant.link.open"
+          data-track-place="text"
+          className="font-medium text-text-link hover:underline"
+        >
           {inline.label}
           <RiArrowRightUpLine className="ml-0.5 inline size-4 align-[-2px]" aria-hidden />
         </a>
@@ -214,7 +242,14 @@ function ErrorTurn({ error, onRetry }: { error: ConversationError; onRetry: () =
   return (
     <BotTurn>
       <ShyText>{ERROR_TEXT[error]}</ShyText>
-      <Button variant="secondary" onClick={onRetry} disabled={waiting} className="self-start">
+      <Button
+        variant="secondary"
+        onClick={onRetry}
+        disabled={waiting}
+        data-track="assistant.answer.retry"
+        data-track-reason={error}
+        className="self-start"
+      >
         Reintentar
       </Button>
     </BotTurn>
@@ -256,6 +291,12 @@ export function Panel({
   const input = useRef<HTMLInputElement>(null);
   const now = useNow();
 
+  // Toda pregunta pasa por acá: se cuenta de dónde salió (nunca el texto) y se manda.
+  const ask = (text: string, source: QuestionSource) => {
+    track("assistant.question.send", { source });
+    onSend(text);
+  };
+
   // El panel se abre con el cursor en el campo de la pregunta.
   useEffect(() => {
     input.current?.focus({ preventScroll: true });
@@ -281,12 +322,12 @@ export function Panel({
     onLocate: async () => {
       const coords = await currentPosition();
       const municipality = coords ? await municipalityAt(coords.latitude, coords.longitude).catch(() => null) : null;
-      if (municipality) onSend(municipality);
+      if (municipality) ask(municipality, "locate");
       else setSheet({ kind: "municipality" });
     },
     onPickMunicipality: () => setSheet({ kind: "municipality" }),
     onSearchActivity: (items) => setSheet({ kind: "activity", items }),
-    onChoose: onSend,
+    onChoose: (text) => ask(text, "option"),
     onNavigate: () => onNavigate?.(),
   };
 
@@ -304,7 +345,7 @@ export function Panel({
             <p className="text-caption-1-regular text-pretty text-text-tertiary">
               No escribas datos personales: si votás una respuesta, guardamos la conversación para mejorar a {NAME}.
             </p>
-            <Suggestions onAsk={onSend} />
+            <Suggestions onAsk={(q) => ask(q, "suggestion")} />
           </>
         )}
         {turns.map((turn, i) => {
@@ -344,7 +385,7 @@ export function Panel({
         onSubmit={(e) => {
           e.preventDefault();
           if (!draft.trim() || thinking) return;
-          onSend(draft);
+          ask(draft, "typed");
           setDraft("");
         }}
       >
@@ -386,9 +427,9 @@ export function Panel({
                 items: sheet.items.map((item) => ({ ...item, icon: activityIcon(item.id, item.label) })),
                 askFree: (query: string) => `Preguntar por «${query}»`,
               })}
-          onPick={(label) => {
+          onPick={(label, free) => {
             setSheet(null);
-            onSend(label);
+            ask(label, sheet.kind === "municipality" ? "municipality_list" : free ? "activity_free" : "activity_list");
           }}
           onClose={() => setSheet(null)}
         />
