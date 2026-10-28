@@ -1,4 +1,5 @@
 import type { AssistantCount, AssistantFeedback, AssistantGap, AssistantVoteDetail } from "@mt/participation/assistant";
+import type { AssistantUsage } from "@mt/participation/assistant-usage";
 import { Alert } from "@mt/ui/components/alert";
 import { Sheet } from "@mt/ui/components/sheet";
 import { StatTile } from "@mt/ui/components/stat-tile";
@@ -6,7 +7,17 @@ import { RiMessage2Line } from "@remixicon/react";
 import { type ReactNode, useState } from "react";
 import { useApi } from "../api.ts";
 import { ScreenHeader } from "../components/layout.tsx";
-import { ASSISTANT_GAP_LABELS, ASSISTANT_REASON_LABELS, formatDate } from "../labels.ts";
+import {
+  ASSISTANT_GAP_LABELS,
+  ASSISTANT_OUTCOME_LABELS,
+  ASSISTANT_PROVIDER_LABELS,
+  ASSISTANT_REASON_LABELS,
+  ASSISTANT_TASK_LABELS,
+  formatCompact,
+  formatDate,
+  formatSeconds,
+  formatUsd,
+} from "../labels.ts";
 
 interface AssistantData {
   feedback: AssistantFeedback;
@@ -29,6 +40,8 @@ export function AssistantPage() {
       <ScreenHeader title="Asistente" />
       <div className="flex max-w-5xl flex-col gap-10 p-4 lg:p-6">
         {error && <Alert title="No se pudo cargar lo del asistente">{error}</Alert>}
+
+        <UsageSection />
 
         <section className="flex flex-col gap-3">
           <h2 className="text-headline-semibold">Opiniones</h2>
@@ -147,6 +160,128 @@ function VoteNoteView({ id }: { id: number }) {
         </span>
       )}
     </div>
+  );
+}
+
+const pct = (part: number, total: number) => (total ? `${Math.round((part / total) * 100)} %` : "—");
+
+/**
+ * Cuánto gasta Aco y en qué: últimos 30 días del widget (las evals van aparte). El costo es el que informa el proveedor
+ * o, si no lo informa, una estimación con el precio público del modelo; se aclara cuánto es estimado.
+ */
+function UsageSection() {
+  const { data: u, error } = useApi<AssistantUsage>("/api/panel/assistant/usage");
+  const t = u?.totals;
+  const ok = t ? t.answers - t.failedAnswers : 0;
+  return (
+    <section className="flex flex-col gap-6">
+      <div className="flex flex-col gap-1">
+        <h2 className="text-headline-semibold">Consumo</h2>
+        <p className="text-body-regular text-text-secondary text-pretty">
+          Últimos 30 días del widget, sin las evals. Cada respuesta puede usar hasta 4 llamadas al modelo.
+        </p>
+      </div>
+      {error && <Alert title="No se pudo cargar el consumo">{error}</Alert>}
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+        <StatTile label="Gasto del mes" value={u ? formatUsd(u.monthUsd) : "…"} note="Desde el día 1" />
+        <StatTile
+          label="Gasto en 30 días"
+          value={t ? formatUsd(t.costUsd) : "…"}
+          note={t ? `${formatUsd(t.estimatedUsd)} estimado` : undefined}
+        />
+        <StatTile label="Costo por respuesta" value={t ? (ok ? formatUsd(t.costUsd / ok) : "—") : "…"} />
+        <StatTile label="Respuestas" value={t ? formatCompact(t.answers) : "…"} note={t ? `${t.failedAnswers} fallaron` : undefined} />
+        <StatTile
+          label="Llamadas al modelo"
+          value={t ? formatCompact(t.calls) : "…"}
+          note={t ? `${pct(t.failedCalls, t.calls)} fallaron` : undefined}
+        />
+        <StatTile label="Tokens de entrada" value={t ? formatCompact(t.promptTokens) : "…"} />
+        <StatTile label="Tokens de salida" value={t ? formatCompact(t.completionTokens) : "…"} />
+        <StatTile label="Tiempo por respuesta" value={t ? (t.answers ? formatSeconds(t.avgAnswerMs) : "—") : "…"} note="Promedio" />
+      </div>
+      {t && t.unpricedCalls > 0 && (
+        <Alert variant="note" title="Hay llamadas sin precio">
+          {t.unpricedCalls} llamadas usaron un modelo sin precio público en OpenRouter y el proveedor no informó el costo: su gasto no está
+          sumado.
+        </Alert>
+      )}
+
+      <div className="flex flex-col gap-3">
+        <h3 className="text-body-medium text-text-primary">Por modelo</h3>
+        <Table
+          head={["Modelo", "Llamadas", "Entrada", "Salida", "Gasto", "Del total", "Tiempo"]}
+          rows={(u?.byModel ?? []).map((m) => [
+            // El nombre sin el proveedor («claude-haiku-5.5») entra en una línea; el id completo queda en el título.
+            <span key="model" title={m.model} className="whitespace-nowrap">
+              {m.model.split("/").at(-1)}
+            </span>,
+            formatCompact(m.calls),
+            formatCompact(m.promptTokens),
+            formatCompact(m.completionTokens),
+            m.estimatedUsd > 0 && m.estimatedUsd >= m.costUsd ? `${formatUsd(m.costUsd)} (est.)` : formatUsd(m.costUsd),
+            pct(m.costUsd, t?.costUsd ?? 0),
+            m.calls ? formatSeconds(m.avgMs) : "—",
+          ])}
+        />
+      </div>
+
+      <div className="grid gap-10 md:grid-cols-2">
+        <div className="flex min-w-0 flex-col gap-3">
+          <h3 className="text-body-medium text-text-primary">Por proveedor</h3>
+          <Table
+            head={["Proveedor", "Llamadas", "Fallaron", "Tiempo"]}
+            rows={(u?.byProvider ?? []).map((p) => [
+              <span key="p" className="flex flex-col">
+                {ASSISTANT_PROVIDER_LABELS[p.provider] ?? p.provider}
+                {p.failures.length > 0 && (
+                  <span className="text-caption-1-regular text-text-tertiary">
+                    {p.failures.map((f) => `${f.status.replace("http_", "HTTP ")} × ${f.n}`).join(" · ")}
+                  </span>
+                )}
+              </span>,
+              formatCompact(p.calls),
+              `${p.failed} (${pct(p.failed, p.calls)})`,
+              formatSeconds(p.avgMs),
+            ])}
+          />
+        </div>
+        <div className="flex min-w-0 flex-col gap-3">
+          <h3 className="text-body-medium text-text-primary">Por tarea</h3>
+          <Table
+            head={["Tarea", "Llamadas", "Gasto"]}
+            rows={(u?.byTask ?? []).map((k) => [ASSISTANT_TASK_LABELS[k.task], formatCompact(k.calls), formatUsd(k.costUsd)])}
+          />
+        </div>
+      </div>
+
+      <div className="grid gap-10 md:grid-cols-2">
+        <div className="flex min-w-0 flex-col gap-3">
+          <h3 className="text-body-medium text-text-primary">Qué respondió</h3>
+          <Table
+            head={["Resultado", "Respuestas", "Del total"]}
+            rows={(u?.byOutcome ?? []).map((o) => [
+              ASSISTANT_OUTCOME_LABELS[o.key] ?? (o.key || "Sin dato"),
+              formatCompact(o.n),
+              pct(o.n, ok),
+            ])}
+          />
+        </div>
+        <div className="flex min-w-0 flex-col gap-3">
+          <h3 className="text-body-medium text-text-primary">Por día</h3>
+          <Table
+            head={["Día", "Respuestas", "Fallaron", "Gasto"]}
+            rows={(u?.byDay ?? []).map((d) => [formatDate(d.day), formatCompact(d.answers), d.failed, formatUsd(d.costUsd)])}
+          />
+        </div>
+      </div>
+
+      {u && u.evals.answers > 0 && (
+        <p className="text-body-regular text-text-secondary text-pretty">
+          Aparte, las evals hicieron {u.evals.answers} respuestas y gastaron {formatUsd(u.evals.costUsd)} en el mismo período.
+        </p>
+      )}
+    </section>
   );
 }
 

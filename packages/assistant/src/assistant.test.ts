@@ -39,7 +39,7 @@ function fakeProvider(script: ({ tool: string; args: object } | { text: string }
             tool_calls: [{ id: `c${i}`, type: "function", function: { name: next.tool, arguments: JSON.stringify(next.args) } }],
           }
         : { content: next.text };
-    return Response.json({ choices: [{ message }] });
+    return Response.json({ choices: [{ message }], usage: { prompt_tokens: 1200, completion_tokens: 80, cost: 0.0015 } });
   };
   return { fetcher, calls };
 }
@@ -401,6 +401,39 @@ describe("http", () => {
     expect(res?.status).toBe(201);
     expect(rows[0]?.slice(1, 3)).toEqual(["down", "falta"]);
   });
+  test("guarda el consumo de cada respuesta, con los intentos fallidos y sin texto", async () => {
+    const saved: { sql: string; values: unknown[] }[] = [];
+    const db = { prepare: (sql: string) => ({ bind: (...values: unknown[]) => ({ run: async () => saved.push({ sql, values }) }) }) };
+    const body = { messages: [{ role: "user", content: "Me llamo Ana, ¿cómo abro un kiosco?" }] };
+    const { fetcher } = fakeProvider([{ status: 429 }, { text: "Contame en qué municipio." }]);
+    const res = await handleAssistant(post("/api/asistente", body), { knowledge: k, env: KEYS, db, fetcher });
+    expect(res?.status).toBe(200);
+    const answers = saved.filter((r) => r.sql.includes("assistant_answers"));
+    const calls = saved.filter((r) => r.sql.includes("assistant_calls"));
+    expect(answers).toHaveLength(1);
+    expect(answers[0]?.values.slice(2, 4)).toEqual(["web", 1]);
+    expect(calls.map((c) => c.values[5])).toEqual(["http_429", "ok"]);
+    expect(calls.map((c) => c.values[3])).toEqual(["gateway", "openrouter"]);
+    expect(calls[1]?.values.slice(6, 9)).toEqual([1200, 80, 0.0015]);
+    expect(JSON.stringify(saved)).not.toContain("Ana");
+    expect(JSON.stringify(saved)).not.toContain("municipio");
+  });
+  test("separa el consumo de las evals y lo guarda aunque la respuesta falle", async () => {
+    const saved: { sql: string; values: unknown[] }[] = [];
+    const db = { prepare: (sql: string) => ({ bind: (...values: unknown[]) => ({ run: async () => saved.push({ sql, values }) }) }) };
+    const body = { messages: [{ role: "user", content: "Hola" }] };
+    const { fetcher } = fakeProvider([{ status: 500 }, { status: 503 }]);
+    const req = new Request("https://x.test/api/asistente", {
+      method: "POST",
+      headers: { "content-type": "application/json", "x-mt-source": "evals" },
+      body: JSON.stringify(body),
+    });
+    const res = await handleAssistant(req, { knowledge: k, env: KEYS, db, fetcher });
+    expect(res?.status).toBe(502);
+    const answer = saved.find((r) => r.sql.includes("assistant_answers"));
+    expect(answer?.values.slice(2, 4)).toEqual(["evals", 0]);
+    expect(saved.filter((r) => r.sql.includes("assistant_calls")).map((c) => c.values[5])).toEqual(["http_500", "http_503"]);
+  });
   test("guarda lo que falta, y sin la tabla responde igual", async () => {
     const script = [{ tool: "find_trade_fee", args: { municipality: "La Paz", activity: "kiosco" } }, { text: "Todavía no." }];
     const body = { messages: [{ role: "user", content: "¿Cuánto cobra La Paz de tasa?" }] };
@@ -408,7 +441,8 @@ describe("http", () => {
     const db = { prepare: () => ({ bind: (...v: unknown[]) => ({ run: async () => rows.push(v) }) }) };
     const ok = await handleAssistant(post("/api/asistente", body), { knowledge: k, env: KEYS, db, fetcher: fakeProvider(script).fetcher });
     expect(ok?.status).toBe(200);
-    expect(rows[0]?.slice(1)).toEqual(["municipio", "La Paz", "tasa-de-comercio"]);
+    // Antes que el faltante se guarda el consumo de la respuesta: se busca la fila del faltante.
+    expect(rows.find((v) => v[1] === "municipio")?.slice(1)).toEqual(["municipio", "La Paz", "tasa-de-comercio"]);
     const broken = {
       prepare: () => ({
         bind: () => ({
