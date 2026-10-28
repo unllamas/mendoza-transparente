@@ -46,9 +46,19 @@ export function formatBytes(bytes: number): string {
 
 const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
 
-/** "2026-10-11..." → "11 oct 2026" */
+/** Argentina is UTC-3 all year (no daylight saving since 2009). */
+const ARGENTINA_OFFSET_MS = 3 * 60 * 60 * 1000;
+
+/** Calendar date in Argentina: a UTC timestamp after 21:00 already belongs to the next UTC day. */
+function argentinaDay(iso: string): string {
+  if (!/T.*(Z|[+-]\d{2}:?\d{2})$/.test(iso)) return iso.slice(0, 10);
+  const time = Date.parse(iso);
+  return Number.isNaN(time) ? iso.slice(0, 10) : new Date(time - ARGENTINA_OFFSET_MS).toISOString().slice(0, 10);
+}
+
+/** "2026-10-11" or "2026-10-11T12:00:00Z" → "11 oct 2026" (Argentina date) */
 export function formatDate(iso: string): string {
-  const [y, m, d] = iso.slice(0, 10).split("-").map(Number);
+  const [y, m, d] = argentinaDay(iso).split("-").map(Number);
   return `${d} ${MESES[m! - 1]} ${y}`;
 }
 
