@@ -6,6 +6,7 @@ import { procedureForModel } from "./agent.ts";
 import { handleAssistant } from "./http.ts";
 import type { Knowledge } from "./knowledge.ts";
 import { issuePass } from "./pass.ts";
+import { type Attempt, complete } from "./providers.ts";
 import { type Limits, limitsForHost, PRODUCTION_LIMITS, type QuotaDb, takeQuota } from "./quota.ts";
 import { getProcedure } from "./tools.ts";
 
@@ -177,5 +178,66 @@ describe("lo que vuelve al modelo", () => {
     expect(m.steps?.map((s) => s.title)).toEqual(p.steps?.map((s) => s.title));
     expect(m.unpublished).toEqual(p.unpublished);
     expect(text.length).toBeLessThan(JSON.stringify(p).length * 0.7);
+  });
+});
+
+describe("lo que se manda a cada proveedor", () => {
+  const body = (url: string, init: RequestInit) => ({ url, body: JSON.parse(String(init.body)) });
+  const ok = (usage: object) => Response.json({ choices: [{ message: { content: "Hola." } }], usage });
+
+  test("a OpenRouter: prefijo en caché y esfuerzo bajo; sin temperature", async () => {
+    const sent: { url: string; body: Record<string, unknown> }[] = [];
+    const attempts: Attempt[] = [];
+    await complete(
+      { OPENROUTER_API_KEY: "or" },
+      {
+        messages: [
+          { role: "system", content: "Instrucciones" },
+          { role: "user", content: "hola" },
+        ],
+        tools: [],
+      },
+      async (url, init) => {
+        sent.push(body(url, init));
+        return ok({
+          prompt_tokens: 2000,
+          completion_tokens: 90,
+          prompt_tokens_details: { cached_tokens: 1950 },
+          completion_tokens_details: { reasoning_tokens: 40 },
+        });
+      },
+      "tools",
+      (a) => attempts.push(a),
+    );
+    const b = sent[0]?.body as { messages: { role: string; content: unknown }[]; reasoning?: unknown; temperature?: unknown };
+    expect(b.messages[0]).toEqual({
+      role: "system",
+      content: [{ type: "text", text: "Instrucciones", cache_control: { type: "ephemeral" } }],
+    });
+    expect(b.messages[1]).toEqual({ role: "user", content: "hola" });
+    expect(b.reasoning).toEqual({ effort: "low" });
+    expect(b.temperature).toBeUndefined();
+    expect(attempts[0]).toMatchObject({ promptTokens: 2000, cachedTokens: 1950, reasoningTokens: 40 });
+  });
+
+  test("al AI Gateway: el cuerpo de siempre, sin campos que no documenta", async () => {
+    const sent: { url: string; body: Record<string, unknown> }[] = [];
+    await complete(
+      { AI_GATEWAY_API_KEY: "gw" },
+      {
+        messages: [
+          { role: "system", content: "Instrucciones" },
+          { role: "user", content: "hola" },
+        ],
+        tools: [],
+      },
+      async (url, init) => {
+        sent.push(body(url, init));
+        return ok({ prompt_tokens: 10, completion_tokens: 2 });
+      },
+    );
+    const b = sent[0]?.body as { messages: unknown[]; reasoning?: unknown };
+    expect(b.messages[0]).toEqual({ role: "system", content: "Instrucciones" });
+    expect(b.reasoning).toBeUndefined();
   });
 });

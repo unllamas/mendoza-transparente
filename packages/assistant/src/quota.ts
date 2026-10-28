@@ -27,7 +27,7 @@ export const WINDOW_MS = 10 * 60 * 1000;
 
 /**
  * Producción: una persona que hace un trámite pregunta entre 3 y 10 veces. Los topes por IP son holgados porque en
- * Argentina muchos celulares salen a internet por la misma IP (CGNAT). El del sitio (≈ USD 4 a 6 por día con Haiku)
+ * Argentina muchos celulares salen a internet por la misma IP (CGNAT). El del sitio (≈ USD 3 por día con Haiku 5.5)
  * se cambia con el secreto ASSISTANT_DAILY_LIMIT.
  */
 export const PRODUCTION_LIMITS: Limits = { name: "production", perIpWindow: 20, perIpDay: 80, perSiteDay: 3000, perPass: 20 };
