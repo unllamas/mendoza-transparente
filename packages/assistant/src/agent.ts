@@ -1,12 +1,22 @@
 /**
- * The agent loop: the model reads the conversation, calls tools over our data and writes a short text. The blocks
- * the widget draws (steps, fee, questions, "no se publica") are built here from the tool results, never from the
- * model's words, so every link and figure on screen is ours.
+ * El bucle del agente: el modelo lee la conversación, llama a herramientas sobre nuestros datos y escribe un texto
+ * corto. Los bloques que dibuja el widget (pasos, tasa, preguntas, "no se publica") se arman acá con los resultados
+ * de las herramientas, nunca con las palabras del modelo, así que cada enlace y cada cifra en pantalla es nuestra.
  */
 
 import { INSTRUCTIONS } from "./instructions.ts";
 import type { Knowledge } from "./knowledge.ts";
 import { type AssistantEnv, type Completion, complete, type Fetcher, type WireMessage } from "./providers.ts";
+import {
+  findSitePage,
+  getMunicipality,
+  SITE_TOOL_DEFINITIONS,
+  type SiteData,
+  searchLaws,
+  searchPeople,
+  searchPurchases,
+  searchUnpublishedCatalog,
+} from "./site-data.ts";
 import {
   activityOptions,
   asksAboutFee,
@@ -22,10 +32,17 @@ import {
   TOOL_DEFINITIONS,
   type UnpublishedResult,
 } from "./tools.ts";
-import type { AssistantReply, Block, ChatMessage, Gap, Progress } from "./types.ts";
+import type { AssistantReply, Block, ChatMessage, DataCard, Gap, Progress } from "./types.ts";
 
-/** Model calls per answer: enough to ask for the procedure and the fee, and to stop a loop from burning tokens. */
+/** Llamadas al modelo por respuesta: alcanzan para pedir el trámite y la tasa, y evitan que un bucle gaste tokens. */
 const MAX_STEPS = 4;
+
+/** Tarjetas con datos del sitio por respuesta: una o dos contestan; más es una página, y para eso está el enlace. */
+const MAX_CARDS = 2;
+
+/** Las herramientas de Aco: las de trámites y las de lo que publica el sitio. */
+const ALL_TOOLS = [...TOOL_DEFINITIONS, ...SITE_TOOL_DEFINITIONS];
+const SITE_TOOLS = new Set<string>(SITE_TOOL_DEFINITIONS.map((t) => t.function.name));
 
 const formatPesos = (n: number) => `$ ${Math.round(n).toLocaleString("es-AR")}`;
 
@@ -33,13 +50,19 @@ interface Collected {
   procedure?: ProcedureResult;
   fee?: FeeResult;
   unpublished?: UnpublishedResult;
+  /** Datos del sitio para mostrar (proveedores, autoridades, un municipio…), armados por las herramientas. */
+  cards: DataCard[];
   ask?: { field: "municipality" | "activity"; options?: { id: string; label: string; words?: string[] }[]; question: string };
   gaps: Gap[];
-  /** From the conversation: the last municipality the person named, and whether they asked about money. */
-  context: { municipality: string | null; asksFee: boolean };
+  /** De la conversación: el último municipio que nombró la persona y si preguntó por plata. */
+  context: { municipality: string | null; asksFee: boolean; asksPay: boolean };
 }
 
-/** Free text from the tools, cut short and normalized before it is saved as a gap. */
+/** Palabras que preguntan cuánto gana alguien: entonces un sueldo que no se publica se muestra como "no se publica". */
+const PAY_WORDS = /\b(gana|ganan|cobra|cobran|sueldo|sueldos|salario|salarios|dieta|dietas|remuneracion)\b/;
+const asksAboutPay = (texts: string[]) => texts.some((t) => PAY_WORDS.test(normalize(t)));
+
+/** Texto libre de las herramientas, acortado y normalizado antes de guardarlo como faltante. */
 const gapValue = (text: string) => normalize(text).slice(0, 40);
 
 function addGap(c: Collected, gap: Gap) {
@@ -47,7 +70,7 @@ function addGap(c: Collected, gap: Gap) {
   c.gaps.push(gap);
 }
 
-/** The options for "¿qué vas a vender?": for the fee, only what we have there; for the steps, any common activity. */
+/** Las opciones de "¿qué vas a vender?": para la tasa, solo lo que tenemos ahí; para los pasos, cualquier actividad común. */
 function askActivity(k: Knowledge, municipality: string, c: Collected) {
   const flow = k.flows.find((f) => f.municipality === municipality && f.id === (c.procedure?.flow ?? "abrir-un-comercio"));
   if (!flow) return { error: "No hace falta el rubro: ese municipio no está relevado. Decilo y respondé con lo que hay." };
@@ -61,12 +84,58 @@ function askActivity(k: Knowledge, municipality: string, c: Collected) {
   return { options };
 }
 
-function runTool(k: Knowledge, name: string, rawArgs: string, collected: Collected): unknown {
+function addCard(c: Collected, card: DataCard | undefined) {
+  if (card && c.cards.length < MAX_CARDS && !c.cards.some((x) => x.title === card.title && x.link.href === card.link.href))
+    c.cards.push(card);
+}
+
+/** Herramientas sobre los datos del sitio: la tarjeta va a la pantalla, los mismos hechos (sin ella) al modelo. */
+function runSiteTool(d: SiteData, name: string, args: Record<string, string>, c: Collected): unknown {
+  const withoutCard = <T extends { card?: DataCard }>(r: T) => {
+    addCard(c, r.card);
+    const { card: _, ...rest } = r;
+    return rest;
+  };
+  switch (name) {
+    case "find_site_page":
+      return withoutCard(findSitePage(d, args));
+    case "search_purchases":
+      return withoutCard(searchPurchases(d, args));
+    case "search_people": {
+      const r = searchPeople(d, args);
+      // Preguntó cuánto gana alguien y no se publica: decir quién no lo publica, con "Pedir el dato".
+      if (c.context.asksPay) {
+        const missing = r.people.find((p) => p.payUnpublished)?.payUnpublished;
+        if (missing) c.unpublished = { matches: [...(c.unpublished?.matches ?? []), { ...missing, municipality: "" }] };
+      }
+      return withoutCard(r);
+    }
+    case "get_municipality":
+      return withoutCard(getMunicipality(d, args));
+    case "search_laws":
+      return withoutCard(searchLaws(d, args));
+    default:
+      return { error: `No existe la herramienta ${name}` };
+  }
+}
+
+async function runTool(
+  k: Knowledge,
+  site: (() => Promise<SiteData | null>) | undefined,
+  name: string,
+  rawArgs: string,
+  collected: Collected,
+): Promise<unknown> {
   let args: Record<string, string> = {};
   try {
     args = JSON.parse(rawArgs || "{}");
   } catch {
     return { error: "Argumentos inválidos" };
+  }
+  if (SITE_TOOLS.has(name)) {
+    const d = await site?.();
+    if (!d) return { error: "Los datos del sitio no están disponibles ahora. Decilo y ofrecé el link a la sección." };
+    return runSiteTool(d, name, args, collected);
   }
   switch (name) {
     case "list_procedures":
@@ -80,7 +149,7 @@ function runTool(k: Knowledge, name: string, rawArgs: string, collected: Collect
       return p;
     }
     case "find_trade_fee": {
-      // The fee shows only when the person asked about money: otherwise the model does not even get the amounts.
+      // La tasa se muestra solo cuando la persona preguntó por plata: si no, el modelo ni recibe los montos.
       if (!collected.context.asksFee) return { error: "La persona no preguntó por la tasa: no la busques ni la menciones." };
       const f = findTradeFee(k, args);
       collected.fee = f;
@@ -89,9 +158,14 @@ function runTool(k: Knowledge, name: string, rawArgs: string, collected: Collect
       if (f.status === "unknown_activity" && f.asked) addGap(collected, { kind: "rubro", municipality, value: gapValue(f.asked) });
       return f;
     }
-    case "search_unpublished":
-      collected.unpublished = searchUnpublished(k, args);
+    case "search_unpublished": {
+      // Los faltantes propios de los trámites y el catálogo del sitio de lo que el Estado no publica (/no-publicado).
+      const own = searchUnpublished(k, args).matches;
+      const d = await site?.();
+      const catalog = d ? searchUnpublishedCatalog(d, args.topic ?? "").map((u) => ({ ...u, municipality: "" })) : [];
+      collected.unpublished = { matches: [...own, ...catalog] };
       return collected.unpublished;
+    }
     case "ask_user": {
       if (args.field !== "activity") {
         collected.ask = { field: "municipality", question: String(args.question ?? "") };
@@ -113,7 +187,7 @@ function runTool(k: Knowledge, name: string, rawArgs: string, collected: Collect
   }
 }
 
-/** The fee card, from what find_trade_fee returned. Null unless there is an amount to show. */
+/** La tarjeta de la tasa, a partir de lo que devolvió find_trade_fee. Null si no hay un monto para mostrar. */
 function feeCard(f: FeeResult): Block | null {
   if (f.status !== "found" || !f.activity || !f.matches.length) return null;
   return {
@@ -130,7 +204,7 @@ function feeCard(f: FeeResult): Block | null {
   };
 }
 
-/** Blocks for the widget, from what the tools returned. */
+/** Bloques para el widget, a partir de lo que devolvieron las herramientas. */
 export function buildBlocks(k: Knowledge, c: Collected): Block[] {
   if (c.ask)
     return c.ask.field === "municipality" ? [{ type: "ask_municipality" }] : [{ type: "ask_activity", options: c.ask.options ?? [] }];
@@ -138,7 +212,7 @@ export function buildBlocks(k: Knowledge, c: Collected): Block[] {
   const p = c.procedure;
   if (p) {
     const steps = p.covered ? p.steps : p.general_steps;
-    // A question only about the fee does not need the national and provincial steps of a municipality we lack.
+    // Una pregunta solo por la tasa no necesita los pasos nacionales y provinciales de un municipio que no tenemos.
     const onlyFee = !p.covered && c.fee && c.context.asksFee;
     if (steps?.length && !onlyFee) {
       const title = k.flows.find((f) => f.id === p.flow)?.title;
@@ -148,7 +222,7 @@ export function buildBlocks(k: Knowledge, c: Collected): Block[] {
         municipality: p.municipality,
         steps: steps.map((s) => ({ level: s.level, title: s.title, detail: s.detail, href: s.href, agency: s.agency })),
         verified: p.verified ?? "",
-        // For the PDF folder: what the procedure is called, the activity picked and what is not published.
+        // Para la carpeta en PDF: cómo se llama el trámite, la actividad elegida y lo que no se publica.
         ...(title ? { title } : {}),
         ...(p.covered && p.activity ? { activity: p.activity.name } : {}),
         ...(p.covered && p.unpublished?.length ? { unpublished: p.unpublished } : {}),
@@ -158,7 +232,7 @@ export function buildBlocks(k: Knowledge, c: Collected): Block[] {
   if (c.fee && c.context.asksFee) {
     const card = feeCard(c.fee);
     if (card) blocks.push(card);
-    // An activity we do not have there: offer the ones we do, so the person is not left without a way forward.
+    // Una actividad que no tenemos ahí: ofrecer las que sí, para que la persona no se quede sin camino.
     if (c.fee.status === "unknown_activity" && c.fee.available?.length) {
       blocks.push({
         type: "ask_activity",
@@ -166,15 +240,16 @@ export function buildBlocks(k: Knowledge, c: Collected): Block[] {
       });
     }
   }
-  // One "ask for it" per agency, and only the ones that matter here: without a municipality, the provincial and
-  // national agencies; with one, also that municipality. The same item repeated across recorridos showed up once per
-  // municipality before.
+  for (const card of c.cards) blocks.push({ type: "data", card });
+  // Un "Pedir el dato" por organismo, y solo los que importan acá: sin municipio, los organismos provinciales y
+  // nacionales; con uno, también ese municipio. Antes, el mismo ítem repetido en varios recorridos aparecía una vez por
+  // municipio.
   const where = c.context.municipality;
   const agencies = new Set<string>();
   for (const u of c.unpublished?.matches ?? []) {
     const own = u.municipality;
     const municipal = /^Municipalidad/i.test(u.agency);
-    if (municipal && (!where || own !== where)) continue;
+    if (municipal && own && (!where || own !== where)) continue;
     if (agencies.has(u.agency) || agencies.size >= 2) continue;
     agencies.add(u.agency);
     blocks.push({ type: "unpublished", what: u.what, agency: u.agency });
@@ -186,11 +261,12 @@ function outcomeOf(text: string, blocks: Block[], c: Collected): AssistantReply[
   if (c.ask || blocks.some((b) => b.type === "ask_activity" || b.type === "ask_municipality")) return "ask";
   if (blocks.some((b) => b.type === "fee")) return "fee";
   if (blocks.some((b) => b.type === "steps")) return "steps";
+  if (blocks.some((b) => b.type === "data")) return "data";
   if (blocks.some((b) => b.type === "unpublished")) return "unpublished";
   return text ? "answer" : "no_answer";
 }
 
-/** Facts for the text when the model's own words are missing (it only called tools). */
+/** Hechos para el texto cuando faltan las palabras propias del modelo (solo llamó a herramientas). */
 function fallbackText(c: Collected): string {
   if (c.ask) return c.ask.question;
   const f = c.fee;
@@ -210,12 +286,14 @@ function fallbackText(c: Collected): string {
 
 export interface RunOptions {
   fetcher?: Fetcher;
-  /** What people asked that we do not have yet (a municipality, an activity, a procedure), to save for later. */
+  /** Lo que la gente preguntó y todavía no tenemos (un municipio, una actividad, un trámite), para guardarlo para después. */
   onGap?: (gap: Gap) => void;
-  /** For logs and tests: which provider answered each call. */
+  /** Para logs y tests: qué proveedor respondió cada llamada. */
   onCompletion?: (c: Completion) => void;
-  /** What Aco is doing right now, for the widget: reading the question, running a tool or writing the answer. */
+  /** Lo que Aco está haciendo ahora, para el widget: leer la pregunta, ejecutar una herramienta o escribir la respuesta. */
   onStatus?: (status: Progress) => void;
+  /** Lo que publica el sitio (/data/asistente.json), cargado solo cuando una herramienta lo necesita. */
+  siteData?: () => Promise<SiteData | null>;
 }
 
 export async function runAgent(k: Knowledge, env: AssistantEnv, history: ChatMessage[], opts: RunOptions = {}): Promise<AssistantReply> {
@@ -226,6 +304,7 @@ export async function runAgent(k: Knowledge, env: AssistantEnv, history: ChatMes
   const said = history.filter((m) => m.role === "user").map((m) => m.content);
   const collected: Collected = {
     gaps: [],
+    cards: [],
     context: {
       municipality:
         said
@@ -233,19 +312,20 @@ export async function runAgent(k: Knowledge, env: AssistantEnv, history: ChatMes
           .filter(Boolean)
           .at(-1) ?? null,
       asksFee: asksAboutFee(said),
+      asksPay: asksAboutPay(said),
     },
   };
   let text = "";
   for (let step = 0; step < MAX_STEPS; step++) {
-    // Last step: no tools, so the model has to write.
+    // Último paso: sin herramientas, así que el modelo tiene que escribir.
     const last = step === MAX_STEPS - 1;
     opts.onStatus?.(step === 0 ? { phase: "thinking" } : last ? { phase: "writing" } : { phase: "thinking" });
-    const c = await complete(env, { messages, tools: last ? [] : TOOL_DEFINITIONS }, opts.fetcher, last ? "answer" : "tools");
+    const c = await complete(env, { messages, tools: last ? [] : ALL_TOOLS }, opts.fetcher, last ? "answer" : "tools");
     opts.onCompletion?.(c);
     if (!c.toolCalls.length) {
       text = (c.content ?? "").trim();
-      // With a writing model of its own, the text after the tools is rewritten by it. Still within MAX_STEPS calls:
-      // this only happens before the last step.
+      // Con un modelo de redacción propio, el texto posterior a las herramientas lo reescribe ese modelo. Sigue dentro de
+      // MAX_STEPS llamadas: esto solo pasa antes del último paso.
       if (env.ASSISTANT_MODEL_ANSWER && step > 0 && !last) {
         opts.onStatus?.({ phase: "writing" });
         const answer = await complete(env, { messages, tools: [] }, opts.fetcher, "answer");
@@ -257,7 +337,7 @@ export async function runAgent(k: Knowledge, env: AssistantEnv, history: ChatMes
     messages.push({ role: "assistant", content: c.content, tool_calls: c.toolCalls });
     for (const call of c.toolCalls) {
       opts.onStatus?.({ phase: "tool", tool: call.function.name });
-      const result = runTool(k, call.function.name, call.function.arguments, collected);
+      const result = await runTool(k, opts.siteData, call.function.name, call.function.arguments, collected);
       messages.push({ role: "tool", tool_call_id: call.id, content: JSON.stringify(result) });
     }
     if (collected.ask) break;

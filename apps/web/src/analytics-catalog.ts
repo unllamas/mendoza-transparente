@@ -1,7 +1,7 @@
 /**
- * Catalog of analytics events: what each one means, in Spanish, as it shows up in PostHog.
- * `bun run posthog-sync` copies these descriptions to PostHog (docs/procesos/analitica.md).
- * When adding a `data-track` or `track()` call, add its event here too.
+ * Catálogo de eventos de analítica: qué significa cada uno, en español, como aparece en PostHog.
+ * `bun run posthog-sync` copia estas descripciones a PostHog (docs/procesos/analitica.md).
+ * Al agregar una llamada `data-track` o `track()`, agregar su evento acá también.
  */
 
 export interface EventDoc {
@@ -544,7 +544,7 @@ export const EVENT_CATALOG: EventDoc[] = [
   {
     event: "assistant.answer.show",
     description:
-      "Aco respondió. Propiedades: outcome (steps, unpublished, ask, answer o no_answer), flow (el recorrido, p. ej. abrir-un-comercio) y municipality.",
+      "Aco respondió. Propiedades: outcome (steps, fee, data, unpublished, ask, answer o no_answer), flow (el recorrido, p. ej. abrir-un-comercio) y municipality.",
     tags: ["asistente"],
   },
   {
@@ -554,7 +554,7 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["asistente"],
   },
 
-  // Retired: the site no longer sends these, but PostHog keeps their history. Described so it can still be read.
+  // Retirados: el sitio ya no los manda, pero PostHog guarda su historial. Se describen para poder leerlos igual.
   {
     event: "municipality.index.open",
     description:

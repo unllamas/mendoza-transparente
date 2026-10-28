@@ -1,6 +1,7 @@
 /**
  * Prepara los datos del sitio antes de compilar. Lee sources.yaml,
  * data/raw/<id>/manifest.jsonl, data/raw/<id>/archive-org.jsonl y data/processed/<id>/*.csv, y escribe en public/data:
+ *   asistente.json                lo que Aco sabe del sitio (proveedores, autoridades, municipios, leyes…)
  *   index.json                    catálogo de fuentes y datasets (para /fuentes y /datos)
  *   fuentes.json                  solo las fuentes y dos totales: lo que necesitan el footer, la portada y cada «Fuentes»
  *   <id>/<archivo>.csv            el CSV completo, para descargar
@@ -14,6 +15,7 @@ import { parse as parseYaml } from "yaml";
 import { NO_PUBLICADO_CATEGORIES } from "../src/no-publicado-categories.ts";
 import type { DataIndex, DatasetMeta, Diccionario, NoPublicado, Preview, SourceCatalog, SourceMeta } from "../src/types.ts";
 import { construirPaginas } from "./paginas.ts";
+import { buildAssistantData } from "./temas/assistant-data.ts";
 import { buildPosters, buildRequestTargets } from "./temas/civic-tools.ts";
 import { buildCompras } from "./temas/compras.ts";
 import { buildCoparticipacion } from "./temas/coparticipacion.ts";
@@ -94,7 +96,7 @@ function readManifest(id: string): ManifestEntry[] {
     .map((line) => JSON.parse(line) as ManifestEntry);
 }
 
-/** Page with every archive.org item of a source, once at least one file was uploaded (see `bun run archivar`). */
+/** Página con cada ítem de archive.org de una fuente, una vez que se subió al menos un archivo (ver `bun run archivar`). */
 function archiveOrgUrl(id: string): string | null {
   const path = join(RAW_DIR, id, "archive-org.jsonl");
   if (!existsSync(path)) return null;
@@ -314,8 +316,9 @@ const funcionariosTema =
         readTable("fotos", "fotos.csv") ?? [],
       )
     : undefined;
-// Who held each position (ex officials and past elections); it also adds the past of each current official.
-// Parties first: one name however each source writes it (data/curado/partidos.yaml), then one page each.
+// Quién ocupó cada cargo (ex funcionarios y elecciones pasadas); también suma el pasado de cada autoridad actual.
+// Primero los partidos: un solo nombre sin importar cómo lo escriba cada fuente (data/curado/partidos.yaml), y después
+// una página cada uno.
 if (funcionariosTema) {
   const electos = readTable("junta-electoral", "electos.csv") ?? [];
   const parties = buildPartyRegistry(
@@ -358,7 +361,8 @@ if (existsSync(noPublicado)) {
   noPublicadoItems = items;
   const invalid = items.filter((i) => !(i.categoria in NO_PUBLICADO_CATEGORIES));
   if (invalid.length) throw new Error(`no-publicado.yaml: categoría faltante o desconocida en ${invalid.map((i) => i.id).join(", ")}`);
-  // A national law needs its own place to file the request: the provincial form would send people to the wrong office.
+  // Una ley nacional necesita su propio lugar para presentar el pedido: el formulario provincial mandaría a la gente
+  // a la oficina equivocada.
   const badFiling = items.filter(
     (i) =>
       (i.ley !== undefined && i.ley !== "9070" && i.ley !== "27275") ||
@@ -400,7 +404,7 @@ if (copaTema && poblacionTema && funcionariosTema) {
     readTable("etica-publica", "funcionarios.csv") ?? [],
     readTable("boletin-oficial", "normas.csv") ?? [],
   );
-  // Budget pages (/municipios/<slug>/presupuesto/<year>) for the municipalities whose annexes are already read.
+  // Páginas de presupuesto (/municipios/<slug>/presupuesto/<year>) de los municipios cuyos anexos ya se leen.
   const budgets = buildMunicipalBudgets(
     readTable("municipios-lrf", "ejecucion_gastos.csv") ?? [],
     readTable("municipios-lrf", "ejecucion_recursos.csv") ?? [],
@@ -414,7 +418,7 @@ if (copaTema && poblacionTema && funcionariosTema) {
     const m = municipios.find((x) => x.slug === b.slug);
     if (m) m.budget = budgetSummary(b);
   }
-  // Procedure pages (/tramites/abrir-un-comercio, /municipios/<slug>/tramites/… and /tasas), from the curated catalog.
+  // Páginas de trámites (/tramites/abrir-un-comercio, /municipios/<slug>/tramites/… y /tasas), del catálogo curado.
   const procedures = buildProcedures(
     leerCurado<Record<string, unknown>>("tramites.yaml"),
     readTable("tributos", "rubros_comercio.csv") ?? [],
@@ -438,7 +442,7 @@ if (copaTema && poblacionTema && funcionariosTema) {
     if (c) m.commerce = c;
   }
   writeFileSync(join(OUT, "temas", "municipios.json"), JSON.stringify(municipios));
-  // The request letter (/pedir) and the posters (/cartel).
+  // La carta de pedido (/pedir) y los carteles (/cartel).
   writeFileSync(join(OUT, "temas", "pedir.json"), JSON.stringify(buildRequestTargets(municipios, noPublicadoItems)));
   writeFileSync(join(OUT, "temas", "carteles.json"), JSON.stringify(buildPosters(municipios, budgets)));
 }
@@ -453,7 +457,7 @@ if (procesos && adjudicaciones) {
   writeFileSync(join(OUT, "temas", "organismos.json"), JSON.stringify(organismos));
   writeFileSync(join(OUT, "temas", "proveedores.json"), JSON.stringify(proveedores));
 
-  // Gobierno por dentro: one page per agency (docs/planes/el-estado-por-dentro.md).
+  // Gobierno por dentro: una página por organismo (docs/planes/el-estado-por-dentro.md).
   const agencyTable = join(ROOT, "data", "curado", "jurisdicciones.yaml");
   if (funcionariosTema && existsSync(agencyTable)) {
     const agencies = buildGobierno(
@@ -473,7 +477,7 @@ if (procesos && adjudicaciones) {
       join(OUT, "temas"),
     );
     writeFileSync(join(OUT, "temas", "gobierno.json"), JSON.stringify(agencies));
-    // buildGobierno links each Executive official to their agency: rewrite the officials file with it.
+    // buildGobierno enlaza a cada autoridad del Ejecutivo con su organismo: reescribir el archivo de autoridades con eso.
     writeFileSync(join(OUT, "temas", "funcionarios.json"), JSON.stringify(funcionariosTema));
   }
 }
@@ -497,6 +501,9 @@ if (normasBoletin) {
     ),
   );
 }
+
+// Lo que Aco responde sobre el sitio (packages/assistant/src/site-data.ts), a partir de los archivos de temas escritos arriba.
+writeFileSync(join(OUT, "asistente.json"), JSON.stringify(buildAssistantData(join(OUT, "temas"))));
 
 const index: DataIndex = { generatedAt: new Date().toISOString(), sources, datasets };
 writeFileSync(join(OUT, "index.json"), JSON.stringify(index));
