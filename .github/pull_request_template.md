@@ -24,7 +24,7 @@ Plantilla de PR (docs/procesos/ramas-y-releases.md). Vale para personas y agente
 - [ ] Si un documento suma un diagrama o una tabla ancha, lo miré en GitHub, también en ancho de celular (diagramas en Mermaid).
 
 **Convenciones**
-- [ ] Código en inglés; documentación, descripción de los commits y textos visibles en español.
+- [ ] Nombres del código en inglés; comentarios, documentación, descripción de los commits y textos visibles en español. Los comentarios en inglés de los archivos que toqué quedaron traducidos.
 - [ ] Ningún secreto ni `.env*` en el diff.
 - [ ] Si suma consumo (una CI, un workflow, una función, un servicio), digo abajo cuánto gasta y de qué cupo gratis ([Costo cero](../docs/procesos/arquitectura.md#costo-cero)).
 
