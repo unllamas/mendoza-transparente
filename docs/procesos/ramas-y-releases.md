@@ -125,7 +125,7 @@ BREAKING CHANGE: la columna monto_total de data/processed/compras deja de existi
 
 Lo que no aplica se tacha diciendo por qué, en vez de borrarlo: así quien revisa ve que se pensó.
 
-**Un agente** no abre el PR sin hacer esa revisión de verdad: mira el diff (`git diff origin/dev...HEAD`), corre los comandos y busca las referencias viejas antes de marcar cada punto. Si algo falla o falta, lo arregla antes de abrir el PR o lo deja escrito en «Riesgos y pendientes». Escribe el cuerpo en un archivo temporal siguiendo la plantilla y abre el PR con `gh pr create --base dev --title "<tipo>(<ámbito>): …" --body-file <archivo>`.
+**Un agente** no abre el PR sin hacer esa revisión de verdad: mira el diff (`git diff origin/dev...HEAD`), corre los comandos y busca las referencias viejas antes de marcar cada punto. Si algo falla o falta, lo arregla antes de abrir el PR o lo deja escrito en «Riesgos y pendientes». Escribe el cuerpo sobre una copia de la plantilla (`cp .github/pull_request_template.md tmp/pr.md`) y abre el PR con `gh pr create --base dev --title "<tipo>(<ámbito>): …" --body-file tmp/pr.md`. Nunca parte de un PR anterior ni lo escribe de memoria: con `--body-file` GitHub no carga la plantilla, y así se perdieron las secciones en los PRs #124 a #135.
 
 ## Quién aprueba
 
