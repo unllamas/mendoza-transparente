@@ -553,6 +553,34 @@ export const EVENT_CATALOG: EventDoc[] = [
       "Votó una respuesta de Aco. Propiedades: vote (up o down) y, si fue down, reason (dato, respuesta o falta). Nunca se envía el texto libre ni la conversación.",
     tags: ["asistente"],
   },
+  {
+    event: "assistant.question.send",
+    description:
+      "Le hizo una pregunta a Aco. Propiedad source: typed (la escribió), suggestion (una sugerencia de la bienvenida), option (una opción de una respuesta, como un rubro), locate (su ubicación), municipality_list o activity_list (eligió de la lista) y activity_free (buscó un rubro que no estaba y preguntó igual). Nunca se envía el texto.",
+    tags: ["asistente"],
+  },
+  {
+    event: "assistant.answer.error",
+    description:
+      "Aco no pudo responder y mostró un error. Propiedad reason: rate-limit (muchas preguntas seguidas), challenge (no pasó la verificación de Turnstile) o generic (falló el modelo o la red).",
+    tags: ["asistente"],
+  },
+  {
+    event: "assistant.answer.retry",
+    description: "Tocó «Reintentar» después de un error de Aco. Propiedad reason, la misma del error.",
+    tags: ["asistente"],
+  },
+  {
+    event: "assistant.link.open",
+    description:
+      "Abrió un link desde una respuesta de Aco. Propiedades: place (text, el texto de la respuesta; step, la fuente oficial de un paso; fee_source, la ordenanza de una tasa; data_row o data_more, una fila o el «ver más» de una tarjeta de datos; request, «Pedir el dato») y href.",
+    tags: ["asistente"],
+  },
+  {
+    event: "assistant.conversation.restart",
+    description: "Tocó «Empezar de nuevo» en el encabezado de Aco y borró la conversación.",
+    tags: ["asistente"],
+  },
 
   // Retirados: el sitio ya no los manda, pero PostHog guarda su historial. Se describen para poder leerlos igual.
   {

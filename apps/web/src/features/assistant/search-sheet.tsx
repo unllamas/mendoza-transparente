@@ -31,7 +31,8 @@ export function SearchSheet({
   items: SearchItem[];
   /** When nothing matches, offer to send what was typed anyway (an activity we do not have yet is noted for later). */
   askFree?: (query: string) => string;
-  onPick: (label: string) => void;
+  /** `free` dice si se eligió la fila «Preguntar por…» con lo escrito, en vez de un elemento de la lista. */
+  onPick: (label: string, free?: boolean) => void;
   onClose: () => void;
 }) {
   const [query, setQuery] = useState("");
@@ -77,7 +78,7 @@ export function SearchSheet({
               {askFree && query.trim() && (
                 <ul className={listVariants()}>
                   <li>
-                    <button type="button" onClick={() => onPick(query.trim())} className={listRowVariants()}>
+                    <button type="button" onClick={() => onPick(query.trim(), true)} className={listRowVariants()}>
                       <span className="min-w-0 flex-1 truncate text-body-medium text-text-link">{askFree(query.trim())}</span>
                       <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
                     </button>

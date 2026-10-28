@@ -154,10 +154,22 @@ Se edita `data/curado/tramites.yaml` (proceso en [Trámites y tributos](tramites
 
 ## Medición
 
-Solo tres eventos en PostHog, sin texto de la conversación (detalle en el plan, etapa 7):
-- `assistant.launcher.open`;
-- `assistant.answer.show`, con `outcome` (`steps`, `fee`, `data`, `ask`, `unpublished`, `answer` o `no_answer`), `flow` y `municipality`;
-- `assistant.feedback.vote`, con `vote` y `reason`.
+Eventos en PostHog, nunca con el texto de la conversación ni la nota del 👎. Cada uno responde una pregunta:
+
+| Evento | Propiedades | Qué responde |
+|---|---|---|
+| `assistant.launcher.open` | | ¿Cuántos abren a Aco? |
+| `assistant.question.send` | `source`: `typed`, `suggestion`, `option`, `locate`, `municipality_list`, `activity_list` o `activity_free` | ¿Cuántos preguntan después de abrirlo, y sirven las sugerencias y los atajos? |
+| `assistant.answer.show` | `outcome` (`steps`, `fee`, `data`, `ask`, `unpublished`, `answer` o `no_answer`), `flow` y `municipality` | ¿Qué responde y cuánto no sabe? |
+| `assistant.answer.error` | `reason`: `rate-limit`, `challenge` o `generic` | ¿Cuántas preguntas se quedan sin respuesta, y por qué? |
+| `assistant.answer.retry` | `reason` | ¿Reintentan después de un error? |
+| `assistant.link.open` | `place`: `text`, `step`, `fee_source`, `data_row`, `data_more` o `request`; `href` | ¿Las respuestas llevan a la fuente o a una página del sitio? |
+| `assistant.conversation.restart` | | ¿Se traban las conversaciones? |
+| `assistant.feedback.vote` | `vote` y `reason` | ¿Sirvió la respuesta? |
+
+`question.send` se manda en `ask()` de `panel.tsx`, por donde pasa toda pregunta; los links, el reintento y el reinicio, con `data-track`. Los links de una respuesta mandan `assistant.link.open` en vez de `link.outbound`. Al sumar un control al widget, se suma su evento acá, en el catálogo y, si responde una pregunta nueva, en el tablero.
+
+El tablero «Uso de Mendoza Transparente» tiene los gráficos de Aco (`bun run posthog-sync`): el embudo de abrir a votar, preguntas, respuestas y errores por día, qué responde, cómo preguntan, votos y links abiertos.
 
 Tokens, costo y fallas de los proveedores se miran en el panel ([Consumo](#consumo)), no en PostHog. Los errores de los proveedores quedan además en el log de la función (`asistente: …`), solo con el código HTTP.
 

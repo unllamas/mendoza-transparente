@@ -112,7 +112,9 @@ export function useConversation(challenge = false) {
       track("assistant.answer.show", { outcome: reply.outcome, flow: reply.flow, municipality: reply.municipality });
     } catch (e) {
       const status = e instanceof AssistantApiError ? e.status : 0;
-      setError(status === 429 ? "rate-limit" : status === 403 ? "challenge" : "generic");
+      const reason: ConversationError = status === 429 ? "rate-limit" : status === 403 ? "challenge" : "generic";
+      setError(reason);
+      track("assistant.answer.error", { reason });
       if (challenge && status !== 429) {
         // El token se gastó (o el pase venció): mostrar Turnstile de nuevo para conseguir uno nuevo.
         if (status === 403) pass.current = null;
