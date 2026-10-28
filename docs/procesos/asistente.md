@@ -57,6 +57,8 @@ Reglas que salieron de probarlo (27/10/2026). Cada una responde a algo que moles
 - **Los pasos van compactos:** número, título y hasta dos líneas de detalle. La flecha abre la fuente.
 - **Las listas de rubros llevan el ícono de cada uno** (`activity-icons.ts`, uno por cada rubro de `rubros.yaml`). Un rubro nuevo suma su ícono ahí.
 - **«Pedir el dato» va una vez por organismo**, y solo a los que vienen al caso: sin municipio, solo la Provincia y la Nación.
+- **El texto nunca muestra marcas de markdown.** El modelo a veces escribe `**negrita**`, listas con guiones o `[links](/ruta)`: `reply-text.ts` entiende ese subconjunto (negrita, cursiva, listas, links y direcciones sueltas) y lo demás queda como texto, nunca como HTML. El lector de pantalla recibe el texto sin marcas.
+- **Un link del texto solo se abre si lo trajo una herramienta** en los bloques de esa misma respuesta (`allowedHrefs`); si no, se ve como texto. Así el modelo no puede inventar un destino. Los links del sitio (también los que vienen con `https://mendoza-transparente.com`) navegan sin recargar la página: el widget vive en el layout y la conversación sigue abierta. En celulares el panel se cierra para mostrar la página y, al volver a abrirlo, la conversación sigue ahí. Los links de afuera se abren en otra pestaña, con ↗.
 
 ## La tasa y lo que no tenemos
 
