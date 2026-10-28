@@ -36,6 +36,12 @@ interface ProviderSpec {
   key: (env: AssistantEnv) => string | undefined;
   model: (env: AssistantEnv) => string;
   headers?: Record<string, string>;
+  /**
+   * Campos de más para el cuerpo del pedido y si se marca el prefijo fijo para la caché. Solo donde el proveedor los
+   * documenta: un campo que el otro no conoce podría hacer fallar el pedido.
+   */
+  extraBody?: Record<string, unknown>;
+  cachePrefix?: boolean;
 }
 
 const PROVIDERS: Record<ProviderId, ProviderSpec> = {
@@ -52,6 +58,11 @@ const PROVIDERS: Record<ProviderId, ProviderSpec> = {
     model: (env) => env.ASSISTANT_MODEL_OPENROUTER || env.ASSISTANT_MODEL || DEFAULT_MODEL,
     // Cabeceras opcionales de atribución que lee OpenRouter: identifican al sitio, no a la persona.
     headers: { "HTTP-Referer": "https://mendoza-transparente.com", "X-Title": "Mendoza Transparente" },
+    // Haiku 5.5 razona por defecto con esfuerzo medio: en la actividad del 27/10/2026 la mitad de la salida era
+    // razonamiento, y 4 de 362 llamadas gastaron los 700 tokens pensando y no escribieron nada. Elegir una herramienta y
+    // escribir 280 caracteres no necesita más que esfuerzo bajo.
+    extraBody: { reasoning: { effort: "low" } },
+    cachePrefix: true,
   },
 };
 
@@ -96,6 +107,10 @@ export interface Attempt {
   ms: number;
   promptTokens?: number;
   completionTokens?: number;
+  /** De la entrada, cuánto salió de la caché (se cobra mucho menos). */
+  cachedTokens?: number;
+  /** De la salida, cuánto fue razonamiento que no se ve. */
+  reasoningTokens?: number;
   costUsd?: number;
 }
 
@@ -119,6 +134,27 @@ export function modelFor(env: AssistantEnv, provider: ProviderId, task: Task): s
 
 const count = (v: unknown) => (typeof v === "number" && Number.isFinite(v) && v >= 0 ? v : undefined);
 
+interface Usage {
+  prompt_tokens?: unknown;
+  completion_tokens?: unknown;
+  cost?: unknown;
+  prompt_tokens_details?: { cached_tokens?: unknown };
+  completion_tokens_details?: { reasoning_tokens?: unknown };
+}
+
+/**
+ * Las instrucciones (el primer mensaje) marcadas para la caché. Las herramientas van antes en el prompt, así que la
+ * marca cubre herramientas e instrucciones: unos 1.950 tokens iguales en cada llamada, más que el mínimo de Haiku 5.5
+ * (512). Dura 5 minutos: la segunda llamada de una misma respuesta ya la lee, a una fracción del precio.
+ */
+export function withCachedPrefix(messages: WireMessage[]): unknown[] {
+  return messages.map((m, i) =>
+    i === 0 && m.role === "system"
+      ? { role: "system", content: [{ type: "text", text: m.content, cache_control: { type: "ephemeral" } }] }
+      : m,
+  );
+}
+
 export async function complete(
   env: AssistantEnv,
   body: { messages: WireMessage[]; tools: readonly unknown[] },
@@ -132,7 +168,7 @@ export async function complete(
   for (const p of providers) {
     const model = modelFor(env, p.id, task);
     const started = Date.now();
-    const attempt = (status: string, usage?: { prompt_tokens?: unknown; completion_tokens?: unknown; cost?: unknown }) =>
+    const attempt = (status: string, usage?: Usage) =>
       onAttempt?.({
         task,
         provider: p.id,
@@ -141,13 +177,27 @@ export async function complete(
         ms: Date.now() - started,
         ...(count(usage?.prompt_tokens) !== undefined ? { promptTokens: count(usage?.prompt_tokens) } : {}),
         ...(count(usage?.completion_tokens) !== undefined ? { completionTokens: count(usage?.completion_tokens) } : {}),
+        ...(count(usage?.prompt_tokens_details?.cached_tokens) !== undefined
+          ? { cachedTokens: count(usage?.prompt_tokens_details?.cached_tokens) }
+          : {}),
+        ...(count(usage?.completion_tokens_details?.reasoning_tokens) !== undefined
+          ? { reasoningTokens: count(usage?.completion_tokens_details?.reasoning_tokens) }
+          : {}),
         ...(count(usage?.cost) !== undefined ? { costUsd: count(usage?.cost) } : {}),
       });
     try {
       const res = await fetcher(p.url, {
         method: "POST",
         headers: { "content-type": "application/json", authorization: `Bearer ${p.key(env)}`, ...p.headers },
-        body: JSON.stringify({ model, messages: body.messages, tools: body.tools, max_tokens: MAX_TOKENS, temperature: 0.2 }),
+        body: JSON.stringify({
+          model,
+          messages: p.cachePrefix ? withCachedPrefix(body.messages) : body.messages,
+          tools: body.tools,
+          // Sin `temperature`: Claude Haiku 5.5 rechaza un valor que no sea el de defecto, y desde el 21/10/2026 la API de
+          // Anthropic lo rechaza en todos los modelos. OpenRouter lo descartaba sin avisar.
+          max_tokens: MAX_TOKENS,
+          ...p.extraBody,
+        }),
         signal: AbortSignal.timeout(TIMEOUT_MS),
       });
       if (!res.ok) {
@@ -158,7 +208,7 @@ export async function complete(
       }
       const json = (await res.json()) as {
         choices?: { message?: { content?: string | null; tool_calls?: ToolCall[] } }[];
-        usage?: { prompt_tokens?: unknown; completion_tokens?: unknown; cost?: unknown };
+        usage?: Usage;
       };
       const message = json.choices?.[0]?.message;
       if (!message) {

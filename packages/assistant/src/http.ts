@@ -157,8 +157,8 @@ async function saveUsage(
     for (const a of usage.attempts) {
       await deps.db
         .prepare(
-          `INSERT INTO assistant_calls (answer_id, created_at, task, provider, model, status, prompt_tokens, completion_tokens, cost_usd, ms)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          `INSERT INTO assistant_calls (answer_id, created_at, task, provider, model, status, prompt_tokens, completion_tokens, cached_tokens, reasoning_tokens, cost_usd, ms)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         )
         .bind(
           id,
@@ -169,6 +169,8 @@ async function saveUsage(
           a.status,
           a.promptTokens ?? null,
           a.completionTokens ?? null,
+          a.cachedTokens ?? null,
+          a.reasoningTokens ?? null,
           a.costUsd ?? null,
           a.ms,
         )

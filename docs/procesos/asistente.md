@@ -142,7 +142,7 @@ Las direcciones `*.pages.dev` de producción usan las claves de producción y no
 | Del sitio, por día | 3.000 (secreto `ASSISTANT_DAILY_LIMIT`) | 600 | 429 `site_day`: «Aco descansa hasta mañana», sin «Reintentar» |
 
 - Los topes por IP son holgados porque en Argentina muchos celulares comparten IP (CGNAT). Una persona que hace un trámite pregunta entre 3 y 10 veces.
-- El tope del sitio llega antes que el tope mensual del proveedor. Si el ataque llegara al del proveedor, Aco quedaría apagado para todos hasta el mes siguiente; con este corte, solo hasta mañana. 3.000 respuestas son unos USD 4 a 6 por día con Haiku.
+- El tope del sitio llega antes que el tope mensual del proveedor. Si el ataque llegara al del proveedor, Aco quedaría apagado para todos hasta el mes siguiente; con este corte, solo hasta mañana. 3.000 respuestas son unos USD 3 por día con Haiku 5.5 ($0,10 y $0,50 por millón de tokens de entrada y de salida), unos USD 100 por mes como máximo.
 - La vista previa deja pasar una corrida de evals entera (unos 52 casos desde una IP) y queda con un total bajo.
 - De la IP solo se guarda su hash con `IP_SALT` (con un prefijo propio, así no se cruza con el del registro). Los contadores vencen solos y la primera respuesta de cada día (en hora de Mendoza) borra los vencidos.
 - Un pedido cortado lee D1 pero no escribe: insistir no gasta las 100.000 escrituras diarias. Una respuesta que pasa suma una escritura (todos los contadores juntos).
@@ -161,11 +161,25 @@ Turnstile es gratis y no consume cupo. En *Preview* se deja apagado, porque con 
 ### Cuántos tokens gasta una respuesta
 
 En los tableros de los proveedores, un «request» es **una llamada al modelo**, no un mensaje de la persona. Cada respuesta hace de 1 a 4 llamadas, y **cada llamada vuelve a mandar todo**:
-- las instrucciones y las 10 herramientas, unos 9.500 caracteres (≈ 2.700 tokens), en todas las llamadas;
+- las instrucciones y las 10 herramientas, unos 9.500 caracteres (≈ 1.950 tokens), en todas las llamadas;
 - el historial;
 - los resultados de las herramientas que ya corrieron.
 
-En las evals del 28/10/2026 (tabla `assistant_calls`), una respuesta hizo 1,9 llamadas de promedio, con unos 4.700 tokens de entrada y 200 de salida cada una: unos 9.000 tokens por respuesta. Una pregunta de trámite llega a 2 o 3 llamadas. Por eso unas 700 llamadas de prueba (evals incluidas) llegan a unos 2,7 millones de tokens por menos de medio dólar. Para que no crezca:
+**Lo que se midió** (actividad de OpenRouter del 27/10/2026: 362 llamadas, 141 respuestas, todas de la clave de `dev`):
+- 2,6 llamadas por respuesta. Por llamada, unos 3.000 tokens de entrada (la mediana es 2.550 y el máximo, 7.000) y 240 de salida.
+- **La mitad de la salida era razonamiento:** Haiku 5.5 piensa por defecto, con esfuerzo medio. En 4 llamadas gastó los 700 tokens pensando y no escribió nada.
+- **Nada salía de la caché** (`tokens_cached` en 0).
+- USD 0,15 en total: USD 0,001 por respuesta. La entrada es el 71 % del gasto, la salida el 29 % y el razonamiento solo, el 15 %.
+
+Así que el volumen de tokens era el esperado, no un error. Para que no crezca:
+- **Caché del prefijo fijo.** A OpenRouter, las instrucciones van marcadas con `cache_control` (`withCachedPrefix` en `providers.ts`). Como las herramientas van antes en el prompt, la marca cubre los ≈ 1.950 tokens que se repiten en cada llamada, más que el mínimo de Haiku 5.5 (512). La caché dura 5 minutos:
+  - la segunda llamada de una respuesta ya la lee, y con tráfico seguido también la leen las respuestas siguientes;
+  - leer de la caché se cobra mucho menos que la entrada normal; escribirla, un poco más;
+  - con 2 o más llamadas por respuesta, conviene.
+- **Esfuerzo bajo.** A OpenRouter va `reasoning: { effort: "low" }`: elegir una herramienta y escribir 280 caracteres no necesita pensar mucho.
+- **Solo en OpenRouter.** Las dos cosas son campos que el AI Gateway no documenta, así que no se le mandan (`extraBody` y `cachePrefix` en `PROVIDERS`).
+- **Sin `temperature`.** Haiku 5.5 rechaza un valor que no sea el de defecto, y OpenRouter lo descartaba sin avisar.
+- **Se mide** en `assistant_calls`: `cached_tokens` y `reasoning_tokens` (migración `0009`).
 - **Lo que vuelve al modelo es lo justo.** `get_procedure` le devuelve los pasos sin links ni la lista de rubros (`procedureForModel` en `agent.ts`), entre un 20 y un 40 % menos, porque el widget dibuja eso con lo que guardó la herramienta. Una herramienta nueva sigue la misma regla: al modelo, los hechos para escribir 280 caracteres; a la pantalla, el resto.
 - **Un modelo por tarea** ([Elegir el modelo](#elegir-el-modelo)) baja el precio por token, no la cantidad, y el de redacción suma una llamada. Haiku ya es el barato: se cambia solo si las evals muestran que otro más chico elige bien las herramientas.
 
@@ -218,7 +232,7 @@ Tokens, costo y fallas de los proveedores se miran en el panel ([Consumo](#consu
 
 Cada respuesta guarda en D1 (migración `0007`) cuánto gastó, sin texto ni IP:
 - **`assistant_answers`:** una fila por respuesta, con si salió bien, el resultado (`outcome`), el recorrido, el municipio, cuántas llamadas hizo y cuánto tardó. `source` dice si vino del widget (`web`) o de las evals (`evals`): el script de evals manda `x-mt-source: evals`.
-- **`assistant_calls`:** una fila por cada intento contra un proveedor, también los que fallaron. Guarda la tarea (`tools` o `answer`), el proveedor, el modelo, el estado (`ok`, `http_429`, `timeout`…), los tokens de entrada y de salida, el costo y el tiempo.
+- **`assistant_calls`:** una fila por cada intento contra un proveedor, también los que fallaron. Guarda la tarea (`tools` o `answer`), el proveedor, el modelo, el estado (`ok`, `http_429`, `timeout`…), los tokens de entrada y de salida, cuántos de entrada salieron de la caché (`cached_tokens`) y cuántos de salida fueron razonamiento (`reasoning_tokens`), el costo y el tiempo.
 
 Se guarda después de responder (`waitUntil`), así no le suma tiempo a la persona, y también cuando la respuesta falla. Sin las tablas, Aco responde igual y deja el log `asistente: no se guardó el consumo`. Cuesta unas 3 a 5 escrituras de D1 por respuesta, dentro de las 100.000 diarias del plan gratis.
 
