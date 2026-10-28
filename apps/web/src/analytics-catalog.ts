@@ -562,7 +562,7 @@ export const EVENT_CATALOG: EventDoc[] = [
   {
     event: "assistant.answer.error",
     description:
-      "Aco no pudo responder y mostró un error. Propiedad reason: rate-limit (muchas preguntas seguidas), challenge (no pasó la verificación de Turnstile) o generic (falló el modelo o la red).",
+      "Aco no pudo responder y mostró un error. Propiedad reason: rate-limit (el límite del WAF, muchas preguntas seguidas), burst (muchas preguntas en 10 minutos), daily (el tope del día de esa IP), closed (el tope del día de todo el sitio), challenge (no pasó Turnstile o la conversación llegó a su tope de mensajes) o generic (falló el modelo o la red).",
     tags: ["asistente"],
   },
   {

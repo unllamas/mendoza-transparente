@@ -5,13 +5,15 @@
  * secretos, los envíos responden 503 en vez de saltearse los controles. La API del panel no se sirve acá.
  * Secretos del asistente: AI_GATEWAY_API_KEY y OPENROUTER_API_KEY (con cualquiera se enciende;
  * docs/procesos/asistente.md); ASSISTANT_TURNSTILE=on reutiliza TURNSTILE_SECRET para verificar a la gente una vez
- * por conversación.
+ * por conversación. Los límites de Aco dependen del host (`limitsForHost`): en las direcciones *.pages.dev de
+ * producción, que no pasan por el WAF, Aco no responde.
  */
 
 import { handleAssistant } from "@mt/assistant/http";
 import type { Knowledge } from "@mt/assistant/knowledge";
 import knowledge from "@mt/assistant/knowledge.json";
 import type { AssistantEnv } from "@mt/assistant/providers";
+import { limitsForHost } from "@mt/assistant/quota";
 import type { SiteData } from "@mt/assistant/site-data";
 import type { Db } from "@mt/participation/db";
 import { handlePublic, verifyTurnstile } from "@mt/participation/public-api";
@@ -73,6 +75,12 @@ export const onRequest = async (ctx: {
       verifyHuman: (token) => verifyTurnstile(token, ip, { turnstileSecret: ctx.env.TURNSTILE_SECRET }),
       passKey: ctx.env.TURNSTILE_SECRET,
       waitUntil: (p) => ctx.waitUntil(p),
+      quota: {
+        db: ctx.env.DB,
+        limits: limitsForHost(new URL(request.url).host, ctx.env.ASSISTANT_DAILY_LIMIT),
+        ip,
+        ipSalt: ctx.env.IP_SALT,
+      },
     })) ??
     (await handlePublic(request, ctx.env.DB, { turnstileSecret: ctx.env.TURNSTILE_SECRET, ipSalt: ctx.env.IP_SALT }, ip)) ??
     new Response("No existe", { status: 404 });

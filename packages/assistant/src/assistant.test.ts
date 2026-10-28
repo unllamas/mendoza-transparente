@@ -507,11 +507,13 @@ describe("turnstile", () => {
   test("el pase vence a los 30 minutos y no se puede falsificar", async () => {
     const now = 1_000_000;
     const pass = await issuePass("clave", now);
-    expect(await checkPass("clave", pass, now + 1000)).toBe(true);
-    expect(await checkPass("otra", pass, now + 1000)).toBe(false);
-    expect(await checkPass("clave", pass, now + PASS_TTL_MS + 1)).toBe(false);
-    expect(await checkPass("clave", `${now + 5000}.${pass.split(".")[1]}`, now)).toBe(false);
-    expect(await checkPass("clave", undefined, now)).toBe(false);
+    const [, id, mac] = pass.split(".");
+    expect(await checkPass("clave", pass, now + 1000)).toBe(id as string);
+    expect(await checkPass("otra", pass, now + 1000)).toBeNull();
+    expect(await checkPass("clave", pass, now + PASS_TTL_MS + 1)).toBeNull();
+    expect(await checkPass("clave", `${now + 5000}.${id}.${mac}`, now)).toBeNull();
+    expect(await checkPass("clave", `${now + PASS_TTL_MS}.0000000000000000.${mac}`, now)).toBeNull();
+    expect(await checkPass("clave", undefined, now)).toBeNull();
   });
   test("sin token no responde; con token responde y devuelve el pase, que sirve para el siguiente mensaje", async () => {
     const tokens: string[] = [];
@@ -542,6 +544,8 @@ describe("turnstile", () => {
     });
     expect(second?.status).toBe(200);
     expect(tokens).toEqual(["ok"]);
+    // El pase no se renueva: la respuesta con un pase vigente no trae uno nuevo.
+    expect(((await second?.json()) as { pass?: string } | undefined)?.pass).toBeUndefined();
   });
   test("prendido sin el secreto, no deja pasar a nadie", async () => {
     const res = await handleAssistant(post({ messages, turnstile: "ok" }), { knowledge: k, env });

@@ -16,7 +16,7 @@ Aco es el chat flotante del sitio. Hace dos cosas:
 | Instrucciones | `packages/assistant/src/instructions.ts` | Cortas: citar, decir «no publica», no opinar, no pedir datos personales |
 | Proveedores | `packages/assistant/src/providers.ts` | Vercel AI Gateway y OpenRouter con la API de OpenAI, en orden; si uno falla (error, demora de 20 s, 429 o 5xx), responde el otro |
 | API | `packages/assistant/src/http.ts`, servida por `apps/web/functions/api/[[route]].ts` | `GET /api/asistente` (si está prendido), `POST /api/asistente` (una respuesta) y `POST /api/asistente/opinion` (👍 o 👎) |
-| Widget | `apps/web/src/features/assistant/` | Botón «Preguntá» y panel. Se carga recién si `GET /api/asistente` dice que está prendido. Accesibilidad: al abrir el foco va a «Tu pregunta» y al cerrar vuelve al botón que lo abrió; el diálogo es `aria-modal` con el foco atrapado (las hojas internas manejan el suyo); en celular la página de atrás no scrollea; cada respuesta nueva se anuncia en una región `aria-live="polite"`. Si la API responde 429 (10 pedidos cada 10 s por IP) muestra un texto propio y «Reintentar» espera 10 s |
+| Widget | `apps/web/src/features/assistant/` | Botón «Preguntá» y panel. Se carga recién si `GET /api/asistente` dice que está prendido. Accesibilidad: al abrir el foco va a «Tu pregunta» y al cerrar vuelve al botón que lo abrió; el diálogo es `aria-modal` con el foco atrapado (las hojas internas manejan el suyo); en celular la página de atrás no scrollea; cada respuesta nueva se anuncia en una región `aria-live="polite"`. Si la API responde 429 muestra un texto según el límite: el del WAF (10 pedidos cada 10 s por IP), donde «Reintentar» espera 10 s; una ráfaga, que pide esperar unos minutos; o el tope del día, por IP o del sitio, sin «Reintentar» ([Límites](#límites-contra-el-abuso-y-el-gasto)) |
 | Carpeta del trámite | `apps/web/src/features/assistant/folder/` | El PDF de la tarjeta de pasos, armado en el navegador con pdf-lib: nunca pasa por un servidor. La descarga se mide con el `data.download` de siempre |
 | Opiniones | Tabla `assistant_feedback` de D1 (migraciones `0004` y `0006`) | Voto, motivo, nota opcional y la conversación votada, con los datos personales de la persona tapados. Sin IP |
 | Faltantes | Tabla `assistant_gaps` de D1 (migración `0005`) | Lo que se pidió y no tenemos: municipio, rubro o trámite, en pocas palabras |
@@ -116,17 +116,58 @@ El modelo se elige sin tocar el código: es el secreto `ASSISTANT_MODEL`, que se
 
 ## Límites contra el abuso y el gasto
 
-- Conversación recortada a los últimos 12 mensajes, cada uno a 500 caracteres; pedidos de más de 16 KB, rechazados.
-- Hasta 4 llamadas al modelo por respuesta (la última, sin herramientas) y 700 tokens de salida por llamada.
-- El límite del sitio para `/api/*`: 10 pedidos cada 10 segundos por IP.
-- El tope de gasto mensual de cada proveedor (paso 1 de arriba).
-- **Turnstile, una vez por conversación, apagado por defecto.** Se prende con el secreto `ASSISTANT_TURNSTILE=on` y reusa `TURNSTILE_SECRET`, el del registro. Con Turnstile prendido:
-  - `GET /api/asistente` responde `challenge: true`;
-  - el primer mensaje lleva el token de Turnstile y la respuesta devuelve un pase firmado, que vale 30 minutos y sirve para los mensajes siguientes (`packages/assistant/src/pass.ts`);
-  - el pase solo lleva su vencimiento, nada de la persona;
-  - si falta `TURNSTILE_SECRET`, no pasa nadie (503).
+Aco no se protege con el WAF solo: la regla de `/api/*` (10 pedidos cada 10 s por IP) es de la zona `mendoza-transparente.com`, y las direcciones `*.pages.dev` no pasan por ella. Por eso tiene sus propios límites, en la función (`packages/assistant/src/quota.ts`).
 
-  Turnstile es gratis y no consume cupo. **Se prende si aparece abuso**: Turnstile frena a los scripts, y con él prendido las evals contra esa vista previa dejan de funcionar. Por eso conviene prenderlo solo en *Production*.
+**Dónde responde** (`limitsForHost`):
+
+| Host | Aco | Límites |
+|---|---|---|
+| `mendoza-transparente.com` | Sí | Producción |
+| `dev.mendoza-transparente.pages.dev` y `localhost` | Sí | Vista previa |
+| `mendoza-transparente.pages.dev`, `<hash>.mendoza-transparente.pages.dev` y cualquier otro | No: `GET` dice `enabled: false` y `POST` responde 403 | — |
+
+Las direcciones `*.pages.dev` de producción usan las claves de producción y no tienen límite por IP: antes de este corte, cualquiera podía gastar desde ahí sin freno.
+
+**Topes por respuesta** (lo que cuesta cada una):
+- conversación recortada a los últimos 12 mensajes, cada uno a 500 caracteres; pedidos de más de 16 KB, rechazados;
+- hasta 4 llamadas al modelo (la última, sin herramientas) y 400 tokens de salida por llamada (el texto tiene como máximo 280 caracteres).
+
+**Topes de uso** (D1, tabla `assistant_quota`, migración `0008`). Cada respuesta suma uno en cada contador; si alguno llegó a su tope, se corta **antes** de llamar al modelo:
+
+| Contador | Producción | Vista previa | Al cortar |
+|---|---|---|---|
+| Por IP, cada 10 minutos | 20 | 120 | 429 `burst`: «Probá de nuevo en unos minutos» |
+| Por IP, por día | 80 | 400 | 429 `ip_day`: «Mañana podés seguir», sin «Reintentar» |
+| Por conversación (pase de Turnstile) | 20 mensajes | 20 | 403 `challenge`: el widget muestra Turnstile y sigue con un pase nuevo |
+| Del sitio, por día | 3.000 (secreto `ASSISTANT_DAILY_LIMIT`) | 600 | 429 `site_day`: «Aco descansa hasta mañana», sin «Reintentar» |
+
+- Los topes por IP son holgados porque en Argentina muchos celulares comparten IP (CGNAT). Una persona que hace un trámite pregunta entre 3 y 10 veces.
+- El tope del sitio llega antes que el tope mensual del proveedor. Si el ataque llegara al del proveedor, Aco quedaría apagado para todos hasta el mes siguiente; con este corte, solo hasta mañana. 3.000 respuestas son unos USD 4 a 6 por día con Haiku.
+- La vista previa deja pasar una corrida de evals entera (unos 52 casos desde una IP) y queda con un total bajo.
+- De la IP solo se guarda su hash con `IP_SALT` (con un prefijo propio, así no se cruza con el del registro). Los contadores vencen solos y la primera respuesta de cada día (en hora de Mendoza) borra los vencidos.
+- Un pedido cortado lee D1 pero no escribe: insistir no gasta las 100.000 escrituras diarias. Una respuesta que pasa suma una escritura (todos los contadores juntos).
+- Si la tabla falta o D1 falla, Aco responde igual y deja el log `asistente: no se pudo contar el uso`. Siguen el WAF y el tope del proveedor.
+- **El tope de gasto mensual de cada proveedor** (paso 1 de [Claves y configuración](#claves-y-configuración)) sigue siendo el último freno.
+
+**Turnstile, una vez por conversación.** Se prende con el secreto `ASSISTANT_TURNSTILE=on`, **solo en *Production***, y reusa `TURNSTILE_SECRET`, el del registro. Con Turnstile prendido:
+- `GET /api/asistente` responde `challenge: true`;
+- el primer mensaje lleva el token de Turnstile y la respuesta devuelve un pase firmado (`packages/assistant/src/pass.ts`);
+- **el pase vence a los 30 minutos de emitido y no se renueva**. Antes se emitía uno nuevo en cada respuesta, y quien pasaba Turnstile una vez quedaba adentro para siempre;
+- el pase lleva su vencimiento y un id al azar, que cuenta los mensajes de la conversación, y nada de la persona;
+- si falta `TURNSTILE_SECRET`, no pasa nadie (503).
+
+Turnstile es gratis y no consume cupo. En *Preview* se deja apagado, porque con él las evals contra la vista previa no pasan.
+
+### Cuántos tokens gasta una respuesta
+
+En los tableros de los proveedores, un «request» es **una llamada al modelo**, no un mensaje de la persona. Cada respuesta hace de 1 a 4 llamadas, y **cada llamada vuelve a mandar todo**:
+- las instrucciones y las 10 herramientas, unos 9.500 caracteres (≈ 2.700 tokens), en todas las llamadas;
+- el historial;
+- los resultados de las herramientas que ya corrieron.
+
+Una pregunta de trámite típica son 2 o 3 llamadas, entre 7.000 y 11.000 tokens. Por eso unas 700 llamadas de prueba (evals incluidas) llegan a unos 2,7 millones de tokens por menos de medio dólar. Para que no crezca:
+- **Lo que vuelve al modelo es lo justo.** `get_procedure` le devuelve los pasos sin links ni la lista de rubros (`procedureForModel` en `agent.ts`), entre un 20 y un 40 % menos, porque el widget dibuja eso con lo que guardó la herramienta. Una herramienta nueva sigue la misma regla: al modelo, los hechos para escribir 280 caracteres; a la pantalla, el resto.
+- **Un modelo por tarea** ([Elegir el modelo](#elegir-el-modelo)) baja el precio por token, no la cantidad, y el de redacción suma una llamada. Haiku ya es el barato: se cambia solo si las evals muestran que otro más chico elige bien las herramientas.
 
 ## Evals
 
@@ -161,7 +202,7 @@ Eventos en PostHog, nunca con el texto de la conversación ni la nota del 👎. 
 | `assistant.launcher.open` | | ¿Cuántos abren a Aco? |
 | `assistant.question.send` | `source`: `typed`, `suggestion`, `option`, `locate`, `municipality_list`, `activity_list` o `activity_free` | ¿Cuántos preguntan después de abrirlo, y sirven las sugerencias y los atajos? |
 | `assistant.answer.show` | `outcome` (`steps`, `fee`, `data`, `ask`, `unpublished`, `answer` o `no_answer`), `flow` y `municipality` | ¿Qué responde y cuánto no sabe? |
-| `assistant.answer.error` | `reason`: `rate-limit`, `challenge` o `generic` | ¿Cuántas preguntas se quedan sin respuesta, y por qué? |
+| `assistant.answer.error` | `reason`: `rate-limit` (WAF), `burst`, `daily`, `closed` ([Límites](#límites-contra-el-abuso-y-el-gasto)), `challenge` o `generic` | ¿Cuántas preguntas se quedan sin respuesta, y por qué? |
 | `assistant.answer.retry` | `reason` | ¿Reintentan después de un error? |
 | `assistant.link.open` | `place`: `text`, `step`, `fee_source`, `data_row`, `data_more` o `request`; `href` | ¿Las respuestas llevan a la fuente o a una página del sitio? |
 | `assistant.conversation.restart` | | ¿Se traban las conversaciones? |

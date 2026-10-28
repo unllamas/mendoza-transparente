@@ -5,8 +5,14 @@ import { AssistantApiError, sendMessages } from "./api.ts";
 
 export type Turn = { from: "user"; text: string } | { from: "assistant"; reply: AssistantReply; at: number };
 
-/** Por qué falló el último pedido: el límite por IP (429), la verificación de Turnstile (403) u otra cosa. */
-export type ConversationError = "rate-limit" | "challenge" | "generic";
+/**
+ * Por qué falló el último pedido: el límite del WAF (10 pedidos cada 10 s), una ráfaga de preguntas (unos minutos),
+ * el tope del día por IP o el del sitio, la verificación de Turnstile (403) u otra cosa.
+ */
+export type ConversationError = "rate-limit" | "burst" | "daily" | "closed" | "challenge" | "generic";
+
+/** El error del widget para el `limit` que devolvió la API en un 429. */
+const LIMIT_ERROR: Record<string, ConversationError> = { burst: "burst", ip_day: "daily", site_day: "closed" };
 
 /** Cuánto espera el primer mensaje a Turnstile antes de rendirse con un error que la persona puede reintentar. */
 const TOKEN_WAIT_MS = 15_000;
@@ -112,7 +118,8 @@ export function useConversation(challenge = false) {
       track("assistant.answer.show", { outcome: reply.outcome, flow: reply.flow, municipality: reply.municipality });
     } catch (e) {
       const status = e instanceof AssistantApiError ? e.status : 0;
-      const reason: ConversationError = status === 429 ? "rate-limit" : status === 403 ? "challenge" : "generic";
+      const limit = e instanceof AssistantApiError && e.limit ? LIMIT_ERROR[e.limit] : undefined;
+      const reason: ConversationError = status === 429 ? (limit ?? "rate-limit") : status === 403 ? "challenge" : "generic";
       setError(reason);
       track("assistant.answer.error", { reason });
       if (challenge && status !== 429) {

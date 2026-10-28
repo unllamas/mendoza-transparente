@@ -17,8 +17,10 @@ export interface AssistantEnv {
   ASSISTANT_MODEL_TOOLS?: string;
   /** Modelo que redacta el texto final, después de las herramientas. Si no está, escribe el de herramientas, sin otra llamada. */
   ASSISTANT_MODEL_ANSWER?: string;
-  /** "on" asks for Turnstile once per conversation (docs/procesos/asistente.md#límites-contra-el-abuso-y-el-gasto). */
+  /** "on" pide Turnstile una vez por conversación (docs/procesos/asistente.md#límites-contra-el-abuso-y-el-gasto). */
   ASSISTANT_TURNSTILE?: string;
+  /** Respuestas por día en todo el sitio, en producción. Por defecto, 3000 (quota.ts). */
+  ASSISTANT_DAILY_LIMIT?: string;
 }
 
 /** Para qué es una llamada: elegir herramientas o redactar la respuesta. Cada una puede usar su propio modelo. */
@@ -102,8 +104,11 @@ export type Fetcher = (url: string, init: RequestInit) => Promise<Response>;
 export class ProvidersUnavailable extends Error {}
 
 const TIMEOUT_MS = 20_000;
-/** Topes por llamada: alcanza con una respuesta corta, y acota el costo de cada pedido. */
-const MAX_TOKENS = 700;
+/**
+ * Tope de salida por llamada. El texto tiene como máximo 280 caracteres (unos 80 tokens) y una llamada a herramientas,
+ * menos: 400 deja margen y acota lo que puede gastar una respuesta que se va de largo.
+ */
+const MAX_TOKENS = 400;
 
 /** El modelo de una tarea en un proveedor: el de la tarea si está, si no el del proveedor, si no el general. */
 export function modelFor(env: AssistantEnv, provider: ProviderId, task: Task): string {

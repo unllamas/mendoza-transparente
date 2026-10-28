@@ -2,7 +2,7 @@ import type { AssistantReply, AssistantRequest, AssistantStatus, ChatMessage, Fe
 
 const ENDPOINT = "/api/asistente";
 
-/** Whether the assistant is configured, and whether it asks for Turnstile. Any failure counts as "not available": the widget stays hidden. */
+/** Si el asistente está configurado y si pide Turnstile. Cualquier falla cuenta como «no disponible»: el widget no aparece. */
 export async function fetchStatus(): Promise<AssistantStatus | null> {
   try {
     const res = await fetch(ENDPOINT);
@@ -14,20 +14,27 @@ export async function fetchStatus(): Promise<AssistantStatus | null> {
   }
 }
 
-/** A non-2xx answer from the API. `status` 429 means the per-IP rate limit (10 requests every 10 s); 403, a failed Turnstile check. */
+/**
+ * Una respuesta que no es 2xx. 429 es un límite de uso: sin `limit`, el del WAF (10 pedidos cada 10 s por IP); con
+ * `limit`, uno de Aco (quota.ts: ráfaga, día por IP o día del sitio). 403, Turnstile que falló o una conversación que
+ * llegó a su tope de mensajes.
+ */
 export class AssistantApiError extends Error {
-  constructor(readonly status: number) {
+  constructor(
+    readonly status: number,
+    readonly limit?: string,
+  ) {
     super(`assistant ${status}`);
   }
 }
 
-/** Past this, the answer is given up and the person gets "Reintentar" instead of waiting forever. */
+/** Pasado este tiempo se abandona la respuesta y la persona ve «Reintentar» en vez de esperar para siempre. */
 const ANSWER_TIMEOUT_MS = 60_000;
 
 /**
- * Sends the conversation and returns Aco's reply. The API streams one NDJSON line per step ({ status }) and then the
- * reply, so `onProgress` can say what Aco is doing. Throws on network errors, non-2xx (`AssistantApiError`), a
- * streamed error or the timeout, so the caller can offer a retry.
+ * Manda la conversación y devuelve la respuesta de Aco. La API manda una línea NDJSON por paso ({ status }) y después
+ * la respuesta, así `onProgress` puede decir qué está haciendo Aco. Tira un error ante una falla de red, una respuesta
+ * que no es 2xx (`AssistantApiError`), un error en el stream o el tiempo agotado, para que se pueda reintentar.
  */
 export async function sendMessages(
   messages: ChatMessage[],
@@ -40,7 +47,11 @@ export async function sendMessages(
     body: JSON.stringify({ messages, ...proof } satisfies AssistantRequest),
     signal: AbortSignal.timeout(ANSWER_TIMEOUT_MS),
   });
-  if (!res.ok) throw new AssistantApiError(res.status);
+  if (!res.ok) {
+    // El 429 del WAF no es JSON: entonces no trae `limit`.
+    const limit = res.status === 429 ? ((await res.json().catch(() => null)) as { limit?: string } | null)?.limit : undefined;
+    throw new AssistantApiError(res.status, limit);
+  }
   if (!res.body || !(res.headers.get("content-type") ?? "").includes("ndjson")) return (await res.json()) as AssistantReply;
   const reader = res.body.pipeThrough(new TextDecoderStream()).getReader();
   let buffer = "";
@@ -60,7 +71,7 @@ export async function sendMessages(
   }
 }
 
-/** Fire and forget: a failed vote is not worth interrupting the person. */
+/** Se manda y se olvida: un voto que falla no justifica interrumpir a la persona. */
 export function sendFeedback(feedback: FeedbackRequest): void {
   fetch(`${ENDPOINT}/opinion`, {
     method: "POST",
