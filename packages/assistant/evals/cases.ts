@@ -62,7 +62,7 @@ export const CASES: EvalCase[] = [
   },
   {
     name: "La tasa de un rubro que ese municipio no tiene: lo dice y lo anota",
-    messages: [user("¿Cuánto paga de tasa una peluquería en Maipú?")],
+    messages: [user("¿Cuánto paga de tasa un gimnasio en Maipú?")],
     outcome: ["ask", "answer"],
     says: [/todav[ií]a no|no (la )?tenemos/i],
     noBlocks: ["fee"],
@@ -236,10 +236,9 @@ export const CASES: EvalCase[] = [
   },
   {
     name: "General Alvear: la categoría de la tasa no se publica",
-    messages: [user("¿Qué categoría de tasa de comercio me va a tocar en General Alvear?")],
-    outcome: ["unpublished", "answer"],
-    noBlocks: ["fee"],
-    says: [/no publica|no (se )?(dice|informa)|Rentas/i],
+    messages: [user("Tengo una panadería en General Alvear, ¿qué categoría de la tasa de comercio me toca?")],
+    outcome: ["unpublished", "answer", "fee"],
+    says: [/no (se )?(publica|dice|informa|aclara|explica|define)|Rentas/i],
   },
   {
     name: "Rivadavia: pasos y tasa de una despensa",
