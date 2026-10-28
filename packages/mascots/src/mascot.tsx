@@ -106,7 +106,7 @@ export type MascotAvatarProps<M extends MascotId = MascotId> = Omit<CommonProps,
   priority?: boolean;
 };
 
-/** The head of a mascot in a round frame: for the header of a chat, a signature, a button. */
+/** The head of a mascot in a round frame: for the header of a chat, a signature, a button. The blue is dark enough for the white feathers of the collar to show. */
 export function MascotAvatar<M extends MascotId>({
   mascot: mascotId,
   style: styleId,
@@ -129,7 +129,7 @@ export function MascotAvatar<M extends MascotId>({
       loading={priority ? "eager" : "lazy"}
       decoding="async"
       draggable={false}
-      className={`shrink-0 rounded-full bg-accent-100 object-cover ${className ?? ""}`.trim()}
+      className={`shrink-0 rounded-full bg-accent-300 object-cover ${className ?? ""}`.trim()}
     />
   );
 }

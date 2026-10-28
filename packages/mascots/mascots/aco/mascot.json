@@ -16,7 +16,7 @@
         "celebrate": { "label": "Festeja", "alt": "Aco festejando con las dos alas arriba", "use": "Después de un 👍" },
         "shy": { "label": "Apenado", "alt": "Aco con el ala en el pecho, apenado", "use": "Errores y datos que no se publican" }
       },
-      "avatar": { "pose": "idle", "crop": { "x": 312, "y": 70, "size": 600 } }
+      "avatar": { "pose": "idle", "crop": { "x": 337, "y": 0, "size": 580 } }
     }
   }
 }
