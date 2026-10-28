@@ -18,7 +18,7 @@ Aco es el chat flotante del sitio. Hace dos cosas:
 | API | `packages/assistant/src/http.ts`, servida por `apps/web/functions/api/[[route]].ts` | `GET /api/asistente` (si está prendido), `POST /api/asistente` (una respuesta) y `POST /api/asistente/opinion` (👍 o 👎) |
 | Widget | `apps/web/src/features/assistant/` | Botón «Preguntá» y panel. Se carga recién si `GET /api/asistente` dice que está prendido. Accesibilidad: al abrir el foco va a «Tu pregunta» y al cerrar vuelve al botón que lo abrió; el diálogo es `aria-modal` con el foco atrapado (las hojas internas manejan el suyo); en celular la página de atrás no scrollea; cada respuesta nueva se anuncia en una región `aria-live="polite"`. Si la API responde 429 (10 pedidos cada 10 s por IP) muestra un texto propio y «Reintentar» espera 10 s |
 | Carpeta del trámite | `apps/web/src/features/assistant/folder/` | El PDF de la tarjeta de pasos, armado en el navegador con pdf-lib: nunca pasa por un servidor. La descarga se mide con el `data.download` de siempre |
-| Opiniones | Tabla `assistant_feedback` de D1 (migración `0004`) | Voto, motivo y nota opcional. Sin IP ni texto de la conversación |
+| Opiniones | Tabla `assistant_feedback` de D1 (migraciones `0004` y `0006`) | Voto, motivo, nota opcional y la conversación votada, con los datos personales de la persona tapados. Sin IP |
 | Faltantes | Tabla `assistant_gaps` de D1 (migración `0005`) | Lo que se pidió y no tenemos: municipio, rubro o trámite, en pocas palabras |
 
 ## Datos del sitio
@@ -48,6 +48,7 @@ Reglas:
 
 Reglas que salieron de probarlo (27/10/2026). Cada una responde a algo que molestaba:
 
+- **La bienvenida avisa qué se guarda:** «No escribas datos personales: si votás una respuesta, guardamos la conversación para mejorar a Aco», en letra chica debajo del texto. Es el único lugar donde se dice, y se va con la bienvenida.
 - **La bienvenida se va con la primera pregunta.** La postal con Aco, el texto y las sugerencias solo se ven con la conversación vacía. Después, el encabezado ya muestra a Aco y el espacio es para la conversación.
 - **El aviso de IA va en el encabezado** («Responde con IA y datos oficiales»), siempre a la vista y sin ocupar una línea debajo del campo. La bienvenida suma «Confirmalo siempre en la ventanilla».
 - **Las sugerencias entran en una línea a 320 px y solo preguntan lo que Aco puede resolver:** un trámite, una tasa y un dato del sitio («¿Quién le vende al Estado?»). Una sugerencia que termina en «no tengo ese dato» es peor que ninguna. Por eso se sacó la de Ingresos Brutos hasta que esté en el conocimiento.
@@ -145,7 +146,7 @@ Los casos van de a uno, con una pausa entre caso y caso, para no chocar con el l
 bun --env-file=.env.asistente run asistente:evals
 ```
 
-Un 👎 real que muestra un error nuevo se suma como caso.
+Un 👎 real que muestra un error nuevo se suma como caso: la pregunta sale de la conversación votada (panel → Asistente → «Ver conversación»), reescrita sin nada de la persona.
 
 ## Sumar o corregir un trámite
 
@@ -162,7 +163,16 @@ Tokens y costo se miran en el tablero de uso de cada proveedor, no en PostHog. L
 
 ## Opiniones
 
-`assistant_feedback` guarda cada voto. La nota del 👎 es texto libre y puede traer datos personales: no se publica, no va a la analítica y se revisa antes de usarla. Se ve en la pantalla **Asistente** del panel (`apps/panel`, consultas en `packages/participation/src/assistant.ts`): los totales 👍 y 👎, los 👎 por motivo, recorrido (`flow`) y municipio, y los últimos 50 votos. La lista nunca trae la nota: se abre de a una, con un aviso de que puede traer datos personales, y cada lectura queda en la auditoría (`assistant.note.read`, con el id del voto y sin el texto). Para consultarlo a mano:
+`assistant_feedback` guarda cada voto con la conversación hasta la respuesta votada (`conversation`, JSON con hasta 12 mensajes de 500 caracteres, los mismos que ya recibió el modelo). Sirve para ver qué preguntó la gente, qué le contestó Aco y sumar casos a las evals. Solo se guarda si la persona vota: una conversación sin voto no queda en ningún lado.
+
+La nota del 👎 y la conversación son texto de la persona y pueden traer datos personales aunque la bienvenida pida no escribirlos. Por eso:
+- **Se tapan antes de guardar** (`redactPersonalData` en `packages/assistant/src/http.ts`), solo en los mensajes de la persona: correos (`[correo]`), CUIT o CUIL (`[cuit]`) y cualquier número de 7 dígitos o más, como un DNI o un teléfono (`[número]`). Un monto escrito con todos sus dígitos también se tapa; es el precio de no guardar un DNI. Las respuestas de Aco no se tocan. Un nombre o una dirección no se pueden tapar con un patrón: para eso está lo que sigue.
+- **No se publican, no van a la analítica y se revisan antes de usarlas.** Un caso de eval se escribe a mano, sin nada de la persona.
+- **Se leen de a un voto.** Se ven en la pantalla **Asistente** del panel (`apps/panel`, consultas en `packages/participation/src/assistant.ts`): los totales 👍 y 👎, los 👎 por motivo, recorrido (`flow`) y municipio, y los últimos 50 votos. La lista nunca trae la nota ni la conversación: «Ver conversación» (o «Ver nota», en los votos anteriores a la `0006`) las abre con un aviso, y cada lectura queda en la auditoría (`assistant.note.read`, con el id del voto y sin el texto).
+
+Si la migración `0006` todavía no está aplicada, el voto se guarda igual, sin la conversación, y queda en el log `asistente: voto sin conversación`.
+
+Para consultar los votos a mano (sin la nota ni la conversación, que se leen desde el panel para que quede la auditoría):
 
 ```bash
 cd apps/web && bunx wrangler@4 d1 execute mendoza-transparente --remote --command "SELECT created_at, vote, reason, flow, municipality FROM assistant_feedback ORDER BY id DESC LIMIT 50"

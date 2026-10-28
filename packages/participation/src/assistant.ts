@@ -1,8 +1,8 @@
 /**
- * Panel reads of what the assistant (Aco) stores in D1: the thumbs up/down votes (`assistant_feedback`) and what
- * people asked for and we do not have (`assistant_gaps`). Documented in docs/procesos/asistente.md. The free note
- * of a thumbs down can carry personal data: it never goes in a list, only in `assistantFeedbackNote`, which the
- * panel audits.
+ * Lecturas del panel sobre lo que el asistente (Aco) guarda en D1: los votos 👍 y 👎 (`assistant_feedback`) y lo que
+ * la gente pidió y no tenemos (`assistant_gaps`). Documentado en docs/procesos/asistente.md. La nota del 👎 y la
+ * conversación votada pueden traer datos personales: nunca van en una lista, solo en `assistantFeedbackNote`, cuya
+ * lectura audita el panel.
  */
 
 import type { Db } from "./db.ts";
@@ -17,12 +17,19 @@ export interface AssistantVote {
   reason: AssistantReason | null;
   flow: string | null;
   municipality: string | null;
-  /** Only whether there is a note; its text is read one by one. */
+  /** Solo si hay nota; el texto se lee de a un voto. */
   hasNote: boolean;
+  /** Solo si se guardó la conversación (votos desde la migración 0006); se lee de a un voto. */
+  hasConversation: boolean;
+}
+
+export interface AssistantMessage {
+  role: "user" | "assistant";
+  content: string;
 }
 
 export interface AssistantCount {
-  /** Empty when the vote did not carry the field. */
+  /** Vacío cuando el voto no traía el campo. */
   key: string;
   n: number;
 }
@@ -51,11 +58,12 @@ export async function assistantFeedback(db: Db) {
     db.prepare(downBy("municipality", 20)).all<AssistantCount>(),
     db
       .prepare(
-        `SELECT id, created_at AS createdAt, vote, reason, flow, municipality, (note IS NOT NULL AND note != '') AS hasNote
+        `SELECT id, created_at AS createdAt, vote, reason, flow, municipality, (note IS NOT NULL AND note != '') AS hasNote,
+         (conversation IS NOT NULL) AS hasConversation
          FROM assistant_feedback ORDER BY id DESC LIMIT ?`,
       )
       .bind(RECENT_VOTES)
-      .all<Omit<AssistantVote, "hasNote"> & { hasNote: number }>(),
+      .all<Omit<AssistantVote, "hasNote" | "hasConversation"> & { hasNote: number; hasConversation: number }>(),
   ]);
   return {
     up: totals?.up ?? 0,
@@ -63,23 +71,46 @@ export async function assistantFeedback(db: Db) {
     byReason: byReason.results,
     byFlow: byFlow.results,
     byMunicipality: byMunicipality.results,
-    recent: recent.results.map((v) => ({ ...v, hasNote: !!v.hasNote })) as AssistantVote[],
+    recent: recent.results.map((v) => ({ ...v, hasNote: !!v.hasNote, hasConversation: !!v.hasConversation })) as AssistantVote[],
   };
 }
 
 export type AssistantFeedback = Awaited<ReturnType<typeof assistantFeedback>>;
 
-/** The free note of one vote, or null when the vote does not exist. `note` is empty when the person left none. */
-export async function assistantFeedbackNote(db: Db, id: number) {
-  return db
+export type AssistantVoteDetail = Omit<AssistantVote, "hasNote" | "hasConversation"> & {
+  note: string;
+  conversation: AssistantMessage[];
+};
+
+/**
+ * Un voto con su nota y la conversación votada, o null si el voto no existe. `note` queda vacía si la persona no dejó
+ * nota, y `conversation` vacía en los votos anteriores a la migración 0006.
+ */
+export async function assistantFeedbackNote(db: Db, id: number): Promise<AssistantVoteDetail | null> {
+  const row = await db
     .prepare(
-      "SELECT id, created_at AS createdAt, vote, reason, flow, municipality, COALESCE(note, '') AS note FROM assistant_feedback WHERE id = ?",
+      `SELECT id, created_at AS createdAt, vote, reason, flow, municipality, COALESCE(note, '') AS note, conversation
+       FROM assistant_feedback WHERE id = ?`,
     )
     .bind(id)
-    .first<Omit<AssistantVote, "hasNote"> & { note: string }>();
+    .first<Omit<AssistantVoteDetail, "conversation"> & { conversation: string | null }>();
+  if (!row) return null;
+  return { ...row, conversation: parseConversation(row.conversation) };
 }
 
-/** What was asked and we do not have, grouped, most asked first. */
+function parseConversation(raw: string | null): AssistantMessage[] {
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    return Array.isArray(parsed)
+      ? parsed.filter((m): m is AssistantMessage => (m?.role === "user" || m?.role === "assistant") && typeof m?.content === "string")
+      : [];
+  } catch {
+    return [];
+  }
+}
+
+/** Lo que se pidió y no tenemos, agrupado, de lo más pedido a lo menos. */
 export async function assistantGaps(db: Db): Promise<AssistantGap[]> {
   const { results } = await db
     .prepare(

@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { currentKnowledge } from "../scripts/build-knowledge.ts";
 import { runAgent } from "./agent.ts";
-import { handleAssistant, sanitizeFeedback, sanitizeMessages } from "./http.ts";
+import { handleAssistant, redactPersonalData, sanitizeFeedback, sanitizeMessages } from "./http.ts";
 import type { Knowledge } from "./knowledge.ts";
 import { checkPass, issuePass, PASS_TTL_MS } from "./pass.ts";
 import { configuredProviders, modelFor } from "./providers.ts";
@@ -353,6 +353,46 @@ describe("http", () => {
       flow: "abrir-un-comercio",
     });
     expect(sanitizeFeedback({ vote: "meh" })).toBeNull();
+  });
+  test("la opinión trae la conversación votada, con los datos personales de la persona tapados", () => {
+    const conversation = [
+      { role: "user", content: "Soy Ana, DNI 30.123.456, mi correo ana@mail.com y el CUIT 27-30123456-4. ¿Cómo abro un kiosco?" },
+      { role: "assistant", content: "Son 3 pasos. La tasa es de $ 1.500.000." },
+    ];
+    expect(sanitizeFeedback({ vote: "up", conversation })?.conversation).toEqual([
+      { role: "user", content: "Soy Ana, DNI [número], mi correo [correo] y el CUIT [cuit]. ¿Cómo abro un kiosco?" },
+      { role: "assistant", content: "Son 3 pasos. La tasa es de $ 1.500.000." },
+    ]);
+    expect(redactPersonalData("llamame al 261 412-3456 o al +54 9 261 4123456")).toBe("llamame al [número] o al [número]");
+    expect(redactPersonalData("¿Qué pide Maipú en 2026 para 3 rubros?")).toBe("¿Qué pide Maipú en 2026 para 3 rubros?");
+    // Tiene que terminar en la respuesta votada y traer al menos una pregunta; si no, el voto va sin conversación.
+    expect(sanitizeFeedback({ vote: "up", conversation: conversation.slice(0, 1) })).toEqual({ vote: "up" });
+    expect(sanitizeFeedback({ vote: "up", conversation: [{ role: "system", content: "x" }] })).toEqual({ vote: "up" });
+  });
+  test("guarda la conversación con el voto y, sin la columna, el voto igual", async () => {
+    const conversation = [
+      { role: "user", content: "¿Cómo abro un kiosco?" },
+      { role: "assistant", content: "Son 3 pasos." },
+    ];
+    const rows: unknown[][] = [];
+    const db = { prepare: () => ({ bind: (...v: unknown[]) => ({ run: async () => rows.push(v) }) }) };
+    await handleAssistant(post("/api/asistente/opinion", { vote: "up", conversation }), { knowledge: k, env: {}, db });
+    expect(JSON.parse(String(rows[0]?.at(-1)))).toEqual(conversation);
+
+    const saved: string[] = [];
+    const old = {
+      prepare: (sql: string) => ({
+        bind: () => ({
+          run: async () => {
+            if (sql.includes("conversation")) throw new Error("no such column");
+            saved.push(sql);
+          },
+        }),
+      }),
+    };
+    const res = await handleAssistant(post("/api/asistente/opinion", { vote: "up", conversation }), { knowledge: k, env: {}, db: old });
+    expect(res?.status).toBe(201);
+    expect(saved).toHaveLength(1);
   });
   test("guarda la opinión en la base", async () => {
     const rows: unknown[][] = [];

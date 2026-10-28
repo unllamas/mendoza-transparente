@@ -81,6 +81,35 @@ describe("assistant feedback", () => {
 
     expect((await panel("/api/panel/assistant/votes/99")).status).toBe(404);
   });
+
+  test("the voted conversation is read one vote at a time too, and audited", async () => {
+    const conversation = [
+      { role: "user", content: "¿Cómo abro un kiosco en Maipú?" },
+      { role: "assistant", content: "Son 3 pasos." },
+    ];
+    await db
+      .prepare("INSERT INTO assistant_feedback (created_at, vote, conversation) VALUES (?, ?, ?)")
+      .bind("2026-10-02T10:00:00Z", "up", JSON.stringify(conversation))
+      .run();
+    await db
+      .prepare("INSERT INTO assistant_feedback (created_at, vote, conversation) VALUES (?, ?, ?)")
+      .bind("2026-10-03T10:00:00Z", "up", "no es json")
+      .run();
+
+    const list = await panel("/api/panel/assistant");
+    const text = await list.text();
+    expect(text).not.toContain("kiosco");
+    expect(
+      (JSON.parse(text) as { feedback: { recent: { id: number; hasConversation: boolean }[] } }).feedback.recent.find((v) => v.id === 1)
+        ?.hasConversation,
+    ).toBe(true);
+
+    const read = await panel("/api/panel/assistant/votes/1");
+    expect(((await read.json()) as { conversation: unknown }).conversation).toEqual(conversation);
+    expect((await auditLog(db)).map((e) => e.action)).toEqual(["assistant.note.read"]);
+    expect(JSON.stringify(await auditLog(db))).not.toContain("kiosco");
+    expect((await assistantFeedbackNote(db, 2))?.conversation).toEqual([]);
+  });
 });
 
 describe("assistant gaps", () => {

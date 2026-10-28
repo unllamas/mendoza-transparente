@@ -1,4 +1,4 @@
-import type { AssistantReply, FeedbackReason, Vote } from "@mt/assistant/types";
+import type { AssistantReply, ChatMessage, FeedbackReason, Vote } from "@mt/assistant/types";
 import { Mascot } from "@mt/mascots/mascot";
 import { Button } from "@mt/ui/components/base/buttons/button";
 import { IconButton } from "@mt/ui/components/base/buttons/icon-button";
@@ -17,7 +17,7 @@ const REASONS: { value: FeedbackReason; label: string }[] = [
   { value: "falta", label: "Falta información o un paso" },
 ];
 
-/** A few light-blue sparks that fly out of the thumb and fade. Tailwind transitions only, so no extra library. */
+/** Unas chispas celestes que salen del pulgar y se apagan. Solo transiciones de Tailwind, sin otra librería. */
 function Burst() {
   const [go, setGo] = useState(false);
   useEffect(() => {
@@ -40,7 +40,7 @@ function Burst() {
   );
 }
 
-/** Thumb button: 32 px to the eye, 44 px to the finger (the ::after widens the target). Liking it pops and sparks. */
+/** Botón del pulgar: 32 px a la vista, 44 px para el dedo (el ::after agranda el área). Al marcarlo salta y echa chispas. */
 function Thumb({ kind, on, onPress }: { kind: Vote; on: boolean; onPress: () => void }) {
   const [pop, setPop] = useState(0);
   const [big, setBig] = useState(false);
@@ -73,8 +73,8 @@ function Thumb({ kind, on, onPress }: { kind: Vote; on: boolean; onPress: () => 
 }
 
 /**
- * Thumbs-down form: three reasons and an optional note, as a bottom sheet over the whole panel. The panel renders it
- * (like the search sheet), not the answer: inside the answer's row it was positioned against that row and broke.
+ * Formulario del 👎: tres motivos y una nota opcional, en una hoja desde abajo sobre todo el panel. La dibuja el panel
+ * (como la hoja de búsqueda), no la respuesta: dentro de la fila de la respuesta se ubicaba contra esa fila y se rompía.
  */
 export function FeedbackSheet({ onSend, onClose }: { onSend: (reason: FeedbackReason, note: string) => void; onClose: () => void }) {
   const [reason, setReason] = useState<FeedbackReason | null>(null);
@@ -138,7 +138,7 @@ export function FeedbackSheet({ onSend, onClose }: { onSend: (reason: FeedbackRe
   );
 }
 
-/** Minutes ago in words, for the line under an answer. */
+/** Hace cuánto, en palabras, para la línea debajo de una respuesta. */
 function relativeTime(at: number, now: number): string {
   const minutes = Math.floor((now - at) / 60_000);
   if (minutes < 1) return "recién";
@@ -150,33 +150,37 @@ function relativeTime(at: number, now: number): string {
 export type FeedbackSend = (reason: FeedbackReason, note: string) => void;
 
 /**
- * Under each answer: when it was given and two small thumbs. Up sparks; down asks the panel to open the form
- * (`onAskWhy`), which calls back with the reason. No thank-you text.
+ * Debajo de cada respuesta: cuándo se dio y dos pulgares chicos. El de arriba festeja; el de abajo le pide al panel que
+ * abra el formulario (`onAskWhy`), que devuelve el motivo. Sin texto de agradecimiento. El voto lleva la conversación
+ * hasta esta respuesta, para revisarla en el panel; nunca va a la analítica.
  */
 export function AnswerFooter({
   reply,
+  conversation,
   at,
   now,
   onAskWhy,
 }: {
   reply: AssistantReply;
+  /** Los mensajes hasta esta respuesta; se arman recién al votar. */
+  conversation: () => ChatMessage[];
   at: number;
   now: number;
   onAskWhy: (send: FeedbackSend) => void;
 }) {
   const [vote, setVote] = useState<Vote | null>(null);
   const [celebrating, setCelebrating] = useState(false);
-  const context = { flow: reply.flow, municipality: reply.municipality, outcome: reply.outcome };
+  const context = () => ({ flow: reply.flow, municipality: reply.municipality, outcome: reply.outcome, conversation: conversation() });
 
   const voteUp = () => {
     if (vote === "up") return;
     setVote("up");
     setCelebrating(true);
-    sendFeedback({ vote: "up", ...context });
+    sendFeedback({ vote: "up", ...context() });
     track("assistant.feedback.vote", { vote: "up" });
   };
 
-  // Aco cheers for 1.5 s above the thumbs (only for people who accept motion).
+  // Aco festeja 1,5 s arriba de los pulgares (solo para quien acepta movimiento).
   useEffect(() => {
     if (!celebrating) return;
     const id = setTimeout(() => setCelebrating(false), 1500);
@@ -204,8 +208,8 @@ export function AnswerFooter({
           vote !== "down" &&
           onAskWhy((reason, note) => {
             setVote("down");
-            sendFeedback({ vote: "down", reason, ...(note ? { note: note.slice(0, NOTE_MAX) } : {}), ...context });
-            // The free note never goes to analytics: only the vote and the reason.
+            sendFeedback({ vote: "down", reason, ...(note ? { note: note.slice(0, NOTE_MAX) } : {}), ...context() });
+            // La nota y la conversación nunca van a la analítica: solo el voto y el motivo.
             track("assistant.feedback.vote", { vote: "down", reason });
           })
         }
