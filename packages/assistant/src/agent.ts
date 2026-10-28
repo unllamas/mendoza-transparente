@@ -119,6 +119,24 @@ function runSiteTool(d: SiteData, name: string, args: Record<string, string>, c:
   }
 }
 
+/**
+ * Lo que vuelve al modelo de get_procedure, más corto que el resultado entero: los links y la lista de rubros los
+ * dibuja el widget con `collected` (buildBlocks), así que el modelo no los necesita para escribir sus 280 caracteres.
+ * El resultado viaja en cada llamada siguiente de la respuesta: recortarlo baja un tercio los tokens de un trámite.
+ */
+export function procedureForModel(p: ProcedureResult) {
+  const { activities, steps, general_steps, costs, promotion, ...rest } = p;
+  const step = ({ level, agency, title, detail }: NonNullable<ProcedureResult["steps"]>[number]) => ({ level, agency, title, detail });
+  return {
+    ...rest,
+    ...(activities ? { activities_count: activities.length } : {}),
+    ...(steps ? { steps: steps.map(step) } : {}),
+    ...(general_steps ? { general_steps: general_steps.map(step) } : {}),
+    ...(costs ? { costs: costs.map(({ concept, detail, rule }) => ({ concept, detail, rule })) } : {}),
+    ...(promotion ? { promotion: { rule: promotion.rule, detail: promotion.detail } } : {}),
+  };
+}
+
 async function runTool(
   k: Knowledge,
   site: (() => Promise<SiteData | null>) | undefined,
@@ -146,7 +164,7 @@ async function runTool(
       const municipality = findMunicipality(p.municipality) ?? undefined;
       if (!p.known) addGap(collected, { kind: "tramite", municipality, value: gapValue(p.flow) });
       else if (!p.covered && municipality) addGap(collected, { kind: "municipio", municipality, value: p.flow });
-      return p;
+      return procedureForModel(p);
     }
     case "find_trade_fee": {
       // La tasa se muestra solo cuando la persona preguntó por plata: si no, el modelo ni recibe los montos.

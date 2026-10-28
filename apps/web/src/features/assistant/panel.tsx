@@ -227,8 +227,14 @@ const RETRY_COOLDOWN_MS = 10_000;
 const ERROR_TEXT: Record<ConversationError, string> = {
   generic: "No pude responder esta vez. Probá de nuevo o empezá otra conversación.",
   "rate-limit": "Mandaste muchas preguntas seguidas. Esperá unos segundos y probá de nuevo.",
+  burst: "Hiciste muchas preguntas en poco tiempo. Probá de nuevo en unos minutos.",
+  daily: "Llegaste al límite de preguntas de hoy. Mañana podés seguir.",
+  closed: "Aco recibió muchas preguntas hoy y descansa hasta mañana. Mientras, buscá en el sitio.",
   challenge: "No pude comprobar que no sos un robot. Probá de nuevo.",
 };
+
+/** Los límites del día: reintentar no sirve hasta mañana, así que no se ofrece. */
+const FINAL_ERRORS = new Set<ConversationError>(["daily", "closed"]);
 
 /** El error con su botón de reintento. Tras un límite de uso (10 pedidos cada 10 s por IP) el botón espera 10 s. */
 function ErrorTurn({ error, onRetry }: { error: ConversationError; onRetry: () => void }) {
@@ -242,16 +248,18 @@ function ErrorTurn({ error, onRetry }: { error: ConversationError; onRetry: () =
   return (
     <BotTurn>
       <ShyText>{ERROR_TEXT[error]}</ShyText>
-      <Button
-        variant="secondary"
-        onClick={onRetry}
-        disabled={waiting}
-        data-track="assistant.answer.retry"
-        data-track-reason={error}
-        className="self-start"
-      >
-        Reintentar
-      </Button>
+      {!FINAL_ERRORS.has(error) && (
+        <Button
+          variant="secondary"
+          onClick={onRetry}
+          disabled={waiting}
+          data-track="assistant.answer.retry"
+          data-track-reason={error}
+          className="self-start"
+        >
+          Reintentar
+        </Button>
+      )}
     </BotTurn>
   );
 }
