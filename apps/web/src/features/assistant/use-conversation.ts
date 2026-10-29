@@ -65,7 +65,8 @@ export function toMessages(turns: Turn[]): ChatMessage[] {
  * La conversación, solo en memoria: no está en la URL ni en el almacenamiento, y desaparece al recargar la página.
  * Con `challenge` (Turnstile activado), el primer pedido lleva un token de Turnstile y los siguientes el pase que trajo
  * la primera respuesta. `verification` dice si el widget de Turnstile tiene que estar en pantalla, y su `key` cambia
- * para conseguir un token nuevo tras un intento fallido (cada token sirve una vez).
+ * para conseguir un token nuevo tras un intento fallido (cada token sirve una vez). `verified` dice si ya hay un token
+ * listo: el panel muestra Turnstile en lugar del campo hasta entonces, y vuelve a mostrarlo si el token vence o se gasta.
  */
 export function useConversation(challenge = false) {
   const [turns, setTurns] = useState<Turn[]>([]);
@@ -73,6 +74,7 @@ export function useConversation(challenge = false) {
   const [progress, setProgress] = useState<Progress | null>(null);
   const [error, setError] = useState<ConversationError | null>(null);
   const [verification, setVerification] = useState<{ needed: boolean; key: number }>({ needed: challenge, key: 0 });
+  const [verified, setVerified] = useState(false);
   const turnsRef = useRef<Turn[]>([]);
   const busy = useRef(false);
   const pass = useRef<string | null>(null);
@@ -81,6 +83,7 @@ export function useConversation(challenge = false) {
 
   const onToken = useCallback((t: string | null) => {
     token.current = t;
+    setVerified(!!t);
     if (t && waiting.current) {
       waiting.current(t);
       waiting.current = null;
@@ -125,7 +128,10 @@ export function useConversation(challenge = false) {
       if (challenge && status !== 429) {
         // El token se gastó (o el pase venció): mostrar Turnstile de nuevo para conseguir uno nuevo.
         if (status === 403) pass.current = null;
-        if (!pass.current) setVerification((v) => ({ needed: true, key: v.key + 1 }));
+        if (!pass.current) {
+          setVerified(false);
+          setVerification((v) => ({ needed: true, key: v.key + 1 }));
+        }
       }
     } finally {
       busy.current = false;
@@ -153,5 +159,5 @@ export function useConversation(challenge = false) {
     setProgress(null);
   }, []);
 
-  return { turns, thinking, progress, error, send, retry: request, reset, verification, onToken };
+  return { turns, thinking, progress, error, send, retry: request, reset, verification, verified, onToken };
 }

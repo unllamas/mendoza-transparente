@@ -4,7 +4,7 @@ import { Mascot, MascotAvatar } from "@mt/mascots/mascot";
 import { Button } from "@mt/ui/components/base/buttons/button";
 import { IconButton } from "@mt/ui/components/base/buttons/icon-button";
 import { RiArrowRightSLine, RiArrowRightUpLine, RiCloseLine, RiRestartLine, RiSendPlane2Line } from "@remixicon/react";
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { track } from "@/analytics.ts";
 import { activityIcon } from "./activity-icons.ts";
@@ -14,16 +14,10 @@ import { AnswerFooter, type FeedbackSend, FeedbackSheet } from "./feedback.tsx";
 import { currentPosition, municipalityAt } from "./locate.ts";
 import { allowedHrefs, type Inline, type Paragraph, parseReplyText, plainReplyText } from "./reply-text.ts";
 import { type SearchItem, SearchSheet } from "./search-sheet.tsx";
+import { suggestionsFor } from "./suggestions.ts";
 import { type ConversationError, progressText, type Turn, toMessages } from "./use-conversation.ts";
 
 export const NAME = "Aco";
-
-/**
- * Lo bastante cortas para una línea a 320 px, y solo lo que Aco puede responder con lo que tenemos: una sugerencia que
- * después no puede resolver es peor que ninguna (Ingresos Brutos todavía no está en el conocimiento). Una por tipo: un
- * trámite, una tasa, los datos del sitio.
- */
-const SUGGESTIONS = ["¿Cómo abro un comercio?", "¿Cuánto cobra mi municipio?", "¿Quién le vende al Estado?"];
 
 /**
  * De dónde salió una pregunta, para `assistant.question.send`: escrita, una sugerencia de la bienvenida, una opción de
@@ -62,24 +56,26 @@ function Header({ onClose, onRestart }: { onClose: () => void; onRestart?: () =>
 
 /**
  * Bienvenida: la mascota sobre los Andes con dos globos de diálogo, como una postal. Solo antes de la primera pregunta:
- * después el encabezado ya muestra a Aco, y el espacio es para la conversación.
+ * después el encabezado ya muestra a Aco, y el espacio es para la conversación. En el celular es más baja (112 px en
+ * vez de 176) para que las sugerencias y el campo de texto entren sin scroll; la mascota se achica y se corre a la
+ * derecha, y el globo de saludo sube al cielo para no taparle la cara.
  */
 function Hero() {
   return (
-    <div className="relative -mx-5 -mt-5 h-44 shrink-0 overflow-hidden bg-accent-50">
+    <div className="relative -mx-5 -mt-5 h-44 shrink-0 overflow-hidden bg-accent-50 max-sm:h-28">
       <Andes />
-      {/* Scaled from the bottom and pushed down, so only the head and the waving wing show over the mountains. */}
+      {/* Escalada desde abajo y empujada hacia abajo: sobre las montañas solo se ven la cabeza y el ala que saluda. */}
       <Mascot
         mascot="aco"
         pose="wave"
         size={120}
         priority
-        className="absolute bottom-0 left-1/2 origin-bottom -translate-x-1/2 translate-y-[42%] scale-[1.9]"
+        className="absolute bottom-0 left-1/2 origin-bottom -translate-x-1/2 translate-y-[42%] scale-[1.9] max-sm:left-[58%] max-sm:scale-[1.3]"
       />
-      <p className="absolute bottom-14 left-5 -rotate-3 rounded-2xl rounded-bl-sm bg-background-surface px-3 py-1.5 text-body-bold text-text-primary shadow-md">
+      <p className="absolute bottom-14 left-5 -rotate-3 rounded-2xl rounded-bl-sm bg-background-surface px-3 py-1.5 text-body-bold text-text-primary shadow-md max-sm:top-3 max-sm:bottom-auto max-sm:left-3">
         ¡Hola! Soy {NAME} 👋
       </p>
-      <p className="absolute right-5 bottom-5 rotate-2 rounded-2xl rounded-br-sm bg-accent-600 px-3 py-1.5 text-body-bold text-white shadow-md">
+      <p className="absolute right-5 bottom-5 rotate-2 rounded-2xl rounded-br-sm bg-accent-600 px-3 py-1.5 text-body-bold text-white shadow-md max-sm:right-3 max-sm:bottom-3">
         Trámites y datos del Estado
       </p>
     </div>
@@ -184,15 +180,18 @@ function ShyText({ children }: { children: ReactNode }) {
   );
 }
 
+/** Las sugerencias dependen de la página donde se abrió Aco; se editan en `suggestions.ts`. */
 function Suggestions({ onAsk }: { onAsk: (q: string) => void }) {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const suggestions = useMemo(() => suggestionsFor(pathname), [pathname]);
   return (
     <div className="flex flex-col items-end gap-2">
-      {SUGGESTIONS.map((q) => (
+      {suggestions.map((q) => (
         <button
           key={q}
           type="button"
           onClick={() => onAsk(q)}
-          className="flex min-h-11 max-w-[85%] items-center gap-2 rounded-2xl border border-transparent bg-background-interactive py-2 pr-3 pl-4 text-left text-body-regular text-text-primary shadow-card transition-colors hover:border-border-link active:bg-background-interactive-hover"
+          className="flex min-h-11 max-w-[85%] items-center max-sm:max-w-full gap-2 rounded-2xl border border-transparent bg-background-interactive py-2 pr-3 pl-4 text-left text-body-regular text-text-primary shadow-card transition-colors hover:border-border-link active:bg-background-interactive-hover"
         >
           <span className="min-w-0 text-balance">{q}</span>
           <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
@@ -276,6 +275,7 @@ export function Panel({
   onClose,
   onNavigate,
   verification,
+  verified = false,
 }: {
   turns: Turn[];
   thinking: boolean;
@@ -289,6 +289,8 @@ export function Panel({
   onNavigate?: () => void;
   /** El widget de Turnstile, mientras la conversación todavía tiene que demostrar que es una persona. */
   verification?: ReactNode;
+  /** Ya hay un token de Turnstile: el widget se oculta (sigue montado, para enterarse si vence) y vuelve el campo. */
+  verified?: boolean;
 }) {
   const [draft, setDraft] = useState("");
   // El selector abierto, si hay alguno: los 18 municipios o las actividades de la última pregunta.
@@ -298,6 +300,8 @@ export function Panel({
   const scroller = useRef<HTMLDivElement>(null);
   const input = useRef<HTMLInputElement>(null);
   const now = useNow();
+  // Mientras Turnstile tiene que pasarse, ocupa el lugar del campo y del botón de enviar.
+  const gated = !!verification && !verified;
 
   // Toda pregunta pasa por acá: se cuenta de dónde salió (nunca el texto) y se manda.
   const ask = (text: string, source: QuestionSource) => {
@@ -305,10 +309,10 @@ export function Panel({
     onSend(text);
   };
 
-  // El panel se abre con el cursor en el campo de la pregunta.
+  // El panel se abre con el cursor en el campo de la pregunta, y también cuando Turnstile termina y aparece el campo.
   useEffect(() => {
-    input.current?.focus({ preventScroll: true });
-  }, []);
+    if (!gated) input.current?.focus({ preventScroll: true });
+  }, [gated]);
 
   // Solo lo más nuevo se anuncia a los lectores de pantalla: la última respuesta de Aco o el error, nunca todo.
   const last = turns[turns.length - 1];
@@ -347,14 +351,14 @@ export function Panel({
       </p>
       <div ref={scroller} className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto overscroll-contain p-5">
         {turns.length === 0 && (
-          <>
+          <div className="flex flex-col gap-6 max-sm:gap-4">
             <Hero />
-            <BotText>Te digo qué hacer, cuánto cuesta y de dónde sale cada dato. Confirmalo siempre en la ventanilla.</BotText>
+            <BotText>Te digo qué hacer, cuánto cuesta y de dónde sale. Confirmalo siempre en la ventanilla.</BotText>
             <p className="text-caption-1-regular text-pretty text-text-tertiary">
-              No escribas datos personales: si votás una respuesta, guardamos la conversación para mejorar a {NAME}.
+              No escribas datos personales: si votás una respuesta, guardamos la conversación.
             </p>
             <Suggestions onAsk={(q) => ask(q, "suggestion")} />
-          </>
+          </div>
         )}
         {turns.map((turn, i) => {
           const key = `${i}-${turn.from}`;
@@ -389,6 +393,7 @@ export function Panel({
       </div>
       {thinking && <ProgressLine progress={progress} />}
       <form
+        hidden={gated}
         className="flex shrink-0 items-center gap-2 px-4 pt-3 pb-4"
         onSubmit={(e) => {
           e.preventDefault();
@@ -409,7 +414,13 @@ export function Panel({
         />
         <IconButton icon={RiSendPlane2Line} aria-label="Enviar" type="submit" disabled={thinking} className="size-12" />
       </form>
-      {verification && <div className="flex shrink-0 justify-center px-4 pt-3 empty:hidden">{verification}</div>}
+      {verification && (
+        <div hidden={verified} className="relative flex min-h-[65px] shrink-0 items-center justify-center px-4 pt-3 pb-4">
+          {/* Detrás del widget: se ve solo el instante en que el script de Turnstile todavía no cargó. */}
+          <p className="absolute inset-x-4 text-center text-caption-1-regular text-text-tertiary">Verificando que seas una persona…</p>
+          <div className="relative">{verification}</div>
+        </div>
+      )}
       {feedback && (
         <FeedbackSheet
           onClose={() => setFeedback(null)}

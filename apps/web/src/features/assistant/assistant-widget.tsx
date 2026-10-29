@@ -5,7 +5,7 @@ import { cx } from "@mt/ui/lib/cx";
 import { RiArrowDownSLine } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import { track } from "@/analytics.ts";
-import { Turnstile } from "@/components/turnstile.tsx";
+import { TURNSTILE_KEY, Turnstile } from "@/components/turnstile.tsx";
 import { NAME, Panel } from "./panel.tsx";
 import { useConversation } from "./use-conversation.ts";
 
@@ -18,7 +18,7 @@ function Launcher({ open, onPress, className }: { open: boolean; onPress: () => 
         onClick={onPress}
         aria-label="Cerrar la guía"
         className={cx(
-          "flex size-14 items-center justify-center rounded-2xl bg-background-surface text-text-primary shadow-lg transition-colors hover:bg-background-interactive-hover",
+          "flex size-14 items-center justify-center rounded-2xl bg-background-inverse text-text-inverse shadow-lg outline-none transition-colors hover:bg-background-inverse-hover focus-visible:ring-2 focus-visible:ring-border-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background-full",
           className,
         )}
       >
@@ -31,12 +31,12 @@ function Launcher({ open, onPress, className }: { open: boolean; onPress: () => 
       onClick={onPress}
       aria-label={`Preguntale a ${NAME} por un trámite o un dato`}
       className={cx(
-        "flex h-14 items-center gap-2 rounded-full bg-background-surface py-1.5 pr-5 pl-1.5 shadow-lg transition-[box-shadow,transform] hover:shadow-xl motion-safe:active:scale-95",
+        "flex h-14 items-center gap-2 rounded-full bg-background-inverse py-1.5 pr-5 pl-1.5 shadow-lg outline-none transition-[box-shadow,transform] hover:shadow-xl focus-visible:ring-2 focus-visible:ring-border-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background-full motion-safe:active:scale-95",
         className,
       )}
     >
-      <MascotAvatar mascot="aco" size={44} decorative />
-      <span className="text-body-semibold text-text-primary">Preguntá</span>
+      <MascotAvatar mascot="aco" size={44} decorative className="ring-1 ring-text-inverse/20" />
+      <span className="text-body-semibold text-text-inverse">Preguntá</span>
     </button>
   );
 }
@@ -121,9 +121,12 @@ export default function AssistantWidget({ challenge = false }: { challenge?: boo
             onSend={conversation.send}
             onRetry={conversation.retry}
             onRestart={conversation.reset}
+            // Sin clave de Turnstile (desarrollo) no hay widget que mostrar: el campo queda siempre a la vista.
             verification={
-              conversation.verification.needed && <Turnstile key={conversation.verification.key} onToken={conversation.onToken} />
+              conversation.verification.needed &&
+              TURNSTILE_KEY && <Turnstile key={conversation.verification.key} onToken={conversation.onToken} />
             }
+            verified={conversation.verified}
             onClose={() => toggle(false)}
             // En celulares el panel tapa la página: cerrarlo para que se vea la página que lo abrió. En escritorio queda.
             onNavigate={() => isPhone && toggle(false)}

@@ -76,6 +76,11 @@
   --color-background-action: var(--color-accent-100);
   --color-background-action-hover: var(--color-accent-200);
   --color-text-action: var(--color-accent-700);
+  /* Invertido respecto del tema, para lo que tiene que destacarse sobre cualquier fondo (el botón flotante del
+     asistente): oscuro en claro, claro en oscuro. Texto sobre fondo: 17,9:1 en claro y 17,4:1 en oscuro. */
+  --color-background-inverse: var(--color-neutral-900);
+  --color-background-inverse-hover: var(--color-neutral-800);
+  --color-text-inverse: var(--color-neutral-50);
   /* Links y lo que lleva a otra página: azul de la marca. */
   --color-text-link: var(--color-accent-600);
   --color-border-link: var(--color-accent-600);
@@ -119,6 +124,9 @@
   --color-background-action: var(--color-accent-950);
   --color-background-action-hover: var(--color-accent-900);
   --color-text-action: var(--color-accent-200);
+  --color-background-inverse: var(--color-neutral-100);
+  --color-background-inverse-hover: var(--color-neutral-200);
+  --color-text-inverse: var(--color-neutral-925);
   --color-text-secondary: var(--color-neutral-300);
   --color-text-tertiary: var(--color-neutral-400);
   --color-text-link: var(--color-accent-300);
@@ -153,6 +161,9 @@
   --color-background-action: var(--color-background-action);
   --color-background-action-hover: var(--color-background-action-hover);
   --color-text-action: var(--color-text-action);
+  --color-background-inverse: var(--color-background-inverse);
+  --color-background-inverse-hover: var(--color-background-inverse-hover);
+  --color-text-inverse: var(--color-text-inverse);
   --color-text-link: var(--color-text-link);
   --color-border-link: var(--color-border-link);
   --color-highlight: var(--color-highlight);
