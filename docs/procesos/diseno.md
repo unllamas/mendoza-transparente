@@ -245,7 +245,7 @@ Se usan con `<Mascot mascot="aco" pose="wave" size={120} />` y `<MascotAvatar ma
 
 `bun run mascotas --check` verifica que cada pose del manifiesto tenga su original y sus archivos generados (y que pesen poco: 512 px menos de 150 KB, 96 px menos de 20 KB). El recorte es el mismo para todas las poses de un estilo, para que Aco no cambie de tamaño al cambiar de pose. `avatar.crop` es el cuadrado, en píxeles del original, que encuadra la cabeza y el collar.
 
-- **La esquina inferior derecha es del asistente.** Ahí va el botón flotante de Aco en todas las páginas, así que ningún otro botón fijo o pegado al borde inferior de la pantalla va en esa esquina (por eso los botones de las fotos de paisaje van a la izquierda).
+- **La esquina inferior derecha es del asistente.** Ahí va el botón flotante de Aco en todas las páginas, así que ningún otro botón fijo o pegado al borde inferior de la pantalla va en esa esquina (por eso los botones de las fotos de paisaje van a la izquierda). El botón va invertido respecto del tema (oscuro en claro, claro en oscuro, con los tokens `background-inverse` y `text-inverse`) para destacarse sobre cualquier fondo, la ilustración de la portada incluida; el panel del chat, en cambio, sigue el tema, porque es una superficie para leer y no tiene que competir con la página.
 
 ## Lo que no hacemos
 

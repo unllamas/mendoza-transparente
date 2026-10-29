@@ -151,7 +151,7 @@ Las direcciones `*.pages.dev` de producción usan las claves de producción y no
 
 **Turnstile, una vez por conversación.** Se prende con el secreto `ASSISTANT_TURNSTILE=on`, **solo en *Production***, y reusa `TURNSTILE_SECRET`, el del registro. Con Turnstile prendido:
 - `GET /api/asistente` responde `challenge: true`;
-- el primer mensaje lleva el token de Turnstile y la respuesta devuelve un pase firmado (`packages/assistant/src/pass.ts`);
+- el primer mensaje lleva el token de Turnstile y la respuesta devuelve un pase firmado (`packages/assistant/src/pass.ts`). En el panel, el widget de Turnstile ocupa el lugar del campo y del botón de enviar hasta que llega el token (`verified` en `useConversation`); entonces se oculta, aparece el campo con el foco, y si el token vence o se gasta tras un error, vuelve a reemplazarlo. Si el script no carga en 15 segundos (un bloqueador, sin red) o Turnstile falla o vence, en su lugar aparece un error con «Reintentar» (`assistant.answer.retry` con `reason: verification`), que vuelve a montar el widget: nadie queda sin salida. Sin `VITE_TURNSTILE_SITE_KEY` el campo se ve siempre;
 - **el pase vence a los 30 minutos de emitido y no se renueva**. Antes se emitía uno nuevo en cada respuesta, y quien pasaba Turnstile una vez quedaba adentro para siempre;
 - el pase lleva su vencimiento y un id al azar, que cuenta los mensajes de la conversación, y nada de la persona;
 - si falta `TURNSTILE_SECRET`, no pasa nadie (503).
