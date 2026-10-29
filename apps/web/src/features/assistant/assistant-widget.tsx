@@ -124,9 +124,13 @@ export default function AssistantWidget({ challenge = false }: { challenge?: boo
             // Sin clave de Turnstile (desarrollo) no hay widget que mostrar: el campo queda siempre a la vista.
             verification={
               conversation.verification.needed &&
-              TURNSTILE_KEY && <Turnstile key={conversation.verification.key} onToken={conversation.onToken} />
+              TURNSTILE_KEY && (
+                <Turnstile key={conversation.verification.key} onToken={conversation.onToken} onError={conversation.onVerificationError} />
+              )
             }
             verified={conversation.verified}
+            verificationFailed={conversation.verificationFailed}
+            onRetryVerification={conversation.retryVerification}
             onClose={() => toggle(false)}
             // En celulares el panel tapa la página: cerrarlo para que se vea la página que lo abrió. En escritorio queda.
             onNavigate={() => isPhone && toggle(false)}

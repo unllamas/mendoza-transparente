@@ -41,8 +41,8 @@ const RULES: Rule[] = [
     questions: () => ["¿Cuánto reparte la Provincia?", "¿Cuánto le toca a Maipú?", "¿Cuánta gente vive en Mendoza?"],
   },
   // La ficha de un proveedor no trae el nombre en la URL (lleva el CUIT): las mismas que la lista.
-  { test: startsWith("/proveedores"), questions: () => [TOP_SUPPLIERS, "¿Cuánto compra cada organismo?", "¿Qué son las señales?"] },
-  { test: startsWith("/organismos"), questions: () => ["¿Cuánto compra cada organismo?", TOP_SUPPLIERS, "¿Qué son las señales?"] },
+  { test: startsWith("/proveedores"), questions: () => [TOP_SUPPLIERS, "¿Qué compró el Hospital Central?", "¿Qué son las señales?"] },
+  { test: startsWith("/organismos"), questions: () => ["¿Qué compró el Hospital Central?", TOP_SUPPLIERS, "¿Qué son las señales?"] },
   // Trámites y tasas de un municipio: lo que se está mirando es el trámite, no la ficha.
   {
     test: (p) => p.startsWith("/tramites") || /^\/municipios\/[^/]+\/(tramites|tasas)/.test(p),
@@ -57,13 +57,13 @@ const RULES: Rule[] = [
   },
   {
     test: startsWith("/municipios"),
-    questions: () => ["¿Qué publica cada municipio?", "¿Cuánto cobra mi municipio?", "¿Cómo abro un comercio?"],
+    questions: () => ["¿Quién gobierna Maipú?", "¿Cuánto cobra mi municipio?", "¿Cómo abro un comercio?"],
   },
   { test: startsWith("/gobierno"), questions: () => ["¿Quién es el gobernador?", "¿Cuánta gente trabaja en Salud?", SALARIES] },
   { test: startsWith("/funcionarios"), questions: () => ["¿Quién es el gobernador?", SALARIES, "¿Quiénes son los senadores?"] },
   {
     test: startsWith("/partidos"),
-    questions: () => ["¿Qué partidos hay en Mendoza?", "¿Quiénes son los senadores?", "¿Quién es el gobernador?"],
+    questions: () => ["¿Quiénes son los diputados?", "¿Quiénes son los senadores?", "¿Quién es el gobernador?"],
   },
   { test: startsWith("/leyes"), questions: () => ["¿Cuáles son las últimas leyes?", UNPUBLISHED, REQUEST] },
   { test: startsWith("/no-publicado"), questions: () => [UNPUBLISHED, SALARIES, REQUEST] },
@@ -77,7 +77,7 @@ const RULES: Rule[] = [
     test: startsWith("/poblacion"),
     questions: () => ["¿Cuánta gente vive en Mendoza?", "¿Cuánto le toca a Maipú?", "¿Cuántos estatales hay?"],
   },
-  { test: startsWith("/senales"), questions: () => ["¿Qué son las señales?", TOP_SUPPLIERS, "¿Cuánto compra cada organismo?"] },
+  { test: startsWith("/senales"), questions: () => ["¿Qué son las señales?", TOP_SUPPLIERS, "¿Qué compró el Hospital Central?"] },
 ];
 
 /** Las tres sugerencias para la ruta (`/municipios/godoy-cruz`); las de siempre si la página no tiene reglas propias. */

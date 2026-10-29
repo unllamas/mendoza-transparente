@@ -567,7 +567,8 @@ export const EVENT_CATALOG: EventDoc[] = [
   },
   {
     event: "assistant.answer.retry",
-    description: "Tocó «Reintentar» después de un error de Aco. Propiedad reason, la misma del error.",
+    description:
+      "Tocó «Reintentar» después de un error de Aco. Propiedad reason, la misma del error, o verification si no pasó la verificación de Turnstile.",
     tags: ["asistente"],
   },
   {

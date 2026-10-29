@@ -276,6 +276,8 @@ export function Panel({
   onNavigate,
   verification,
   verified = false,
+  verificationFailed = false,
+  onRetryVerification,
 }: {
   turns: Turn[];
   thinking: boolean;
@@ -291,6 +293,9 @@ export function Panel({
   verification?: ReactNode;
   /** Ya hay un token de Turnstile: el widget se oculta (sigue montado, para enterarse si vence) y vuelve el campo. */
   verified?: boolean;
+  /** Turnstile no cargó o falló: en su lugar va el error con «Reintentar», nunca un hueco sin salida. */
+  verificationFailed?: boolean;
+  onRetryVerification?: () => void;
 }) {
   const [draft, setDraft] = useState("");
   // El selector abierto, si hay alguno: los 18 municipios o las actividades de la última pregunta.
@@ -416,9 +421,28 @@ export function Panel({
       </form>
       {verification && (
         <div hidden={verified} className="relative flex min-h-[65px] shrink-0 items-center justify-center px-4 pt-3 pb-4">
-          {/* Detrás del widget: se ve solo el instante en que el script de Turnstile todavía no cargó. */}
-          <p className="absolute inset-x-4 text-center text-caption-1-regular text-text-tertiary">Verificando que seas una persona…</p>
-          <div className="relative">{verification}</div>
+          {verificationFailed ? (
+            <div role="alert" className="flex w-full items-center gap-3">
+              <p className="min-w-0 flex-1 text-caption-1-regular text-pretty text-text-secondary">
+                No pudimos comprobar que seas una persona. Puede ser un bloqueador de anuncios o la conexión.
+              </p>
+              <Button
+                variant="secondary"
+                onClick={onRetryVerification}
+                data-track="assistant.answer.retry"
+                data-track-reason="verification"
+                className="shrink-0"
+              >
+                Reintentar
+              </Button>
+            </div>
+          ) : (
+            <>
+              {/* Detrás del widget: se ve solo el instante en que el script de Turnstile todavía no cargó. */}
+              <p className="absolute inset-x-4 text-center text-caption-1-regular text-text-tertiary">Verificando que seas una persona…</p>
+              <div className="relative">{verification}</div>
+            </>
+          )}
         </div>
       )}
       {feedback && (

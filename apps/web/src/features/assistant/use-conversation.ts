@@ -75,6 +75,8 @@ export function useConversation(challenge = false) {
   const [error, setError] = useState<ConversationError | null>(null);
   const [verification, setVerification] = useState<{ needed: boolean; key: number }>({ needed: challenge, key: 0 });
   const [verified, setVerified] = useState(false);
+  // Turnstile no cargó, falló o venció el desafío: el panel muestra el error con «Reintentar».
+  const [verificationFailed, setVerificationFailed] = useState(false);
   const turnsRef = useRef<Turn[]>([]);
   const busy = useRef(false);
   const pass = useRef<string | null>(null);
@@ -159,5 +161,26 @@ export function useConversation(challenge = false) {
     setProgress(null);
   }, []);
 
-  return { turns, thinking, progress, error, send, retry: request, reset, verification, verified, onToken };
+  const onVerificationError = useCallback(() => setVerificationFailed(true), []);
+  /** Vuelve a montar Turnstile (su `key` cambia) para un intento nuevo. */
+  const retryVerification = useCallback(() => {
+    setVerificationFailed(false);
+    setVerification((v) => ({ needed: true, key: v.key + 1 }));
+  }, []);
+
+  return {
+    turns,
+    thinking,
+    progress,
+    error,
+    send,
+    retry: request,
+    reset,
+    verification,
+    verified,
+    verificationFailed,
+    onToken,
+    onVerificationError,
+    retryVerification,
+  };
 }
