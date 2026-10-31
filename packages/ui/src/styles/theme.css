@@ -837,6 +837,22 @@
       opacity: 0.2;
     }
   }
+
+  /* Skeleton: invisible los primeros 150 ms (si los datos llegan antes, no hay parpadeo) y después pulsa. El lugar
+   * se guarda igual desde el principio: solo cambia la opacidad. `skeleton-in` es la espera sola, para quien pide
+   * menos movimiento; `skeleton` le suma el pulso. */
+  --animate-skeleton-in: skeleton-in 1ms 150ms both;
+  --animate-skeleton: skeleton-in 1ms 150ms both, skeleton-pulse 2s 150ms cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  @keyframes skeleton-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes skeleton-pulse {
+    50% {
+      opacity: 0.5;
+    }
+  }
 }
 
 /* Keep color feedback quick while the physical press motion remains soft.

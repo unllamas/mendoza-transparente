@@ -35,7 +35,7 @@ Igual, mirando las visitas lentas aparecían problemas reales:
 - `Proveedor` recibe la ficha que ya cargó la ruta (`initial`).
 - `meta.json` solo al navegar dentro del sitio.
 - Tema y mapa en paralelo en `/coparticipacion` y `/poblacion`.
-- `Skeleton` y `SkeletonText` en `@mt/ui`. Lo usan la tabla de `/datos`, «Fuentes» y la sección «Lo que el Estado no publica» de la portada, que pasó a capa 3 (`<Await>`).
+- `Skeleton` y `SkeletonText` en `@mt/ui`. Lo usan la tabla de `/datos` y «Fuentes». La sección «Lo que el Estado no publica» de la portada pasó primero a capa 3 (`<Await>`) y después a `home.json`, porque su skeleton no podía copiar el alto de filas que cambian con el texto.
 - Cada HTML precarga el JavaScript de su página y los JSON de su capa 1 (`scripts/preload.ts`).
 - `bun run medir` para medir antes y después.
 
