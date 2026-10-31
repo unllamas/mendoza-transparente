@@ -1,0 +1,8 @@
+/* Los tokens del sitio (@mt/ui), para que las escenas usen los mismos colores que la web: var(--color-accent-600),
+   var(--color-neutral-900)… Tailwind emite cada variable que encuentra usada en los archivos de src/. */
+@import "@mt/ui/styles/mt.css";
+
+html,
+body {
+  margin: 0;
+}

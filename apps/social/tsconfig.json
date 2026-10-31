@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    // El kit de Stageshow (vendor/) es código de terceros que se copia sin tocar y no está escrito para estas dos reglas
+    "noUncheckedIndexedAccess": false,
+    "noUnusedLocals": false,
+    "types": ["bun", "vite/client"]
+  },
+  "include": ["src", "scripts", "vite.config.ts"]
+}

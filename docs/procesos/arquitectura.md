@@ -15,6 +15,7 @@ Lo existente no se repasa de una vez: cada cambio acomoda el archivo que toca, t
 | `apps/web` | El sitio (Vite + React + TanStack Router), con sus scripts de build de datos y SEO y la función de la API pública (`functions/`) |
 | `apps/panel` | El panel interno del equipo (Vite + React), detrás de Cloudflare Access. Ver `panel.md` |
 | `apps/votacion` | `votacion.mendoza-transparente.com` (Vite + React): las elecciones provinciales, del histórico al conteo en vivo. Por ahora, una página «en construcción» sin indexar. Ver el plan [Votación](../planes/votacion.md) |
+| `apps/social` | Estudio de piezas para redes (Vite + React + el kit de Stageshow en `vendor/`): solo local, no se publica. Ver `piezas-sociales.md` |
 | `packages/ui` (`@mt/ui`) | Design system: tokens, componentes y hooks genéricos. No conoce el router, la analítica ni los datos del sitio |
 | `packages/core` (`@mt/core`) | Utilidades de datos compartidas por los scrapers: archivo, CSV, municipios |
 | `packages/participation` (`@mt/participation`) | API de participación y del panel, consultas a la base, migraciones de D1 y login. Lo usan `apps/web` y `apps/panel` |
