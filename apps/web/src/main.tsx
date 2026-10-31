@@ -40,6 +40,7 @@ import type {
   RequestTarget,
   SenalesTema,
   UniversidadesTema,
+  WeeklyUpdate,
 } from "./types.ts";
 
 // Cada página es su propio chunk: la primera visita baja solo el layout y la página donde entra.
@@ -187,6 +188,21 @@ const comoLeerRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/como-leer",
   component: page(() => import("./pages/como-leer.tsx"), "ComoLeerPage"),
+});
+
+// Novedades semanales: un solo JSON chico con todas las semanas (docs/procesos/novedades.md).
+const updatesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/novedades",
+  loader: () => loadTema<WeeklyUpdate[]>("novedades"),
+  component: page(() => import("./pages/updates.tsx"), "UpdatesPage"),
+});
+
+const updateRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/novedades/$semana",
+  loader: async ({ params }) => ({ updates: await loadTema<WeeklyUpdate[]>("novedades"), week: params.semana }),
+  component: page(() => import("./pages/updates.tsx"), "UpdatePage"),
 });
 
 const participarRoute = createRoute({
@@ -422,6 +438,8 @@ const router = createRouter({
     pedirRoute,
     cartelRoute,
     comoLeerRoute,
+    updatesRoute,
+    updateRoute,
     fuentesRoute,
     datosRoute,
     ...(import.meta.env.DEV ? [previewRoute] : []),

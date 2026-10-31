@@ -1048,3 +1048,22 @@ export interface MunicipalFees {
   highlights: { name: string; code: string; min: number; max: number }[];
   rows: FeeRow[];
 }
+
+/** Una novedad de la semana: qué se sumó al sitio, contado para quien lo usa. */
+export interface UpdateItem {
+  title: string;
+  text: string;
+  /** La página donde se ve, si la hay. */
+  link?: { label: string; to: string };
+}
+
+/** Una semana de novedades (temas/novedades.json, de data/curado/novedades/<lunes>.yaml; ver docs/procesos/novedades.md). */
+export interface WeeklyUpdate {
+  /** El lunes de la semana (2026-10-26): es el slug de /novedades/<semana> y de su imagen. */
+  week: string;
+  title: string;
+  summary: string;
+  /** Los cambios técnicos de la semana en GitHub (la comparación entre releases). */
+  changesUrl: string;
+  items: UpdateItem[];
+}
