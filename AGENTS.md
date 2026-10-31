@@ -44,6 +44,7 @@ Las skills del proyecto (`.claude/skills/<nombre>/SKILL.md`) son la puerta de en
 | Tocar el panel interno (`apps/panel`), el registro público (`/api/registro`), la API de participación o el acceso del equipo | `panel` |
 | Encontrar un problema de seguridad en un sitio del Estado (datos de la gente expuestos, un sitio hackeado) | `panel` y `docs/procesos/seguridad.md` |
 | Relevar un trámite, sumar la tarifaria de un municipio o tocar la fuente `tributos` | `tramites-y-tributos` |
+| Hacer un video o una pieza para redes que muestra el sitio en uso | `piezas-sociales` |
 | Tocar el asistente Aco (`packages/assistant`, `/api/asistente`, su widget, instrucciones, modelo o claves) | `asistente` |
 | Lanzar un subagente o integrar lo que devolvió | `delegar-en-agentes` |
 | Crear una rama, commitear, pushear o abrir un PR (incluido el de publicación `dev → main`), tocar los releases de GitHub o hacer un hotfix | `ramas-y-releases` |

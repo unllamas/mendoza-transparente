@@ -6,7 +6,17 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["**", "!**/data", "!**/dist", "!**/public/data", "!**/*.json", "!**/*.md", "!**/*.yaml", "!**/*.yml"]
+    "includes": [
+      "**",
+      "!**/data",
+      "!**/dist",
+      "!**/public/data",
+      "!**/*.json",
+      "!**/*.md",
+      "!**/*.yaml",
+      "!**/*.yml",
+      "!apps/social/vendor"
+    ]
   },
   "formatter": {
     "enabled": true,
