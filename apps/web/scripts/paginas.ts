@@ -14,7 +14,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { GLOSSARY } from "../src/glossary.ts";
 import { NO_PUBLICADO_CATEGORIES } from "../src/no-publicado-categories.ts";
-import { datosMeta, PAGES, SITE_NAME, SITE_URL, TITLE_SUFFIX } from "../src/seo.ts";
+import { datosMeta, ogImageUrl, PAGES, SITE_NAME, SITE_URL, TITLE_SUFFIX } from "../src/seo.ts";
 import { ROLES } from "../src/slug.ts";
 import type {
   AgencyDetail,
@@ -43,6 +43,7 @@ import type {
   RecaudacionTema,
   SenalesTema,
   UniversidadesTema,
+  WeeklyUpdate,
 } from "../src/types.ts";
 
 export interface Pagina {
@@ -128,6 +129,7 @@ const NAV = [
   ["/cartel", "Hacé un cartel"],
   ["/participar", "Participá"],
   ["/como-leer", "Cómo leer estos datos"],
+  ["/novedades", "Novedades"],
   ["/fuentes", "Fuentes"],
 ] as const;
 
@@ -208,6 +210,7 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
   const leyes = await json<LeyResumen[]>("temas/leyes.json", []);
   const senales = await json<SenalesTema>("temas/senales.json", { generado: "", senales: [] });
   const noPublicado = await json<NoPublicado[]>("temas/no-publicado.json", []);
+  const novedades = await json<WeeklyUpdate[]>("temas/novedades.json", []);
   const hoy = index.generatedAt.slice(0, 10);
   const fuente = (id: string) => index.sources.find((s) => s.id === id);
   const lastFetch = (id: string) => fuente(id)?.raw.lastFetch?.slice(0, 10) ?? hoy;
@@ -656,6 +659,83 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
     lastmod: hoy,
     prioridad: 0.7,
   });
+
+  // ---------------------------------------------------------------- novedades semanales
+  if (novedades.length) {
+    const migasIndice: Miga[] = [
+      ["/", "Inicio"],
+      ["/novedades", "Novedades"],
+    ];
+    const semana = (u: WeeklyUpdate) => `Semana del ${fechaLarga(u.week)}`;
+    const cantidad = (u: WeeklyUpdate) => `${u.items.length} ${u.items.length === 1 ? "novedad" : "novedades"}`;
+    const ultima = novedades[0]!;
+    estatica("/novedades", {
+      figura: cantidad(ultima),
+      bajada: `Esta semana: ${ultima.summary.charAt(0).toLowerCase()}${ultima.summary.slice(1)}`,
+      ld: [
+        breadcrumb(migasIndice),
+        {
+          "@type": "Blog",
+          name: "Novedades de Mendoza Transparente",
+          url: url("/novedades"),
+          publisher,
+          blogPost: novedades.map((u) => ({
+            "@type": "BlogPosting",
+            headline: u.title,
+            url: url(`/novedades/${u.week}`),
+            datePublished: u.week,
+          })),
+        },
+      ],
+      html: cuerpo({
+        migas: migasIndice,
+        h1: "Novedades",
+        resumen: "Cada semana contamos qué sumamos al sitio: datos nuevos, páginas nuevas y lo que mejoramos a partir de lo que nos piden.",
+        secciones: [
+          { titulo: "Semanas", items: novedades.map((u) => ({ texto: `${semana(u)}: ${u.title}`, href: `/novedades/${u.week}` })) },
+        ],
+      }),
+      lastmod: ultima.week,
+      prioridad: 0.5,
+    });
+    for (const u of novedades) {
+      const path = `/novedades/${u.week}`;
+      const [, m, d] = u.week.split("-").map(Number);
+      paginas.push({
+        path,
+        title: titulo(u.title),
+        description: descripcion(`${semana(u)} en Mendoza Transparente: ${u.summary}`),
+        og: {
+          slug: `novedades-${u.week}`,
+          eyebrow: `NOVEDADES · SEMANA DEL ${d} ${MESES[m! - 1]!.slice(0, 3).toUpperCase()}`,
+          titulo: u.title,
+          figura: cantidad(u),
+          bajada: u.summary,
+        },
+        ld: [
+          breadcrumb([...migasIndice, [path, semana(u)]]),
+          {
+            "@type": "BlogPosting",
+            headline: u.title,
+            description: u.summary,
+            url: url(path),
+            datePublished: u.week,
+            image: ogImageUrl(`novedades-${u.week}`),
+            inLanguage: "es-AR",
+            publisher,
+          },
+        ],
+        html: cuerpo({
+          migas: [...migasIndice, [path, semana(u)]],
+          h1: u.title,
+          resumen: u.summary,
+          secciones: [{ titulo: "Novedades", items: u.items.map((i) => ({ texto: `${i.title}: ${i.text}`, href: i.link?.to })) }],
+        }),
+        lastmod: u.week,
+        prioridad: 0.4,
+      });
+    }
+  }
 
   estatica("/participar", {
     figura: "Participá",

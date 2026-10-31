@@ -21,6 +21,7 @@ import {
   RiGroupLine,
   RiImageLine,
   RiMapPinLine,
+  RiMegaphoneLine,
   RiMenuLine,
   RiQuillPenLine,
   RiReceiptLine,
@@ -273,6 +274,13 @@ export function Layout() {
               >
                 <RiGitBranchLine className="size-4" aria-hidden /> Código y datos abiertos en GitHub
               </a>
+              <Link
+                to="/novedades"
+                className="inline-flex w-fit items-center gap-1.5 text-text-link hover:underline"
+                data-track="footer.updates.open"
+              >
+                <RiMegaphoneLine className="size-4" aria-hidden /> Novedades de cada semana
+              </Link>
               {/* The line is always there (empty while it loads), so the footer does not grow when the date arrives. */}
               <p className="min-h-[1lh] text-text-tertiary">
                 {sourceCatalog && `Datos actualizados al ${formatDate(sourceCatalog.generatedAt)}`}

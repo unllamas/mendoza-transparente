@@ -1,0 +1,14 @@
+# Novedades de la semana del lunes 26 de octubre de 2026. Proceso: docs/procesos/novedades.md
+titulo: Llegó Aco, el asistente de trámites
+bajada: Aco, trámites y tasas por municipio, y la carpeta del trámite en PDF.
+cambios: https://github.com/unllamas/mendoza-transparente/compare/2026-10-25...2026-10-31
+novedades:
+  - titulo: Aco responde tus preguntas
+    texto: Tocá a Aco en cualquier página y preguntale cómo hacer un trámite, quién gobierna tu departamento o a quién le compra el Estado. Responde con los datos del sitio y te deja el link a cada uno.
+  - titulo: Trámites y tasas de tu municipio
+    texto: Qué pasos tiene abrir un comercio en cada departamento y cuánto cobra cada municipio, según su ordenanza tarifaria.
+    link: { texto: Ver cómo abrir un comercio, ruta: /tramites/abrir-un-comercio }
+  - titulo: La carpeta del trámite, en PDF
+    texto: Desde los pasos de un trámite, Aco arma un PDF con los requisitos y las direcciones, para llevarlo impreso.
+  - titulo: Páginas que no saltan al cargar
+    texto: Mientras llegan los datos, cada bloque guarda su lugar. Lo que estabas por tocar ya no se mueve.

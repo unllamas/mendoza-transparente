@@ -37,6 +37,7 @@ import { buildRecaudacion } from "./temas/recaudacion.ts";
 import { buildSenales } from "./temas/senales.ts";
 import type { TransparencySurvey } from "./temas/transparency.ts";
 import { buildUniversidades } from "./temas/universidades.ts";
+import { buildUpdates } from "./temas/updates.ts";
 
 const ROOT = join(import.meta.dir, "..", "..", "..");
 const RAW_DIR = join(ROOT, "data", "raw");
@@ -483,6 +484,9 @@ if (procesos && adjudicaciones) {
   }
 }
 /** Lee un YAML de data/curado/ (lista vacía si no existe). */
+// Las novedades semanales (/novedades).
+writeFileSync(join(OUT, "temas", "novedades.json"), JSON.stringify(buildUpdates(join(ROOT, "data", "curado", "novedades"))));
+
 function leerCurado<T>(archivo: string): T[] {
   const p = join(ROOT, "data", "curado", archivo);
   return existsSync(p) ? ((parseYaml(readFileSync(p, "utf8")) as T[] | null) ?? []) : [];

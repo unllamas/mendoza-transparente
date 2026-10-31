@@ -179,6 +179,15 @@ export const PAGES: Record<string, PageMeta> = {
     eyebrow: "GUÍA",
     activa: true,
   },
+  "/novedades": {
+    title: `Novedades: lo nuevo de cada semana${TITLE_SUFFIX}`,
+    description:
+      "Qué sumamos cada semana a Mendoza Transparente: datos nuevos, páginas nuevas y lo que mejoramos a partir de lo que nos piden, contado en pocas líneas.",
+    ogSlug: "novedades",
+    ogTitle: "Lo nuevo de cada semana",
+    eyebrow: "NOVEDADES",
+    activa: true,
+  },
   "/participar": {
     title: `Participá: registrá tu pedido de información${TITLE_SUFFIX}`,
     description:
