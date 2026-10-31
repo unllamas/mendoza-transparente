@@ -15,7 +15,7 @@ export interface PageMeta {
   title: string;
   /** Descripción para buscadores y redes (140-160 caracteres). */
   description: string;
-  /** Slug de la imagen: /og/<slug>.png */
+  /** Slug de la imagen: /og/<slug>.webp */
   ogSlug: string;
   /** Título corto que va grande en la imagen. */
   ogTitle: string;
@@ -277,7 +277,7 @@ export function canonicalUrl(pathname: string): string {
 }
 
 export function ogImageUrl(slug: string): string {
-  return `${SITE_URL}/og/${slug}.png`;
+  return `${SITE_URL}/og/${slug}.webp`;
 }
 
 /** Resuelve los metadatos de una ruta; para /datos/<fuente> necesita el índice. */

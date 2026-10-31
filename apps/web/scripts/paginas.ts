@@ -14,7 +14,6 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { GLOSSARY } from "../src/glossary.ts";
 import { NO_PUBLICADO_CATEGORIES } from "../src/no-publicado-categories.ts";
-import { municipalityPhoto, type PhotoId } from "../src/photos.ts";
 import { datosMeta, PAGES, SITE_NAME, SITE_URL, TITLE_SUFFIX } from "../src/seo.ts";
 import { ROLES } from "../src/slug.ts";
 import type {
@@ -51,7 +50,7 @@ export interface Pagina {
   title: string;
   description: string;
   /** Imagen para compartir. */
-  og: { slug: string; eyebrow: string; titulo: string; figura: string; bajada: string; photo?: PhotoId };
+  og: { slug: string; eyebrow: string; titulo: string; figura: string; bajada: string };
   /** Datos estructurados (sin @context: se agrega al escribir). */
   ld: Record<string, unknown>[];
   /** Contenido principal en HTML semántico (h1, resumen, datos, enlaces). */
@@ -1309,7 +1308,6 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
       og: {
         slug: `municipio-${m.slug}`,
         eyebrow: "MUNICIPIO",
-        photo: municipalityPhoto(m.slug),
         titulo: `${m.nombre}, Mendoza`,
         figura: `${nf.format(m.poblacion.actual)} hab.`,
         bajada: c
@@ -1445,7 +1443,6 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
         og: {
           slug: `municipio-${m.slug}-presupuesto-${y.year}`,
           eyebrow: "PRESUPUESTO MUNICIPAL",
-          photo: municipalityPhoto(m.slug),
           titulo: `${m.nombre}, ${y.year}${y.partial ? ` (hasta ${y.cutoff.split(" ")[0]})` : ""}`,
           figura: pesosCorto(y.accrued),
           bajada: `Gastado de ${pesos(y.current)} autorizados.`,
@@ -1639,7 +1636,6 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
           og: {
             slug: `municipio-${m.slug}-abrir-un-comercio`,
             eyebrow: "TRÁMITES",
-            photo: municipalityPhoto(m.slug),
             titulo: `Abrir un comercio en ${m.nombre}`,
             figura: `${procedure.steps.length} pasos`,
             bajada: "Requisitos, costos y lo que el municipio no publica.",
@@ -1735,7 +1731,6 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
           og: {
             slug: `municipio-${m.slug}-tasas`,
             eyebrow: "TASA DE COMERCIO",
-            photo: municipalityPhoto(m.slug),
             titulo: `${m.nombre}, ${fees.year}`,
             figura: `${nf.format(fees.rows.length)} rubros`,
             bajada: `Derecho de comercio de la Ordenanza tarifaria ${fees.ordinance.number}.`,
