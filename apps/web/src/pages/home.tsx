@@ -1,7 +1,6 @@
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { cardVariants, listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
 import { SectionTitle } from "@mt/ui/components/section";
-import { Skeleton, SkeletonText } from "@mt/ui/components/skeleton";
 import { cx } from "@mt/ui/lib/cx";
 import {
   type RemixiconComponentType,
@@ -23,7 +22,7 @@ import {
   RiSparklingLine,
   RiTeamLine,
 } from "@remixicon/react";
-import { Await, getRouteApi, Link, useNavigate } from "@tanstack/react-router";
+import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
 import { track } from "@/analytics.ts";
@@ -34,7 +33,7 @@ import { DepartmentPicker, EcosystemMap, HeroQuestions, ReadingRules, StartingQu
 import { SearchTrigger } from "@/components/search-dialog.tsx";
 import { formatDate, formatNumber } from "@/lib.ts";
 import { slug } from "@/slug.ts";
-import type { NoPublicado, SourceMeta } from "@/types.ts";
+import type { HomeTema, SourceMeta } from "@/types.ts";
 
 const route = getRouteApi("/");
 
@@ -45,20 +44,20 @@ const pesos = (v: number) => `$ ${entero(v)}`;
 const millones = (v: number) => `$ ${entero(v / 1e6)}`;
 
 export function HomePage() {
-  const { sources, home, mapa, noPublicado, guide } = route.useLoaderData();
+  const { sources, home, mapa, guide } = route.useLoaderData();
   const navigate = useNavigate();
-  const { deuda, coparticipacion, empleo, poblacion, compras, boletin, inflacion, dolar } = home;
+  const { deuda, coparticipacion, empleo, poblacion, compras, boletin, inflacion, dolar, noPublicado } = home;
   const fuente = (id: string) => sources.sources.find((s) => s.id === id);
 
   return (
     <>
       {/*
-        Hero: the whole first screen on phones and desktop, full width and under the transparent header
-        (-mt-14 = the header height; the layout gives the home page no padding). Search and department side by
-        side with the same weight, and three questions as shortcuts. The content is centered on the whole screen
-        below the header (pt-24 = header + the same 2.5rem as pb-10). The illustration fills the hero behind it: a mask
-        fades it into the page at the bottom and a soft veil of the page color sits behind the text so it reads. Day or
-        night version per theme, from --hero-image in mt.css.
+        Hero: toda la primera pantalla en el celular y en la computadora, a lo ancho y debajo del header
+        transparente (-mt-14 = el alto del header; el layout no le da padding a la portada). Búsqueda y departamento
+        lado a lado con el mismo peso, y tres preguntas como atajos. El contenido va centrado en toda la pantalla
+        debajo del header (pt-24 = header + los mismos 2.5rem de pb-10). La ilustración llena el hero por detrás: una
+        máscara la funde con la página abajo y un velo suave del color de la página queda detrás del texto para que se
+        lea. Versión de día o de noche según el tema, desde --hero-image en mt.css.
       */}
       <section className="relative -mt-14 flex min-h-svh flex-col">
         <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center-safe gap-6 px-4 pt-24 pb-10 text-center sm:px-5">
@@ -317,10 +316,8 @@ export function HomePage() {
           )}
         </section>
 
-        {/* Lo que no se publica: tercera capa, llega después y mientras tanto guarda su lugar */}
-        <Await promise={noPublicado} fallback={<MissingDataSkeleton />}>
-          {(items) => <MissingData items={items} />}
-        </Await>
+        {/* Lo que no se publica: los cuatro primeros vienen en home.json, así no hay que esperar la lista entera */}
+        {noPublicado && <MissingData {...noPublicado} />}
 
         {guide && (
           <section className="flex flex-col gap-6">
@@ -348,19 +345,18 @@ export function HomePage() {
   );
 }
 
-/** «Lo que el Estado no publica»: the first four, with a link to the full list. */
-function MissingData({ items }: { items: NoPublicado[] }) {
-  if (items.length === 0) return null;
+/** «Lo que el Estado no publica»: los cuatro primeros, con un link a la lista completa. */
+function MissingData({ total, primeros }: NonNullable<HomeTema["noPublicado"]>) {
   return (
     <section className="flex flex-col gap-6">
       <Encabezado
         id="no-publicado"
         icon={RiEyeOffLine}
         titulo="Lo que el Estado no publica"
-        bajada={`${items.length} datos que deberían ser públicos y no están. Podés pedirlos vos.`}
+        bajada={`${total} datos que deberían ser públicos y no están. Podés pedirlos vos.`}
       />
       <ul className={listVariants()}>
-        {items.slice(0, 4).map((item) => (
+        {primeros.map((item) => (
           <li key={item.id}>
             <Link
               to="/no-publicado"
@@ -380,25 +376,8 @@ function MissingData({ items }: { items: NoPublicado[] }) {
         ))}
       </ul>
       <Link to="/no-publicado" className={buttonClassName({ variant: "secondary", className: "w-full sm:w-fit" })}>
-        Ver los {items.length} y cómo pedirlos <RiArrowRightLine className="size-5" aria-hidden />
+        Ver los {total} y cómo pedirlos <RiArrowRightLine className="size-5" aria-hidden />
       </Link>
-    </section>
-  );
-}
-
-/** Same height as `MissingData` while the list loads: heading, four two-line rows and the button. */
-function MissingDataSkeleton() {
-  return (
-    <section aria-hidden className="flex flex-col gap-6">
-      <div className="flex max-w-2xl flex-col gap-1.5">
-        <SkeletonText className="w-3/5 text-title-1-semibold" />
-        <SkeletonText className="w-full" />
-        <SkeletonText className="w-2/3" />
-        <SkeletonText className="w-1/3 sm:hidden" />
-      </div>
-      {/* Measured: the four rows wrap to more lines on a phone. */}
-      <Skeleton className="h-[21.75rem] rounded-xl sm:h-[16.75rem]" />
-      <Skeleton className="h-11 w-full sm:w-64" />
     </section>
   );
 }
@@ -478,7 +457,7 @@ function Cifra({ icon: Icon, titulo, valor, unidad, detalle, serie, fuente, to, 
   );
 }
 
-/** A figure and one sentence: the nuance and the cases live in /senales. */
+/** Una cifra y una oración: el matiz y los casos están en /senales. */
 function Senal({ valor, texto }: { valor: string; texto: string }) {
   return (
     <div className={cx(tileVariants({ size: "lg" }), "flex flex-col gap-2")}>

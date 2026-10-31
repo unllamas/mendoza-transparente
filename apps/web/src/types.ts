@@ -220,6 +220,8 @@ export interface HomeTema {
   boletin?: { normas: number; designaciones: number; contrataciones: number; presupuesto: number; desde: string; hasta: string };
   inflacion?: { mensual: number; interanual: number; periodo: string; serie: number[] };
   dolar?: { oficial: number; periodo: string };
+  /** «Lo que el Estado no publica»: cuántos son y los cuatro primeros, para no bajar la lista entera en la portada. */
+  noPublicado?: { total: number; primeros: Pick<NoPublicado, "id" | "titulo" | "organismo">[] };
 }
 
 export interface NoPublicado {
@@ -230,9 +232,9 @@ export interface NoPublicado {
   por_que_importa: string;
   organismo: string;
   marco_legal: string;
-  /** Access-to-information law the request goes under: provincial 9070 (default) or national 27.275 (universities, national bodies). */
+  /** Ley de acceso a la información del pedido: la provincial 9070 (por defecto) o la nacional 27.275 (universidades, organismos nacionales). */
   ley?: "9070" | "27275";
-  /** Where to file it, when it is not the provincial form: a web form or a mailto: link. */
+  /** Dónde presentarlo cuando no es el formulario provincial: un formulario web o un link mailto:. */
   formulario?: string;
   estado: "sin_publicar" | "parcial" | "desactualizado";
   detalle_estado?: string;

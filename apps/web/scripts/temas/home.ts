@@ -1,6 +1,6 @@
 /** Cifras principales para el inicio: un solo archivo con todo lo que muestra la portada. */
 
-import type { CoparticipacionTema, DeudaTema, EmpleoTema, HomeTema, PoblacionTema } from "../../src/types.ts";
+import type { CoparticipacionTema, DeudaTema, EmpleoTema, HomeTema, NoPublicado, PoblacionTema } from "../../src/types.ts";
 
 type CsvRow = Record<string, string>;
 
@@ -16,9 +16,17 @@ export function buildHome(input: {
   normas?: CsvRow[];
   ipc?: CsvRow[];
   dolar?: CsvRow[];
+  noPublicado?: NoPublicado[];
 }): HomeTema {
   const home: HomeTema = {};
-  const { deuda, coparticipacion, empleo, poblacion, procesos, adjudicaciones, normas, ipc, dolar } = input;
+  const { deuda, coparticipacion, empleo, poblacion, procesos, adjudicaciones, normas, ipc, dolar, noPublicado } = input;
+
+  if (noPublicado?.length) {
+    home.noPublicado = {
+      total: noPublicado.length,
+      primeros: noPublicado.slice(0, 4).map(({ id, titulo, organismo }) => ({ id, titulo, organismo })),
+    };
+  }
 
   if (deuda) {
     home.deuda = {
