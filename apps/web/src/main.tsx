@@ -42,7 +42,7 @@ import type {
   UniversidadesTema,
 } from "./types.ts";
 
-// Each page is its own chunk: the first visit downloads only the layout and the page it lands on.
+// Cada página es su propio chunk: la primera visita baja solo el layout y la página donde entra.
 const page = <K extends string>(load: () => Promise<Record<K, () => ReactNode>>, name: K) => lazyRouteComponent(load, name);
 
 const rootRoute = createRootRoute({ component: Layout });
@@ -51,15 +51,13 @@ const homeRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
   loader: async () => {
-    // Third layer: not awaited, the page shows its place and fills it when it arrives (docs/procesos/web.md).
-    const noPublicado = loadTema<NoPublicado[]>("no-publicado").catch(() => [] as NoPublicado[]);
     const [sources, home, mapa, guide] = await Promise.all([
       loadSources(),
       loadTema<HomeTema>("home"),
       loadTema<MapaMendoza>("mapa").catch(() => null),
       loadTema<HomeGuide>("guia").catch(() => null),
     ]);
-    return { sources, home, mapa, noPublicado, guide };
+    return { sources, home, mapa, guide };
   },
   component: page(() => import("./pages/home.tsx"), "HomePage"),
 });
@@ -117,7 +115,7 @@ const coparticipacionRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/coparticipacion",
   loader: async () => {
-    // In parallel: one after the other, the map waited for the topic.
+    // En paralelo: uno detrás del otro, el mapa esperaba al tema.
     const [tema, mapa] = await Promise.all([loadTema<CoparticipacionTema>("coparticipacion"), loadTema<MapaMendoza>("mapa")]);
     return { tema, mapa };
   },
@@ -128,7 +126,7 @@ const poblacionRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/poblacion",
   loader: async () => {
-    // In parallel: one after the other, the map waited for the topic.
+    // En paralelo: uno detrás del otro, el mapa esperaba al tema.
     const [tema, mapa] = await Promise.all([loadTema<PoblacionTema>("poblacion"), loadTema<MapaMendoza>("mapa")]);
     return { tema, mapa };
   },
@@ -149,7 +147,7 @@ const funcionariosRoute = createRoute({
   component: page(() => import("./pages/funcionarios.tsx"), "FuncionariosPage"),
 });
 
-// Static, so it wins over /funcionarios/$role.
+// Estática, así gana sobre /funcionarios/$role.
 const historyRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/funcionarios/historial",
@@ -259,7 +257,7 @@ const municipalBudgetRoute = createRoute({
   component: page(() => import("./pages/municipal-budget.tsx"), "MunicipalBudgetPage"),
 });
 
-/** Without a year, the budget opens on the latest year, even if it is still in progress. */
+/** Sin año, el presupuesto abre en el último, aunque todavía esté en curso. */
 const municipalBudgetLatestRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/municipios/$slug/presupuesto",
@@ -368,8 +366,8 @@ const cartelRoute = createRoute({
   component: page(() => import("./pages/cartel.tsx"), "CartelPage"),
 });
 
-// Development only: /vista-previa/<name> shows apps/web/src/previews/<name>.tsx, a gitignored throwaway page
-// to review a UI change before touching the real one. Process: docs/procesos/vista-previa.md.
+// Solo en desarrollo: /vista-previa/<name> muestra apps/web/src/previews/<name>.tsx, una página descartable (en
+// .gitignore) para revisar un cambio de interfaz antes de tocar el real. Proceso: docs/procesos/vista-previa.md.
 type PreviewModule = { Preview: (props: { data: unknown }) => ReactNode; loader?: () => Promise<unknown> };
 const previews = import.meta.glob<PreviewModule>("./previews/*.tsx");
 const previewRoute = createRoute({
@@ -429,11 +427,11 @@ const router = createRouter({
     ...(import.meta.env.DEV ? [previewRoute] : []),
   ]),
   defaultPreload: "intent",
-  // A page that fails shows RouteError (and reports it to PostHog) inside the layout; the rest keeps working.
+  // Una página que falla muestra RouteError (y lo reporta a PostHog) dentro del layout; el resto sigue andando.
   defaultErrorComponent: RouteError,
   defaultNotFoundComponent: RouteNotFound,
-  // The data only changes with each deploy: once loaded, a page does not fetch it again when its URL
-  // parameters change (a tab, a search typed letter by letter).
+  // Los datos solo cambian con cada publicación: una vez cargada, la página no los vuelve a pedir cuando cambian
+  // los parámetros de su URL (una pestaña, una búsqueda escrita letra por letra).
   defaultStaleTime: Infinity,
   scrollRestoration: true,
 });

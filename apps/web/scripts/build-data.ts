@@ -389,6 +389,7 @@ writeFileSync(
       normas: readTable("boletin-oficial", "normas.csv") ?? undefined,
       ipc: ipcNacional ?? undefined,
       dolar: readTable("indices", "tipo_cambio_mensual.csv") ?? undefined,
+      noPublicado: noPublicadoItems,
     }),
   ),
 );
