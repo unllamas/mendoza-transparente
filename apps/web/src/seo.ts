@@ -15,7 +15,7 @@ export interface PageMeta {
   title: string;
   /** Descripción para buscadores y redes (140-160 caracteres). */
   description: string;
-  /** Slug de la imagen: /og/<slug>.png */
+  /** Slug de la imagen: /og/<slug>.webp */
   ogSlug: string;
   /** Título corto que va grande en la imagen. */
   ogTitle: string;
@@ -179,6 +179,15 @@ export const PAGES: Record<string, PageMeta> = {
     eyebrow: "GUÍA",
     activa: true,
   },
+  "/novedades": {
+    title: `Novedades: lo nuevo de cada semana${TITLE_SUFFIX}`,
+    description:
+      "Qué sumamos cada semana a Mendoza Transparente: datos nuevos, páginas nuevas y lo que mejoramos a partir de lo que nos piden, contado en pocas líneas.",
+    ogSlug: "novedades",
+    ogTitle: "Lo nuevo de cada semana",
+    eyebrow: "NOVEDADES",
+    activa: true,
+  },
   "/participar": {
     title: `Participá: registrá tu pedido de información${TITLE_SUFFIX}`,
     description:
@@ -277,7 +286,7 @@ export function canonicalUrl(pathname: string): string {
 }
 
 export function ogImageUrl(slug: string): string {
-  return `${SITE_URL}/og/${slug}.png`;
+  return `${SITE_URL}/og/${slug}.webp`;
 }
 
 /** Resuelve los metadatos de una ruta; para /datos/<fuente> necesita el índice. */

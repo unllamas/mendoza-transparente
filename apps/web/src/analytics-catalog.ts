@@ -84,6 +84,26 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["compartir"],
   },
   {
+    event: "footer.updates.open",
+    description: "Tocó «Novedades de cada semana» en el pie.",
+    tags: ["navegación"],
+  },
+  {
+    event: "updates.week.open",
+    description: "Abrió una semana de novedades, desde /novedades o desde «Semana anterior». Propiedad week: el lunes de la semana.",
+    tags: ["navegación"],
+  },
+  {
+    event: "updates.item.open",
+    description: "Tocó el botón de una novedad para ir a la página donde se ve. Propiedades week y to (la ruta).",
+    tags: ["navegación"],
+  },
+  {
+    event: "updates.changes.open",
+    description: "Tocó «Todos los cambios técnicos, en GitHub» al final de una semana de novedades. Propiedad week.",
+    tags: ["navegación"],
+  },
+  {
     event: "footer.friend_site.open",
     description: "Tocó un sitio amigo en el pie. Propiedades site (el dominio) y href (con los UTM).",
     tags: ["navegación"],

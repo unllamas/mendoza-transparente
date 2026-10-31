@@ -1,0 +1,16 @@
+# Novedades de la semana del lunes 19 de octubre de 2026. Proceso: docs/procesos/novedades.md
+titulo: Cada persona, con su partido
+bajada: Partidos, quién ocupó cada cargo, un buscador más fácil y notas para pedir datos.
+cambios: https://github.com/unllamas/mendoza-transparente/compare/2026-10-18...2026-10-25
+novedades:
+  - titulo: Páginas de partidos
+    texto: Cada partido tiene su página con quiénes lo representan hoy, y cada persona electa muestra la insignia de su partido.
+    link: { texto: Ver los partidos, ruta: /partidos }
+  - titulo: ¿Quién ocupó cada cargo?
+    texto: Gobernadores, elecciones y ex funcionarios desde 2015, con el cargo que tuvo cada persona.
+    link: { texto: Ver quién ocupó cada cargo, ruta: /funcionarios/historial }
+  - titulo: Un buscador que encuentra por apellido
+    texto: Escribí el apellido de una persona, en cualquier orden y aunque te equivoques en una letra.
+  - titulo: Pedí un dato que falta
+    texto: Armá la nota de pedido de acceso a la información en PDF, lista para presentar, o imprimí un cartel con los datos de tu municipio.
+    link: { texto: Armar un pedido, ruta: /pedir }

@@ -12,7 +12,6 @@ import { dirname, join } from "node:path";
 
 import { Resvg } from "@resvg/resvg-js";
 
-import { DEFAULT_PHOTO, PHOTOS, type Photo, type PhotoId } from "../src/photos.ts";
 import { canonicalUrl, OG_SIZE, ogImageUrl, SITE_NAME, SITE_URL } from "../src/seo.ts";
 import { construirPaginas, type Pagina } from "./paginas.ts";
 import { preloadTags } from "./preload.ts";
@@ -23,8 +22,10 @@ const DATA = join(WEB, "public", "data");
 const FONTS = join(import.meta.dirname, "fonts");
 
 const ACCENT = "#74acdf";
-/** Goes into the image hash: bump it when the design of the share images changes, so networks fetch them again. */
-const OG_DESIGN = 2;
+/** La cifra de la imagen, en el azul de la marca (accent-700, el de las acciones). */
+const FIGURE = "#185893";
+/** Entra en el hash de la imagen: subirlo cuando cambia el diseño, para que las redes la vuelvan a pedir. */
+const OG_DESIGN = 3;
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const jsonLd = (o: unknown) => JSON.stringify(o).replace(/</g, "\\u003c");
@@ -34,9 +35,9 @@ const jsonLd = (o: unknown) => JSON.stringify(o).replace(/</g, "\\u003c");
 function headTags(p: Pagina): string {
   const { path, title, description } = p;
   const url = canonicalUrl(path);
-  // Social networks cache images by URL: a hash of the image content makes them fetch it again when it changes.
+  // Las redes guardan la imagen por URL: un hash de su contenido hace que la vuelvan a pedir cuando cambia.
   const image = `${ogImageUrl(p.og.slug)}?v=${new Bun.CryptoHasher("sha1")
-    .update(JSON.stringify({ ...p.og, photo: p.og.photo ?? DEFAULT_PHOTO, design: OG_DESIGN }))
+    .update(JSON.stringify({ ...p.og, design: OG_DESIGN }))
     .digest("hex")
     .slice(0, 8)}`;
   const lines = [
@@ -53,6 +54,7 @@ function headTags(p: Pagina): string {
     `<meta property="og:image" content="${image}" />`,
     `<meta property="og:image:width" content="${OG_SIZE.width}" />`,
     `<meta property="og:image:height" content="${OG_SIZE.height}" />`,
+    `<meta property="og:image:type" content="image/webp" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
     `<meta name="twitter:title" content="${esc(title)}" />`,
     `<meta name="twitter:description" content="${esc(description)}" />`,
@@ -80,105 +82,95 @@ function render(base: string, p: Pagina, preload: string[]): string {
 
 // ---------------------------------------------------------------- OG
 
+/**
+ * Corta `text` en líneas de hasta `maxChars` caracteres, parejas: si no entra en una línea, busca el ancho más
+ * chico que lo deja en la misma cantidad de líneas, como `text-wrap: balance`. Así nunca queda una palabra huérfana
+ * («Cada persona, con su / partido» pasa a «Cada persona, / con su partido»). Si no entra en `maxLines`, corta la
+ * última con «…».
+ */
 function wrap(text: string, maxChars: number, maxLines: number): string[] {
-  const lines: string[] = [];
-  let cur = "";
-  const words = text.split(/ +/);
-  for (const [i, w] of words.entries()) {
-    if (cur && `${cur} ${w}`.length > maxChars) {
-      lines.push(cur);
-      cur = w;
-      if (lines.length === maxLines) {
-        cur = "";
-        lines[maxLines - 1] = `${lines[maxLines - 1]!.replace(/[\s,.;:]+$/, "")}…`;
-        return lines;
-      }
-    } else cur = cur ? `${cur} ${w}` : w;
-    if (i === words.length - 1 && cur) lines.push(cur);
+  const greedy = (width: number): string[] => {
+    const lines: string[] = [];
+    let cur = "";
+    for (const w of text.split(/ +/)) {
+      if (cur && `${cur} ${w}`.length > width) {
+        lines.push(cur);
+        cur = w;
+      } else cur = cur ? `${cur} ${w}` : w;
+    }
+    if (cur) lines.push(cur);
+    return lines;
+  };
+  const lines = greedy(maxChars);
+  if (lines.length > maxLines) {
+    const cut = lines.slice(0, maxLines);
+    cut[maxLines - 1] = `${cut[maxLines - 1]!.replace(/[\s,.;:]+$/, "")}…`;
+    return cut;
   }
-  return lines.slice(0, maxLines);
+  let best = lines;
+  for (let width = maxChars - 1; width > 0; width--) {
+    const tried = greedy(width);
+    if (tried.length > lines.length) break;
+    best = tried;
+  }
+  return best;
 }
 
 type OgData = Pagina["og"];
 
 /**
- * The page's landscape in dots, like `DotImage` on the site: dim behind the text, brighter toward the top
- * right corner. Each dot is a flat circle with the color of its cell (resvg renders the photo at one pixel per
- * dot to read them), which keeps the PNG under the 300 KB WhatsApp accepts. Drawn once per photo, as a PNG layer.
+ * Fondo de todas las imágenes: la ilustración de Mendoza de la portada (`public/fondos/portada.webp`), con un velo
+ * blanco detrás del texto, como en el hero. Se prepara una sola vez, al ancho de la imagen y en JPEG (resvg no lee WebP):
+ * resvg la decodifica en cada imagen, y una chica es lo que hace rápido el build.
  */
-const photoLayers = new Map<PhotoId, string>();
-const NO_SYSTEM_FONTS = { font: { loadSystemFonts: false } }; // loading them takes ~3 s per render
-
-function photoLayer(id: PhotoId): string {
-  const cached = photoLayers.get(id);
-  if (cached) return cached;
-  const { width: W, height: H } = OG_SIZE;
-  const photo: Photo = PHOTOS[id];
-  const jpg = readFileSync(join(WEB, "public", photo.src));
-  // object-position → preserveAspectRatio, which only takes start/middle/end: the closest one is enough here.
-  const align = (v = "50%") => {
-    const n = Number.parseFloat(v);
-    return n < 34 ? "Min" : n > 66 ? "Max" : "Mid";
-  };
-  const [fx, fy] = (photo.focus ?? "").split(" ");
-  const dot = 12;
-  const cols = W / dot;
-  const rows = Math.ceil(H / dot);
-  const grid = new Resvg(
-    `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${cols}" height="${rows}">
-      <image xlink:href="data:image/jpeg;base64,${jpg.toString("base64")}" width="${cols}" height="${rows}" preserveAspectRatio="x${align(fx)}Y${align(fy)} slice"/>
-    </svg>`,
-    NO_SYSTEM_FONTS,
-  ).render().pixels;
-  const BG = 13; // #0d0d0d
-  const circles: string[] = [];
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      const x = c / (cols - 1);
-      const y = r / (rows - 1);
-      // How much of the photo shows: 14 % on the left half, up to 85 % in the top right corner.
-      const k = 0.14 + 0.71 * Math.max(0, (x - 0.35) / 0.65) ** 1.2 * (1 - 0.5 * y);
-      const i = (r * cols + c) * 4;
-      // Quantized to steps of 16: fewer distinct colors make a much smaller PNG, with no visible difference.
-      const [cr = 0, cg = 0, cb = 0] = [0, 1, 2].map((o) => Math.round((BG + ((grid[i + o] ?? 0) - BG) * k) / 16) * 16);
-      if (Math.max(cr, cg, cb) < BG + 6) continue;
-      circles.push(`<circle cx="${c * dot + dot / 2}" cy="${r * dot + dot / 2}" r="${dot * 0.42}" fill="rgb(${cr},${cg},${cb})"/>`);
-    }
-  }
-  const png = new Resvg(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">${circles.join("")}</svg>`, NO_SYSTEM_FONTS)
-    .render()
-    .asPng();
-  const uri = `data:image/png;base64,${Buffer.from(png).toString("base64")}`;
-  photoLayers.set(id, uri);
-  return uri;
-}
+const BACKGROUND = `data:image/jpeg;base64,${Buffer.from(
+  await new Bun.Image(readFileSync(join(WEB, "public", "fondos", "portada.webp")))
+    .resize(OG_SIZE.width, OG_SIZE.height * 2, { fit: "inside" })
+    .jpeg({ quality: 90 })
+    .bytes(),
+).toString("base64")}`;
 
 function ogSvg(d: OgData): string {
   const { width: W, height: H } = OG_SIZE;
-  const titleLines = wrap(d.titulo, 30, 2);
-  const titleSize = 64;
+  const titleLines = wrap(d.titulo, 26, 2);
   const title = titleLines
-    .map((l, i) => `<text x="80" y="${210 + i * 76}" font-size="${titleSize}" font-weight="700" fill="#ffffff">${esc(l)}</text>`)
+    .map((l, i) => `<text x="80" y="${180 + i * 72}" font-size="60" font-weight="700" letter-spacing="-1" fill="#0a0a0a">${esc(l)}</text>`)
     .join("");
-  const figSize = Math.round(Math.min(titleLines.length > 1 ? 100 : 150, 1040 / (d.figura.length * 0.64)));
-  const bajada = wrap(d.bajada, 62, 2)
-    .map((l, i) => `<text x="80" y="${487 + i * 40}" font-size="30" fill="#d4d4d4">${esc(l)}</text>`)
+  const figY = 200 + titleLines.length * 72 + 70;
+  const figSize = Math.round(Math.min(104, 1040 / (d.figura.length * 0.62)));
+  const bajada = wrap(d.bajada, 46, 2)
+    .map((l, i) => `<text x="80" y="${figY + 56 + i * 38}" font-size="28" fill="#404040">${esc(l)}</text>`)
     .join("");
   const host = SITE_URL.replace(/^https?:\/\//, "");
   return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="Inter">
-  <rect width="${W}" height="${H}" fill="#0d0d0d"/>
-  <image xlink:href="${photoLayer(d.photo ?? DEFAULT_PHOTO)}" width="${W}" height="${H}"/>
+  <defs>
+    <linearGradient id="velo" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.94"/>
+      <stop offset="0.45" stop-color="#ffffff" stop-opacity="0.82"/>
+      <stop offset="0.75" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="pie" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.55" stop-color="#ffffff" stop-opacity="0.92"/>
+    </linearGradient>
+  </defs>
+  <image xlink:href="${BACKGROUND}" width="${W}" height="${H}" preserveAspectRatio="xMidYMid slice"/>
+  <rect width="${W}" height="${H}" fill="url(#velo)"/>
+  <rect y="470" width="${W}" height="160" fill="url(#pie)"/>
   <rect x="80" y="72" width="56" height="6" rx="3" fill="${ACCENT}"/>
-  <text x="152" y="82" font-size="22" font-weight="700" letter-spacing="3" fill="#a3a3a3">${esc(d.eyebrow)}</text>
+  <text x="152" y="82" font-size="22" font-weight="700" letter-spacing="3" fill="#525252">${esc(d.eyebrow)}</text>
   ${title}
-  <text x="76" y="${titleLines.length > 1 ? 430 : 380}" font-size="${figSize}" font-weight="700" letter-spacing="-3" fill="#ffffff">${esc(d.figura)}</text>
+  <text x="76" y="${figY}" font-size="${figSize}" font-weight="700" letter-spacing="-3" fill="${FIGURE}">${esc(d.figura)}</text>
   ${bajada}
-  <line x1="80" y1="548" x2="${W - 80}" y2="548" stroke="#262626" stroke-width="2"/>
-  <text x="80" y="590" font-size="26" font-weight="700" fill="#ffffff">${SITE_NAME}</text>
-  <text x="${W - 80}" y="590" font-size="24" text-anchor="end" fill="#a3a3a3">${esc(host)}</text>
+  <text x="80" y="590" font-size="26" font-weight="700" fill="#0a0a0a">${SITE_NAME}</text>
+  <text x="${W - 80}" y="590" font-size="24" text-anchor="end" fill="#525252">${esc(host)}</text>
 </svg>`;
 }
 
+/**
+ * WebP al 80 %: unos 50 KB por imagen, muy por debajo de los 300 KB que acepta WhatsApp. El dibujo es sincrónico y
+ * la conversión a WebP corre en otro hilo: se devuelve sin esperarla, para dibujar la siguiente mientras tanto.
+ */
 async function writeOg(slug: string, d: OgData) {
   const png = new Resvg(ogSvg(d), {
     font: {
@@ -189,9 +181,9 @@ async function writeOg(slug: string, d: OgData) {
   })
     .render()
     .asPng();
-  const out = join(DIST, "og", `${slug}.png`);
+  const out = join(DIST, "og", `${slug}.webp`);
   await mkdir(dirname(out), { recursive: true });
-  await writeFile(out, png);
+  await writeFile(out, await new Bun.Image(png).webp({ quality: 80 }).bytes());
 }
 
 // ---------------------------------------------------------------- main
@@ -220,6 +212,8 @@ const entryChunks = new Set([...base.matchAll(/(?:src|href)="\/(assets\/[^"]+\.j
 const dataExists = (file: string) => existsSync(join(DIST, "data", file));
 
 const slugsOg = new Set<string>();
+/** Imágenes que se están pasando a WebP: hasta 4 a la vez, para no juntar cientos de PNG en memoria. */
+const writingOg = new Set<Promise<void>>();
 for (const p of paginas) {
   // "/deuda" → dist/deuda.html: Cloudflare Pages lo sirve en /deuda sin redirigir a /deuda/.
   const file = p.path === "/" ? join(DIST, "index.html") : join(DIST, `${p.path}.html`);
@@ -227,9 +221,12 @@ for (const p of paginas) {
   await writeFile(file, render(base, p, preloadTags(p.path, manifest, entryChunks, dataExists)));
   if (!slugsOg.has(p.og.slug)) {
     slugsOg.add(p.og.slug);
-    await writeOg(p.og.slug, p.og);
+    const writing = writeOg(p.og.slug, p.og).finally(() => writingOg.delete(writing));
+    writingOg.add(writing);
+    if (writingOg.size >= 4) await Promise.race(writingOg);
   }
 }
+await Promise.all(writingOg);
 
 // 404.html: Cloudflare Pages lo sirve con código 404 para cualquier ruta sin HTML propio. Es la app vacía (React
 // resuelve la ruta: un proveedor sin página propia, por ejemplo, igual se ve) pero los buscadores no la indexan.
