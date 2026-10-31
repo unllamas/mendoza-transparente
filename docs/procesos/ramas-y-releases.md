@@ -80,7 +80,7 @@ Desde octubre de 2026 seguimos [Conventional Commits 1.0.0](https://www.conventi
 
 | Ámbito | Qué cubre |
 |---|---|
-| `web`, `panel`, `votacion` | `apps/web`, `apps/panel`, `apps/votacion` |
+| `web`, `panel`, `votacion`, `social` | `apps/web`, `apps/panel`, `apps/votacion`, `apps/social` |
 | `ui`, `core`, `scrapers`, `participation` | Cada paquete de `packages/` |
 | `data` | `data/` (crudos, procesados y curado) |
 | `docs` | `docs/`, `README.md`, `AGENTS.md` |

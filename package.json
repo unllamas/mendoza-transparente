@@ -32,7 +32,10 @@
     "test": "bun test",
     "hooks": "lefthook install",
     "panel": "turbo run dev --filter=@mt/panel",
-    "votacion": "turbo run dev --filter=@mt/votacion"
+    "votacion": "turbo run dev --filter=@mt/votacion",
+    "piezas": "turbo run dev --filter=@mt/social",
+    "pieza:filmar": "bun apps/social/vendor/stageshow/scripts/film.mjs",
+    "pieza:grabar": "bun apps/social/scripts/record.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
