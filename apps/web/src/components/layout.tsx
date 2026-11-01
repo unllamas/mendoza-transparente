@@ -23,6 +23,7 @@ import {
   RiMapPinLine,
   RiMegaphoneLine,
   RiMenuLine,
+  RiPlaneLine,
   RiQuillPenLine,
   RiReceiptLine,
   RiScales3Line,
@@ -56,6 +57,7 @@ const GRUPOS: Grupo[] = [
     label: "Gobierno",
     items: [
       { to: "/funcionarios", label: "Funcionarios", descripcion: "Quiénes nos representan y qué declaran", icon: RiUserLine },
+      { to: "/funcionarios/viajes", label: "Viajes oficiales", descripcion: "A dónde viajaron y quién lo pagó", icon: RiPlaneLine },
       {
         to: "/gobierno",
         label: "Gobierno por dentro",

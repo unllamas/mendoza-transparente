@@ -316,6 +316,60 @@ export interface Funcionario {
   pastPositions?: PastPosition[];
   /** Elections this person won, from the Junta Electoral proclamation records. */
   elected?: ElectedRecord[];
+  /** Viajes en misión oficial autorizados por decreto, del más reciente al más viejo (/funcionarios/viajes). */
+  trips?: TripRef[];
+}
+
+/** Lo que dice el decreto sobre quién paga el viaje (columna `costo_provincia` de `misiones-oficiales`). */
+export type TripCost = "paga_provincia" | "paga_tercero" | "sin_costo" | "sin_viaticos" | "no_informa";
+
+/** Una persona que viaja, con su ficha si es funcionario del sitio. */
+export interface TripTraveler {
+  name: string;
+  role: string;
+  photo: string | null;
+  /** /funcionarios/<role>/<slug>, si tiene ficha. */
+  path: string | null;
+}
+
+/** Un viaje oficial: un decreto que autoriza una misión oficial, con todas las personas que viajan. */
+export interface Trip {
+  /** norma_id del Boletín Oficial: abre la hoja con `?viaje=<id>`. */
+  id: string;
+  from: string | null;
+  to: string | null;
+  days: number | null;
+  destination: string;
+  countries: string[];
+  reason: string;
+  cost: TripCost;
+  /** Frase textual del decreto sobre el costo. */
+  costText: string;
+  /** "Decreto 1757/2026". */
+  norm: string;
+  normDate: string | null;
+  published: string;
+  /** Organismo que tramitó el decreto, tal como lo publica el Boletín. */
+  issuer: string;
+  /** Organismo de /gobierno que tramitó el decreto, si se pudo cruzar. */
+  agency: { slug: string; name: string } | null;
+  url: string;
+  travelers: TripTraveler[];
+}
+
+/** Resumen de un viaje para la ficha de un funcionario o de un organismo. */
+export interface TripRef {
+  id: string;
+  from: string | null;
+  destination: string;
+  countries: string[];
+  reason: string;
+  cost: TripCost;
+  travelers: string[];
+}
+
+export interface TripsTema {
+  trips: Trip[];
 }
 
 /** A position registered in the Ética Pública registry, with its dates (YYYY-MM-DD, null when unknown). */
@@ -742,6 +796,8 @@ export interface AgencyDetail extends AgencySummary {
     buyers: { slug: string; name: string; processes: number }[];
   } | null;
   appointments: { date: string; action: string; person: string; role: string; unit: string; url: string; photo: string | null }[];
+  /** Viajes oficiales que tramitó el organismo (decretos de misión oficial). */
+  trips?: TripRef[];
   /** Occupied positions in each year's budget law (planilla 8.2) and unfilled ones (8.6, since 2022). */
   budget: { year: number; positions: number; vacancies: number | null; project: boolean }[];
 }

@@ -3,6 +3,7 @@
  *
  * Uso: bun run scrape boletin-oficial [--desde YYYY-MM-DD] [--hasta YYYY-MM-DD] [--solo-tipo=ley[,tipo2]]
  *      (por defecto, hoy)
+ *      bun run scrape boletin-oficial --ids=<id,id,...>
  *
  * --solo-tipo=<tipos>  Backfill liviano: recorre todas las ediciones del rango y archiva el índice de cada una,
  *   pero solo baja el detalle (texto completo) de las normas de esos tipos (lista separada por comas; el tipo es
@@ -10,6 +11,10 @@
  *   datos del índice (sumario = lo que dice el índice, sin texto ni categoría) si todavía no están; un
  *   corrida normal posterior les baja el detalle. Nunca borra ni pisa filas existentes; se puede cortar y
  *   retomar (lo ya bajado se saltea).
+ *
+ * --ids=<id,id,...>  Baja el detalle (texto completo) de normas que ya están en normas.csv solo con el dato del
+ *   índice, sin recorrer ediciones. Sirve para completar las que dejó el backfill liviano cuando una fuente
+ *   derivada las necesita (por ejemplo, los decretos de misión oficial de `misiones-oficiales`).
  *
  * titulo_ley (solo leyes): objeto de la ley, tomado de la primera oración del artículo 1 (el texto publicado no
  *   trae título), hasta ~180 caracteres.
@@ -238,6 +243,53 @@ function parseCsv(text: string): Row[] {
   return body.map((r) => Object.fromEntries(head!.map((h, i) => [h, r[i] ?? ""])));
 }
 
+/** Baja el detalle de una norma, guarda su texto y devuelve la fila de normas.csv. */
+async function fetchDetail(n: {
+  fecha: string;
+  nro: string;
+  id: string;
+  tipo: string;
+  numero: string;
+  organismo: string;
+  tema: string;
+  fechaNorma: string;
+}): Promise<Row> {
+  const { fecha } = n;
+  const params = {
+    tipo_busqueda: "norma",
+    norma_edicto_id: n.id,
+    fecha_desde: n.fechaNorma || fecha,
+    fecha_hasta: fecha,
+    tipo_boletin: "2",
+  };
+  const html = await post("detail", params);
+  await archive(SOURCE, `detalle-${fecha}-${n.id}.html`, html, {
+    url: `${BASE}/detail (${new URLSearchParams(params).toString()})`,
+  });
+  const d = parseDetail(html);
+  if (!d.texto) throw new Error("detalle sin texto");
+  await mkdir(join(OUT_DIR, "textos", fecha), { recursive: true });
+  await writeFile(join(OUT_DIR, "textos", fecha, `${n.id}.txt`), `${d.texto}\n`);
+
+  const sumario = collapseSpaces(d.texto.replace(/^\s*MENDOZA,?[^\n]{0,60}?\d{4}\.?\s*/i, "")).slice(0, 300);
+  const expediente = (d.tema || n.tema).match(/EX-\d{4}-\d+-[\w-]+/)?.[0] ?? "";
+  return {
+    fecha,
+    nro_boletin: n.nro,
+    norma_id: n.id,
+    tipo: n.tipo,
+    numero: n.numero,
+    organismo: n.organismo,
+    expediente,
+    sumario,
+    largo_texto: d.texto.length,
+    url_pdf: d.url_pdf,
+    categoria: classify(n.tipo, sumario, d.texto),
+    fecha_norma: n.fechaNorma,
+    titulo_ley: n.tipo === "ley" ? tituloLey(d.texto) : "",
+  };
+}
+
 function parseArgs(args: string[]) {
   const today = new Date().toLocaleDateString("sv", { timeZone: "America/Argentina/Mendoza" });
   const val = (k: string) => {
@@ -252,7 +304,11 @@ function parseArgs(args: string[]) {
     .split(",")
     .map((x) => x.trim().toLowerCase())
     .filter(Boolean);
-  return { desde, hasta, soloTipo };
+  const ids = (val("--ids") ?? "")
+    .split(",")
+    .map((x) => x.trim())
+    .filter(Boolean);
+  return { desde, hasta, soloTipo, ids };
 }
 
 function* dias(desde: string, hasta: string) {
@@ -260,7 +316,7 @@ function* dias(desde: string, hasta: string) {
 }
 
 export async function run(args: string[]) {
-  const { desde, hasta, soloTipo } = parseArgs(args);
+  const { desde, hasta, soloTipo, ids } = parseArgs(args);
   const csvPath = join(OUT_DIR, "normas.csv");
   const existing = new Map<string, Row>();
   if (existsSync(csvPath)) for (const r of parseCsv(await readFile(csvPath, "utf8"))) existing.set(String(r.norma_id), r);
@@ -279,6 +335,43 @@ export async function run(args: string[]) {
     }
     await writeProcessed(SOURCE, "normas.csv", [...existing.values()], COLUMNS);
     console.log(`Reclasificadas ${existing.size} normas`);
+    return;
+  }
+
+  if (ids.length) {
+    // Completa normas que ya están en el índice: el sumario del índice (el «tema») se usa como respaldo del expediente.
+    let ok = 0;
+    for (const id of ids) {
+      const r = existing.get(id);
+      if (!r) {
+        console.warn(`  ${id}: no está en normas.csv; primero hay que bajar el índice de su edición`);
+        continue;
+      }
+      if (existsSync(join(OUT_DIR, "textos", String(r.fecha), `${id}.txt`))) continue;
+      try {
+        existing.set(
+          id,
+          await fetchDetail({
+            fecha: String(r.fecha),
+            nro: String(r.nro_boletin),
+            id,
+            tipo: String(r.tipo),
+            numero: String(r.numero),
+            organismo: String(r.organismo),
+            tema: String(r.sumario),
+            fechaNorma: String(r.fecha_norma),
+          }),
+        );
+        ok++;
+      } catch (err) {
+        console.warn(`  fallo ${r.fecha} norma ${id}: ${(err as Error).message}`);
+      }
+    }
+    const rows = [...existing.values()].sort(
+      (a, b) => String(a.fecha).localeCompare(String(b.fecha)) || Number(a.norma_id) - Number(b.norma_id),
+    );
+    await writeProcessed(SOURCE, "normas.csv", rows, COLUMNS);
+    console.log(`Listo: ${ok} de ${ids.length} detalles bajados`);
     return;
   }
 
@@ -345,41 +438,10 @@ export async function run(args: string[]) {
       const txtPath = join(OUT_DIR, "textos", fecha, `${n.id}.txt`);
       if (existing.has(n.id) && existsSync(txtPath)) continue;
       try {
-        const params = {
-          tipo_busqueda: "norma",
-          norma_edicto_id: n.id,
-          fecha_desde: n.fechaNorma || fecha,
-          fecha_hasta: fecha,
-          tipo_boletin: "2",
-        };
-        const html = await post("detail", params);
-        await archive(SOURCE, `detalle-${fecha}-${n.id}.html`, html, {
-          url: `${BASE}/detail (${new URLSearchParams(params).toString()})`,
-        });
-        const d = parseDetail(html);
-        if (!d.texto) throw new Error("detalle sin texto");
+        const row = await fetchDetail({ fecha, nro, ...n });
         detalles++;
-        await mkdir(join(OUT_DIR, "textos", fecha), { recursive: true });
-        await writeFile(txtPath, `${d.texto}\n`);
-
-        const sumario = collapseSpaces(d.texto.replace(/^\s*MENDOZA,?[^\n]{0,60}?\d{4}\.?\s*/i, "")).slice(0, 300);
-        const expediente = (d.tema || n.tema).match(/EX-\d{4}-\d+-[\w-]+/)?.[0] ?? "";
         if (!existing.has(n.id)) nuevas++;
-        existing.set(n.id, {
-          fecha,
-          nro_boletin: nro,
-          norma_id: n.id,
-          tipo: n.tipo,
-          numero: n.numero,
-          organismo: n.organismo,
-          expediente,
-          sumario,
-          largo_texto: d.texto.length,
-          url_pdf: d.url_pdf,
-          categoria: classify(n.tipo, sumario, d.texto),
-          fecha_norma: n.fechaNorma,
-          titulo_ley: n.tipo === "ley" ? tituloLey(d.texto) : "",
-        });
+        existing.set(n.id, row);
       } catch (err) {
         failed.push(`${fecha}/${n.id}`);
         console.warn(`  fallo ${fecha} norma ${n.id}: ${(err as Error).message}`);

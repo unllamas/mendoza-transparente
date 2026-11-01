@@ -92,6 +92,16 @@
   dificultad: media
   estado: activo
 
+- id: misiones-oficiales
+  nombre: Misiones oficiales y viajes de funcionarios
+  descripcion: "Qué funcionarios viajaron en misión oficial, a dónde, cuándo, para qué y si la Provincia pagó el viaje, según los decretos del Boletín Oficial. Solo nombre y cargo: nunca DNI."
+  organismo: Gobierno de Mendoza (Boletín Oficial)
+  url: https://portalgateway.mendoza.gov.ar/api/boe/
+  formato: derivada de boletin-oficial (texto de las normas)
+  frecuencia: diaria
+  dificultad: media
+  estado: activo
+
 - id: etica-publica
   nombre: Declaraciones juradas patrimoniales y registro de sanciones
   descripcion: "Qué bienes declaran los funcionarios provinciales (inmuebles y vehículos, por su valor fiscal) y quiénes fueron sumariados o sancionados."

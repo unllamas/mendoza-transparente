@@ -49,6 +49,11 @@ const RUTAS = [
   "/funcionarios/gobierno/alfredo-victor-cornejo",
   "/funcionarios/diputados-provinciales",
   "/funcionarios/historial",
+  // Viajes oficiales: la lista, una hoja abierta (con varias personas) y una ficha con viajes.
+  "/funcionarios/viajes",
+  "/funcionarios/viajes?viaje=240943",
+  "/funcionarios/gobierno/jimena-latorre",
+  "/gobierno/ministerio-de-energia-y-ambiente",
   "/funcionarios/diputados-provinciales/edgardo-civit-evans",
   "/partidos",
   // The most people in office, the most people elected before (with the search) and one with nobody in office.
