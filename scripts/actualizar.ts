@@ -42,6 +42,7 @@ const TODAS = [
   "lrf-personal",
   "presupuesto-planta",
   "designaciones",
+  "misiones-oficiales",
   "municipios-personal",
   "municipios-lrf",
   "universidades-estadisticas",

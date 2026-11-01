@@ -232,12 +232,13 @@ jobs:
           echo "fuentes=$(for f in "${PAQUETES[@]}"; do basename "$f" .tgz; done | paste -sd ', ' -)" >> "$GITHUB_OUTPUT"
           echo "hay=true" >> "$GITHUB_OUTPUT"
 
-      - name: Extraer designaciones de las normas nuevas del Boletín
-        # Fuente derivada: lee data/processed/boletin-oficial (no descarga nada), por eso corre después de aplicar los cambios.
+      - name: Extraer designaciones y misiones oficiales de las normas nuevas del Boletín
+        # Fuentes derivadas: leen data/processed/boletin-oficial (no descargan nada), por eso corren después de aplicar los cambios.
         if: steps.aplicar.outputs.hay == 'true' && contains(steps.aplicar.outputs.fuentes, 'boletin-oficial')
         run: |
           bun install --frozen-lockfile
           bun run scrape designaciones
+          bun run scrape misiones-oficiales
 
       - name: Resumir leyes nuevas en lenguaje simple
         # Opcional: sin el secreto ANTHROPIC_API_KEY las leyes se muestran sin resumen. Si falla, no frena la publicación.

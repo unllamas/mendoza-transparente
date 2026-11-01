@@ -1,0 +1,120 @@
+{
+  "titulo": "Misiones oficiales de funcionarios",
+  "fuente": "Boletín Oficial de Mendoza (decretos que autorizan misiones oficiales y salidas del país)",
+  "descripcion": "Cada fila es una persona en un decreto o resolución que autoriza una misión oficial o la salida del país, publicado en el Boletín Oficial de Mendoza. Se extrae leyendo el texto de la norma con reglas automáticas, así que puede tener errores: el texto original está en `url_pdf`. Casi ninguna norma trae el monto del viaje; `costo_provincia` resume lo que la norma dice sobre si paga la Provincia, y `detalle_costo` copia esa frase. Que una norma no lo diga no significa que el viaje no tenga costo. No se publican documentos de identidad.",
+  "columnas": {
+    "fecha_boletin": {
+      "etiqueta": "Publicado",
+      "tipo": "fecha",
+      "descripcion": "Fecha de la edición del Boletín Oficial."
+    },
+    "norma_id": {
+      "etiqueta": "ID de la norma",
+      "tipo": "texto",
+      "descripcion": "Identificador de la norma en el Boletín Oficial."
+    },
+    "tipo_norma": {
+      "etiqueta": "Tipo",
+      "tipo": "texto",
+      "valores": {
+        "decreto": "Decreto",
+        "resolucion": "Resolución"
+      }
+    },
+    "numero_norma": {
+      "etiqueta": "N.º",
+      "tipo": "texto"
+    },
+    "fecha_norma": {
+      "etiqueta": "Fecha de la norma",
+      "tipo": "fecha",
+      "descripcion": "Fecha en que se firmó la norma; puede ser posterior al viaje."
+    },
+    "organismo_emisor": {
+      "etiqueta": "Organismo",
+      "tipo": "texto",
+      "descripcion": "Ministerio u organismo que tramitó la norma."
+    },
+    "persona": {
+      "etiqueta": "Persona",
+      "tipo": "texto",
+      "descripcion": "Nombre tal como figura en la norma."
+    },
+    "cargo": {
+      "etiqueta": "Cargo",
+      "tipo": "texto",
+      "descripcion": "Cargo según la norma, cuando se puede leer."
+    },
+    "destino": {
+      "etiqueta": "Destino",
+      "tipo": "texto",
+      "descripcion": "Ciudad o país del viaje según la norma."
+    },
+    "pais": {
+      "etiqueta": "País",
+      "tipo": "texto",
+      "descripcion": "País del destino, deducido del texto."
+    },
+    "desde": {
+      "etiqueta": "Desde",
+      "tipo": "fecha",
+      "descripcion": "Primer día autorizado."
+    },
+    "hasta": {
+      "etiqueta": "Hasta",
+      "tipo": "fecha",
+      "descripcion": "Último día autorizado, si la norma lo dice."
+    },
+    "dias": {
+      "etiqueta": "Días",
+      "tipo": "entero",
+      "unidad": "días",
+      "descripcion": "Días entre desde y hasta, ambos incluidos."
+    },
+    "motivo": {
+      "etiqueta": "Motivo",
+      "tipo": "texto",
+      "descripcion": "Evento o motivo del viaje según la norma."
+    },
+    "costo_provincia": {
+      "etiqueta": "Costo para la Provincia",
+      "tipo": "texto",
+      "valores": {
+        "paga_provincia": "La Provincia paga algo (pasajes, estadía o viáticos)",
+        "paga_tercero": "Lo paga otro (la organización del evento, otro gobierno, un organismo federal o internacional)",
+        "sin_costo": "La norma dice que no tiene costo para la Provincia",
+        "sin_viaticos": "La norma solo dice que no se pagan viáticos",
+        "no_informa": "La norma no dice nada sobre el costo"
+      },
+      "descripcion": "Lo que la norma dice sobre el costo. Casi nunca trae el monto."
+    },
+    "detalle_costo": {
+      "etiqueta": "Qué dice la norma del costo",
+      "tipo": "texto",
+      "descripcion": "Frase textual de la norma sobre el costo."
+    },
+    "url_pdf": {
+      "etiqueta": "Texto original",
+      "tipo": "url",
+      "descripcion": "PDF publicado en el Boletín Oficial."
+    }
+  },
+  "orden": [
+    "desde",
+    "persona",
+    "cargo",
+    "destino",
+    "pais",
+    "motivo",
+    "costo_provincia",
+    "hasta",
+    "dias",
+    "detalle_costo",
+    "organismo_emisor",
+    "tipo_norma",
+    "numero_norma",
+    "fecha_norma",
+    "fecha_boletin",
+    "url_pdf"
+  ]
+}

@@ -210,6 +210,22 @@ Fuente: anexo 19 del informe trimestral de Responsabilidad Fiscal (`lrf-personal
   - Se muestra desde cuatro pasos. En los organismos que cambiaron de áreas (`antes`) se aclara que un salto grande puede ser un traspaso.
 - **Designaciones:** las del Boletín Oficial (`designaciones`), asignadas por organismo emisor o repartición. La cobertura depende de cuántos Boletines tengamos con texto completo.
 
+## Misiones oficiales
+
+Los viajes de funcionarios autorizados por decreto (`misiones-oficiales`, derivada del Boletín Oficial). Una fila por persona y norma.
+
+- **Qué entra:** decretos y resoluciones provinciales cuyo artículo que autoriza habla de «misión oficial» o de la «salida del país» o «del territorio». Quedan afuera las «misiones especiales» de la DGE, que son asignaciones docentes, no viajes.
+- **Personas:** se reconocen por el DNI que las acompaña en el decreto, como en las designaciones, y el número nunca se guarda. Si el decreto no trae DNI, se toma el nombre en mayúsculas que sigue al título («Abog. JIMENA HEBE LATORRE»). Entra también quien acompaña sin cargo jerárquico, como el chofer, porque figura en un acto público.
+- **Costo (`costo_provincia`):** casi ninguna norma trae el monto. Se clasifica lo que la norma **dice**, y se copia la frase en `detalle_costo` para que cualquiera la verifique:
+  - `paga_provincia`: la Provincia o un ministerio «se hará cargo» de vuelos, estadía o viáticos, o se ordena liquidarlos.
+  - `paga_tercero`: lo paga la organización del evento, otro gobierno, el CFI o un proyecto internacional.
+  - `sin_costo`: la norma dice que no implica gastos ni compromiso económico para la Provincia.
+  - `sin_viaticos`: solo dice que no se pagan viáticos; los pasajes pueden haberse pagado igual.
+  - `no_informa`: no dice nada. **No significa que el viaje no haya costado nada.**
+- **Fechas:** `desde` y `hasta` son las autorizadas. Muchas normas dicen «hasta la finalización de las actividades oficiales» y quedan sin `hasta`. La norma suele firmarse y publicarse después del viaje.
+- **Cómo se presenta:** como un registro de lo que el Gobierno autorizó, nunca como una sospecha. Un viaje frecuente o sin costo informado es una pregunta para hacer (cuánto costó), no una irregularidad. El monto se pide por la Ley 9070 (`data/curado/no-publicado.yaml`, `costo-misiones-oficiales`).
+- **Qué falta:** los viajes del Gobernador los autoriza la Legislatura y no aparecen. Tampoco los de organismos que no publican en el Boletín, ni los que se autorizan con una norma cuyo sumario no dice «misión oficial». Las normas que el backfill liviano trajo solo con el índice se completan con `bun run scrape misiones-oficiales --faltantes` y `bun run scrape boletin-oficial --ids=<lista>`.
+
 ## Desvío entre lo estimado y lo adjudicado
 
 - **Señal "adjudicado-sobre-estimado":** procesos con un estimado de al menos $ 100.000 y una adjudicación de al menos el doble. Se ordenan por la diferencia en pesos.
