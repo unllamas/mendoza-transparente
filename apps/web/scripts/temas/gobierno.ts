@@ -72,10 +72,10 @@ export const properName = (s: string) =>
     .replace(/(^|[\s-])(\p{L})/gu, (_, sep: string, l: string) => sep + l.toUpperCase())
     .trim();
 
-/** Hierarchy rank for the leadership team: lower goes first. */
+/** Rango jerárquico del equipo de conducción: el menor va primero. El Superintendente encabeza Irrigación, por encima de sus secretarios. */
 function rank(role: string): number {
   const r = normalize(role);
-  if (/^(gobernador|vicegobernador|ministr)/.test(r)) return 0;
+  if (/^(gobernador|vicegobernador|ministr|superintendente)/.test(r)) return 0;
   if (/^(secretari|jefe de gabinete)/.test(r)) return 1;
   if (/^subsecretari/.test(r)) return 2;
   if (
