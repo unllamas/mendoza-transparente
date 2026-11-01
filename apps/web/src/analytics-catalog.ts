@@ -282,6 +282,12 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["funcionarios", "partidos"],
   },
   {
+    event: "official.photo.open",
+    description:
+      "En la ficha de un funcionario, tocó su cara para ver la foto más grande. Propiedad role: el grupo de la ficha (intendentes, diputados…).",
+    tags: ["funcionarios"],
+  },
+  {
     event: "officials.history.party.open",
     description: "En el historial, abrió la página de un partido desde el reparto de cargos de una elección.",
     tags: ["funcionarios", "partidos"],

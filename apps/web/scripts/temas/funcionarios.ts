@@ -124,6 +124,7 @@ export function buildFuncionarios(
         // Los legisladores nacionales declaran ante la Oficina Anticorrupción, no ante Ética Pública de Mendoza.
         ddjj: grupo === "diputados_nacional" || grupo === "senado_nacional" ? null : ddjj(a.nombre!),
         foto: null,
+        largePhoto: null,
         fotoCredito: null,
       };
     }),
@@ -150,6 +151,7 @@ export function buildFuncionarios(
         remuneracion: [],
         ddjj: ddjj(separarNota(l.nombre!).nombre),
         foto: null,
+        largePhoto: null,
         fotoCredito: null,
       }),
     ),
@@ -158,6 +160,7 @@ export function buildFuncionarios(
   for (const p of personas) {
     const f = fotoPorId.get(p.id);
     p.foto = f ? `/data/fotos/${f.foto}` : null;
+    p.largePhoto = f?.foto_grande ? `/data/fotos/${f.foto_grande}` : null;
     p.fotoCredito = f?.credito ?? null;
   }
 
