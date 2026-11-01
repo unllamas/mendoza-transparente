@@ -679,16 +679,21 @@ organismos:
     nombre: "Departamento General de Irrigación"
     sigla: "DGI"
     tipo: ente_descentralizado
-    depende_de: ministerio-de-gobierno-infraestructura-y-desarrollo-territorial
-    que_hace: "Es el organismo que administra el agua superficial y subterránea de Mendoza. La Ley 9501 lo nombra entre los organismos que se relacionan con el Ejecutivo a través del Ministerio de Gobierno, Infraestructura y Desarrollo Territorial, y pide al Ministerio coordinar con él la legislación sobre agua."
+    # Autárquico por la Constitución: no depende de ningún ministerio (reporte R-A8EP5Z07). La Ley 9501 solo lo vincula
+    # con el Ejecutivo a través de un ministerio, que no es lo mismo que depender de él.
+    depende_de: null
+    que_hace: "Es el organismo que administra el agua superficial y subterránea de Mendoza. La Constitución provincial le da a cargo todos los asuntos de irrigación y una conducción propia, así que no depende de ningún ministerio: lo encabeza un Superintendente que propone el Poder Ejecutivo y aprueba el Senado, junto con un consejo de cinco miembros."
     puntos:
-      - "Se relaciona con el Ejecutivo vía el Ministerio de Gobierno, Infraestructura y Desarrollo Territorial (art. 11 inc. 2)."
-      - "El Ministerio promueve y adapta la legislación sobre agua superficial y subterránea 'en coordinación con el Departamento General de Irrigación' (art. 10 inc. 29)."
-    norma: "Ley 9501, arts. 10 inc. 29 y 11 inc. 2"
+      - "Tiene a cargo todos los asuntos de irrigación de la Provincia que no son de la justicia ordinaria (Constitución, art. 188)."
+      - "Lo conducen un Superintendente y un consejo de cinco miembros, designados por el Poder Ejecutivo con acuerdo del Senado (Constitución, art. 188)."
+      - "El Superintendente y los consejeros duran cinco años y pueden ser reelectos (Constitución, art. 189)."
+      - "Se vincula con el Poder Ejecutivo a través del Ministerio de Gobierno, Infraestructura y Desarrollo Territorial, que no lo conduce (Ley 9501, art. 11 inc. 2)."
+      - "El Ministerio promueve y adapta la legislación sobre agua superficial y subterránea 'en coordinación con el Departamento General de Irrigación' (Ley 9501, art. 10 inc. 29)."
+    norma: "Constitución de Mendoza, arts. 188 y 189; Ley 9501, arts. 10 inc. 29 y 11 inc. 2"
     fuente_url: "https://boe.mendoza.gov.ar/publico/pdf_pedido/a856ae518df4edffc94596381277e75e8f07923179"
     sitio_url: "https://www.irrigacion.gov.ar/web/"
     antes: []
-    nota: "Tiene autonomía constitucional propia y presupuesto propio; no aparece con jurisdicción en las planillas de planta 8.2 ni como comprador en COMPR.AR (compra por otro sistema)."
+    nota: "Es autárquico, con autonomía constitucional y presupuesto propios; no aparece con jurisdicción en las planillas de planta 8.2 ni como comprador en COMPR.AR (compra por otro sistema). Sus autoridades se publican en https://www.irrigacion.gov.ar/web/autoridades/."
     alias:
       nombres:
         - "Departamento General de Irrigación"

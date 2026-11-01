@@ -45,7 +45,8 @@ const GROUPS = [
   {
     id: "ente",
     title: "Entes, fuerzas y organismos descentralizados",
-    description: "Tienen presupuesto o conducción propios, pero dependen de un ministerio.",
+    description:
+      "Tienen presupuesto o conducción propios. La mayoría depende de un ministerio; Irrigación es autárquico por la Constitución.",
   },
   { id: "empresa", title: "Empresas y sociedades del Estado", description: "Sociedades con participación de la Provincia." },
   { id: "poder", title: "Otros poderes", description: "Legislatura, Poder Judicial y ministerios públicos." },
