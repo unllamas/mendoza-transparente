@@ -66,6 +66,7 @@ export function EmpleoPage() {
             valor: r.cadaMil,
             destacado: r.provincia === "Mendoza",
           }))}
+          total="max"
           formatValue={(v) => decimal.format(v)}
         />
         <p className="text-body-regular text-text-tertiary">

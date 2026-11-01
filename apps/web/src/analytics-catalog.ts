@@ -321,6 +321,11 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["viajes", "no publicado"],
   },
   {
+    event: "trips.trip.request.open",
+    description: "En la hoja de un viaje oficial, abrió el pedido por la Ley 9070 desde «Cuánto costó: no está publicado».",
+    tags: ["viajes", "no publicado"],
+  },
+  {
     event: "official.party.open",
     description:
       "Desde la ficha de un funcionario (o su lista de elecciones ganadas), abrió la página de su partido, frente o bloque. También desde la composición por bloque.",

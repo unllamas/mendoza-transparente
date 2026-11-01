@@ -94,6 +94,7 @@ export function DeudaPage() {
               valor: a.usd,
               detalle: `${Math.round((a.usd / deuda.totalUsd) * 100)}%`,
             }))}
+            total={deuda.totalUsd}
             formatValue={usdM}
           />
         </Section>
@@ -104,6 +105,7 @@ export function DeudaPage() {
               valor: a.usd,
               detalle: `${Math.round((a.usd / deuda.totalUsd) * 100)}%`,
             }))}
+            total={deuda.totalUsd}
             formatValue={usdM}
           />
           <p className="text-body-regular text-text-tertiary">

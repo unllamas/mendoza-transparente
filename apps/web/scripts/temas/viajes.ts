@@ -1,13 +1,15 @@
 /**
  * Viajes oficiales (/funcionarios/viajes): los decretos de misión oficial de la fuente `misiones-oficiales`,
  * agrupados en un viaje por decreto con todas las personas que viajan. Cada persona se cruza con su ficha de
- * funcionario (foto y link) y cada funcionario recibe la lista de sus viajes en `trips`.
+ * funcionario (foto y link) y cada funcionario recibe la lista de sus viajes en `trips`. Quien no tiene ficha
+ * (subsecretarios, directores, asesores) se cruza con su declaración en Ética Pública: de ahí sale el cargo cuando el
+ * decreto no lo dice, y la foto oficial si la hay (`etica-<official_id>` en fotos.csv).
  * El organismo de cada viaje lo completa después `buildGobierno()`, con el mismo cruce que las designaciones.
  * Metodología: docs/procesos/metodologia.md#misiones-oficiales.
  */
 
 import type { Funcionario, FuncionariosTema, Trip, TripCost, TripRef } from "../../src/types.ts";
-import { properName, samePerson, sentence } from "./gobierno.ts";
+import { normalize, properName, samePerson, sentence } from "./gobierno.ts";
 
 type Row = Record<string, string>;
 
@@ -20,8 +22,25 @@ function cleanDestination(destination: string, countries: string[]): string {
   return d || countries.join(", ") || "Destino sin precisar";
 }
 
-export function buildTrips(rows: Row[], funcionarios: FuncionariosTema | null | undefined): Trip[] {
+/** La declaración de Ética Pública de alguien sin ficha: la vigente si hay; ninguna si el nombre es de más de una persona. */
+function declared(name: string, etica: Row[]): Row | null {
+  const matches = etica.filter((r) => samePerson(name, r.nombre!));
+  if (new Set(matches.map((r) => normalize(r.nombre!))).size !== 1) return null;
+  return matches.find((r) => !r.fecha_fin_cargo) ?? matches[0]!;
+}
+
+export function buildTrips(
+  rows: Row[],
+  funcionarios: FuncionariosTema | null | undefined,
+  etica: Row[] = [],
+  photoRows: Row[] = [],
+): Trip[] {
   const people = funcionarios?.personas ?? [];
+  const photos = new Map(photoRows.filter((r) => r.id?.startsWith("etica-")).map((r) => [r.id!, `/data/fotos/${r.foto}`]));
+  // El cargo que dice el decreto más reciente de cada persona: sirve para los decretos que no lo dicen.
+  const lastRole = new Map<string, string>();
+  for (const r of [...rows].sort((x, y) => (y.fecha_boletin ?? "").localeCompare(x.fecha_boletin ?? "")))
+    if (r.cargo && !lastRole.has(normalize(r.persona!))) lastRole.set(normalize(r.persona!), r.cargo);
   const byNorm = new Map<string, Row[]>();
   for (const r of rows) byNorm.set(r.norma_id!, [...(byNorm.get(r.norma_id!) ?? []), r]);
 
@@ -56,10 +75,11 @@ export function buildTrips(rows: Row[], funcionarios: FuncionariosTema | null | 
       url: first.url_pdf ?? "",
       travelers: group.map((r) => {
         const match = people.find((p) => samePerson(r.persona!, p.nombre));
+        const decl = match ? null : declared(r.persona!, etica);
         return {
           name: match?.nombre ?? properName(r.persona!),
-          role: r.cargo || match?.cargo || "",
-          photo: match?.foto ?? null,
+          role: r.cargo || match?.cargo || lastRole.get(normalize(r.persona!)) || (decl?.cargo ? sentence(decl.cargo) : ""),
+          photo: match?.foto ?? (decl ? (photos.get(`etica-${decl.official_id}`) ?? null) : null),
           path: match ? `/funcionarios/${match.role}/${match.slug}` : null,
         };
       }),

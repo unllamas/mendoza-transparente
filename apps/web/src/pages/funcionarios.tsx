@@ -170,7 +170,7 @@ function Bloques({ personas }: { personas: Funcionario[] }) {
         </span>
       </summary>
       <div className="mt-4">
-        <BarList items={items} formatValue={(v) => `${v} ${v === 1 ? "banca" : "bancas"}`} />
+        <BarList items={items} total={personas.length} formatValue={(v) => `${v} ${v === 1 ? "banca" : "bancas"}`} />
       </div>
     </details>
   );
