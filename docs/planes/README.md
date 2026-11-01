@@ -17,4 +17,5 @@ Cuando una parte de un plan queda funcionando, su proceso se documenta en `docs/
 | [Partidos políticos](partidos.md) | Etapas 1 a 3 hechas; faltan los logos y medir |
 | [Votación](votacion.md) | Etapas 0 a 3 hechas (subdominio, histórico y páginas por año); faltan el conteo en vivo, los aportes de la ciudadanía y abrir al público |
 | [Pedidos y carteles ciudadanos](pedidos-ciudadanos.md) | Nota de pedido y carteles hechos; falta relevar la adhesión a la Ley 9070 y el resto del backlog |
+| [Mapa de datos](mapa-de-datos.md) | Primera versión (01/11/2026): 15 CSV sin mostrar, 30 fuentes relevadas sin recopilar y 40 temas no publicados sin pedido presentado |
 | [Base de datos para consultar (Neon)](base-de-datos.md) | Propuesta, sin empezar; faltan las decisiones del final |

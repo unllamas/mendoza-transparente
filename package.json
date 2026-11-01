@@ -19,6 +19,7 @@
     "verificar": "bun scripts/verificar-web.ts",
     "medir": "bun scripts/measure-vitals.ts",
     "vista-previa": "bun scripts/vista-previa.ts",
+    "mapa-de-datos": "bun scripts/data-usage.ts",
     "novedades": "bun scripts/weekly-update.ts",
     "mascotas": "bun packages/mascots/scripts/build-assets.ts",
     "asistente:datos": "bun packages/assistant/scripts/build-knowledge.ts",
