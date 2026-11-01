@@ -24,6 +24,7 @@ import { Link } from "@tanstack/react-router";
 import { type ReactNode, useEffect, useState } from "react";
 
 import { type ColumnaVista, formatMoneda } from "@/celdas.ts";
+import { ProportionBar } from "@/charts/bar-list.tsx";
 import { ColumnChart } from "@/charts/column-chart.tsx";
 import { EntityColumns } from "@/components/entity-columns.tsx";
 import { formatDate, formatNumber, limpiarOrganismo, loadJson } from "@/lib.ts";
@@ -259,12 +260,7 @@ export function Proveedor({
                   <span className="text-body-medium whitespace-nowrap tabular-nums">{formatMoneda(o.monto, "ARS")}</span>
                 </span>
                 <span className="flex items-center gap-2">
-                  <span className="h-1.5 flex-1 rounded-full bg-chart-grid/60">
-                    <span
-                      className="block h-full rounded-full bg-highlight"
-                      style={{ width: `${Math.max((o.monto / p.organismos[0]!.monto) * 100, 1)}%` }}
-                    />
-                  </span>
+                  <ProportionBar value={o.monto} of={p.total} className="h-1.5 flex-1" />
                   <span className="w-20 text-right text-caption-1-regular whitespace-nowrap text-text-tertiary tabular-nums">
                     {o.procesos} {o.procesos === 1 ? "proceso" : "procesos"}
                   </span>
@@ -597,11 +593,7 @@ function Montos({ estimado, adjudicado }: { estimado: number | null; adjudicado:
               <span className="text-text-secondary">{f.label}</span>
               <span className="text-body-medium tabular-nums">{f.valor ? formatMoneda(f.valor, "ARS") : "—"}</span>
             </div>
-            <div className="h-2.5 rounded-full bg-chart-grid/60">
-              {f.valor ? (
-                <div className="h-full rounded-full bg-highlight" style={{ width: `${Math.max((f.valor / max) * 100, 1)}%` }} />
-              ) : null}
-            </div>
+            {f.valor ? <ProportionBar value={f.valor} of={max} className="h-2.5" /> : <div className="h-2.5 rounded-full bg-chart-track" />}
           </li>
         ))}
       </ul>

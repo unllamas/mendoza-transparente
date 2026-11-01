@@ -42,7 +42,7 @@ La gente describe lo que siente. Buscar la regla (detalle en `docs/procesos/dise
 | "Ese botón ocupa una fila entera", "sobra lugar abajo del título" | La acción de la página va en columna a la derecha del encabezado, solo ícono con tooltip | `diseno` |
 | "Se repite arriba del título", "dos líneas que dicen lo mismo" | Una sola línea arriba del título: la ruta termina en la página actual con su ícono | `diseno` |
 | "Queda un espacio de más arriba del título", "sobra lugar" | El link para atrás va pegado al encabezado (`WithBreadcrumbs`) | `diseno` |
-| "El gráfico no es proporcional", "¿qué es el 100 %?" | En una composición, la barra llena es el total | `diseno` |
+| "El gráfico no es proporcional", "¿qué es el 100 %?", "la primera barra ocupa todo", "el fondo de la barra no se ve" | La barra llena es el total (`total` obligatorio en `BarList`) y su fondo se ve (`chart-track`) | `diseno` |
 | "¿Qué significan todas esas barras?", "esto es ilegible", "muestran muchos datos pero qué significan" | Cada tramo dice qué es; un control responde primero con una oración | `diseno` |
 | "Se mezclan las provinciales y las municipales", "¿contra quién compite?" | Provinciales y municipales nunca en la misma vista | `diseno`, `contenido-y-metodologia` |
 | "Ocupa toda la pantalla", "en la compu sobra espacio" | Dos gráficos chicos seguidos, en dos columnas en desktop | `diseno` |

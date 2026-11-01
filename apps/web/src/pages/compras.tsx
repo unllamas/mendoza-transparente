@@ -15,6 +15,7 @@ import {
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { formatMoneda } from "@/celdas.ts";
+import { ProportionBar } from "@/charts/bar-list.tsx";
 import { ColumnChart } from "@/charts/column-chart.tsx";
 import { Breadcrumbs, WithBreadcrumbs } from "@/components/breadcrumbs.tsx";
 import { useDetail } from "@/components/detail-sheet.tsx";
@@ -203,7 +204,6 @@ export function OrganismoPage() {
     );
   }
   const nombre = limpiarOrganismo(o.nombre);
-  const maxProv = o.proveedores[0]?.monto ?? 1;
   return (
     <div className="flex flex-col gap-10">
       <EntityColumns
@@ -255,12 +255,7 @@ export function OrganismoPage() {
                     <span className="text-body-medium whitespace-nowrap tabular-nums">{formatMoneda(p.monto, "ARS")}</span>
                   </span>
                   <span className="flex items-center gap-2">
-                    <span className="h-1.5 flex-1 rounded-full bg-chart-grid/60">
-                      <span
-                        className="block h-full rounded-full bg-highlight"
-                        style={{ width: `${Math.max((p.monto / maxProv) * 100, 1)}%` }}
-                      />
-                    </span>
+                    <ProportionBar value={p.monto} of={o.total} className="h-1.5 flex-1" />
                     <span className="w-20 text-right text-caption-1-regular whitespace-nowrap text-text-tertiary tabular-nums">
                       {p.procesos} {p.procesos === 1 ? "proceso" : "procesos"}
                     </span>

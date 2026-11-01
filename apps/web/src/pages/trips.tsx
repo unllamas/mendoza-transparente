@@ -16,13 +16,16 @@ import { ShareButton } from "@/components/share-button.tsx";
 import { TrackedSheet } from "@/components/tracked-sheet.tsx";
 import { COST_LABEL, COST_SENTENCE, CostChip, tripTitle } from "@/features/officials/components/trip-rows.tsx";
 import { formatDate, formatNumber, normalizeText } from "@/lib.ts";
-import type { Trip, TripCost } from "@/types.ts";
+import type { Trip, TripCost, TripTraveler } from "@/types.ts";
 import { useUrlOption, useUrlText } from "@/url-state.ts";
 
 const route = getRouteApi("/funcionarios/viajes");
 
 const ALL = "todos";
 const COSTS: TripCost[] = ["paga_provincia", "paga_tercero", "sin_costo", "sin_viaticos", "no_informa"];
+
+/** Lo que dice el decreto deja abierto que la Provincia haya gastado: ahí va el aviso de que el monto no se publica. */
+const COST_UNKNOWN = new Set<TripCost>(["paga_provincia", "sin_viaticos", "no_informa"]);
 
 const year = (t: Trip) => (t.from ?? t.normDate ?? t.published).slice(0, 4);
 
@@ -99,32 +102,53 @@ export function TripsPage() {
   );
 }
 
+/**
+ * Países y personas con más viajes. Cada barra se mide contra todos los viajes (no contra el primero), así se lee qué
+ * parte del total es: un viaje puede tocar varios países y llevar a varias personas, por eso no suman 100 %.
+ */
 function Rankings({ trips }: { trips: Trip[] }) {
   const byCountry = new Map<string, number>();
   for (const t of trips) for (const c of t.countries) byCountry.set(c, (byCountry.get(c) ?? 0) + 1);
-  const byPerson = new Map<string, { count: number; path: string | null }>();
-  for (const t of trips) for (const x of t.travelers) byPerson.set(x.name, { count: (byPerson.get(x.name)?.count ?? 0) + 1, path: x.path });
+  // Los viajes vienen del más reciente al más viejo: el primer cargo que aparece es el último que tuvo.
+  const byPerson = new Map<string, { count: number; traveler: TripTraveler }>();
+  for (const t of trips)
+    for (const x of t.travelers) {
+      const seen = byPerson.get(x.name);
+      byPerson.set(x.name, {
+        count: (seen?.count ?? 0) + 1,
+        traveler: { ...x, role: seen?.traveler.role || x.role, photo: seen?.traveler.photo ?? x.photo },
+      });
+    }
   const countries = [...byCountry].sort((a, b) => b[1] - a[1]).slice(0, 8);
   const people = [...byPerson].sort((a, b) => b[1].count - a[1].count).slice(0, 8);
   const plural = (n: number) => `${n} ${n === 1 ? "viaje" : "viajes"}`;
+  const note = `El porcentaje es sobre los ${formatNumber(trips.length)} viajes.`;
   return (
-    <div className="grid items-start gap-8 lg:grid-cols-2">
+    <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-2">
       <Section id="destinos" title="A qué países">
-        <BarList items={countries.map(([nombre, valor]) => ({ nombre, valor }))} formatValue={plural} />
+        <BarList items={countries.map(([nombre, valor]) => ({ nombre, valor }))} total={trips.length} formatValue={plural} />
+        <p className="text-body-regular text-pretty text-text-tertiary">{note} Un viaje puede incluir más de un país.</p>
       </Section>
       <Section id="quienes" title="Quiénes viajaron más">
         <BarList
-          items={people.map(([nombre, v]) => ({
+          items={people.map(([nombre, { count, traveler: x }]) => ({
             nombre,
-            valor: v.count,
-            etiqueta: v.path ? (
-              <Link to={v.path} data-track="trips.traveler.open" className="text-text-link hover:underline">
+            valor: count,
+            nota: x.role || "El decreto no dice el cargo",
+            cara: <PersonAvatar name={nombre} photo={x.photo} className="size-10 text-caption-1-regular" />,
+            etiqueta: x.path ? (
+              <Link to={x.path} data-track="trips.traveler.open" className="text-text-link hover:underline">
                 {nombre}
               </Link>
             ) : undefined,
           }))}
+          total={trips.length}
           formatValue={plural}
         />
+        <p className="text-body-regular text-pretty text-text-tertiary">
+          {note} Solo las autoridades superiores tienen ficha en el sitio; el cargo de los demás sale del decreto o de su declaración
+          jurada.
+        </p>
       </Section>
     </div>
   );
@@ -180,11 +204,13 @@ function TripList({ trips, onOpen }: { trips: Trip[]; onOpen: (t: Trip) => void 
           {shown.map((t) => (
             <li key={t.id}>
               <button type="button" onClick={() => onOpen(t)} className={listRowVariants()}>
+                <TravelerFace travelers={t.travelers} />
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                   <span className="truncate font-medium text-text-link">{tripTitle(t)}</span>
                   <span className="truncate text-body-regular text-text-tertiary">{t.travelers.map((x) => x.name).join(", ")}</span>
-                  <span className="flex min-w-0 items-center gap-2 text-caption-1-regular text-text-tertiary">
-                    <span className="truncate">{tripDates(t)}</span>
+                  {/* La fecha no se corta: si no entra junto a la etiqueta del costo, la etiqueta baja. */}
+                  <span className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-caption-1-regular text-text-tertiary">
+                    <span className="whitespace-nowrap">{tripDates(t)}</span>
                     <span className="sm:hidden">
                       <CostChip cost={t.cost} />
                     </span>
@@ -200,6 +226,26 @@ function TripList({ trips, onOpen }: { trips: Trip[]; onOpen: (t: Trip) => void 
         </ul>
       )}
     </Section>
+  );
+}
+
+/**
+ * La cara de quien viaja, para reconocerlo en la lista sin leer. Si viajan varios, la del primero que nombra el decreto
+ * con cuántos más («+2»): una sola cara de ancho fijo deja todos los títulos alineados.
+ */
+function TravelerFace({ travelers }: { travelers: TripTraveler[] }) {
+  const first = travelers[0];
+  if (!first) return null;
+  const more = travelers.length - 1;
+  return (
+    <span aria-hidden className="relative inline-flex shrink-0">
+      <PersonAvatar name={first.name} photo={first.photo} className="size-10 text-caption-1-regular" />
+      {more > 0 && (
+        <span className="absolute -right-1.5 -bottom-1 rounded-full bg-background-action px-1 text-caption-2-semibold text-text-link ring-2 ring-background-interactive tabular-nums">
+          +{more}
+        </span>
+      )}
+    </span>
   );
 }
 
@@ -279,6 +325,25 @@ function TripSheet({ trip: t, onClose }: { trip: Trip; onClose: () => void }) {
             </blockquote>
           )}
         </section>
+
+        {COST_UNKNOWN.has(t.cost) && (
+          <section className="flex flex-col gap-2">
+            <h4 className="text-body-semibold">Cuánto costó</h4>
+            <Alert title="No está publicado">
+              {t.cost === "paga_provincia"
+                ? "La Provincia pagó, pero el decreto no dice cuánto: ni pasajes, ni estadía, ni viáticos."
+                : "El decreto no dice cuánto costó ni si la Provincia pagó una parte."}{" "}
+              <Link
+                to="/no-publicado"
+                search={{ dato: "costo-misiones-oficiales" } as never}
+                data-track="trips.trip.request.open"
+                className="font-medium text-text-link hover:underline"
+              >
+                Pedí el gasto con la Ley 9070 ›
+              </Link>
+            </Alert>
+          </section>
+        )}
 
         {t.url && (
           <a

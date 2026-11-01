@@ -463,7 +463,12 @@ if (procesos && adjudicaciones) {
   // Gobierno por dentro: una página por organismo (docs/planes/el-estado-por-dentro.md).
   const agencyTable = join(ROOT, "data", "curado", "jurisdicciones.yaml");
   // Viajes oficiales (/funcionarios/viajes): cada viaje se cruza con las fichas y, en buildGobierno, con su organismo.
-  const trips = buildTrips(readTable("misiones-oficiales", "misiones.csv") ?? [], funcionariosTema);
+  const trips = buildTrips(
+    readTable("misiones-oficiales", "misiones.csv") ?? [],
+    funcionariosTema,
+    readTable("etica-publica", "funcionarios.csv") ?? [],
+    readTable("fotos", "fotos.csv") ?? [],
+  );
   if (funcionariosTema) attachTrips(funcionariosTema.personas, trips);
   if (funcionariosTema && existsSync(agencyTable)) {
     const agencies = buildGobierno(
