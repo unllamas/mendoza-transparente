@@ -1,6 +1,11 @@
 # Actualización de datos
 
-Los datos se mantienen al día solos en la nube (GitHub Actions). Una actualización manual desde una computadora en Argentina sirve de respaldo y de doble confirmación.
+Los datos se actualizan de dos maneras:
+
+- **En la nube (GitHub Actions)**, solos: todas las fuentes, menos las de los sitios que bloquean a la nube.
+- **A mano, todos los lunes**, desde una computadora en Argentina: el Boletín Oficial (leyes, decretos y resoluciones, y de ahí las designaciones y los viajes oficiales), Ética Pública y el Senado. Ver [La corrida de los lunes](#la-corrida-de-los-lunes).
+
+No se contrata un proxy con IP argentina para la nube: decidido el 01/11/2026, para no sumar un gasto (ver [Costo cero](arquitectura.md#costo-cero)).
 
 ## En la nube: GitHub Actions
 
@@ -17,7 +22,7 @@ Cómo funciona:
 2. **scrape** corre cada fuente en su propio job; si una falla, las demás siguen. Empaqueta los cambios de `data/`.
 3. **commit** junta todos los cambios, comprueba que la web compile con ellos (`bun run data`, tipos, build y SEO), hace **un único commit** (`chore(data): actualización automática (<fuentes>)`) en la rama `datos/automatica` y abre un **PR a `dev`** con el resumen de lo que cambia (ver [Revisar el PR de datos](#revisar-el-pr-de-datos)). Si la web no compila, no commitea y abre un issue.
    Antes, si se actualizó el Boletín Oficial, extrae las designaciones y las misiones oficiales de las normas nuevas (`designaciones` y `misiones-oficiales`, fuentes derivadas que no descargan nada) y escribe los resúmenes en lenguaje simple de las leyes nuevas (`apps/web/scripts/resumir-leyes.ts`). Necesita el secreto **`ANTHROPIC_API_KEY`**: sin él, las leyes nuevas se publican igual, sin resumen. Si ese paso falla, no frena la publicación. Ver [Metodología](metodologia.md#resumenes-de-leyes).
-4. **frescura** controla que el Boletín Oficial no pase más de 10 días sin actualizarse (solo si hay proxy configurado).
+4. **frescura** controla que el Boletín Oficial no pase más de 10 días sin actualizarse (solo si hay proxy configurado; sin proxy, lo cuida la corrida de los lunes).
 5. **archivo-externo** copia en archive.org los archivos crudos que todavía no tienen copia y pide a la Wayback Machine que capture sus URLs oficiales. Corre después del commit y commitea solo los registros `archive-org.jsonl`, en el mismo PR de datos. Necesita los secretos **`IA_ACCESS_KEY`** e **`IA_SECRET_KEY`**; sin ellos, se saltea. Ver [Datos y archivo](datos-y-archivo.md#copias-fuera-del-repo-archiveorg).
 
 Los datos **nunca van directo a `main`**: una actualización puede traer menos filas que antes (una fuente que se cae a medias, un archivo que el organismo reemplazó) y eso dejaría el sitio incongruente. Por eso entran a `dev` por un PR que alguien revisa, y llegan a producción con la próxima publicación. Ver [Ramas y releases](ramas-y-releases.md#datos).
@@ -60,11 +65,23 @@ Esos hosts están en `HOSTS_CON_PROXY` (`packages/core/src/fetch.ts`). Si el rep
 - La Legislatura actualiza Diputados y el Senado conserva sus datos anteriores.
 - Ética Pública se saltea, sin abrir issues.
 
-Para activarlo: contratar un proxy argentino de pago por uso (el consumo es de unos 20 MB por mes para el Boletín y el Senado, más unos 25 MB por mes para Ética Pública, que baja unos 6 MB por semana) y cargarlo en **Settings → Secrets and variables → Actions → New repository secret** con el nombre `PROXY_AR`.
+**El secreto no está cargado y no se va a cargar:** esas tres fuentes se actualizan en [la corrida de los lunes](#la-corrida-de-los-lunes). El soporte de `PROXY_AR` queda en el código por si algún día cambia la decisión (un proxy de pago por uso gastaría unos 45 MB por mes).
 
 ## A mano: `bun run actualizar`
 
-Respaldo para cuando la nube no llega (sitios bloqueados) o para confirmar un dato. Se corre desde una computadora en Argentina, en la copia de trabajo del repo:
+Se corre desde una computadora en Argentina, en la copia de trabajo del repo. Es la única forma de actualizar el Boletín Oficial, Ética Pública y el Senado, y sirve también para confirmar un dato o reintentar una fuente que falló en la nube.
+
+### La corrida de los lunes
+
+Todos los lunes, alguien del equipo (o un agente en su máquina) corre la actualización de las fuentes bloqueadas:
+
+1. Desde la copia del repo, al día con `dev`: `bun run actualizar --sin-publicar`. Muestra cuántas normas nuevas trajo cada fuente y qué cambia contra `dev`.
+2. Si el resumen no avisa borrados raros, `bun run actualizar` publica: commit de `data/`, rama `datos/actualizacion-<fecha>` y PR a `dev`.
+3. El PR se revisa y se mergea como cualquier PR de datos ([Revisar el PR de datos](#revisar-el-pr-de-datos)), y llega a producción con la próxima publicación.
+
+El Boletín baja los últimos 10 días, así que un lunes salteado no pierde nada si se corre antes del lunes siguiente. Si pasaron más días, se pide el rango que falta: `bun run scrape boletin-oficial --desde <fecha> --hasta <fecha>`.
+
+Comandos:
 
 ```bash
 bun run actualizar                     # Boletín Oficial, Legislatura y Ética Pública (las bloqueadas en la nube)
@@ -76,7 +93,7 @@ bun run actualizar --si                # publicar sin preguntar
 
 Qué hace (`scripts/actualizar.ts`):
 
-1. Corre cada scraper con los mismos argumentos que el workflow.
+1. Corre cada scraper con los mismos argumentos que el workflow. Si corrió el Boletín Oficial, después corre las fuentes derivadas (`designaciones` y `misiones-oficiales`) y, con `ANTHROPIC_API_KEY` en el entorno, los resúmenes de las leyes nuevas; sin la clave, avisa y las leyes se publican sin resumen.
 2. Muestra un resumen: estado, archivos nuevos y tiempo por fuente, y lo que cambia contra `dev` ([Revisar el PR de datos](#revisar-el-pr-de-datos)).
 3. Comprueba que la web compile con los datos nuevos.
 4. **Pregunta antes de publicar** y hace commit **solo de `data/`** (nunca sube código que se esté editando), push y un **PR a `dev`** con el resumen. Si se corre en `dev`, crea antes la rama `datos/actualizacion-<fecha>`; en otra rama, commitea ahí. En `main` no corre: los datos no se publican directo en producción.
@@ -99,7 +116,7 @@ Recorre todas las ediciones del rango y archiva sus índices, pero solo baja el 
 2. Causas habituales:
    - **El sitio cambió de estructura** (otra URL, otra tabla): ajustar el scraper.
    - **El sitio estuvo caído o limitó los pedidos** (HTTP 429, timeouts): suele resolverse solo en la próxima corrida.
-   - **El sitio bloquea a la nube**: agregar el host a `HOSTS_CON_PROXY` y configurar `PROXY_AR`, o actualizar a mano mientras tanto.
+   - **El sitio bloquea a la nube**: agregar el host a `HOSTS_CON_PROXY` (para que la nube lo saltee) y sumar la fuente a la corrida de los lunes (`scripts/actualizar.ts`).
 3. Probar localmente: `bun run scrape <fuente>`.
 4. Si el dato cambió de verdad (no es un error), revisar que los diccionarios y las páginas sigan siendo correctos.
 

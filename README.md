@@ -117,7 +117,7 @@ Los datos ya procesados están en el repo, así que la web levanta sin correr ni
 
 ## Datos siempre al día
 
-Los datos se actualizan solos con GitHub Actions ([`actualizar-datos.yml`](.github/workflows/actualizar-datos.yml)):
+Casi todos los datos se actualizan solos con GitHub Actions ([`actualizar-datos.yml`](.github/workflows/actualizar-datos.yml)):
 
 | Frecuencia | Fuentes |
 |---|---|
@@ -126,7 +126,7 @@ Los datos se actualizan solos con GitHub Actions ([`actualizar-datos.yml`](.gith
 
 Cada fuente corre por separado y al final se hace un único commit, después de comprobar que la web compila. Si una fuente falla, se abre un issue con la etiqueta `scraper-roto`, que se cierra solo cuando vuelve a funcionar. Para correrlo a mano: pestaña Actions → «Actualizar datos» → «Run workflow», o `bun run actualizar` desde una máquina en Argentina.
 
-**Proxy con IP argentina.** Dos sitios del Gobierno rechazan conexiones desde servidores en la nube: el Boletín Oficial no responde a la red de GitHub y el Senado de Mendoza solo responde a IPs de Argentina. Los pedidos a esos sitios (lista en `HOSTS_CON_PROXY`, `packages/core/src/fetch.ts`) salen por el proxy definido en el secreto `PROXY_AR` del repositorio (`http://usuario:clave@host:puerto`). Sin el secreto, el Boletín se saltea sin abrir issues y la Legislatura actualiza solo Diputados.
+**Corrida manual de los lunes.** Tres sitios del Gobierno no responden bien a servidores en la nube: el Boletín Oficial no responde a la red de GitHub, el Senado de Mendoza solo responde a IPs de Argentina y Ética Pública tarda demasiado. En la nube se saltean, y todos los lunes se actualizan con `bun run actualizar` desde una computadora en Argentina. No se usa un proxy pago (costo cero); el código lo admite con el secreto `PROXY_AR` por si eso cambia.
 
 Las fotos de funcionarios y el mapa se actualizan a mano (`bun run scrape fotos`, `bun run scrape geo`), porque cambian poco. El proceso completo está en [Actualización de datos](docs/procesos/actualizacion-de-datos.md).
 

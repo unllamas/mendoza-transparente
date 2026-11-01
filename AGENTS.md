@@ -99,7 +99,7 @@ El proyecto no tiene financiación y vive en planes gratis (Cloudflare, GitHub A
 - Tipos: `bun run typecheck`.
 - Web: `bun run verificar` (sin scroll horizontal en ningún ancho, consola limpia y un solo scroll con el menú móvil abierto). Obligatorio antes de dar por terminado un cambio de interfaz.
 - Velocidad: `bun run medir` (LCP, FCP y CLS de las páginas clave sobre el build, en celular y escritorio). Correrlo cuando un cambio toca cómo carga una página. Ver `docs/procesos/web.md#velocidad-de-carga`.
-- Actualización manual de datos (respaldo de GitHub Actions): `bun run actualizar`.
+- Actualización manual de datos: `bun run actualizar`, todos los lunes desde Argentina (Boletín Oficial, Ética Pública y Senado no se actualizan en la nube).
 
 <!-- BEGIN:turborepo-agent-rules -->
 
