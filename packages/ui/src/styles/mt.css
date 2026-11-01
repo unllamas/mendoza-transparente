@@ -93,6 +93,9 @@
   /* Gráficos: líneas de guía y ejes. */
   --color-chart-grid: var(--color-neutral-200);
   --color-chart-axis: var(--color-neutral-300);
+  /* El fondo de una barra de proporción (lo que falta para el total): se tiene que ver sobre el gris de la página
+     y sobre el blanco de una tarjeta, por eso es celeste y no gris. */
+  --color-chart-track: var(--color-accent-100);
   /* Botón principal liso, sin el degradé de BoardUI (en diseno.md, "Lo que no hacemos": gradientes). */
   --gradient-button-primary-default: linear-gradient(var(--color-accent-600), var(--color-accent-600));
   --gradient-button-primary-hover: linear-gradient(var(--color-accent-700), var(--color-accent-700));
@@ -137,6 +140,7 @@
   --color-warning-border: rgba(250, 178, 25, 0.3);
   --color-chart-grid: var(--color-neutral-800);
   --color-chart-axis: var(--color-neutral-700);
+  --color-chart-track: var(--color-accent-950);
   /* En oscuro el botón sigue en 600: con 500, el texto blanco no llega a 4,5:1. */
   --gradient-button-primary-default: linear-gradient(var(--color-accent-600), var(--color-accent-600));
   --gradient-button-primary-hover: linear-gradient(var(--color-accent-700), var(--color-accent-700));
@@ -172,6 +176,7 @@
   --color-warning-border: var(--color-warning-border);
   --color-chart-grid: var(--color-chart-grid);
   --color-chart-axis: var(--color-chart-axis);
+  --color-chart-track: var(--color-chart-track);
   --color-map-0: var(--color-map-0);
   --color-map-1: var(--color-map-1);
   --color-map-2: var(--color-map-2);
