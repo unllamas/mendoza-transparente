@@ -276,10 +276,61 @@ export const EVENT_CATALOG: EventDoc[] = [
     tags: ["funcionarios"],
   },
   {
+    event: "officials.trips.open",
+    description: "Desde la página de funcionarios, abrió los viajes oficiales (/funcionarios/viajes).",
+    tags: ["funcionarios", "viajes"],
+  },
+  {
+    event: "official.trip.open",
+    description: "Desde la ficha de un funcionario, abrió uno de sus viajes oficiales (hoja en /funcionarios/viajes).",
+    tags: ["funcionarios", "viajes"],
+  },
+  {
+    event: "official.trips.open",
+    description: "Desde la ficha de un funcionario, abrió la lista de todos los viajes oficiales.",
+    tags: ["funcionarios", "viajes"],
+  },
+  {
+    event: "agency.trip.open",
+    description: "Desde la página de un organismo (/gobierno/<organismo>), abrió uno de los viajes oficiales que tramitó.",
+    tags: ["gobierno", "viajes"],
+  },
+  {
+    event: "agency.trips.open",
+    description: "Desde la página de un organismo, abrió la lista de todos los viajes oficiales.",
+    tags: ["gobierno", "viajes"],
+  },
+  {
+    event: "trips.traveler.open",
+    description: "En /funcionarios/viajes, abrió la ficha de alguien que viajó (desde el ranking o desde la hoja de un viaje).",
+    tags: ["funcionarios", "viajes"],
+  },
+  {
+    event: "trips.agency.open",
+    description: "En la hoja de un viaje oficial, abrió la página del organismo que lo tramitó.",
+    tags: ["gobierno", "viajes"],
+  },
+  {
+    event: "trips.decree.open",
+    description: "En la hoja de un viaje oficial, abrió el decreto en el Boletín Oficial.",
+    tags: ["viajes"],
+  },
+  {
+    event: "trips.request.open",
+    description: "En /funcionarios/viajes, abrió el pedido por la Ley 9070 del costo de los viajes oficiales.",
+    tags: ["viajes", "no publicado"],
+  },
+  {
     event: "official.party.open",
     description:
       "Desde la ficha de un funcionario (o su lista de elecciones ganadas), abrió la página de su partido, frente o bloque. También desde la composición por bloque.",
     tags: ["funcionarios", "partidos"],
+  },
+  {
+    event: "official.photo.open",
+    description:
+      "En la ficha de un funcionario, tocó su cara para ver la foto más grande. Propiedad role: el grupo de la ficha (intendentes, diputados…).",
+    tags: ["funcionarios"],
   },
   {
     event: "officials.history.party.open",

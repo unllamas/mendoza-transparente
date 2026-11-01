@@ -3,7 +3,9 @@
  *
  * Sólo fuentes oficiales; cada foto se descarga con get(), se archiva sin tocar en
  * data/raw/fotos/<fecha>/ y se genera una miniatura cuadrada de 192x192 JPEG en
- * data/processed/fotos/<id>.jpg (con `sips`, sólo macOS).
+ * data/processed/fotos/<id>.jpg (con `sips`, sólo macOS). Si el original mide al menos 320 px de lado, se
+ * genera también una versión grande sin recortar (lado mayor de 800 px como máximo) en
+ * data/processed/fotos/<id>-grande.jpg, la que se ve al tocar la cara en la ficha.
  *
  * Fuentes por grupo:
  *  - Diputados provinciales: páginas de bloque de hcdmza.gob.ar (la <img> del flip-container de cada diputado).
@@ -22,12 +24,13 @@
  *    mano (AGENCY_HEADS).
  *
  * Uso: bun run scrape fotos
+ *      bun run scrape fotos grandes   (rehace solo las versiones grandes con los originales ya archivados)
  */
 
 import { mkdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { archive, get, latestRaw, PROCESSED_DIR, type Row, readRaw, toCsv } from "@mt/core";
+import { archive, get, latestRaw, PROCESSED_DIR, RAW_DIR, ROOT, type Row, readRaw, toCsv } from "@mt/core";
 import * as cheerio from "cheerio";
 
 const SOURCE = "fotos";
@@ -35,6 +38,10 @@ const HCD = "https://www.hcdmza.gob.ar";
 const HCS = "https://www.senadomendoza.gob.ar";
 const OUT_DIR = join(PROCESSED_DIR, SOURCE);
 const SIZE = 192;
+/** Lado mayor de la versión grande. */
+const LARGE_SIZE = 800;
+/** Con un original más chico que esto, la versión grande no muestra nada que la miniatura no muestre. */
+const LARGE_MIN = 320;
 
 const fold = (s: string) =>
   s
@@ -420,6 +427,44 @@ async function thumbnail(src: string, dest: string, top = 0): Promise<void> {
   await rm(tmp, { force: true });
 }
 
+/**
+ * Versión grande para verla ampliada: la foto entera (sin recorte), con el lado mayor en 800 px como máximo.
+ * Devuelve false sin generar nada si el original es demasiado chico para que valga la pena.
+ */
+async function largeVersion(src: string, dest: string): Promise<boolean> {
+  const info = await sips("-g", "pixelWidth", "-g", "pixelHeight", src);
+  const side = Math.max(Number(info.match(/pixelWidth: (\d+)/)?.[1]), Number(info.match(/pixelHeight: (\d+)/)?.[1]));
+  if (!(side >= LARGE_MIN)) return false;
+  await sips("-Z", String(Math.min(side, LARGE_SIZE)), "-s", "format", "jpeg", "-s", "formatOptions", "78", src, "--out", dest);
+  return true;
+}
+
+const largeName = (id: string) => `${id}-grande.jpg`;
+
+/** `foto_grande` va al final: así las columnas que ya existían no cambian de lugar. */
+const COLUMNS = ["id", "foto", "foto_original_url", "pagina_fuente_url", "credito", "foto_grande"];
+
+/** Rehace las versiones grandes a partir de los originales archivados, sin descargar nada. */
+async function rebuildLarge(): Promise<void> {
+  const rows = await readCsv("fotos/fotos.csv");
+  const byUrl = new Map<string, string>();
+  for (const line of (await readFile(join(RAW_DIR, SOURCE, "manifest.jsonl"), "utf8")).split("\n")) {
+    if (!line) continue;
+    const entry = JSON.parse(line) as { path: string; url: string };
+    byUrl.set(entry.url, join(ROOT, entry.path));
+  }
+  let made = 0;
+  for (const r of rows) {
+    const src = byUrl.get(r.foto_original_url!);
+    r.foto_grande = src && (await largeVersion(src, join(OUT_DIR, largeName(r.id!)))) ? largeName(r.id!) : "";
+    if (r.foto_grande) made++;
+    else await rm(join(OUT_DIR, largeName(r.id!)), { force: true });
+  }
+  await writeFile(join(OUT_DIR, "fotos.csv"), toCsv(rows, COLUMNS));
+  await writeMeta();
+  console.log(`Versiones grandes: ${made}/${rows.length}`);
+}
+
 function ext(url: string, type: string | null): string {
   const m = new URL(url).pathname.match(/\.(jpe?g|png|gif|webp)$/i);
   if (m) return m[1]!.toLowerCase().replace("jpeg", "jpg");
@@ -431,7 +476,8 @@ function ext(url: string, type: string | null): string {
 
 // ---------------------------------------------------------------- Main
 
-export async function run(_args: string[]) {
+export async function run(args: string[]) {
+  if (args[0] === "grandes") return rebuildLarge();
   const legs = await readCsv("legislatura/legisladores.csv");
   const auts = await readCsv("autoridades/autoridades.csv");
   const personas = new Map<string, { nombre: string; grupo: string }>();
@@ -486,10 +532,19 @@ export async function run(_args: string[]) {
       const tmp = join(work, `${c.id}.${e}`);
       await writeFile(tmp, bytes);
       await thumbnail(tmp, join(OUT_DIR, `${c.id}.jpg`), c.top ?? 0);
+      const large = await largeVersion(tmp, join(OUT_DIR, largeName(c.id)));
+      if (!large) await rm(join(OUT_DIR, largeName(c.id)), { force: true });
       await rm(tmp, { force: true });
       const kb = (await stat(join(OUT_DIR, `${c.id}.jpg`))).size / 1024;
       if (kb > 25) console.warn(`${c.id}: miniatura de ${kb.toFixed(1)} KB (> 25 KB)`);
-      rows.push({ id: c.id, foto: `${c.id}.jpg`, foto_original_url: c.foto_url, pagina_fuente_url: c.pagina, credito: c.credito });
+      rows.push({
+        id: c.id,
+        foto: `${c.id}.jpg`,
+        foto_grande: large ? largeName(c.id) : "",
+        foto_original_url: c.foto_url,
+        pagina_fuente_url: c.pagina,
+        credito: c.credito,
+      });
       done.add(c.id);
     } catch (e) {
       console.warn(`${c.id}: ${(e as Error).message}`);
@@ -498,7 +553,7 @@ export async function run(_args: string[]) {
 
   const orden = [...personas.keys()];
   rows.sort((a, b) => orden.indexOf(String(a.id)) - orden.indexOf(String(b.id)));
-  await writeFile(join(OUT_DIR, "fotos.csv"), toCsv(rows, ["id", "foto", "foto_original_url", "pagina_fuente_url", "credito"]));
+  await writeFile(join(OUT_DIR, "fotos.csv"), toCsv(rows, COLUMNS));
 
   const porGrupo: Record<string, { con: number; total: number }> = {};
   const sin: string[] = [];
@@ -511,13 +566,22 @@ export async function run(_args: string[]) {
   for (const [g, v] of Object.entries(porGrupo)) console.log(`${g}: ${v.con}/${v.total}`);
   console.log(`Total: ${rows.length}/${personas.size}. Sin foto: ${sin.join("; ") || "ninguno"}`);
 
+  await writeMeta();
+}
+
+async function writeMeta(): Promise<void> {
   const meta = {
     titulo: "Fotos oficiales de legisladores y autoridades",
     descripcion:
-      "Cada fila es la foto de un funcionario listado en legisladores.csv o autoridades.csv, tomada del sitio oficial del organismo que la publica (Cámaras legislativas, Gobierno de Mendoza, municipios). La miniatura es un recorte cuadrado de 192 px; el original está archivado en data/raw/fotos. No hay foto de quienes los sitios oficiales no publican.",
+      "Cada fila es la foto de un funcionario listado en legisladores.csv o autoridades.csv, tomada del sitio oficial del organismo que la publica (Cámaras legislativas, Gobierno de Mendoza, municipios). La miniatura es un recorte cuadrado de 192 px y la versión grande, la foto entera con el lado mayor en 800 px como máximo (solo si el original mide al menos 320 px); el original está archivado en data/raw/fotos. No hay foto de quienes los sitios oficiales no publican.",
     columnas: {
       id: { etiqueta: "Identificador", tipo: "texto", oculta: true },
       foto: { etiqueta: "Miniatura", tipo: "texto", descripcion: "Nombre del archivo en data/processed/fotos/ (JPEG 192x192)." },
+      foto_grande: {
+        etiqueta: "Foto grande",
+        tipo: "texto",
+        descripcion: "Nombre del archivo en data/processed/fotos/ (JPEG sin recortar, hasta 800 px). Vacío si el original es muy chico.",
+      },
       foto_original_url: { etiqueta: "Foto original", tipo: "url", descripcion: "Dirección de la imagen en el sitio oficial." },
       pagina_fuente_url: { etiqueta: "Página de origen", tipo: "url" },
       credito: { etiqueta: "Crédito", tipo: "texto", descripcion: "Organismo que publica la foto." },

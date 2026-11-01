@@ -2,6 +2,7 @@ import { Alert } from "@mt/ui/components/alert";
 import { PersonAvatar } from "@mt/ui/components/avatar";
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { cardVariants, listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
+import { ImageViewer } from "@mt/ui/components/image-viewer";
 import { PageHeader, SectionTitle } from "@mt/ui/components/section";
 import { cx } from "@mt/ui/lib/cx";
 import {
@@ -13,10 +14,12 @@ import {
   RiHistoryLine,
   RiMailLine,
   RiMapPinLine,
+  RiPlaneLine,
   RiSurveyLine,
+  RiZoomInLine,
 } from "@remixicon/react";
 import { getRouteApi, Link } from "@tanstack/react-router";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { formatMoneda } from "@/celdas.ts";
 import { BarList } from "@/charts/bar-list.tsx";
 import { Breadcrumbs, WithBreadcrumbs } from "@/components/breadcrumbs.tsx";
@@ -25,6 +28,7 @@ import { FuentesOficiales } from "@/components/official-sources.tsx";
 import { ShareButton } from "@/components/share-button.tsx";
 import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
 import { Career } from "@/features/officials/components/career.tsx";
+import { TripRows } from "@/features/officials/components/trip-rows.tsx";
 import { formatDate, formatNumber, normalizeText } from "@/lib.ts";
 import { ROLES, roleBySlug, slug } from "@/slug.ts";
 import type { Funcionario, FuncionariosTema, GrupoFuncionario, PartyRef } from "@/types.ts";
@@ -122,6 +126,22 @@ export function FuncionariosPage() {
           <span className="font-medium text-text-link">¿Quién ocupó cada cargo antes?</span>
           <span className="text-body-regular text-text-secondary">
             Gobernadores desde 2015, los cargos que ganó cada partido y los ex funcionarios.
+          </span>
+        </span>
+        <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
+      </Link>
+
+      <Link
+        to="/funcionarios/viajes"
+        id="funcionarios-viajes"
+        data-track="officials.trips.open"
+        className={cx(cardVariants(), "flex items-center gap-3")}
+      >
+        <RiPlaneLine className="size-6 shrink-0 text-text-tertiary" aria-hidden />
+        <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+          <span className="font-medium text-text-link">¿A dónde viajaron en misión oficial?</span>
+          <span className="text-body-regular text-text-secondary">
+            Los viajes que autorizó el Gobierno por decreto, quiénes fueron y qué dice cada uno sobre quién pagó.
           </span>
         </span>
         <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
@@ -284,19 +304,55 @@ export function FuncionarioPage() {
   );
 }
 
+/**
+ * Cara de la ficha. Si hay una versión grande de la foto, es un botón que la abre ampliada, con quién la publica;
+ * la lupa abajo a la izquierda avisa que se puede tocar (en el celular no hay hover). La insignia del partido queda
+ * abajo a la derecha, como en todo el sitio.
+ */
+function OfficialFace({ persona: p }: { persona: Funcionario }) {
+  const [open, setOpen] = useState(false);
+  const face = (
+    <PersonAvatar name={p.nombre} photo={p.foto} party={p.party} partyMissing={p.partyMissing} className="size-16 text-headline-regular" />
+  );
+  if (!p.largePhoto) return face;
+  return (
+    <>
+      <button
+        type="button"
+        id="funcionario-foto"
+        data-track="official.photo.open"
+        data-track-role={p.role}
+        aria-label={`Ver la foto de ${p.nombre} más grande`}
+        onClick={() => setOpen(true)}
+        className="group relative shrink-0 cursor-zoom-in rounded-full outline-offset-2 motion-safe:transition-transform motion-safe:duration-150 motion-safe:active:scale-95"
+      >
+        {face}
+        <span
+          aria-hidden
+          className="absolute -bottom-0.5 -left-0.5 flex size-6 items-center justify-center rounded-full bg-background-action text-text-action ring-2 ring-background-full group-hover:bg-background-action-hover"
+        >
+          <RiZoomInLine className="size-3.5" />
+        </span>
+      </button>
+      {open && (
+        <ImageViewer
+          src={p.largePhoto}
+          alt={`Foto de ${p.nombre}`}
+          caption={`${p.nombre}, ${p.cargo}.${p.fotoCredito ? ` Foto: ${p.fotoCredito}.` : ""}`}
+          onClose={() => setOpen(false)}
+        />
+      )}
+    </>
+  );
+}
+
 /** Contenido de la ficha: foto, cargo, mandato, declaración jurada y sueldo publicado. */
 function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: FuncionariosTema["usd"] }) {
   const pedido = PEDIDO_SUELDO[p.grupo];
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center gap-3">
-        <PersonAvatar
-          name={p.nombre}
-          photo={p.foto}
-          party={p.party}
-          partyMissing={p.partyMissing}
-          className="size-16 text-headline-regular"
-        />
+        <OfficialFace persona={p} />
         <div className="flex min-w-0 flex-col gap-0.5">
           <h1 className="text-title-2-semibold tracking-tight text-balance sm:text-title-1-regular">{p.nombre}</h1>
           <span className="text-body-regular text-text-secondary">{p.cargo}</span>
@@ -323,6 +379,21 @@ function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: Fun
       <Declaracion persona={p} usd={usd} />
 
       <Career positions={p.pastPositions ?? []} elected={p.elected ?? []} headingLevel="h4" />
+
+      {p.trips && p.trips.length > 0 && (
+        <section className="flex flex-col gap-2">
+          <h4 className="text-body-semibold">
+            Viajes oficiales <span className="font-normal text-text-tertiary">· {p.trips.length}</span>
+          </h4>
+          <TripRows trips={p.trips} track="official.trip.open" />
+          <p className="text-caption-1-regular text-text-tertiary">
+            Misiones oficiales autorizadas por decreto en el Boletín Oficial.{" "}
+            <Link to="/funcionarios/viajes" data-track="official.trips.open" className="text-text-link hover:underline">
+              Todos los viajes oficiales ›
+            </Link>
+          </p>
+        </section>
+      )}
 
       <section className="flex flex-col gap-2">
         <h4 className="text-body-semibold">Cuánto cobra</h4>

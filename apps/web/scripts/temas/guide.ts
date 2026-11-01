@@ -24,6 +24,7 @@ import type {
   ProveedorResumen,
   SearchEntry,
   SenalesTema,
+  TripsTema,
 } from "../../src/types.ts";
 import type { Pagina } from "../paginas.ts";
 
@@ -121,6 +122,7 @@ export function buildGuide(outDir: string, appointments: Row[]): HomeGuide {
 const KIND_BY_PREFIX: [RegExp, string][] = [
   [/^\/funcionarios\/[^/]+\/[^/]+$/, "Funcionario"],
   [/^\/funcionarios\/historial$/, "Sección"],
+  [/^\/funcionarios\/viajes$/, "Sección"],
   [/^\/funcionarios\/[^/]+$/, "Cargo"],
   [/^\/municipios\/[^/]+$/, "Municipio"],
   [/^\/partidos\/[^/]+$/, "Partido"],
@@ -190,6 +192,7 @@ export function writeSearchIndex(paginas: Pagina[], outDir: string) {
   const signals = read<SenalesTema>("temas/senales.json", { senales: [] } as unknown as SenalesTema).senales;
   const missing = read<NoPublicado[]>("temas/no-publicado.json", []);
   const history = read<HistoryTema>("temas/history.json", { people: [], elections: [], formerCount: 0 });
+  const trips = read<TripsTema>("temas/viajes.json", { trips: [] }).trips;
 
   const byPath = new Map<string, Omit<SearchEntry, "p" | "k">>();
   for (const o of officials) {
@@ -280,6 +283,15 @@ export function writeSearchIndex(paginas: Pagina[], outDir: string) {
       t: h.name,
       s: [h.role, h.agency, h.to ?? h.from].filter(Boolean).join(" · "),
       q: [...new Set([...h.positions.map((x) => x.agency), ...h.elected.map((x) => `${x.role} ${x.place} ${x.party ?? ""}`)])].join(" "),
+    });
+  // Cada viaje oficial: se encuentra por quién viajó (la mayoría no tiene ficha), el destino o el evento.
+  for (const t of trips)
+    entries.push({
+      p: `/funcionarios/viajes?viaje=${t.id}`,
+      k: "Viaje oficial",
+      t: `${t.destination}${t.from ? `, ${t.from.slice(0, 4)}` : ""}`,
+      s: t.travelers.map((x) => x.name).join(", "),
+      q: `${t.countries.join(" ")} ${t.reason} ${t.issuer} ${t.travelers.map((x) => x.role).join(" ")} viaje misión oficial`,
     });
   for (const m of missing)
     entries.push({ p: `/no-publicado?dato=${m.id}`, k: "No se publica", t: m.titulo, s: m.organismo, q: `${m.que_es} ${m.categoria}` });

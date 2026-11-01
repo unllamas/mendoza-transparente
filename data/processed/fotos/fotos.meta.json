@@ -1,6 +1,6 @@
 {
   "titulo": "Fotos oficiales de legisladores y autoridades",
-  "descripcion": "Cada fila es la foto de un funcionario listado en legisladores.csv o autoridades.csv, tomada del sitio oficial del organismo que la publica (Cámaras legislativas, Gobierno de Mendoza, municipios). La miniatura es un recorte cuadrado de 192 px; el original está archivado en data/raw/fotos. No hay foto de quienes los sitios oficiales no publican.",
+  "descripcion": "Cada fila es la foto de un funcionario listado en legisladores.csv o autoridades.csv, tomada del sitio oficial del organismo que la publica (Cámaras legislativas, Gobierno de Mendoza, municipios). La miniatura es un recorte cuadrado de 192 px y la versión grande, la foto entera con el lado mayor en 800 px como máximo (solo si el original mide al menos 320 px); el original está archivado en data/raw/fotos. No hay foto de quienes los sitios oficiales no publican.",
   "columnas": {
     "id": {
       "etiqueta": "Identificador",
@@ -11,6 +11,11 @@
       "etiqueta": "Miniatura",
       "tipo": "texto",
       "descripcion": "Nombre del archivo en data/processed/fotos/ (JPEG 192x192)."
+    },
+    "foto_grande": {
+      "etiqueta": "Foto grande",
+      "tipo": "texto",
+      "descripcion": "Nombre del archivo en data/processed/fotos/ (JPEG sin recortar, hasta 800 px). Vacío si el original es muy chico."
     },
     "foto_original_url": {
       "etiqueta": "Foto original",

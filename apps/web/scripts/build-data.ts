@@ -13,7 +13,7 @@ import { join } from "node:path";
 import { parse as parseYaml } from "yaml";
 
 import { NO_PUBLICADO_CATEGORIES } from "../src/no-publicado-categories.ts";
-import type { DataIndex, DatasetMeta, Diccionario, NoPublicado, Preview, SourceCatalog, SourceMeta } from "../src/types.ts";
+import type { DataIndex, DatasetMeta, Diccionario, NoPublicado, Preview, SourceCatalog, SourceMeta, TripsTema } from "../src/types.ts";
 import { construirPaginas } from "./paginas.ts";
 import { buildAssistantData } from "./temas/assistant-data.ts";
 import { buildPosters, buildRequestTargets } from "./temas/civic-tools.ts";
@@ -38,6 +38,7 @@ import { buildSenales } from "./temas/senales.ts";
 import type { TransparencySurvey } from "./temas/transparency.ts";
 import { buildUniversidades } from "./temas/universidades.ts";
 import { buildUpdates } from "./temas/updates.ts";
+import { attachTrips, buildTrips } from "./temas/viajes.ts";
 
 const ROOT = join(import.meta.dir, "..", "..", "..");
 const RAW_DIR = join(ROOT, "data", "raw");
@@ -461,6 +462,9 @@ if (procesos && adjudicaciones) {
 
   // Gobierno por dentro: una página por organismo (docs/planes/el-estado-por-dentro.md).
   const agencyTable = join(ROOT, "data", "curado", "jurisdicciones.yaml");
+  // Viajes oficiales (/funcionarios/viajes): cada viaje se cruza con las fichas y, en buildGobierno, con su organismo.
+  const trips = buildTrips(readTable("misiones-oficiales", "misiones.csv") ?? [], funcionariosTema);
+  if (funcionariosTema) attachTrips(funcionariosTema.personas, trips);
   if (funcionariosTema && existsSync(agencyTable)) {
     const agencies = buildGobierno(
       parseYaml(readFileSync(agencyTable, "utf8")) as AgencyTable,
@@ -477,11 +481,13 @@ if (procesos && adjudicaciones) {
       readTable("fotos", "fotos.csv") ?? [],
       deflactor(ipcNacional ?? []),
       join(OUT, "temas"),
+      trips,
     );
     writeFileSync(join(OUT, "temas", "gobierno.json"), JSON.stringify(agencies));
     // buildGobierno enlaza a cada autoridad del Ejecutivo con su organismo: reescribir el archivo de autoridades con eso.
     writeFileSync(join(OUT, "temas", "funcionarios.json"), JSON.stringify(funcionariosTema));
   }
+  writeFileSync(join(OUT, "temas", "viajes.json"), JSON.stringify({ trips } satisfies TripsTema));
 }
 /** Lee un YAML de data/curado/ (lista vacía si no existe). */
 // Las novedades semanales (/novedades).

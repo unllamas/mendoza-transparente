@@ -19,6 +19,7 @@ import type {
   OrganismoResumen,
   ProveedorResumen,
   QuarterlyChange,
+  Trip,
 } from "../../src/types.ts";
 import type { Deflactor } from "./inflacion.ts";
 
@@ -50,7 +51,7 @@ export interface AgencyTable {
   equivalencias_lrf: Record<string, string | null>;
 }
 
-const normalize = (s: string) =>
+export const normalize = (s: string) =>
   s
     .normalize("NFD")
     .replace(/\p{Diacritic}/gu, "")
@@ -59,13 +60,13 @@ const normalize = (s: string) =>
     .trim();
 
 /** "DIRECTOR GENERAL DE ADMINISTRACION" → "Director general de administración" (leaves mixed case alone). */
-const sentence = (s: string) => {
+export const sentence = (s: string) => {
   const t = s.replace(/\s+/g, " ").trim();
   if (t !== t.toUpperCase()) return t;
   const low = t.toLowerCase().replace(/\bmendoza\b/g, "Mendoza");
   return low.charAt(0).toUpperCase() + low.slice(1);
 };
-const properName = (s: string) =>
+export const properName = (s: string) =>
   s
     .toLowerCase()
     .replace(/(^|[\s-])(\p{L})/gu, (_, sep: string, l: string) => sep + l.toUpperCase())
@@ -93,7 +94,7 @@ function rank(role: string): number {
 const quarterKey = (r: Row) => `${r.anio}-T${r.trimestre}`;
 
 /** "María Mercedes Rus" and "Mercedes Rus" are the same person: every word of the shorter name is in the longer one. */
-function samePerson(a: string, b: string): boolean {
+export function samePerson(a: string, b: string): boolean {
   const [x, y] = [normalize(a).split(" "), normalize(b).split(" ")].sort((p, q) => p.length - q.length);
   return x!.length >= 2 && x!.every((w) => y!.includes(w));
 }
@@ -120,6 +121,7 @@ export function buildGobierno(
   photoRows: Row[],
   inflation: Deflactor | null,
   outDir: string,
+  trips: Trip[] = [],
 ): AgencySummary[] {
   mkdirSync(join(outDir, "gobierno"), { recursive: true });
   const byId = new Map(table.organismos.map((o) => [o.id, o]));
@@ -294,6 +296,19 @@ export function buildGobierno(
         url: a.url_pdf!,
       }));
 
+    // Viajes oficiales que tramitó el organismo: mismo cruce por nombre que las designaciones. Marca el organismo en el viaje.
+    // El Boletín a veces escribe el organismo sin artículos ("MINISTERIO HACIENDA Y FINANZAS"): se comparan sin ellos.
+    const bare = (s: string) =>
+      s
+        .replace(/\b(?:de|del|la|las|los|y)\b/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    const agencyTrips = trips.filter((t) => {
+      const issuer = bare(normalize(t.issuer));
+      return nameKeys.some((k) => k && (issuer === bare(k) || issuer.includes(bare(k))));
+    });
+    for (const t of agencyTrips) t.agency ??= { slug: o.id, name: o.nombre };
+
     const parent = o.depende_de && byId.get(o.depende_de) ? { slug: o.depende_de, name: byId.get(o.depende_de)!.nombre } : null;
     const detail: AgencyDetail = {
       slug: o.id,
@@ -326,6 +341,15 @@ export function buildGobierno(
       teamTotal: team.length,
       purchases,
       appointments: agencyAppointments,
+      trips: agencyTrips.slice(0, 15).map(({ id, from, destination, countries, reason, cost, travelers }) => ({
+        id,
+        from,
+        destination,
+        countries,
+        reason,
+        cost,
+        travelers: travelers.map((x) => x.name),
+      })),
       budget,
     };
     details.push(detail);
