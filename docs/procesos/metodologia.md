@@ -223,6 +223,7 @@ Los viajes de funcionarios autorizados por decreto (`misiones-oficiales`, deriva
   - `sin_viaticos`: solo dice que no se pagan viáticos; los pasajes pueden haberse pagado igual.
   - `no_informa`: no dice nada. **No significa que el viaje no haya costado nada.**
 - **Fechas:** `desde` y `hasta` son las autorizadas. Muchas normas dicen «hasta la finalización de las actividades oficiales» y quedan sin `hasta`. La norma suele firmarse y publicarse después del viaje.
+- **Dónde se ve:** en `/funcionarios/viajes`, en la ficha de cada funcionario que viajó y en la página del organismo que tramitó el decreto (cruce por nombre, como las designaciones). Cada viaje junta a todas las personas del mismo decreto.
 - **Cómo se presenta:** como un registro de lo que el Gobierno autorizó, nunca como una sospecha. Un viaje frecuente o sin costo informado es una pregunta para hacer (cuánto costó), no una irregularidad. El monto se pide por la Ley 9070 (`data/curado/no-publicado.yaml`, `costo-misiones-oficiales`).
 - **Qué falta:** los viajes del Gobernador los autoriza la Legislatura y no aparecen. Tampoco los de organismos que no publican en el Boletín, ni los que se autorizan con una norma cuyo sumario no dice «misión oficial». Las normas que el backfill liviano trajo solo con el índice se completan con `bun run scrape misiones-oficiales --faltantes` y `bun run scrape boletin-oficial --ids=<lista>`.
 

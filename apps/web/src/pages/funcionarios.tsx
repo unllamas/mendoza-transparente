@@ -13,6 +13,7 @@ import {
   RiHistoryLine,
   RiMailLine,
   RiMapPinLine,
+  RiPlaneLine,
   RiSurveyLine,
 } from "@remixicon/react";
 import { getRouteApi, Link } from "@tanstack/react-router";
@@ -25,6 +26,7 @@ import { FuentesOficiales } from "@/components/official-sources.tsx";
 import { ShareButton } from "@/components/share-button.tsx";
 import { TrackedSegmented } from "@/components/tracked-segmented.tsx";
 import { Career } from "@/features/officials/components/career.tsx";
+import { TripRows } from "@/features/officials/components/trip-rows.tsx";
 import { formatDate, formatNumber, normalizeText } from "@/lib.ts";
 import { ROLES, roleBySlug, slug } from "@/slug.ts";
 import type { Funcionario, FuncionariosTema, GrupoFuncionario, PartyRef } from "@/types.ts";
@@ -122,6 +124,22 @@ export function FuncionariosPage() {
           <span className="font-medium text-text-link">¿Quién ocupó cada cargo antes?</span>
           <span className="text-body-regular text-text-secondary">
             Gobernadores desde 2015, los cargos que ganó cada partido y los ex funcionarios.
+          </span>
+        </span>
+        <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
+      </Link>
+
+      <Link
+        to="/funcionarios/viajes"
+        id="funcionarios-viajes"
+        data-track="officials.trips.open"
+        className={cx(cardVariants(), "flex items-center gap-3")}
+      >
+        <RiPlaneLine className="size-6 shrink-0 text-text-tertiary" aria-hidden />
+        <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+          <span className="font-medium text-text-link">¿A dónde viajaron en misión oficial?</span>
+          <span className="text-body-regular text-text-secondary">
+            Los viajes que autorizó el Gobierno por decreto, quiénes fueron y qué dice cada uno sobre quién pagó.
           </span>
         </span>
         <RiArrowRightSLine className="size-5 shrink-0 text-text-link" aria-hidden />
@@ -323,6 +341,21 @@ function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: Fun
       <Declaracion persona={p} usd={usd} />
 
       <Career positions={p.pastPositions ?? []} elected={p.elected ?? []} headingLevel="h4" />
+
+      {p.trips && p.trips.length > 0 && (
+        <section className="flex flex-col gap-2">
+          <h4 className="text-body-semibold">
+            Viajes oficiales <span className="font-normal text-text-tertiary">· {p.trips.length}</span>
+          </h4>
+          <TripRows trips={p.trips} track="official.trip.open" />
+          <p className="text-caption-1-regular text-text-tertiary">
+            Misiones oficiales autorizadas por decreto en el Boletín Oficial.{" "}
+            <Link to="/funcionarios/viajes" data-track="official.trips.open" className="text-text-link hover:underline">
+              Todos los viajes oficiales ›
+            </Link>
+          </p>
+        </section>
+      )}
 
       <section className="flex flex-col gap-2">
         <h4 className="text-body-semibold">Cuánto cobra</h4>

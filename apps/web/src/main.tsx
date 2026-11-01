@@ -39,6 +39,7 @@ import type {
   RecaudacionTema,
   RequestTarget,
   SenalesTema,
+  TripsTema,
   UniversidadesTema,
   WeeklyUpdate,
 } from "./types.ts";
@@ -154,6 +155,14 @@ const historyRoute = createRoute({
   path: "/funcionarios/historial",
   loader: () => loadTema<HistoryTema>("history"),
   component: page(() => import("./pages/history.tsx"), "HistoryPage"),
+});
+
+// Estática, así gana sobre /funcionarios/$role.
+const tripsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/funcionarios/viajes",
+  loader: () => loadTema<TripsTema>("viajes"),
+  component: page(() => import("./pages/trips.tsx"), "TripsPage"),
 });
 
 const roleRoute = createRoute({
@@ -413,6 +422,7 @@ const router = createRouter({
     poblacionRoute,
     funcionariosRoute,
     historyRoute,
+    tripsRoute,
     roleRoute,
     funcionarioRoute,
     partiesRoute,

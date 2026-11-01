@@ -25,11 +25,12 @@ import { Breadcrumbs, WithBreadcrumbs } from "@/components/breadcrumbs.tsx";
 import { FuentesOficiales } from "@/components/official-sources.tsx";
 import { ShareButton } from "@/components/share-button.tsx";
 import { StaffChange } from "@/components/staff-change.tsx";
+import { TripRows } from "@/features/officials/components/trip-rows.tsx";
 import { GOBIERNOS } from "@/gobiernos.ts";
 import { formatDate, formatNumber } from "@/lib.ts";
 import type { AgencyDetail, AgencySummary, GobiernoOverview } from "@/types.ts";
 
-const SOURCES = ["lrf-personal", "etica-publica", "compras-ocds", "designaciones"];
+const SOURCES = ["lrf-personal", "etica-publica", "compras-ocds", "designaciones", "misiones-oficiales"];
 const listApi = getRouteApi("/gobierno");
 const detailApi = getRouteApi("/gobierno/$slug");
 
@@ -172,6 +173,7 @@ function withDefaults(a: AgencyDetail | null): AgencyDetail | null {
     team: a.team ?? [],
     teamTotal: a.teamTotal ?? 0,
     appointments: a.appointments ?? [],
+    trips: a.trips ?? [],
     budget: a.budget ?? [],
   };
 }
@@ -411,6 +413,18 @@ export function AgencyPage() {
           nombramientos se publican en el Boletín.
         </p>
       </Section>
+
+      {a.trips && a.trips.length > 0 && (
+        <Section id="viajes" title="Viajes oficiales">
+          <TripRows trips={a.trips} showTravelers track="agency.trip.open" />
+          <p className="text-caption-1-regular text-text-tertiary">
+            Misiones oficiales que tramitó este organismo, según los decretos del Boletín Oficial.{" "}
+            <Link to="/funcionarios/viajes" data-track="agency.trips.open" className="text-text-link hover:underline">
+              Todos los viajes oficiales ›
+            </Link>
+          </p>
+        </Section>
+      )}
 
       {a.children.length > 0 && (
         <Section id="organismos" title="Organismos que dependen de este">

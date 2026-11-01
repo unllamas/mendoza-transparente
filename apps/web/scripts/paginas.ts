@@ -42,6 +42,7 @@ import type {
   ProveedorResumen,
   RecaudacionTema,
   SenalesTema,
+  TripsTema,
   UniversidadesTema,
   WeeklyUpdate,
 } from "../src/types.ts";
@@ -203,6 +204,7 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
   const universidades = await json<UniversidadesTema | null>("temas/universidades.json", null);
   const funcionarios = await json<FuncionariosTema>("temas/funcionarios.json", { personas: [] });
   const historial = await json<HistoryTema>("temas/history.json", { people: [], elections: [], formerCount: 0 });
+  const viajes = await json<TripsTema>("temas/viajes.json", { trips: [] });
   const municipios = await json<MunicipioPagina[]>("temas/municipios.json", []);
   const partidos = await json<PartySummary[]>("temas/partidos.json", []);
   const organismos = await json<OrganismoResumen[]>("temas/organismos.json", []);
@@ -877,6 +879,78 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
     });
   }
 
+  // Viajes oficiales: /funcionarios/viajes (cada viaje se abre en una hoja, así que no tiene página propia).
+  if (viajes.trips.length) {
+    const path = "/funcionarios/viajes";
+    const migas: Miga[] = [
+      ["/", "Inicio"],
+      ["/funcionarios", "Funcionarios"],
+      [path, "Viajes oficiales"],
+    ];
+    const trips = viajes.trips;
+    const people = new Set(trips.flatMap((t) => t.travelers.map((x) => x.name))).size;
+    const countries = [...new Set(trips.flatMap((t) => t.countries))];
+    const paid = trips.filter((t) => t.cost === "paga_provincia").length;
+    const silent = trips.filter((t) => t.cost === "no_informa").length;
+    const firstYear = trips.map((t) => (t.from ?? t.normDate ?? t.published).slice(0, 4)).sort()[0];
+    const resumen = `${nf.format(trips.length)} viajes en misión oficial autorizados por decreto desde ${firstYear}: ${nf.format(people)} personas a ${nf.format(countries.length)} países. En ${nf.format(paid)} el decreto dice que paga la Provincia; ${nf.format(silent)} no dicen nada sobre el costo y ninguno trae el monto.`;
+    paginas.push({
+      path,
+      title: titulo("Viajes oficiales de funcionarios de Mendoza"),
+      description: descripcion(resumen),
+      og: {
+        slug: "funcionarios-viajes",
+        eyebrow: "FUNCIONARIOS",
+        titulo: "Viajes oficiales",
+        figura: `${nf.format(trips.length)} viajes`,
+        bajada: "A dónde viajaron los funcionarios de Mendoza, para qué y quién lo pagó.",
+      },
+      ld: [
+        breadcrumb(migas),
+        {
+          "@type": "Dataset",
+          name: "Misiones oficiales de funcionarios de Mendoza",
+          description: resumen,
+          url: url(path),
+          license: "https://creativecommons.org/licenses/by/4.0/",
+          creator: { "@type": "Organization", name: "Mendoza Transparente" },
+          isBasedOn: "https://boe.mendoza.gov.ar/",
+        },
+        faq([
+          [
+            "¿Cuánto cuestan los viajes oficiales de los funcionarios de Mendoza?",
+            `Ningún decreto de misión oficial publicado en el Boletín Oficial trae el monto. En ${nf.format(paid)} de ${nf.format(trips.length)} el decreto dice que la Provincia paga pasajes, estadía o viáticos, y ${nf.format(silent)} no dicen nada sobre el costo. El gasto se puede pedir con la Ley 9070.`,
+          ],
+          [
+            "¿A qué países viajan los funcionarios de Mendoza?",
+            `Según los decretos de misión oficial: ${countries.slice(0, 10).join(", ")}.`,
+          ],
+        ]),
+      ],
+      html: cuerpo({
+        migas,
+        h1: "Viajes oficiales",
+        resumen,
+        secciones: [
+          {
+            titulo: "Todos los viajes",
+            items: trips.map((t) => ({
+              texto: `${t.from ? `${fechaLarga(t.from)}, ` : ""}${t.destination}: ${t.travelers.map((x) => x.name).join(", ")}${t.reason ? ` (${t.reason})` : ""}`,
+              href: `${path}?viaje=${t.id}`,
+            })),
+          },
+        ],
+        fuente: { nombre: "Boletín Oficial de Mendoza", url: "https://boe.mendoza.gov.ar/" },
+      }),
+      lastmod:
+        trips
+          .map((t) => t.published)
+          .sort()
+          .at(-1) ?? hoy,
+      prioridad: 0.7,
+    });
+  }
+
   // One page per role: /funcionarios/diputados-provinciales
   for (const [key, role] of Object.entries(ROLES)) {
     const people = funcionarios.personas.filter((p) => p.grupo === key);
@@ -1007,6 +1081,13 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
             titulo: "Elecciones que ganó",
             items: (p.elected ?? []).map((e) => ({
               texto: `${e.date.slice(0, 4)}: ${e.role}, ${e.place}${e.party ? ` (${e.party})` : ""}`,
+            })),
+          },
+          {
+            titulo: "Viajes oficiales",
+            items: (p.trips ?? []).map((t) => ({
+              texto: `${t.from ? `${fechaLarga(t.from)}: ` : ""}${t.destination}${t.reason ? `, ${t.reason}` : ""}`,
+              href: `/funcionarios/viajes?viaje=${t.id}`,
             })),
           },
           {
