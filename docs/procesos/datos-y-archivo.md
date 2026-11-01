@@ -59,6 +59,7 @@ Además de los archivos, el repositorio completo (código, datos e historial) ti
 - Montos en pesos **nominales**, con su escala real (pesos, no miles ni millones, salvo que la columna lo diga).
 - Junto a cada CSV, su diccionario `<archivo>.meta.json` (formato en [`docs/diccionario-de-datos.md`](../diccionario-de-datos.md)).
 - Se regeneran completos en cada corrida del scraper.
+- `bun run mapa-de-datos` dice qué app usa cada CSV y `--sin-uso` lista los que no muestra ninguna página, ficha ni el asistente (todos se descargan en `/datos`). Cuando un dato cambia de etapa (se procesa, se empieza a mostrar, se pide), se actualiza el [mapa de datos](../planes/mapa-de-datos.md) en el mismo PR.
 
 ## Contenido curado
 
