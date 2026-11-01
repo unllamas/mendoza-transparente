@@ -1,7 +1,7 @@
 /**
- * Actualización manual de datos desde una computadora en Argentina: respaldo de la actualización
- * automática en GitHub Actions, sobre todo para los sitios que rechazan a los servidores en la nube
- * (Boletín Oficial, Senado de Mendoza y Ética Pública).
+ * Actualización manual de datos desde una computadora en Argentina. Se corre todos los lunes: es la única
+ * forma de actualizar los sitios que rechazan a los servidores en la nube (Boletín Oficial, Senado de
+ * Mendoza y Ética Pública), porque no hay proxy. Sirve también para reintentar cualquier otra fuente.
  *
  * Uso (desde la raíz del repo):
  *   bun run actualizar                     fuentes bloqueadas en la nube (Boletín Oficial, Legislatura y Ética Pública)
@@ -10,8 +10,9 @@
  *   bun run actualizar --si                publica sin preguntar
  *   bun run actualizar --sin-publicar      solo descarga y muestra el resumen y los cambios contra dev
  *
- * Pasos: corre cada scraper, muestra qué cambió contra dev (filas nuevas, filas que ya no están, archivos
- * borrados), comprueba que la web compile con los datos nuevos, pide confirmación y hace commit y push solo
+ * Pasos: corre cada scraper (si corrió el Boletín Oficial, también las designaciones, las misiones
+ * oficiales y los resúmenes de las leyes nuevas, igual que el workflow), muestra qué cambió contra dev
+ * (filas nuevas, filas que ya no están, archivos borrados), comprueba que la web compile con los datos nuevos, pide confirmación y hace commit y push solo
  * de data/ (nunca de código que se esté editando) en una rama que sale de dev, con un PR a dev. Nunca
  * publica en main: los datos llegan a producción con la próxima publicación de dev.
  * Documentado en docs/procesos/actualizacion-de-datos.md.
@@ -51,7 +52,8 @@ const TODAS = [
 
 const hace = (dias: number) => new Date(Date.now() - dias * 864e5).toISOString().slice(0, 10);
 const ARGS: Record<string, string[]> = {
-  "boletin-oficial": ["--desde", hace(7), "--hasta", hace(0)],
+  // 10 días, como el workflow: un lunes salteado no deja huecos si se corre antes del siguiente.
+  "boletin-oficial": ["--desde", hace(10), "--hasta", hace(0)],
   dnap: ["--refresh"],
   "etica-publica": ["--refresh"],
 };
@@ -59,7 +61,12 @@ const ARGS: Record<string, string[]> = {
 const args = process.argv.slice(2);
 const flags = new Set(args.filter((a) => a.startsWith("--")));
 const pedidas = args.filter((a) => !a.startsWith("--"));
-const fuentes = flags.has("--todas") ? TODAS : pedidas.length ? pedidas : BLOQUEADAS;
+// Fuentes derivadas del Boletín Oficial: leen sus normas (no descargan nada), así que van después.
+const DERIVADAS_DEL_BOLETIN = ["designaciones", "misiones-oficiales"];
+const elegidas = flags.has("--todas") ? TODAS : pedidas.length ? pedidas : BLOQUEADAS;
+const fuentes = elegidas.includes("boletin-oficial")
+  ? [...elegidas.filter((f) => !DERIVADAS_DEL_BOLETIN.includes(f)), ...DERIVADAS_DEL_BOLETIN]
+  : elegidas;
 
 async function sh(cmd: string[], cwd = ROOT, silencioso = false): Promise<{ ok: boolean; salida: string }> {
   const proc = Bun.spawn(cmd, { cwd, stdout: "pipe", stderr: "pipe" });
@@ -85,6 +92,18 @@ for (const fuente of fuentes) {
   console.log(ok ? `listo (${archivos} archivos nuevos o modificados, ${segundos} s)` : `FALLÓ (${segundos} s)`);
 }
 
+// Resúmenes en lenguaje simple de las leyes nuevas, como en el workflow. Sin la clave, se publican sin resumen.
+if (resultados.some((r) => r.fuente === "boletin-oficial" && r.ok)) {
+  if (process.env.ANTHROPIC_API_KEY) {
+    process.stdout.write("→ resúmenes de leyes … ");
+    const ok =
+      (await sh(["bun", "run", "data"], join(ROOT, "apps", "web"))).ok && (await sh(["bun", "apps/web/scripts/resumir-leyes.ts"])).ok;
+    console.log(ok ? "listo" : "FALLÓ (las leyes nuevas se publican sin resumen)");
+  } else {
+    console.log("→ resúmenes de leyes: falta ANTHROPIC_API_KEY, las leyes nuevas se publican sin resumen.");
+  }
+}
+
 console.log("\nResumen");
 console.table(resultados.map((r) => ({ fuente: r.fuente, estado: r.ok ? "ok" : "falló", archivos: r.archivos, segundos: r.segundos })));
 
@@ -95,7 +114,7 @@ if (cambios.length === 0) {
 }
 console.log(`${cambios.length} archivos con cambios en data/.`);
 
-// What changed against dev, the branch the data PR goes to: new rows, rows that disappear, deleted files.
+// Qué cambia contra dev, la rama a la que va el PR de datos: filas nuevas, filas que desaparecen y archivos borrados.
 await sh(["git", "fetch", "-q", "origin", "dev"], ROOT, true);
 await sh(["git", "add", "-A", "--", "data"]);
 const informe = await sh(["bun", "scripts/data-changes.ts", "--base", "origin/dev", "--out", join(ROOT, "tmp", "cambios-datos.md")]);
@@ -115,7 +134,7 @@ if (!build) {
 }
 console.log("La web compila.");
 
-// Data goes to dev through a PR, never straight to main (docs/procesos/ramas-y-releases.md#datos).
+// Los datos van a dev por un PR, nunca directo a main (docs/procesos/ramas-y-releases.md#datos).
 let branch = (await sh(["git", "branch", "--show-current"], ROOT, true)).salida.trim();
 if (branch === "main") {
   console.error("Estás en main y los datos no se publican ahí. Pasate a dev (git switch dev && git pull) y volvé a correrlo.");
