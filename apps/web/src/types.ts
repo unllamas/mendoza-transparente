@@ -278,6 +278,8 @@ export interface Funcionario {
   nota: string | null;
   /** Miniatura de la foto oficial y organismo que la publica. */
   foto: string | null;
+  /** La foto entera, más grande, para verla ampliada al tocar la cara. Null si el original es muy chico. */
+  largePhoto: string | null;
   fotoCredito: string | null;
   cargo: string;
   grupo: GrupoFuncionario;

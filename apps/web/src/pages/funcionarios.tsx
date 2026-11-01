@@ -2,6 +2,7 @@ import { Alert } from "@mt/ui/components/alert";
 import { PersonAvatar } from "@mt/ui/components/avatar";
 import { buttonClassName } from "@mt/ui/components/base/buttons/button";
 import { cardVariants, listRowVariants, listVariants, tileVariants } from "@mt/ui/components/card";
+import { ImageViewer } from "@mt/ui/components/image-viewer";
 import { PageHeader, SectionTitle } from "@mt/ui/components/section";
 import { cx } from "@mt/ui/lib/cx";
 import {
@@ -14,9 +15,10 @@ import {
   RiMailLine,
   RiMapPinLine,
   RiSurveyLine,
+  RiZoomInLine,
 } from "@remixicon/react";
 import { getRouteApi, Link } from "@tanstack/react-router";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { formatMoneda } from "@/celdas.ts";
 import { BarList } from "@/charts/bar-list.tsx";
 import { Breadcrumbs, WithBreadcrumbs } from "@/components/breadcrumbs.tsx";
@@ -284,19 +286,55 @@ export function FuncionarioPage() {
   );
 }
 
+/**
+ * Cara de la ficha. Si hay una versión grande de la foto, es un botón que la abre ampliada, con quién la publica;
+ * la lupa abajo a la izquierda avisa que se puede tocar (en el celular no hay hover). La insignia del partido queda
+ * abajo a la derecha, como en todo el sitio.
+ */
+function OfficialFace({ persona: p }: { persona: Funcionario }) {
+  const [open, setOpen] = useState(false);
+  const face = (
+    <PersonAvatar name={p.nombre} photo={p.foto} party={p.party} partyMissing={p.partyMissing} className="size-16 text-headline-regular" />
+  );
+  if (!p.largePhoto) return face;
+  return (
+    <>
+      <button
+        type="button"
+        id="funcionario-foto"
+        data-track="official.photo.open"
+        data-track-role={p.role}
+        aria-label={`Ver la foto de ${p.nombre} más grande`}
+        onClick={() => setOpen(true)}
+        className="group relative shrink-0 cursor-zoom-in rounded-full outline-offset-2 motion-safe:transition-transform motion-safe:duration-150 motion-safe:active:scale-95"
+      >
+        {face}
+        <span
+          aria-hidden
+          className="absolute -bottom-0.5 -left-0.5 flex size-6 items-center justify-center rounded-full bg-background-action text-text-action ring-2 ring-background-full group-hover:bg-background-action-hover"
+        >
+          <RiZoomInLine className="size-3.5" />
+        </span>
+      </button>
+      {open && (
+        <ImageViewer
+          src={p.largePhoto}
+          alt={`Foto de ${p.nombre}`}
+          caption={`${p.nombre}, ${p.cargo}.${p.fotoCredito ? ` Foto: ${p.fotoCredito}.` : ""}`}
+          onClose={() => setOpen(false)}
+        />
+      )}
+    </>
+  );
+}
+
 /** Contenido de la ficha: foto, cargo, mandato, declaración jurada y sueldo publicado. */
 function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: FuncionariosTema["usd"] }) {
   const pedido = PEDIDO_SUELDO[p.grupo];
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center gap-3">
-        <PersonAvatar
-          name={p.nombre}
-          photo={p.foto}
-          party={p.party}
-          partyMissing={p.partyMissing}
-          className="size-16 text-headline-regular"
-        />
+        <OfficialFace persona={p} />
         <div className="flex min-w-0 flex-col gap-0.5">
           <h1 className="text-title-2-semibold tracking-tight text-balance sm:text-title-1-regular">{p.nombre}</h1>
           <span className="text-body-regular text-text-secondary">{p.cargo}</span>
