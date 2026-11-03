@@ -16,8 +16,6 @@ import {
   RiCoinsLine,
   RiEyeOffLine,
   RiFileTextLine,
-  RiGitBranchLine,
-  RiGlobalLine,
   RiGroupLine,
   RiImageLine,
   RiMapPinLine,
@@ -41,7 +39,7 @@ import { formatDate } from "@/lib.ts";
 import { usePageMeta } from "@/seo.ts";
 import { DetailSheet } from "./detail-sheet.tsx";
 import { NavigationProgress } from "./navigation-progress.tsx";
-import { REPO, useSourceCatalog } from "./official-sources.tsx";
+import { useSourceCatalog } from "./official-sources.tsx";
 import { ReportErrorBand } from "./report-error.tsx";
 import { HeaderSearchButton, SearchDialog } from "./search-dialog.tsx";
 import { UiProviders } from "./ui-providers.tsx";
@@ -49,7 +47,7 @@ import { UiProviders } from "./ui-providers.tsx";
 type Item = { to: string; label: string; descripcion: string; icon: RemixiconComponentType };
 type Grupo = { label: string; items: Item[] };
 
-/** Navigation: main destinations and dropdown groups. `live` adds the blinking yellow dot that calls attention to it. */
+/** Navegación: destinos principales y grupos desplegables. `live` suma el punto amarillo titilante que llama la atención. */
 const PRINCIPALES: { to: string; label: string; live?: boolean }[] = [{ to: "/senales", label: "Para mirar de cerca", live: true }];
 
 const GRUPOS: Grupo[] = [
@@ -94,13 +92,7 @@ const GRUPOS: Grupo[] = [
   },
 ];
 
-const AUTOR = {
-  nombre: "Jona Llamas",
-  web: "https://jonallamas.com",
-  x: "https://x.com/unllamas",
-};
-
-/** Friend sites listed in the footer. To add one, append it here: the UTM parameters and tracking are added automatically. */
+/** Sitios amigos del pie. Para sumar uno, se agrega acá: los parámetros UTM y el trackeo se ponen solos. */
 const FRIEND_SITES = [
   { name: "Municipios Argentinos", url: "https://municipiosargentinos.net/" },
   { name: "Datos Hoy", url: "https://www.datoshoy.com/" },
@@ -116,7 +108,7 @@ function withUtm(url: string) {
   return u.href;
 }
 
-/** Whether the page is scrolled to the top. Only listens while `enabled`. */
+/** Si la página está arriba de todo. Solo escucha mientras `enabled` es verdadero. */
 function useAtTop(enabled: boolean) {
   const [atTop, setAtTop] = useState(true);
   useEffect(() => {
@@ -135,13 +127,13 @@ export function Layout() {
   usePageMeta(pathname);
   useEffect(() => trackPageview(pathname), [pathname]);
   const [abierto, setAbierto] = useState(false);
-  // The home page hero runs full width under the header: there the header has no background or border
-  // until the page scrolls, and the page sets its own width.
+  // En la portada el hero ocupa todo el ancho debajo del encabezado: ahí el encabezado no tiene fondo ni borde
+  // hasta que la página se desplaza, y la página define su propio ancho.
   const isHome = pathname === "/";
   const atTop = useAtTop(isHome);
 
   // El menú se cierra al navegar y la página no se desplaza detrás mientras está abierto.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: close the menu whenever the route changes.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: el menú se cierra cada vez que cambia la ruta.
   useEffect(() => setAbierto(false), [pathname]);
 
   return (
@@ -191,8 +183,8 @@ export function Layout() {
 
         {/* Fuera del header: su backdrop-blur haría que el panel fijo se mida contra el header y no contra la pantalla. */}
         {abierto && (
-          // Full-screen panel with its own top bar: it never depends on the page header, which can scroll away on
-          // phones while the page is scroll-locked (sticky stops working when <html> has overflow: hidden).
+          // Panel a pantalla completa con su propia barra: no depende del encabezado de la página, que en el celular
+          // puede quedar fuera de vista mientras el desplazamiento está bloqueado (sticky deja de andar con overflow: hidden en <html>).
           <Dialog
             label="Menú"
             onClose={() => setAbierto(false)}
@@ -268,14 +260,6 @@ export function Layout() {
                 Proyecto ciudadano, independiente y apartidario. Cada número enlaza a su fuente oficial y los archivos originales se guardan
                 tal cual se descargaron.
               </p>
-              <a
-                href={REPO}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex w-fit items-center gap-1.5 text-text-link hover:underline"
-              >
-                <RiGitBranchLine className="size-4" aria-hidden /> Código y datos abiertos en GitHub
-              </a>
               <Link
                 to="/novedades"
                 className="inline-flex w-fit items-center gap-1.5 text-text-link hover:underline"
@@ -283,7 +267,7 @@ export function Layout() {
               >
                 <RiMegaphoneLine className="size-4" aria-hidden /> Novedades de cada semana
               </Link>
-              {/* The line is always there (empty while it loads), so the footer does not grow when the date arrives. */}
+              {/* La línea está siempre (vacía mientras carga), así el pie no crece cuando llega la fecha. */}
               <p className="min-h-[1lh] text-text-tertiary">
                 {sourceCatalog && `Datos actualizados al ${formatDate(sourceCatalog.generatedAt)}`}
               </p>
@@ -311,33 +295,6 @@ export function Layout() {
                 </ul>
               </nav>
             </div>
-
-            <div className="flex max-w-sm flex-col gap-2 text-body-regular">
-              <span className="text-text-tertiary">Hecho por</span>
-              <span className="text-body-semibold">{AUTOR.nombre}</span>
-              <p className="text-text-secondary text-pretty">
-                Indie hacker y product engineer desde Argentina. Construye proyectos open source pensados para usarse fuera del laboratorio,
-                como este.
-              </p>
-              <div className="flex flex-wrap gap-x-4 gap-y-1">
-                <a
-                  href={AUTOR.x}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 text-text-link hover:underline"
-                >
-                  <XLogo /> @unllamas
-                </a>
-                <a
-                  href={AUTOR.web}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 text-text-link hover:underline"
-                >
-                  <RiGlobalLine className="size-4" aria-hidden /> jonallamas.com
-                </a>
-              </div>
-            </div>
           </div>
         </footer>
       </div>
@@ -351,7 +308,7 @@ function Desplegable({ grupo, pathname }: { grupo: Grupo; pathname: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const activo = grupo.items.some((i) => pathname.startsWith(i.to));
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: close the dropdown whenever the route changes.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: el desplegable se cierra cada vez que cambia la ruta.
   useEffect(() => setAbierto(false), [pathname]);
   useEffect(() => {
     if (!abierto) return;
@@ -397,14 +354,5 @@ function Desplegable({ grupo, pathname }: { grupo: Grupo; pathname: string }) {
         </div>
       )}
     </div>
-  );
-}
-
-/** Logo de X (el set de íconos no lo incluye). */
-function XLogo() {
-  return (
-    <svg viewBox="0 0 24 24" className="size-3.5 fill-current" aria-hidden>
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-    </svg>
   );
 }
