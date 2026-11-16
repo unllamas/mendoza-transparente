@@ -31,6 +31,7 @@ import { Career } from "@/features/officials/components/career.tsx";
 import { TripRows } from "@/features/officials/components/trip-rows.tsx";
 import { formatDate, formatNumber, normalizeText } from "@/lib.ts";
 import { ROLES, roleBySlug, slug } from "@/slug.ts";
+import { officialSummary } from "@/summaries.ts";
 import type { Funcionario, FuncionariosTema, GrupoFuncionario, PartyRef } from "@/types.ts";
 import { useSetUrlParams, useUrlOption, useUrlText } from "@/url-state.ts";
 
@@ -358,6 +359,8 @@ function FichaFuncionario({ persona: p, usd }: { persona: Funcionario; usd?: Fun
           <span className="text-body-regular text-text-secondary">{p.cargo}</span>
         </div>
       </div>
+
+      <p className="text-headline-regular text-pretty text-text-secondary">{officialSummary(p)}</p>
 
       {p.nota && <Alert title="Atención">{p.nota}</Alert>}
 

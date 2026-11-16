@@ -26,6 +26,8 @@ import { Proveedor } from "@/components/purchase-detail.tsx";
 import { ShareButton } from "@/components/share-button.tsx";
 import { formatDate, formatNumber, limpiarOrganismo, normalizeText } from "@/lib.ts";
 import { slugProveedor } from "@/slug.ts";
+import { agencySummary, supplierSummary } from "@/summaries.ts";
+import type { ProveedorDetalle } from "@/types.ts";
 import { useUrlText } from "@/url-state.ts";
 
 const FUENTES = ["compras-ocds", "proveedores"];
@@ -95,6 +97,22 @@ export function ProveedoresPage() {
   );
 }
 
+/** El resumen de la ficha de un proveedor, con el organismo que más le compró si son varios. */
+function supplierSummaryOf(p: ProveedorDetalle, name: string): string {
+  const main = p.organismos.length > 1 ? p.organismos[0] : null;
+  return supplierSummary({
+    name,
+    total: p.total,
+    processes: p.procesos,
+    first: p.primera,
+    last: p.ultima,
+    companyType: p.empresa?.tipoSocietario ?? null,
+    place: p.empresa?.localidad ?? null,
+    activity: p.empresa?.actividad ?? null,
+    mainBuyer: main && p.total > 0 ? { name: limpiarOrganismo(main.nombre), pct: (main.monto / p.total) * 100 } : null,
+  });
+}
+
 export function ProveedorPage() {
   const { ficha, cuit } = proveedorRoute.useLoaderData();
   const { slug } = proveedorRoute.useParams();
@@ -128,7 +146,10 @@ export function ProveedorPage() {
             items={[{ label: "Proveedores", to: "/proveedores" }]}
             current={{ label: `CUIT ${cuit}`, icon: RiBuilding2Line }}
           >
-            <h1 className="text-title-1-semibold tracking-tight text-balance break-words sm:text-display-4-semibold">{nombre}</h1>
+            <div className="flex flex-col gap-3">
+              <h1 className="text-title-1-semibold tracking-tight text-balance break-words sm:text-display-4-semibold">{nombre}</h1>
+              <p className="text-headline-regular text-pretty text-text-secondary">{supplierSummaryOf(ficha, nombre)}</p>
+            </div>
           </WithBreadcrumbs>
         }
         onProceso={(ocid) => detail.open("proceso", ocid)}
@@ -211,7 +232,14 @@ export function OrganismoPage() {
           <>
             <WithBreadcrumbs items={[{ label: "Organismos", to: "/organismos" }]} current={{ label: nombre, icon: RiBankLine }}>
               <PageHeader action={<ShareButton />} title={nombre}>
-                Cuánto compró, a quiénes y con qué modalidad.
+                {agencySummary({
+                  name: nombre,
+                  total: o.total,
+                  processes: o.procesos,
+                  pctDirect: o.pctDirecta,
+                  pctOneOffer: o.pctUnaOferta,
+                  mainSupplier: o.proveedorPrincipal,
+                })}
               </PageHeader>
             </WithBreadcrumbs>
 

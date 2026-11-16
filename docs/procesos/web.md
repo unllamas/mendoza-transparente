@@ -173,6 +173,8 @@ Al sumar una entidad, pensar qué la conecta con las otras y enlazarlo, también
 - Organismos: al menos 20 procesos.
 - Municipios, funcionarios y leyes: todos.
 
+**El resumen escrito también se ve en la ficha.** Google lee la página después de que carga React, y React reemplaza el `html` prerenderizado. Si la ficha muestra solo cifras con su etiqueta, Google ve una página casi sin texto propio, aunque el HTML prerenderizado tenga un buen resumen. Por eso, la oración que resume cada ficha («CAMILETTI S.A. ganó $ 544,3 millones en 8 procesos…») se arma una sola vez en `src/summaries.ts` y la usan las dos versiones: `scripts/paginas.ts` (resumen, descripción y JSON-LD) y la ficha en React, debajo del título. Hoy la tienen funcionarios, proveedores y organismos. Al sumar un tipo de ficha, su resumen va ahí y se muestra en la página. Las pruebas están en `src/summaries.test.ts`. Este cambio se hizo después de la caída en Google de noviembre de 2026.
+
 **Sumar un tipo de página.** Agregar la sección en `construirPaginas()` con su `title`, `description`, `ld` y `html`, la ruta en `src/main.tsx` y, si es una sección nueva, su entrada en `PAGES` (`src/seo.ts`) y en `NAV` (`scripts/paginas.ts`). `scripts/seo.ts` corta el build si alguna página sale con "undefined", "NaN" o "null".
 
 El dominio sale de `VITE_SITE_URL` (por defecto `https://mendoza-transparente.com`).
