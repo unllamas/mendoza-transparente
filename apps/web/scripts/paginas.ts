@@ -16,6 +16,7 @@ import { GLOSSARY } from "../src/glossary.ts";
 import { NO_PUBLICADO_CATEGORIES } from "../src/no-publicado-categories.ts";
 import { datosMeta, ogImageUrl, PAGES, SITE_NAME, SITE_URL, TITLE_SUFFIX } from "../src/seo.ts";
 import { ROLES } from "../src/slug.ts";
+import { agencySummary, officialPlace, officialSummary, pesosText, supplierSummary } from "../src/summaries.ts";
 import type {
   AgencyDetail,
   AgencySummary,
@@ -69,12 +70,8 @@ const fechaLarga = (iso: string) => {
   const [y, m, d] = iso.slice(0, 10).split("-").map(Number);
   return `${d} de ${MESES[m! - 1]} de ${y}`;
 };
-const pesos = (v: number) => {
-  const abs = Math.abs(v);
-  if (abs >= 1e9) return `$ ${nf1.format(v / 1e9)} mil millones`;
-  if (abs >= 1e6) return `$ ${nf1.format(v / 1e6)} millones`;
-  return `$ ${nf.format(Math.round(v))}`;
-};
+const pesos = pesosText;
+const upperFirst = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 const pesosCorto = (v: number) =>
   Math.abs(v) >= 1e9
     ? `$ ${nf1.format(v / 1e9)} mil M`
@@ -994,16 +991,14 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
 
   for (const p of funcionarios.personas) {
     const path = `/funcionarios/${p.role}/${p.slug}`;
-    const lugar = p.grupo === "intendentes" ? `intendente de ${p.organismo}` : p.cargo.replace(/\s*\(.*\)$/, "");
+    const lugar = officialPlace(p);
     const filiacion = p.partido ?? p.bloque;
     const bienes = p.ddjj
       ? `Declaró inmuebles y vehículos a su nombre por ${pesos(p.ddjj.totalBienes)} (pesos a valor fiscal, menor al de mercado; ${p.ddjj.inmuebles} inmuebles y ${p.ddjj.rodados} vehículos). Los montos de cuentas y otros bienes no se publican.`
       : "";
-    const sueldo = p.remuneracion.length ? `Cobra una dieta de ${pesos(p.remuneracion[0]!.monto)} brutos.` : "Su sueldo no está publicado.";
-    const resumen =
-      `${p.nombre} es ${lugar}${p.grupo.endsWith("nacional") ? "" : " de Mendoza"}${filiacion ? ` (${filiacion})` : ""}${p.mandatoHasta ? `, con mandato hasta ${p.mandatoHasta}` : ""}. ${bienes} ${sueldo}`
-        .replace(/\s+/g, " ")
-        .trim();
+    const sueldo = p.remuneracion.length ? `Cobra ${pesos(p.remuneracion[0]!.monto)} brutos por mes.` : "Su sueldo no está publicado.";
+    // El mismo resumen que muestra la ficha debajo del nombre (src/summaries.ts).
+    const resumen = officialSummary(p);
     const migas: Miga[] = [
       ["/", "Inicio"],
       ["/funcionarios", "Funcionarios"],
@@ -1032,10 +1027,10 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
         slug: `funcionario-${p.id}`,
         eyebrow: GRUPO[p.grupo]!.toUpperCase(),
         titulo: p.nombre,
-        figura: p.ddjj ? pesosCorto(p.ddjj.totalBienes) : (filiacion ?? lugar),
+        figura: p.ddjj ? pesosCorto(p.ddjj.totalBienes) : (filiacion ?? upperFirst(lugar)),
         bajada: p.ddjj
-          ? `Inmuebles y vehículos declarados, en pesos a valor fiscal. ${lugar}.`
-          : `${lugar}${p.mandatoHasta ? `, mandato hasta ${p.mandatoHasta}` : ""}.`,
+          ? `Inmuebles y vehículos declarados, en pesos a valor fiscal. ${upperFirst(lugar)}.`
+          : `${upperFirst(lugar)}${p.mandatoHasta ? `, mandato hasta ${p.mandatoHasta}` : ""}.`,
       },
       ld: [
         {
@@ -1993,10 +1988,17 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
   for (const p of proveedores) {
     const path = `/proveedores/${p.slug}`;
     const anios = p.primera && p.ultima ? ` entre ${p.primera.slice(0, 4)} y ${p.ultima.slice(0, 4)}` : "";
-    const quien = [p.tipoSocietario, p.localidad ? `de ${p.localidad}` : null, p.actividad ? `(${p.actividad.toLowerCase()})` : null]
-      .filter(Boolean)
-      .join(" ");
-    const resumen = `${p.nombre} ganó ${pesos(p.total)} en contrataciones con el Estado de Mendoza en ${p.procesos} procesos${anios}.${quien ? ` Es una ${quien}.` : ""}`;
+    // El mismo resumen que muestra la ficha debajo del nombre (src/summaries.ts).
+    const resumen = supplierSummary({
+      name: p.nombre,
+      total: p.total,
+      processes: p.procesos,
+      first: p.primera,
+      last: p.ultima,
+      companyType: p.tipoSocietario,
+      place: p.localidad,
+      activity: p.actividad,
+    });
     const migas: Miga[] = [
       ["/", "Inicio"],
       ["/proveedores", "Proveedores"],
@@ -2078,11 +2080,15 @@ export async function construirPaginas(dataDir: string): Promise<Pagina[]> {
 
   for (const o of organismos) {
     const path = `/organismos/${o.slug}`;
-    const resumen = `${o.nombre} adjudicó ${pesos(o.total)} en ${o.procesos} procesos de compra. El ${Math.round(o.pctDirecta)} % fueron contrataciones directas y el ${Math.round(o.pctUnaOferta)} % recibió una sola oferta.${
-      o.proveedorPrincipal
-        ? ` Su principal proveedor es ${o.proveedorPrincipal.nombre} (${Math.round(o.proveedorPrincipal.pct)} % del total).`
-        : ""
-    }`;
+    // El mismo resumen que muestra la ficha debajo del nombre (src/summaries.ts).
+    const resumen = agencySummary({
+      name: o.nombre,
+      total: o.total,
+      processes: o.procesos,
+      pctDirect: o.pctDirecta,
+      pctOneOffer: o.pctUnaOferta,
+      mainSupplier: o.proveedorPrincipal,
+    });
     const migas: Miga[] = [
       ["/", "Inicio"],
       ["/organismos", "Organismos"],

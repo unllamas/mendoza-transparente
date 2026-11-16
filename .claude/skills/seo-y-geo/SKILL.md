@@ -15,6 +15,7 @@ Fuente completa: `docs/procesos/web.md`, secciones "SEO y GEO" y "La portada com
    - `og`: la cifra principal para la imagen para compartir.
    - `ld`: JSON-LD de schema.org (`Person`, `Organization`, `GovernmentOrganization`, `AdministrativeArea`, `Legislation`, `Dataset`, `DefinedTermSet`, siempre `BreadcrumbList`, y `FAQPage` con las preguntas que hace la gente).
    - `html`: el contenido escrito (h1, resumen, datos y links).
+   - **Si es una ficha:** su resumen en una oración se arma en `src/summaries.ts` y se muestra también en la página de React, debajo del título. Google lee la página ya cargada, y React reemplaza el `html`.
 2. **Si es una sección:** su entrada en `PAGES` (`src/seo.ts`) y en `NAV` (`paginas.ts`).
 3. **Enlaces internos en los dos sentidos,** por ejemplo de funcionario a municipio y de vuelta, y su lugar en el mapa de la portada si corresponde.
 4. **Buscador:** si es un tipo de entidad nuevo, darle tipo y una línea útil en `writeSearchIndex` (`scripts/temas/guide.ts`): nombre en `t`, lo que importa en `s` y nunca el nombre repetido.
